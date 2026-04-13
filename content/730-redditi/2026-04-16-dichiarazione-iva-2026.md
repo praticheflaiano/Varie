@@ -1,10 +1,10 @@
 ---
-title: "Dichiarazione IVA 2026: guida alla scadenza del 30 aprile"
+title: "Dichiarazione IVA 2026: guida alla scadenza del 30 aprile - CAF Roma"
 date: 2026-04-16
 last_updated: 2026-04-13
 category: "730-redditi"
-tags: ["scadenza", "dichiarazione IVA", "IVA 2026", "modello IVA", "partita IVA", "anno imposta 2025"]
-meta_description: "Dichiarazione IVA 2026: scadenza 30 aprile, chi deve presentarla, novita del modello e sanzioni. Guida completa del CAF Centro Pratiche Flaiano."
+tags: ["scadenza", "agenzia-entrate", "guida", "partita IVA", "dipendenti"]
+meta_description: "Dichiarazione IVA 2026: scadenza 30 aprile, chi deve presentarla, novita modello e sanzioni. CAF UNSIC Roma - guida completa e assistenza."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Provvedimento Agenzia delle Entrate n. 51732 del 15/01/2026 (approvazione modello IVA 2026)"
@@ -93,6 +93,118 @@ fact_check_status: "PUBBLICABILE CON CORREZIONI - correzioni applicate"
 ║ - Data ultimo aggiornamento presente: CONFERMATO               ║
 ║ - Fonti ufficiali citate: CONFERMATO                           ║
 ║                                                                ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║                      SEO REPORT                                 ║
+║             Data analisi: 13 aprile 2026                        ║
+║             Specialista: SEO Specialist - Centro Pratiche       ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║ KEYWORD PRIMARIA: "dichiarazione IVA 2026"                      ║
+║ KEYWORD SECONDARIE: "modello IVA 2026", "scadenza IVA aprile",  ║
+║   "partita IVA dichiarazione annuale", "CAF Roma partita IVA"   ║
+║                                                                  ║
+║ TITLE TAG (FRONTMATTER)                                         ║
+║ Originale: "Dichiarazione IVA 2026: guida alla scadenza del     ║
+║   30 aprile" (56 char)                                          ║
+║ Ottimizzato: "Dichiarazione IVA 2026: guida alla scadenza del   ║
+║   30 aprile - CAF Roma" (66 char)                               ║
+║ Intervento: aggiunto "CAF Roma" per geo-targeting locale.       ║
+║                                                                  ║
+║ META DESCRIPTION                                                ║
+║ Originale (153 char): keyword presente, mancava "Roma".        ║
+║ Ottimizzata (144 char): aggiunto "CAF UNSIC Roma" per          ║
+║   geo-targeting; keyword primaria in apertura; CTA implicita.  ║
+║                                                                  ║
+║ H1                                                              ║
+║ Invariato: "Dichiarazione IVA 2026: guida alla scadenza del    ║
+║   30 aprile" - keyword primaria presente, conforme.            ║
+║                                                                  ║
+║ H2 CON KEYWORD                                                  ║
+║ Presenti: "Cos'e la dichiarazione annuale IVA" (keyword),      ║
+║   "Novita del modello IVA 2026" (keyword), "Come presentare    ║
+║   la dichiarazione IVA" (keyword), "Dichiarazione tardiva",    ║
+║   "Dichiarazione omessa". Copertura buona: keyword primaria    ║
+║   appare in 3 H2 su 7 totali.                                  ║
+║                                                                  ║
+║ KEYWORD DENSITY                                                 ║
+║ "IVA": ~40 occorrenze su ~900 parole stimate = ~4,4%           ║
+║ (la parola "IVA" e inevitabile come termine tecnico unico;     ║
+║   non si configura come keyword stuffing artificiale).          ║
+║ "dichiarazione IVA": ~15 occorrenze = ~1,7% - nella norma.    ║
+║ "partita IVA": ~8 occorrenze = ~0,9% - nella norma.           ║
+║ Density complessiva accettabile: argomento tecnico specifico.  ║
+║                                                                  ║
+║ TAGS (TASSONOMIA)                                               ║
+║ Originali: ["scadenza", "dichiarazione IVA", "IVA 2026",       ║
+║   "modello IVA", "partita IVA", "anno imposta 2025"]           ║
+║ Problema: 4 tag su 6 erano tag liberi non in tassonomia;       ║
+║   superavano il limite di 6 tag; mancavano tag standard.       ║
+║ Ottimizzati: ["scadenza", "agenzia-entrate", "guida",          ║
+║   "partita IVA", "dipendenti"] - 5 tag, tutti conformi alla    ║
+║   tassonomia ufficiale del progetto.                           ║
+║ Nota: "partita IVA" non e nella tassonomia standard ma e       ║
+║   l'unico tag tematico specifico per questo argomento; si      ║
+║   raccomanda di aggiungere "iva" come tag tematico formale.    ║
+║                                                                  ║
+║ INTERNAL LINKS                                                  ║
+║ Originali: 1 link (guida 730/2026)                             ║
+║ Aggiunti: link a Rottamazione Quinquies 2026 (stessa scadenza  ║
+║   30 aprile - alta rilevanza contestuale)                       ║
+║ Totale: 2 internal links. Conforme al minimo 2-3 richiesto.    ║
+║                                                                  ║
+║ LEGGIBILITA                                                     ║
+║ - Frasi brevi e dirette: CONFORME                              ║
+║ - Paragrafi max 3-4 righe: CONFORME                            ║
+║ - Grassetti su termini chiave: CONFORME                        ║
+║ - Tabella riepilogativa in apertura: OTTIMO (aiuta scansione)  ║
+║ - Sezione FAQ: OTTIMO (risponde a intent informativo)          ║
+║ - Elenco puntato documenti: CONFORME                          ║
+║ - Struttura H2/H3 gerarchica: CONFORME                        ║
+║ - Lunghezza stimata ~1.000 parole: SOTTO target 1200-1800.    ║
+║   Non modificato (contenuto fattuale: no invenzioni).          ║
+║                                                                  ║
+║ SCHEMA MARKUP SUGGERITO (da implementare nel CMS/GHL)          ║
+║ 1. Article schema:                                             ║
+║    - "@type": "Article"                                        ║
+║    - "headline": title tag ottimizzato                         ║
+║    - "datePublished": "2026-04-16"                             ║
+║    - "dateModified": "2026-04-13"                              ║
+║    - "author": "Redazione Centro Pratiche Flaiano"            ║
+║    - "publisher": Centro Pratiche Flaiano + logo              ║
+║    - "description": meta_description ottimizzata              ║
+║ 2. FAQPage schema (sezione "Domande frequenti"):               ║
+║    - 3 FAQ presenti: forfettari, chiusura partita IVA, 730    ║
+║    - "@type": "FAQPage" con mainEntity per ciascuna FAQ       ║
+║ 3. Event schema (opzionale per la scadenza):                   ║
+║    - "@type": "Event"                                          ║
+║    - "name": "Scadenza Dichiarazione IVA 2026"                ║
+║    - "startDate": "2026-04-30"                                 ║
+║    - "location": Roma + online                                 ║
+║                                                                  ║
+║ OPPORTUNITA SEO FUTURE                                          ║
+║ - Creare articolo dedicato "Regime forfettario e IVA" per      ║
+║   intercettare ricerche dei forfettari esonerati               ║
+║ - Creare articolo "Liquidazioni periodiche IVA (LIPE)" come   ║
+║   prerequisito/approfondimento linkabile                       ║
+║ - Aggiungere tag "iva" alla tassonomia ufficiale del progetto  ║
+║ - Valutare categoria "adempimenti-fiscali" come suggerito      ║
+║   dal fact-checker (piu accurata di "730-redditi")            ║
+║                                                                  ║
+║ STATO OTTIMIZZAZIONI APPLICATE:                                ║
+║ [OK] Title tag aggiornato con geo "CAF Roma"                   ║
+║ [OK] Meta description aggiornata con "CAF UNSIC Roma"          ║
+║ [OK] Tags allineati alla tassonomia ufficiale                  ║
+║ [OK] Internal links portati da 1 a 2 (aggiunto rottamazione)  ║
+║ [OK] Anchor text interno descrittivo e con keyword             ║
+║ [--] H1 invariato (gia conforme)                               ║
+║ [--] H2 invariati (copertura keyword gia buona)                ║
+║ [--] Contenuto fattuale non modificato (regola ZERO INVENZIONI)║
+║ [--] Disclaimer e fact-check HTML non rimossi                  ║
+║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 -->
 
@@ -225,7 +337,8 @@ No. I contribuenti che adottano il regime forfettario sono esonerati dalla dichi
 Si. Se nel corso del 2025 sono state effettuate operazioni rilevanti ai fini IVA prima della chiusura, la dichiarazione annuale deve essere presentata.
 
 **Articoli correlati:**
-- [Guida al modello 730/2026: tutto quello che c'e da sapere](/content/730-redditi/2026-04-13-guida-730-2026.md)
+- [Dichiarazione dei Redditi 730/2026: guida completa con documenti e scadenze](/content/730-redditi/2026-04-13-guida-730-2026.md)
+- [Rottamazione Quinquies 2026: come aderire entro il 30 aprile](/content/imu-tributi-locali/2026-04-14-rottamazione-quinquies-2026.md)
 
 ---
 
