@@ -14,9 +14,87 @@ sources:
   - "Art. 10 del D.P.R. n. 633/1972 (operazioni esenti IVA)"
   - "Art. 36-bis del D.P.R. n. 633/1972 (dispensa dagli obblighi di fatturazione)"
 deadline: 2026-04-30
-status: draft
+status: review
 type: scadenza
+fact_check_date: 2026-04-13
+fact_check_status: "PUBBLICABILE CON CORREZIONI - correzioni applicate"
 ---
+
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║                   REPORT FACT-CHECK                            ║
+║             Data verifica: 13 aprile 2026                      ║
+║          Esito: PUBBLICABILE CON CORREZIONI                    ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                ║
+║ [ERRORE 1] SANZIONE OMESSA DICHIARAZIONE - PERCENTUALE        ║
+║ L'articolo riportava: "dal 120% al 240% dell'IVA dovuta,      ║
+║ con un minimo di 500 euro".                                    ║
+║ CORREZIONE: Dopo il D.Lgs. 87/2024 (in vigore dal 1/09/2024), ║
+║ la sanzione e stata fissata al 120% in misura unica (non piu  ║
+║ una forbice 120%-240%). Il minimo e di 250 euro, NON 500 euro. ║
+║ Fonti: Art. 5 co. 1 D.Lgs. 471/1997 come modificato dal      ║
+║ D.Lgs. 87/2024; studiosantacroce.eu; fiscoetasse.com;         ║
+║ informazionefiscale.it                                         ║
+║ STATO: CORRETTO nel testo                                      ║
+║                                                                ║
+║ [ERRORE 2] SANZIONE OMESSA DICHIARAZIONE - IMPOSTA NON DOVUTA ║
+║ L'articolo riportava: "da 250 a 2.000 euro".                  ║
+║ CORREZIONE: Dopo il D.Lgs. 87/2024, il range e "da 250 a     ║
+║ 1.000 euro" (non piu da 250 a 2.000).                         ║
+║ Fonti: informazionefiscale.it; centrofiscale.com;              ║
+║ Art. 5 co. 3 D.Lgs. 471/1997 come modificato                  ║
+║ STATO: CORRETTO nel testo                                      ║
+║                                                                ║
+║ [ERRORE 3] RIFERIMENTO A "FISCONLINE"                         ║
+║ L'articolo menzionava "Entratel o Fisconline".                 ║
+║ CORREZIONE: Le credenziali Fisconline per i cittadini privati  ║
+║ sono state dismesse dal 30/09/2021. L'accesso ai servizi      ║
+║ telematici avviene ora tramite SPID, CIE o CNS.               ║
+║ Fonti: agenziaentrate.gov.it; edotto.com                      ║
+║ STATO: CORRETTO nel testo                                      ║
+║                                                                ║
+║ [ATTENZIONE 1] RAVVEDIMENTO OLTRE 90 GIORNI                   ║
+║ L'articolo affermava: "Non e possibile avvalersi del           ║
+║ ravvedimento operoso oltre il termine dei 90 giorni".          ║
+║ NOTA: L'affermazione e sostanzialmente corretta per il         ║
+║ ravvedimento tradizionale. Tuttavia, il D.Lgs. 87/2024 ha     ║
+║ introdotto una sanzione ridotta al 75% per dichiarazioni       ║
+║ presentate oltre 90 giorni ma entro i termini di accertamento  ║
+║ e prima di controlli. Aggiunta nota chiarificatrice.           ║
+║ Fonti: cesystemweb.it; ayming.it; informazionefiscale.it      ║
+║ STATO: INTEGRATO nel testo                                     ║
+║                                                                ║
+║ [ATTENZIONE 2] CATEGORIA ARTICOLO                             ║
+║ L'articolo e nella directory "730-redditi" ma tratta della     ║
+║ dichiarazione IVA, che e un adempimento distinto dal 730.      ║
+║ SUGGERIMENTO: Valutare lo spostamento in una categoria piu     ║
+║ appropriata (es. "iva" o "adempimenti-fiscali").               ║
+║ STATO: NON MODIFICATO (richiede decisione editoriale)          ║
+║                                                                ║
+║ DATI VERIFICATI E CONFERMATI:                                  ║
+║ - Scadenza 30 aprile 2026: CONFERMATO (art. 8 DPR 322/1998)   ║
+║ - Provvedimento AdE n. 51732 del 15/01/2026: CONFERMATO       ║
+║ - Periodo presentazione 1 feb - 30 apr: CONFERMATO             ║
+║ - Esonero forfettari: CONFERMATO (L. 190/2014)                 ║
+║ - Esonero operazioni esenti art. 10 + art. 36-bis: CONFERMATO  ║
+║ - Esonero produttori agricoli art. 34 co. 6 (7.000 euro):     ║
+║   CONFERMATO                                                    ║
+║ - Novita modello: righi VA15, VE38, VJ30: CONFERMATO           ║
+║ - Versamento saldo IVA entro 16 marzo: CONFERMATO              ║
+║ - Soglia minima versamento 10,33 euro: CONFERMATO              ║
+║ - Rateizzazione con interessi 0,33% mensile: CONFERMATO        ║
+║ - Sanzione tardiva 250 euro: CONFERMATO                        ║
+║ - Ravvedimento 25 euro (1/10): CONFERMATO                      ║
+║ - Codice tributo 8911: CONFERMATO                              ║
+║ - Data limite dichiarazione tardiva 29/07/2026: CONFERMATO     ║
+║ - D.Lgs. 87/2024 in vigore dal 1/09/2024: CONFERMATO          ║
+║ - Disclaimer presente e conforme: CONFERMATO                   ║
+║ - Data ultimo aggiornamento presente: CONFERMATO               ║
+║ - Fonti ufficiali citate: CONFERMATO                           ║
+║                                                                ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
 
 # Dichiarazione IVA 2026: guida alla scadenza del 30 aprile
 
@@ -98,16 +176,18 @@ Se vi sono anche imposte non versate, alla sanzione per il ritardo si aggiungono
 
 Superati i 90 giorni, la dichiarazione e considerata **omessa**. In questo caso, ai sensi dell'art. 5, comma 1, del D.Lgs. n. 471/1997, come modificato dal D.Lgs. n. 87/2024 (riforma delle sanzioni tributarie, in vigore dal 1 settembre 2024), si applica una sanzione:
 
-- dal **120% al 240%** dell'IVA dovuta, con un **minimo di 500 euro**;
-- da **250 a 2.000 euro** se l'IVA non risulta dovuta.
+- del **120%** dell'IVA dovuta, con un **minimo di 250 euro**;
+- da **250 a 1.000 euro** se l'IVA non risulta dovuta.
 
-**Non e possibile** avvalersi del ravvedimento operoso oltre il termine dei 90 giorni per la regolarizzazione della dichiarazione omessa.
+**Nota:** il D.Lgs. n. 87/2024 ha eliminato la precedente forbice dal 120% al 240%, fissando la sanzione in misura unica al 120%.
+
+**Non e possibile** avvalersi del ravvedimento operoso nelle forme tradizionali oltre il termine dei 90 giorni. Tuttavia, ai sensi del D.Lgs. n. 87/2024, se la dichiarazione omessa viene presentata entro i termini di decadenza dell'accertamento e prima che il contribuente abbia avuto formale conoscenza di accessi, ispezioni o verifiche, si applica una sanzione ridotta pari al 75% dell'imposta dovuta (ovvero da 150 a 1.000 euro se l'imposta non e dovuta).
 
 ## Come presentare la dichiarazione IVA
 
 La dichiarazione IVA 2026 puo essere trasmessa esclusivamente per **via telematica**. Le modalita sono due:
 
-1. **Direttamente dal contribuente**, tramite il servizio telematico Entratel o Fisconline dell'Agenzia delle Entrate;
+1. **Direttamente dal contribuente**, tramite l'area riservata del sito dell'Agenzia delle Entrate, accessibile con SPID, CIE o CNS;
 2. **Tramite un intermediario abilitato** (commercialista, consulente del lavoro, CAF impresa, associazione di categoria), che si occupa della compilazione e dell'invio per conto del contribuente.
 
 Affidarsi a un intermediario qualificato e particolarmente consigliabile per evitare errori nella compilazione dei quadri e per verificare la corretta esposizione di tutte le operazioni effettuate.
