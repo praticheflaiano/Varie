@@ -1,5 +1,6 @@
 ---
 title: "Rottamazione Quinquies 2026: come aderire entro il 30 aprile | CAF Roma"
+slug: "rottamazione-quinquies-2026"
 date: 2026-04-14
 last_updated: 2026-04-14
 category: "imu-tributi-locali"

@@ -7,6 +7,7 @@ Ogni articolo appartiene a UNA categoria principale. La categoria determina la d
 | Categoria | Directory | Descrizione | Keyword principali |
 |---|---|---|---|
 | Dichiarazione dei Redditi | `730-redditi/` | 730, precompilato, Modello Redditi PF, CU, detrazioni nel 730 | 730, dichiarazione redditi, precompilato, modello redditi |
+| IVA | `iva/` | Dichiarazione IVA annuale, LIPE, regime forfettario IVA, esoneri | iva, dichiarazione iva, partita iva, lipe |
 | ISEE e DSU | `isee-dsu/` | ISEE ordinario, universitario, minorenni, sociosanitario, DSU | isee, dsu, indicatore economico, isee online |
 | Bonus Fiscali | `bonus-fiscali/` | Bonus casa, ecobonus, bonus mobili, bonus verde, altri incentivi fiscali | bonus, ristrutturazione, ecobonus, incentivi |
 | Assegno Unico | `assegno-unico/` | Assegno Unico Universale: requisiti, importi, domanda, maggiorazioni | assegno unico, AUU, figli, famiglia |

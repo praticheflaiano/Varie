@@ -1,14 +1,15 @@
 ---
-title: "[TITOLO: Come fare + argomento + anno se rilevante]"
+title: "[TITOLO: Come fare + argomento + anno + Roma se pertinente]"
+slug: "[slug-breve-con-keyword]"
 date: YYYY-MM-DD
 last_updated: YYYY-MM-DD
 category: "[nome-categoria]"
 tags: ["guida", "tag2", "tag3"]
-meta_description: "[Max 155 caratteri. Deve rispondere a 'come fare X']"
+meta_description: "[Max 155 caratteri. 'Come fare X' + 'Roma' o 'CAF Roma']"
 author: "Redazione Centro Pratiche Flaiano"
 sources:
-  - "[Fonte normativa 1]"
-  - "[Fonte normativa 2]"
+  - "[Fonte normativa 1 con link]"
+  - "[Fonte normativa 2 con link]"
 status: draft
 type: guida
 ---
@@ -73,22 +74,29 @@ Verifichi di avere a disposizione:
 **[Domanda 3]?**
 [Risposta]
 
-## Serve aiuto? Ci pensiamo noi
+## Perche rivolgersi al Centro Pratiche Flaiano
 
-Se la procedura Le sembra complessa o non ha tempo di occuparsene personalmente, il Centro Pratiche Flaiano puo gestire tutto per Lei. Come CAF UNSIC e Patronato ENASC, ci occupiamo quotidianamente di [argomento].
+Operiamo a **Roma Nord**, zona **Vigne Nuove** (Municipio III Montesacro), come CAF autorizzato **UNSIC** e Patronato **ENASC**. Serviamo contribuenti da Tufello, Conca d'Oro, Bufalotta, Porta di Roma e tutto il Municipio III.
 
-**Prenoti un appuntamento:**
-- Telefono: 0697845429
-- WhatsApp: 3716230690
-- Sede: Via Filoteo Alberini 25 int 10, 00139 Roma
+Per [argomento] i nostri operatori si occupano dell'intera procedura: dalla raccolta dei documenti alla compilazione, fino all'invio finale.
+
+## [CTA contestuale all'argomento]
+
+[Esempio: "Prenoti la Sua pratica di [argomento] - Le risparmiamo tempo e Le evitiamo errori"]
+
+**Prenoti online:** https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1
+**Telefono:** 0697845429
+**WhatsApp:** 3716230690
+**Sede:** Via Filoteo Alberini 25 int 10, 00139 Roma
 
 **Articoli correlati:**
-- [Titolo articolo correlato 1](link)
-- [Titolo articolo correlato 2](link)
+- [Titolo articolo correlato 1](https://praticheflaiano.it/blog/slug-articolo-1)
+- [Titolo articolo correlato 2](https://praticheflaiano.it/blog/slug-articolo-2)
 
 ---
 
 *Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche da parte del legislatore; si invita a verificare sempre l'attualita delle informazioni presso le fonti ufficiali (agenziaentrate.gov.it, inps.it, gazzettaufficiale.it). Per una valutazione personalizzata della propria situazione, si consiglia di prenotare un appuntamento presso il nostro Centro.*
 
 *Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC*
-*Via Filoteo Alberini 25 int 10, 00139 Roma | Tel: 0697845429 | WhatsApp: 3716230690*
+*Via Filoteo Alberini 25 int 10, 00139 Roma | Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it*
+*Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1*

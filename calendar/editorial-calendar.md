@@ -11,6 +11,30 @@ Non modificare manualmente le righe contrassegnate come "Pubblicato".
 - Bilanciare articoli stagionali (legati a scadenze) e articoli evergreen
 - Massimo 3-4 articoli a settimana
 
+---
+
+## Argomenti Stagionali per Mese (riferimento)
+
+Questa sezione raccoglie gli ARGOMENTI ricorrenti per ogni mese. Le date specifiche vanno SEMPRE verificate su fonti ufficiali al momento della pianificazione (proroghe e modifiche frequenti).
+
+| Mese | Argomenti principali |
+|---|---|
+| Gennaio | Rinnovo ISEE, conguaglio pensioni, Canone RAI |
+| Febbraio | Certificazione Unica (CU), preparazione campagna 730 |
+| Marzo | Consegna CU, RED/INVCIV (campagne INPS), preparazione 730 precompilato |
+| Aprile | Apertura 730 precompilato, dichiarazione IVA annuale, detrazioni e bonus 2025 |
+| Maggio | Campagna 730, IMU acconto, Assegno Unico adeguamenti |
+| Giugno | Scadenza IMU acconto, IRPEF saldo/acconto, 730 in corso |
+| Luglio | Rimborsi 730 in busta paga, Assegno Unico verifiche |
+| Agosto | Sospensione feriale, contenuti evergreen |
+| Settembre | Scadenza finale 730, Modello Redditi PF, ISEE corrente, bonus scuole |
+| Ottobre | Modello Redditi PF scadenza, 730 integrativo, bonus edilizi anno successivo |
+| Novembre | Secondo acconto IRPEF, preparazione IMU saldo, rivalutazione pensioni |
+| Dicembre | IMU saldo, rinnovo ISEE anno successivo, RED/INVCIV/ACCAS, bonus in scadenza |
+
+### Argomenti evergreen (pubblicabili sempre)
+Successioni, invalidita civile, Legge 104, assunzione colf/badanti, bonus ristrutturazione, NASpI, pensione di vecchiaia, dimissioni online, cambio residenza.
+
 ## Legenda Stati
 
 | Stato | Significato |

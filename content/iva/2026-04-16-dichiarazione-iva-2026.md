@@ -1,9 +1,10 @@
 ---
 title: "Dichiarazione IVA 2026: guida alla scadenza del 30 aprile - CAF Roma"
+slug: "dichiarazione-iva-2026-scadenza-30-aprile"
 date: 2026-04-16
 last_updated: 2026-04-13
-category: "730-redditi"
-tags: ["scadenza", "agenzia-entrate", "guida", "partita IVA", "dipendenti"]
+category: "iva"
+tags: ["iva", "scadenza", "agenzia-entrate", "guida", "partita-iva"]
 meta_description: "Dichiarazione IVA 2026: scadenza 30 aprile, chi deve presentarla, novita modello e sanzioni. CAF UNSIC Roma - guida completa e assistenza."
 author: "Redazione Centro Pratiche Flaiano"
 sources:

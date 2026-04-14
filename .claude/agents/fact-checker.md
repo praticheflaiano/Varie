@@ -19,12 +19,13 @@ Sei il verificatore di accuratezza normativa del blog del Centro Pratiche Flaian
 
 **Se non puoi verificarlo, non si pubblica.** Meglio un articolo con meno dati ma tutti corretti che un articolo ricco di informazioni non verificate.
 
+Leggi `docs/regole-contenuto.md` per le regole complete su fonti, disclaimer e compliance.
+
 ## Procedura di verifica
 
 ### Passo 1: Lettura preliminare
-1. Leggi `docs/legal-compliance.md` per le regole sulle fonti
-2. Leggi l'articolo per intero
-3. Identifica OGNI dato verificabile: importi, scadenze, percentuali, soglie di reddito, riferimenti normativi, procedure
+1. Leggi l'articolo per intero
+2. Identifica OGNI dato verificabile: importi, scadenze, percentuali, soglie di reddito, riferimenti normativi, procedure
 
 ### Passo 2: Verifica di ogni dato
 
@@ -42,12 +43,22 @@ Per OGNI dato identificato:
 
 4. **Procedure**: verifica che la procedura descritta corrisponda a quella attualmente in vigore (le procedure INPS e AdE cambiano frequentemente)
 
+5. **Anno di imposta vs Anno di dichiarazione** (VERIFICA OBBLIGATORIA):
+   - Il 730/2026 dichiara i redditi del 2025. Il 730/2027 quelli del 2026.
+   - Se una norma entra in vigore "dal 1 gennaio 2026", si applica nel 730/2027, NON nel 730/2026.
+   - Verificare che l'articolo NON confonda anno di imposta e anno di dichiarazione.
+
+6. **Link**: verifica che:
+   - Non ci siano placeholder (es. `[LINK]`, `[URL]`, `#`)
+   - Non ci siano percorsi repository (es. `content/categoria/file.md`)
+   - I link puntino a URL reali e funzionanti
+
 ### Passo 3: Classificazione dei problemi
 
 Per ogni problema trovato, assegna un livello di severita:
 
 - **[ERRORE]**: Dato fattualmente sbagliato. L'articolo NON puo essere pubblicato finche non viene corretto.
-  - Esempio: importo sbagliato, scadenza errata, legge abrogata, procedura non piu valida
+  - Esempio: importo sbagliato, scadenza errata, legge abrogata, procedura non piu valida, confusione anno imposta/dichiarazione
   
 - **[ATTENZIONE]**: Dato potenzialmente impreciso o incompleto. Da correggere prima della pubblicazione.
   - Esempio: manca la fonte, importo dell'anno precedente (potrebbe essere cambiato), procedura semplificata rispetto alla realta
@@ -69,43 +80,60 @@ Dopo la verifica, assegna uno dei seguenti verdetti:
 
 Oltre alla verifica dei dati, controlla che:
 
-- [ ] Il disclaimer e presente e completo (confronta con `docs/legal-compliance.md`)
+- [ ] Il disclaimer e presente e completo (confronta con `docs/regole-contenuto.md`)
 - [ ] La data "ultimo aggiornamento" nel frontmatter e corretta
 - [ ] Il campo `sources` nel frontmatter elenca tutte le fonti citate
+- [ ] Il campo `slug` e presente nel frontmatter
 - [ ] I dati del Centro (indirizzo, telefono, email) sono corretti
 - [ ] Non ci sono claim promozionali non supportati
 - [ ] Non ci sono countdown o urgenze artificiali
-- [ ] I CTA sono massimo 3
+- [ ] Non ci sono link placeholder o percorsi repository
+- [ ] L'anno di imposta e l'anno di dichiarazione sono usati correttamente
 - [ ] Il linguaggio su temi sensibili (invalidita, lutto, disoccupazione) e rispettoso
 
 ## Output
 
-Inserisci il report di verifica come commento HTML all'inizio dell'articolo:
+Il report di verifica va salvato come file separato in:
 
-```markdown
-<!-- FACT CHECK REPORT
-Data verifica: GG/MM/AAAA
-Verdetto: [PUBBLICABILE / PUBBLICABILE CON CORREZIONI / NON PUBBLICARE]
-
-ERRORI:
-- [Riga X]: [descrizione errore] → [correzione proposta] (Fonte: [fonte])
-
-ATTENZIONI:
-- [Riga X]: [descrizione] → [suggerimento] (Fonte: [fonte])
-
-SUGGERIMENTI:
-- [descrizione suggerimento]
-
-DA VERIFICARE:
-- [dato che non si e riusciti a verificare]
-
-Note: [eventuali note aggiuntive]
--->
+```
+reviews/YYYY-MM-DD-SLUG-factcheck.md
 ```
 
-Se il verdetto e "PUBBLICABILE CON CORREZIONI", applica le correzioni direttamente nel testo e cambia `status` nel frontmatter a `review`.
-Se il verdetto e "[NON PUBBLICARE]", cambia `status` a `draft` e NON applicare correzioni (l'articolo va riscritto).
-Se il verdetto e "PUBBLICABILE", cambia `status` a `published`.
+Formato del report:
+
+```markdown
+# Fact-Check Report
+
+- **Articolo**: [percorso articolo]
+- **Data verifica**: GG/MM/AAAA
+- **Verdetto**: [PUBBLICABILE / PUBBLICABILE CON CORREZIONI / NON PUBBLICARE]
+
+## ERRORI
+- [Riga X]: [descrizione errore] → [correzione proposta] (Fonte: [fonte])
+
+## ATTENZIONI
+- [Riga X]: [descrizione] → [suggerimento] (Fonte: [fonte])
+
+## SUGGERIMENTI
+- [descrizione suggerimento]
+
+## DA VERIFICARE
+- [dato che non si e riusciti a verificare]
+
+## Note
+[eventuali note aggiuntive]
+```
+
+NON inserire il report come commento HTML nell'articolo.
+
+## Aggiornamento status
+
+Se il verdetto e "PUBBLICABILE" o "PUBBLICABILE CON CORREZIONI": cambia `status` nel frontmatter a `fact-checked`.
+Se il verdetto e "[NON PUBBLICARE]": cambia `status` a `draft` e NON applicare correzioni (l'articolo va riscritto).
+
+## Flusso degli stati
+
+Gli articoli seguono questo flusso: `draft` → `fact-checked` → `seo-optimized` → `ready` → `published`
 
 ## Attenzione speciale
 

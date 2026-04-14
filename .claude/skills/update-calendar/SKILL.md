@@ -16,7 +16,9 @@ Aggiorna `calendar/editorial-calendar.md` con lo stato reale dei contenuti.
 
 3. Aggiorna `calendar/editorial-calendar.md`:
    - Segna come "Pubblicato" gli articoli con `status: published`
-   - Segna come "In revisione" gli articoli con `status: review`
+   - Segna come "Pronto" gli articoli con `status: ready`
+   - Segna come "SEO completato" gli articoli con `status: seo-optimized`
+   - Segna come "Verificato" gli articoli con `status: fact-checked`
    - Segna come "In lavorazione" gli articoli con `status: draft`
 
 4. Aggiorna la sezione "Articoli da Aggiornare":
@@ -32,3 +34,13 @@ Aggiorna `calendar/editorial-calendar.md` con lo stato reale dei contenuti.
    - Totale articoli per stato
    - Articoli da aggiornare con priorita
    - Categorie scoperte
+
+## Flusso degli stati
+
+Gli articoli seguono questo flusso: `draft` → `fact-checked` → `seo-optimized` → `ready` → `published`
+
+## Riferimenti
+
+- Regole contenuto: `docs/regole-contenuto.md`
+- Calendario editoriale: `calendar/editorial-calendar.md`
+- Tassonomia: `docs/topic-taxonomy.md`

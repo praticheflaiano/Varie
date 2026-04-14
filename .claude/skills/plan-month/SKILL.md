@@ -14,9 +14,8 @@ Genera il piano editoriale per il mese richiesto.
    - Se non specificati, usa il mese corrente o il mese successivo
 
 2. Delega al subagent `editorial-planner` con le seguenti istruzioni:
-   - Leggere `docs/fiscal-calendar.md` per gli argomenti stagionali
+   - Leggere `calendar/editorial-calendar.md` per lo stato attuale e gli argomenti stagionali
    - Leggere `docs/topic-taxonomy.md` per le categorie
-   - Leggere `calendar/editorial-calendar.md` per lo stato attuale
    - Scansionare `content/` per identificare gap
    - **VERIFICARE le scadenze reali** del mese su fonti ufficiali
    - Generare il piano e aggiornare `calendar/editorial-calendar.md`
