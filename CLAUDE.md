@@ -64,3 +64,4 @@ draft → fact-checked → seo-optimized → ready → published
 - `/plan-month [mese] [anno]`
 - `/create-social [percorso-articolo]`
 - `/update-calendar`
+- `/watchdog [giorni]` - scansiona fonti ufficiali per novita normative (default: ultime 48h)
