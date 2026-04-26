@@ -40,9 +40,33 @@ Aperto su [http://localhost:4321](http://localhost:4321).
 
 Vedi `.env.example`. In dev creare `.env.local` con i valori pubblici. I segreti (Resend, Turnstile secret) vanno solo nelle env Vercel.
 
-## Deploy
+## Deploy su Vercel
 
-Hosting: Vercel (Root Directory `sito`). Build command: `npm run build`. Output directory: `dist`.
+**1) Setup iniziale (una volta sola, da fare dalla dashboard Vercel):**
+
+1. Vai su https://vercel.com/new
+2. Importa il repository `praticheflaiano/Varie`
+3. **Importante**: nelle impostazioni del progetto imposta:
+   - **Root Directory**: `sito`
+   - **Framework Preset**: Astro (auto-detect)
+   - Build/install/output sono gia presenti in `sito/vercel.json`, non toccare
+4. **Variabili d'ambiente da settare in Vercel**:
+   - `PUBLIC_SITE_URL` = `https://praticheflaiano.it` (o il dominio scelto)
+   - `SHOW_DRAFTS` = `false` in Production, `true` nei Preview (mostra articoli in review)
+   - quando si aggiungera il form contatto: `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`
+5. Branch di produzione: `main`. I push su altri branch generano preview deploy automatici.
+6. **Dominio**: nelle impostazioni del progetto -> Domains, aggiungi prima `nuovo.praticheflaiano.it` (subdominio sicuro per testing). Dopo aver verificato tutto, switch DNS finale su `praticheflaiano.it`.
+
+**2) Deploy automatico:**
+
+Una volta collegato il repo, ogni `git push` su `main` (o merge di una PR) deploya in produzione. I push su altri branch generano un Preview URL (es. `praticheflaiano-git-xxx.vercel.app`).
+
+**3) Deploy manuale via CLI** (alternativa, richiede `VERCEL_TOKEN`):
+
+```bash
+cd sito
+npx vercel --prod --token=$VERCEL_TOKEN
+```
 
 ## Workflow editoriale (invariato)
 
