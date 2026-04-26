@@ -1,0 +1,109 @@
+---
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import Card from "~/components/ui/Card.astro";
+import { Icon } from "astro-icon/components";
+
+const services = [
+  {
+    title: "Modello 730 / Redditi",
+    desc: "Compilazione e invio della dichiarazione, massimizzazione delle detrazioni, rimborso veloce.",
+    icon: "heroicons:document-text",
+    href: "/servizi/caf",
+    area: "CAF",
+  },
+  {
+    title: "ISEE e DSU",
+    desc: "Calcolo ISEE ordinario, corrente, universitario per bonus, asili, mensa scolastica.",
+    icon: "heroicons:chart-bar-square",
+    href: "/servizi/caf",
+    area: "CAF",
+  },
+  {
+    title: "IMU, TARI e tributi locali",
+    desc: "Calcolo, modello F24, ravvedimento operoso, esenzioni e riduzioni.",
+    icon: "heroicons:home-modern",
+    href: "/servizi/caf",
+    area: "CAF",
+  },
+  {
+    title: "Successioni e Volture",
+    desc: "Dichiarazione di successione e voltura catastale: ti seguiamo dall'apertura alla ricevuta.",
+    icon: "heroicons:document-duplicate",
+    href: "/servizi/caf",
+    area: "CAF",
+  },
+  {
+    title: "Contratti di affitto",
+    desc: "Registrazione (RLI), proroghe, cedolare secca, risoluzioni.",
+    icon: "heroicons:key",
+    href: "/servizi/caf",
+    area: "CAF",
+  },
+  {
+    title: "Pensioni",
+    desc: "Verifica contributi, domanda di pensione di vecchiaia, anticipata, opzione donna.",
+    icon: "heroicons:identification",
+    href: "/servizi/patronato",
+    area: "PATRONATO",
+  },
+  {
+    title: "NASpI e disoccupazione",
+    desc: "Domanda NASpI, dimissioni online, indennita di disoccupazione, sostegno al reddito.",
+    icon: "heroicons:briefcase",
+    href: "/servizi/patronato",
+    area: "PATRONATO",
+  },
+  {
+    title: "Invalidita civile e Legge 104",
+    desc: "Domanda di invalidita, accompagnamento, riconoscimento handicap e benefici fiscali.",
+    icon: "heroicons:heart",
+    href: "/servizi/patronato",
+    area: "PATRONATO",
+  },
+  {
+    title: "Assegno Unico Universale",
+    desc: "Domanda AUU, importi, ISEE, integrazioni e variazioni nucleo familiare.",
+    icon: "heroicons:user-group",
+    href: "/servizi/patronato",
+    area: "PATRONATO",
+  },
+];
+---
+
+<section class="section">
+  <div class="container-wide">
+    <SectionHeading
+      eyebrow="Cosa facciamo"
+      title="Tutti i servizi del Centro Pratiche Flaiano"
+      subtitle="Un unico punto di riferimento per fisco, previdenza e adempimenti amministrativi. CAF e Patronato sotto lo stesso tetto."
+    />
+
+    <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <Card href={s.href} hoverable padded={false} class="group p-6 md:p-7">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex size-12 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-700)] group-hover:bg-[var(--color-brand-900)] group-hover:text-white transition-colors">
+              <Icon name={s.icon} class="size-6" aria-hidden="true" />
+            </div>
+            <span class="rounded-md bg-[var(--color-accent-100)] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[var(--color-accent-800)]">
+              {s.area}
+            </span>
+          </div>
+          <h3 class="mt-5 font-display text-xl font-bold text-[var(--color-ink)]">{s.title}</h3>
+          <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed">{s.desc}</p>
+          <p class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand-700)] group-hover:gap-2 transition-all">
+            Scopri di piu
+            <Icon name="heroicons:arrow-right" class="size-4" aria-hidden="true" />
+          </p>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/servizi" class="inline-flex items-center gap-2 font-semibold text-[var(--color-brand-700)] hover:text-[var(--color-brand-900)]">
+        Vedi tutti i servizi
+        <Icon name="heroicons:arrow-right" class="size-4" />
+      </a>
+    </div>
+  </div>
+</section>

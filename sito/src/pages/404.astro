@@ -1,0 +1,31 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Button from "~/components/ui/Button.astro";
+import HeroBlob from "~/components/illustrations/HeroBlob.astro";
+---
+
+<BaseLayout title="Pagina non trovata" description="La pagina richiesta non esiste. Torna alla home del Centro Pratiche Flaiano." noindex>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10 opacity-30">
+      <HeroBlob class="size-full" />
+    </div>
+    <div class="container-narrow relative py-24 text-center md:py-32">
+      <p class="font-display text-7xl font-extrabold text-[var(--color-brand-900)] md:text-9xl">404</p>
+      <h1 class="mt-6 font-display">Questa pagina non c'e</h1>
+      <p class="mt-4 text-lg text-[var(--color-ink-soft)]">
+        Forse hai seguito un link vecchio, oppure abbiamo rimosso o spostato la pagina. Da qui puoi ripartire:
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button variant="primary" size="lg" href="/" icon="heroicons:home" iconPosition="left">
+          Torna alla home
+        </Button>
+        <Button variant="secondary" size="lg" href="/blog" icon="heroicons:book-open" iconPosition="left">
+          Vai al blog
+        </Button>
+        <Button variant="ghost" size="lg" href="/contatti" icon="heroicons:phone" iconPosition="left">
+          Contattaci
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

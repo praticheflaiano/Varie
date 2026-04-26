@@ -1,0 +1,69 @@
+---
+import { NAV, BOOKING, CONTACT } from "~/consts";
+import Logo from "~/components/illustrations/Logo.astro";
+import Button from "~/components/ui/Button.astro";
+import MobileMenu from "./MobileMenu.svelte";
+
+const items = NAV.map((n) => ({
+  label: n.label,
+  href: n.href,
+  children: "children" in n ? n.children?.map((c) => ({ label: c.label, href: c.href })) : undefined,
+}));
+---
+
+<header class="sticky top-0 z-40 border-b border-[var(--color-border)] bg-white/85 backdrop-blur-md">
+  <div class="container-wide flex h-16 items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 no-underline" aria-label="Centro Pratiche Flaiano - Home">
+      <Logo variant="full" class="h-9 w-auto" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="Navigazione principale">
+      {NAV.map((item) => (
+        <div class="group relative">
+          <a
+            href={item.href}
+            class="inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold text-[var(--color-ink)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)] no-underline"
+          >
+            {item.label}
+            {"children" in item && item.children && (
+              <svg viewBox="0 0 20 20" class="size-4 opacity-60" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 0 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
+              </svg>
+            )}
+          </a>
+          {"children" in item && item.children && (
+            <div class="absolute left-0 top-full hidden min-w-[280px] pt-2 group-hover:block group-focus-within:block">
+              <div class="rounded-lg border border-[var(--color-border)] bg-white shadow-[var(--shadow-lift)] py-2">
+                {item.children.map((child) => (
+                  <a
+                    href={child.href}
+                    class="block px-4 py-2 text-sm text-[var(--color-ink-soft)] hover:bg-[var(--color-brand-50)] hover:text-[var(--color-brand-900)] no-underline"
+                  >
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <div class="hidden md:flex items-center gap-2">
+      <Button variant="ghost" size="sm" href={`tel:${CONTACT.phone.landlineRaw}`} icon="heroicons:phone" iconPosition="left">
+        06 9784 5429
+      </Button>
+      <Button variant="primary" size="sm" href={BOOKING.arcanisGroup} external>
+        Prenota
+      </Button>
+    </div>
+
+    <MobileMenu
+      client:load
+      items={items}
+      bookingUrl={BOOKING.arcanisGroup}
+      phoneRaw={CONTACT.phone.landlineRaw}
+      whatsappLink={CONTACT.whatsapp.link}
+    />
+  </div>
+</header>

@@ -1,0 +1,136 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import Accordion from "~/components/ui/Accordion.svelte";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+
+const groups = [
+  {
+    title: "Generale",
+    items: [
+      {
+        question: "Dove si trova il Centro Pratiche Flaiano?",
+        answer: "Siamo a Roma, in <strong>Via Filoteo Alberini 25, interno 10</strong>, dentro il Centro Acquisti Flaiano (quartiere Vigne Nuove, Municipio III). Serviamo Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma e tutta la zona nord di Roma.",
+      },
+      {
+        question: "Quali sono gli orari di apertura?",
+        answer: "Lunedi-Giovedi 9:30-13:00 e 15:30-18:00. Venerdi 9:30-14:00 (orario continuato). Sabato e domenica chiusi.",
+      },
+      {
+        question: "Come prenoto un appuntamento?",
+        answer: "Puoi prenotare online attraverso <a href='/prenota'>la pagina prenota</a> oppure chiamare il numero 06 9784 5429 o scrivere su WhatsApp al 371 6230 690.",
+      },
+      {
+        question: "Posso essere seguito da remoto?",
+        answer: "Si. Offriamo consulenza video o telefonica con prenotazione online dal sito.",
+      },
+    ],
+  },
+  {
+    title: "Tesseramento",
+    items: [
+      {
+        question: "Quanto costa la tessera?",
+        answer: "30 € all'anno o 20 € a semestre per tutto il nucleo familiare. Vedi <a href='/tesseramento'>la pagina tesseramento</a> per tutti i dettagli.",
+      },
+      {
+        question: "Devo essere socio per usare i vostri servizi?",
+        answer: "No. Tutti i servizi sono accessibili a soci e non soci. La tessera ti da pero tariffe agevolate, priorita appuntamenti, consulenza illimitata e altri benefit.",
+      },
+      {
+        question: "La tessera vale anche per il Patronato?",
+        answer: "Le pratiche di Patronato (pensioni, NASpI, invalidita, AUU) sono <strong>gratuite per legge</strong> per tutti, soci e non soci.",
+      },
+    ],
+  },
+  {
+    title: "730 e Dichiarazione redditi",
+    items: [
+      {
+        question: "Quanto costa fare il 730?",
+        answer: "A partire da 30 € per situazioni semplici. Per i soci tariffe agevolate. Forniamo sempre un preventivo prima di iniziare.",
+      },
+      {
+        question: "Quali documenti servono per il 730?",
+        answer: "Documento d'identita, codice fiscale di tutto il nucleo, Certificazione Unica, ricevute spese sanitarie e detraibili, contratti mutuo/affitto. <a href='/blog/categoria/730-redditi'>Trovi la lista completa nel blog 730</a>.",
+      },
+      {
+        question: "Entro quando si presenta il 730?",
+        answer: "La scadenza ordinaria del 730 e <strong>30 settembre</strong>. Per il 730/2026 (anno d'imposta 2025) la finestra utile e dal 1 maggio al 30 settembre 2026. Verifica sempre le fonti ufficiali Agenzia Entrate per gli aggiornamenti.",
+      },
+    ],
+  },
+  {
+    title: "ISEE",
+    items: [
+      {
+        question: "Quanto costa fare l'ISEE?",
+        answer: "Dipende dalla complessita (numero componenti, redditi, immobili). Per i soci tariffe agevolate. ISEE corrente e ordinario hanno prezzi distinti.",
+      },
+      {
+        question: "Quanto dura l'ISEE?",
+        answer: "L'ISEE ordinario scade il <strong>31 dicembre</strong> dell'anno in cui viene rilasciato. Va rifatto ogni gennaio per non perdere benefici come l'Assegno Unico in misura piena.",
+      },
+      {
+        question: "Cos'e l'ISEE corrente?",
+        answer: "Una variante dell'ISEE che fotografa la situazione economica recente (12 mesi) invece di quella di 2 anni fa. Utile in caso di calo del reddito (perdita lavoro, riduzione attivita). Vale 6 mesi.",
+      },
+    ],
+  },
+  {
+    title: "Pensioni e Patronato",
+    items: [
+      {
+        question: "Devo pagare per fare domanda di pensione?",
+        answer: "No. Tutte le pratiche di Patronato sono <strong>gratuite per legge</strong> (Legge 152/2001).",
+      },
+      {
+        question: "Quanto tempo ho per fare domanda di NASpI?",
+        answer: "<strong>68 giorni</strong> dalla cessazione del rapporto di lavoro. Oltre questo termine il diritto decade.",
+      },
+      {
+        question: "Quanto tempo dura la pratica di invalidita civile?",
+        answer: "Dalla domanda al verbale di visita medica passano in media 3-6 mesi. Per gravi patologie si attiva la procedura accelerata.",
+      },
+    ],
+  },
+];
+
+const allFaq = groups.flatMap((g) => g.items);
+---
+
+<BaseLayout
+  title="FAQ: domande frequenti"
+  description="Domande frequenti al Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma. Tesseramento, 730, ISEE, pensioni, NASpI: tutte le risposte in un'unica pagina."
+>
+  <JsonLdFaq slot="head" items={allFaq} />
+
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb items={[{ name: "FAQ", href: "/faq" }]} class="mb-6" />
+      <SectionHeading
+        eyebrow="Domande frequenti"
+        title="Le risposte a tutto cio che ci chiedete piu spesso"
+        subtitle="Se non trovi la tua risposta, scrivici su WhatsApp o telefonaci: rispondiamo in giornata."
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow space-y-12">
+      {groups.map((g) => (
+        <div>
+          <h2 class="font-display text-2xl font-bold text-[var(--color-brand-900)]">{g.title}</h2>
+          <div class="mt-6">
+            <Accordion client:visible items={g.items} multipleOpen />
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

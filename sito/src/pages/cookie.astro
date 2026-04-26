@@ -1,0 +1,56 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+
+const updatedAt = "26 aprile 2026";
+---
+
+<BaseLayout
+  title="Cookie Policy"
+  description="Cookie policy del Centro Pratiche Flaiano: tipi di cookie utilizzati, finalita, gestione del consenso e disattivazione."
+>
+  <section class="bg-[var(--color-surface-soft)] py-10">
+    <div class="container-narrow">
+      <Breadcrumb items={[{ name: "Cookie Policy", href: "/cookie" }]} class="mb-6" />
+      <h1 class="font-display">Cookie Policy</h1>
+      <p class="mt-4 text-[var(--color-ink-soft)]">Ultimo aggiornamento: {updatedAt}</p>
+    </div>
+  </section>
+
+  <article class="container-narrow prose-article py-12">
+    <p>
+      Questo sito utilizza esclusivamente <strong>cookie tecnici di prima parte</strong>, strettamente necessari al funzionamento delle pagine. Non utilizziamo cookie di profilazione o di tracciamento pubblicitario.
+    </p>
+
+    <h2>Cookie tecnici utilizzati</h2>
+    <ul>
+      <li><strong>Cookie di sessione</strong>: necessari al funzionamento delle pagine dinamiche e al mantenimento dello stato di navigazione. Si cancellano alla chiusura del browser.</li>
+      <li><strong>Cookie di preferenza</strong>: memorizzano scelte come consenso ai cookie o lingua. Durata massima 12 mesi.</li>
+    </ul>
+
+    <h2>Cookie di terze parti</h2>
+    <p>
+      Quando incorporiamo contenuti di terze parti (mappe Google, calendario di prenotazione Arcanis, video YouTube), questi servizi possono installare propri cookie soggetti alle rispettive privacy policy. Quando possibile, attiviamo l'incorporamento solo dopo il tuo esplicito consenso.
+    </p>
+    <ul>
+      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></li>
+      <li><a href="https://link.arcanis.it" target="_blank" rel="noopener">Arcanis Booking</a></li>
+    </ul>
+
+    <h2>Come gestire i cookie</h2>
+    <p>
+      Puoi gestire o disattivare i cookie attraverso le impostazioni del tuo browser:
+    </p>
+    <ul>
+      <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener">Google Chrome</a></li>
+      <li><a href="https://support.mozilla.org/it/kb/Eliminare%20i%20cookie" target="_blank" rel="noopener">Mozilla Firefox</a></li>
+      <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" rel="noopener">Safari</a></li>
+      <li><a href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" rel="noopener">Microsoft Edge</a></li>
+    </ul>
+
+    <h2>Maggiori informazioni</h2>
+    <p>
+      Per informazioni piu dettagliate sul trattamento dei dati personali consulta la nostra <a href="/privacy">Privacy Policy</a>.
+    </p>
+  </article>
+</BaseLayout>

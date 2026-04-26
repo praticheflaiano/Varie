@@ -1,0 +1,65 @@
+---
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import { Icon } from "astro-icon/components";
+import FamilyShield from "~/components/illustrations/FamilyShield.astro";
+
+const reasons = [
+  {
+    icon: "heroicons:user-group",
+    title: "Persone, non pratiche",
+    desc: "Ti accogliamo per nome. Ti spieghiamo ogni passaggio in italiano semplice, senza burocratese.",
+  },
+  {
+    icon: "heroicons:bolt",
+    title: "Tempi rapidi",
+    desc: "Appuntamento entro 48 ore in alta stagione. Pratiche urgenti gestite in giornata.",
+  },
+  {
+    icon: "heroicons:shield-check",
+    title: "Zero invenzioni",
+    desc: "Ogni dato che ti diamo e verificato sulle fonti ufficiali (Agenzia delle Entrate, INPS).",
+  },
+  {
+    icon: "heroicons:device-phone-mobile",
+    title: "Anche da remoto",
+    desc: "Consulenza video o telefonica per chi non puo raggiungere la sede.",
+  },
+  {
+    icon: "heroicons:archive-box",
+    title: "Conservazione documenti",
+    desc: "Custodiamo per te i documenti delle pratiche fatte: ti bastano un click o una telefonata.",
+  },
+  {
+    icon: "heroicons:currency-euro",
+    title: "Costi chiari",
+    desc: "Listino trasparente, niente sorprese. Tariffe agevolate per i nostri soci.",
+  },
+];
+---
+
+<section class="section bg-[var(--color-surface-soft)]">
+  <div class="container-wide grid gap-12 lg:grid-cols-12">
+    <div class="lg:col-span-5">
+      <SectionHeading
+        eyebrow="Perche sceglierci"
+        title="Un CAF di quartiere con la qualita di uno studio professionale"
+        subtitle="Da anni accompagniamo famiglie, lavoratori e pensionati di Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma e di tutto il Municipio III."
+      />
+      <div class="mt-8 hidden lg:block">
+        <FamilyShield class="size-48" />
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {reasons.map((r) => (
+          <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)]">
+            <Icon name={r.icon} class="size-7 text-[var(--color-brand-700)]" aria-hidden="true" />
+            <h3 class="mt-4 font-display text-lg font-bold text-[var(--color-ink)]">{r.title}</h3>
+            <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

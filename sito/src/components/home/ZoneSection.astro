@@ -1,0 +1,57 @@
+---
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import { ZONE_SERVITE, CONTACT } from "~/consts";
+import ZoneMap from "~/components/illustrations/ZoneMap.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<section class="section bg-[var(--color-surface-soft)]">
+  <div class="container-wide grid gap-10 lg:grid-cols-12">
+    <div class="lg:col-span-5 flex flex-col justify-center">
+      <SectionHeading
+        eyebrow="Dove siamo"
+        title="Nel cuore di Roma Nord, Municipio III"
+        subtitle="Sede al Centro Acquisti Flaiano in Via Filoteo Alberini 25, quartiere Vigne Nuove. A pochi minuti dalle principali zone del nord di Roma."
+      />
+
+      <address class="mt-6 not-italic text-base">
+        <p class="font-semibold text-[var(--color-ink)]">{CONTACT.address.street}</p>
+        <p class="text-[var(--color-ink-soft)]">{CONTACT.address.postalCode} {CONTACT.address.locality} ({CONTACT.address.region})</p>
+        <p class="mt-2 text-sm text-[var(--color-ink-muted)]">{CONTACT.address.landmark}</p>
+      </address>
+
+      <div class="mt-6">
+        <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Zone servite</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {ZONE_SERVITE.map((z) => (
+            <li class:list={[
+              "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold",
+              z.primary
+                ? "bg-[var(--color-brand-900)] text-white"
+                : "border border-[var(--color-border-strong)] bg-white text-[var(--color-ink-soft)]"
+            ]}>
+              <Icon name="heroicons:map-pin-20-solid" class="size-3.5" aria-hidden="true" />
+              {z.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <a
+        href={CONTACT.mapsUrl}
+        target="_blank"
+        rel="noopener"
+        class="mt-6 inline-flex items-center gap-2 self-start font-semibold text-[var(--color-brand-700)] hover:text-[var(--color-brand-900)]"
+      >
+        Apri in Google Maps
+        <Icon name="heroicons:arrow-top-right-on-square" class="size-4" aria-hidden="true" />
+      </a>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-white p-4 shadow-[var(--shadow-card)] md:p-6">
+        <ZoneMap class="aspect-[3/2] w-full" />
+      </div>
+    </div>
+  </div>
+</section>

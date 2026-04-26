@@ -1,0 +1,72 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import Button from "~/components/ui/Button.astro";
+import { Icon } from "astro-icon/components";
+import { BOOKING, CONTACT } from "~/consts";
+---
+
+<BaseLayout
+  title="Prenota un appuntamento"
+  description="Prenota online il tuo appuntamento al Centro Pratiche Flaiano: in sede a Roma Vigne Nuove o consulenza video/telefonica da remoto. Calendario in tempo reale, conferma immediata."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-12">
+      <Breadcrumb items={[{ name: "Prenota", href: "/prenota" }]} class="mb-6" />
+      <SectionHeading
+        eyebrow="Prenotazioni"
+        title="Scegli giorno, ora e modalita"
+        subtitle="Il nostro calendario online ti mostra in tempo reale le disponibilita. Riceverai conferma via email."
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-wide grid gap-6 md:grid-cols-2">
+      <div class="rounded-[var(--radius-2xl)] border border-[var(--color-brand-200)] bg-gradient-to-br from-[var(--color-brand-900)] to-[var(--color-brand-950)] p-8 text-white">
+        <Icon name="heroicons:building-office" class="size-10 text-[var(--color-accent-300)]" aria-hidden="true" />
+        <h2 class="mt-4 font-display text-2xl font-bold text-white">In sede a Vigne Nuove</h2>
+        <p class="mt-3 text-slate-300">
+          Vieni a trovarci nel nostro ufficio. Ti accogliamo, prendiamo i documenti, ti spieghiamo tutto a voce. Modalita ideale per pratiche complesse o prima volta.
+        </p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-200">
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-accent-300)]" />Slot 30 minuti</li>
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-accent-300)]" />Parcheggio gratuito</li>
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-accent-300)]" />Conferma via email/SMS</li>
+        </ul>
+        <Button variant="accent" size="lg" href={BOOKING.arcanisGroup} external icon="heroicons:calendar-days" iconPosition="left" class="mt-7 w-full justify-center">
+          Apri calendario in sede
+        </Button>
+      </div>
+
+      <div class="rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-white p-8">
+        <Icon name="heroicons:video-camera" class="size-10 text-[var(--color-brand-700)]" aria-hidden="true" />
+        <h2 class="mt-4 font-display text-2xl font-bold text-[var(--color-ink)]">Consulenza da remoto</h2>
+        <p class="mt-3 text-[var(--color-ink-soft)]">
+          Video o telefonata: ti seguiamo da casa o dall'ufficio. Modalita ideale per chi non puo raggiungere la sede o per consulenze rapide.
+        </p>
+        <ul class="mt-5 space-y-2 text-sm text-[var(--color-ink-soft)]">
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />Slot 30 minuti</li>
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />Documenti via email/WhatsApp</li>
+          <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />Conferma via email/SMS</li>
+        </ul>
+        <Button variant="primary" size="lg" href={BOOKING.arcanisRemote} external icon="heroicons:video-camera" iconPosition="left" class="mt-7 w-full justify-center">
+          Apri calendario remoto
+        </Button>
+      </div>
+    </div>
+
+    <div class="container-wide mt-10">
+      <div class="rounded-[var(--radius-lg)] border border-[var(--color-accent-200)] bg-[var(--color-accent-50)] p-6">
+        <p class="text-sm text-[var(--color-ink-soft)]">
+          <strong>Preferisci sentirci a voce?</strong> Chiamaci al
+          <a href={`tel:${CONTACT.phone.landlineRaw}`} class="font-bold">{CONTACT.phone.landline}</a>
+          oppure scrivi su WhatsApp al
+          <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" class="font-bold">{CONTACT.phone.mobile}</a>: ti rispondiamo in giornata e ti aiutiamo a scegliere lo slot giusto.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

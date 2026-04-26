@@ -1,0 +1,56 @@
+---
+import { BOOKING, CONTACT } from "~/consts";
+import Button from "~/components/ui/Button.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<section class="section">
+  <div class="container-wide">
+    <div class="relative overflow-hidden rounded-[var(--radius-2xl)] bg-[var(--color-brand-950)] px-6 py-12 text-white md:px-12 md:py-16 lg:px-20 lg:py-20">
+      <!-- Pattern decorativo -->
+      <div class="absolute inset-0 bg-grid-pattern opacity-[0.06]" aria-hidden="true"></div>
+      <div class="absolute -right-20 -top-20 size-80 rounded-full bg-[var(--color-accent-400)] opacity-10 blur-3xl" aria-hidden="true"></div>
+      <div class="absolute -bottom-32 -left-32 size-96 rounded-full bg-[var(--color-brand-500)] opacity-20 blur-3xl" aria-hidden="true"></div>
+
+      <div class="relative grid gap-8 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-300)]">
+            Pronto a sistemare le tue pratiche?
+          </p>
+          <h2 class="font-display text-white">
+            Prenota un appuntamento, in sede o da remoto.
+          </h2>
+          <p class="mt-4 text-lg text-slate-300 max-w-2xl">
+            Scegli giorno e ora dal nostro calendario online. Ti richiamiamo per confermare e dirti esattamente quali documenti portare.
+          </p>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col gap-3">
+          <Button variant="accent" size="lg" href={BOOKING.arcanisGroup} external icon="heroicons:calendar-days" iconPosition="left" class="w-full justify-center">
+            Prenota in sede
+          </Button>
+          <Button variant="secondary" size="lg" href={BOOKING.arcanisRemote} external icon="heroicons:video-camera" iconPosition="left" class="w-full justify-center !bg-white/10 !text-white !border-white/20 hover:!bg-white/20">
+            Consulenza da remoto
+          </Button>
+          <div class="mt-2 grid grid-cols-2 gap-3">
+            <a
+              href={`tel:${CONTACT.phone.landlineRaw}`}
+              class="inline-flex items-center justify-center gap-2 rounded-md border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 no-underline"
+            >
+              <Icon name="heroicons:phone" class="size-4" />
+              Chiama
+            </a>
+            <a
+              href={CONTACT.whatsapp.link}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1ebe5a] no-underline"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

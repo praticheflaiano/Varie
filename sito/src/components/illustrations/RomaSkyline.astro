@@ -1,0 +1,54 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 800 160"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  aria-hidden="true"
+  role="presentation"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <!-- Cupola San Pietro -->
+  <g fill="currentColor" opacity="0.8">
+    <ellipse cx="160" cy="100" rx="44" ry="36" />
+    <rect x="116" y="100" width="88" height="40" />
+    <rect x="156" y="42" width="8" height="20" />
+    <circle cx="160" cy="40" r="4" />
+    <!-- colonne -->
+    <rect x="120" y="120" width="4" height="20" />
+    <rect x="135" y="120" width="4" height="20" />
+    <rect x="180" y="120" width="4" height="20" />
+    <rect x="195" y="120" width="4" height="20" />
+  </g>
+  <!-- Colosseo -->
+  <g fill="currentColor" opacity="0.8">
+    <ellipse cx="380" cy="118" rx="76" ry="22" />
+    <rect x="304" y="80" width="152" height="40" rx="2" />
+    <!-- archi -->
+    <rect x="316" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="334" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="352" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="370" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="388" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="406" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="424" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+    <rect x="442" y="92" width="6" height="22" rx="2" fill="white" fill-opacity="0.4" />
+  </g>
+  <!-- Pini romani -->
+  <g fill="currentColor" opacity="0.6">
+    <rect x="568" y="100" width="4" height="40" />
+    <ellipse cx="570" cy="96" rx="20" ry="14" />
+    <rect x="640" y="110" width="4" height="30" />
+    <ellipse cx="642" cy="106" rx="16" ry="10" />
+    <rect x="700" y="100" width="4" height="40" />
+    <ellipse cx="702" cy="96" rx="22" ry="15" />
+  </g>
+  <!-- Linea terra -->
+  <line x1="0" y1="140" x2="800" y2="140" stroke="currentColor" stroke-width="1" opacity="0.3" />
+</svg>

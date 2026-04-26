@@ -1,0 +1,71 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import { CONTACT, SITE, ORG_CREDENTIALS } from "~/consts";
+
+const updatedAt = "26 aprile 2026";
+---
+
+<BaseLayout
+  title="Note legali"
+  description="Note legali del sito Centro Pratiche Flaiano: dati identificativi, copyright, limitazioni di responsabilita, foro competente."
+>
+  <section class="bg-[var(--color-surface-soft)] py-10">
+    <div class="container-narrow">
+      <Breadcrumb items={[{ name: "Note legali", href: "/note-legali" }]} class="mb-6" />
+      <h1 class="font-display">Note legali</h1>
+      <p class="mt-4 text-[var(--color-ink-soft)]">Ultimo aggiornamento: {updatedAt}</p>
+    </div>
+  </section>
+
+  <article class="container-narrow prose-article py-12">
+    <h2>Identificazione del titolare</h2>
+    <p>
+      Il sito {SITE.url} e di proprieta di {SITE.legalName}, con sede in {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality} ({CONTACT.address.region}). Email: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </p>
+
+    <h2>Natura giuridica e accreditamenti</h2>
+    <ul>
+      <li><strong>{ORG_CREDENTIALS.caf.fullName}</strong> - operiamo come CAF in conformita al D.Lgs. 9 luglio 1997, n. 241.</li>
+      <li><strong>{ORG_CREDENTIALS.patronato.fullName}</strong> - operiamo come Patronato riconosciuto a norma della Legge 30 marzo 2001, n. 152.</li>
+    </ul>
+
+    <h2>Contenuti del sito</h2>
+    <p>
+      Le informazioni pubblicate sul sito hanno scopo divulgativo e informativo e non costituiscono in alcun modo consulenza professionale personalizzata. Norme, importi e scadenze possono variare nel tempo: per situazioni specifiche e sempre consigliabile consultare un professionista o le fonti ufficiali (Agenzia delle Entrate, INPS, Gazzetta Ufficiale).
+    </p>
+    <p>
+      Il Centro Pratiche Flaiano si impegna a verificare l'accuratezza e l'aggiornamento dei contenuti, ma non garantisce la totale assenza di errori. Eventuali segnalazioni possono essere inviate a <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </p>
+
+    <h2>Diritti d'autore</h2>
+    <p>
+      Tutti i contenuti del sito (testi, immagini, grafica, illustrazioni SVG, codice) sono protetti dal diritto d'autore. La riproduzione, totale o parziale, e consentita solo previa autorizzazione scritta del titolare, fatta eccezione per la condivisione di link e citazioni nei limiti del fair use.
+    </p>
+
+    <h2>Marchi</h2>
+    <p>
+      I marchi UNSIC ed ENASC sono di proprieta dei rispettivi titolari e sono utilizzati nel rispetto delle convenzioni di rete.
+    </p>
+
+    <h2>Limitazione di responsabilita</h2>
+    <p>
+      Il titolare non e responsabile per eventuali danni derivanti dall'utilizzo delle informazioni pubblicate sul sito. La consulenza professionale viene prestata esclusivamente in modalita personalizzata, attraverso appuntamento in sede o da remoto, sulla base di documentazione effettivamente fornita dal cliente.
+    </p>
+
+    <h2>Link esterni</h2>
+    <p>
+      Il sito puo contenere link a siti di terze parti. Il titolare non e responsabile dei contenuti, della disponibilita o delle pratiche di trattamento dati di tali siti.
+    </p>
+
+    <h2>Foro competente</h2>
+    <p>
+      Per ogni controversia relativa al sito e ai servizi erogati, il foro competente e quello di Roma, salve diverse disposizioni di legge inderogabile.
+    </p>
+
+    <h2>Modifiche</h2>
+    <p>
+      Le presenti note legali possono essere modificate. La versione vigente e sempre quella pubblicata in questa pagina.
+    </p>
+  </article>
+</BaseLayout>

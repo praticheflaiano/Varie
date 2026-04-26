@@ -1,0 +1,47 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 600 600"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  role="presentation"
+>
+  <defs>
+    <linearGradient id="heroBlobGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--color-brand-400)" stop-opacity="0.4" />
+      <stop offset="50%" stop-color="var(--color-brand-700)" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="var(--color-brand-900)" stop-opacity="0.9" />
+    </linearGradient>
+    <linearGradient id="heroAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="var(--color-accent-300)" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="var(--color-accent-500)" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+  <g>
+    <path
+      fill="url(#heroBlobGradient)"
+      d="M421,323Q406,396,343,432Q280,468,213,438Q146,408,114,344Q82,280,114,217Q146,154,209,118Q272,82,344,108Q416,134,433,207Q450,280,421,323Z"
+    >
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        values="M421,323Q406,396,343,432Q280,468,213,438Q146,408,114,344Q82,280,114,217Q146,154,209,118Q272,82,344,108Q416,134,433,207Q450,280,421,323Z;
+                M408,310Q396,390,330,425Q264,460,201,432Q138,404,108,342Q78,280,108,219Q138,158,200,124Q262,90,335,112Q408,134,418,207Q428,280,408,310Z;
+                M421,323Q406,396,343,432Q280,468,213,438Q146,408,114,344Q82,280,114,217Q146,154,209,118Q272,82,344,108Q416,134,433,207Q450,280,421,323Z"
+      />
+    </path>
+    <circle cx="450" cy="160" r="40" fill="url(#heroAccent)" opacity="0.85">
+      <animate attributeName="cy" values="160;180;160" dur="6s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="120" cy="450" r="22" fill="var(--color-accent-300)" opacity="0.7">
+      <animate attributeName="cx" values="120;140;120" dur="8s" repeatCount="indefinite" />
+    </circle>
+  </g>
+</svg>

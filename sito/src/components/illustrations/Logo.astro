@@ -1,0 +1,40 @@
+---
+interface Props {
+  variant?: "full" | "mark";
+  class?: string;
+}
+const { variant = "full", class: className = "" } = Astro.props;
+---
+
+{variant === "mark" ? (
+  <svg class={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centro Pratiche Flaiano">
+    <defs>
+      <linearGradient id="markGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--color-brand-700)" />
+        <stop offset="100%" stop-color="var(--color-brand-950)" />
+      </linearGradient>
+    </defs>
+    <rect width="64" height="64" rx="14" fill="url(#markGrad)" />
+    <!-- Lettera F stilizzata + foglio -->
+    <path d="M22 18 H46 V25 H30 V31 H42 V38 H30 V46 H22 Z" fill="white" />
+    <circle cx="48" cy="46" r="6" fill="var(--color-accent-400)" />
+  </svg>
+) : (
+  <svg class={className} viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centro Pratiche Flaiano">
+    <defs>
+      <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="var(--color-brand-700)" />
+        <stop offset="100%" stop-color="var(--color-brand-950)" />
+      </linearGradient>
+    </defs>
+    <rect width="64" height="64" rx="14" fill="url(#logoGrad)" />
+    <path d="M22 18 H46 V25 H30 V31 H42 V38 H30 V46 H22 Z" fill="white" />
+    <circle cx="48" cy="46" r="6" fill="var(--color-accent-400)" />
+    <text x="80" y="32" font-family="var(--font-display)" font-size="20" font-weight="800" fill="var(--color-brand-900)" letter-spacing="-0.02em">
+      Centro Pratiche
+    </text>
+    <text x="80" y="52" font-family="var(--font-display)" font-size="20" font-weight="800" fill="var(--color-brand-700)" letter-spacing="-0.02em">
+      Flaiano
+    </text>
+  </svg>
+)}

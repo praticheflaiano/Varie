@@ -1,0 +1,94 @@
+---
+import type { Article } from "~/utils/articles";
+import { articlePath } from "~/utils/articles";
+import { getCategory } from "~/utils/categories";
+import { formatDateIt } from "~/utils/date";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  article: Article;
+  variant?: "default" | "featured" | "compact";
+}
+
+const { article, variant = "default" } = Astro.props;
+const cat = getCategory(article.data.category);
+const href = articlePath(article);
+const dateStr = formatDateIt(article.data.last_updated ?? article.data.date);
+
+const typeLabels: Record<string, string> = {
+  guida: "Guida",
+  scadenza: "Scadenza",
+  novita: "Novita",
+  informativo: "Informativo",
+};
+---
+
+{variant === "compact" ? (
+  <a href={href} class="group block py-4 border-b border-[var(--color-border)] last:border-0 no-underline">
+    <div class="flex items-center gap-3 text-xs text-[var(--color-ink-muted)]">
+      {cat && (
+        <span class="font-semibold uppercase tracking-wider" style={`color: ${cat.color}`}>
+          {cat.label}
+        </span>
+      )}
+      <time>{dateStr}</time>
+    </div>
+    <h3 class="mt-1.5 font-display text-base font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)] transition-colors">
+      {article.data.title}
+    </h3>
+  </a>
+) : (
+  <article class:list={[
+    "group flex flex-col rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)] transition-all hover:shadow-[var(--shadow-lift)] hover:-translate-y-0.5 hover:border-[var(--color-brand-200)]",
+    variant === "featured" && "lg:flex-row lg:col-span-2"
+  ]}>
+    <div class="p-6 md:p-7 flex flex-col flex-1">
+      <div class="flex items-center gap-2 text-xs">
+        {cat && (
+          <span
+            class="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-semibold"
+            style={`background-color: color-mix(in oklab, ${cat.color} 12%, white); color: ${cat.color}; border: 1px solid color-mix(in oklab, ${cat.color} 20%, white);`}
+          >
+            {cat.label}
+          </span>
+        )}
+        <span class="rounded-full bg-[var(--color-surface-muted)] px-2.5 py-0.5 font-semibold text-[var(--color-ink-soft)]">
+          {typeLabels[article.data.type] ?? article.data.type}
+        </span>
+      </div>
+
+      <h3 class:list={[
+        "mt-4 font-display font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)] transition-colors text-balance",
+        variant === "featured" ? "text-2xl lg:text-3xl" : "text-xl"
+      ]}>
+        <a href={href} class="no-underline before:absolute before:inset-0">
+          {article.data.title}
+        </a>
+      </h3>
+
+      <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
+        {article.data.meta_description}
+      </p>
+
+      <div class="mt-auto pt-5 flex items-center justify-between text-xs text-[var(--color-ink-muted)]">
+        <time datetime={article.data.date.toISOString()}>{dateStr}</time>
+        <span class="inline-flex items-center gap-1 font-semibold text-[var(--color-brand-700)] group-hover:gap-2 transition-all">
+          Leggi
+          <Icon name="heroicons:arrow-right" class="size-3.5" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  </article>
+)}
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  article {
+    position: relative;
+  }
+</style>

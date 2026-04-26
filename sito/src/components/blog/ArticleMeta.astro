@@ -1,0 +1,47 @@
+---
+import { formatDateIt } from "~/utils/date";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  date: Date;
+  lastUpdated?: Date;
+  author: string;
+  readingTime: number;
+  type?: string;
+}
+const { date, lastUpdated, author, readingTime, type } = Astro.props;
+
+const typeLabels: Record<string, string> = {
+  guida: "Guida",
+  scadenza: "Scadenza",
+  novita: "Novita normativa",
+  informativo: "Articolo informativo",
+};
+---
+
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[var(--color-ink-muted)]">
+  {type && (
+    <span class="inline-flex items-center gap-1.5 font-semibold text-[var(--color-brand-700)]">
+      <Icon name="heroicons:document-text" class="size-4" />
+      {typeLabels[type] ?? type}
+    </span>
+  )}
+  <span class="inline-flex items-center gap-1.5">
+    <Icon name="heroicons:user-circle" class="size-4" />
+    {author}
+  </span>
+  <span class="inline-flex items-center gap-1.5">
+    <Icon name="heroicons:calendar" class="size-4" />
+    <time datetime={date.toISOString()}>{formatDateIt(date)}</time>
+  </span>
+  {lastUpdated && lastUpdated.getTime() !== date.getTime() && (
+    <span class="inline-flex items-center gap-1.5">
+      <Icon name="heroicons:arrow-path" class="size-4" />
+      aggiornato il <time datetime={lastUpdated.toISOString()}>{formatDateIt(lastUpdated)}</time>
+    </span>
+  )}
+  <span class="inline-flex items-center gap-1.5">
+    <Icon name="heroicons:clock" class="size-4" />
+    {readingTime} min di lettura
+  </span>
+</div>

@@ -1,0 +1,37 @@
+---
+interface Props {
+  variant?: "neutral" | "brand" | "accent" | "success" | "category";
+  size?: "sm" | "md";
+  color?: string;
+  class?: string;
+}
+
+const { variant = "neutral", size = "sm", color, class: className = "" } = Astro.props;
+
+const sizes: Record<string, string> = {
+  sm: "text-xs px-2 py-0.5",
+  md: "text-sm px-3 py-1",
+};
+
+const variants: Record<string, string> = {
+  neutral: "bg-slate-100 text-slate-700 border border-slate-200",
+  brand: "bg-brand-50 text-brand-800 border border-brand-100",
+  accent: "bg-accent-100 text-accent-800 border border-accent-200",
+  success: "bg-success-50 text-success-700 border border-success-500/20",
+  category: "",
+};
+
+const styleVar =
+  variant === "category" && color
+    ? `background-color: color-mix(in oklab, ${color} 12%, white); color: ${color}; border: 1px solid color-mix(in oklab, ${color} 20%, white);`
+    : "";
+
+const cls = [
+  "inline-flex items-center gap-1 font-semibold rounded-full whitespace-nowrap",
+  sizes[size],
+  variants[variant],
+  className,
+].join(" ");
+---
+
+<span class={cls} style={styleVar}><slot /></span>

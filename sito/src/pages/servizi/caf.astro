@@ -1,0 +1,156 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+import Accordion from "~/components/ui/Accordion.svelte";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
+import { Icon } from "astro-icon/components";
+
+const services = [
+  {
+    title: "Modello 730 e Redditi PF",
+    desc: "Compilazione e invio della dichiarazione dei redditi per dipendenti e pensionati. Massimizzazione di detrazioni e deduzioni, gestione della precompilata, rimborso veloce sulla busta paga o sulla pensione.",
+    icon: "heroicons:document-text",
+    bullets: [
+      "Modello 730 ordinario, integrativo, congiunto",
+      "Modello Redditi PF per autonomi e situazioni particolari",
+      "Recupero spese sanitarie, mutuo, istruzione, sport, animali",
+      "Gestione precompilata Agenzia Entrate",
+    ],
+  },
+  {
+    title: "ISEE e DSU",
+    desc: "Calcolo dell'ISEE per accedere a bonus, agevolazioni, asili nido, mensa scolastica, borse di studio, riduzione utenze.",
+    icon: "heroicons:chart-bar-square",
+    bullets: [
+      "ISEE ordinario per benefici sociali",
+      "ISEE corrente per variazioni reddituali",
+      "ISEE universitario per tasse e borse",
+      "ISEE minorenni con genitori non conviventi",
+    ],
+  },
+  {
+    title: "IMU e tributi locali",
+    desc: "Calcolo IMU, TASI, TARI con compilazione del modello F24. Verifica esenzioni, riduzioni e ravvedimento operoso.",
+    icon: "heroicons:home-modern",
+    bullets: [
+      "Calcolo IMU prima e seconda casa",
+      "Compilazione e stampa F24",
+      "Ravvedimento operoso per ritardi",
+      "Pratiche TARI e variazioni",
+    ],
+  },
+  {
+    title: "Successioni e Volture catastali",
+    desc: "Apertura della successione, dichiarazione telematica, calcolo imposta successioni e donazioni, voltura catastale automatica al Catasto.",
+    icon: "heroicons:document-duplicate",
+    bullets: [
+      "Dichiarazione di successione completa",
+      "Calcolo imposte e modello F24",
+      "Voltura catastale al Catasto",
+      "Gestione conti correnti e quote ereditarie",
+    ],
+  },
+  {
+    title: "Contratti di affitto",
+    desc: "Registrazione telematica dei contratti di locazione, gestione cedolare secca, proroghe, risoluzioni, cessioni.",
+    icon: "heroicons:key",
+    bullets: [
+      "Registrazione contratti RLI",
+      "Cedolare secca al 21% / 10%",
+      "Proroghe, risoluzioni, cessioni",
+      "Calcolo imposta di registro e marche",
+    ],
+  },
+  {
+    title: "Bonus fiscali e detrazioni",
+    desc: "Assistenza per bonus ristrutturazione, ecobonus, bonus mobili, sismabonus, e tutte le detrazioni IRPEF.",
+    icon: "heroicons:gift",
+    bullets: [
+      "Bonus ristrutturazione (50%)",
+      "Ecobonus risparmio energetico",
+      "Bonus mobili ed elettrodomestici",
+      "Sismabonus, bonus barriere architettoniche",
+    ],
+  },
+];
+
+const faq = [
+  {
+    question: "Devo essere socio per fare il 730 con voi?",
+    answer: "No. Il 730 e accessibile a tutti, soci e non soci. La <a href='/tesseramento'>tessera</a> ti da pero un costo agevolato e priorita sugli appuntamenti.",
+  },
+  {
+    question: "Quanto costa fare il 730?",
+    answer: "Il 730 ha un costo a partire da <strong>30 €</strong> per situazioni semplici (un solo CUD, poche detrazioni). Il prezzo aumenta con la complessita (piu redditi, immobili, casi particolari). Forniamo sempre un preventivo prima di iniziare.",
+  },
+  {
+    question: "Posso fare il 730 da remoto?",
+    answer: "Si. Puoi <a href='/prenota'>prenotare una consulenza video</a> e inviarci i documenti via email o WhatsApp. Ti seguiamo in tutte le fasi senza muoverti da casa.",
+  },
+  {
+    question: "Cos'e l'ISEE corrente e quando serve?",
+    answer: "L'ISEE corrente fotografa la situazione economica attuale (ultimi 12 mesi) invece che quella di 2 anni fa, ed e utile in caso di calo del reddito (perdita lavoro, riduzione attivita). E valido per 6 mesi dal rilascio.",
+  },
+  {
+    question: "Quanto tempo ci vuole per una successione?",
+    answer: "La dichiarazione di successione va presentata <strong>entro 12 mesi</strong> dal decesso. Da noi la pratica dura mediamente 2-4 settimane dalla raccolta dei documenti completi.",
+  },
+];
+---
+
+<BaseLayout
+  title="Servizi CAF: 730, ISEE, IMU, Successioni, Contratti, Bonus"
+  description="Servizi CAF UNSIC del Centro Pratiche Flaiano a Roma Vigne Nuove: dichiarazione 730, ISEE, IMU/TARI, successioni e volture, contratti di affitto, bonus fiscali. Prezzi chiari, appuntamenti rapidi."
+>
+  <JsonLdFaq slot="head" items={faq} />
+
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb items={[{ name: "Servizi", href: "/servizi" }, { name: "CAF", href: "/servizi/caf" }]} class="mb-6" />
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-brand-100)] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--color-brand-800)]">
+        <Icon name="heroicons:academic-cap" class="size-3.5" /> CAF UNSIC autorizzato
+      </span>
+      <SectionHeading
+        title="Servizi fiscali e tributari"
+        subtitle="Il nostro CAF UNSIC ti accompagna in ogni adempimento fiscale: dalla dichiarazione dei redditi alle pratiche catastali. Da oltre vent'anni al servizio di Roma Nord."
+        class="mt-3"
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-wide grid gap-6 md:grid-cols-2">
+      {services.map((s) => (
+        <article class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
+          <div class="flex size-12 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-700)]">
+            <Icon name={s.icon} class="size-6" aria-hidden="true" />
+          </div>
+          <h2 class="mt-5 font-display text-xl font-bold text-[var(--color-ink)]">{s.title}</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">{s.desc}</p>
+          <ul class="mt-5 space-y-1.5 text-sm text-[var(--color-ink-soft)]">
+            {s.bullets.map((b) => (
+              <li class="flex items-start gap-2">
+                <Icon name="heroicons:check-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" aria-hidden="true" />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section bg-[var(--color-surface-soft)]">
+    <div class="container-narrow">
+      <SectionHeading eyebrow="Domande frequenti CAF" title="Le risposte alle domande piu comuni" align="center" />
+      <div class="mt-10">
+        <Accordion client:visible items={faq} />
+      </div>
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

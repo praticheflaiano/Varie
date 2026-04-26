@@ -1,0 +1,129 @@
+---
+import { SITE, CONTACT, HOURS, BOOKING, SOCIAL, ORG_CREDENTIALS } from "~/consts";
+import { CATEGORY_LIST } from "~/utils/categories";
+import Logo from "~/components/illustrations/Logo.astro";
+import { Icon } from "astro-icon/components";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[var(--color-brand-950)] text-slate-300">
+  <div class="container-wide section-tight">
+    <div class="grid gap-10 lg:grid-cols-12">
+      <!-- Brand + claim -->
+      <div class="lg:col-span-4">
+        <Logo variant="full" class="h-10 w-auto [&_text]:fill-white [&_rect]:fill-white/10" />
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-slate-400">
+          {SITE.tagline}
+        </p>
+        <div class="mt-6 flex items-center gap-3">
+          <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-200">
+            CAF UNSIC
+          </span>
+          <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-200">
+            Patronato ENASC
+          </span>
+        </div>
+        <div class="mt-6 flex items-center gap-3">
+          <a href={SOCIAL.facebook} target="_blank" rel="noopener" class="text-slate-400 hover:text-white" aria-label="Facebook">
+            <Icon name="lucide:facebook" class="size-5" />
+          </a>
+          <a href={SOCIAL.whatsappChannel} target="_blank" rel="noopener" class="text-slate-400 hover:text-white" aria-label="Canale WhatsApp">
+            <Icon name="lucide:message-circle" class="size-5" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Servizi -->
+      <div class="lg:col-span-2">
+        <h3 class="font-display text-base font-semibold text-white">Servizi</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="/servizi/caf" class="text-slate-400 hover:text-white no-underline">CAF</a></li>
+          <li><a href="/servizi/patronato" class="text-slate-400 hover:text-white no-underline">Patronato</a></li>
+          <li><a href="/servizi/servizi-vari" class="text-slate-400 hover:text-white no-underline">Servizi vari</a></li>
+          <li><a href="/tesseramento" class="text-slate-400 hover:text-white no-underline">Tesseramento</a></li>
+        </ul>
+      </div>
+
+      <!-- Categorie blog -->
+      <div class="lg:col-span-3">
+        <h3 class="font-display text-base font-semibold text-white">Argomenti del blog</h3>
+        <ul class="mt-4 grid grid-cols-1 gap-y-2 text-sm">
+          {CATEGORY_LIST.slice(0, 8).map((c) => (
+            <li>
+              <a href={`/blog/categoria/${c.slug}`} class="text-slate-400 hover:text-white no-underline">
+                {c.label}
+              </a>
+            </li>
+          ))}
+          <li><a href="/blog" class="text-accent-300 hover:text-accent-200 no-underline font-semibold">Vai al blog &rarr;</a></li>
+        </ul>
+      </div>
+
+      <!-- Contatti -->
+      <div class="lg:col-span-3">
+        <h3 class="font-display text-base font-semibold text-white">Contatti</h3>
+        <address class="mt-4 not-italic text-sm space-y-3 text-slate-400">
+          <div class="flex items-start gap-2">
+            <Icon name="heroicons:map-pin" class="size-5 shrink-0 mt-0.5 text-accent-400" />
+            <span>
+              {CONTACT.address.street}<br />
+              {CONTACT.address.postalCode} {CONTACT.address.locality}<br />
+              <span class="text-slate-500">{CONTACT.address.landmark}</span>
+            </span>
+          </div>
+          <div class="flex items-start gap-2">
+            <Icon name="heroicons:phone" class="size-5 shrink-0 mt-0.5 text-accent-400" />
+            <div>
+              <a href={`tel:${CONTACT.phone.landlineRaw}`} class="block text-white hover:text-accent-300 no-underline">{CONTACT.phone.landline}</a>
+              <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" class="block text-white hover:text-accent-300 no-underline">WhatsApp {CONTACT.phone.mobile}</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-2">
+            <Icon name="heroicons:envelope" class="size-5 shrink-0 mt-0.5 text-accent-400" />
+            <a href={`mailto:${CONTACT.email}`} class="text-white hover:text-accent-300 no-underline break-all">{CONTACT.email}</a>
+          </div>
+          <div class="flex items-start gap-2">
+            <Icon name="heroicons:clock" class="size-5 shrink-0 mt-0.5 text-accent-400" />
+            <div class="space-y-0.5">
+              {HOURS.filter((h) => h.open).map((h) => (
+                <div>
+                  <span class="text-slate-300">{h.day}</span>{" "}
+                  <span>{h.open}-{h.close}{h.afternoon && ` / ${h.afternoon.open}-${h.afternoon.close}`}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </address>
+        <a
+          href={BOOKING.arcanisGroup}
+          target="_blank"
+          rel="noopener"
+          class="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-accent-400 px-4 py-2.5 text-sm font-semibold text-brand-950 hover:bg-accent-300 no-underline"
+        >
+          Prenota appuntamento
+          <Icon name="heroicons:arrow-top-right-on-square" class="size-4" />
+        </a>
+      </div>
+    </div>
+
+    <hr class="my-10 border-white/10" />
+
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs text-slate-500">
+      <p>
+        &copy; {year} {SITE.legalName}. Tutti i diritti riservati. P.IVA da indicare.
+      </p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        <li><a href="/privacy" class="hover:text-white no-underline">Privacy</a></li>
+        <li><a href="/cookie" class="hover:text-white no-underline">Cookie</a></li>
+        <li><a href="/note-legali" class="hover:text-white no-underline">Note legali</a></li>
+        <li><a href="/contatti" class="hover:text-white no-underline">Contatti</a></li>
+      </ul>
+    </div>
+
+    <p class="mt-4 text-xs text-slate-600">
+      {ORG_CREDENTIALS.caf.fullName} - {ORG_CREDENTIALS.patronato.fullName}.
+      Riferimenti normativi: {ORG_CREDENTIALS.legalReferences.join("; ")}.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,21 @@
+---
+import type { Article } from "~/utils/articles";
+import ArticleCard from "./ArticleCard.astro";
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+---
+
+{articles.length > 0 && (
+  <section class="mt-16 border-t border-[var(--color-border)] pt-12">
+    <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">Articoli correlati</h2>
+    <p class="mt-2 text-sm text-[var(--color-ink-muted)]">Altre risorse che potrebbero interessarti.</p>
+
+    <div class="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {articles.map((a) => <ArticleCard article={a} />)}
+    </div>
+  </section>
+)}

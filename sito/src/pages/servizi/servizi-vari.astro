@@ -1,0 +1,76 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+import { Icon } from "astro-icon/components";
+
+const services = [
+  {
+    title: "PEC - Posta Elettronica Certificata",
+    desc: "Attivazione casella PEC, rinnovi, configurazione, supporto invio comunicazioni ufficiali.",
+    icon: "heroicons:envelope",
+  },
+  {
+    title: "Cambio residenza e certificati",
+    desc: "Pratiche anagrafiche al Comune di Roma: cambio residenza, certificati di stato civile e familiare, autocertificazioni.",
+    icon: "heroicons:home",
+  },
+  {
+    title: "Utenze: confronto e cambio fornitore",
+    desc: "Valutazione gratuita dei consumi luce e gas, confronto offerte, cambio fornitore, pratiche di voltura e subentro.",
+    icon: "heroicons:bolt",
+  },
+  {
+    title: "Assicurazioni auto e moto",
+    desc: "Sottoscrizione e rinnovi RC auto/moto, polizze accessorie, gestione sinistri.",
+    icon: "heroicons:shield-check",
+  },
+  {
+    title: "Rateizzazioni Agenzia Entrate Riscossione",
+    desc: "Pratiche di rateizzazione cartelle esattoriali, ravvedimento operoso, definizioni agevolate.",
+    icon: "heroicons:banknotes",
+  },
+  {
+    title: "Comunicazioni con la PA",
+    desc: "Risposta a comunicazioni di Agenzia Entrate, INPS, Comune, gestione raccomandate, deleghe e procure.",
+    icon: "heroicons:document-arrow-up",
+  },
+];
+---
+
+<BaseLayout
+  title="Servizi vari: PEC, utenze, certificati, assicurazioni"
+  description="Centro Pratiche Flaiano a Roma: PEC, cambio residenza, confronto utenze, assicurazioni auto, rateizzazioni AdER, comunicazioni con la PA. Pratiche di vita quotidiana, senza file."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb items={[{ name: "Servizi", href: "/servizi" }, { name: "Servizi vari", href: "/servizi/servizi-vari" }]} class="mb-6" />
+      <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-success-50)] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--color-success-700)]">
+        <Icon name="heroicons:cog-6-tooth" class="size-3.5" /> Servizi amministrativi
+      </span>
+      <SectionHeading
+        title="Pratiche di vita quotidiana"
+        subtitle="Tutto cio che richiede una fila, un modulo o una telefonata: lo facciamo noi per te. PEC, utenze, certificati, comunicazioni con la PA."
+        class="mt-3"
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-wide grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <article class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
+          <div class="flex size-12 items-center justify-center rounded-lg bg-[var(--color-success-50)] text-[var(--color-success-700)]">
+            <Icon name={s.icon} class="size-6" aria-hidden="true" />
+          </div>
+          <h2 class="mt-5 font-display text-lg font-bold text-[var(--color-ink)]">{s.title}</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">{s.desc}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

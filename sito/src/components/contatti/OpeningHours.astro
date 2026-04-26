@@ -1,0 +1,48 @@
+---
+import { HOURS } from "~/consts";
+import { Icon } from "astro-icon/components";
+
+const today = new Date().getDay(); // 0 dom, 1 lun, ...
+const dayMap = [6, 0, 1, 2, 3, 4, 5];
+const todayIdx = dayMap[today];
+---
+
+<div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)]">
+  <h3 class="flex items-center gap-2 font-display text-lg font-bold text-[var(--color-ink)]">
+    <Icon name="heroicons:clock" class="size-5 text-[var(--color-brand-700)]" aria-hidden="true" />
+    Orari di apertura
+  </h3>
+  <dl class="mt-5 space-y-2 text-sm">
+    {HOURS.map((h, i) => {
+      const isToday = i === todayIdx;
+      const closed = !h.open;
+      return (
+        <div class:list={[
+          "flex items-center justify-between gap-4 rounded-md px-3 py-2",
+          isToday && "bg-[var(--color-brand-50)] font-semibold"
+        ]}>
+          <dt class:list={[
+            "min-w-24",
+            isToday ? "text-[var(--color-brand-900)]" : "text-[var(--color-ink-soft)]"
+          ]}>
+            {h.day}
+            {isToday && <span class="ml-2 rounded bg-[var(--color-brand-900)] px-1.5 py-0.5 text-[10px] uppercase text-white">oggi</span>}
+          </dt>
+          <dd class:list={[
+            "tabular-nums",
+            closed ? "text-[var(--color-ink-muted)]" : "text-[var(--color-ink)]"
+          ]}>
+            {closed ? (
+              "Chiuso"
+            ) : (
+              <>
+                {h.open}-{h.close}
+                {h.afternoon && ` / ${h.afternoon.open}-${h.afternoon.close}`}
+              </>
+            )}
+          </dd>
+        </div>
+      );
+    })}
+  </dl>
+</div>

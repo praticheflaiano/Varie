@@ -1,0 +1,122 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import OpeningHours from "~/components/contatti/OpeningHours.astro";
+import EmbedMap from "~/components/contatti/EmbedMap.astro";
+import Button from "~/components/ui/Button.astro";
+import { CONTACT, BOOKING, SOCIAL, ZONE_SERVITE } from "~/consts";
+import { Icon } from "astro-icon/components";
+---
+
+<BaseLayout
+  title="Contatti e indicazioni"
+  description="Centro Pratiche Flaiano: Via Filoteo Alberini 25, Roma Vigne Nuove. Telefono 06 9784 5429, WhatsApp 371 6230 690, email info@praticheflaiano.it. Lun-Gio 9:30-13:00 e 15:30-18:00, Ven 9:30-14:00."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-12">
+      <Breadcrumb items={[{ name: "Contatti", href: "/contatti" }]} class="mb-6" />
+      <SectionHeading
+        eyebrow="Contatti"
+        title="Vieni a trovarci o scrivici"
+        subtitle="Siamo a Roma, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano - Vigne Nuove). Puoi prenotare online, telefonare, scrivere su WhatsApp o inviarci un'email."
+      />
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-wide grid gap-8 lg:grid-cols-12">
+      <!-- Sinistra: dati contatto -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <a href={`tel:${CONTACT.phone.landlineRaw}`} class="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)] hover:border-[var(--color-brand-300)] hover:shadow-[var(--shadow-card)] no-underline">
+            <Icon name="heroicons:phone" class="size-7 text-[var(--color-brand-700)]" aria-hidden="true" />
+            <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-muted)]">Telefono</p>
+            <p class="mt-1 font-display text-xl font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)]">{CONTACT.phone.landline}</p>
+          </a>
+          <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" class="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)] hover:border-[#25D366] hover:shadow-[var(--shadow-card)] no-underline">
+            <svg viewBox="0 0 32 32" class="size-7 fill-[#25D366]" aria-hidden="true">
+              <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.7.315-.402.456-.957 1.29-.957 2.236 0 1.045.6 2.064 1.39 2.92 1.32 1.475 3.118 2.964 4.808 3.494.358.115.745.215 1.118.215.526 0 1.06-.114 1.503-.388.487-.302.7-.762.7-1.32 0-.358 0-.832-.43-.974-.36-.16-1.103-.572-1.388-.572m-3.32 6.94c-1.762 0-3.508-.585-4.873-1.65a.49.49 0 0 0-.26-.072c-.072 0-.143.014-.214.043l-2.78 1.058 1.073-2.665a.594.594 0 0 0-.085-.586C7.68 18.93 7.092 17.215 7.092 15.43c0-4.812 3.91-8.722 8.722-8.722s8.723 3.91 8.723 8.722c0 4.812-3.91 8.715-8.723 8.715M16.026 5.05c-5.733 0-10.387 4.654-10.387 10.387 0 1.962.544 3.866 1.575 5.515L5.114 26l5.16-1.962a10.34 10.34 0 0 0 5.752 1.733c5.733 0 10.387-4.654 10.387-10.388C26.413 9.65 21.76 5.05 16.026 5.05" />
+            </svg>
+            <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-muted)]">WhatsApp</p>
+            <p class="mt-1 font-display text-xl font-bold text-[var(--color-ink)] group-hover:text-[#25D366]">{CONTACT.phone.mobile}</p>
+          </a>
+          <a href={`mailto:${CONTACT.email}`} class="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)] hover:border-[var(--color-brand-300)] hover:shadow-[var(--shadow-card)] no-underline">
+            <Icon name="heroicons:envelope" class="size-7 text-[var(--color-brand-700)]" aria-hidden="true" />
+            <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-muted)]">Email</p>
+            <p class="mt-1 font-display text-base font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)] break-all">{CONTACT.email}</p>
+          </a>
+          <a href={CONTACT.mapsUrl} target="_blank" rel="noopener" class="group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)] hover:border-[var(--color-brand-300)] hover:shadow-[var(--shadow-card)] no-underline">
+            <Icon name="heroicons:map-pin" class="size-7 text-[var(--color-brand-700)]" aria-hidden="true" />
+            <p class="mt-3 text-xs font-semibold uppercase tracking-wider text-[var(--color-ink-muted)]">Indirizzo</p>
+            <p class="mt-1 font-display text-base font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)]">
+              {CONTACT.address.street}<br />
+              {CONTACT.address.postalCode} {CONTACT.address.locality}
+            </p>
+          </a>
+        </div>
+
+        <EmbedMap />
+
+        <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6">
+          <h3 class="font-display text-lg font-bold text-[var(--color-ink)]">Come raggiungerci</h3>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">
+            La sede e dentro il <strong>Centro Acquisti Flaiano</strong> in Via Filoteo Alberini 25, quartiere Vigne Nuove (Municipio III). Ampio parcheggio gratuito. Raggiungibile da Tufello, Conca d'Oro, Bufalotta, Porta di Roma e da tutta la zona nord di Roma in pochi minuti.
+          </p>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)]">
+            <strong>Trasporti pubblici:</strong> autobus della linea ATAC con fermate vicine al centro commerciale; metro B1 Conca d'Oro a circa 15 minuti.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Zone servite</p>
+          <ul class="mt-3 flex flex-wrap gap-2">
+            {ZONE_SERVITE.map((z) => (
+              <li class="inline-flex items-center gap-1 rounded-full border border-[var(--color-border-strong)] bg-white px-3 py-1 text-xs font-semibold text-[var(--color-ink-soft)]">
+                {z.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="rounded-[var(--radius-lg)] border border-[var(--color-brand-200)] bg-[var(--color-brand-50)] p-6">
+          <h3 class="font-display text-lg font-bold text-[var(--color-brand-900)]">Seguici</h3>
+          <div class="mt-3 flex gap-3">
+            <a href={SOCIAL.facebook} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-ink)] hover:border-[var(--color-brand-300)] no-underline">
+              <Icon name="lucide:facebook" class="size-4" /> Facebook
+            </a>
+            <a href={SOCIAL.whatsappChannel} target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-md border border-[var(--color-border)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-ink)] hover:border-[#25D366] no-underline">
+              <Icon name="lucide:message-circle" class="size-4" /> Canale WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Destra: orari + booking -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="rounded-[var(--radius-lg)] border border-[var(--color-brand-200)] bg-gradient-to-br from-[var(--color-brand-900)] to-[var(--color-brand-950)] p-6 text-white">
+          <Icon name="heroicons:calendar-days" class="size-8 text-[var(--color-accent-300)]" aria-hidden="true" />
+          <h3 class="mt-3 font-display text-xl font-bold">Prenota un appuntamento</h3>
+          <p class="mt-2 text-sm text-slate-300">Scegli giorno e ora dal calendario online. In sede o da remoto.</p>
+          <div class="mt-5 flex flex-col gap-2">
+            <Button variant="accent" href={BOOKING.arcanisGroup} external icon="heroicons:calendar-days" iconPosition="left" class="w-full justify-center">
+              In sede a Vigne Nuove
+            </Button>
+            <Button variant="secondary" href={BOOKING.arcanisRemote} external icon="heroicons:video-camera" iconPosition="left" class="w-full justify-center !bg-white/10 !text-white !border-white/20">
+              Da remoto (video o telefono)
+            </Button>
+          </div>
+        </div>
+
+        <OpeningHours />
+
+        <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-6">
+          <h3 class="font-display text-base font-bold text-[var(--color-ink)]">Privacy</h3>
+          <p class="mt-2 text-xs text-[var(--color-ink-muted)] leading-relaxed">
+            I dati che ci comunichi sono trattati esclusivamente per fornirti il servizio richiesto, nel rispetto del GDPR. Puoi richiedere modifica o cancellazione in qualsiasi momento. Maggiori dettagli nella <a href="/privacy">privacy policy</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

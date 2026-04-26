@@ -1,0 +1,23 @@
+---
+import { CONTACT } from "~/consts";
+import { Icon } from "astro-icon/components";
+
+const staticMapPlace = `${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality}`;
+---
+
+<div class="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)]">
+  <div class="aspect-[16/10] w-full bg-[var(--color-surface-muted)] flex flex-col items-center justify-center text-center p-8 bg-grid-pattern relative">
+    <Icon name="heroicons:map-pin-solid" class="size-12 text-[var(--color-brand-900)]" aria-hidden="true" />
+    <p class="mt-4 font-display text-lg font-bold text-[var(--color-ink)]">{staticMapPlace}</p>
+    <p class="mt-1 text-sm text-[var(--color-ink-muted)]">{CONTACT.address.landmark}</p>
+    <a
+      href={CONTACT.mapsUrl}
+      target="_blank"
+      rel="noopener"
+      class="mt-5 inline-flex items-center gap-2 rounded-md bg-[var(--color-brand-900)] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[var(--color-brand-800)] no-underline"
+    >
+      <Icon name="heroicons:arrow-top-right-on-square" class="size-4" />
+      Apri su Google Maps
+    </a>
+  </div>
+</div>

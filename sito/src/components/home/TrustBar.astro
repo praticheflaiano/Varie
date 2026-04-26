@@ -1,0 +1,42 @@
+---
+import { Icon } from "astro-icon/components";
+
+const items = [
+  {
+    icon: "heroicons:academic-cap",
+    title: "CAF UNSIC autorizzato",
+    desc: "Iscritto all'Albo dei Centri di Assistenza Fiscale (D.Lgs. 241/97).",
+  },
+  {
+    icon: "heroicons:shield-check",
+    title: "Patronato ENASC",
+    desc: "Tutela previdenziale e assistenziale a norma di Legge 152/2001.",
+  },
+  {
+    icon: "heroicons:map-pin",
+    title: "Cuore di Roma Nord",
+    desc: "Sede Vigne Nuove, Municipio III. A pochi minuti da tutta la zona nord.",
+  },
+  {
+    icon: "heroicons:chat-bubble-bottom-center-text",
+    title: "Comunicazione diretta",
+    desc: "Telefono, WhatsApp, email, canale informativo: ti rispondiamo davvero.",
+  },
+];
+---
+
+<section class="border-y border-[var(--color-border)] bg-[var(--color-surface-soft)]">
+  <div class="container-wide grid gap-8 py-10 md:grid-cols-2 lg:grid-cols-4 lg:py-12">
+    {items.map((it) => (
+      <div class="flex items-start gap-4">
+        <div class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-700)]">
+          <Icon name={it.icon} class="size-6" aria-hidden="true" />
+        </div>
+        <div>
+          <p class="font-display text-base font-bold text-[var(--color-ink)]">{it.title}</p>
+          <p class="mt-1 text-sm text-[var(--color-ink-soft)] leading-relaxed">{it.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
