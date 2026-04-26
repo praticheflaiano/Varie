@@ -52,6 +52,20 @@ const {
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} - Blog`} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
+    {/* Font: Inter (body) + Fraunces variable (display serif) + Manrope (alt sans).
+        TODO produzione: self-host woff2 subset latin per perf+privacy. */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..700&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    />
+
     <SEO
       title={title}
       description={description}
