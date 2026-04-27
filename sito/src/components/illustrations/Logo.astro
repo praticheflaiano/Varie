@@ -1,51 +1,48 @@
 ---
 /**
- * Logo Centro Pratiche Flaiano.
- *
- * BRAND ASSET TODO (vedi PR #1, sezione "Punti aperti"):
- * Questo e un PLACEHOLDER: monogramma "F" + wordmark tipografico.
- * Va sostituito con il logo SVG ufficiale del Centro Pratiche Flaiano
- * appena disponibile (richiesta al cliente).
- *
- * Stessa nota per i loghi UNSIC ed ENASC eventualmente da inserire
- * nel footer/credenziali (richiede autorizzazione delle reti).
+ * Logo Centro Pratiche Flaiano - "Brand Mark"
+ * Design system "Adriatic Blue" (handoff Anthropic 2026-04-26).
+ * Monogramma "PF" stilizzato in stile lapide romana, integrato in glyph
+ * tonale primary. Variante "full" mostra brand-mark completo (glyph + nome
+ * + sottotitolo); "mark" solo il glyph.
  */
 interface Props {
   variant?: "full" | "mark";
+  size?: "sm" | "md" | "lg";
   class?: string;
 }
-const { variant = "full", class: className = "" } = Astro.props;
+const { variant = "full", size = "md", class: className = "" } = Astro.props;
+
+const dims =
+  size === "lg"
+    ? { glyph: 56, name: "1.5rem", sub: "0.875rem" }
+    : size === "sm"
+    ? { glyph: 32, name: "1rem", sub: "0.6875rem" }
+    : { glyph: 40, name: "1.1875rem", sub: "0.75rem" };
 ---
 
 {variant === "mark" ? (
-  <svg class={className} viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centro Pratiche Flaiano">
-    <defs>
-      <linearGradient id="markGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--color-brand-700)" />
-        <stop offset="100%" stop-color="var(--color-brand-950)" />
-      </linearGradient>
-    </defs>
-    <rect width="64" height="64" rx="14" fill="url(#markGrad)" />
-    <!-- Lettera F stilizzata + foglio -->
-    <path d="M22 18 H46 V25 H30 V31 H42 V38 H30 V46 H22 Z" fill="white" />
-    <circle cx="48" cy="46" r="6" fill="var(--color-accent-400)" />
-  </svg>
+  <span
+    class:list={["brand-glyph", className]}
+    style={`width: ${dims.glyph}px; height: ${dims.glyph}px;`}
+    aria-label="Centro Pratiche Flaiano"
+  >
+    <svg viewBox="0 0 40 40" width="60%" height="60%" fill="currentColor" aria-hidden="true">
+      <path d="M8 6 L8 34 L13 34 L13 24 L18 24 Q24 24 24 18 Q24 12 18 12 L13 12 L13 6 z M13 16 L18 16 Q20 16 20 18 Q20 20 18 20 L13 20 z"/>
+      <path d="M22 14 L22 34 L27 34 L27 26 L31 26 L31 22 L27 22 L27 18 L33 18 L33 14 z"/>
+    </svg>
+  </span>
 ) : (
-  <svg class={className} viewBox="0 0 280 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Centro Pratiche Flaiano">
-    <defs>
-      <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="var(--color-brand-700)" />
-        <stop offset="100%" stop-color="var(--color-brand-950)" />
-      </linearGradient>
-    </defs>
-    <rect width="64" height="64" rx="14" fill="url(#logoGrad)" />
-    <path d="M22 18 H46 V25 H30 V31 H42 V38 H30 V46 H22 Z" fill="white" />
-    <circle cx="48" cy="46" r="6" fill="var(--color-accent-400)" />
-    <text x="80" y="32" font-family="var(--font-display)" font-size="20" font-weight="800" fill="var(--color-brand-900)" letter-spacing="-0.02em">
-      Centro Pratiche
-    </text>
-    <text x="80" y="52" font-family="var(--font-display)" font-size="20" font-weight="800" fill="var(--color-brand-700)" letter-spacing="-0.02em">
-      Flaiano
-    </text>
-  </svg>
+  <span class:list={["brand-mark", className]}>
+    <span class="brand-glyph" style={`width: ${dims.glyph}px; height: ${dims.glyph}px;`}>
+      <svg viewBox="0 0 40 40" width="60%" height="60%" fill="currentColor" aria-hidden="true">
+        <path d="M8 6 L8 34 L13 34 L13 24 L18 24 Q24 24 24 18 Q24 12 18 12 L13 12 L13 6 z M13 16 L18 16 Q20 16 20 18 Q20 20 18 20 L13 20 z"/>
+        <path d="M22 14 L22 34 L27 34 L27 26 L31 26 L31 22 L27 22 L27 18 L33 18 L33 14 z"/>
+      </svg>
+    </span>
+    <span>
+      <span class="brand-name" style={`font-size: ${dims.name};`}>Centro Pratiche Flaiano</span>
+      <span class="brand-sub block" style={`font-size: ${dims.sub};`}>CAF UNSIC · Patronato ENASC · Roma Nord</span>
+    </span>
+  </span>
 )}
