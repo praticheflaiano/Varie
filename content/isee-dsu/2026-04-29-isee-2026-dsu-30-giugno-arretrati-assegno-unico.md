@@ -5,7 +5,7 @@ date: 2026-04-29
 last_updated: 2026-04-29
 category: "isee-dsu"
 tags: ["isee", "scadenza", "assegno-unico", "faq", "famiglie", "inps"]
-meta_description: "ISEE 2026: DSU entro il 30 giugno per gli arretrati Assegno Unico da marzo. Documenti e costi. CAF Roma Vigne Nuove."
+meta_description: "ISEE 2026: presenta la DSU entro il 30 giugno e recupera gli arretrati Assegno Unico da marzo. Guida documenti e importi. CAF Roma Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS - Assegno unico 2026: presentazione domanda e aggiornamento importi (notizia del 27/02/2026, inps.it)"
@@ -17,11 +17,11 @@ sources:
   - "Fiscoetasse - Assegno unico 2026 tabelle importi, ISEE, domanda"
   - "Informazione Fiscale - Aumento assegno unico nel 2026: come cambiano gli importi con la rivalutazione"
 deadline: 2026-06-30
-status: seo-optimized
+status: published
 type: scadenza
 fact_check_date: 2026-04-29
 seo_optimization_date: 2026-04-29
-seo_score: 82/100
+seo_score: 88/100
 fact_check_result: "PUBBLICABILE CON CORREZIONI - Corretti importi maggiorazioni AUU 2026 (madre under 21 da 20 a 22,80 €; entrambi genitori lavoratori da 30 a 34,10 €) e aggiunto disclaimer mancante. Tutti gli altri dati verificati su fonti INPS ufficiali (Circolare INPS n. 7/2026, Comunicato n. 4002/2026, Comunicato n. 3980/2026)."
 ---
 
@@ -167,7 +167,7 @@ L'**ISEE corrente** e una variante che fotografa la situazione economica **degli
 
 Una volta rilasciato, l'**ISEE corrente vale 6 mesi** dalla data di presentazione. Va aggiornato in caso di nuovi eventi (nuova perdita lavoro, riduzione ulteriore).
 
-In pratica: se nel 2024 lavoravi e nel 2025-2026 hai perso il lavoro, l'ISEE ordinario 2026 (basato sui redditi 2024) ti penalizza. **L'ISEE corrente fotografa la situazione reale e ti da accesso a importi AUU e bonus piu alti**.
+In pratica: se nel 2024 lavoravi e nel 2025-2026 hai perso il lavoro, l'ISEE ordinario 2026 (basato sui redditi 2024) ti penalizza. **L'ISEE corrente fotografa la situazione reale e ti da accesso a importi AUU e bonus piu alti**. E uno strumento poco conosciuto ma molto usato nel nostro sportello di **Roma Vigne Nuove**: se pensi di essere in questa situazione, contattaci prima di presentare la DSU ordinaria.
 
 ## Posso modificare la DSU se cambia la situazione familiare?
 
@@ -185,15 +185,15 @@ Per modifiche significative la cosa migliore e una **DSU integrativa o ex novo**
 
 ### Cosa succede se ho gia ricevuto l'AUU al minimo da marzo?
 
-Continui a riceverlo al minimo finche non presenti la DSU 2026. Presentandola **entro il 30 giugno**, ricevi gli arretrati con conguaglio nelle mensilita successive (di solito in 1-2 mesi).
+Se hai ricevuto l'**Assegno Unico al minimo (58,30 €/figlio)** da marzo, continui a riceverlo cosi finche non presenti la DSU 2026. Presentandola **entro il 30 giugno**, ricevi gli arretrati con conguaglio nelle mensilita successive (di solito in 1-2 mesi).
 
 ### Devo rifare la domanda di Assegno Unico ogni anno?
 
 **No**. La domanda di AUU si fa una sola volta. Ogni anno va rinnovato solo l'**ISEE** (presentando una nuova DSU): il rinnovo e automatico dal punto di vista AUU, l'INPS ricalcola in base al nuovo ISEE.
 
-### Quanto tempo ci vuole per rilasciare l'ISEE?
+### Quanto tempo ci vuole per rilasciare l'ISEE 2026?
 
-In condizioni normali, **10-15 giorni lavorativi** dalla presentazione della DSU. In periodi di picco (gennaio, giugno) puo arrivare a 20-25 giorni. Meglio non aspettare gli ultimi giorni di giugno.
+L'**ISEE 2026** viene rilasciato in condizioni normali in **10-15 giorni lavorativi** dalla presentazione della DSU. In periodi di picco (gennaio, giugno) puo arrivare a 20-25 giorni. Meglio non aspettare gli ultimi giorni di giugno.
 
 ### Cosa succede se mi accorgo di un errore nella DSU dopo averla presentata?
 
@@ -232,10 +232,10 @@ Disponibile anche in **modalita remota**: invio documenti via email/WhatsApp, **
 
 ## Articoli correlati
 
+- [Categoria: ISEE e DSU](https://praticheflaiano.it/blog/categoria/isee-dsu) - tutti gli articoli su ISEE, DSU e precompilata ISEE
+- [Categoria: Assegno Unico](https://praticheflaiano.it/blog/categoria/assegno-unico) - importi, domanda, maggiorazioni AUU
 - [Precompilata 2026: 730 consultabile dal 30 aprile, modifica e invio dal 14 maggio](https://praticheflaiano.it/blog/precompilata-2026-30-aprile-14-maggio)
 - [Dichiarazione dei Redditi 730/2026: Guida Completa con Documenti e Scadenze](https://praticheflaiano.it/blog/guida-730-2026-documenti-scadenze)
-- [Categoria: ISEE e DSU](https://praticheflaiano.it/blog/categoria/isee-dsu)
-- [Categoria: Detrazioni e Deduzioni](https://praticheflaiano.it/blog/categoria/detrazioni-deduzioni)
 
 ---
 
