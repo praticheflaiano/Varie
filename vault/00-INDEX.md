@@ -41,7 +41,9 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[lessons/2026-04-anthropic-design-bundle]] - Decompressione e uso del bundle handoff Claude Design (api.anthropic.com/v1/design)
 - [[lessons/2026-04-vercel-sso-protection]] - Vercel team SSO protection blocca production di default
 - [[lessons/2026-04-org-usage-limit]] - Org monthly usage limit raggiunto durante mass-production batch di subagent
-- [[lessons/2026-04-isee-dsu-prima-presentazione-gratuita]] - **ISEE/DSU al CAF: prima presentazione gratuita (convenzione INPS-CAF) - errore lampante non rilevato dal fact-check AI**
+- [[lessons/2026-04-isee-dsu-prima-presentazione-gratuita]] - ISEE/DSU al CAF: prima presentazione gratuita (convenzione INPS-CAF)
+- [[lessons/2026-04-cross-repo-deploy-sandbox-restricted]] - **Push verso repo non-whitelisted dal sandbox: bypass proxy + token utente usa-e-getta**
+- [[lessons/2026-04-anti-ripetizione-due-siti]] - **Anti-ripetizione tra siti distinti del brand: pattern "mappa vs dettaglio"**
 
 ## Riferimenti rapidi
 
@@ -50,6 +52,7 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[riferimenti/comandi-veloci]] - Snippet CLI piu usati (vercel, git, astro, sync-content)
 - [[riferimenti/dati-ufficio]] - Dati di contatto, orari, zone, social del Centro Pratiche Flaiano
 - [[riferimenti/credenziali-deploy]] - Token, project IDs Vercel, repo GitHub (placeholder, niente segreti)
+- [[riferimenti/naspi-mappa-codici-importi]] - **NASpI 2026: codici UNILAV, importi, requisiti, scadenze + cluster contenuto cross-site**
 
 ## Template
 
