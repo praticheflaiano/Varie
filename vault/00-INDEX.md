@@ -40,7 +40,8 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[lessons/2026-04-licenza-skill-commerciali]] - Licenze restrittive su skill di terze parti (huashu-design)
 - [[lessons/2026-04-anthropic-design-bundle]] - Decompressione e uso del bundle handoff Claude Design (api.anthropic.com/v1/design)
 - [[lessons/2026-04-vercel-sso-protection]] - Vercel team SSO protection blocca production di default
-- [[lessons/2026-04-org-usage-limit]] - **Org monthly usage limit raggiunto durante mass-production batch di subagent**
+- [[lessons/2026-04-org-usage-limit]] - Org monthly usage limit raggiunto durante mass-production batch di subagent
+- [[lessons/2026-04-isee-dsu-prima-presentazione-gratuita]] - **ISEE/DSU al CAF: prima presentazione gratuita (convenzione INPS-CAF) - errore lampante non rilevato dal fact-check AI**
 
 ## Riferimenti rapidi
 

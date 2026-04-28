@@ -1,5 +1,21 @@
 # Fact-Check Report - ISEE 2026 e DSU 30 giugno arretrati AUU
 
+## ⚠️ Aggiornamento post-pubblicazione (29/04/2026)
+
+Errore importante segnalato dall'utente (titolare CAF) e non rilevato dal fact-check originale: l'articolo dichiarava "costo medio 25-50 €" per la DSU al CAF, mentre **per il cittadino la prima presentazione annuale dell'ISEE al CAF e gratuita** in base alla **convenzione nazionale INPS-CAF** (D.M. 7 maggio 1999 n. 164). Solo dalla seconda in poi, in caso di omissioni o difformita, puo essere previsto un costo.
+
+**Correzioni applicate in commit successivo**:
+- Sezione "Con il CAF": riformulata con base normativa
+- FAQ "Devo essere socio del CAF": chiarita gratuita per soci e non
+- **Nuova FAQ** "Quanto costa fare la DSU 2026 al CAF?"
+- Pagina FAQ globale del sito (`sito/src/pages/faq.astro`): aggiornata
+
+Lesson nel vault: `vault/lessons/2026-04-isee-dsu-prima-presentazione-gratuita.md`.
+
+Fact-check originale sotto, mantenuto come storico.
+
+---
+
 - **Articolo**: `/home/user/Varie/content/isee-dsu/2026-04-29-isee-2026-dsu-30-giugno-arretrati-assegno-unico.md`
 - **Data verifica**: 29/04/2026
 - **Verdetto**: PUBBLICABILE CON CORREZIONI (correzioni applicate direttamente)

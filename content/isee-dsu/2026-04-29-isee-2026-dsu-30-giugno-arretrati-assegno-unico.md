@@ -152,10 +152,10 @@ Sul portale INPS o su quello dell'Agenzia delle Entrate (area riservata, accesso
 
 ### Con il CAF
 
-Il CAF compila la DSU per te, controllando ogni voce e verificando che il calcolo sia ottimale. **Costo medio**: indicativamente 25-50 € a seconda della complessita del nucleo (per i soci tessera tariffe agevolate).
+Il CAF compila la DSU per te, controllando ogni voce e verificando che il calcolo sia ottimale. **Per il cittadino il primo rilascio annuale dell'ISEE al CAF e gratuito**: il servizio e remunerato direttamente dall'INPS al CAF tramite la convenzione nazionale ai sensi del D.M. 7 maggio 1999 n. 164 e successivi accordi. Solo eventuali **rilasci successivi nello stesso anno per modifiche/integrazioni** dovuti a omissioni o difformita rilevate nei controlli (DSU sostitutive a posteriori) possono comportare un costo, secondo il regolamento interno del CAF.
 
-**Pro**: controllo professionale, deduzioni e maggiorazioni recuperate al massimo, **responsabilita CAF** sui dati inseriti, conservazione documenti.
-**Contro**: non e gratis (ma il "danno evitato" sull'AUU vale spesso molte volte il costo).
+**Pro**: gratis (prima presentazione annuale), controllo professionale, deduzioni e maggiorazioni recuperate al massimo, **responsabilita CAF** sui dati inseriti, conservazione documenti, supporto in caso di contestazioni INPS.
+**Contro**: serve appuntamento e portare i documenti completi (le omissioni possono generare costi sui rilasci successivi).
 
 ## ISEE corrente: quando conviene a chi ha avuto cali di reddito
 
@@ -201,7 +201,11 @@ Si fa una **DSU sostitutiva** o un'**integrazione**. Per le pratiche fatte da no
 
 ### Devo essere socio del CAF per fare la DSU con voi?
 
-No. La DSU e accessibile a tutti, soci e non soci. La nostra **tessera (30 € all'anno per nucleo familiare)** da pero accesso a tariffe agevolate e priorita sugli appuntamenti.
+No. La DSU e accessibile a tutti, soci e non soci, e la **prima presentazione annuale e gratuita** per il cittadino in base alla convenzione INPS-CAF. La nostra **tessera (30 € all'anno per nucleo familiare)** da accesso a priorita sugli appuntamenti, consulenza fiscale e previdenziale illimitata e tariffe agevolate sugli **altri servizi** (730, successioni, contratti, ecc.).
+
+### Quanto costa fare la DSU 2026 al CAF?
+
+**Niente**, per la prima presentazione annuale: il servizio e gratuito grazie alla convenzione tra INPS e CAF. L'unica eccezione sono i **rilasci successivi nello stesso anno** richiesti per correggere omissioni o difformita non imputabili al CAF: in quel caso puo essere previsto un costo a copertura del lavoro aggiuntivo. Fornire **documenti completi al primo appuntamento** e il modo migliore per evitare oneri successivi.
 
 ### Posso fare la DSU anche da remoto?
 
