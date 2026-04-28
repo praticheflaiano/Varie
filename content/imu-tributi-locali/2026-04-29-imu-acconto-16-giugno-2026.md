@@ -157,14 +157,16 @@ Per i **titolari di partita IVA**: obbligo di versamento esclusivamente telemati
 
 ## Cosa succede se non si paga entro il 16 giugno
 
-L'omesso o tardivo versamento dell'IMU comporta sanzioni e interessi:
+L'omesso o tardivo versamento dell'IMU comporta sanzioni e interessi. Per le violazioni commesse a partire dal **1° settembre 2024**, si applicano le **nuove sanzioni ridotte** introdotte dal **D.Lgs. n. 87/2024** (riforma del sistema sanzionatorio tributario), che ha abbassato la sanzione ordinaria dal 30% al **25%**:
 
-- **Ravvedimento operoso "sprint"** (entro 14 giorni): sanzione **0,1% per giorno** di ritardo + interessi legali
-- **Ravvedimento operoso breve** (15-30 giorni): sanzione **1,5%** + interessi
-- **Ravvedimento medio** (31-90 giorni): sanzione **1,67%** + interessi
-- **Ravvedimento lungo** (entro un anno): sanzione **3,75%** + interessi
-- **Ravvedimento ultrannuale** (entro la dichiarazione successiva): sanzione **4,29%** + interessi
-- Oltre i termini di ravvedimento, interviene il Comune con accertamento e sanzione **30%**
+- **Ravvedimento operoso "sprint"** (entro 14 giorni): sanzione **0,083% per giorno** di ritardo + interessi legali
+- **Ravvedimento operoso breve** (15-30 giorni): sanzione **1,25%** + interessi
+- **Ravvedimento medio** (31-90 giorni): sanzione **1,39%** + interessi
+- **Ravvedimento lungo** (entro un anno): sanzione **3,125%** + interessi
+- **Ravvedimento ultrannuale** (entro 2 anni): sanzione **3,572%** + interessi
+- Oltre i termini di ravvedimento, interviene il Comune con accertamento e sanzione ordinaria **25%**
+
+Il **tasso di interesse legale** per il 2026 e fissato all'**1,60%** annuo (D.M. MEF 10 dicembre 2025).
 
 Il Centro Pratiche Flaiano puo gestire il **ravvedimento operoso** se la scadenza e gia passata: piu si aspetta, piu si paga.
 
@@ -202,7 +204,7 @@ Per chi possiede **piu immobili in piu Comuni** o ha situazioni particolari (imm
 
 ### Cos'e l'abitazione principale ai fini IMU?
 
-E l'immobile in cui il proprietario e i suoi familiari **risiedono anagraficamente e dimorano abitualmente**. Servono entrambi i requisiti. Se la moglie ha residenza in un altro Comune (in un altro immobile di proprieta), entrambe le abitazioni perdono l'esenzione (regola "abitazione principale dei coniugi").
+E l'immobile in cui il **soggetto passivo risiede anagraficamente e dimora abitualmente**. Servono entrambi i requisiti, ma riferiti al singolo proprietario. Dopo la **sentenza della Corte Costituzionale n. 209 del 13 ottobre 2022**, e legittima l'esenzione IMU per l'abitazione principale **anche nei casi in cui i coniugi abbiano residenze in Comuni diversi** (o nello stesso Comune): ciascun coniuge puo beneficiare dell'esenzione sull'immobile in cui ha effettiva dimora abituale e residenza anagrafica, **a prescindere dalla residenza dell'altro coniuge o degli altri familiari**.
 
 ### Cosa succede se ho l'immobile concesso in comodato d'uso a un parente?
 
