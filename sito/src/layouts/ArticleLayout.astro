@@ -39,6 +39,7 @@ const related = await getRelatedArticles(article, 3);
   description={article.data.meta_description}
   canonical={url}
   ogType="article"
+  ogImage={article.data.image}
   publishedTime={toISODate(article.data.date)}
   modifiedTime={toISODate(lastUpdated)}
   author={article.data.author}

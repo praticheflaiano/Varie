@@ -8,8 +8,8 @@ node_modules/
 # Content mirror generato in CI
 .content-mirror/
 
-# OG images generate in build
-public/og/
+# OG images generate via scripts/generate-og-via-openrouter.py sono
+# COMMITTATE come asset versionati. Niente da ignorare qui.
 
 # Environment
 .env

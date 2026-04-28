@@ -16,6 +16,8 @@ sources:
 deadline: 2026-09-30
 status: published
 type: scadenza
+image: "/og/precompilata-2026-30-aprile-14-maggio.jpg"
+image_alt: "Illustrazione editoriale del 730 Precompilato 2026: documenti fiscali e calendario in palette Adriatic Blue, con marche d'oro sulle date 30 aprile e 14 maggio."
 ---
 
 # 730 Precompilato 2026: consultabile dal 30 aprile, modifica e invio dal 14 maggio
