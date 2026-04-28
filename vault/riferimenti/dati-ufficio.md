@@ -20,6 +20,7 @@ Tutti i dati di contatto / brand / geo del Centro Pratiche Flaiano. **Sincronizz
 - **Anni attivita**: ~22 (placeholder, da verificare con cliente)
 - **Sito attuale**: https://praticheflaiano.it
 - **Sito nuovo (Vercel)**: https://praticheflaiano-sito.vercel.app
+- **Portale NASpI dedicato**: https://domandedisoccupazione.it (calcolatore, anticipo, OCR documenti INPS, 30+ guide su disoccupazione/dimissioni/DIS-COLL). Repo: `praticheflaiano/domande-disoccupazione-web`. Cross-link bidirezionale con sito principale, brand unificato Adriatic Blue (vedi `vault/_attachments/brand-unification-naspi-README.md`).
 
 ## Contatti
 

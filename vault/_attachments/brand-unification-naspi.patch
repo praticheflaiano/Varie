@@ -1,0 +1,618 @@
+From fe4306f20c92538a3000e2d0cbf37bc1f5af7128 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 28 Apr 2026 21:13:15 +0000
+Subject: [PATCH] Brand unification: Adriatic Blue + cross-link al sito
+ principale
+
+Ristyle del portale NASpI domandedisoccupazione.it allineato al design
+system del sito principale praticheflaiano-sito.vercel.app per
+continuita brand.
+
+Modifiche:
+
+1. tailwind.config.js: theme.extend.colors palette Adriatic Blue
+   (brand 50-950, accent 50-900, gold, ink, paper, line) +
+   fontFamily Newsreader/Public Sans/JetBrains Mono + boxShadow
+   custom con tinte adriatic blue + content path .astro
+
+2. src/index.css: design tokens come CSS variables, h1-h6 in font-display
+   con clamp() + opsz variation axes, body bg-brand-50 + grain texture,
+   utility .eyebrow + text-gradient brand+accent (sostituisce teal+blue),
+   mesh background tonale Adriatic Blue
+
+3. src/layouts/Base.astro: Google Fonts Newsreader + Public Sans +
+   JetBrains Mono (preconnect + stylesheet), body bg-brand-50 + .grain
+
+4. src/components/SiteHeader.astro: nuova TOPBAR scura con cross-link
+   prominent "Torna al sito principale Pratiche Flaiano" sempre visibile,
+   nav active state brand-700 (era teal-700), CTA brand-700 (era teal-700),
+   mobile menu con cross-link aggiunto
+
+5. src/components/Footer.tsx: sezione "Vai al sito Centro Pratiche
+   Flaiano" con CTA bg-accent-400, restyle teal->accent + slate->brand,
+   import ArrowUpRight + MAIN_SITE_URL
+
+6. src/constants.ts: MAIN_SITE_URL + MAIN_SITE_LABEL per cross-link
+   bidirezionale
+
+Build: 40 pagine, 0 errori. Tutte le feature funzionali (calcolatori,
+OCR, guide, news, obblighi) restano integre.
+
+Cross-link bidirezionale completato:
+- Sito principale -> NASpI: navbar voce "Disoccupazione" + card
+  prominent in /servizi/patronato + footer
+- NASpI -> Sito principale: topbar header sempre visibile + footer
+  CTA + voce mobile menu
+---
+ src/components/Footer.tsx       |  53 ++++++----
+ src/components/SiteHeader.astro |  48 ++++++++--
+ src/constants.ts                |   6 ++
+ src/index.css                   | 165 +++++++++++++++++++++++---------
+ src/layouts/Base.astro          |  12 ++-
+ tailwind.config.js              |  59 +++++++++++-
+ 6 files changed, 270 insertions(+), 73 deletions(-)
+
+diff --git a/src/components/Footer.tsx b/src/components/Footer.tsx
+index 8813a38..e0610f8 100644
+--- a/src/components/Footer.tsx
++++ b/src/components/Footer.tsx
+@@ -1,49 +1,50 @@
+ import React from 'react';
+-import { MessageCircle, Phone } from 'lucide-react';
++import { MessageCircle, Phone, ArrowUpRight } from 'lucide-react';
+ import { LogoSmall } from './Logo';
+ import { WHATSAPP_HREF, WHATSAPP_NUMBER, PHONE_HREF, PHONE_LABEL } from './ConversionCTA';
++import { MAIN_SITE_URL } from '../constants';
+ 
+ const Footer: React.FC = () => {
+     return (
+-        <footer className="bg-slate-900 text-slate-400 py-12 px-4 text-center border-t border-slate-800 mt-auto">
++        <footer className="bg-brand-950 text-brand-200 py-12 px-4 text-center border-t border-brand-900 mt-auto">
+             <div className="max-w-4xl mx-auto mb-8 text-sm">
+                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                     <div className="flex flex-col items-center md:items-start">
+                         <div className="mb-4 bg-white p-2 rounded-sm inline-block opacity-90">
+                             <LogoSmall className="text-slate-900" />
+                         </div>
+-                        <p className="text-slate-400 text-sm">
++                        <p className="text-brand-300 text-sm">
+                             Il tuo punto di riferimento per le pratiche di disoccupazione NASpI.
+                             Assistenza professionale e aggiornata.
+                         </p>
+                     </div>
+ 
+                     <nav aria-label="Navigazione sito">
+-                        <h3 className="font-bold text-lg mb-4 text-teal-400">Navigazione</h3>
++                        <h3 className="font-bold text-lg mb-4 text-accent-300">Navigazione</h3>
+                         <ul className="space-y-2">
+-                            <li><a href="/" className="text-slate-400 hover:text-teal-400 transition-colors">Home</a></li>
+-                            <li><a href="/calcolatore" className="text-slate-400 hover:text-teal-400 transition-colors">Calcolatore</a></li>
+-                            <li><a href="/anticipo" className="text-slate-400 hover:text-teal-400 transition-colors">Anticipo NASpI</a></li>
+-                            <li><a href="/obblighi" className="text-slate-400 hover:text-teal-400 transition-colors">Obblighi e SIISL</a></li>
+-                            <li><a href="/richiedi" className="text-slate-400 hover:text-teal-400 transition-colors">Richiedi Online</a></li>
+-                            <li><a href="/chi-siamo" className="text-slate-400 hover:text-teal-400 transition-colors">Chi siamo</a></li>
++                            <li><a href="/" className="text-brand-300 hover:text-accent-200 transition-colors">Home</a></li>
++                            <li><a href="/calcolatore" className="text-brand-300 hover:text-accent-200 transition-colors">Calcolatore</a></li>
++                            <li><a href="/anticipo" className="text-brand-300 hover:text-accent-200 transition-colors">Anticipo NASpI</a></li>
++                            <li><a href="/obblighi" className="text-brand-300 hover:text-accent-200 transition-colors">Obblighi e SIISL</a></li>
++                            <li><a href="/richiedi" className="text-brand-300 hover:text-accent-200 transition-colors">Richiedi Online</a></li>
++                            <li><a href="/chi-siamo" className="text-brand-300 hover:text-accent-200 transition-colors">Chi siamo</a></li>
+                         </ul>
+                     </nav>
+ 
+                     <address className="not-italic">
+-                        <h3 className="font-bold text-lg mb-4 text-teal-400">Contatti</h3>
+-                        <ul className="space-y-2 text-slate-400 text-sm">
++                        <h3 className="font-bold text-lg mb-4 text-accent-300">Contatti</h3>
++                        <ul className="space-y-2 text-brand-300 text-sm">
+                             <li>Via Filoteo Alberini, 25 — 00139 Roma (RM)</li>
+-                            <li><a href="tel:+390697845429" className="hover:text-teal-400">06 9784 5429</a></li>
+-                            <li><a href="mailto:info@praticheflaiano.it" className="hover:text-teal-400">info@praticheflaiano.it</a></li>
++                            <li><a href="tel:+390697845429" className="hover:text-accent-200">06 9784 5429</a></li>
++                            <li><a href="mailto:info@praticheflaiano.it" className="hover:text-accent-200">info@praticheflaiano.it</a></li>
+                             <li>Lun-Gio: 9:30-13:00 / 15:30-18:00</li>
+                             <li>Ven: 9:30-14:00</li>
+                         </ul>
+                     </address>
+ 
+                     <div>
+-                        <h3 className="font-bold text-lg mb-4 text-teal-400">Parlaci ora</h3>
+-                        <p className="text-slate-400 text-sm mb-4">Hai 68 giorni per presentare la NASpI. Non rimandare.</p>
++                        <h3 className="font-bold text-lg mb-4 text-accent-300">Parlaci ora</h3>
++                        <p className="text-brand-300 text-sm mb-4">Hai 68 giorni per presentare la NASpI. Non rimandare.</p>
+                         <div className="space-y-2">
+                             <a
+                                 href={WHATSAPP_HREF}
+@@ -56,7 +57,7 @@ const Footer: React.FC = () => {
+                             </a>
+                             <a
+                                 href={PHONE_HREF}
+-                                className="w-full border border-slate-700 hover:border-teal-500 hover:text-teal-400 text-slate-300 font-semibold py-2.5 rounded-lg transition-colors text-sm flex items-center justify-center gap-2"
++                                className="w-full border border-brand-800 hover:border-accent-400 hover:text-accent-200 text-brand-200 font-semibold py-2.5 rounded-lg transition-colors text-sm flex items-center justify-center gap-2"
+                             >
+                                 <Phone className="w-4 h-4" aria-hidden="true" />
+                                 {PHONE_LABEL}
+@@ -65,13 +66,29 @@ const Footer: React.FC = () => {
+                     </div>
+                 </div>
+             </div>
++            {/* Cross-link al sito principale Pratiche Flaiano */}
++            <div className="max-w-4xl mx-auto mb-8 px-4 py-5 border-y border-brand-900 text-sm">
++                <p className="text-brand-200 mb-3">
++                    Cerchi <strong className="text-white">730, ISEE, IMU, successioni, pensioni, assegno unico, bonus fiscali</strong>?
++                    Vai al sito principale del Centro Pratiche Flaiano:
++                </p>
++                <a
++                    href={MAIN_SITE_URL}
++                    target="_blank"
++                    rel="noopener noreferrer"
++                    className="inline-flex items-center gap-2 bg-accent-400 hover:bg-accent-300 text-brand-950 font-bold py-2.5 px-5 rounded-lg text-sm transition-colors"
++                >
++                    Vai al sito Centro Pratiche Flaiano
++                    <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
++                </a>
++            </div>
+             <p>© 2026 Centro Pratiche Flaiano. Tutti i diritti riservati.</p>
+             <p className="text-xs mt-4 max-w-xl mx-auto opacity-50">
+                 Le informazioni fornite hanno scopo puramente informativo e non sostituiscono la consulenza professionale.
+                 Gli importi sono stime basate sulla normativa vigente.
+             </p>
+             <p className="text-xs mt-2 opacity-50">
+-                <a href="/privacy" className="hover:text-teal-400">Privacy Policy</a>
++                <a href="/privacy" className="hover:text-accent-200">Privacy Policy</a>
+             </p>
+         </footer>
+     );
+diff --git a/src/components/SiteHeader.astro b/src/components/SiteHeader.astro
+index 7b45da3..85145bd 100644
+--- a/src/components/SiteHeader.astro
++++ b/src/components/SiteHeader.astro
+@@ -2,6 +2,7 @@
+ import { Logo } from './Logo';
+ import SiteFinder from './SiteFinder.astro';
+ import { NAV_LINKS } from '../lib/routes';
++import { MAIN_SITE_URL } from '../constants';
+ 
+ interface Props {
+     currentPath: string;
+@@ -15,7 +16,29 @@ const isActive = (href: string): boolean => {
+ };
+ ---
+ 
+-<header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
++{/* Topbar con cross-link al sito principale Centro Pratiche Flaiano.
++    Brand unification: continuita visiva con praticheflaiano-sito.vercel.app */}
++<div class="bg-brand-950 text-brand-100 text-xs">
++    <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-4 flex-wrap">
++        <span class="font-medium tracking-wide">
++            Portale NASpI · CAF UNSIC · Patronato ENASC
++        </span>
++        <a
++            href={MAIN_SITE_URL}
++            target="_blank"
++            rel="noopener"
++            class="inline-flex items-center gap-1.5 font-semibold text-accent-300 hover:text-white transition-colors"
++        >
++            <span>Torna al sito principale Pratiche Flaiano</span>
++            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
++                <path d="M7 17L17 7"/>
++                <polyline points="7 7 17 7 17 17"/>
++            </svg>
++        </a>
++    </div>
++</div>
++
++<header class="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-line shadow-soft">
+     <div class="max-w-7xl mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-4">
+ 
+         <a href="/" class="flex items-center flex-shrink-0" aria-label="Centro Pratiche Flaiano — Home">
+@@ -28,7 +51,7 @@ const isActive = (href: string): boolean => {
+                     href={link.href}
+                     class:list={[
+                         'text-sm font-bold uppercase tracking-wider transition-colors whitespace-nowrap',
+-                        isActive(link.href) ? 'text-teal-700' : 'text-slate-600 hover:text-slate-900',
++                        isActive(link.href) ? 'text-brand-700' : 'text-ink-soft hover:text-ink',
+                     ]}
+                     aria-current={isActive(link.href) ? 'page' : undefined}
+                 >
+@@ -41,7 +64,7 @@ const isActive = (href: string): boolean => {
+             <SiteFinder />
+             <a
+                 href="/richiedi"
+-                class="hidden sm:inline-flex bg-teal-700 hover:bg-teal-800 text-white px-4 md:px-5 py-2.5 rounded-md text-xs md:text-sm font-bold transition-all shadow-sm hover:shadow-md uppercase tracking-wide"
++                class="hidden sm:inline-flex bg-brand-700 hover:bg-brand-800 text-white px-4 md:px-5 py-2.5 rounded-md text-xs md:text-sm font-bold transition-all shadow-soft hover:shadow-card uppercase tracking-wide"
+             >
+                 Richiedi Online
+             </a>
+@@ -49,7 +72,7 @@ const isActive = (href: string): boolean => {
+             <button
+                 type="button"
+                 id="mobile-menu-button"
+-                class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-slate-700 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
++                class="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-ink-soft hover:bg-brand-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400"
+                 aria-label="Apri menu"
+                 aria-expanded="false"
+                 aria-controls="mobile-menu"
+@@ -63,7 +86,7 @@ const isActive = (href: string): boolean => {
+ 
+     <div
+         id="mobile-menu"
+-        class="lg:hidden hidden border-t border-slate-200 bg-white"
++        class="lg:hidden hidden border-t border-line bg-white"
+     >
+         <nav class="px-4 py-4 space-y-1" aria-label="Navigazione mobile">
+             {NAV_LINKS.map((link) => (
+@@ -72,8 +95,8 @@ const isActive = (href: string): boolean => {
+                     class:list={[
+                         'block px-4 py-3 rounded-lg text-base font-semibold transition-colors',
+                         isActive(link.href)
+-                            ? 'bg-teal-50 text-teal-800'
+-                            : 'text-slate-700 hover:bg-slate-50',
++                            ? 'bg-brand-50 text-brand-800'
++                            : 'text-ink-soft hover:bg-brand-50',
+                     ]}
+                     aria-current={isActive(link.href) ? 'page' : undefined}
+                 >
+@@ -82,10 +105,18 @@ const isActive = (href: string): boolean => {
+             ))}
+             <a
+                 href="/richiedi"
+-                class="block mt-4 px-4 py-3 rounded-lg text-center bg-teal-700 hover:bg-teal-800 text-white font-bold uppercase tracking-wide text-sm"
++                class="block mt-4 px-4 py-3 rounded-lg text-center bg-brand-700 hover:bg-brand-800 text-white font-bold uppercase tracking-wide text-sm"
+             >
+                 Richiedi Online
+             </a>
++            <a
++                href={MAIN_SITE_URL}
++                target="_blank"
++                rel="noopener"
++                class="block mt-2 px-4 py-3 rounded-lg text-center border border-line-strong hover:border-brand-400 hover:bg-brand-50 text-ink-soft font-semibold text-sm"
++            >
++                Sito principale Pratiche Flaiano →
++            </a>
+         </nav>
+     </div>
+ </header>
+@@ -99,7 +130,6 @@ const isActive = (href: string): boolean => {
+             btn.setAttribute('aria-expanded', String(isOpen));
+             btn.setAttribute('aria-label', isOpen ? 'Chiudi menu' : 'Apri menu');
+         });
+-        // Chiudi il menu su click di un link (i link nel menu ricaricano la pagina).
+         menu.querySelectorAll('a').forEach((a) => {
+             a.addEventListener('click', () => {
+                 menu.classList.add('hidden');
+diff --git a/src/constants.ts b/src/constants.ts
+index 94d7056..a06663a 100644
+--- a/src/constants.ts
++++ b/src/constants.ts
+@@ -29,3 +29,9 @@ export const IRPEF_BRACKETS_2026 = {
+ 
+ export const REFERENCE_YEAR = 2026;
+ export const LAST_UPDATED = "2026-04-22";
++
++// Sito principale del Centro Pratiche Flaiano - cross-link bidirezionale
++// per continuita brand. Il sito principale (praticheflaiano-sito.vercel.app)
++// linka qui via EXTERNAL_PORTALS.naspi nel suo consts.ts.
++export const MAIN_SITE_URL = "https://praticheflaiano-sito.vercel.app";
++export const MAIN_SITE_LABEL = "Centro Pratiche Flaiano";
+diff --git a/src/index.css b/src/index.css
+index dcb1655..44a6e15 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -2,38 +2,97 @@
+ @tailwind components;
+ @tailwind utilities;
+ 
++/* =========================================================================
++   DESIGN SYSTEM - "Adriatic Blue" allineato al sito principale
++   praticheflaiano-sito.vercel.app per continuita brand.
++   Vedi: ../Varie/sito/src/styles/global.css blocco @theme
++   ========================================================================= */
++
+ @layer base {
++    :root {
++        /* Palette tokens (mirror del sito principale) */
++        --color-bg: #EEF3F8;
++        --color-bg-soft: #DEE7F0;
++        --color-bg-card: #F6F9FC;
++        --color-paper: #FFFFFF;
++
++        --color-ink: #0C1B2E;
++        --color-ink-soft: #2A3D54;
++        --color-ink-muted: #5C7089;
++
++        --color-primary: #0A4DA2;
++        --color-primary-deep: #062F66;
++        --color-primary-soft: #2E78D6;
++
++        --color-accent: #18A0D8;
++        --color-accent-soft: #6FC6E8;
++
++        --color-gold: #E8B547;
++        --color-gold-soft: #F2D080;
++
++        --color-line: #C9D6E4;
++        --color-line-strong: #97AEC8;
++
++        /* Tipografia editoriale */
++        --font-sans: "Public Sans", "Public Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
++        --font-display: "Newsreader", "Newsreader Fallback", "Source Serif 4", Georgia, serif;
++        --font-mono: "JetBrains Mono", ui-monospace, monospace;
++    }
++
+     body {
+-        @apply text-slate-800 bg-slate-50;
++        @apply text-ink-soft bg-brand-50;
++        font-family: var(--font-sans);
++        font-size: 17px;
++        line-height: 1.55;
++        font-feature-settings: "ss01", "cv11";
++    }
++
++    h1, h2, h3, h4, h5, h6 {
++        font-family: var(--font-display);
++        color: var(--color-ink);
++        font-weight: 500;
++        letter-spacing: -0.022em;
++        text-wrap: balance;
++        font-variation-settings: "opsz" 36;
++    }
++
++    h1 {
++        @apply text-4xl md:text-5xl lg:text-6xl;
++        line-height: 0.98;
++        letter-spacing: -0.035em;
++        font-weight: 400;
++        font-variation-settings: "opsz" 144;
++    }
++    h2 {
++        @apply text-3xl md:text-4xl;
++        line-height: 1.05;
++        letter-spacing: -0.028em;
++        font-weight: 400;
++        font-variation-settings: "opsz" 72;
+     }
++    h3 {
++        @apply text-xl md:text-2xl;
++        line-height: 1.2;
++        font-weight: 500;
++    }
++    h4 { @apply text-lg; line-height: 1.3; font-weight: 600; }
++
++    p, li, dd { text-wrap: pretty; }
+ 
+     :focus-visible {
+-        @apply outline-none ring-2 ring-blue-500 ring-offset-2 ring-offset-slate-50 rounded-md;
++        @apply outline-none ring-2 ring-accent-400 ring-offset-2 ring-offset-brand-50 rounded-md;
+     }
+ 
+     .skip-link {
+-        @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-slate-900 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg;
++        @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-brand-950 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg;
+     }
+ }
+ 
+-.prose {
+-    @apply text-slate-700;
+-}
++.prose { @apply text-ink-soft; }
+ 
+ @media print {
+-
+-    header,
+-    footer,
+-    button,
+-    .no-print {
+-        display: none !important;
+-    }
+-
+-    body,
+-    main {
+-        background: white !important;
+-        color: black !important;
+-    }
++    header, footer, button, .no-print { display: none !important; }
++    body, main { background: white !important; color: black !important; }
+ }
+ 
+ @layer utilities {
+@@ -42,44 +101,55 @@
+     }
+ 
+     .glass-dark {
+-        @apply bg-slate-900/80 backdrop-blur-lg border border-slate-700/50 shadow-xl;
++        @apply bg-brand-950/80 backdrop-blur-lg border border-brand-900/50 shadow-xl;
+     }
+ 
++    /* Text gradient Adriatic Blue (sostituisce vecchio teal+blue) */
+     .text-gradient {
+-        @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-blue-600;
++        @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-700 to-accent-400;
++    }
++
++    /* Eyebrow uniforme con sito principale */
++    .eyebrow {
++        @apply text-xs font-semibold uppercase tracking-[0.14em] text-brand-700 inline-flex items-center gap-2;
++    }
++    .eyebrow::before {
++        content: "";
++        @apply w-6 h-px bg-current;
+     }
+ }
+ 
++/* Background sito - mesh tonale Adriatic Blue (sostituisce vecchio teal/cyan) */
+ body {
+-    background-color: #f8fafc;
++    background-color: var(--color-bg);
+     background-image:
+-        radial-gradient(at 0% 0%, hsla(192, 100%, 96%, 1) 0, transparent 50%),
+-        radial-gradient(at 100% 0%, hsla(214, 100%, 96%, 1) 0, transparent 50%);
++        radial-gradient(at 0% 0%, rgba(232, 181, 71, 0.08) 0, transparent 50%),
++        radial-gradient(at 100% 0%, rgba(10, 77, 162, 0.10) 0, transparent 50%),
++        radial-gradient(at 0% 50%, rgba(24, 160, 216, 0.06) 0, transparent 50%);
+     background-attachment: fixed;
+ }
+ 
+-@keyframes float {
+-    0% {
+-        transform: translateY(0px);
+-    }
+-
+-    50% {
+-        transform: translateY(-10px);
+-    }
++/* Texture grain SVG (uniforme con sito principale) */
++.grain::before {
++    content: "";
++    position: fixed;
++    inset: 0;
++    pointer-events: none;
++    opacity: 0.30;
++    mix-blend-mode: multiply;
++    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
++    z-index: 1;
++}
+ 
+-    100% {
+-        transform: translateY(0px);
+-    }
++@keyframes float {
++    0% { transform: translateY(0px); }
++    50% { transform: translateY(-10px); }
++    100% { transform: translateY(0px); }
+ }
+ 
+ @keyframes shimmer {
+-    0% {
+-        background-position: -1000px 0;
+-    }
+-
+-    100% {
+-        background-position: 1000px 0;
+-    }
++    0% { background-position: -1000px 0; }
++    100% { background-position: 1000px 0; }
+ }
+ 
+ .animate-float {
+@@ -90,4 +160,13 @@ body {
+     animation: shimmer 2s linear infinite;
+     background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+     background-size: 1000px 100%;
+-}
+\ No newline at end of file
++}
++
++@media (prefers-reduced-motion: reduce) {
++    *, *::before, *::after {
++        animation-duration: 0.01ms !important;
++        animation-iteration-count: 1 !important;
++        transition-duration: 0.01ms !important;
++        scroll-behavior: auto !important;
++    }
++}
+diff --git a/src/layouts/Base.astro b/src/layouts/Base.astro
+index ff12efe..129f421 100644
+--- a/src/layouts/Base.astro
++++ b/src/layouts/Base.astro
+@@ -101,6 +101,16 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0
+         <link rel="canonical" href={canonicalUrl} />
+         <link rel="alternate" hreflang="it-IT" href={canonicalUrl} />
+ 
++        {/* Font: Newsreader display serif + Public Sans body + JetBrains Mono.
++            Allineato al sito principale praticheflaiano-sito.vercel.app per
++            continuita brand. Design system "Adriatic Blue". */}
++        <link rel="preconnect" href="https://fonts.googleapis.com" />
++        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
++        <link
++            rel="stylesheet"
++            href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Public+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap"
++        />
++
+         <meta property="og:type" content={ogType} />
+         <meta property="og:locale" content="it_IT" />
+         <meta property="og:url" content={canonicalUrl} />
+@@ -144,7 +154,7 @@ const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0
+         )}
+         {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
+     </head>
+-    <body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 min-h-screen flex flex-col font-sans">
++    <body class="bg-brand-50 text-ink antialiased selection:bg-brand-200 selection:text-brand-950 min-h-screen flex flex-col font-sans grain">
+         <a href="#main" class="skip-link">Salta al contenuto principale</a>
+ 
+         <SiteHeader currentPath={currentPath} />
+diff --git a/tailwind.config.js b/tailwind.config.js
+index ceb0351..c737a6a 100644
+--- a/tailwind.config.js
++++ b/tailwind.config.js
+@@ -2,10 +2,65 @@
+ export default {
+     content: [
+         "./index.html",
+-        "./src/**/*.{js,ts,jsx,tsx}",
++        "./src/**/*.{astro,js,ts,jsx,tsx}",
+     ],
+     theme: {
+-        extend: {},
++        extend: {
++            // Design system "Adriatic Blue" - allineato al sito principale
++            // praticheflaiano-sito.vercel.app per continuita brand.
++            colors: {
++                brand: {
++                    50: '#EEF3F8',
++                    100: '#DEE7F0',
++                    200: '#C9D6E4',
++                    300: '#97AEC8',
++                    400: '#6FA0DA',
++                    500: '#2E78D6',
++                    600: '#1E6CC9',
++                    700: '#0A4DA2',
++                    800: '#083D82',
++                    900: '#062F66',
++                    950: '#0C1B2E',
++                },
++                accent: {
++                    50: '#EAF7FB',
++                    100: '#CCEBF5',
++                    200: '#95D6EB',
++                    300: '#6FC6E8',
++                    400: '#18A0D8',
++                    500: '#1391C5',
++                    600: '#0E7AAB',
++                    700: '#0B6086',
++                    800: '#094862',
++                    900: '#062F66',
++                },
++                gold: {
++                    DEFAULT: '#E8B547',
++                    soft: '#F2D080',
++                },
++                ink: {
++                    DEFAULT: '#0C1B2E',
++                    soft: '#2A3D54',
++                    muted: '#5C7089',
++                },
++                paper: '#FFFFFF',
++                line: {
++                    DEFAULT: '#C9D6E4',
++                    strong: '#97AEC8',
++                },
++            },
++            fontFamily: {
++                sans: ['"Public Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
++                display: ['Newsreader', 'Source Serif 4', 'Georgia', 'serif'],
++                mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
++            },
++            boxShadow: {
++                'soft': '0 1px 2px rgba(10, 77, 162, 0.05), 0 4px 12px rgba(10, 77, 162, 0.06)',
++                'card': '0 1px 2px rgba(10, 77, 162, 0.07), 0 12px 32px rgba(10, 77, 162, 0.08)',
++                'lift': '0 4px 8px rgba(10, 77, 162, 0.10), 0 24px 48px rgba(10, 77, 162, 0.12)',
++                'cta': '0 1px 2px rgba(0, 0, 0, 0.08), 0 6px 18px rgba(10, 77, 162, 0.28)',
++            },
++        },
+     },
+     plugins: [],
+ }
+-- 
+2.43.0
+
