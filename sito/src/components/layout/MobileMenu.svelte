@@ -2,6 +2,7 @@
   interface NavItem {
     label: string;
     href: string;
+    external?: boolean;
     children?: { label: string; href: string }[];
   }
 
@@ -94,6 +95,19 @@
                   {/each}
                 </ul>
               {/if}
+            {:else if item.external}
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener"
+                class="flex items-center justify-between rounded-md px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+              >
+                <span>{item.label}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="opacity-60">
+                  <path d="M7 17L17 7"></path>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </a>
             {:else}
               <a
                 href={item.href}

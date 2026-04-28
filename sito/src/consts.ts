@@ -93,6 +93,16 @@ export const SOCIAL = {
   whatsappChannel: "https://whatsapp.com/channel/0029VaVaZQKDDmFc54xFmA2d",
 } as const;
 
+/** Portali esterni del Centro Pratiche Flaiano. Cross-link bidirezionale. */
+export const EXTERNAL_PORTALS = {
+  naspi: {
+    url: "https://domandedisoccupazione.it",
+    label: "Portale NASpI",
+    description:
+      "Calcolatore NASpI, anticipo, OCR documenti INPS, 30+ guide su disoccupazione, dimissioni, DIS-COLL.",
+  },
+} as const;
+
 export const ZONE_SERVITE = [
   { name: "Vigne Nuove", primary: true },
   { name: "Tufello", primary: true },
@@ -127,6 +137,11 @@ export const NAV = [
   },
   { label: "Tesseramento", href: "/tesseramento" },
   { label: "Blog", href: "/blog" },
+  {
+    label: "Disoccupazione",
+    href: "https://domandedisoccupazione.it",
+    external: true,
+  },
   { label: "FAQ", href: "/faq" },
   { label: "Contatti", href: "/contatti" },
 ] as const;

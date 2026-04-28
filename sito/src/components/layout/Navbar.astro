@@ -1,11 +1,12 @@
 ---
-import { NAV, BOOKING, CONTACT } from "~/consts";
+import { NAV, BOOKING, CONTACT, EXTERNAL_PORTALS } from "~/consts";
 import Logo from "~/components/illustrations/Logo.astro";
 import MobileMenu from "./MobileMenu.svelte";
 
 const items = NAV.map((n) => ({
   label: n.label,
   href: n.href,
+  external: "external" in n ? !!n.external : false,
   children: "children" in n ? n.children?.map((c) => ({ label: c.label, href: c.href })) : undefined,
 }));
 ---
@@ -21,6 +22,13 @@ const items = NAV.map((n) => ({
       <a href="/servizi">Servizi</a>
       <a href="/tesseramento">Tesseramento</a>
       <a href="/blog">Blog</a>
+      <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" class="nav-external" title={EXTERNAL_PORTALS.naspi.description}>
+        Disoccupazione
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-left:4px;">
+          <path d="M7 17L17 7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
+      </a>
       <a href="/contatti">Contatti</a>
     </nav>
 

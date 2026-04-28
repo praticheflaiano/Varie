@@ -1,5 +1,5 @@
 ---
-import { SITE, CONTACT, HOURS, BOOKING, SOCIAL, ORG_CREDENTIALS } from "~/consts";
+import { SITE, CONTACT, HOURS, BOOKING, SOCIAL, ORG_CREDENTIALS, EXTERNAL_PORTALS } from "~/consts";
 import { CATEGORY_LIST } from "~/utils/categories";
 import Logo from "~/components/illustrations/Logo.astro";
 import { Icon } from "astro-icon/components";
@@ -42,6 +42,15 @@ const year = new Date().getFullYear();
           <li><a href="/servizi/patronato" class="text-slate-400 hover:text-white no-underline">Patronato</a></li>
           <li><a href="/servizi/servizi-vari" class="text-slate-400 hover:text-white no-underline">Servizi vari</a></li>
           <li><a href="/tesseramento" class="text-slate-400 hover:text-white no-underline">Tesseramento</a></li>
+          <li class="pt-2 mt-2 border-t border-white/10">
+            <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-accent-300 hover:text-accent-200 no-underline font-semibold">
+              Portale NASpI
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7"/>
+                <polyline points="7 7 17 7 17 17"/>
+              </svg>
+            </a>
+          </li>
         </ul>
       </div>
 
