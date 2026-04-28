@@ -15,7 +15,9 @@ sources:
   - "Comune di Roma Capitale - Regolamento IMU vigente (comune.roma.it - sezione tributi)"
   - "Il Sole 24 Ore - IMU pagamento 16 giugno: 9 domande e risposte"
 deadline: 2026-06-16
-status: draft
+status: published
+fact_check_date: 2026-04-29
+fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: scadenza
 ---
 
@@ -216,7 +218,7 @@ Si. L'IMU va versata **separatamente per ogni Comune** (codice catastale diverso
 
 ### Se non pago entro il 16 giugno, cosa rischio?
 
-Sanzioni progressive da **0,1%/giorno** (entro 14 giorni) fino al **30%** (oltre i termini di ravvedimento). Conviene **sempre** il ravvedimento spontaneo: meno si aspetta, meno si paga.
+Sanzioni progressive da **0,083%/giorno** (entro 14 giorni) fino al **25%** (accertamento ordinario oltre i termini di ravvedimento, post D.Lgs. 87/2024). Conviene **sempre** il ravvedimento spontaneo: meno si aspetta, meno si paga.
 
 ### Come faccio a sapere l'aliquota del mio Comune?
 

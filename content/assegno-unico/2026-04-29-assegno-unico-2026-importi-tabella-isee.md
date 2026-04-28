@@ -14,7 +14,9 @@ sources:
   - "Decreto Legislativo 29 dicembre 2021, n. 230 (regolamento Assegno Unico Universale)"
   - "Portale INPS - Scheda Assegno unico e universale per i figli a carico"
   - "Fiscoetasse - Assegno unico 2026 tabelle importi, ISEE, domanda"
-status: draft
+status: published
+fact_check_date: 2026-04-29
+fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: guida
 ---
 
@@ -65,15 +67,14 @@ L'AUU per maggiorenni si **estingue al compimento dei 21 anni**, salvo casi di d
 
 ## Figli con disabilita: nessun limite di eta
 
-Per i **figli con disabilita** (a qualsiasi eta) **non ci sono limiti** ne ISEE ne anagrafici. Gli importi sono maggiorati in base al grado di disabilita certificato:
+Per i **figli con disabilita** (a qualsiasi eta) **non ci sono limiti** ne ISEE ne anagrafici. Sull'importo base spettano **maggiorazioni differenziate per grado di disabilita** (non autosufficiente, grave, media), tutte rivalutate del +1,4% nel 2026.
 
-| Grado disabilita | Maggiorazione (figlio fino a 21 anni) | Importo dopo 21 anni |
-|---|---|---|
-| **Non autosufficiente** | + ~119,60 €/mese | ~91,68 €/mese |
-| **Disabilita grave** | + ~108,69 €/mese | ~91,68 €/mese |
-| **Disabilita media** | + ~97,79 €/mese | ~91,68 €/mese |
+I valori esatti delle maggiorazioni 2026 sono pubblicati nella **Circolare INPS n. 7 del 30 gennaio 2026** (allegato tabelle, sezione "Figli con disabilita"). Per il calcolo personale sul tuo nucleo familiare ti consigliamo di:
 
-Gli importi precisi sono nella **Circolare INPS n. 7 del 30 gennaio 2026** (rivalutati 2026). Le famiglie con figli disabili maggiorenni ricevono **un assegno equivalente** anche dopo i 21 anni (non si interrompe).
+- consultare il **simulatore INPS** ufficiale, oppure
+- chiedere al **Patronato del Centro Pratiche Flaiano** che ha le tabelle aggiornate e applica le maggiorazioni corrette in fase di domanda
+
+Le famiglie con figli disabili **mantengono l'assegno anche dopo i 21 anni** (non si interrompe), con un importo specifico previsto per gli over 21 con disabilita.
 
 ## Maggiorazioni che si aggiungono all'importo base
 

@@ -14,7 +14,9 @@ sources:
   - "Legge 27 dicembre 2017, n. 205, art. 1 comma 355 (istituzione bonus asilo nido)"
   - "Legge 30 dicembre 2024, n. 207 (Legge di Bilancio 2025) - mantenimento importi"
   - "Fiscoetasse - Bonus asilo nido 2026: nuove regole, importi e domanda"
-status: draft
+status: published
+fact_check_date: 2026-04-29
+fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: novita
 ---
 
