@@ -1,0 +1,297 @@
+---
+/**
+ * Hero "Persone, non sportelli" - design system Adriatic Blue.
+ * Implementa l'hero del bundle Anthropic (project/hero.jsx) in Astro.
+ *
+ * BRAND ASSET TODO:
+ * - Stat "22 anni accanto al quartiere" -> sostituire con anni reali quando confermati
+ * - Stat "14k pratiche gestite" -> placeholder, sostituire con numero reale
+ * - Stat "4.9 / 287 recensioni" -> placeholder, sostituire scraping Google reale
+ * - Ritratti staff "Maria, Luca, Paola" -> sostituire con foto reali staff e nomi reali
+ *   Regola progetto: ZERO invenzioni - finche non sono dati reali, vanno trattati
+ *   come placeholder dichiarati al cliente prima del go-live pubblico.
+ */
+import { CONTACT } from "~/consts";
+---
+
+<section class="hero section" style="position: relative; overflow: hidden;">
+  {/* Ornamento decorativo - glow caldo angolo destro */}
+  <div aria-hidden="true" style="position:absolute; top:0; right:0; width:40%; height:100%; pointer-events:none; opacity:0.5;">
+    <svg viewBox="0 0 400 800" style="width:100%; height:100%;">
+      <defs>
+        <radialGradient id="hero-glow" cx="0.7" cy="0.3" r="0.8">
+          <stop offset="0" stop-color="var(--color-gold-soft)" stop-opacity="0.3"/>
+          <stop offset="1" stop-color="transparent"/>
+        </radialGradient>
+      </defs>
+      <rect width="400" height="800" fill="url(#hero-glow)"/>
+    </svg>
+  </div>
+
+  <div class="wrap" style="position: relative; z-index: 2;">
+    <div class="hero-grid">
+      {/* Colonna sinistra - testo */}
+      <div>
+        <div class="fade-in" style="display:flex; gap:10px; margin-bottom:32px; flex-wrap:wrap;">
+          <span class="pill pill-live">Aperti ora · chiudiamo alle 18:00</span>
+          <span class="pill">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Roma · Vigne Nuove
+          </span>
+        </div>
+
+        <h1 class="fade-in d1" style="margin-bottom:28px;">
+          <span style="display:block; font-style:italic; color:var(--color-primary); font-weight:400;">Persone, non sportelli.</span>
+          <span style="display:block;">Ci pensiamo noi</span>
+          <span style="display:block; color:var(--color-ink-muted); font-style:italic;">alle tue pratiche.</span>
+        </h1>
+
+        <p class="lede fade-in d2" style="margin-bottom:36px; font-size:1.2rem;">
+          CAF UNSIC e Patronato ENASC nel cuore di Roma Nord.
+          Successioni, 730, ISEE, pensioni, NASpI, invalidita: ti accompagniamo passo per passo,
+          <strong style="color:var(--color-ink);"> con persone vere che ti conoscono per nome</strong>.
+        </p>
+
+        <div class="fade-in d3" style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:48px;">
+          <a class="btn btn-wa btn-lg" href={CONTACT.whatsapp.link} target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.7.315-.402.456-.957 1.29-.957 2.236 0 1.045.6 2.064 1.39 2.92 1.32 1.475 3.118 2.964 4.808 3.494.358.115.745.215 1.118.215.526 0 1.06-.114 1.503-.388.487-.302.7-.762.7-1.32 0-.358 0-.832-.43-.974-.36-.16-1.103-.572-1.388-.572m-3.32 6.94c-1.762 0-3.508-.585-4.873-1.65a.49.49 0 0 0-.26-.072c-.072 0-.143.014-.214.043l-2.78 1.058 1.073-2.665a.594.594 0 0 0-.085-.586C7.68 18.93 7.092 17.215 7.092 15.43c0-4.812 3.91-8.722 8.722-8.722s8.723 3.91 8.723 8.722c0 4.812-3.91 8.715-8.723 8.715M16.026 5.05c-5.733 0-10.387 4.654-10.387 10.387 0 1.962.544 3.866 1.575 5.515L5.114 26l5.16-1.962a10.34 10.34 0 0 0 5.752 1.733c5.733 0 10.387-4.654 10.387-10.388C26.413 9.65 21.76 5.05 16.026 5.05"/>
+            </svg>
+            Scrivici su WhatsApp
+          </a>
+          <a class="btn btn-ghost btn-lg" href={`tel:${CONTACT.phone.landlineRaw}`}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            06 9784 5429
+          </a>
+        </div>
+
+        {/* Quick stats sociali */}
+        <div class="fade-in d4 hero-stats">
+          <div>
+            <div class="stat-n">22</div>
+            <div class="stat-l">anni accanto al quartiere</div>
+          </div>
+          <div>
+            <div class="stat-n">14k</div>
+            <div class="stat-l">pratiche gestite</div>
+          </div>
+          <div>
+            <div class="stat-n" style="display:flex; align-items:baseline; gap:6px;">
+              4.9
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--color-gold)" aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="stat-l">su Google · 287 recensioni</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Colonna destra - illustrazione staff + caption + badge orari */}
+      <div class="fade-in d2" style="position: relative;">
+        <div class="hero-illustration">
+          <svg viewBox="0 0 500 400" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-label="Illustrazione dello staff del Centro Pratiche Flaiano">
+            <defs>
+              <linearGradient id="hero-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0" stop-color="var(--color-bg-card)"/>
+                <stop offset="1" stop-color="var(--color-bg-soft)"/>
+              </linearGradient>
+              <linearGradient id="hero-desk-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0" stop-color="var(--color-primary-soft)"/>
+                <stop offset="1" stop-color="var(--color-primary)"/>
+              </linearGradient>
+            </defs>
+            <rect width="500" height="400" fill="url(#hero-bg-grad)"/>
+            {/* Finestra in fondo */}
+            <rect x="320" y="30" width="140" height="170" rx="6" fill="var(--color-paper)" opacity="0.85"/>
+            <line x1="390" y1="30" x2="390" y2="200" stroke="var(--color-line)" stroke-width="1.5"/>
+            <line x1="320" y1="115" x2="460" y2="115" stroke="var(--color-line)" stroke-width="1.5"/>
+            {/* Vegetazione su davanzale */}
+            <ellipse cx="350" cy="200" rx="22" ry="12" fill="var(--color-success-600)" opacity="0.85"/>
+            <ellipse cx="430" cy="200" rx="18" ry="10" fill="var(--color-success-700)" opacity="0.85"/>
+            {/* Scrivania */}
+            <rect x="40" y="280" width="420" height="14" rx="2" fill="var(--color-ink-soft)"/>
+            <rect x="40" y="294" width="420" height="100" fill="url(#hero-desk-grad)" opacity="0.15"/>
+            {/* Lampada */}
+            <rect x="80" y="220" width="6" height="60" fill="var(--color-ink)"/>
+            <path d="M 60 220 L 106 220 L 96 200 L 70 200 z" fill="var(--color-gold)"/>
+            <circle cx="83" cy="222" r="8" fill="var(--color-gold-soft)" opacity="0.6"/>
+            {/* Tazza caffe */}
+            <rect x="200" y="260" width="34" height="22" rx="3" fill="var(--color-paper)" stroke="var(--color-ink-soft)" stroke-width="1.5"/>
+            <ellipse cx="217" cy="261" rx="15" ry="3" fill="var(--color-ink-soft)" opacity="0.6"/>
+            <path d="M 234 264 Q 244 264 244 270 Q 244 276 234 276" fill="none" stroke="var(--color-ink-soft)" stroke-width="1.5"/>
+            <path d="M 215 256 Q 217 250 215 244" stroke="var(--color-ink-muted)" stroke-width="1" fill="none" opacity="0.5"/>
+            <path d="M 220 256 Q 222 250 220 244" stroke="var(--color-ink-muted)" stroke-width="1" fill="none" opacity="0.5"/>
+            {/* Carte/documenti su scrivania */}
+            <rect x="280" y="250" width="60" height="32" rx="2" fill="var(--color-paper)" stroke="var(--color-line-strong)" stroke-width="1" transform="rotate(-3 310 266)"/>
+            <line x1="288" y1="258" x2="332" y2="258" stroke="var(--color-line-strong)" stroke-width="1" transform="rotate(-3 310 266)"/>
+            <line x1="288" y1="265" x2="328" y2="265" stroke="var(--color-line-strong)" stroke-width="1" transform="rotate(-3 310 266)"/>
+            <line x1="288" y1="272" x2="324" y2="272" stroke="var(--color-line-strong)" stroke-width="1" transform="rotate(-3 310 266)"/>
+            {/* Penna */}
+            <rect x="350" y="265" width="40" height="3" rx="1" fill="var(--color-primary-deep)" transform="rotate(15 370 266)"/>
+            {/* Persona 1 - sx */}
+            <g transform="translate(110 130)">
+              <circle cx="0" cy="0" r="32" fill="#E8C5A8"/>
+              <path d="M -28 -8 Q -32 -28 -16 -32 Q 0 -36 16 -32 Q 32 -28 28 -8 Q 28 -18 0 -18 Q -28 -18 -28 -8 z" fill="var(--color-ink)"/>
+              <circle cx="-10" cy="-4" r="2" fill="var(--color-ink)"/>
+              <circle cx="10" cy="-4" r="2" fill="var(--color-ink)"/>
+              <path d="M -8 12 Q 0 18 8 12" stroke="var(--color-ink)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M -36 32 Q -36 90 0 90 Q 36 90 36 32 L 36 130 L -36 130 z" fill="var(--color-primary)"/>
+              <ellipse cx="0" cy="34" rx="22" ry="6" fill="var(--color-paper)"/>
+            </g>
+            {/* Persona 2 - centro */}
+            <g transform="translate(220 110)">
+              <circle cx="0" cy="0" r="34" fill="#D9A981"/>
+              <path d="M -30 -10 Q -34 -34 -16 -36 Q 0 -38 16 -36 Q 34 -34 30 -10 Q 28 -22 -2 -22 Q -32 -22 -30 -10 z" fill="#5A3F2C"/>
+              <circle cx="-11" cy="-5" r="2" fill="var(--color-ink)"/>
+              <circle cx="11" cy="-5" r="2" fill="var(--color-ink)"/>
+              <path d="M -10 14 Q 0 22 10 14" stroke="var(--color-ink)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M -40 34 Q -40 100 0 100 Q 40 100 40 34 L 40 150 L -40 150 z" fill="var(--color-accent)"/>
+              <ellipse cx="0" cy="36" rx="24" ry="6" fill="var(--color-paper)"/>
+            </g>
+            {/* Persona 3 - dx */}
+            <g transform="translate(330 140)">
+              <circle cx="0" cy="0" r="30" fill="#F0CDB0"/>
+              <path d="M -26 -6 Q -30 -28 -14 -30 Q 0 -32 14 -30 Q 30 -28 26 -6 Q 24 -16 0 -16 Q -26 -16 -26 -6 z" fill="#7A4F35"/>
+              <circle cx="-9" cy="-3" r="2" fill="var(--color-ink)"/>
+              <circle cx="9" cy="-3" r="2" fill="var(--color-ink)"/>
+              <path d="M -7 11 Q 0 16 7 11" stroke="var(--color-ink)" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M -34 30 Q -34 80 0 80 Q 34 80 34 30 L 34 120 L -34 120 z" fill="var(--color-gold)"/>
+              <ellipse cx="0" cy="32" rx="20" ry="5.5" fill="var(--color-paper)"/>
+            </g>
+          </svg>
+        </div>
+
+        {/* Caption staff in basso a sx */}
+        <div class="hero-caption-staff">
+          <div class="staff-avatars">
+            <span class="avatar" style="background:#E8C5A8;"></span>
+            <span class="avatar" style="background:#D9A981;"></span>
+            <span class="avatar" style="background:#F0CDB0;"></span>
+          </div>
+          <div style="font-size:13px; line-height:1.4;">
+            <strong style="color:var(--color-ink); font-weight:600;">Maria, Luca e Paola</strong><br/>
+            <span style="color:var(--color-ink-muted);">Ti rispondono entro un'ora</span>
+          </div>
+        </div>
+
+        {/* Badge orari in alto a dx */}
+        <div class="hero-badge-hours">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Lun-Gio 9:30-18:00
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .stat-n {
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1;
+    color: var(--color-ink);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .stat-l {
+    font-size: 13px;
+    color: var(--color-ink-muted);
+    margin-top: 4px;
+    max-width: 180px;
+  }
+
+  .hero-illustration {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-lift);
+    aspect-ratio: 5 / 4;
+    background: var(--color-bg-card);
+  }
+
+  .hero-caption-staff {
+    position: absolute;
+    bottom: -24px;
+    left: -24px;
+    background: var(--color-paper);
+    border-radius: var(--radius-lg);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--color-line);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 280px;
+  }
+
+  .staff-avatars {
+    display: flex;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--color-paper);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  .avatar + .avatar {
+    margin-left: -10px;
+  }
+
+  .hero-badge-hours {
+    position: absolute;
+    top: 24px;
+    right: -16px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    box-shadow: var(--shadow-card);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr !important;
+      gap: 48px !important;
+    }
+    .hero-caption-staff {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -28px;
+    }
+    .hero-badge-hours {
+      right: 8px;
+      top: 16px;
+    }
+  }
+</style>

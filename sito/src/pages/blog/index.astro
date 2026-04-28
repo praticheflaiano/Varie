@@ -1,0 +1,78 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import ArticleCard from "~/components/blog/ArticleCard.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import { getVisibleArticles } from "~/utils/articles";
+import { CATEGORY_LIST } from "~/utils/categories";
+import { Icon } from "astro-icon/components";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+
+const articles = await getVisibleArticles();
+const featured = articles[0];
+const rest = articles.slice(1);
+
+// Categorie con almeno un articolo
+const activeCategories = CATEGORY_LIST.filter((c) =>
+  articles.some((a) => a.data.category === c.slug),
+);
+---
+
+<BaseLayout
+  title="Blog: guide, scadenze e novita fiscali"
+  description="Articoli del Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma: 730, ISEE, IMU, pensioni, NASpI, invalidita, assegno unico. Tutto verificato sulle fonti ufficiali."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb items={[{ name: "Blog", href: "/blog" }]} class="mb-6" />
+      <SectionHeading
+        eyebrow="Il nostro blog"
+        title="Guide, scadenze e novita normative"
+        subtitle="Spiegazioni in italiano semplice di chi le pratiche le fa davvero. Ogni articolo cita le fonti ufficiali e indica la data di ultimo aggiornamento."
+      />
+    </div>
+  </section>
+
+  {activeCategories.length > 0 && (
+    <section class="border-y border-[var(--color-border)] bg-white">
+      <div class="container-wide flex flex-wrap items-center gap-3 py-4">
+        <span class="text-sm font-semibold text-[var(--color-ink-muted)]">Categorie:</span>
+        {activeCategories.map((c) => (
+          <a
+            href={`/blog/categoria/${c.slug}`}
+            class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold no-underline hover:bg-[var(--color-surface-soft)]"
+            style={`color: ${c.color}; border-color: color-mix(in oklab, ${c.color} 25%, white);`}
+          >
+            <Icon name={c.icon} class="size-3.5" aria-hidden="true" />
+            {c.label}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container-wide">
+      {articles.length === 0 ? (
+        <div class="rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-soft)] p-12 text-center">
+          <p class="text-lg text-[var(--color-ink-soft)]">
+            Stiamo preparando i primi articoli. Torna presto!
+          </p>
+        </div>
+      ) : (
+        <>
+          {featured && (
+            <div class="mb-10">
+              <ArticleCard article={featured} variant="featured" />
+            </div>
+          )}
+          <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {rest.map((a) => <ArticleCard article={a} />)}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import ArticleCard from "~/components/blog/ArticleCard.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import { getVisibleArticles, getAllTags } from "~/utils/articles";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  const articles = await getVisibleArticles();
+  return tags.map(({ tag }) => ({
+    params: { tag },
+    props: {
+      tag,
+      items: articles.filter((a) => a.data.tags.includes(tag)),
+    },
+  }));
+}
+
+const { tag, items } = Astro.props;
+---
+
+<BaseLayout
+  title={`#${tag}: articoli e guide`}
+  description={`Tutti gli articoli con tag #${tag} del blog del Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma.`}
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb
+        items={[
+          { name: "Blog", href: "/blog" },
+          { name: `#${tag}`, href: `/blog/tag/${tag}` },
+        ]}
+        class="mb-6"
+      />
+      <SectionHeading
+        eyebrow="Tag"
+        title={`#${tag}`}
+        subtitle={`${items.length} articolo/i con questo tag.`}
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-wide">
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {items.map((a) => <ArticleCard article={a} />)}
+      </div>
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

@@ -1,0 +1,50 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 240 240"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  aria-hidden="true"
+  role="presentation"
+>
+  <defs>
+    <linearGradient id="paperGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="white" />
+      <stop offset="100%" stop-color="var(--color-brand-50)" />
+    </linearGradient>
+  </defs>
+  <!-- Documento posteriore -->
+  <rect x="60" y="40" width="120" height="160" rx="8"
+    fill="url(#paperGradient)" stroke="var(--color-brand-200)" stroke-width="1.5"
+    transform="rotate(-6 120 120)" />
+  <!-- Documento centrale -->
+  <rect x="50" y="50" width="120" height="160" rx="8"
+    fill="url(#paperGradient)" stroke="var(--color-brand-300)" stroke-width="1.5"
+    transform="rotate(2 110 130)" />
+  <!-- Documento anteriore -->
+  <g>
+    <rect x="56" y="48" width="128" height="170" rx="10"
+      fill="white" stroke="var(--color-brand-400)" stroke-width="2" />
+    <!-- Header doc -->
+    <rect x="72" y="64" width="60" height="6" rx="3" fill="var(--color-brand-700)" />
+    <rect x="72" y="76" width="40" height="4" rx="2" fill="var(--color-brand-300)" />
+    <!-- Linee testo -->
+    <rect x="72" y="98" width="96" height="3" rx="1.5" fill="var(--color-brand-100)" />
+    <rect x="72" y="108" width="86" height="3" rx="1.5" fill="var(--color-brand-100)" />
+    <rect x="72" y="118" width="72" height="3" rx="1.5" fill="var(--color-brand-100)" />
+    <rect x="72" y="138" width="96" height="3" rx="1.5" fill="var(--color-brand-100)" />
+    <rect x="72" y="148" width="60" height="3" rx="1.5" fill="var(--color-brand-100)" />
+    <!-- Timbro accent -->
+    <circle cx="148" cy="178" r="22" fill="var(--color-accent-100)" stroke="var(--color-accent-500)" stroke-width="2" />
+    <text x="148" y="182" text-anchor="middle" font-size="8" font-weight="700" fill="var(--color-accent-700)" font-family="system-ui, sans-serif">CAF</text>
+    <!-- Check verde -->
+    <circle cx="84" cy="178" r="10" fill="var(--color-success-500)" />
+    <path d="M80 178 l3 3 l5 -6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

@@ -1,0 +1,125 @@
+---
+import type { Article } from "~/utils/articles";
+import { getRelatedArticles } from "~/utils/articles";
+import { getCategory } from "~/utils/categories";
+import { formatDateIt, toISODate } from "~/utils/date";
+import { readingTime } from "~/utils/reading-time";
+import BaseLayout from "./BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import ArticleMeta from "~/components/blog/ArticleMeta.astro";
+import Disclaimer from "~/components/blog/Disclaimer.astro";
+import RelatedArticles from "~/components/blog/RelatedArticles.astro";
+import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
+import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
+import { SITE } from "~/consts";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  article: Article;
+  rawBody: string;
+}
+
+const { article, rawBody } = Astro.props;
+const cat = getCategory(article.data.category);
+const minutes = readingTime(rawBody);
+const url = new URL(`/blog/${article.data.slug}`, SITE.url).toString();
+const lastUpdated = article.data.last_updated ?? article.data.date;
+
+const breadcrumbs = [
+  { name: "Blog", href: "/blog" },
+  ...(cat ? [{ name: cat.label, href: `/blog/categoria/${cat.slug}` }] : []),
+  { name: article.data.title, href: `/blog/${article.data.slug}` },
+];
+
+const related = await getRelatedArticles(article, 3);
+---
+
+<BaseLayout
+  title={article.data.title}
+  description={article.data.meta_description}
+  canonical={url}
+  ogType="article"
+  publishedTime={toISODate(article.data.date)}
+  modifiedTime={toISODate(lastUpdated)}
+  author={article.data.author}
+  tags={[...article.data.tags]}
+>
+  <JsonLdArticle
+    slot="head"
+    headline={article.data.title}
+    description={article.data.meta_description}
+    datePublished={toISODate(article.data.date)}
+    dateModified={toISODate(lastUpdated)}
+    authorName={article.data.author}
+    url={url}
+    isNews={article.data.type === "novita"}
+    category={cat?.label}
+    keywords={[...article.data.tags]}
+  />
+
+  <article class="container-narrow py-10 md:py-16">
+    <Breadcrumb items={breadcrumbs} class="mb-6" />
+
+    {cat && (
+      <a
+        href={`/blog/categoria/${cat.slug}`}
+        class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider no-underline"
+        style={`background-color: color-mix(in oklab, ${cat.color} 12%, white); color: ${cat.color}; border: 1px solid color-mix(in oklab, ${cat.color} 20%, white);`}
+      >
+        <Icon name={cat.icon} class="size-3.5" aria-hidden="true" />
+        {cat.label}
+      </a>
+    )}
+
+    <h1 class="mt-5 font-display text-balance">{article.data.title}</h1>
+
+    <p class="mt-5 text-lg text-[var(--color-ink-soft)] leading-relaxed">
+      {article.data.meta_description}
+    </p>
+
+    <div class="mt-7 border-y border-[var(--color-border)] py-4">
+      <ArticleMeta
+        date={article.data.date}
+        lastUpdated={article.data.last_updated}
+        author={article.data.author}
+        readingTime={minutes}
+        type={article.data.type}
+      />
+    </div>
+
+    <div class="prose-article mt-10">
+      <slot />
+    </div>
+
+    {article.data.tags.length > 0 && (
+      <div class="mt-10 flex flex-wrap items-center gap-2">
+        <span class="text-sm font-semibold text-[var(--color-ink-muted)]">Argomenti:</span>
+        {article.data.tags.map((tag) => (
+          <a
+            href={`/blog/tag/${tag}`}
+            class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] bg-white px-3 py-1 text-xs font-semibold text-[var(--color-ink-soft)] hover:border-[var(--color-brand-400)] hover:text-[var(--color-brand-700)] no-underline"
+          >
+            #{tag}
+          </a>
+        ))}
+      </div>
+    )}
+
+    {article.data.sources && article.data.sources.length > 0 && (
+      <details class="mt-10 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-5">
+        <summary class="cursor-pointer font-display text-base font-bold text-[var(--color-ink)]">
+          Fonti normative ({article.data.sources.length})
+        </summary>
+        <ul class="mt-4 list-disc space-y-2 pl-5 text-sm text-[var(--color-ink-soft)]">
+          {article.data.sources.map((s) => <li>{s}</li>)}
+        </ul>
+      </details>
+    )}
+
+    <WhyFlaiano />
+
+    <Disclaimer lastUpdated={formatDateIt(lastUpdated)} />
+
+    <RelatedArticles articles={related} />
+  </article>
+</BaseLayout>

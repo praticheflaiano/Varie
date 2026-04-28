@@ -1,0 +1,54 @@
+---
+import { SITE } from "~/consts";
+
+interface Props {
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+  authorName: string;
+  url: string;
+  image?: string;
+  isNews?: boolean;
+  category?: string;
+  keywords?: string[];
+}
+
+const {
+  headline,
+  description,
+  datePublished,
+  dateModified,
+  authorName,
+  url,
+  image,
+  isNews = false,
+  category,
+  keywords,
+} = Astro.props;
+
+const data = {
+  "@context": "https://schema.org",
+  "@type": isNews ? "NewsArticle" : "Article",
+  headline,
+  description,
+  datePublished,
+  dateModified: dateModified ?? datePublished,
+  author: {
+    "@type": "Organization",
+    name: authorName,
+    url: SITE.url,
+  },
+  publisher: { "@id": `${SITE.url}/#organization` },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": url,
+  },
+  ...(image && { image: new URL(image, SITE.url).toString() }),
+  ...(category && { articleSection: category }),
+  ...(keywords && { keywords: keywords.join(", ") }),
+  inLanguage: "it-IT",
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />

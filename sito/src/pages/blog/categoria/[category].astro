@@ -1,0 +1,71 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import ArticleCard from "~/components/blog/ArticleCard.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import { getVisibleArticles } from "~/utils/articles";
+import { CATEGORY_LIST } from "~/utils/categories";
+import { Icon } from "astro-icon/components";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+
+export async function getStaticPaths() {
+  const articles = await getVisibleArticles();
+  return CATEGORY_LIST.map((cat) => {
+    const items = articles.filter((a) => a.data.category === cat.slug);
+    return {
+      params: { category: cat.slug },
+      props: { category: cat, items },
+    };
+  });
+}
+
+const { category, items } = Astro.props;
+---
+
+<BaseLayout
+  title={`${category.label}: articoli e guide`}
+  description={`${category.description} Tutti gli articoli della categoria ${category.label} del blog del Centro Pratiche Flaiano a Roma.`}
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb
+        items={[
+          { name: "Blog", href: "/blog" },
+          { name: category.label, href: `/blog/categoria/${category.slug}` },
+        ]}
+        class="mb-6"
+      />
+      <span
+        class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
+        style={`background-color: color-mix(in oklab, ${category.color} 12%, white); color: ${category.color}; border: 1px solid color-mix(in oklab, ${category.color} 20%, white);`}
+      >
+        <Icon name={category.icon} class="size-3.5" aria-hidden="true" />
+        Categoria
+      </span>
+      <SectionHeading
+        title={category.label}
+        subtitle={category.description}
+        class="mt-3"
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-wide">
+      {items.length === 0 ? (
+        <div class="rounded-[var(--radius-lg)] border border-dashed border-[var(--color-border-strong)] bg-[var(--color-surface-soft)] p-12 text-center">
+          <p class="text-lg text-[var(--color-ink-soft)]">
+            Stiamo preparando contenuti per questa categoria. Nel frattempo <a href="/contatti">contattaci</a> o vai al <a href="/blog">blog completo</a>.
+          </p>
+        </div>
+      ) : (
+        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {items.map((a) => <ArticleCard article={a} />)}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

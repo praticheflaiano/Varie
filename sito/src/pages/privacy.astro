@@ -1,0 +1,83 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import { CONTACT, SITE } from "~/consts";
+
+const updatedAt = "26 aprile 2026";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Informativa privacy del Centro Pratiche Flaiano: come trattiamo i tuoi dati personali ai sensi del GDPR (Regolamento UE 2016/679)."
+>
+  <section class="bg-[var(--color-surface-soft)] py-10">
+    <div class="container-narrow">
+      <Breadcrumb items={[{ name: "Privacy Policy", href: "/privacy" }]} class="mb-6" />
+      <h1 class="font-display">Privacy Policy</h1>
+      <p class="mt-4 text-[var(--color-ink-soft)]">Ultimo aggiornamento: {updatedAt}</p>
+    </div>
+  </section>
+
+  <article class="container-narrow prose-article py-12">
+    <p>
+      Il <strong>{SITE.legalName}</strong> ("<strong>Titolare</strong>") rispetta la riservatezza dei dati personali degli utenti del sito web {SITE.url} e dei propri clienti, in conformita al <strong>Regolamento UE 2016/679 (GDPR)</strong> e alla normativa italiana di adeguamento (D.Lgs. 196/2003 e successive modifiche).
+    </p>
+
+    <h2>1. Titolare del trattamento</h2>
+    <p>
+      Titolare del trattamento e {SITE.legalName}, con sede in {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality}.
+      Email: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>. Telefono: {CONTACT.phone.landline}.
+    </p>
+
+    <h2>2. Categorie di dati trattati</h2>
+    <ul>
+      <li><strong>Dati di navigazione</strong>: indirizzo IP, tipo di browser, pagine visitate, durata della visita (raccolti in forma aggregata).</li>
+      <li><strong>Dati forniti volontariamente</strong>: nome, cognome, email, telefono, codice fiscale e altri dati comunicati nei form di contatto o per l'erogazione dei servizi CAF e Patronato.</li>
+      <li><strong>Cookie tecnici</strong>: strettamente necessari al funzionamento del sito.</li>
+    </ul>
+
+    <h2>3. Finalita e basi giuridiche</h2>
+    <ul>
+      <li>Erogare i servizi richiesti (consulenza fiscale, previdenziale, amministrativa) - base giuridica: esecuzione del contratto.</li>
+      <li>Adempiere a obblighi di legge (fiscali, tributari, antiriciclaggio) - base giuridica: obbligo legale.</li>
+      <li>Rispondere a richieste informative - base giuridica: consenso o legittimo interesse.</li>
+      <li>Inviare comunicazioni informative su scadenze e novita - base giuridica: consenso revocabile.</li>
+    </ul>
+
+    <h2>4. Modalita di trattamento</h2>
+    <p>
+      I dati sono trattati con strumenti elettronici e cartacei, con misure di sicurezza adeguate a prevenire perdita, accessi non autorizzati o usi illeciti. Conserviamo i dati per il tempo necessario alle finalita per cui sono stati raccolti e nel rispetto degli obblighi di legge (es. archiviazione decennale per documenti fiscali).
+    </p>
+
+    <h2>5. Comunicazione e trasferimento</h2>
+    <p>
+      I dati possono essere comunicati a:
+    </p>
+    <ul>
+      <li>Agenzia delle Entrate, INPS, INAIL, enti pubblici per l'invio telematico delle pratiche;</li>
+      <li>UNSIC ed ENASC per gli adempimenti istituzionali di CAF e Patronato;</li>
+      <li>Fornitori di servizi tecnici (hosting, software gestionali) nominati Responsabili del trattamento ex art. 28 GDPR.</li>
+    </ul>
+    <p>
+      Non trasferiamo dati al di fuori dell'UE/SEE.
+    </p>
+
+    <h2>6. Diritti dell'interessato</h2>
+    <p>
+      In ogni momento puoi esercitare i diritti previsti dagli artt. 15-22 GDPR: <strong>accesso, rettifica, cancellazione, limitazione, portabilita, opposizione</strong>. Puoi inoltre proporre reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>).
+    </p>
+    <p>
+      Per esercitare i tuoi diritti scrivi a <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>.
+    </p>
+
+    <h2>7. Cookie</h2>
+    <p>
+      Il sito utilizza solo cookie tecnici necessari al funzionamento. Per dettagli vedi la <a href="/cookie">Cookie Policy</a>.
+    </p>
+
+    <h2>8. Modifiche</h2>
+    <p>
+      La presente informativa puo essere aggiornata. La versione vigente e sempre quella pubblicata in questa pagina, con data di ultimo aggiornamento.
+    </p>
+  </article>
+</BaseLayout>

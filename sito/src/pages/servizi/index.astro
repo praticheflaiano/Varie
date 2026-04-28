@@ -1,0 +1,105 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import Card from "~/components/ui/Card.astro";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+import { Icon } from "astro-icon/components";
+
+const clusters = [
+  {
+    href: "/servizi/caf",
+    eyebrow: "CAF UNSIC",
+    title: "Servizi fiscali e tributari",
+    desc: "Dichiarazioni dei redditi, ISEE, IMU, successioni, contratti di affitto, bonus fiscali.",
+    items: [
+      "Modello 730 e Redditi PF",
+      "ISEE ordinario, corrente e universitario",
+      "Calcolo IMU, TARI, F24",
+      "Dichiarazione di successione e voltura catastale",
+      "Registrazione contratti di affitto (RLI)",
+      "Bonus ristrutturazione, ecobonus, mobili",
+    ],
+    icon: "heroicons:document-text",
+    color: "var(--color-brand-700)",
+  },
+  {
+    href: "/servizi/patronato",
+    eyebrow: "Patronato ENASC",
+    title: "Pratiche previdenziali e assistenziali",
+    desc: "Pensioni, disoccupazione, invalidita civile, Legge 104, assegno unico, maternita.",
+    items: [
+      "Domanda di pensione di vecchiaia/anticipata",
+      "NASpI e dimissioni online",
+      "Invalidita civile, Legge 104, accompagnamento",
+      "Assegno Unico Universale",
+      "ADI, SFL, sostegno al reddito",
+      "RED, INVCIV, ACCAS/PS",
+    ],
+    icon: "heroicons:identification",
+    color: "var(--color-accent-600)",
+  },
+  {
+    href: "/servizi/servizi-vari",
+    eyebrow: "Servizi amministrativi",
+    title: "Pratiche di vita quotidiana",
+    desc: "PEC, utenze, certificati, cambi residenza, comunicazioni con la PA.",
+    items: [
+      "Attivazione PEC e gestione",
+      "Cambio residenza e certificati",
+      "Confronto e cambio utenze (luce, gas)",
+      "Assicurazioni auto e moto",
+      "Rateizzazioni Agenzia Entrate Riscossione",
+      "Comunicazioni con AdE e INPS",
+    ],
+    icon: "heroicons:cog-6-tooth",
+    color: "var(--color-success-600)",
+  },
+];
+---
+
+<BaseLayout
+  title="Tutti i servizi: CAF, Patronato e pratiche amministrative"
+  description="I servizi del Centro Pratiche Flaiano a Roma: CAF UNSIC (730, ISEE, IMU, successioni), Patronato ENASC (pensioni, NASpI, AUU, invalidita) e servizi amministrativi (PEC, utenze, certificati)."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
+      <Breadcrumb items={[{ name: "Servizi", href: "/servizi" }]} class="mb-6" />
+      <SectionHeading
+        eyebrow="I nostri servizi"
+        title="Tutto quello che ti serve, in un unico posto"
+        subtitle="Il Centro Pratiche Flaiano e CAF UNSIC e Patronato ENASC. Sotto lo stesso tetto trovi competenze fiscali, previdenziali e amministrative."
+        level="h1"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-wide grid gap-6 lg:grid-cols-3">
+      {clusters.map((c) => (
+        <Card href={c.href} hoverable padded={false} class="group p-7">
+          <div class="flex size-12 items-center justify-center rounded-lg" style={`background-color: color-mix(in oklab, ${c.color} 10%, white); color: ${c.color};`}>
+            <Icon name={c.icon} class="size-6" aria-hidden="true" />
+          </div>
+          <p class="mt-5 text-xs font-bold uppercase tracking-wider" style={`color: ${c.color}`}>{c.eyebrow}</p>
+          <h2 class="mt-2 font-display text-2xl font-bold text-[var(--color-ink)]">{c.title}</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">{c.desc}</p>
+          <ul class="mt-5 space-y-1.5 text-sm text-[var(--color-ink-soft)]">
+            {c.items.map((it) => (
+              <li class="flex items-start gap-2">
+                <Icon name="heroicons:check-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" aria-hidden="true" />
+                {it}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand-700)] group-hover:gap-2 transition-all">
+            Approfondisci
+            <Icon name="heroicons:arrow-right" class="size-4" />
+          </p>
+        </Card>
+      ))}
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

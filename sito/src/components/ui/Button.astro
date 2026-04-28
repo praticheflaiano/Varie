@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "whatsapp" | "accent";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  type?: "button" | "submit" | "reset";
+  icon?: string;
+  iconPosition?: "left" | "right";
+  external?: boolean;
+  disabled?: boolean;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  type = "button",
+  icon,
+  iconPosition = "right",
+  external = false,
+  disabled = false,
+  ariaLabel,
+  class: className = "",
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-md)] transition-all duration-150 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent-400 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap";
+
+const variants: Record<string, string> = {
+  primary:
+    "bg-brand-900 text-white hover:bg-brand-800 active:bg-brand-950 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)]",
+  secondary:
+    "bg-white text-brand-900 border border-brand-200 hover:border-brand-400 hover:bg-brand-50",
+  ghost:
+    "bg-transparent text-brand-900 hover:bg-brand-50",
+  accent:
+    "bg-accent-400 text-brand-950 hover:bg-accent-300 active:bg-accent-500 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)]",
+  whatsapp:
+    "bg-[#25D366] text-white hover:bg-[#1ebe5a] shadow-[var(--shadow-soft)]",
+};
+
+const sizes: Record<string, string> = {
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-5 py-2.5 text-base",
+  lg: "px-7 py-3.5 text-lg",
+};
+
+const cls = [base, variants[variant], sizes[size], className].join(" ");
+const externalAttrs = external
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+---
+
+{href ? (
+  <a
+    href={href}
+    class={cls}
+    aria-label={ariaLabel}
+    aria-disabled={disabled}
+    {...externalAttrs}
+  >
+    {icon && iconPosition === "left" && <Icon name={icon} class="size-5" aria-hidden="true" />}
+    <slot />
+    {icon && iconPosition === "right" && <Icon name={icon} class="size-5" aria-hidden="true" />}
+    {external && (
+      <Icon name="heroicons:arrow-top-right-on-square" class="size-4 opacity-70" aria-label="(apre in nuova scheda)" />
+    )}
+  </a>
+) : (
+  <button type={type} class={cls} disabled={disabled} aria-label={ariaLabel}>
+    {icon && iconPosition === "left" && <Icon name={icon} class="size-5" aria-hidden="true" />}
+    <slot />
+    {icon && iconPosition === "right" && <Icon name={icon} class="size-5" aria-hidden="true" />}
+  </button>
+)}

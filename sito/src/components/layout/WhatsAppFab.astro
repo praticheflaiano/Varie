@@ -1,0 +1,45 @@
+---
+import { CONTACT } from "~/consts";
+---
+
+<a
+  href={`${CONTACT.whatsapp.link}?text=${encodeURIComponent("Salve, vorrei informazioni su...")}`}
+  target="_blank"
+  rel="noopener"
+  class="whatsapp-fab"
+  aria-label="Contattaci su WhatsApp"
+>
+  <svg viewBox="0 0 32 32" class="size-7" aria-hidden="true" fill="currentColor">
+    <path d="M19.11 17.205c-.372 0-1.088 1.39-1.518 1.39a.63.63 0 0 1-.315-.1c-.802-.402-1.504-.817-2.163-1.447-.545-.516-1.146-1.29-1.46-1.963a.426.426 0 0 1-.073-.215c0-.33.99-.945.99-1.49 0-.143-.73-2.09-.832-2.335-.143-.372-.214-.487-.6-.487-.187 0-.36-.043-.53-.043-.302 0-.53.115-.7.315-.402.456-.957 1.29-.957 2.236 0 1.045.6 2.064 1.39 2.92 1.32 1.475 3.118 2.964 4.808 3.494.358.115.745.215 1.118.215.526 0 1.06-.114 1.503-.388.487-.302.7-.762.7-1.32 0-.358 0-.832-.43-.974-.36-.16-1.103-.572-1.388-.572m-3.32 6.94c-1.762 0-3.508-.585-4.873-1.65a.49.49 0 0 0-.26-.072c-.072 0-.143.014-.214.043l-2.78 1.058 1.073-2.665a.594.594 0 0 0-.085-.586C7.68 18.93 7.092 17.215 7.092 15.43c0-4.812 3.91-8.722 8.722-8.722s8.723 3.91 8.723 8.722c0 4.812-3.91 8.715-8.723 8.715M16.026 5.05c-5.733 0-10.387 4.654-10.387 10.387 0 1.962.544 3.866 1.575 5.515L5.114 26l5.16-1.962a10.34 10.34 0 0 0 5.752 1.733c5.733 0 10.387-4.654 10.387-10.388C26.413 9.65 21.76 5.05 16.026 5.05" />
+  </svg>
+  <span class="hidden sm:inline">WhatsApp</span>
+</a>
+
+<style>
+  .whatsapp-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 40;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: white;
+    padding: 0.875rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .whatsapp-fab:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+    color: white;
+  }
+  .whatsapp-fab:focus-visible {
+    outline: 3px solid var(--color-accent-400);
+    outline-offset: 3px;
+  }
+</style>

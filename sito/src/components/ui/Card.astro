@@ -1,0 +1,38 @@
+---
+interface Props {
+  as?: "div" | "article" | "section" | "li";
+  href?: string;
+  hoverable?: boolean;
+  padded?: boolean;
+  bordered?: boolean;
+  class?: string;
+}
+
+const {
+  as: Tag = "div",
+  href,
+  hoverable = false,
+  padded = true,
+  bordered = true,
+  class: className = "",
+} = Astro.props;
+
+const base = "block bg-white rounded-[var(--radius-lg)] transition-all duration-200";
+const padding = padded ? "p-6 md:p-8" : "";
+const border = bordered ? "border border-[var(--color-border)]" : "";
+const hover = hoverable
+  ? "hover:shadow-[var(--shadow-lift)] hover:-translate-y-0.5 hover:border-brand-200 cursor-pointer"
+  : "shadow-[var(--shadow-soft)]";
+
+const cls = [base, padding, border, hover, className].join(" ");
+---
+
+{href ? (
+  <a href={href} class={cls}>
+    <slot />
+  </a>
+) : (
+  <Tag class={cls}>
+    <slot />
+  </Tag>
+)}

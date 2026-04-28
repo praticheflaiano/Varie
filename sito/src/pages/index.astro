@@ -1,0 +1,97 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Hero from "~/components/home/Hero.astro";
+import TrustBar from "~/components/home/TrustBar.astro";
+import ServicesGrid from "~/components/home/ServicesGrid.astro";
+import WhyUs from "~/components/home/WhyUs.astro";
+import TesseramentoTeaser from "~/components/home/TesseramentoTeaser.astro";
+import BookingCTA from "~/components/home/BookingCTA.astro";
+import ZoneSection from "~/components/home/ZoneSection.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import ArticleCard from "~/components/blog/ArticleCard.astro";
+import Accordion from "~/components/ui/Accordion.svelte";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
+import { getVisibleArticles } from "~/utils/articles";
+import { Icon } from "astro-icon/components";
+
+const articles = (await getVisibleArticles()).slice(0, 4);
+
+const homeFaq = [
+  {
+    question: "Devo essere socio per usufruire dei vostri servizi?",
+    answer:
+      "No, alcuni servizi sono accessibili a tutti. La tessera (30 € annuali o 20 € semestrali per nucleo familiare) ti da accesso a <strong>tariffe agevolate</strong>, priorita sugli appuntamenti e consulenza fiscale e previdenziale illimitata.",
+  },
+  {
+    question: "Dove si trova la sede del Centro Pratiche Flaiano?",
+    answer:
+      "Siamo a Roma, in <strong>Via Filoteo Alberini 25, interno 10</strong> (Centro Acquisti Flaiano), nel quartiere Vigne Nuove, Municipio III. Serviamo Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma e tutta la zona nord di Roma.",
+  },
+  {
+    question: "Posso essere seguito anche da remoto?",
+    answer:
+      "Si. Offriamo <strong>consulenza video o telefonica</strong> per chi non puo raggiungere la sede. Puoi prenotare l'appuntamento da remoto direttamente dal sito.",
+  },
+  {
+    question: "Quali documenti devo portare per il 730?",
+    answer:
+      "In linea generale: documento d'identita, codice fiscale di tutti i membri del nucleo, Certificazione Unica 2026, ricevute spese sanitarie e altre detraibili, contratti di affitto/mutuo. <a href='/blog/guida-730-2026-documenti-scadenze'>Trovi la lista completa nel nostro articolo dedicato al 730/2026</a>.",
+  },
+  {
+    question: "Quanto costa fare il 730?",
+    answer:
+      "Il 730 ha un costo a partire da <strong>30 €</strong> per situazioni semplici. Per i soci tesserati le tariffe sono agevolate. Forniamo sempre un preventivo prima di iniziare la pratica.",
+  },
+];
+---
+
+<BaseLayout
+  title=""
+  description="Centro Pratiche Flaiano: CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. 730, ISEE, IMU, successioni, pensioni, NASpI, invalidita civile, assegno unico. Tessera 30 euro/anno per nucleo. Prenota appuntamento."
+>
+  <JsonLdFaq slot="head" items={homeFaq} />
+
+  <Hero />
+  <TrustBar />
+  <ServicesGrid />
+  <WhyUs />
+  <TesseramentoTeaser />
+
+  {articles.length > 0 && (
+    <section class="section">
+      <div class="container-wide">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+          <SectionHeading
+            eyebrow="Aggiornamenti"
+            title="Ultimi articoli dal blog"
+            subtitle="Guide, scadenze e novita normative spiegate in italiano semplice. Sempre con fonti ufficiali."
+          />
+          <a href="/blog" class="inline-flex items-center gap-1.5 font-semibold text-[var(--color-brand-700)] hover:text-[var(--color-brand-900)]">
+            Tutti gli articoli
+            <Icon name="heroicons:arrow-right" class="size-4" />
+          </a>
+        </div>
+        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          {articles.map((a) => <ArticleCard article={a} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <ZoneSection />
+
+  <section class="section">
+    <div class="container-narrow">
+      <SectionHeading
+        eyebrow="Domande frequenti"
+        title="Le risposte alle domande piu comuni"
+        align="center"
+      />
+      <div class="mt-10">
+        <Accordion client:visible items={homeFaq} />
+      </div>
+    </div>
+  </section>
+
+  <BookingCTA />
+</BaseLayout>

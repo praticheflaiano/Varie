@@ -1,0 +1,89 @@
+---
+import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE } from "~/consts";
+
+const data = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "AccountingService", "FinancialService"],
+  "@id": `${SITE.url}/#organization`,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  description: SITE.defaultDescription,
+  url: SITE.url,
+  logo: `${SITE.url}/img/logo/flaiano-mark.svg`,
+  image: `${SITE.url}${SITE.ogImage}`,
+  slogan: SITE.claim,
+  telephone: CONTACT.phone.landlineRaw,
+  email: CONTACT.email,
+  priceRange: "€€",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: CONTACT.address.street,
+    addressLocality: CONTACT.address.locality,
+    postalCode: CONTACT.address.postalCode,
+    addressRegion: CONTACT.address.region,
+    addressCountry: CONTACT.address.countryCode,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: CONTACT.geo.latitude,
+    longitude: CONTACT.geo.longitude,
+  },
+  hasMap: CONTACT.mapsUrl,
+  openingHoursSpecification: HOURS_SCHEMA,
+  areaServed: ZONE_SERVITE.map((z) => ({
+    "@type": "Place",
+    name: `${z.name}, Roma`,
+  })),
+  sameAs: [SOCIAL.facebook, SOCIAL.whatsappChannel],
+  potentialAction: {
+    "@type": "ReserveAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: BOOKING.arcanisGroup,
+      inLanguage: "it-IT",
+      actionPlatform: [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform",
+      ],
+    },
+    result: {
+      "@type": "Reservation",
+      name: "Appuntamento al Centro Pratiche Flaiano",
+    },
+  },
+  knowsAbout: [
+    "Dichiarazione dei redditi 730",
+    "ISEE",
+    "IMU",
+    "Successioni",
+    "Pensioni",
+    "NASpI",
+    "Invalidita civile",
+    "Legge 104",
+    "Assegno Unico",
+    "Bonus fiscali",
+  ],
+};
+
+const websiteData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  description: SITE.defaultDescription,
+  inLanguage: "it-IT",
+  publisher: { "@id": `${SITE.url}/#organization` },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${SITE.url}/blog?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(data)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(websiteData)} />
