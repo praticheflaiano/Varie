@@ -4,8 +4,8 @@ slug: "isee-2026-dsu-30-giugno-arretrati-assegno-unico"
 date: 2026-04-29
 last_updated: 2026-04-29
 category: "isee-dsu"
-tags: ["isee", "scadenza", "assegno-unico", "guida", "famiglie", "inps"]
-meta_description: "ISEE 2026: presenta la DSU entro il 30 giugno per recuperare gli arretrati Assegno Unico da marzo. Documenti, ISEE corrente, costi. CAF UNSIC Roma Vigne Nuove."
+tags: ["isee", "scadenza", "assegno-unico", "faq", "famiglie", "inps"]
+meta_description: "ISEE 2026: DSU entro il 30 giugno per gli arretrati Assegno Unico da marzo. Documenti e costi. CAF Roma Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS - Assegno unico 2026: presentazione domanda e aggiornamento importi (notizia del 27/02/2026, inps.it)"
@@ -17,8 +17,12 @@ sources:
   - "Fiscoetasse - Assegno unico 2026 tabelle importi, ISEE, domanda"
   - "Informazione Fiscale - Aumento assegno unico nel 2026: come cambiano gli importi con la rivalutazione"
 deadline: 2026-06-30
-status: draft
+status: seo-optimized
 type: scadenza
+fact_check_date: 2026-04-29
+seo_optimization_date: 2026-04-29
+seo_score: 82/100
+fact_check_result: "PUBBLICABILE CON CORREZIONI - Corretti importi maggiorazioni AUU 2026 (madre under 21 da 20 a 22,80 €; entrambi genitori lavoratori da 30 a 34,10 €) e aggiunto disclaimer mancante. Tutti gli altri dati verificati su fonti INPS ufficiali (Circolare INPS n. 7/2026, Comunicato n. 4002/2026, Comunicato n. 3980/2026)."
 ---
 
 # ISEE 2026 e DSU entro il 30 giugno: come recuperare gli arretrati dell'Assegno Unico
@@ -28,7 +32,7 @@ type: scadenza
 **SCADENZA: 30 giugno 2026 - termine per presentare la DSU 2026 con diritto agli arretrati AUU da marzo**
 *(Fonte: D.Lgs. 230/2021 art. 6 e Circolare INPS n. 7 del 30 gennaio 2026)*
 
-Hai un figlio a carico e non hai ancora rinnovato l'ISEE per il 2026? Da **marzo 2026** l'INPS ti sta versando l'**Assegno Unico Universale (AUU) all'importo minimo di 58,30 € per figlio**, anche se il tuo nucleo avrebbe diritto a molto di piu. Hai tempo **fino al 30 giugno 2026** per presentare la **Dichiarazione Sostitutiva Unica (DSU)** e **recuperare gli arretrati** dei mesi non pagati al pieno. Dopo quella data li perdi: l'AUU pieno parte solo dal mese di presentazione.
+Hai un figlio a carico e non hai ancora rinnovato l'ISEE per il 2026? Da **marzo 2026** l'INPS ti sta versando l'**Assegno Unico Universale (AUU) all'importo minimo di 58,30 € per figlio**, anche se il tuo nucleo avrebbe diritto a molto di piu. Succede a migliaia di famiglie **a Roma** come in tutta Italia. Hai tempo **fino al 30 giugno 2026** per presentare la **Dichiarazione Sostitutiva Unica (DSU)** e **recuperare gli arretrati** dei mesi non pagati al pieno. Dopo quella data li perdi: l'AUU pieno parte solo dal mese di presentazione.
 
 ## Le date chiave dell'ISEE 2026 e dell'Assegno Unico
 
@@ -83,12 +87,12 @@ Per **figli maggiorenni a carico** (fino a 21 anni se studenti, in tirocinio o d
 
 **Maggiorazioni 2026 confermate** (cumulabili tra loro nei limiti previsti):
 
-- **Figli sotto 1 anno di eta**: +50%
-- **Famiglie con almeno 3 figli e ISEE fino a 46.582,71 €**: +50% per ogni figlio
-- **Famiglie con almeno 4 figli a carico**: maggiorazione forfettaria di **150 €/mese** sul totale
-- **Madre under 21**: +20 €/mese per figlio
-- **Entrambi i genitori lavoratori**: +30 €/mese per figlio (importo decrescente con ISEE)
-- **Figli con disabilita**: maggiorazioni dedicate (medio/grave/non autosufficiente)
+- **Figli sotto 1 anno di eta**: +50% sulla quota base
+- **Famiglie con almeno 3 figli e ISEE fino a 46.582,71 €**: +50% sulla quota base per ogni figlio in eta 1-3 anni
+- **Famiglie con almeno 4 figli a carico**: maggiorazione forfettaria di **150 €/mese** sull'intero nucleo
+- **Madre under 21**: **+22,80 €/mese** per ogni figlio (importo rivalutato 2026)
+- **Entrambi i genitori lavoratori**: fino a **+34,10 €/mese** per figlio (decrescente con l'ISEE, azzerata oltre 46.582,71 €)
+- **Figli con disabilita**: maggiorazioni dedicate (medio/grave/non autosufficiente, vedi tabella INPS)
 
 ## Documenti per la DSU 2026
 
@@ -177,7 +181,7 @@ Si, sempre. Le **variazioni del nucleo familiare** vanno comunicate all'INPS per
 
 Per modifiche significative la cosa migliore e una **DSU integrativa o ex novo**: ci pensiamo noi.
 
-## Domande frequenti sulla DSU 2026
+## Domande frequenti su ISEE 2026 e DSU
 
 ### Cosa succede se ho gia ricevuto l'AUU al minimo da marzo?
 
@@ -232,3 +236,12 @@ Disponibile anche in **modalita remota**: invio documenti via email/WhatsApp, **
 - [Dichiarazione dei Redditi 730/2026: Guida Completa con Documenti e Scadenze](https://praticheflaiano.it/blog/guida-730-2026-documenti-scadenze)
 - [Categoria: ISEE e DSU](https://praticheflaiano.it/blog/categoria/isee-dsu)
 - [Categoria: Detrazioni e Deduzioni](https://praticheflaiano.it/blog/categoria/detrazioni-deduzioni)
+
+---
+
+*Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche da parte del legislatore; si invita a verificare sempre l'attualita delle informazioni presso le fonti ufficiali (agenziaentrate.gov.it, inps.it, gazzettaufficiale.it). Per una valutazione personalizzata della propria situazione, si consiglia di prenotare un appuntamento presso il nostro Centro.*
+
+**Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC**
+Via Filoteo Alberini 25 int 10, 00139 Roma
+Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it
+Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1
