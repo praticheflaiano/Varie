@@ -15,7 +15,7 @@ sources:
   - "Art. 10 del D.P.R. n. 633/1972 (operazioni esenti IVA)"
   - "Art. 36-bis del D.P.R. n. 633/1972 (dispensa dagli obblighi di fatturazione)"
 deadline: 2026-04-30
-status: review
+status: published
 type: scadenza
 fact_check_date: 2026-04-13
 fact_check_status: "PUBBLICABILE CON CORREZIONI - correzioni applicate"

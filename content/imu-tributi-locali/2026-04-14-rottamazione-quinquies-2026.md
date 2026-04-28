@@ -12,7 +12,7 @@ sources:
   - "Agenzia delle Entrate-Riscossione - Sezione Definizione agevolata Rottamazione-quinquies (agenziaentrateriscossione.gov.it)"
   - "Art. 36-bis e 36-ter DPR n. 600/1973 (controlli automatici e formali dichiarazioni dei redditi)"
   - "Art. 54-bis e 54-ter DPR n. 633/1972 (controlli automatici IVA)"
-status: review
+status: published
 fact_check_date: 2026-04-13
 fact_check_result: "PUBBLICABILE CON CORREZIONI"
 type: guida

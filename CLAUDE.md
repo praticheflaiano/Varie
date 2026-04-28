@@ -17,16 +17,30 @@ Base URL blog: https://praticheflaiano.it/blog/
 - **Patronato**: Pensioni, Legge 104/invalidita, Accompagno, Assegno Unico, Maternita/bonus nido, ADI/SFL, NASpI
 - **Generali**: PEC, Rateizzazioni, Utenze, Assicurazioni, Cambio residenza, Certificati, Comunicazioni AdE
 
-## Directory
+## ⚡ Knowledge Base — Vault Obsidian (CONSULTARE PRIMA)
 
-- `docs/` → Riferimenti: regole-contenuto (regole unificate), tassonomia, personas
+**`vault/` contiene la mappa di conoscenza operativa del progetto.** Prima di affrontare un task non triviale, **leggere `vault/00-INDEX.md`** e identificare la nota pertinente. Riduce drasticamente il context-burn rispetto al rileggere transcript.
+
+- `vault/00-INDEX.md` → MOC (entry point)
+- `vault/procedure/` → workflow editoriale, deploy Vercel, redesign, pubblicazione articolo, knowledge base
+- `vault/lessons/` → errori incontrati e fix (Vercel rootDir, stream timeout, race condition, licenze, design bundle, SSO)
+- `vault/riferimenti/` → agenti, skill, comandi, dati ufficio, credenziali (no segreti)
+- `vault/template/` → schemi standard procedura/lesson
+
+**Regola operativa**: ogni nuovo errore o cambio significativo va riflesso nel vault. Il vault e fonte di verita operativa.
+
+## Directory progetto
+
+- `vault/` → **Knowledge base Obsidian (vedi sopra)**
+- `sito/` → Sito web Astro 5 (deploy Vercel: praticheflaiano-sito.vercel.app)
+- `docs/` → Riferimenti: regole-contenuto, tassonomia, personas
 - `content/_templates/` → 4 template articoli (informativo, scadenza, guida, novita)
-- `content/<categoria>/` → 12 directory per articoli pubblicati
+- `content/<categoria>/` → 13 directory per articoli pubblicati
 - `reviews/` → Report di fact-check e SEO (separati dagli articoli)
 - `calendar/` → Piano editoriale attivo + argomenti stagionali
 - `social/` → Output post Facebook e WhatsApp
-- `.claude/agents/` → 5 subagent specializzati
-- `.claude/skills/` → 5 slash command invocabili
+- `.claude/agents/` → 5 subagent specializzati (vedi `vault/riferimenti/agenti-disponibili.md`)
+- `.claude/skills/` → 5 slash command invocabili (vedi `vault/riferimenti/skill-progetto.md`)
 
 ## Regola fondamentale: ZERO INVENZIONI
 
@@ -64,3 +78,23 @@ draft → fact-checked → seo-optimized → ready → published
 - `/plan-month [mese] [anno]`
 - `/create-social [percorso-articolo]`
 - `/update-calendar`
+
+## Procedure consolidate (link al vault)
+
+Prima di eseguire questi task, leggere la procedura corrispondente:
+
+| Task | Procedura |
+|---|---|
+| Scrivere e pubblicare un articolo dalla A alla Z | `vault/procedure/04-pubblicazione-articolo.md` |
+| Workflow editoriale completo (panoramica) | `vault/procedure/01-workflow-editoriale.md` |
+| Deploy o redeploy Vercel | `vault/procedure/02-deploy-vercel.md` |
+| Modificare design system del sito | `vault/procedure/03-redesign-frontend.md` |
+| Mantenere il vault stesso | `vault/procedure/05-knowledge-base-vault.md` |
+
+## Stato infrastruttura (2026-04-28)
+
+- **Sito web**: live su https://praticheflaiano-sito.vercel.app (Astro 5 + Tailwind v4 + Svelte islands, design "Adriatic Blue")
+- **Vercel project**: `praticheflaiano-sito`, rootDirectory `sito`, SSO disattivata
+- **GitHub**: repo `praticheflaiano/Varie`, branch attivo `claude/identify-project-ULhhV`, PR draft #1 aperta
+- **Articoli published**: 4 (Precompilata 2026, Guida 730/2026, IVA 2026, Rottamazione Quinquies 2026)
+- **Token Vercel temporanei usati e da revocare**: vedi `vault/riferimenti/credenziali-deploy.md`
