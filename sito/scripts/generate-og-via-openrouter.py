@@ -159,6 +159,16 @@ PROMPTS = {
         "distinct roles. Studio composition.\n"
         + COMMON_STYLE
     ),
+    "bonus-dopo-diploma-2026-agevolazioni-neodiplomati": (
+        "Editorial illustration about post-secondary-school bonuses and "
+        "scholarships for newly graduated Italian students.\n\n"
+        "Subject: A graduation cap (cappello da diploma, mortarboard) in deep "
+        "blue with a warm gold tassel placed on top of two stacked university "
+        "books. Beside them, a paper coupon or voucher abstracted as a "
+        "rectangle in cream paper with a thin gold seal (no readable text). "
+        "Soft natural light from upper right. Geometric, vector-flat finish.\n"
+        + COMMON_STYLE
+    ),
 }
 
 
