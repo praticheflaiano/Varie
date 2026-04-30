@@ -169,6 +169,18 @@ PROMPTS = {
         "Soft natural light from upper right. Geometric, vector-flat finish.\n"
         + COMMON_STYLE
     ),
+    "detrazioni-spese-mediche-730-2026-guida-completa": (
+        "Editorial illustration about Italian medical expense tax deductions "
+        "in the 730 income tax return.\n\n"
+        "Subject: A small stack of pharmacy receipts in cream paper, "
+        "partially fanned out. Above them, a stylized medical cross symbol "
+        "in warm gold (like a small pharmacy sign). To the left, a "
+        "geometric calculator silhouette in deep blue. A single 730 form "
+        "rectangle hinted in the background. Clean studio light from upper "
+        "right. No readable text or numbers, no faces, no people. "
+        "Calm institutional mood.\n"
+        + COMMON_STYLE
+    ),
 }
 
 
