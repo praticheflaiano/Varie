@@ -42,8 +42,9 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[lessons/2026-04-vercel-sso-protection]] - Vercel team SSO protection blocca production di default
 - [[lessons/2026-04-org-usage-limit]] - Org monthly usage limit raggiunto durante mass-production batch di subagent
 - [[lessons/2026-04-isee-dsu-prima-presentazione-gratuita]] - ISEE/DSU al CAF: prima presentazione gratuita (convenzione INPS-CAF)
-- [[lessons/2026-04-cross-repo-deploy-sandbox-restricted]] - **Push verso repo non-whitelisted dal sandbox: bypass proxy + token utente usa-e-getta**
-- [[lessons/2026-04-anti-ripetizione-due-siti]] - **Anti-ripetizione tra siti distinti del brand: pattern "mappa vs dettaglio"**
+- [[lessons/2026-04-cross-repo-deploy-sandbox-restricted]] - Push verso repo non-whitelisted dal sandbox: bypass proxy + token utente usa-e-getta
+- [[lessons/2026-04-anti-ripetizione-due-siti]] - Anti-ripetizione tra siti distinti del brand: pattern "mappa vs dettaglio"
+- [[lessons/2026-04-image-gen-openrouter-gemini]] - **Generazione immagini OG via OpenRouter + Google Gemini Image (script + integrazione Astro)**
 
 ## Riferimenti rapidi
 

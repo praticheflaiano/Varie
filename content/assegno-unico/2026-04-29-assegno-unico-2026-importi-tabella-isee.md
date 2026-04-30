@@ -18,6 +18,8 @@ status: published
 fact_check_date: 2026-04-29
 fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: guida
+image: "/og/assegno-unico-2026-importi-tabella-isee.jpg"
+image_alt: "Illustrazione editoriale: pattern bar-chart astratto in toni di blu con aeroplanino di carta dorato, palette Adriatic Blue."
 ---
 
 # Assegno Unico 2026: tabella importi per fascia ISEE, maggiorazioni e disabilita

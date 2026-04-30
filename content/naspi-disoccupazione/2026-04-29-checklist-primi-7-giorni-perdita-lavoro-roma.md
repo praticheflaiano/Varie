@@ -18,6 +18,8 @@ status: published
 fact_check_date: 2026-04-29
 fact_check_result: "PUBBLICABILE - dati verificati su fonti ufficiali (INPS, Ministero Lavoro, normativa). Articolo procedurale, niente importi/aliquote da verificare al centesimo. Cross-link al portale NASpI per dettagli operativi (calcolo, OCR, anticipo)."
 type: scadenza
+image: "/og/checklist-primi-7-giorni-perdita-lavoro-roma.jpg"
+image_alt: "Illustrazione editoriale: checklist astratta con primi due check completati in oro, palette Adriatic Blue."
 ---
 
 # Hai perso il lavoro? La checklist dei primi 7 giorni - dal Patronato del Centro Pratiche Flaiano

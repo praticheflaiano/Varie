@@ -15,6 +15,8 @@ sources:
   - "Decreto Legislativo 4 marzo 2015, n. 22 (NASpI)"
   - "DPCM 159/2013 art. 11 (rilascio ISEE - sostitutive)"
 type: guida
+image: "/og/naspi-2026-patronato-vs-caf-cosa-fa-cosa.jpg"
+image_alt: "Illustrazione editoriale: due documenti paralleli verticali collegati da linea sottile in oro alla base, palette Adriatic Blue."
 status: published
 fact_check_date: 2026-04-29
 fact_check_result: "PUBBLICABILE - articolo procedurale su convenzioni INPS-CAF e Patronato gratuito ex Legge 152/2001. Tutti i riferimenti normativi verificati. Cross-link al portale NASpI per dettagli operativi (calcolatore, anticipo, OCR)."

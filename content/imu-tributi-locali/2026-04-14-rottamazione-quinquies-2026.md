@@ -16,6 +16,8 @@ status: published
 fact_check_date: 2026-04-13
 fact_check_result: "PUBBLICABILE CON CORREZIONI"
 type: guida
+image: "/og/rottamazione-quinquies-2026.jpg"
+image_alt: "Illustrazione editoriale: cartella sollevata con frammenti di carta che fluttuano via, palette Adriatic Blue."
 ---
 
 <!--

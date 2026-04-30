@@ -28,7 +28,9 @@ except ImportError:
     sys.exit(1)
 
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "google/gemini-2.5-flash-image"
+# Gemini 3 Pro Image: qualita superiore, ~$0.10/img (vs $0.04 di Flash).
+# Per il quality del Centro Pratiche Flaiano vale la differenza.
+MODEL = "google/gemini-3-pro-image-preview"
 
 API_KEY = os.environ.get("OPENROUTER_API_KEY")
 if not API_KEY:
@@ -68,15 +70,95 @@ Output: 1200x630 PNG, suitable as Open Graph hero image for a tax services blog.
 PROMPTS = {
     "precompilata-2026-30-aprile-14-maggio": (
         "Editorial illustration for an Italian tax services blog article about "
-        "'730 Precompilato 2026' (Italian pre-filled tax return for 2026). "
-        "\n\nSubject: Abstract symbolic composition — a stack of paper documents "
+        "'730 Precompilato 2026' (the pre-filled income tax return).\n\n"
+        "Subject: Abstract symbolic composition — a stack of paper documents "
         "in muted blue and cream, partially overlapping. A wall calendar in the "
-        "upper right with two abstract circle marks (no readable dates). A "
-        "geometric calculator silhouette in deep blue on the right edge. Soft "
-        "natural light from upper right. Pencil-like illustration finish.\n"
+        "upper right with two abstract circle marks. A geometric calculator "
+        "silhouette in deep blue on the right edge. Soft natural light from "
+        "upper right. Pencil-like illustration finish.\n"
         + COMMON_STYLE
     ),
-    # Aggiungere qui altri articoli quando si vuole scalare
+    "guida-730-2026-documenti-scadenze": (
+        "Editorial illustration about the Italian 730 tax return guide: which "
+        "documents to collect.\n\n"
+        "Subject: A neat folder open on a desk, papers fanning out (receipts, "
+        "medical bills abstracted as colored rectangles, a blank pay-slip "
+        "stylized in cream). A coffee cup in the upper right corner. Geometric "
+        "and clean. Late afternoon light from the right.\n"
+        + COMMON_STYLE
+    ),
+    "dichiarazione-iva-2026-scadenza-30-aprile": (
+        "Editorial illustration about the Italian VAT (IVA) annual declaration "
+        "deadline.\n\n"
+        "Subject: A tall stack of ledger-style accounting papers in deep blue "
+        "tones, an abstract stamp shape in warm gold next to it (suggesting "
+        "official approval). A pen lying diagonally. No readable text or "
+        "numbers. Clean studio setup.\n"
+        + COMMON_STYLE
+    ),
+    "rottamazione-quinquies-2026": (
+        "Editorial illustration about an Italian tax amnesty program "
+        "('Rottamazione Quinquies' tax debts cancellation).\n\n"
+        "Subject: A folder of papers being lifted, with smaller paper "
+        "fragments floating away in the air (suggesting cancellation, "
+        "lightness). Background a quiet cream. A gold ribbon-like accent. "
+        "Calm hopeful mood without being saccharine.\n"
+        + COMMON_STYLE
+    ),
+    "isee-2026-dsu-30-giugno-arretrati-assegno-unico": (
+        "Editorial illustration about the Italian ISEE/DSU income statement "
+        "for family benefits, with a deadline of June 30.\n\n"
+        "Subject: An abstract family-shaped silhouette (no faces, just "
+        "geometric forms) on the right, paired with a single document and a "
+        "calendar showing one circled day in gold. Soft pastel cream "
+        "background. Calm warmth.\n"
+        + COMMON_STYLE
+    ),
+    "assegno-unico-2026-importi-tabella-isee": (
+        "Editorial illustration about the Italian Universal Single Allowance "
+        "(Assegno Unico Universale) for children, with amount tables.\n\n"
+        "Subject: A horizontal abstract bar-chart pattern in alternating blue "
+        "shades (tall to short, suggesting amounts decreasing by income "
+        "bracket), accompanied by a single small paper-airplane in gold "
+        "floating gently. No text on the bars. Clean minimal.\n"
+        + COMMON_STYLE
+    ),
+    "bonus-asilo-nido-2026-3600-euro-domanda-inps": (
+        "Editorial illustration about the Italian nursery school subsidy "
+        "(Bonus Asilo Nido).\n\n"
+        "Subject: A small abstract building shape (suggesting a nursery, very "
+        "geometric, no signage) on the right, with three colored geometric "
+        "blocks at its base (suggesting playful blocks, in deep blue, water "
+        "blue and gold). Soft sunlight from above. Warm but institutional.\n"
+        + COMMON_STYLE
+    ),
+    "imu-acconto-16-giugno-2026": (
+        "Editorial illustration about the Italian property tax (IMU) advance "
+        "payment due June 16.\n\n"
+        "Subject: A simplified geometric architectural facade of an Italian "
+        "apartment building, in cream-blue tones, with a single window in "
+        "warm gold light. Beside it, a small abstract bill or receipt. "
+        "Sober institutional mood.\n"
+        + COMMON_STYLE
+    ),
+    "checklist-primi-7-giorni-perdita-lavoro-roma": (
+        "Editorial illustration about a 7-day checklist for someone who just "
+        "lost their job in Italy (NASpI process).\n\n"
+        "Subject: An abstract checklist composition — seven horizontal lines, "
+        "the first two with completed checkmarks in gold, the others empty. "
+        "On the side, a small paper folder. No people, no faces. Soft hopeful "
+        "atmosphere.\n"
+        + COMMON_STYLE
+    ),
+    "naspi-2026-patronato-vs-caf-cosa-fa-cosa": (
+        "Editorial illustration about the difference between Italian Patronato "
+        "(welfare advisory) and CAF (tax advisory) services.\n\n"
+        "Subject: Two parallel paper documents standing upright, one slightly "
+        "in front of the other, one tinted deep blue and one cream. A subtle "
+        "thin gold line connects them at the base. Suggests cooperation and "
+        "distinct roles. Studio composition.\n"
+        + COMMON_STYLE
+    ),
 }
 
 

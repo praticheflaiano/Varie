@@ -17,6 +17,8 @@ sources:
 deadline: 2026-04-30
 status: published
 type: scadenza
+image: "/og/dichiarazione-iva-2026-scadenza-30-aprile.jpg"
+image_alt: "Illustrazione editoriale: documenti IVA accatastati con timbro astratto in oro, palette Adriatic Blue."
 fact_check_date: 2026-04-13
 fact_check_status: "PUBBLICABILE CON CORREZIONI - correzioni applicate"
 ---

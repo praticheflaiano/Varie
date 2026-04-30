@@ -19,6 +19,8 @@ status: published
 fact_check_date: 2026-04-29
 fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: scadenza
+image: "/og/imu-acconto-16-giugno-2026.jpg"
+image_alt: "Illustrazione editoriale: facciata stilizzata di un edificio italiano con finestra in luce dorata, palette Adriatic Blue."
 ---
 
 # IMU Acconto 16 giugno 2026: chi paga, come si calcola, modello F24

@@ -78,6 +78,20 @@ const related = await getRelatedArticles(article, 3);
       {article.data.meta_description}
     </p>
 
+    {article.data.image && (
+      <figure class="mt-8 -mx-4 sm:mx-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] shadow-[var(--shadow-card)]">
+        <img
+          src={article.data.image}
+          alt={article.data.image_alt ?? article.data.title}
+          width="1200"
+          height="630"
+          loading="eager"
+          decoding="async"
+          class="w-full h-auto block"
+        />
+      </figure>
+    )}
+
     <div class="mt-7 border-y border-[var(--color-border)] py-4">
       <ArticleMeta
         date={article.data.date}

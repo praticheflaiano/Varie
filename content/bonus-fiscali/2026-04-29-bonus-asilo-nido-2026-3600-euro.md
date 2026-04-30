@@ -18,6 +18,8 @@ status: published
 fact_check_date: 2026-04-29
 fact_check_result: "PUBBLICABILE - fact-check via OpenRouter DeepSeek V3 (fallback per org monthly limit Anthropic). Segnalazioni validate manualmente: vedi reviews/."
 type: novita
+image: "/og/bonus-asilo-nido-2026-3600-euro-domanda-inps.jpg"
+image_alt: "Illustrazione editoriale: edificio asilo nido geometrico con blocchi colorati alla base, palette Adriatic Blue."
 ---
 
 # Bonus Asilo Nido 2026: fino a 3.600 euro per famiglie - domanda INPS aperta

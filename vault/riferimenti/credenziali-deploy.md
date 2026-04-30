@@ -1,9 +1,9 @@
 ---
-title: "Riferimento: credenziali e config deploy (placeholder)"
+title: "Riferimento: credenziali e config deploy (placeholder + workflow)"
 type: riferimento
-tags: [deploy, vercel, github, credenziali]
+tags: [deploy, vercel, github, openrouter, credenziali]
 created: 2026-04-28
-updated: 2026-04-28
+updated: 2026-04-29
 ---
 
 # Credenziali e config deploy
@@ -77,12 +77,55 @@ Non gestito da Vercel/repo, e SaaS esterno con account separato (TODO: documenta
   2. Switch DNS A/CNAME `praticheflaiano.it` -> Vercel
   3. 301 redirect dagli slug del vecchio sito (mappa da preparare)
 
+## OpenRouter (LLM + image gen via fallback)
+
+- **Dashboard**: https://openrouter.ai
+- **Tokens**: https://openrouter.ai/keys
+- **Modelli usati**:
+  - **Fact-check fallback** (quando subagent Anthropic e bloccato dall'org limit):
+    `deepseek/deepseek-chat-v3-0324` — non-reasoning, 163K ctx, ~$0.0002/1K input, ~$0.0006/1K output. Costo per articolo ~$0.002.
+  - **Image generation** (OG image articoli blog):
+    `google/gemini-3-pro-image-preview` — qualita superiore, ~$0.10/img. **Modello di riferimento per immagini editoriali del Centro**.
+    Alternativa economica: `google/gemini-2.5-flash-image` (~$0.04/img) - qualita inferiore ma accettabile.
+- **Endpoint**: `https://openrouter.ai/api/v1/chat/completions` (compatibile OpenAI)
+- **Header obbligatori**: `Authorization: Bearer $OPENROUTER_API_KEY` + `Content-Type: application/json`
+- **Header opzionali raccomandati**: `HTTP-Referer: https://praticheflaiano-sito.vercel.app` + `X-Title: Centro Pratiche Flaiano`
+
+### Procedura token OpenRouter
+
+1. Crea token su https://openrouter.ai/keys con limit di spesa basso (es $5)
+2. Usa via env var `OPENROUTER_API_KEY`
+3. Mai committare in repo
+4. Revoca dopo task one-shot
+
+### Script disponibili che usano OpenRouter
+
+- `sito/scripts/factcheck-via-openrouter.py` - fact-check articoli (fallback)
+- `sito/scripts/generate-og-via-openrouter.py` - generazione OG image 1200x630 JPEG
+
+Vedi [[lessons/2026-04-org-usage-limit]] e [[lessons/2026-04-image-gen-openrouter-gemini]].
+
+## GitHub PAT per push cross-repo
+
+Il sandbox e whitelistato solo per `praticheflaiano/Varie`. Per pushare verso `domande-disoccupazione-web` o altri repo serve PAT utente:
+
+1. Crea PAT classic su https://github.com/settings/tokens/new
+2. Scope minimo: `public_repo` (per repo pubblici dell'utente)
+3. Scadenza 24h max
+4. Push tramite URL ephemeral:
+   ```bash
+   git -c "http.proxy=" push \
+     "https://x-access-token:${GH_TOKEN}@github.com/owner/repo.git" branch
+   ```
+5. PR creation via API REST (vedi `[[lessons/2026-04-cross-repo-deploy-sandbox-restricted]]`)
+6. Revoca dopo l'uso
+
 ## Provider altri servizi
 
 - **Email** (info@praticheflaiano.it): provider attuale TODO
 - **Cookie banner / privacy** (Iubenda? altro): TODO
 - **Form contatto futuro**: Resend (non ancora settato), Cloudflare Turnstile (non ancora settato)
-- **OG image dynamic**: TODO con Satori
+- **OG image dynamic**: implementato (`scripts/generate-og-via-openrouter.py`), commit asset versionati
 
 ## Vedi anche
 

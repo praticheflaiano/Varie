@@ -19,6 +19,8 @@ sources:
 deadline: 2026-06-30
 status: published
 type: scadenza
+image: "/og/isee-2026-dsu-30-giugno-arretrati-assegno-unico.jpg"
+image_alt: "Illustrazione editoriale: silhouette familiare astratta, documento e calendario con un giorno cerchiato in oro, palette Adriatic Blue."
 fact_check_date: 2026-04-29
 seo_optimization_date: 2026-04-29
 seo_score: 88/100
