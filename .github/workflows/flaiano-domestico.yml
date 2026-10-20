@@ -35,15 +35,17 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Verifica desktop, mobile e offline
         run: npm run test:browser
+      - name: Verifica anteprima ospitata
+        run: node scripts/check-hosted-preview.mjs
       - name: Prepara pacchetto PWA
         run: |
-          mkdir -p .pwa-test-artifacts
-          zip -r .pwa-test-artifacts/flaiano-colf-badanti-pwa.zip index.html styles.css app.js data.js engine.js exports.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png README.md scripts package.json
+          mkdir -p pwa-test-artifacts
+          zip -r pwa-test-artifacts/flaiano-colf-badanti-pwa.zip index.html styles.css app.js data.js engine.js exports.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png README.md scripts package.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: flaiano-domestico-verifiche-e-pwa
           path: |
-            colf-badanti-pwa/.pwa-test-artifacts/
+            colf-badanti-pwa/pwa-test-artifacts/
             colf-badanti-pwa/playwright-report/
           retention-days: 30

@@ -21,7 +21,7 @@ test("simulazione riapribile e importazione validata",()=>{
 });
 test("esportazioni bloccate per calcoli invalidi",()=>{const bad=calculate({hours:0});for(const fn of [docx,xlsx,pdf,snapshot])assert.throws(()=>fn(bad));});
 test("prepara campioni per verifica con software indipendenti",async()=>{
- await mkdir(".pwa-test-artifacts",{recursive:true});
- await writeFile(".pwa-test-artifacts/sample.docx",docx(r));await writeFile(".pwa-test-artifacts/sample.xlsx",xlsx(r));await writeFile(".pwa-test-artifacts/sample.pdf",pdf(r));
- await writeFile(".pwa-test-artifacts/expected.json",JSON.stringify({net:r.netPayable,cost:r.totalCost,annual:r.annualCost}));
+ await mkdir("pwa-test-artifacts",{recursive:true});
+ await writeFile("pwa-test-artifacts/sample.docx",docx(r));await writeFile("pwa-test-artifacts/sample.xlsx",xlsx(r));await writeFile("pwa-test-artifacts/sample.pdf",pdf(r));
+ await writeFile("pwa-test-artifacts/expected.json",JSON.stringify({net:r.netPayable,cost:r.totalCost,annual:r.annualCost}));
 });

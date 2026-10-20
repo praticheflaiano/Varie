@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from docx import Document
 from openpyxl import load_workbook
 from pypdf import PdfReader
-root=Path(".pwa-test-artifacts")
+root=Path("pwa-test-artifacts")
 expected=json.loads((root/"expected.json").read_text())
 for name in ("sample.docx","sample.xlsx"):
     with ZipFile(root/name) as z:

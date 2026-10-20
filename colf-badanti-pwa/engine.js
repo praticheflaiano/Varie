@@ -16,7 +16,7 @@ export function seniority(hire,reference) {
  return Math.max(0,Math.min(7,Math.floor(((y-hy)*12+m-hm-1)/24)));
 }
 export function contribution(grossSalary,ctx,forcedBand=null) {
- const effective=(grossSalary+ctx.benefitMonthly)*(ctx.referenceMultiplier||1)*13/12/ctx.meanHours;
+ const effective=(grossSalary*(ctx.referenceMultiplier||1)+ctx.benefitMonthly+(ctx.referenceExtraBenefit||0))*13/12/ctx.meanHours;
  const band=forcedBand!==null?forcedBand:ctx.contributionHoursWeek>24?3:effective<=9.61+1e-9?0:effective<=11.70+1e-9?1:2;
  const add=ctx.contract==="fixed"&&!ctx.substitution;
  const total=RULES.inps[add?"fixed":"indefinite"][band]+(ctx.cuaf?0:.01);
@@ -90,13 +90,14 @@ export function calculate(raw={}) {
  const dailyBenefit=(i.meal?2.33:0)+(i.dinner?2.33:0)+(i.room?2:0);
  // For hourly relationships use actual weekly benefit days for the INPS effective remuneration.
  const benefitMonthly=hourly?dailyBenefit*i.benefitDaysWeek*52/12:dailyBenefit*30;
+ const inpsBenefitMonthly=dailyBenefit*i.benefitDaysWeek*52/12;
  const benefitCash=dailyBenefit*i.cashBenefitDays;
  if(benefitCash>benefitMonthly+1e-7) fail("cashBenefitDays","La quota monetizzata supera il valore convenzionale mensile configurato.");
  const contributionHoursWeek=special?i.specialInpsHours:i.hours;
  const contributionMeanHours=contributionHoursWeek*52/12;
  const cassaMeanHours=special?(i.regime==="night"?8:5)*i.nightsWeek*52/12:meanHours;
  const recurringCoefficient=i.extrasRecurring?(i.extraOrdinary+i.overtime10*1.10+i.overtime25*1.25+i.overtime50*1.50+i.holidayWorked*1.60+i.restWorked*1.40+i.ordinaryNight*.20)/meanHours:0;
- const ctx={meanHours,minimum,benefitMonthly,benefitCash,contributionHoursWeek,contributionMeanHours,cassaMeanHours,referenceMultiplier:1+recurringCoefficient,contract:i.contract,substitution:i.substitution,cuaf:i.cuaf};
+ const ctx={meanHours,minimum,benefitMonthly:inpsBenefitMonthly,benefitCash,contributionHoursWeek,contributionMeanHours,cassaMeanHours,referenceMultiplier:1+recurringCoefficient,referenceExtraBenefit:recurringCoefficient*benefitMonthly,contract:i.contract,substitution:i.substitution,cuaf:i.cuaf};
  let grossSalary=minimum,alternatives=0;
  if(i.payMode==="minimum") {
   const extra=i.supermin*(i.payUnit==="hour"?meanHours:1);
@@ -138,6 +139,7 @@ export function calculate(raw={}) {
  if(i.ordinaryNight>0) extraRows.push({code:"ordinaryNight",label:"Maggiorazione notturno ordinario (+20%)",quantity:i.ordinaryNight,rate:globalHourly*.20,amount:globalHourly*.20*i.ordinaryNight});
  const extraPay=extraRows.reduce((a,b)=>a+b.amount,0);
  const extraHours=extraDefs.reduce((a,[k])=>a+i[k],0);
+ if(basePaidHours+extraHours>744) fail("ordinaryPaidHours","Il totale delle ore retribuite del periodo supera 744: verificare sovrapposizioni e quantità.");
  const inpsHours=i.monthMode==="actual"&&hourly?basePaidHours+extraHours:contributionMeanHours*fraction+extraHours;
  const cassaHours=i.monthMode==="actual"&&hourly?basePaidHours+extraHours:cassaMeanHours*fraction+extraHours;
  const inpsWorker=money(inpsHours*rate.worker),inpsEmployer=money(inpsHours*rate.employer),inpsTotal=money(inpsWorker+inpsEmployer);
@@ -170,6 +172,8 @@ export function calculate(raw={}) {
  notes.push("Ore INPS/Cassa e versamenti esposti sono stime: il pagamento trimestrale richiede le ore retribuite effettive e il relativo calendario previdenziale.");
  if(!i.extrasRecurring&&extraPay>0) notes.push("Voci aggiuntive del periodo escluse dalla proiezione annua; inclusione TFR del periodo: "+(i.extrasTfr?"sì":"no (occasionali)"));
  if(!i.cuaf) warnings.push("Esclusione CUAF: verificare il rapporto familiare e le condizioni di riconoscimento previste da INPS.");
+ if(i.hireDate||i.endDate) notes.push("Le date non riproporzionano automaticamente il preventivo annuale. Per un periodo parziale inserire le ore e la quota di mensilità verificate; il costo annuo resta una proiezione a condizioni costanti.");
+ if(dailyBenefit>0) notes.push("Per la fascia INPS il vitto/alloggio è ripartito sulle ore tramite i giorni settimanali di fruizione; per gli istituti dei mensilizzati il valore convenzionale mensile usa 30 giorni.");
  if(i.contract==="fixed"&&i.substitution) notes.push("Tempo determinato sostitutivo: applicata la tabella senza contributo addizionale.");
  if(!hourly&&dailyBenefit===0) warnings.push("Per il rapporto mensilizzato verificare il diritto a vitto/alloggio e inserire le componenti spettanti.");
  if(dailyBenefit>0&&i.actualBoardCost===0&&benefitMonthly>benefitCash) warnings.push("Vitto/alloggio in natura: il costo effettivo non è stato inserito. Il totale non comprende tale esborso, mentre il valore convenzionale entra negli istituti.");
@@ -211,7 +215,7 @@ export function calculate(raw={}) {
  if(errors.length) return {ok:false,input:i,errors,warnings,minimum,version:VERSION,rules:RULES};
  return {ok:true,input:i,errors,warnings,notes,version:VERSION,rules:RULES,level:level.name,regime:REGIMES[i.regime],
  hourly,special,meanHours,contributionMeanHours,cassaMeanHours,basePaidHours,inpsHours,cassaHours,rate,minimum,
- grossSalary,unitOrdinary,globalHourly,nScatti,components,benefitMonthly,benefitCash,dailyBenefit,regularPeriod,
+ grossSalary,unitOrdinary,globalHourly,nScatti,components,benefitMonthly,inpsBenefitMonthly,benefitCash,dailyBenefit,regularPeriod,
  benefitCashPeriod,extraRows,extraPay,gross,inpsWorker,inpsEmployer,inpsTotal,cassaWorker,cassaEmployer,cassaTotal,
  netOrdinary,netPayable,thirteenthAccrual,thirteenthAnnual,tfrAccrual,annualTfr:money(annualTfr),currentCost,totalCost,
  annualCost,cashOut,revaluation,payslip,costRows,leaveAccrual:26/12*fraction};

@@ -71,7 +71,8 @@ export function xlsx(r) {
  ["Rimborsi documentati",i.reimbursements],["Costo effettivo vitto/alloggio",i.actualBoardCost],
  ["Acconto già pagato",i.advance],["Tredicesima corrisposta",i.paid13],["Anticipo TFR",i.tfrAdvance],
  ["Voci aggiuntive ricorrenti (1 sì / 0 no)",i.extrasRecurring?1:0],["Aggiuntive utili TFR (1 sì / 0 no)",i.extrasTfr?1:0],
- ["Nota","La conversione netto/lordo è eseguita nell'app. Modificando il lordo in B7, il foglio Calcoli ricalcola costi e netto. Per cambiare livello, rapporto o diritti contrattuali, rigenerare dall'app."]
+ ["Nota","La conversione netto/lordo è eseguita nell'app. Modificando il lordo in B7, il foglio Calcoli ricalcola costi e netto. Per cambiare livello, rapporto o diritti contrattuali, rigenerare dall'app."],
+ ["Valore mensile VA per fascia INPS (giorni di fruizione)",r.inpsBenefitMonthly]
  ];
  const extraRows=[["VOCI AGGIUNTIVE","Ore","Moltiplicatore","Importo"],...r.extraRows.map(x=>[x.label,x.quantity,x.rate/r.globalHourly,f("B"+(r.extraRows.indexOf(x)+2)+"*C"+(r.extraRows.indexOf(x)+2)+"*Calcoli!B2",x.amount)])];
  const exLast=Math.max(2,extraRows.length),exSum=r.extraRows.length?"SUM(Aggiuntive!D2:D"+exLast+")":"0";
@@ -80,7 +81,7 @@ export function xlsx(r) {
  ["FLAIANO · CALCOLI","Importo"],
  ["Retribuzione globale oraria",f("(Parametri!B7+Parametri!B8)/Parametri!B6",r.globalHourly)],
  ["Voci aggiuntive del periodo",f(exSum,r.extraPay)],
- ["Retribuzione effettiva INPS",f("(Parametri!B7+Parametri!B8+IF(Parametri!B22=1,B3,0))*13/12/Parametri!B6",r.rate.effective)],
+ ["Retribuzione effettiva INPS",f("(Parametri!B7+Parametri!B25+IF(Parametri!B22=1,B3,0))*13/12/Parametri!B6",r.rate.effective)],
  ["Fascia INPS",f("IF(Parametri!B12>24,4,IF(B4<=9.61,1,IF(B4<=11.70,2,3)))",r.rate.band+1)],
  ["INPS orario totale",f("INDEX(Tabelle!B2:C5,B5,IF(Parametri!B13=1,2,1))+IF(Parametri!B14=1,0,0.01)",r.rate.total)],
  ["INPS orario lavoratore",f("INDEX(Tabelle!D2:D5,B5)",r.rate.worker)],

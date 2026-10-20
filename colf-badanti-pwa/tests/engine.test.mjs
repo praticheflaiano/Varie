@@ -112,3 +112,9 @@ test("gli importi visibili si riconciliano al centesimo",()=>{
  close(money(earnings),r.gross,.00000001);
  close(r.totalCost,money(r.currentCost+r.thirteenthAccrual+r.tfrAccrual),.00000001);
 });
+
+test("tabella B 20 ore: VA INPS sui giorni di fruizione, istituti su 30 giorni",()=>{
+ const r=calc({regime:"reduced",level:"BS",hours:20,days:5,payMode:"minimum",meal:true,dinner:true,room:true,benefitDaysWeek:6});
+ close(r.benefitMonthly,199.80);close(r.inpsBenefitMonthly,6.66*6*52/12);
+ close(r.rate.effective,(737.39/(20*52/12)+6.66*6/20)*13/12,.0000001);assert.equal(r.rate.band,1);
+});
