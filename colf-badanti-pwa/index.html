@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#143f46"><meta name="description" content="Preventivi professionali per colf e badanti: netto, lordo, INPS, Cassa Colf, tredicesima, TFR ed esportazioni modificabili. Centro Pratiche Flaiano, Roma.">
+<meta name="color-scheme" content="light"><title>Flaiano · Colf e badanti</title>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./icon.svg"><link rel="apple-touch-icon" href="./icon-192.png"><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Vai al calcolatore</a>
+<div class="app-shell">
+<aside class="sidebar" aria-label="Menu principale">
+ <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">F</span><span>PRATICHE FLAIANO<small>Strumenti per il lavoro domestico</small></span></a>
+ <div class="sidebar-label">AREA OPERATIVA</div>
+ <nav id="navigation">
+  <button class="nav-item active" data-page="calculator" aria-current="page"><span aria-hidden="true">▦</span> Calcolatore</button>
+  <button class="nav-item" data-page="compare"><span aria-hidden="true">⇄</span> Confronta scenari <span id="compare-count" class="nav-count">0</span></button>
+  <button class="nav-item" data-page="levels"><span aria-hidden="true">≡</span> Livelli e mansioni</button>
+  <button class="nav-item" data-page="archive"><span aria-hidden="true">▤</span> Preventivi salvati</button>
+  <button class="nav-item" data-page="sources"><span aria-hidden="true">↗</span> Regole e fonti</button>
+ </nav>
+ <div class="sidebar-bottom"><span class="year-tag">TABELLE 2026</span><p>CCNL lavoro domestico H501<br>Verifica: 20 ottobre 2026</p><button class="text-button light" id="install-button">Installa l’app ↗</button><button class="text-button light" id="download-app">Scarica il progetto PWA</button><small id="connection">Online · calcoli sul dispositivo</small></div>
+</aside>
+<div class="workspace">
+<header class="topbar"><div class="breadcrumb">Centro Pratiche Flaiano <span>/</span> <strong id="page-name">Calcolatore</strong></div><div class="top-actions"><button class="button quiet" id="import-button">Importa simulazione</button><input type="file" id="import-file" accept=".json,application/json" hidden><button class="button quiet" id="save-button">Salva preventivo</button><button class="button primary" id="open-export">Esporta prospetto ↓</button></div></header>
+<main id="main">
+<section class="page" id="page-calculator">
+ <div class="page-intro"><div><div class="eyebrow">COLF, BADANTI E BABY-SITTER</div><h1>Un preventivo chiaro.<br><span>Ogni voce al suo posto.</span></h1><p>Parti dal contratto, da una paga lorda o dal netto concordato.<br>Il costo del datore e il compenso del lavoratore, nello stesso prospetto.</p></div><div class="intro-note"><span class="status-dot"></span> Regole 2026 verificate<br><small>INPS · CCNL H501 · CAS.SA.COLF</small></div></div>
+ <div class="calculator-layout">
+ <form id="calculator-form" novalidate>
+ <section class="panel form-panel"><div class="section-heading"><span class="step">01</span><div><h2>Il rapporto di lavoro</h2><p>Inquadramento e condizioni contrattuali</p></div></div>
+ <div class="form-grid">
+ <label class="field full">Tipologia di rapporto<select name="regime" id="regime"></select></label>
+ <label class="field full">Livello di inquadramento<select name="level" id="level"></select></label>
+ <div class="level-description full" id="level-description"></div>
+ <label class="field">Ore settimanali<input name="hours" type="number" min="0.5" max="54" step="0.5" inputmode="decimal"></label>
+ <label class="field">Giorni a settimana<input name="days" type="number" min="1" max="6" step="1" inputmode="numeric"></label>
+ <label class="field">Tipo di contratto<select name="contract"><option value="indefinite">Tempo indeterminato</option><option value="fixed">Tempo determinato</option></select></label>
+ <label class="field">Mese di riferimento<input name="reference" type="month" min="2026-01" max="2026-12"></label>
+ <label class="check full" data-visible="fixed"><input name="substitution" type="checkbox">Assunzione per sostituire un lavoratore assente</label>
+ <label class="field" data-visible="fixed">Data fine contratto (facoltativa)<input name="endDate" type="date"></label>
+ <label class="field full" data-visible="reduced">Distribuzione dell’orario ridotto<select name="reducedWindow"><option value="morning">Interamente fra le 6 e le 14</option><option value="afternoon">Interamente fra le 14 e le 22</option><option value="threeDays">Fino a 3 giorni, massimo 10 ore al giorno</option></select></label>
+ <div class="notice full" data-visible="special">Le ore convenzionali CAS.SA.COLF dei rapporti notturni non sostituiscono automaticamente le ore INPS. Inserisci il dato previdenziale verificato.</div>
+ <label class="field" data-visible="special">Ore INPS settimanali verificate<input name="specialInpsHours" type="number" min="0" max="72" step="0.5"></label>
+ <label class="field" data-visible="special">Notti a settimana<input name="nightsWeek" type="number" min="1" max="6" step="1"></label>
+ <label class="check full" data-visible="special"><input name="specialConfirmed" type="checkbox">Ho verificato atto scritto, orari, riposi e base INPS del rapporto notturno.</label>
+ <label class="check full" data-visible="ds"><input name="qualified" type="checkbox">Titolo / formazione qualificante DS verificati</label>
+ </div>
+ <details class="details"><summary>Anzianità e condizioni contributive</summary><div class="form-grid">
+ <label class="field">Scatti biennali già maturati<input name="scatti" type="number" min="0" max="7" step="1"></label>
+ <label class="field">Data di assunzione<input name="hireDate" type="date"></label>
+ <label class="check full"><input name="autoScatti" type="checkbox">Calcola gli scatti dalla data di assunzione</label>
+ <label class="check full"><input name="cuaf" type="checkbox">Contribuzione ordinaria comprensiva CUAF</label>
+ <p class="field-help full">Togliere CUAF solo nei rapporti familiari ammessi e riconosciuti dall’INPS. Gli scatti sono il 4% del minimo ogni biennio, fino a 7, dal mese successivo alla maturazione.</p>
+ </div></details>
+ </section>
+ <section class="panel form-panel"><div class="section-heading"><span class="step">02</span><div><h2>La retribuzione</h2><p>Scegli il dato da cui partire</p></div></div>
+ <div class="segmented" role="group" aria-label="Modalità di calcolo"><button type="button" data-mode="minimum">Minimo CCNL</button><button type="button" data-mode="gross">Dal lordo</button><button type="button" data-mode="net" class="selected">Dal netto</button></div>
+ <input name="payMode" type="hidden"><div class="form-grid pay-fields">
+ <label class="field" id="pay-field"><span id="pay-label">Netto ordinario concordato</span><div class="input-money"><span>€</span><input name="pay" type="number" min="0" step="0.01" inputmode="decimal"></div></label>
+ <label class="field">Unità della paga<select name="payUnit"><option value="hour">All’ora</option><option value="month">Al mese</option></select></label>
+ <label class="field" data-visible="minimum">Superminimo aggiuntivo lordo<div class="input-money"><span>€</span><input name="supermin" type="number" min="0" step="0.01"></div></label>
+ <label class="check full" data-visible="minimum"><input name="absorb" type="checkbox">Assorbi le indennità assorbibili nel superminimo</label>
+ </div><div class="net-explanation" id="pay-explanation"></div>
+ <details class="details"><summary>Indennità contrattuali</summary><div class="checks">
+ <label class="check" data-visible="bs"><input name="child" type="checkbox">Baby-sitter BS con almeno un bambino sotto 6 anni</label>
+ <label class="check" data-visible="care"><input name="multiple" type="checkbox">Assistenza a più persone non autosufficienti</label>
+ <label class="check" data-visible="uni"><input name="certified" type="checkbox">Certificazione UNI 11766 valida e comunicata al datore</label>
+ <p class="field-help">Le indennità saranno separate dal minimo, dagli scatti e dal superminimo. La quantità di bambini non viene usata per moltiplicare automaticamente l’indennità.</p>
+ </div></details>
+ <details class="details" id="board-details"><summary>Vitto e alloggio</summary><div class="checks inline-checks"><label class="check"><input name="meal" type="checkbox">Pranzo / colazione</label><label class="check"><input name="dinner" type="checkbox">Cena</label><label class="check"><input name="room" type="checkbox">Alloggio</label></div>
+ <div class="form-grid"><label class="field" data-visible="hourly">Giorni di fruizione a settimana<input name="benefitDaysWeek" type="number" min="0" max="7" step="1"></label><label class="field">Giorni convenzionali monetizzati<input name="cashBenefitDays" type="number" min="0" max="30" step="0.5"></label><label class="field full">Costo effettivo mensile per il datore (€)<input name="actualBoardCost" type="number" min="0" step="0.01"><small>Solo il costo in natura, senza le quote già monetizzate in busta.</small></label><p class="field-help full">Valori 2026: 2,33 € + 2,33 € + 2,00 € al giorno. Il valore convenzionale per tredicesima e TFR è distinto dal costo effettivo sostenuto.</p></div></details>
+ </section>
+ <section class="panel form-panel"><div class="section-heading"><span class="step">03</span><div><h2>Il periodo e le altre voci</h2><p>Per affinare il preventivo o simulare il mese</p></div></div>
+ <label class="field">Base del prospetto<select name="monthMode"><option value="average">Preventivo · mese medio (52/12 settimane)</option><option value="actual">Prospetto mensile · dati da presenze</option></select></label>
+ <div class="notice" data-visible="actual">Inserisci le ore retribuite dalle presenze. Ferie e festività indicate qui sono escluse dal campo ore ordinarie. Malattia, maternità e infortuni richiedono elaborazione specifica.</div>
+ <div class="form-grid" data-visible="actual-hourly"><label class="field">Ore ordinarie retribuite<input name="ordinaryPaidHours" type="number" min="0" max="744" step="0.01"></label><label class="field">Ore festività non lavorate<input name="holidayPaidHours" type="number" min="0" max="744" step="0.01"></label><label class="field">Ore ferie retribuite<input name="leavePaidHours" type="number" min="0" max="744" step="0.01"></label><p class="field-help full">Per il rapporto ad ore una giornata convenzionale di ferie/festività corrisponde a 1/6 dell’orario settimanale. Non sommare qui ore già comprese nelle ordinarie.</p></div>
+ <label class="field" data-visible="actual-monthly">Frazione di mensilità spettante<input name="monthlyFraction" type="number" min="0.001" max="1" step="0.001"><small>1 = mese intero. Le frazioni di assunzione, cessazione o assenza vanno verificate dall’operatore.</small></label>
+ <details class="details"><summary>Ore aggiuntive e maggiorazioni</summary><p class="field-help">Indicare solo le ore aggiuntive del periodo, senza sovrapporle alle ore ordinarie. Le ore notturne ordinarie, invece, sono già comprese nella paga e ricevono soltanto il +20%.</p><div class="form-grid">
+ <label class="field">Aggiuntive ordinarie · ore<input name="extraOrdinary" type="number" min="0" step="0.5"></label>
+ <label class="field">41ª–44ª ora diurna +10%<input name="overtime10" type="number" min="0" step="0.5"></label>
+ <label class="field">Straordinario diurno +25%<input name="overtime25" type="number" min="0" step="0.5"></label>
+ <label class="field">Straordinario notturno +50%<input name="overtime50" type="number" min="0" step="0.5"></label>
+ <label class="field">Festivo / domenicale +60%<input name="holidayWorked" type="number" min="0" step="0.5"></label>
+ <label class="field">Riposo convivente +40%<input name="restWorked" type="number" min="0" step="0.5"></label>
+ <label class="field full">Notturno ordinario, già incluso nelle ore base · +20%<input name="ordinaryNight" type="number" min="0" step="0.5"></label>
+ <label class="check full"><input name="extrasRecurring" type="checkbox">Voci ricorrenti ogni mese: includi nell’annualizzazione e negli istituti</label>
+ <label class="check full"><input name="extrasTfr" type="checkbox">Includi le voci aggiuntive del periodo nella retribuzione utile TFR</label>
+ </div></details>
+ <details class="details"><summary>Rimborsi, acconti e somme corrisposte</summary><div class="form-grid">
+ <label class="field">Rimborsi documentati (€)<input name="reimbursements" type="number" min="0" step="0.01"></label>
+ <label class="field">Acconto già pagato (€)<input name="advance" type="number" min="0" step="0.01"></label>
+ <label class="field full">Tredicesima effettivamente corrisposta (€)<input name="paid13" type="number" min="0" step="0.01"><small>Non aumenta il costo maturato: è un pagamento di competenze accantonate.</small></label>
+ <label class="field">Anticipo TFR (€)<input name="tfrAdvance" type="number" min="0" step="0.01"></label>
+ <label class="field">Fondo TFR disponibile (€)<input name="tfrFund" type="number" min="0" step="0.01"></label>
+ <label class="check full"><input name="tfrAdvanceConfirmed" type="checkbox">Richiesta del lavoratore e unico anticipo annuo verificati; limite 70%</label>
+ </div></details>
+ <details class="details"><summary>Rivalutazione del fondo TFR pregresso</summary><div class="form-grid">
+ <label class="field">Fondo al 31 dicembre precedente (€)<input name="existingFund" type="number" min="0" step="0.01"></label><label class="field">Variazione FOI annua verificata (%)<input name="foi" type="number" step="0.01"></label><label class="check full"><input name="calculateRevaluation" type="checkbox">Mostra il calcolo annuo della rivalutazione separato dal preventivo</label>
+ </div></details>
+ </section>
+ <section class="panel form-panel"><div class="section-heading"><span class="step">04</span><div><h2>Intestazione del prospetto</h2><p>Facoltativa · dati mantenuti sul dispositivo</p></div></div><div class="form-grid">
+ <label class="field full">Nome della simulazione<input name="scenario" type="text" maxlength="120"></label>
+ <label class="field">Datore di lavoro<input name="employer" type="text" maxlength="120" autocomplete="off"></label>
+ <label class="field">Lavoratore<input name="employee" type="text" maxlength="120" autocomplete="off"></label>
+ <label class="field full">Operatore<input name="operator" type="text" maxlength="120" autocomplete="off"></label></div>
+ <div class="form-footer"><button class="button quiet" type="button" id="reset-button">Nuovo preventivo</button><button class="button primary" type="submit">Aggiorna il calcolo ↗</button></div></section>
+ </form>
+ <aside class="results-column" aria-label="Risultati del calcolo">
+ <div id="validation" aria-live="polite"></div>
+ <div id="results" aria-live="polite" aria-atomic="false"></div>
+ </aside>
+ </div>
+</section>
+<section class="page" id="page-compare" hidden><div class="simple-intro"><div class="eyebrow">DECIDERE CON CHIAREZZA</div><h1>Confronta gli scenari</h1><p>Conserva fino a quattro simulazioni e confronta netto e costo complessivo.</p></div><div id="comparison"></div></section>
+<section class="page" id="page-levels" hidden><div class="simple-intro"><div class="eyebrow">CCNL H501 · TABELLE 2026</div><h1>Il livello giusto parte dalle mansioni</h1><p>La descrizione orienta la scelta. Verifica sempre le attività effettive e la formazione richiesta.</p></div><div id="levels-grid" class="levels-grid"></div><div class="notice">Le retribuzioni indicate sono minimi lordi. Scatti, indennità e superminimi possono modificare la paga complessiva. La tabella B è distinta dalla convivenza ordinaria.</div></section>
+<section class="page" id="page-archive" hidden><div class="simple-intro"><div class="eyebrow">ARCHIVIO SUL DISPOSITIVO</div><h1>I preventivi salvati</h1><p>Il salvataggio avviene solo quando lo richiedi. Esporta il file della simulazione per trasferirlo o conservarne una copia.</p></div><div id="archive-list"></div></section>
+<section class="page" id="page-sources" hidden><div class="simple-intro"><div class="eyebrow">CALCOLI TRASPARENTI</div><h1>Regole, fonti e metodo</h1><p>Versione 1.0.0 · tabelle valide per il 2026 · verifica del 20 ottobre 2026.</p></div><div class="sources-layout"><section class="panel prose"><h2>Come leggere i risultati</h2><p><strong>Netto:</strong> retribuzione monetaria meno contributi a carico del lavoratore. L’eventuale IRPEF personale non è calcolata.</p><p><strong>Costo corrente:</strong> lordo, contributi del datore, rimborsi e costo effettivo di vitto/alloggio inserito.</p><p><strong>Costo con ratei:</strong> costo corrente più tredicesima e TFR maturati. Accantonamento e pagamento restano distinti.</p><p><strong>Proiezione annua:</strong> 12 mesi a condizioni costanti. Le ferie sono già incluse; sostituzioni, eventi e festività del calendario richiedono dati specifici.</p><h2>Confini del calcolo</h2><p>Lo strumento produce preventivi e prospetti simulati. Non elabora automaticamente malattia, maternità, infortunio, arretrati, vertenze, imposte personali o liquidazioni finali. Il prospetto mensile richiede ore e competenze già verificate dall’operatore.</p><p>Il dato trimestrale effettivo INPS non si ottiene moltiplicando sempre per 13 settimane: occorrono il calendario previdenziale e le ore retribuite reali.</p><h2>Dati e privacy</h2><p>I dati inseriti e i calcoli non vengono inviati a un server. L’archivio è locale a questo browser; non è condiviso fra operatori o dispositivi. I file esportati contengono i dati del prospetto.</p><h2>Aggiornamenti</h2><p>Questa versione impedisce di usare le tabelle 2026 per un mese di un altro anno. Le regole non si aggiornano tramite stime automatiche. Una nuova versione deve essere verificata sulle fonti ufficiali.</p></section><section class="panel prose"><h2>Fonti utilizzate</h2><div id="source-links"></div><h2>Installazione PWA</h2><p>Apri l’app tramite HTTPS. Su Android usa “Installa app” o “Aggiungi a schermata Home”. Su iPhone: Safari → Condividi → Aggiungi a Home. Dopo il primo caricamento completo il calcolatore e le esportazioni funzionano anche offline.</p><p>La disponibilità del comando di installazione dipende dal browser e dalle autorizzazioni del sito che ospita l’app.</p></section></div></section>
+</main>
+<footer class="footer"><span>Centro Pratiche Flaiano · Roma</span><span>Calcolo locale · CCNL H501 · 2026</span></footer>
+</div></div>
+<dialog id="export-dialog"><div class="dialog-heading"><div><div class="eyebrow">PROSPETTO CLIENTE</div><h2>Esporta il preventivo</h2></div><button class="icon-button" data-close="export-dialog" aria-label="Chiudi">×</button></div><p class="muted">Dati, voci di costo, ipotesi e fonti nello stesso documento.</p><div class="export-options">
+<button data-export="docx"><span class="file-icon word">W</span><span><strong>Word modificabile</strong><small>Documento .docx con tabelle e impaginazione A4</small></span><span>↓</span></button>
+<button data-export="xlsx"><span class="file-icon excel">X</span><span><strong>Excel con formule</strong><small>Parametri, calcoli, tabelle INPS e dati originali</small></span><span>↓</span></button>
+<button data-export="pdf"><span class="file-icon pdf">P</span><span><strong>PDF pronto per il cliente</strong><small>Prospetto completo con pagine e tabelle</small></span><span>↓</span></button>
+<button data-export="json"><span class="file-icon json">{ }</span><span><strong>File della simulazione</strong><small>Per riaprire il preventivo su un altro dispositivo</small></span><span>↓</span></button>
+</div><button class="button quiet wide" id="print-button">Stampa il prospetto</button></dialog>
+<dialog id="install-dialog"><div class="dialog-heading"><h2>Porta l’app sulla schermata Home</h2><button class="icon-button" data-close="install-dialog" aria-label="Chiudi">×</button></div><p><strong>Android:</strong> menu del browser → Installa app / Aggiungi a schermata Home.</p><p><strong>iPhone:</strong> Safari → Condividi → Aggiungi a Home.</p><p><strong>Computer:</strong> usa il comando di installazione nella barra degli indirizzi, se disponibile.</p><p class="muted">È necessario un indirizzo HTTPS. Il primo caricamento deve essere completato online.</p></dialog>
+<div id="toast" role="status" aria-live="polite" hidden></div><div id="print-report"></div>
+<script type="module" src="./app.js"></script>
+<noscript><p class="notice">Per utilizzare il calcolatore occorre abilitare JavaScript nel browser.</p></noscript>
+</body></html>
