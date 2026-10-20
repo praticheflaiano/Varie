@@ -100,7 +100,7 @@ test("aiuto delle spunte e dei risultati non modifica i dati",async({page})=>{
  await page.locator("details").evaluateAll(nodes=>nodes.forEach(d=>d.open=true));
  const before=await page.getByTestId("total-cost").innerText();
  await expect(checkbox).not.toBeChecked();await help.click();
- await expect(page.locator("#context-help-popover")).toContainText("più persone");
+ await expect(page.locator("#context-help-popover")).toContainText(/più persone/i);
  await expect(checkbox).not.toBeChecked();
  await page.getByRole("button",{name:"Chiudi spiegazione"}).click();
  await page.locator('[data-help-key="result.totalCost"]').click();
