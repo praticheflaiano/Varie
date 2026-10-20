@@ -28,3 +28,26 @@ text="\n".join(p.extract_text() or "" for p in pdf.pages)
 assert "FLAIANO" in text
 assert "Prova & Figli <Roma>" in text
 print("DOCX, XLSX e PDF verificati con parser indipendenti.")
+
+for name in ("contributi-trimestre.docx","contributi-trimestre.xlsx"):
+    with ZipFile(root/name) as z:
+        assert z.testzip() is None
+        for part in z.namelist():
+            if part.endswith((".xml",".rels")):
+                ET.fromstring(z.read(part))
+quarter_doc=Document(root/"contributi-trimestre.docx")
+assert len(quarter_doc.tables)>=6
+assert any("Famiglia & <prova>" in c.text for t in quarter_doc.tables for row in t.rows for c in row.cells)
+quarter_book=load_workbook(root/"contributi-trimestre.xlsx",data_only=True)
+assert quarter_book["Settimane"].max_row==14
+assert quarter_book["Calcoli"]["B2"].value==325
+assert quarter_book["Calcoli"]["B5"].value==403
+assert abs(quarter_book["Calcoli"]["B15"].value-422.5)<0.001
+assert quarter_book["Riconciliazione"]["B4"].value in (None,"")
+quarter_formulas=load_workbook(root/"contributi-trimestre.xlsx",data_only=False)
+assert quarter_formulas["Calcoli"]["B2"].value=="=ROUNDUP(SUM(Settimane!C2:C14),0)"
+quarter_pdf=PdfReader(root/"contributi-trimestre.pdf")
+quarter_text="\n".join(p.extract_text() or "" for p in quarter_pdf.pages)
+assert "422,50" in quarter_text
+assert "pagoPA" in quarter_text
+print("Prospetti trimestrali DOCX, XLSX e PDF verificati con parser indipendenti.")

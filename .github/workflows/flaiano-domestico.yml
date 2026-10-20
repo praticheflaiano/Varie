@@ -40,7 +40,7 @@ jobs:
       - name: Prepara pacchetto PWA
         run: |
           mkdir -p pwa-test-artifacts
-          zip -r pwa-test-artifacts/flaiano-colf-badanti-pwa.zip index.html styles.css app.js help.js data.js engine.js exports.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png README.md scripts package.json
+          zip -r pwa-test-artifacts/flaiano-colf-badanti-pwa.zip index.html styles.css app.js help.js quarter.js quarter-ui.js quarter-exports.js data.js engine.js exports.js sw.js manifest.webmanifest icon.svg icon-192.png icon-512.png README.md VERIFICA-CALCOLI-2026.md scripts package.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

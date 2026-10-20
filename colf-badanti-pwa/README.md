@@ -10,13 +10,13 @@ Richiede Node.js 20 o successivo solo per il server di sviluppo:
 
 Aprire http://localhost:4173. Per l'uso da telefono e l'installazione PWA pubblicare i file statici tramite HTTPS. Non aprire index.html direttamente con file://: i moduli JavaScript richiedono un server.
 
-Per ospitare l'app è sufficiente copiare nella stessa cartella index.html, styles.css, app.js, help.js, data.js, engine.js, exports.js, sw.js, manifest.webmanifest, icon.svg, icon-192.png, icon-512.png, scripts/serve.mjs, package.json e questo README. Tutti i percorsi sono relativi, quindi è supportata anche una sottocartella del dominio.
+Per ospitare l'app è sufficiente copiare nella stessa cartella index.html, styles.css, app.js, help.js, quarter.js, quarter-ui.js, quarter-exports.js, data.js, engine.js, exports.js, sw.js, manifest.webmanifest, icon.svg, icon-192.png, icon-512.png, scripts/serve.mjs, package.json e questo README. Tutti i percorsi sono relativi, quindi è supportata anche una sottocartella del dominio.
 
 ## Funzioni
 
 - Livelli A, AS, B, BS, C, CS, D e DS, con mansioni e minimi 2026.
 - Paga base sempre visibile per livello e rapporto; tabella completa dei minimi A/B/C/D/E/G, con funzione D/DS esplicita.
-- Guide contestuali per tutti i 58 campi, le voci di risultato e i formati di esportazione: significato, quando usarli ed effetti sul calcolo. Apertura tramite mouse, tastiera o tocco; chiusura con Escape o all’esterno.
+- Guide contestuali per tutti i 66 campi del preventivo e quelli del trimestre, le voci di risultato e i formati di esportazione: significato, quando usarli ed effetti sul calcolo. Apertura tramite mouse, tastiera o tocco; chiusura con Escape o all’esterno.
 - Non conviventi, conviventi, tabella B, sostituzione riposi, assistenza e presenza notturna.
 - Minimo CCNL con superminimo, lordo concordato o netto ordinario richiesto.
 - Scatti, indennità di funzione, bambini sotto 6 anni, più persone non autosufficienti e UNI 11766.
@@ -26,6 +26,11 @@ Per ospitare l'app è sufficiente copiare nella stessa cartella index.html, styl
 - Voci aggiuntive e maggiorazioni; distinzione fra voci occasionali e ricorrenti.
 - Tredicesima, TFR, acconti, rimborsi e anticipo TFR verificato.
 - Preventivo medio e prospetto mensile simulato sulle ore di presenza inserite.
+- Ore contributive effettive per i mensilizzati e base TFR verificata obbligatoria per mesi parziali.
+- Mese utile a tredicesima e ferie distinto dalla frazione di paga del mese parziale.
+- Trimestri INPS e F2 con calendario domenica/sabato, ore verificate, arrotondamento e quote distinte.
+- Confronto separato con avviso ufficiale e trattenute già effettuate, con saldi espliciti.
+- Prospetti trimestrali DOCX/XLSX/PDF e file JSON riapribili.
 - Confronto di quattro scenari; archivio locale; import/export JSON.
 - Esportazioni native DOCX, XLSX e PDF, interamente generate sul dispositivo.
 - PWA con service worker, senza librerie o font caricati da terzi.
@@ -40,7 +45,11 @@ Il costo annuale è strutturale su 12 mesi a condizioni costanti. Ferie ordinari
 
 Per i rapporti notturni le ore INPS devono essere verificate e inserite dall'operatore. Le ore convenzionali contrattuali Cassa non sono usate automaticamente come ore INPS.
 
-Gli importi trimestrali INPS definitivi richiedono calendario e ore retribuite reali: l'app non genera un PagoPA.
+Il prospetto trimestrale riguarda un rapporto con condizioni costanti: richiede ore retribuite reali, verifica dell’operatore e confronto con l’avviso ufficiale. Il totale INPS usa le ore sommate e arrotondate una sola volta. Per i rapporti ordinari F2 usa le ore dichiarate; nei rapporti notturni è prevista una base Cassa separata. L’app non genera un avviso pagoPA né esegue versamenti.
+
+Incentivi o esoneri individuali bloccano il calcolo ordinario. Variazioni di condizioni nel trimestre richiedono conteggi distinti; gli scatti automatici che cambiano la paga vengono intercettati. I dati di cessazione nel trimestre gestiscono il termine contributivo, senza calcolare automaticamente le competenze di cessazione.
+
+La revisione normativa, i casi provati e i limiti sono documentati in VERIFICA-CALCOLI-2026.md. Una verifica tecnica non equivale a una garanzia assoluta sul singolo rapporto.
 
 Le tabelle sono esclusivamente 2026. Il motore rifiuta un mese di un altro anno.
 

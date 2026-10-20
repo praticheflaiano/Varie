@@ -118,3 +118,27 @@ test("tabella B 20 ore: VA INPS sui giorni di fruizione, istituti su 30 giorni",
  close(r.benefitMonthly,199.80);close(r.inpsBenefitMonthly,6.66*6*52/12);
  close(r.rate.effective,(737.39/(20*52/12)+6.66*6/20)*13/12,.0000001);assert.equal(r.rate.band,1);
 });
+
+test("ratei del mese parziale distinti dalla frazione di paga",()=>{
+ const base={regime:"livein",level:"CS",hours:54,days:6,payMode:"minimum",payUnit:"month",monthMode:"actual",monthlyFraction:.5,actualInpsHours:100,actualCassaHours:100,actualContributionsConfirmed:true,useTfrVerifiedBase:true,tfrVerifiedBase:1200};
+ const yes=calc({...base,accrualMonths:1}),no=calc({...base,accrualMonths:0});
+ close(yes.regularPeriod,1193.84/2);close(yes.thirteenthAccrual,1193.84/12);close(no.thirteenthAccrual,0);
+ close(yes.leaveAccrual,26/12);close(no.leaveAccrual,0);
+ close(yes.tfrAccrual,1200/13.5);close(no.tfrAccrual,1200/13.5);
+});
+test("date impossibili, notti frazionate e distribuzione ridotta invalida bloccate",()=>{
+ for(const input of [{hireDate:"2024-02-31"},{endDate:"2026-02-30"},{accrualMonths:.5},{nonstandardContributions:true},{regime:"reduced",level:"B",hours:30,days:1,payMode:"minimum"},{regime:"night",nightsWeek:2.5,specialConfirmed:true,specialInpsHours:20}])assert.equal(calculate(input).ok,false,JSON.stringify(input));
+});
+test("interventi presenza notturna usano la tabella C verificata",()=>{
+ const input={regime:"presence",level:"CS",hours:25,payMode:"minimum",specialConfirmed:true,specialInpsHours:25,nightsWeek:5,extraOrdinary:2,ordinaryNight:2};
+ assert.equal(calculate(input).ok,false);
+ const r=calc({...input,presenceActivePay:10});close(r.extraPay,24);
+ assert.equal(calculate({...input,presenceActivePay:10,overtime50:1}).ok,false);
+});
+
+test("mensilizzato: trattenute sulle ore reali, netto concordato e TFR parziale verificato",()=>{
+ const input={regime:"livein",level:"CS",hours:54,days:6,payMode:"net",payUnit:"month",pay:1200,monthMode:"actual",actualInpsHours:270,actualCassaHours:270,actualContributionsConfirmed:true};
+ const r=calc(input);close(r.netOrdinary,1200);close(r.inpsWorker,83.7);close(r.cassaWorker,5.4);
+ assert.equal(calculate({...input,actualContributionsConfirmed:false}).ok,false);
+ assert.equal(calculate({...input,monthlyFraction:.5}).ok,false);
+});

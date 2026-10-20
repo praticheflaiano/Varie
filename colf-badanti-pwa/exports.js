@@ -20,6 +20,7 @@ export const formatMoney=n=>Number(n).toLocaleString("it-IT",{minimumFractionDig
 const formatNum=n=>Number(n).toLocaleString("it-IT",{maximumFractionDigits:4});
 export function reportSections(r) {
  if(!r?.ok) throw new Error("Calcolo non valido: esportazione non disponibile.");
+ if(r.kind==="quarter"&&Array.isArray(r.sections))return r.sections;
  const i=r.input;
  return [
  {title:"Dati della simulazione",rows:[["Riferimento",i.scenario],["Datore di lavoro",i.employer||"Non indicato"],["Lavoratore",i.employee||"Non indicato"],["Operatore",i.operator||"Non indicato"],["Periodo",i.reference+" · "+(i.monthMode==="average"?"mese medio":"ore del periodo")],["Inquadramento",r.level],["Rapporto",r.regime],["Contratto",i.contract==="fixed"?"Tempo determinato"+(i.substitution?" sostitutivo":""):"Tempo indeterminato"],["Ore settimanali",formatNum(i.hours)],["Giorni settimanali",String(i.days)],["Paga di partenza",i.payMode==="minimum"?"Minimo CCNL + eventuale superminimo":formatMoney(i.pay)+"/"+(i.payUnit==="hour"?"ora":"mese")+" "+(i.payMode==="net"?"netti prima IRPEF":"lordi")]]},
@@ -27,7 +28,7 @@ export function reportSections(r) {
  {title:"Composizione retribuzione ordinaria · mese medio",rows:r.components.filter(x=>x.amount).map(x=>[x.label,formatMoney(x.amount)])},
  {title:"Prospetto paga simulato",rows:r.payslip.map(x=>[x.label,formatMoney(x.amount)])},
  {title:"Costo del datore",rows:r.costRows.filter(x=>x.amount||x.kind==="total").map(x=>[x.label,formatMoney(x.amount)])},
- {title:"Contributi e istituti",rows:[["Retribuzione effettiva oraria per fascia INPS",formatMoney(r.rate.effective)],["Fascia INPS",r.rate.band===3?"Oltre 24 ore settimanali":String(r.rate.band+1)],["INPS orario totale",formatMoney(r.rate.total)],["INPS orario lavoratore",formatMoney(r.rate.worker)],["Ore INPS del periodo",formatNum(r.inpsHours)],["Ore CAS.SA.COLF del periodo",formatNum(r.cassaHours)],["INPS totale da versare per il periodo",formatMoney(r.inpsTotal)],["CAS.SA.COLF totale del periodo",formatMoney(r.cassaTotal)],["Tredicesima annua di riferimento",formatMoney(r.thirteenthAnnual)],["TFR annuo strutturale",formatMoney(r.annualTfr)],["Ferie maturate (giorni convenzionali)",formatNum(r.leaveAccrual)],["Valore convenzionale vitto/alloggio mensile",formatMoney(r.benefitMonthly)],...(i.calculateRevaluation?[["Rivalutazione annua fondo pregresso",formatMoney(r.revaluation)]]:[])]},
+ {title:"Contributi e istituti",rows:[["Retribuzione effettiva oraria per fascia INPS",formatMoney(r.rate.effective)],["Fascia INPS",r.rate.band===3?"Oltre 24 ore settimanali":String(r.rate.band+1)],["INPS orario totale",formatMoney(r.rate.total)],["INPS orario lavoratore",formatMoney(r.rate.worker)],["Ore INPS del periodo",formatNum(r.inpsHours)],["Ore CAS.SA.COLF del periodo",formatNum(r.cassaHours)],["INPS totale del periodo · stima",formatMoney(r.inpsTotal)],["CAS.SA.COLF totale del periodo",formatMoney(r.cassaTotal)],["Tredicesima annua di riferimento",formatMoney(r.thirteenthAnnual)],["Retribuzione utile TFR del periodo",formatMoney(r.tfrUseful)],["TFR annuo strutturale",formatMoney(r.annualTfr)],["Ferie maturate (giorni convenzionali)",formatNum(r.leaveAccrual)],["Valore convenzionale vitto/alloggio mensile",formatMoney(r.benefitMonthly)],...(i.calculateRevaluation?[["Rivalutazione annua fondo pregresso",formatMoney(r.revaluation)]]:[])]},
  {title:"Ipotesi e verifiche",rows:[...r.warnings.map(x=>["Da verificare",x]),...r.notes.map(x=>["Metodo",x]),["Arrotondamenti","Importi del periodo arrotondati al centesimo per voce. Il costo annuo è calcolato separatamente a precisione piena prima dell'arrotondamento finale."],["Versione","App "+VERSION+" · regole "+RULES.year+" verificate il "+RULES.checked]]},
  {title:"Fonti",rows:SOURCES.map(x=>[x.title,x.url])}
  ];
@@ -37,7 +38,7 @@ const relns="http://schemas.openxmlformats.org/package/2006/relationships";
 export function docx(r) {
  const p=(s,style="Normal")=>'<w:p><w:pPr><w:pStyle w:val="'+style+'"/></w:pPr><w:r><w:t xml:space="preserve">'+E(s)+'</w:t></w:r></w:p>';
  const cell=(s,width,head=false,right=false)=>'<w:tc><w:tcPr><w:tcW w:w="'+width+'" w:type="dxa"/>'+(head?'<w:shd w:fill="143F46"/>':"")+'</w:tcPr><w:p><w:pPr>'+(right?'<w:jc w:val="right"/>':"")+'</w:pPr><w:r><w:rPr>'+(head?'<w:b/><w:color w:val="FFFFFF"/>':"")+'</w:rPr><w:t xml:space="preserve">'+E(s)+'</w:t></w:r></w:p></w:tc>';
- let body=p("CENTRO PRATICHE FLAIANO","Subtitle")+p("Colf e badanti · Prospetto economico","Title")+p("Via Filoteo Alberini 25 int. 10, 00139 Roma · 06 97845429")+p("info@praticheflaiano.it · praticheflaiano.it","Subtitle");
+ let body=p("CENTRO PRATICHE FLAIANO","Subtitle")+p(r.kind==="quarter"?"Contributi trimestrali · Prospetto di controllo":"Colf e badanti · Prospetto economico","Title")+p("Via Filoteo Alberini 25 int. 10, 00139 Roma · 06 97845429")+p("info@praticheflaiano.it · praticheflaiano.it","Subtitle");
  for(const section of reportSections(r)) {
   body+=p(section.title,"Heading1");
   body+='<w:tbl><w:tblPr><w:tblStyle w:val="FlaianoTable"/><w:tblW w:w="9360" w:type="dxa"/><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid><w:gridCol w:w="5500"/><w:gridCol w:w="3860"/></w:tblGrid>';
@@ -67,12 +68,14 @@ export function xlsx(r) {
  ["Ore Cassa del periodo",r.cassaHours],["Ore INPS settimanali",r.special?i.specialInpsHours:i.hours],
  ["Addizionale TD (1 sì / 0 no)",r.rate.additional?1:0],["CUAF (1 sì / 0 no)",i.cuaf?1:0],
  ["Fattore paga ordinaria del periodo",r.grossSalary?r.regularPeriod/r.grossSalary:1],
- ["Fattore mensilità per ratei",i.monthMode==="actual"&&!r.hourly?i.monthlyFraction:1],
+ ["Fattore mensilizzato per paga e vitto/alloggio",i.monthMode==="actual"&&!r.hourly?i.monthlyFraction:1],
  ["Rimborsi documentati",i.reimbursements],["Costo effettivo vitto/alloggio",i.actualBoardCost],
  ["Acconto già pagato",i.advance],["Tredicesima corrisposta",i.paid13],["Anticipo TFR",i.tfrAdvance],
  ["Voci aggiuntive ricorrenti (1 sì / 0 no)",i.extrasRecurring?1:0],["Aggiuntive utili TFR (1 sì / 0 no)",i.extrasTfr?1:0],
  ["Nota","La conversione netto/lordo è eseguita nell'app. Modificando il lordo in B7, il foglio Calcoli ricalcola costi e netto. Per cambiare livello, rapporto o diritti contrattuali, rigenerare dall'app."],
- ["Valore mensile VA per fascia INPS (giorni di fruizione)",r.inpsBenefitMonthly]
+ ["Valore mensile VA per fascia INPS (giorni di fruizione)",r.inpsBenefitMonthly],
+ ["Mesi utili per ratei nel periodo",r.accrualMonths],
+ ["Retribuzione utile TFR del periodo verificata",r.tfrUseful],["Base TFR verificata attiva (1 sì / 0 no)",i.monthMode==="actual"&&i.useTfrVerifiedBase?1:0]
  ];
  const extraRows=[["VOCI AGGIUNTIVE","Ore","Moltiplicatore","Importo"],...r.extraRows.map(x=>[x.label,x.quantity,x.rate/r.globalHourly,f("B"+(r.extraRows.indexOf(x)+2)+"*C"+(r.extraRows.indexOf(x)+2)+"*Calcoli!B2",x.amount)])];
  const exLast=Math.max(2,extraRows.length),exSum=r.extraRows.length?"SUM(Aggiuntive!D2:D"+exLast+")":"0";
@@ -92,8 +95,8 @@ export function xlsx(r) {
  ["INPS datore",f("ROUND(Parametri!B10*(B6-B7),2)",r.inpsEmployer)],
  ["Cassa datore",f("ROUND(Parametri!B11*0.04,2)",r.cassaEmployer)],
  ["Tredicesima annua di riferimento",f("Parametri!B7+Parametri!B8+IF(Parametri!B22=1,B3,0)",r.thirteenthAnnual)],
- ["Rateo tredicesima",f("ROUND(B14/12*Parametri!B16,2)",r.thirteenthAccrual)],
- ["Rateo TFR",f("ROUND((Parametri!B7*Parametri!B15+Parametri!B8*Parametri!B16+IF(OR(Parametri!B22=1,Parametri!B23=1),B3,0)+B14/12*Parametri!B16)/13.5,2)",r.tfrAccrual)],
+ ["Rateo tredicesima",f("ROUND(B14/12*Parametri!B26,2)",r.thirteenthAccrual)],
+ ["Rateo TFR",f("ROUND(IF(Parametri!B28=1,Parametri!B27,Parametri!B7*Parametri!B15+Parametri!B8*Parametri!B16+IF(OR(Parametri!B22=1,Parametri!B23=1),B3,0)+B14/12*Parametri!B26)/13.5,2)",r.tfrAccrual)],
  ["Costo corrente",f("ROUND(B8+B12+B13+Parametri!B17+Parametri!B18,2)",r.currentCost)],
  ["Costo del periodo con ratei",f("ROUND(B17+B15+B16,2)",r.totalCost)],
  ["Da corrispondere al lavoratore",f("ROUND(B11+Parametri!B20+Parametri!B21+Parametri!B17-Parametri!B19,2)",r.netPayable)],
@@ -107,6 +110,9 @@ export function xlsx(r) {
  const original=[["DATI ORIGINALI DELLA SIMULAZIONE","Valore"],...Object.entries(i).map(([k,v])=>[k,typeof v==="boolean"?(v?1:0):v]),["Versione",VERSION]];
  const notes=[["FONTI E IPOTESI","Dettaglio"],...r.warnings.map(x=>["Verifica",x]),...r.notes.map(x=>["Metodo",x]),...SOURCES.map(x=>[x.title,x.url])];
  const sheets=[["Parametri",inputRows],["Calcoli",calcRows],["Aggiuntive",extraRows],["Tabelle",tables],["Dati originali",original],["Fonti e note",notes]];
+ return workbook(sheets);
+}
+export function workbook(sheets){
  const col=n=>{let s="";while(n){n--;s=String.fromCharCode(65+n%26)+s;n=Math.floor(n/26);}return s;};
  const entry={};
  entry["_rels/.rels"]=declaration+'<Relationships xmlns="'+relns+'"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
@@ -121,7 +127,7 @@ export function xlsx(r) {
    for(let c=0;c<rows[row].length;c++) {
     const v=rows[row][c],ref=col(c+1)+(row+1),style=row===0?1:typeof v==="number"?(sn===0?3:2):v&&typeof v==="object"?2:0;
     xml+='<c r="'+ref+'" s="'+style+'"';
-    if(v&&typeof v==="object") xml+='><f>'+E(v.formula)+'</f><v>'+Number(v.value)+'</v></c>';
+    if(v&&typeof v==="object") xml+=(typeof v.value==="string"?' t="str"':'')+'><f>'+E(v.formula)+'</f><v>'+(typeof v.value==="string"?E(v.value):Number(v.value))+'</v></c>';
     else if(typeof v==="number") xml+='><v>'+v+"</v></c>";
     else xml+=' t="inlineStr"><is><t xml:space="preserve">'+E(v)+"</t></is></c>";
    } xml+="</row>";
@@ -139,7 +145,7 @@ export function pdf(r) {
  const pages=[];let stream="",y=0,pageNo=0;
  const text=(s,x,yy,size=10,bold=false)=>{stream+="BT /"+(bold?"F2":"F1")+" "+size+" Tf 0.08 0.21 0.23 rg 1 0 0 1 "+x+" "+yy+" Tm "+pdfString(s)+" Tj ET\n";};
  const line=(yy)=>{stream+="0.82 0.88 0.87 RG 0.5 w 48 "+yy+" m 547 "+yy+" l S\n";};
- const newPage=()=>{if(stream)pages.push(stream);stream="";pageNo++;y=785;text("CENTRO PRATICHE FLAIANO",48,y,10,true);text("Colf e badanti · Simulazione "+r.input.reference,48,y-23,17,true);text("Via Filoteo Alberini 25 int. 10, Roma · 06 97845429",48,y-41,8);line(y-52);y-=76;text("Regole 2026 · App "+VERSION+" · Pagina "+pageNo,48,28,8);};
+ const newPage=()=>{if(stream)pages.push(stream);stream="";pageNo++;y=785;text("CENTRO PRATICHE FLAIANO",48,y,10,true);text((r.kind==="quarter"?"Contributi · Prospetto ":"Colf e badanti · Simulazione ")+r.input.reference,48,y-23,17,true);text("Via Filoteo Alberini 25 int. 10, Roma · 06 97845429",48,y-41,8);line(y-52);y-=76;text("Regole 2026 · App "+VERSION+" · Pagina "+pageNo,48,28,8);};
  newPage();
  for(const section of reportSections(r)) {
   if(y<120)newPage();text(section.title,48,y,12,true);y-=23;

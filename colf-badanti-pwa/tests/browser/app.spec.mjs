@@ -67,7 +67,7 @@ test("tutti i campi hanno una guida e mantengono un nome accessibile",async({pag
   name:input.name,hidden:input.type==="hidden",label:input.labels?.[0]?.textContent.trim()||"",
   helpers:form.querySelectorAll('.help-trigger[data-help-key="field.'+input.name+'"]').length
  })));
- expect(fields.length).toBe(58);
+ expect(fields.length).toBe(66);
  expect(fields.filter(f=>f.helpers!==1)).toEqual([]);
  expect(fields.filter(f=>!f.hidden&&!f.label)).toEqual([]);
  await expect(page.locator("label .help-trigger")).toHaveCount(0);
@@ -147,4 +147,56 @@ test("paga base CCNL distinta dall'accordo e coerente per ogni regime",async({pa
  await expect(page.locator("#minimum-reference-table")).toContainText("Non prevista");
  await page.locator('[data-help-key="minimum.DS.livein"]').first().click();
  await expect(page.locator("#context-help-popover")).toContainText("non sommarla due volte");
+});
+
+test("trimestre da presenze con confronto avviso e trattenute",async({page})=>{
+ await page.locator('[data-page="quarter"]').click();await page.locator("#q-copy").click();
+ await expect(page.getByTestId("quarter-total")).toHaveCount(0);
+ await page.locator("#q-fill").click();await page.locator("#q-confirmed").check();
+ await expect(page.getByTestId("quarter-total")).toHaveText(/422,50/);
+ await page.locator("#q-officialInps").fill("403");await page.locator("#q-officialCassa").fill("19.5");await page.locator("#q-withheldInps").fill("100.74");
+ await expect(page.locator("#q-results")).toContainText("Importi coincidenti");
+ await expect(page.locator("#q-results tr").filter({hasText:"Saldo INPS lavoratore"})).toContainText("0,01");
+ await page.locator("#q-officialCassa").fill("19.49");await expect(page.locator("#q-results")).toContainText("Scostamento");
+ await page.locator('[data-week="0"][data-column="inpsHours"]').fill("");
+ await expect(page.getByTestId("quarter-total")).toHaveCount(0);
+ await expect(page.locator('[data-quarter-export="xlsx"]')).toBeDisabled();
+});
+test("esportazioni trimestrali modificabili e file riapribile",async({page})=>{
+ await page.locator('[data-page="quarter"]').click();await page.locator("#q-copy").click();await page.locator("#q-fill").click();await page.locator("#q-confirmed").check();
+ let jsonDownload;
+ for(const type of ["docx","xlsx","pdf","json"]){
+  const event=page.waitForEvent("download");await page.locator('[data-quarter-export="'+type+'"]').click();const file=await event;
+  expect(file.suggestedFilename()).toMatch(new RegExp("\\."+type+"$"));expect(await file.failure()).toBeNull();
+  if(type==="json")jsonDownload=file;
+ }
+ await page.locator("#q-file").setInputFiles(await jsonDownload.path());
+ await expect(page.locator("#q-confirmed")).not.toBeChecked();
+ await page.locator("#q-confirmed").check();await expect(page.getByTestId("quarter-total")).toHaveText(/422,50/);
+ await page.locator('[data-help-key="quarter.hours"]').first().click();
+ await expect(page.locator("#context-help-popover")).toContainText("una sola volta");
+});
+test("trimestre disponibile offline e senza overflow della pagina",async({page,context})=>{
+ await page.evaluate(async()=>{await navigator.serviceWorker.ready;});await page.reload();
+ await context.setOffline(true);await page.reload();
+ await page.locator('[data-page="quarter"]').click();await page.locator("#q-copy").click();await page.locator("#q-fill").click();await page.locator("#q-confirmed").check();
+ await expect(page.getByTestId("quarter-total")).toHaveText(/422,50/);
+ const size=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));expect(size.scroll).toBeLessThanOrEqual(size.width+1);
+ await context.setOffline(false);
+});
+
+test("cedolino mensilizzato: contributi effettivi e base TFR parziale verificata",async({page})=>{
+ await page.locator('[name="regime"]').selectOption("livein");
+ await page.locator('[data-mode="net"]').click();await page.locator('[name="pay"]').fill("1200");
+ await page.locator('[name="monthMode"]').selectOption("actual");
+ await expect(page.getByTestId("total-cost")).toHaveCount(0);
+ await page.locator('[name="actualInpsHours"]').fill("270");await page.locator('[name="actualCassaHours"]').fill("270");
+ await page.locator('[name="actualContributionsConfirmed"]').check();
+ await expect(page.getByTestId("net-pay")).toHaveText(/1.200,00/);
+ await page.locator('[name="monthlyFraction"]').fill("0.5");await page.locator('[name="monthlyFraction"]').blur();
+ await expect(page.getByTestId("total-cost")).toHaveCount(0);
+ await page.locator('[name="actualInpsHours"]').fill("135");await page.locator('[name="actualCassaHours"]').fill("135");await page.locator('[name="actualContributionsConfirmed"]').check();
+ await page.locator('[name="useTfrVerifiedBase"]').check();await page.locator('[name="tfrVerifiedBase"]').fill("700");await page.locator('[name="tfrVerifiedBase"]').blur();
+ await expect(page.getByTestId("net-pay")).toHaveText(/600,00/);
+ await expect(page.locator("#results .accruals")).toContainText("51,85");
 });

@@ -39,6 +39,10 @@ try{
  const download=await dl;
  if(await download.failure())throw new Error("PDF offline non disponibile");
  await page.locator('[data-close="export-dialog"]').click();
+ await page.locator('[data-page="quarter"]').click();await page.locator("#q-copy").click();await page.locator("#q-fill").click();await page.locator("#q-confirmed").check();
+ const quarterTotal=await page.locator('[data-testid="quarter-total"]').innerText();
+ if(!quarterTotal.includes("514,80"))throw new Error("Prospetto trimestrale offline inatteso: "+quarterTotal);
+ result.quarterOffline=true;result.quarterTotal=quarterTotal;
  await page.context().setOffline(false);
  result.verified=true;result.offline=true;result.exportPdf=true;result.tooltipsOffline=true;result.ccnlBase=base;result.title=await page.title();
  await page.screenshot({path:"pwa-test-artifacts/preview-desktop.png",fullPage:true});

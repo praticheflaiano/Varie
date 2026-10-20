@@ -1,3 +1,4 @@
+import {installQuarterCalculator} from "./quarter-ui.js";
 import {installContextHelp,refreshResultHelp,closeContextHelp} from "./help.js";
 import {DEFAULTS,LEVELS,REGIMES,SOURCES,RULES,VERSION,ccnlMinimum} from "./data.js";
 import {calculate,normalize} from "./engine.js";
@@ -6,7 +7,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const form=$("calculator-form"),storageKey="flaiano.domestico.archive.v1";
 let current={...DEFAULTS},result=null,detailTab="payslip",comparison=[],toastTimer=null,installPrompt=null,updateTimer=null;
-const pageNames={calculator:"Calcolatore",compare:"Confronta scenari",levels:"Livelli e mansioni",archive:"Preventivi salvati",sources:"Regole e fonti"};
+const pageNames={calculator:"Calcolatore",quarter:"Contributi trimestrali",compare:"Confronta scenari",levels:"Livelli e mansioni",archive:"Preventivi salvati",sources:"Regole e fonti"};
 $("regime").innerHTML=Object.entries(REGIMES).map(([k,v])=>'<option value="'+k+'">'+esc(v)+"</option>").join("");
 $("level").innerHTML=Object.entries(LEVELS).map(([k,v])=>'<option value="'+k+'">'+esc(v.name)+"</option>").join("");
 for(const c of form.elements)if(c.name&&!c.id)c.id="input-"+c.name;
@@ -37,7 +38,7 @@ function renderContractBase(){
 }
 function updateVisibility(){
  const i=current,hourly=["hourly","replacement"].includes(i.regime),special=["night","presence"].includes(i.regime);
- const flags={fixed:i.contract==="fixed",reduced:i.regime==="reduced",special,ds:i.level==="DS",bs:i.level==="BS",
+ const flags={fixed:i.contract==="fixed",presence:i.regime==="presence",reduced:i.regime==="reduced",special,ds:i.level==="DS",bs:i.level==="BS",
  care:["CS","DS"].includes(i.level),uni:["B","BS","CS"].includes(i.level),minimum:i.payMode==="minimum",hourly,
  actual:i.monthMode==="actual","actual-hourly":i.monthMode==="actual"&&hourly,"actual-monthly":i.monthMode==="actual"&&!hourly};
  document.querySelectorAll("[data-visible]").forEach(el=>el.hidden=!flags[el.dataset.visible]);
@@ -55,6 +56,7 @@ function go(page){
  document.querySelectorAll(".page").forEach(p=>p.hidden=p.id!=="page-"+page);
  document.querySelectorAll("[data-page]").forEach(b=>{const active=b.dataset.page===page;b.classList.toggle("active",active);if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
  $("page-name").textContent=pageNames[page]||page;
+ for(const id of ["open-export","save-button","import-button"])$(id).hidden=page==="quarter";
  if(page==="compare")renderComparison();if(page==="archive")renderArchive();
  window.scrollTo({top:0,behavior:"instant"});
 }
@@ -94,10 +96,11 @@ $("results").addEventListener("click",event=>{
  if(action==="export")openExport();
  if(action==="compare")addComparison();
 });
-form.addEventListener("input",()=>{clearTimeout(updateTimer);updateTimer=setTimeout(render,180);});
+form.addEventListener("input",event=>{if(["actualInpsHours","actualCassaHours","extraOrdinary","overtime10","overtime25","overtime50","holidayWorked","restWorked"].includes(event.target.name))control("actualContributionsConfirmed").checked=false;clearTimeout(updateTimer);updateTimer=setTimeout(render,180);});
 form.addEventListener("change",event=>{
  const name=event.target.name;
  readForm();
+ if(["reference","regime","hours","contract","substitution","cuaf"].includes(name))current.actualContributionsConfirmed=false;
  if(name==="regime"){
   const monthly=!["hourly","replacement"].includes(current.regime);
   current.payUnit=monthly?"month":"hour";current.payMode="minimum";
@@ -192,7 +195,7 @@ $("import-file").addEventListener("change",async event=>{
 });
 $("download-app").addEventListener("click",async()=>{
  try{
-  const names=["index.html","styles.css","app.js","help.js","data.js","engine.js","exports.js","sw.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","README.md","scripts/serve.mjs","package.json"];
+  const names=["index.html","styles.css","app.js","help.js","quarter.js","quarter-ui.js","quarter-exports.js","data.js","engine.js","exports.js","sw.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","README.md","VERIFICA-CALCOLI-2026.md","scripts/serve.mjs","package.json"];
   const files={};
   for(const name of names){const response=await fetch(new URL(name,location.href));if(!response.ok)throw new Error("File progetto non disponibile: "+name);files[name]=name.endsWith(".png")?new Uint8Array(await response.arrayBuffer()):await response.text();}
   download(zip(files),"flaiano-colf-badanti-pwa-"+VERSION+".zip","application/zip");toast("Progetto PWA scaricato.");
@@ -217,3 +220,5 @@ function renderMinimumReference(){
 renderMinimumReference();
 
 setForm(DEFAULTS);render();renderComparison();renderArchive();
+
+installQuarterCalculator($("quarter-content"),()=>{clearTimeout(updateTimer);render();return result;},toast);
