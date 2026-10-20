@@ -1,4 +1,5 @@
-import {DEFAULTS,LEVELS,REGIMES,SOURCES,RULES,VERSION} from "./data.js";
+import {installContextHelp,refreshResultHelp,closeContextHelp} from "./help.js";
+import {DEFAULTS,LEVELS,REGIMES,SOURCES,RULES,VERSION,ccnlMinimum} from "./data.js";
 import {calculate,normalize} from "./engine.js";
 import {docx,xlsx,pdf,download,snapshot,importSnapshot,formatMoney,reportSections,zip} from "./exports.js";
 const $=id=>document.getElementById(id);
@@ -9,6 +10,7 @@ const pageNames={calculator:"Calcolatore",compare:"Confronta scenari",levels:"Li
 $("regime").innerHTML=Object.entries(REGIMES).map(([k,v])=>'<option value="'+k+'">'+esc(v)+"</option>").join("");
 $("level").innerHTML=Object.entries(LEVELS).map(([k,v])=>'<option value="'+k+'">'+esc(v.name)+"</option>").join("");
 for(const c of form.elements)if(c.name&&!c.id)c.id="input-"+c.name;
+installContextHelp(form,()=>current);
 function control(name){return form.elements.namedItem(name);}
 function setForm(values){
  current=normalize(values);
@@ -26,6 +28,13 @@ function readForm(){
  }
  current=normalize(next);return current;
 }
+function renderContractBase(){
+ const m=ccnlMinimum(current.level,current.regime,current.hours),box=$("contract-base-summary");
+ if(!m){box.innerHTML='<strong>Paga base CCNL non applicabile</strong><p>Questa combinazione di livello e rapporto non ha una tariffa nella tabella selezionata.</p>';return;}
+ const suffix=m.unit==="hour"?"/ora":"/mese";
+ box.innerHTML='<div class="ccnl-base-heading"><span data-help-minimum="selected">Paga base CCNL 2026</span><small>Tabella '+m.table+' · '+(current.contract==="fixed"?"Tempo determinato":"Tempo indeterminato")+'</small></div><div class="ccnl-base-amount" data-testid="ccnl-base">'+esc(formatMoney(m.total))+' <small>'+suffix+'</small></div>'+(m.role?'<p>Base '+esc(formatMoney(m.base))+' + indennità di funzione '+esc(formatMoney(m.role))+'.</p>':"")+(m.monthlyEquivalent!==null?'<p>Equivalente mensile: <strong>'+esc(formatMoney(m.monthlyEquivalent))+'</strong> a '+esc(current.hours)+' ore settimanali.</p>':"")+'<p class="ccnl-base-note">Prima di scatti, ulteriori indennità e superminimo. Il minimo è uguale per determinato e indeterminato; la contribuzione può cambiare.</p>';
+ refreshResultHelp(box);
+}
 function updateVisibility(){
  const i=current,hourly=["hourly","replacement"].includes(i.regime),special=["night","presence"].includes(i.regime);
  const flags={fixed:i.contract==="fixed",reduced:i.regime==="reduced",special,ds:i.level==="DS",bs:i.level==="BS",
@@ -38,9 +47,11 @@ function updateVisibility(){
  $("pay-label").textContent=i.payMode==="net"?"Netto ordinario concordato":"Lordo ordinario concordato";
  $("pay-explanation").textContent=i.payMode==="net"?"Il netto richiesto riguarda la paga ordinaria, prima dell’IRPEF personale. Ore aggiuntive, rimborsi e pagamenti di tredicesima o TFR sono separati.":i.payMode==="minimum"?"Al minimo contrattuale si aggiungono scatti, indennità e il superminimo inserito. La paga dei conviventi non viene ridotta automaticamente in proporzione alle ore.":"Il lordo inserito comprende minimo, scatti, indennità e superminimo; l’app ne verifica il rispetto del minimo complessivo. Non comprende il vitto/alloggio monetizzato.";
  control("scatti").disabled=i.autoScatti;
+ renderContractBase();
 }
 function toast(message){clearTimeout(toastTimer);$("toast").textContent=message;$("toast").hidden=false;toastTimer=setTimeout(()=>$("toast").hidden=true,5000);}
 function go(page){
+ closeContextHelp();
  document.querySelectorAll(".page").forEach(p=>p.hidden=p.id!=="page-"+page);
  document.querySelectorAll("[data-page]").forEach(b=>{const active=b.dataset.page===page;b.classList.toggle("active",active);if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");});
  $("page-name").textContent=pageNames[page]||page;
@@ -55,10 +66,11 @@ function renderDetails(r){
  if(detailTab==="payslip")content=rows(r.payslip);
  if(detailTab==="employer")content=rows(r.costRows);
  if(detailTab==="composition")content=rows(r.components)+rows([{label:"Lordo ordinario del mese medio",amount:r.grossSalary,kind:"total"}]);
- if(detailTab==="contributions")content=rows([{label:"INPS datore",amount:r.inpsEmployer},{label:"INPS lavoratore",amount:r.inpsWorker},{label:"INPS totale",amount:r.inpsTotal,kind:"total"},{label:"CAS.SA.COLF datore",amount:r.cassaEmployer},{label:"CAS.SA.COLF lavoratore",amount:r.cassaWorker},{label:"CAS.SA.COLF totale",amount:r.cassaTotal,kind:"total"}])+'<p class="mini-note">Fascia INPS: '+(r.rate.band===3?"oltre 24 ore settimanali":r.rate.band+1)+' · Retribuzione effettiva: '+esc(formatMoney(r.rate.effective))+'/ora.<br>Ore del periodo: INPS '+r.inpsHours.toLocaleString("it-IT",{maximumFractionDigits:3})+' · Cassa '+r.cassaHours.toLocaleString("it-IT",{maximumFractionDigits:3})+'.<br>Il versamento trimestrale effettivo richiede il calendario e le ore reali.</p>';
+ if(detailTab==="contributions")content=rows([{label:"INPS datore",amount:r.inpsEmployer},{label:"INPS lavoratore",amount:r.inpsWorker},{label:"INPS totale",amount:r.inpsTotal,kind:"total"},{label:"CAS.SA.COLF datore",amount:r.cassaEmployer},{label:"CAS.SA.COLF lavoratore",amount:r.cassaWorker},{label:"CAS.SA.COLF totale",amount:r.cassaTotal,kind:"total"}])+'<p class="mini-note"><span data-help-result="inpsBand">Fascia INPS</span>: '+(r.rate.band===3?"oltre 24 ore settimanali":r.rate.band+1)+' · <span data-help-result="inpsEffective">Retribuzione effettiva</span>: '+esc(formatMoney(r.rate.effective))+'/ora.<br><span data-help-result="inpsHours">Ore INPS del periodo</span>: '+r.inpsHours.toLocaleString("it-IT",{maximumFractionDigits:3})+' · <span data-help-result="cassaHours">Ore Cassa</span>: '+r.cassaHours.toLocaleString("it-IT",{maximumFractionDigits:3})+'.<br>Il versamento trimestrale effettivo richiede il calendario e le ore reali.</p>';
  return '<div class="panel result-panel"><div class="panel-heading"><h2>Il dettaglio, voce per voce</h2><span class="badge">2026</span></div><div class="result-tabs" role="group" aria-label="Dettaglio risultati">'+tabs.map(([k,label])=>'<button type="button" data-detail="'+k+'" class="'+(detailTab===k?"active":"")+'" aria-pressed="'+(detailTab===k)+'">'+label+"</button>").join("")+"</div>"+content+'<div class="accruals"><div><span>Rateo tredicesima</span><strong>'+esc(formatMoney(r.thirteenthAccrual))+'</strong></div><div><span>Rateo TFR</span><strong>'+esc(formatMoney(r.tfrAccrual))+'</strong></div><div><span>Ferie · giorni</span><strong>'+r.leaveAccrual.toLocaleString("it-IT",{maximumFractionDigits:3})+'</strong></div></div><p class="mini-note">I ratei maturati sono distinti dagli importi effettivamente pagati.</p></div>';
 }
 function render(){
+ closeContextHelp();
  readForm();updateVisibility();result=calculate(current);
  for(const el of form.elements)if(el.removeAttribute)el.removeAttribute("aria-invalid");
  $("open-export").disabled=!result.ok;$("save-button").disabled=!result.ok;
@@ -74,6 +86,7 @@ function render(){
  renderDetails(r)+
  '<div class="result-actions"><button class="button primary" data-action="export">Esporta il prospetto ↓</button><button class="button quiet" data-action="compare">Aggiungi al confronto</button></div>'+
  '<section class="panel result-panel method-panel"><div class="panel-heading"><h2>Le ipotesi del calcolo</h2></div><ul class="method-list">'+r.notes.map(n=>"<li>"+esc(n)+"</li>").join("")+'</ul><p class="mini-note">App '+VERSION+' · Tabelle '+RULES.year+' · Fonti verificate il 20/10/2026</p></section>';
+ refreshResultHelp($("results"));
 }
 $("results").addEventListener("click",event=>{
  const detail=event.target.closest("[data-detail]");if(detail){detailTab=detail.dataset.detail;render();return;}
@@ -165,9 +178,11 @@ function renderComparison(){
  if(!comparison.length){$("comparison").innerHTML='<div class="empty-state"><h2>Parti dal primo scenario</h2><p>Nel calcolatore scegli “Aggiungi al confronto”, modifica ore o paga e aggiungi lo scenario successivo.</p><button class="button primary" data-go-calculator>Apri il calcolatore</button></div>';return;}
  const data=[["Livello",s=>s.input.level],["Rapporto",s=>REGIMES[s.input.regime]],["Ore settimanali",s=>String(s.input.hours)],["Lordo orario",s=>formatMoney(s.gross)],["Da corrispondere",s=>formatMoney(s.net)],["Costo con ratei del periodo",s=>formatMoney(s.cost)],["Costo annuo strutturale",s=>formatMoney(s.annual)]];
  $("comparison").innerHTML='<div class="compare-wrap"><table class="compare-table"><thead><tr><th>Voce</th>'+comparison.map((s,n)=>'<th>'+esc(s.name)+'<small>'+esc(s.input.reference)+'</small><button class="text-button" data-compare-remove="'+n+'">Rimuovi</button></th>').join("")+'</tr></thead><tbody>'+data.map(([label,fn],n)=>'<tr class="'+(n>=5?"emphasis":"")+'"><th scope="row">'+esc(label)+'</th>'+comparison.map(s=>"<td>"+esc(fn(s))+"</td>").join("")+"</tr>").join("")+'</tbody></table></div><p class="muted">Confrontare periodi e condizioni omogenee. Gli scenari restano in memoria fino alla chiusura della pagina.</p>';
+ refreshResultHelp($("comparison"));
 }
 $("comparison").addEventListener("click",event=>{const remove=event.target.closest("[data-compare-remove]");if(remove){comparison.splice(Number(remove.dataset.compareRemove),1);$("compare-count").textContent=String(comparison.length);renderComparison();}if(event.target.closest("[data-go-calculator]"))go("calculator");});
-$("levels-grid").innerHTML=Object.entries(LEVELS).map(([key,v])=>'<article class="panel level-card"><span class="level-letter">'+key+'</span><h2>'+esc(v.name.split(" · ")[1])+'</h2><p>'+esc(v.description)+'</p><div class="level-prices"><span>Non convivente / ora<strong>'+esc(formatMoney(v.hourly))+'</strong></span><span>Convivente / mese<strong>'+esc(formatMoney(v.monthly+(v.role||0)))+'</strong></span></div>'+(v.role?'<p class="mini-note">Include indennità di funzione di '+esc(formatMoney(v.role))+".</p>":"")+'<button class="button quiet small" data-select-level="'+key+'">Usa questo livello</button></article>').join("");
+$("levels-grid").innerHTML=Object.entries(LEVELS).map(([key,v])=>'<article class="panel level-card"><span class="level-letter">'+key+'</span><h2>'+esc(v.name.split(" · ")[1])+'</h2><p>'+esc(v.description)+'</p><div class="level-prices"><span><span data-help-minimum="'+key+'.hourly">Non convivente / ora</span><strong>'+esc(formatMoney(v.hourly))+'</strong></span><span><span data-help-minimum="'+key+'.livein">Convivente / mese</span><strong>'+esc(formatMoney(v.monthly+(v.role||0)))+'</strong></span></div>'+(v.role?'<p class="mini-note">Include indennità di funzione di '+esc(formatMoney(v.role))+".</p>":"")+'<button class="button quiet small" data-select-level="'+key+'">Usa questo livello</button></article>').join("");
+refreshResultHelp($("levels-grid"));
 $("levels-grid").addEventListener("click",event=>{const b=event.target.closest("[data-select-level]");if(!b)return;readForm();current.level=b.dataset.selectLevel;current.regime="hourly";current.hours=25;current.days=5;current.payMode="minimum";current.payUnit="hour";current.child=false;current.multiple=false;current.certified=false;current.meal=false;current.dinner=false;current.room=false;setForm(current);render();go("calculator");});
 $("source-links").innerHTML=SOURCES.map(s=>'<a class="source-link" href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+' ↗<small>'+esc(new URL(s.url).hostname)+"</small></a>").join("");
 $("import-button").addEventListener("click",()=>$("import-file").click());
@@ -177,7 +192,7 @@ $("import-file").addEventListener("change",async event=>{
 });
 $("download-app").addEventListener("click",async()=>{
  try{
-  const names=["index.html","styles.css","app.js","data.js","engine.js","exports.js","sw.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","README.md","scripts/serve.mjs","package.json"];
+  const names=["index.html","styles.css","app.js","help.js","data.js","engine.js","exports.js","sw.js","manifest.webmanifest","icon.svg","icon-192.png","icon-512.png","README.md","scripts/serve.mjs","package.json"];
   const files={};
   for(const name of names){const response=await fetch(new URL(name,location.href));if(!response.ok)throw new Error("File progetto non disponibile: "+name);files[name]=name.endsWith(".png")?new Uint8Array(await response.arrayBuffer()):await response.text();}
   download(zip(files),"flaiano-colf-badanti-pwa-"+VERSION+".zip","application/zip");toast("Progetto PWA scaricato.");
@@ -193,4 +208,12 @@ if("serviceWorker" in navigator&&location.protocol!=="file:"){
   registration.addEventListener("updatefound",()=>{const worker=registration.installing;worker?.addEventListener("statechange",()=>{if(worker.state==="installed"&&navigator.serviceWorker.controller)toast("Nuova versione pronta. Salva il preventivo e riapri l’app.");});});
  }).catch(()=>{ $("connection").textContent="Online · offline non disponibile su questo indirizzo"; });
 }
+
+function renderMinimumReference(){
+ const types=[["hourly","Non convivente","C · €/ora"],["livein","Convivente","A · €/mese"],["reduced","Convivente ridotto","B · €/mese"],["night","Assistenza notturna","D · €/mese"],["replacement","Copertura riposi","G · €/ora"]];
+ $("minimum-reference-table").innerHTML='<div class="minimum-table-scroll"><table class="minimum-table"><thead><tr><th scope="col">Livello</th>'+types.map(([,title,unit])=>'<th scope="col">'+title+'<small>'+unit+'</small></th>').join("")+'</tr></thead><tbody>'+Object.keys(LEVELS).map(level=>'<tr><th scope="row">'+level+'</th>'+types.map(([regime])=>{const m=ccnlMinimum(level,regime);return m?'<td><span data-help-minimum="'+level+"."+regime+'">'+esc(formatMoney(m.total))+'</span>'+(m.role?'<small>Funzione inclusa</small>':"")+'</td>':'<td class="not-applicable">Non prevista</td>';}).join("")+'</tr>').join("")+'</tbody></table></div><div class="presence-minimum"><span data-help-minimum="CS.presence">Presenza notturna · tabella E · livello unico</span><strong>'+esc(formatMoney(ccnlMinimum("CS","presence").total))+' /mese</strong></div><p class="field-help">Nella convivenza ordinaria D e DS il totale comprende la funzione di 207,69 € mensili. Restano distinti scatti, indennità aggiuntive, superminimo e vitto/alloggio. “Non prevista” indica una combinazione senza minimo nella specifica tabella.</p>';
+ refreshResultHelp($("minimum-reference-table"));
+}
+renderMinimumReference();
+
 setForm(DEFAULTS);render();renderComparison();renderArchive();

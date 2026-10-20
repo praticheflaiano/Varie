@@ -17,6 +17,8 @@ try{
  await page.locator('[data-testid="gross-hourly"]').waitFor({timeout:15000});
  const gross=await page.locator('[data-testid="gross-hourly"]').innerText();
  if(!gross.includes("10,33"))throw new Error("Risultato iniziale inatteso: "+gross);
+ const base=await page.locator('[data-testid="ccnl-base"]').innerText();
+ if(!base.includes("8,30"))throw new Error("Paga base CCNL inattesa: "+base);
  await page.locator('[name="hours"]').fill("20");await page.locator('[name="hours"]').blur();
  await page.waitForFunction(()=>document.querySelector('[data-testid="gross-hourly"]')?.textContent.includes("10,50"));
  await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error("Service worker non attivo")),12000))]);});
@@ -26,6 +28,11 @@ try{
  await page.locator('[data-testid="gross-hourly"]').waitFor({timeout:10000});
  await page.locator('[name="hours"]').fill("20");await page.locator('[name="hours"]').blur();
  await page.waitForFunction(()=>document.querySelector('[data-testid="gross-hourly"]')?.textContent.includes("10,50"));
+ await page.locator('[data-help-key="field.hours"]').click();
+ const help=page.locator("#context-help-popover");
+ await help.waitFor({state:"visible"});
+ if(!(await help.innerText()).includes("Cosa determina"))throw new Error("Guida offline non disponibile");
+ await page.keyboard.press("Escape");
  await page.locator("#open-export").click();
  const dl=page.waitForEvent("download");
  await page.locator('[data-export="pdf"]').click();
@@ -33,7 +40,7 @@ try{
  if(await download.failure())throw new Error("PDF offline non disponibile");
  await page.locator('[data-close="export-dialog"]').click();
  await page.context().setOffline(false);
- result.verified=true;result.offline=true;result.exportPdf=true;result.title=await page.title();
+ result.verified=true;result.offline=true;result.exportPdf=true;result.tooltipsOffline=true;result.ccnlBase=base;result.title=await page.title();
  await page.screenshot({path:"pwa-test-artifacts/preview-desktop.png",fullPage:true});
  console.log("ANTEPRIMA_VERIFICATA "+url);
 }catch(error){result.error=error.message;console.log("ANTEPRIMA_NON_VERIFICATA "+error.message);}

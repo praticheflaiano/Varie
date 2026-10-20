@@ -1,4 +1,4 @@
-export const VERSION = "1.0.0";
+export const VERSION = "1.1.0";
 export const RULES = Object.freeze({year:2026, checked:"2026-10-20", effective:"2026-01-01", ccnl:"H501", contract:"CCNL 2025–2028", validTo:"2026-12-31", cassa:{total:.06,worker:.02}, board:{meal:2.33,dinner:2.33,room:2.00}, thresholds:[9.61,11.70], inps:{worker:[.43,.48,.59,.31], indefinite:[1.70,1.92,2.34,1.24], fixed:[1.82,2.05,2.50,1.32]}});
 export const LEVELS = Object.freeze({
  A:{name:"A · Compiti esecutivi",description:"Pulizie, lavanderia, aiuto cucina, cura di animali o aree verdi: mansioni specifiche esecutive, sotto il controllo del datore.",hourly:6.51,monthly:908.10},
@@ -39,3 +39,16 @@ export const DEFAULTS = Object.freeze({
  extrasRecurring:false,extrasTfr:false,reimbursements:0,advance:0,paid13:0,tfrAdvance:0,tfrFund:0,tfrAdvanceConfirmed:false,
  existingFund:0,foi:0,calculateRevaluation:false
 });
+
+export function ccnlMinimum(levelKey,regime,hours=0) {
+ const v=LEVELS[levelKey];
+ if(!v||!REGIMES[regime])return null;
+ const table={hourly:"C",livein:"A",reduced:"B",replacement:"G",night:"D",presence:"E"}[regime];
+ const isHourly=regime==="hourly"||regime==="replacement";
+ let base=regime==="hourly"?v.hourly:regime==="livein"?v.monthly:regime==="reduced"?v.reduced:regime==="replacement"?v.replacement:regime==="night"?v.night:811.09;
+ if(!Number.isFinite(base))return null;
+ const role=regime==="livein"?(v.role||0):0;
+ const total=base+role;
+ return {level:levelKey,regime,table,unit:isHourly?"hour":"month",base,role,total,
+  monthlyEquivalent:isHourly&&Number.isFinite(Number(hours))&&Number(hours)>0?total*Number(hours)*52/12:null};
+}

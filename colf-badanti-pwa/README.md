@@ -10,11 +10,13 @@ Richiede Node.js 20 o successivo solo per il server di sviluppo:
 
 Aprire http://localhost:4173. Per l'uso da telefono e l'installazione PWA pubblicare i file statici tramite HTTPS. Non aprire index.html direttamente con file://: i moduli JavaScript richiedono un server.
 
-Per ospitare l'app è sufficiente copiare nella stessa cartella index.html, styles.css, app.js, data.js, engine.js, exports.js, sw.js, manifest.webmanifest, icon.svg, icon-192.png, icon-512.png, scripts/serve.mjs, package.json e questo README. Tutti i percorsi sono relativi, quindi è supportata anche una sottocartella del dominio.
+Per ospitare l'app è sufficiente copiare nella stessa cartella index.html, styles.css, app.js, help.js, data.js, engine.js, exports.js, sw.js, manifest.webmanifest, icon.svg, icon-192.png, icon-512.png, scripts/serve.mjs, package.json e questo README. Tutti i percorsi sono relativi, quindi è supportata anche una sottocartella del dominio.
 
 ## Funzioni
 
 - Livelli A, AS, B, BS, C, CS, D e DS, con mansioni e minimi 2026.
+- Paga base sempre visibile per livello e rapporto; tabella completa dei minimi A/B/C/D/E/G, con funzione D/DS esplicita.
+- Guide contestuali per tutti i 58 campi, le voci di risultato e i formati di esportazione: significato, quando usarli ed effetti sul calcolo. Apertura tramite mouse, tastiera o tocco; chiusura con Escape o all’esterno.
 - Non conviventi, conviventi, tabella B, sostituzione riposi, assistenza e presenza notturna.
 - Minimo CCNL con superminimo, lordo concordato o netto ordinario richiesto.
 - Scatti, indennità di funzione, bambini sotto 6 anni, più persone non autosufficienti e UNI 11766.
