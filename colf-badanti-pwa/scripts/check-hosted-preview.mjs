@@ -19,7 +19,21 @@ try{
  if(!gross.includes("10,33"))throw new Error("Risultato iniziale inatteso: "+gross);
  await page.locator('[name="hours"]').fill("20");await page.locator('[name="hours"]').blur();
  await page.waitForFunction(()=>document.querySelector('[data-testid="gross-hourly"]')?.textContent.includes("10,50"));
- result.verified=true;result.title=await page.title();
+ await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(new Error("Service worker non attivo")),12000))]);});
+ await page.reload({waitUntil:"networkidle"});
+ await page.context().setOffline(true);
+ await page.reload({waitUntil:"domcontentloaded"});
+ await page.locator('[data-testid="gross-hourly"]').waitFor({timeout:10000});
+ await page.locator('[name="hours"]').fill("20");await page.locator('[name="hours"]').blur();
+ await page.waitForFunction(()=>document.querySelector('[data-testid="gross-hourly"]')?.textContent.includes("10,50"));
+ await page.locator("#open-export").click();
+ const dl=page.waitForEvent("download");
+ await page.locator('[data-export="pdf"]').click();
+ const download=await dl;
+ if(await download.failure())throw new Error("PDF offline non disponibile");
+ await page.locator('[data-close="export-dialog"]').click();
+ await page.context().setOffline(false);
+ result.verified=true;result.offline=true;result.exportPdf=true;result.title=await page.title();
  await page.screenshot({path:"pwa-test-artifacts/preview-desktop.png",fullPage:true});
  console.log("ANTEPRIMA_VERIFICATA "+url);
 }catch(error){result.error=error.message;console.log("ANTEPRIMA_NON_VERIFICATA "+error.message);}
