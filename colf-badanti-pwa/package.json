@@ -1,0 +1,16 @@
+{
+  "name": "flaiano-colf-badanti-pwa",
+  "version": "1.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Calcolatore PWA del costo del lavoro domestico con tabelle 2026",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/engine.test.mjs tests/exports.test.mjs tests/quarter.test.mjs tests/audit.test.mjs",
+    "test:browser": "playwright test",
+    "check": "npm test && npm run test:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}

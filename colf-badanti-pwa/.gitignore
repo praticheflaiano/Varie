@@ -1,0 +1,4 @@
+node_modules/
+pwa-test-artifacts/
+playwright-report/
+test-results/
