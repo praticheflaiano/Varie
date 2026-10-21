@@ -68,21 +68,22 @@ export function xlsx(r) {
  ["Ore Cassa del periodo",r.cassaHours],["Ore INPS settimanali",r.special?i.specialInpsHours:i.hours],
  ["Addizionale TD (1 sì / 0 no)",r.rate.additional?1:0],["CUAF (1 sì / 0 no)",i.cuaf?1:0],
  ["Fattore paga ordinaria del periodo",r.grossSalary?r.regularPeriod/r.grossSalary:1],
- ["Fattore mensilizzato per paga e vitto/alloggio",i.monthMode==="actual"&&!r.hourly?i.monthlyFraction:1],
+ ["Fattore mensilizzato per paga e vitto/alloggio convenzionale",i.monthMode==="actual"&&!r.hourly?i.monthlyFraction:1],
  ["Rimborsi documentati",i.reimbursements],["Costo effettivo vitto/alloggio",i.actualBoardCost],
  ["Acconto già pagato",i.advance],["Tredicesima corrisposta",i.paid13],["Anticipo TFR",i.tfrAdvance],
  ["Voci aggiuntive ricorrenti (1 sì / 0 no)",i.extrasRecurring?1:0],["Aggiuntive utili TFR (1 sì / 0 no)",i.extrasTfr?1:0],
  ["Nota","La conversione netto/lordo è eseguita nell'app. Modificando il lordo in B7, il foglio Calcoli ricalcola costi e netto. Per cambiare livello, rapporto o diritti contrattuali, rigenerare dall'app."],
  ["Valore mensile VA per fascia INPS (giorni di fruizione)",r.inpsBenefitMonthly],
  ["Mesi utili per ratei nel periodo",r.accrualMonths],
- ["Retribuzione utile TFR del periodo verificata",r.tfrUseful],["Base TFR verificata attiva (1 sì / 0 no)",i.monthMode==="actual"&&i.useTfrVerifiedBase?1:0]
+ ["Retribuzione utile TFR del periodo verificata",r.tfrUseful],["Base TFR verificata attiva (1 sì / 0 no)",i.monthMode==="actual"&&i.useTfrVerifiedBase?1:0],
+ ["Paga oraria attiva presenza notturna (0 negli altri casi)",i.regime==="presence"&&r.extraRows.length?i.presenceActivePay:0]
  ];
  const extraRows=[["VOCI AGGIUNTIVE","Ore","Moltiplicatore","Importo"],...r.extraRows.map(x=>[x.label,x.quantity,x.rate/r.globalHourly,f("B"+(r.extraRows.indexOf(x)+2)+"*C"+(r.extraRows.indexOf(x)+2)+"*Calcoli!B2",x.amount)])];
  const exLast=Math.max(2,extraRows.length),exSum=r.extraRows.length?"SUM(Aggiuntive!D2:D"+exLast+")":"0";
  const extraHours=r.extraRows.filter(x=>x.code!=="ordinaryNight").reduce((n,x)=>n+x.quantity,0);
  const calcRows=[
  ["FLAIANO · CALCOLI","Importo"],
- ["Retribuzione globale oraria",f("(Parametri!B7+Parametri!B8)/Parametri!B6",r.globalHourly)],
+ ["Retribuzione globale oraria",f("IF(Parametri!B29>0,Parametri!B29,(Parametri!B7+Parametri!B8)/Parametri!B6)",r.globalHourly)],
  ["Voci aggiuntive del periodo",f(exSum,r.extraPay)],
  ["Retribuzione effettiva INPS",f("(Parametri!B7+Parametri!B25+IF(Parametri!B22=1,B3,0))*13/12/Parametri!B6",r.rate.effective)],
  ["Fascia INPS",f("IF(Parametri!B12>24,4,IF(B4<=9.61,1,IF(B4<=11.70,2,3)))",r.rate.band+1)],
@@ -92,8 +93,8 @@ export function xlsx(r) {
  ["INPS lavoratore",f("ROUND(Parametri!B10*B7,2)",r.inpsWorker)],
  ["Cassa lavoratore",f("ROUND(Parametri!B11*0.02,2)",r.cassaWorker)],
  ["Netto del periodo prima IRPEF",f("ROUND(B8-B9-B10,2)",r.netOrdinary)],
- ["INPS datore",f("ROUND(Parametri!B10*(B6-B7),2)",r.inpsEmployer)],
- ["Cassa datore",f("ROUND(Parametri!B11*0.04,2)",r.cassaEmployer)],
+ ["INPS datore",f("ROUND(ROUND(Parametri!B10*B6,2)-B9,2)",r.inpsEmployer)],
+ ["Cassa datore",f("ROUND(ROUND(Parametri!B11*0.06,2)-B10,2)",r.cassaEmployer)],
  ["Tredicesima annua di riferimento",f("Parametri!B7+Parametri!B8+IF(Parametri!B22=1,B3,0)",r.thirteenthAnnual)],
  ["Rateo tredicesima",f("ROUND(B14/12*Parametri!B26,2)",r.thirteenthAccrual)],
  ["Rateo TFR",f("ROUND(IF(Parametri!B28=1,Parametri!B27,Parametri!B7*Parametri!B15+Parametri!B8*Parametri!B16+IF(OR(Parametri!B22=1,Parametri!B23=1),B3,0)+B14/12*Parametri!B26)/13.5,2)",r.tfrAccrual)],

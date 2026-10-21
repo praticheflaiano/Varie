@@ -43,7 +43,8 @@ export function calculate(raw={}) {
  }
  for(const k of ["ordinaryPaidHours","holidayPaidHours","leavePaidHours","extraOrdinary","overtime10","overtime25","overtime50","holidayWorked","restWorked","ordinaryNight"]) if(i[k]>744) fail(k,"Le ore mensili non possono superare 744.");
  if(i.pay>1000000||i.supermin>1000000) fail("pay","Importo oltre il limite di calcolo ammesso (1.000.000 €).");
- if(!(i.hours>0&&i.hours<=54)) fail("hours","Le ore contrattuali devono essere superiori a zero e non oltre 54.");
+ const maxHours=i.regime==="night"?72:i.regime==="presence"?66:54;
+ if(!(i.hours>0&&i.hours<=maxHours)) fail("hours","Le ore contrattuali devono essere superiori a zero e non oltre "+maxHours+" per il rapporto selezionato.");
  if(!Number.isInteger(i.days)||i.days<1||i.days>6) fail("days","Indicare da 1 a 6 giorni settimanali.");
  if(!Number.isInteger(i.scatti)||i.scatti>7) fail("scatti","Gli scatti devono essere un intero da 0 a 7.");
  if(!["indefinite","fixed"].includes(i.contract)) fail("contract","Tipologia contrattuale non valida.");
@@ -60,6 +61,7 @@ export function calculate(raw={}) {
  if(i.regime==="replacement"&&!level?.replacement) fail("regime","La sostituzione dei riposi in tabella G è prevista solo per CS e DS.");
  if(i.regime==="night"&&!level?.night) fail("regime","L'assistenza notturna è prevista per BS, CS e DS.");
  if(special&&(!i.specialConfirmed||!(i.specialInpsHours>0))) fail("specialInpsHours","Per i rapporti notturni indicare le ore INPS settimanali verificate e confermare la disciplina specifica.");
+ if(special&&i.specialInpsHours>168) fail("specialInpsHours","Le ore INPS settimanali non possono superare 168.");
  if(special&&(!Number.isInteger(i.nightsWeek)||!(i.nightsWeek>0)||i.nightsWeek>6)) fail("nightsWeek","Indicare da 1 a 6 notti settimanali.");
  if(i.child&&i.level!=="BS") fail("child","L'indennità bambini sotto 6 anni è prevista per la baby-sitter BS.");
  if(i.multiple&&!["CS","DS"].includes(i.level)) fail("multiple","L'indennità per più persone non autosufficienti è prevista per CS e DS.");
@@ -79,6 +81,8 @@ export function calculate(raw={}) {
  if(i.endDate&&i.hireDate&&i.endDate<i.hireDate) fail("endDate","La cessazione non può precedere l'assunzione.");
  if(i.endDate&&i.endDate.slice(0,4)!=="2026") warnings.push("La scadenza supera il 2026: gli importi oltre il 31 dicembre 2026 richiederanno nuove tabelle.");
  if(i.hireDate&&i.hireDate.slice(0,7)>i.reference) fail("hireDate","Il mese simulato precede l'assunzione.");
+ if(i.endDate&&i.endDate.slice(0,7)<i.reference) fail("endDate","Il mese simulato è successivo alla cessazione del rapporto.");
+ if(i.regime==="night"&&i.ordinaryNight>0) fail("ordinaryNight","La tabella D remunera già l’assistenza notturna: non aggiungere il 20% del notturno ordinario alle stesse ore.");
  if(i.overtime10>0&&i.regime!=="hourly") fail("overtime10","La maggiorazione del 10% fra la 41ª e la 44ª ora è riservata ai non conviventi.");
  if(i.restWorked>0&&!["livein","reduced"].includes(i.regime)) fail("restWorked","Le 12 ore di riposo con maggiorazione del 40% riguardano i conviventi.");
  if(errors.length) return {ok:false,input:i,errors,warnings,version:VERSION,rules:RULES};
@@ -114,19 +118,22 @@ export function calculate(raw={}) {
   const target=i.pay*(i.payUnit==="hour"?meanHours:1);
   // Cassa may have a different conventional base in night contracts.
   const candidates=[];
-  const monthFraction=i.monthMode==="actual"&&!hourly?i.monthlyFraction:1;
+  // Solve the requested ordinary net on the same paid period used below.
+  // Monetized benefit days already refer to that period and must not be scaled twice.
+  const monthFraction=i.monthMode==="actual"?(hourly?(i.ordinaryPaidHours+i.holidayPaidHours+i.leavePaidHours)/meanHours:i.monthlyFraction):1;
    const ordinaryExtraHours=i.extraOrdinary+i.overtime10+i.overtime25+i.overtime50+i.holidayWorked+i.restWorked;
    const netInpsHours=i.monthMode==="actual"&&!hourly?Math.max(0,i.actualInpsHours-ordinaryExtraHours)/monthFraction:contributionMeanHours;
    const netCassaHours=i.monthMode==="actual"&&!hourly?Math.max(0,i.actualCassaHours-ordinaryExtraHours)/monthFraction:cassaMeanHours;
+  if(monthFraction<=0) fail("pay","Senza ore ordinarie retribuite non è possibile ricostruire una paga netta ordinaria: usare il minimo CCNL o una paga lorda verificata.");
   for(const b of contributionHoursWeek>24?[3]:[0,1,2]) {
    const rr=contribution(0,ctx,b);
-   const candidate=target+rr.worker*netInpsHours+.02*netCassaHours-benefitCash;
+   const candidate=target+rr.worker*netInpsHours+.02*netCassaHours-benefitCash/monthFraction;
    if(contribution(candidate,ctx).band===b&&candidate+1e-7>=minimum) candidates.push(candidate);
   }
   candidates.sort((a,b)=>a-b);alternatives=candidates.length;
   if(!candidates.length) {
    const rr=contribution(minimum,ctx);
-   const minNet=minimum+benefitCash-rr.worker*netInpsHours-.02*netCassaHours;
+   const minNet=minimum+benefitCash/(monthFraction||1)-rr.worker*netInpsHours-.02*netCassaHours;
    fail("pay","Il netto richiesto non raggiunge il minimo contrattuale. Netto minimo ordinario stimato: "+money(minNet)+" € al mese.");
   } else grossSalary=candidates[0];
  }
@@ -141,7 +148,7 @@ export function calculate(raw={}) {
  const basePaidHours=i.monthMode==="actual"&&hourly?i.ordinaryPaidHours+i.holidayPaidHours+i.leavePaidHours:meanHours;
  if(i.ordinaryNight>(i.regime==="presence"?i.extraOrdinary:basePaidHours)) fail("ordinaryNight","Le ore notturne ordinarie non possono superare le ore già comprese nella paga ordinaria.");
  const regularPeriod=hourly?unitOrdinary*basePaidHours:grossSalary*fraction;
- const benefitCashPeriod=benefitCash*fraction;
+ const benefitCashPeriod=benefitCash;
  const benefitUsefulPeriod=benefitMonthly*fraction;
  const extraDefs=[
  ["extraOrdinary","Ore aggiuntive ordinarie",1],["overtime10","Ore dalla 41ª alla 44ª (+10%)",1.10],
@@ -156,8 +163,8 @@ export function calculate(raw={}) {
  if(i.monthMode==="actual"&&!hourly&&(i.actualInpsHours+1e-7<extraHours||i.actualCassaHours+1e-7<extraHours)) fail("actualInpsHours","Le ore contributive totali verificate non possono essere inferiori alle ore aggiuntive indicate.");
  const inpsHours=i.monthMode==="actual"?(hourly?basePaidHours+extraHours:i.actualInpsHours):contributionMeanHours+extraHours;
  const cassaHours=i.monthMode==="actual"?(hourly?basePaidHours+extraHours:i.actualCassaHours):cassaMeanHours+extraHours;
- const inpsWorker=money(inpsHours*rate.worker),inpsEmployer=money(inpsHours*rate.employer),inpsTotal=money(inpsWorker+inpsEmployer);
- const cassaWorker=money(cassaHours*.02),cassaEmployer=money(cassaHours*.04),cassaTotal=money(cassaWorker+cassaEmployer);
+ const inpsTotal=money(inpsHours*rate.total),inpsWorker=money(inpsHours*rate.worker),inpsEmployer=money(inpsTotal-inpsWorker);
+ const cassaTotal=money(cassaHours*.06),cassaWorker=money(cassaHours*.02),cassaEmployer=money(cassaTotal-cassaWorker);
  const gross=money(regularPeriod+benefitCashPeriod+extraPay);
  const netOrdinary=money(gross-inpsWorker-cassaWorker);
  const recurringExtra=i.extrasRecurring?extraPay:0;
@@ -176,7 +183,7 @@ export function calculate(raw={}) {
  const annualExtra=i.extrasRecurring?extraPay*12:0;
  const annualExtraContribution=i.extrasRecurring?extraHours*12*(rate.employer+.04):0;
  const annualTfr=((grossSalary+benefitMonthly)*12+thirteenthAnnual+((i.extrasTfr||i.extrasRecurring)?annualExtra:0))/13.5;
- const annualCost=money((grossSalary+benefitCash+normalInpsEmployer+normalCassaEmployer+i.actualBoardCost)*12+annualExtra+annualExtraContribution+thirteenthAnnual+annualTfr);
+ const annualCost=money((grossSalary+benefitCash/fraction+normalInpsEmployer+normalCassaEmployer+i.actualBoardCost)*12+annualExtra+annualExtraContribution+thirteenthAnnual+annualTfr);
  const revaluation=i.calculateRevaluation?money(i.existingFund*(.015+.75*i.foi/100)):0;
  if(i.calculateRevaluation) notes.push("La rivalutazione indicata è un calcolo annuo sul fondo pregresso con FOI inserito manualmente, separato dal costo previsto. Non determina imposte o liquidazione finale.");
  if(i.monthMode==="average") notes.push("Mese medio: ore settimanali × 52 ÷ 12. Non è un cedolino basato sulle presenze del calendario.");
@@ -187,6 +194,8 @@ export function calculate(raw={}) {
  if(!i.extrasRecurring&&extraPay>0) notes.push("Voci aggiuntive del periodo escluse dalla proiezione annua; inclusione TFR del periodo: "+(i.extrasTfr?"sì":"no (occasionali)"));
  if(!i.cuaf) warnings.push("Esclusione CUAF: verificare il rapporto familiare e le condizioni di riconoscimento previste da INPS.");
  if(i.hireDate||i.endDate) notes.push("Le date non riproporzionano automaticamente il preventivo annuale. Per un periodo parziale inserire le ore e la quota di mensilità verificate; il costo annuo resta una proiezione a condizioni costanti.");
+ if(i.endDate&&i.endDate.slice(0,7)===i.reference) warnings.push("Mese di cessazione: questo prospetto non liquida ferie residue, tredicesima pregressa, TFR totale o preavviso. Non usarlo come cedolino finale.");
+ if(benefitCash>0) notes.push("I giorni di vitto/alloggio monetizzati sono quelli del periodo indicato: l’importo giornaliero non è nuovamente ridotto per la frazione di mensilità. Nel netto concordato la quota monetizzata è compresa; maggiorazioni e altri pagamenti restano separati.");
  if(dailyBenefit>0) notes.push("Per la fascia INPS il vitto/alloggio è ripartito sulle ore tramite i giorni settimanali di fruizione; per gli istituti dei mensilizzati il valore convenzionale mensile usa 30 giorni.");
  if(i.contract==="fixed"&&i.substitution) notes.push("Tempo determinato sostitutivo: applicata la tabella senza contributo addizionale.");
  if(!hourly&&dailyBenefit===0) warnings.push("Per il rapporto mensilizzato verificare il diritto a vitto/alloggio e inserire le componenti spettanti.");
@@ -195,6 +204,7 @@ export function calculate(raw={}) {
  if(i.monthMode==="actual"&&!hourly) notes.push("Trattenute del mese mensilizzato calcolate sulle ore INPS/Cassa effettive confermate, non sulle settimane del mese medio.");
  if(i.monthMode==="actual"&&i.useTfrVerifiedBase) notes.push("Rateo TFR del periodo sulla retribuzione utile verificata di "+money(i.tfrVerifiedBase)+" euro, già comprensiva della tredicesima utile. La proiezione annua resta strutturale.");
  if(i.monthMode==="actual") notes.push("Tredicesima e ferie: mese "+(accrualMonths?"utile":"non utile")+" secondo la scelta dell’operatore, distinta dalla frazione della paga. Le frazioni di almeno 15 giorni di calendario si computano come mese intero, ferme le assenze tutelate.");
+ if(i.monthMode==="actual") warnings.push("Le trattenute del mese usano una sola tariffa INPS: se le ore retribuite passano da una parte all’altra della soglia di 24 ore fra settimane, questo prospetto non ricostruisce le diverse quote. Occorre il conteggio settimanale specifico prima di usarlo per la paga effettiva.");
  if(hasPresenceWork) notes.push("Interventi attivi durante la presenza notturna: paga oraria verificata dall’operatore sulla tabella C, distinta dal compenso di attesa della tabella E.");
  if(i.regime==="replacement") notes.push("Tabella G: verificare che il titolare sostituito sia un assistente CS/DS a tempo pieno. Non è una sostituzione generica.");
  if(i.ordinaryNight>0||extraHours>0) warnings.push("Le tipologie di ore sono scelte dall'operatore: verificare limiti giornalieri, collocazione settimanale, riposi e assenza di sovrapposizioni.");

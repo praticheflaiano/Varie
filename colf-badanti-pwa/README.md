@@ -2,6 +2,8 @@
 
 PWA autonoma, senza dipendenze di produzione e senza invio dei dati a server. Il motore di calcolo, la presentazione e le esportazioni sono separati.
 
+La versione 1.3.0 corregge discrepanze nei mesi parziali, nel ricalcolo Excel della presenza notturna, negli arrotondamenti e nel trasferimento della cessazione al trimestre. Blocca i trimestri a tariffa unica se una settimana attraversa la soglia delle 24 ore. Esito e limiti sono in [VERIFICA-CALCOLI-2026.md](VERIFICA-CALCOLI-2026.md): il preventivo resta distinto dalla paga effettiva e dal consuntivo del costo.
+
 ## Avvio
 
 Richiede Node.js 20 o successivo solo per il server di sviluppo:
@@ -79,6 +81,6 @@ Il workflow GitHub dedicato esegue inoltre controlli con python-docx, openpyxl e
 
 ## Fonti e manutenzione
 
-Fonti primarie e delle parti firmatarie elencate in data.js e nella schermata Regole e fonti. Verifica: 20 ottobre 2026. Prima di aggiungere un anno aggiornare tabelle, fonti e test ai bordi di fascia; incrementare VERSION e il nome della cache nel service worker. Una nuova cache viene applicata dopo la chiusura delle vecchie finestre per evitare aggiornamenti nel mezzo di un preventivo.
+Fonti primarie e delle parti firmatarie elencate in data.js e nella schermata Regole e fonti. Verifica: 21 ottobre 2026. Prima di aggiungere un anno aggiornare tabelle, fonti e test ai bordi di fascia; incrementare VERSION e il nome della cache nel service worker. Una nuova cache viene applicata dopo la chiusura delle vecchie finestre per evitare aggiornamenti nel mezzo di un preventivo.
 
 L'archivio è locale al browser, non condiviso fra dispositivi. Non vengono raccolti dati di utilizzo o inseriti dati reali di clienti nel codice.

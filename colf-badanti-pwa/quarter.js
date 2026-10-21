@@ -28,8 +28,10 @@ const optionalNumber=(v,key,fail)=>{
 };
 export function makeQuarterDraft(result,quarter=Math.ceil(Number(result?.input?.reference?.slice(5,7))/3)){
  if(!result?.ok)throw new Error("Correggi il preventivo prima di copiarne i parametri.");
- const calendar=quarterCalendar(RULES.year,quarter);
- return {schema:1,year:RULES.year,quarter,terminationDate:"",sourceInput:{...result.input},rows:calendar.weeks.map(w=>({key:w.key,inpsHours:"",cassaHours:""})),confirmed:false,cassaSupplement:0,officialInps:"",officialCassa:"",withheldInps:"",withheldCassa:""};
+ const end=result.input.endDate;
+ const terminationDate=end&&end.slice(0,4)===String(RULES.year)&&Math.ceil(Number(end.slice(5,7))/3)===Number(quarter)?end:"";
+ const calendar=quarterCalendar(RULES.year,quarter,terminationDate);
+ return {schema:1,year:RULES.year,quarter,terminationDate,sourceInput:{...result.input},rows:calendar.weeks.map(w=>({key:w.key,inpsHours:"",cassaHours:""})),confirmed:false,cassaSupplement:0,officialInps:"",officialCassa:"",withheldInps:"",withheldCassa:""};
 }
 export function calculateQuarter(raw){
  const errors=[],fail=(key,message)=>errors.push({key,message});
@@ -38,6 +40,12 @@ export function calculateQuarter(raw){
  if(!raw.sourceInput||typeof raw.sourceInput!=="object"||Array.isArray(raw.sourceInput))fail("sourceInput","Copia i parametri da un preventivo valido.");
  const source=raw.sourceInput?calculate(raw.sourceInput):null;
  if(!source?.ok)fail("sourceInput","I parametri di origine non producono un calcolo valido. Riapri e correggi il preventivo.");
+ if(calendar&&source?.ok){
+  const {hireDate,endDate}=source.input;
+  if(hireDate&&hireDate>calendar.solarTo||endDate&&endDate<calendar.from)fail("sourceInput","Il rapporto non è attivo nel trimestre selezionato.");
+  if(endDate&&endDate>=calendar.solarFrom&&endDate<=calendar.solarTo&&calendar.terminationDate!==endDate)fail("terminationDate","La cessazione del trimestre deve coincidere con la fine rapporto già indicata nel preventivo.");
+  if(endDate&&calendar.terminationDate&&endDate!==calendar.terminationDate)fail("terminationDate","Le date di cessazione del preventivo e del trimestre non coincidono.");
+ }
  const rows=Array.isArray(raw.rows)?raw.rows:[];
  if(calendar&&(rows.length!==calendar.weeks.length||rows.some((r,n)=>r?.key!==calendar.weeks[n]?.key)))fail("rows","Le settimane non corrispondono al calendario selezionato: rigenera il prospetto.");
  if(raw.confirmed!==true)fail("confirmed","Conferma ore da presenze e condizioni retributive e contributive costanti nel trimestre.");
@@ -60,7 +68,13 @@ export function calculateQuarter(raw){
    const num=Number(value);if(!Number.isFinite(num)||num<0||num>168){fail("rows","Ore settimanali non valide per "+w.to+".");return 0;}return num;
   };
   const inpsHours=read("inpsHours"),cassaHours=special?read("cassaHours"):inpsHours;
+  const referenceHours=special?source.input.specialInpsHours:source.input.hours;
+  if(inpsHours>0&&(inpsHours>24)!==(referenceHours>24))fail("rows","La settimana fino al "+w.to+" attraversa la soglia delle 24 ore rispetto alla tariffa del preventivo. Questo prospetto a tariffa unica non è applicabile: elaborare le fasce settimanali e verificare i relativi importi nel Portale INPS.");
   if(source.input.hireDate&&w.to<source.input.hireDate&&(inpsHours>0||cassaHours>0))fail("rows","Sono indicate ore anteriori all’assunzione nella settimana "+w.to+".");
+  const activeFrom=source.input.hireDate&&source.input.hireDate>w.from?source.input.hireDate:w.from;
+  const activeTo=source.input.endDate&&source.input.endDate<w.to?source.input.endDate:w.to;
+  const maximumHours=Math.max(0,(stamp(activeTo)-stamp(activeFrom))/DAY+1)*24;
+  if(inpsHours>maximumHours+1e-7||cassaHours>maximumHours+1e-7)fail("rows","Le ore superano il tempo disponibile nei giorni di rapporto della settimana "+w.to+".");
   checked.push({...w,inpsHours,cassaHours});
  }
  const cassaSupplement=optionalNumber(raw.cassaSupplement,"cassaSupplement",fail)??0;

@@ -15,7 +15,7 @@ export function installQuarterCalculator(root,getResult,toast){
  function copy(){
   const current=getResult();if(!current?.ok){toast("Correggi il preventivo prima di copiarne i parametri.");return;}
   const next=makeQuarterDraft(current,draft?.quarter);
-  if(draft){for(const row of next.rows){const old=draft.rows.find(x=>x.key===row.key);if(old)Object.assign(row,old);}next.terminationDate=draft.terminationDate||"";}
+  if(draft){for(const row of next.rows){const old=draft.rows.find(x=>x.key===row.key);if(old)Object.assign(row,old);}next.terminationDate=next.terminationDate||draft.terminationDate||"";}
   draft=next;rebuildCalendar();mount();toast("Parametri copiati. Verifica le ore e le condizioni del trimestre.");
  }
  function rebuildCalendar(){

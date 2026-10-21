@@ -38,6 +38,7 @@ function renderContractBase(){
 }
 function updateVisibility(){
  const i=current,hourly=["hourly","replacement"].includes(i.regime),special=["night","presence"].includes(i.regime);
+ control("hours").max=i.regime==="night"?72:i.regime==="presence"?66:54;
  const flags={fixed:i.contract==="fixed",presence:i.regime==="presence",reduced:i.regime==="reduced",special,ds:i.level==="DS",bs:i.level==="BS",
  care:["CS","DS"].includes(i.level),uni:["B","BS","CS"].includes(i.level),minimum:i.payMode==="minimum",hourly,
  actual:i.monthMode==="actual","actual-hourly":i.monthMode==="actual"&&hourly,"actual-monthly":i.monthMode==="actual"&&!hourly};
@@ -46,7 +47,7 @@ function updateVisibility(){
  document.querySelectorAll("[data-mode]").forEach(b=>{const chosen=b.dataset.mode===i.payMode;b.classList.toggle("selected",chosen);b.setAttribute("aria-pressed",String(chosen));});
  $("pay-field").hidden=i.payMode==="minimum";
  $("pay-label").textContent=i.payMode==="net"?"Netto ordinario concordato":"Lordo ordinario concordato";
- $("pay-explanation").textContent=i.payMode==="net"?"Il netto richiesto riguarda la paga ordinaria, prima dell’IRPEF personale. Ore aggiuntive, rimborsi e pagamenti di tredicesima o TFR sono separati.":i.payMode==="minimum"?"Al minimo contrattuale si aggiungono scatti, indennità e il superminimo inserito. La paga dei conviventi non viene ridotta automaticamente in proporzione alle ore.":"Il lordo inserito comprende minimo, scatti, indennità e superminimo; l’app ne verifica il rispetto del minimo complessivo. Non comprende il vitto/alloggio monetizzato.";
+ $("pay-explanation").textContent=i.payMode==="net"?"Il netto richiesto riguarda la paga ordinaria, prima dell’IRPEF personale, e comprende il vitto/alloggio monetizzato inserito. Ore aggiuntive, rimborsi e pagamenti di tredicesima o TFR sono separati.":i.payMode==="minimum"?"Al minimo contrattuale si aggiungono scatti, indennità e il superminimo inserito. La paga dei conviventi non viene ridotta automaticamente in proporzione alle ore.":"Il lordo inserito comprende minimo, scatti, indennità e superminimo; l’app ne verifica il rispetto del minimo complessivo. Non comprende il vitto/alloggio monetizzato.";
  control("scatti").disabled=i.autoScatti;
  renderContractBase();
 }

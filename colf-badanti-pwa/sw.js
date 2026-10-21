@@ -1,5 +1,5 @@
 const PREFIX="flaiano-domestico:"+self.registration.scope;
-const CACHE=PREFIX+"1.2.0";
+const CACHE=PREFIX+"1.3.0";
 const ASSETS=["./index.html","./styles.css","./app.js","./help.js","./quarter.js","./quarter-ui.js","./quarter-exports.js","./data.js","./engine.js","./exports.js","./manifest.webmanifest","./icon.svg","./icon-192.png","./icon-512.png","./README.md","./VERIFICA-CALCOLI-2026.md","./scripts/serve.mjs","./package.json"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)));});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith(PREFIX)&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});

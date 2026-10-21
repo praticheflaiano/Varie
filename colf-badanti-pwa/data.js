@@ -1,5 +1,5 @@
-export const VERSION = "1.2.0";
-export const RULES = Object.freeze({year:2026, checked:"2026-10-20", effective:"2026-01-01", ccnl:"H501", contract:"CCNL 2025–2028", validTo:"2026-12-31", cassa:{total:.06,worker:.02}, board:{meal:2.33,dinner:2.33,room:2.00}, thresholds:[9.61,11.70], inps:{worker:[.43,.48,.59,.31], indefinite:[1.70,1.92,2.34,1.24], fixed:[1.82,2.05,2.50,1.32]}});
+export const VERSION = "1.3.0";
+export const RULES = Object.freeze({year:2026, checked:"2026-10-21", effective:"2026-01-01", ccnl:"H501", contract:"CCNL 2025–2028", validTo:"2026-12-31", cassa:{total:.06,worker:.02}, board:{meal:2.33,dinner:2.33,room:2.00}, thresholds:[9.61,11.70], inps:{worker:[.43,.48,.59,.31], indefinite:[1.70,1.92,2.34,1.24], fixed:[1.82,2.05,2.50,1.32]}});
 export const LEVELS = Object.freeze({
  A:{name:"A · Compiti esecutivi",description:"Pulizie, lavanderia, aiuto cucina, cura di animali o aree verdi: mansioni specifiche esecutive, sotto il controllo del datore.",hourly:6.51,monthly:908.10},
  AS:{name:"AS · Compagnia",description:"Compagnia a persone adulte autosufficienti, senza ulteriori mansioni di assistenza.",hourly:6.76,monthly:958.55},
@@ -22,7 +22,7 @@ export const SOURCES = Object.freeze([
  {title:"Ministero del Lavoro · Minimi retributivi 2026",url:"https://www.lavoro.gov.it/temi-e-priorita-rapporti-di-lavoro-e-relazioni-industriali/focus/tabella-lavoro-domestico-2026"},
  {title:"Contributi 2026 · Circolare INPS 9/2026",url:"https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15154/Allegati/16551_Circolare-numero-9-del-03-02-2026.pdf"},
  {title:"DOMINA · Testo del CCNL H501",url:"https://associazionedomina.it/ccnl-lavoro-domestico/"},
- {title:"CAS.SA.COLF · Importi e versamenti",url:"https://www.cassacolf.it/versamenti/"},
+ {title:"CAS.SA.COLF · Importi e versamenti",url:"https://www.cassacolf.it/contribuzione/versamento-contributi/"},
  {title:"INPS · Retribuzione effettiva e contribuzione",url:"https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.49828.contributi-e-agevolazioni-fiscali-per-chi-assume-un-lavoratore-domestico.html"},
  {title:"INPS · Pagamento trimestrale e avvisi pagoPA",url:"https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50061.pagamento-dei-contributi-al-lavoratore-domestico.html"},
  {title:"INPS · Istruzioni su settimane e arrotondamento delle ore (messaggio 70/2003)",url:"https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2003/06/Circolare_10887/Allegati/0_Messaggio-numero-70-del-16-6-2003_Allegato-n-1.pdf"},

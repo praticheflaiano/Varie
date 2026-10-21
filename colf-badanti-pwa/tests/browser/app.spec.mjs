@@ -1,5 +1,33 @@
 import {test,expect} from "@playwright/test";
+const importCase=async(page,input)=>{
+ const content=JSON.stringify({application:'flaiano-domestico',schema:1,rulesYear:2026,input});
+ await page.locator('#import-file').setInputFiles({name:'audit.json',mimeType:'application/json',buffer:Buffer.from(content)});
+};
 test.beforeEach(async({page})=>{await page.goto("/");});
+test('audit: vitto del mese parziale senza seconda riduzione',async({page})=>{
+ await importCase(page,{regime:'livein',level:'CS',hours:54,days:6,payMode:'minimum',monthMode:'actual',monthlyFraction:.5,actualInpsHours:100,actualCassaHours:100,actualContributionsConfirmed:true,useTfrVerifiedBase:true,tfrVerifiedBase:800,meal:true,dinner:true,room:true,cashBenefitDays:10});
+ await expect(page.getByTestId('net-pay')).toHaveText(/630,52/);
+ await page.locator('[data-detail="payslip"]').click();await expect(page.locator('#results')).toContainText('66,60');
+});
+test('audit: tabella D senza doppia maggiorazione ordinaria',async({page})=>{
+ await importCase(page,{regime:'night',level:'CS',hours:60,payMode:'minimum',specialConfirmed:true,specialInpsHours:30,nightsWeek:5,ordinaryNight:100});
+ await expect(page.getByRole('alert')).toContainText('tabella D');
+ await expect(page.getByTestId('total-cost')).toHaveCount(0);
+});
+test('audit: cessazione nota trasferita al trimestre e al totale',async({page})=>{
+ await importCase(page,{endDate:'2026-10-31'});
+ await expect(page.getByTestId('net-pay')).toBeVisible();
+ await page.locator('[data-page="quarter"]').click();await page.locator('#q-copy').click();
+ await expect(page.locator('#q-terminationDate')).toHaveValue('2026-10-31');
+ await page.locator('#q-fill').click();await page.locator('#q-confirmed').check();
+ await expect(page.getByTestId('quarter-total')).toHaveText(/162,50/);
+});
+test('audit: trimestre a tariffa unica blocca una settimana sotto soglia',async({page})=>{
+ await page.locator('[data-page="quarter"]').click();await page.locator('#q-copy').click();await page.locator('#q-fill').click();
+ await page.locator('[data-week="0"][data-column="inpsHours"]').fill('20');await page.locator('#q-confirmed').check();
+ await expect(page.locator('#q-results')).toContainText('soglia delle 24 ore');
+ await expect(page.getByTestId('quarter-total')).toHaveCount(0);
+});
 test("calcolo iniziale, conversione a 20 ore e assenza di errori JS",async({page})=>{
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  await expect(page.getByTestId("gross-hourly")).toHaveText(/10,33/);
