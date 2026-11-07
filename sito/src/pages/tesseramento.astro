@@ -39,7 +39,7 @@ const faq = [
   },
   {
     question: "Come faccio la tessera?",
-    answer: `In ufficio, anche durante l'appuntamento per un'altra pratica. Oppure lasciaci i tuoi dati dalla <a href='${GHL.tesseraFunnel}'>pagina tessera</a> e ti richiamiamo.`,
+    answer: `In ufficio, anche durante l'appuntamento per un'altra pratica. Oppure mandaci una <a href='${GHL.tesseraFunnel}'>richiesta online</a> e ti richiamiamo.`,
   },
 ];
 
@@ -109,20 +109,20 @@ const offerData = {
       <h2>Con e senza tessera</h2>
       <p class="mt-2">Qualche esempio concreto.</p>
       <div class="mt-6 overflow-x-auto">
-        <table class="w-full text-left" style="border-collapse:separate;border-spacing:0 8px">
+        <table class="w-full text-left text-[15px] sm:text-base" style="border-collapse:separate;border-spacing:0 8px">
           <thead>
             <tr style="font-size:14px">
               <th class="px-3">Pratica</th>
-              <th class="px-3 text-center">Senza tessera</th>
-              <th class="px-3 text-center">Con tessera</th>
+              <th class="px-2 text-center">Senza</th>
+              <th class="px-2 text-center">Con tessera</th>
             </tr>
           </thead>
           <tbody>
             {examples.map((r) => (
               <tr style="background:#fff">
                 <td class="px-3 py-3 font-semibold" style="border-radius:16px 0 0 16px;color:#14142B">{r.s}</td>
-                <td class="px-3 py-3 text-center">{r.non}</td>
-                <td class="px-3 py-3 text-center font-bold" style="border-radius:0 16px 16px 0;background:#D4FF4F;color:#14142B">{r.soci}</td>
+                <td class="px-2 py-3 text-center whitespace-nowrap">{r.non}</td>
+                <td class="px-2 py-3 text-center font-bold whitespace-nowrap" style="border-radius:0 16px 16px 0;background:#D4FF4F;color:#14142B">{r.soci}</td>
               </tr>
             ))}
           </tbody>

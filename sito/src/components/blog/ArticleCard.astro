@@ -39,7 +39,7 @@ const typeLabels: Record<string, string> = {
   </a>
 ) : (
   <article class:list={[
-    "group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)] transition-all hover:shadow-[var(--shadow-lift)] hover:-translate-y-0.5 hover:border-[var(--color-brand-200)]",
+    "group flex flex-col overflow-hidden rounded-[28px] bg-[#F7F7FB] transition-all hover:bg-[#F1EEFF] hover:shadow-[var(--shadow-lift)] hover:-translate-y-1",
     variant === "featured" && "lg:flex-row lg:col-span-2"
   ]}>
     {article.data.image && (

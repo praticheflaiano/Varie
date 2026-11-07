@@ -1,6 +1,6 @@
 ---
 import type { Article } from "~/utils/articles";
-import { getRelatedArticles } from "~/utils/articles";
+import { getRelatedArticles, tagSlug } from "~/utils/articles";
 import { getCategory } from "~/utils/categories";
 import { formatDateIt, toISODate } from "~/utils/date";
 import { readingTime } from "~/utils/reading-time";
@@ -79,7 +79,7 @@ const related = await getRelatedArticles(article, 3);
     </p>
 
     {article.data.image && (
-      <figure class="mt-8 -mx-4 sm:mx-0 overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] shadow-[var(--shadow-card)]">
+      <figure class="mt-8 -mx-4 sm:mx-0 overflow-hidden rounded-[32px]">
         <img
           src={article.data.image}
           alt={article.data.image_alt ?? article.data.title}
@@ -118,7 +118,7 @@ const related = await getRelatedArticles(article, 3);
         <span class="text-sm font-semibold text-[var(--color-ink-muted)]">Argomenti:</span>
         {article.data.tags.map((tag) => (
           <a
-            href={`/blog/tag/${tag}`}
+            href={`/blog/tag/${tagSlug(tag)}`}
             class="inline-flex items-center rounded-full border border-[var(--color-border-strong)] bg-white px-3 py-1 text-xs font-semibold text-[var(--color-ink-soft)] hover:border-[var(--color-brand-400)] hover:text-[var(--color-brand-700)] no-underline"
           >
             #{tag}
@@ -128,7 +128,7 @@ const related = await getRelatedArticles(article, 3);
     )}
 
     {article.data.sources && article.data.sources.length > 0 && (
-      <details class="mt-10 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-5">
+      <details class="mt-10 rounded-[28px] border border-[var(--color-border)] bg-[var(--color-surface-soft)] p-5">
         <summary class="cursor-pointer font-display text-base font-bold text-[var(--color-ink)]">
           Fonti normative ({article.data.sources.length})
         </summary>

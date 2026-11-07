@@ -68,16 +68,29 @@ export async function getRelatedArticles(
     .map((s) => s.article);
 }
 
-export async function getAllTags(): Promise<{ tag: string; count: number }[]> {
+/** Slug URL-safe di un tag: minuscolo, senza accenti, spazi -> trattini. */
+export function tagSlug(t: string): string {
+  return t
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export async function getAllTags(): Promise<{ tag: string; label: string; count: number }[]> {
   const articles = await getVisibleArticles();
-  const counts = new Map<string, number>();
+  const counts = new Map<string, { label: string; count: number }>();
   for (const a of articles) {
     for (const t of a.data.tags) {
-      counts.set(t, (counts.get(t) ?? 0) + 1);
+      const k = tagSlug(t);
+      const cur = counts.get(k);
+      counts.set(k, { label: cur?.label ?? t, count: (cur?.count ?? 0) + 1 });
     }
   }
   return Array.from(counts.entries())
-    .map(([tag, count]) => ({ tag, count }))
+    .map(([tag, v]) => ({ tag, label: v.label, count: v.count }))
     .sort((a, b) => b.count - a.count);
 }
 

@@ -614,3 +614,8 @@
 .prose-article > h1:first-child { display: none; }
 article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-height: 1.02; }
 @media (max-width: 480px) { .site-header .brand-sub { display: none; } .site-header .brand-name { font-size: 18px; } }
+@media (max-width: 760px) {
+  .prose-article table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+.prose-article pre, .prose-article code { overflow-wrap: anywhere; }
+.prose-article a, .prose-article p, .prose-article li { overflow-wrap: anywhere; }

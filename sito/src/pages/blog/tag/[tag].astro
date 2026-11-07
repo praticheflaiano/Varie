@@ -3,17 +3,17 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import ArticleCard from "~/components/blog/ArticleCard.astro";
 import SectionHeading from "~/components/ui/SectionHeading.astro";
-import { getVisibleArticles, getAllTags } from "~/utils/articles";
+import { getVisibleArticles, getAllTags, tagSlug } from "~/utils/articles";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 
 export async function getStaticPaths() {
   const tags = await getAllTags();
   const articles = await getVisibleArticles();
-  return tags.map(({ tag }) => ({
+  return tags.map(({ tag, label }) => ({
     params: { tag },
     props: {
-      tag,
-      items: articles.filter((a) => a.data.tags.includes(tag)),
+      tag: label,
+      items: articles.filter((a) => a.data.tags.some((t) => tagSlug(t) === tag)),
     },
   }));
 }
@@ -30,7 +30,7 @@ const { tag, items } = Astro.props;
       <Breadcrumb
         items={[
           { name: "Blog", href: "/blog" },
-          { name: `#${tag}`, href: `/blog/tag/${tag}` },
+          { name: `#${tag}`, href: `/blog/tag/${tagSlug(tag)}` },
         ]}
         class="mb-6"
       />

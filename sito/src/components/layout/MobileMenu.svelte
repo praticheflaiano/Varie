@@ -132,7 +132,7 @@
         <div class="grid grid-cols-2 gap-3">
           <a
             href={`tel:${phoneRaw}`}
-            class="flex items-center justify-center gap-2 rounded-xl border border-[var(--color-brand-200)] bg-white px-4 py-3 text-sm font-semibold text-[var(--color-brand-900)] hover:border-[var(--color-brand-400)]"
+            class="flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-[var(--color-brand-900)] hover:border-[var(--color-brand-400)]"
           >
             Chiama
           </a>

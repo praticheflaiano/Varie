@@ -62,6 +62,12 @@ async function main() {
   }
   for (const [full, txt] of files) {
     let out = txt.replace(/<!--[\s\S]*?-->/g, "");
+    // link assoluti al vecchio blog -> percorsi interni del sito
+    out = out.replace(/https:\/\/(?:www\.)?praticheflaiano\.it\/blog\//g, "/blog/");
+    // voci di elenco che puntano ad articoli non ancora pubblicati
+    out = out.replace(/^[ \t]*[-*][^\n]*\[DA PUBBLICARE[^\n]*\n/gim, "");
+    // email unica del centro (quella pubblicata sul sito)
+    out = out.replace(/info@praticheflaiano\.it/g, "praticheflaiano@gmail.com");
     out = out.replace(/\]\(\/content\/[^)]*?\/([^/)]+\.md)\)/g, (all, file) =>
       slugs[file] ? `](/blog/${slugs[file]})` : all,
     );

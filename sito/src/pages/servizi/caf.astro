@@ -6,10 +6,12 @@ import BookingCTA from "~/components/home/BookingCTA.astro";
 import Accordion from "~/components/ui/Accordion.svelte";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { Icon } from "astro-icon/components";
+import ServiceBlock from "~/components/ui/ServiceBlock.astro";
 
 const services = [
   {
     title: "Modello 730 e Redditi PF",
+    href: "/730",
     desc: "Compilazione e invio della dichiarazione dei redditi per dipendenti e pensionati. Massimizzazione di detrazioni e deduzioni, gestione della precompilata, rimborso veloce sulla busta paga o sulla pensione.",
     icon: "heroicons:document-text",
     bullets: [
@@ -21,6 +23,7 @@ const services = [
   },
   {
     title: "ISEE e DSU",
+    href: "/isee",
     desc: "Calcolo dell'ISEE per accedere a bonus, agevolazioni, asili nido, mensa scolastica, borse di studio, riduzione utenze.",
     icon: "heroicons:chart-bar-square",
     bullets: [
@@ -32,6 +35,7 @@ const services = [
   },
   {
     title: "IMU e tributi locali",
+    href: "/blog/categoria/imu-tributi-locali",
     desc: "Calcolo IMU, TASI, TARI con compilazione del modello F24. Verifica esenzioni, riduzioni e ravvedimento operoso.",
     icon: "heroicons:home-modern",
     bullets: [
@@ -43,6 +47,7 @@ const services = [
   },
   {
     title: "Successioni e Volture catastali",
+    href: "/successioni",
     desc: "Apertura della successione, dichiarazione telematica, calcolo imposta successioni e donazioni, voltura catastale automatica al Catasto.",
     icon: "heroicons:document-duplicate",
     bullets: [
@@ -65,6 +70,7 @@ const services = [
   },
   {
     title: "Bonus fiscali e detrazioni",
+    href: "/blog/categoria/bonus-fiscali",
     desc: "Assistenza per bonus ristrutturazione, ecobonus, bonus mobili, sismabonus, e tutte le detrazioni IRPEF.",
     icon: "heroicons:gift",
     bullets: [
@@ -123,23 +129,7 @@ const faq = [
 
   <section class="section">
     <div class="container-wide grid gap-6 md:grid-cols-2">
-      {services.map((s) => (
-        <article class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
-          <div class="flex size-12 items-center justify-center rounded-lg bg-[var(--color-brand-50)] text-[var(--color-brand-700)]">
-            <Icon name={s.icon} class="size-6" aria-hidden="true" />
-          </div>
-          <h2 class="mt-5 font-display text-xl font-bold text-[var(--color-ink)]">{s.title}</h2>
-          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">{s.desc}</p>
-          <ul class="mt-5 space-y-1.5 text-sm text-[var(--color-ink-soft)]">
-            {s.bullets.map((b) => (
-              <li class="flex items-start gap-2">
-                <Icon name="heroicons:check-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" aria-hidden="true" />
-                {b}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+      {services.map((s, i) => <ServiceBlock {...s} i={i} />)}
     </div>
   </section>
 

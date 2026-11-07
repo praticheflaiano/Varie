@@ -6,11 +6,13 @@ import BookingCTA from "~/components/home/BookingCTA.astro";
 import Accordion from "~/components/ui/Accordion.svelte";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { Icon } from "astro-icon/components";
+import ServiceBlock from "~/components/ui/ServiceBlock.astro";
 import { EXTERNAL_PORTALS } from "~/consts";
 
 const services = [
   {
     title: "Pensioni",
+    href: "/servizi/patronato",
     desc: "Verifica contributi, simulazione pensione, presentazione domanda di pensione di vecchiaia, anticipata, opzione donna, Quota 103, Ape sociale, ricongiunzioni.",
     icon: "heroicons:identification",
     bullets: [
@@ -22,6 +24,7 @@ const services = [
   },
   {
     title: "NASpI e disoccupazione",
+    href: "/naspi",
     desc: "Domanda NASpI, dimissioni online, indennita di disoccupazione, ricalcoli e integrazioni reddituali. Importante: la domanda va presentata <strong>entro 68 giorni</strong> dalla cessazione.",
     icon: "heroicons:briefcase",
     bullets: [
@@ -32,7 +35,8 @@ const services = [
     ],
   },
   {
-    title: "Invalidita civile e Legge 104",
+    title: "Invalidità civile e Legge 104",
+    href: "/invalidita-104",
     desc: "Domanda di invalidita civile, indennita di accompagnamento, riconoscimento handicap (L. 104), aggravamento, integrazioni reddituali per invalidi civili.",
     icon: "heroicons:heart",
     bullets: [
@@ -44,6 +48,7 @@ const services = [
   },
   {
     title: "Assegno Unico Universale",
+    href: "/assegno-unico",
     desc: "Domanda AUU, integrazioni ISEE, variazioni del nucleo familiare, calcolo importi, gestione decadenze.",
     icon: "heroicons:user-group",
     bullets: [
@@ -54,7 +59,8 @@ const services = [
     ],
   },
   {
-    title: "Maternita e bonus famiglia",
+    title: "Maternità e bonus famiglia",
+    href: "/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps",
     desc: "Indennita di maternita, congedi parentali, bonus nido, bonus genitori, congedo di paternita.",
     icon: "heroicons:heart",
     bullets: [
@@ -66,6 +72,7 @@ const services = [
   },
   {
     title: "ADI, SFL e sostegno reddito",
+    href: "/servizi/patronato",
     desc: "Assegno di Inclusione, Supporto Formazione e Lavoro, sostegno per famiglie e singoli in difficolta economica.",
     icon: "heroicons:lifebuoy",
     bullets: [
@@ -77,6 +84,7 @@ const services = [
   },
   {
     title: "RED, INVCIV, ACCAS/PS",
+    href: "/servizi/patronato",
     desc: "Modelli reddituali INPS obbligatori per pensionati, invalidi civili e percettori di prestazioni assistenziali.",
     icon: "heroicons:clipboard-document-list",
     bullets: [
@@ -147,24 +155,24 @@ const faq = [
   {/* Portale NASpI dedicato - cross-link al sito esterno del Centro */}
   <section class="section-tight">
     <div class="container-wide">
-      <div class="relative overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-brand-200)] bg-gradient-to-br from-[var(--color-brand-50)] via-white to-[var(--color-accent-50)] p-7 md:p-10">
+      <div class="relative overflow-hidden p-7 md:p-10" style="background:#D4FF4F;border-radius:36px">
         <div class="grid gap-6 lg:grid-cols-12 lg:items-center">
           <div class="lg:col-span-8">
-            <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent-400)] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--color-brand-950)]">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-[#14142B] px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
               <Icon name="heroicons:rocket-launch" class="size-3.5" />
               Portale dedicato
             </span>
             <h2 class="mt-3 font-display text-[var(--color-brand-950)]">
               NASpI? Abbiamo un portale dedicato.
             </h2>
-            <p class="mt-3 text-base text-[var(--color-ink-soft)] leading-relaxed max-w-2xl">
+            <p class="mt-3 text-base text-[#14142B] leading-relaxed max-w-2xl">
               <strong>{EXTERNAL_PORTALS.naspi.label}</strong>: calcolatore NASpI con simulazione importi e durata, anticipo NASpI in unica soluzione, OCR documenti INPS automatico, oltre 30 guide approfondite su dimissioni, DIS-COLL, obblighi del disoccupato. Sito autonomo del Centro Pratiche Flaiano.
             </p>
-            <ul class="mt-5 grid gap-2 sm:grid-cols-2 text-sm text-[var(--color-ink-soft)]">
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />Calcolatore NASpI online</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />Anticipo NASpI in unica soluzione</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />OCR automatico documenti INPS</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" />30+ guide su dimissioni e obblighi</li>
+            <ul class="mt-5 grid gap-2 sm:grid-cols-2 text-sm text-[#14142B] font-semibold">
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />Calcolatore NASpI online</li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />Anticipo NASpI in unica soluzione</li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />OCR automatico documenti INPS</li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />30+ guide su dimissioni e obblighi</li>
             </ul>
           </div>
           <div class="lg:col-span-4 flex lg:justify-end">
@@ -172,7 +180,7 @@ const faq = [
               href={EXTERNAL_PORTALS.naspi.url}
               target="_blank"
               rel="noopener"
-              class="inline-flex items-center gap-2 rounded-full bg-[var(--color-brand-900)] px-7 py-3.5 text-base font-semibold text-white hover:bg-[var(--color-brand-800)] no-underline shadow-[var(--shadow-cta)] hover:shadow-[var(--shadow-cta-hover)] transition-all"
+              class="btn btn-primary btn-lg"
             >
               Vai al portale NASpI
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -188,23 +196,7 @@ const faq = [
 
   <section class="section">
     <div class="container-wide grid gap-6 md:grid-cols-2">
-      {services.map((s) => (
-        <article class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
-          <div class="flex size-12 items-center justify-center rounded-lg bg-[var(--color-accent-100)] text-[var(--color-accent-700)]">
-            <Icon name={s.icon} class="size-6" aria-hidden="true" />
-          </div>
-          <h2 class="mt-5 font-display text-xl font-bold text-[var(--color-ink)]">{s.title}</h2>
-          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed" set:html={s.desc} />
-          <ul class="mt-5 space-y-1.5 text-sm text-[var(--color-ink-soft)]">
-            {s.bullets.map((b) => (
-              <li class="flex items-start gap-2">
-                <Icon name="heroicons:check-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" aria-hidden="true" />
-                {b}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))}
+      {services.map((s, i) => <ServiceBlock {...s} i={i} />)}
     </div>
   </section>
 

@@ -1,0 +1,32 @@
+---
+/** Card servizio nello stile "giovane": colori a rotazione, icona viola/lime, link al funnel giusto. */
+import { Icon } from "astro-icon/components";
+interface Props { title: string; desc: string; icon: string; bullets?: string[]; i?: number; href?: string; }
+const { title, desc, icon, bullets = [], i = 0, href = "/richiesta" } = Astro.props;
+const themes = [
+  { bg: "#F1EEFF", fg: "#14142B", sub: "#3F3F5A", ico: "#5B3DF5", icoFg: "#D4FF4F", go: "#4B2FE0" },
+  { bg: "#F7F7FB", fg: "#14142B", sub: "#3F3F5A", ico: "#14142B", icoFg: "#D4FF4F", go: "#4B2FE0" },
+  { bg: "#FFE3EC", fg: "#14142B", sub: "#3F3F5A", ico: "#FF5C8A", icoFg: "#fff", go: "#14142B" },
+  { bg: "#EEFFC2", fg: "#14142B", sub: "#3F3F5A", ico: "#14142B", icoFg: "#D4FF4F", go: "#14142B" },
+];
+const t = themes[i % themes.length];
+const external = href.startsWith("http");
+const cta = href === "/richiesta" ? "Chiedi info →" : external ? "Scopri di più ↗" : "Vai alla pagina →";
+---
+<article style={`background:${t.bg};color:${t.fg};border-radius:28px;padding:28px`} class="flex flex-col gap-3">
+  <span style={`width:48px;height:48px;border-radius:14px;background:${t.ico};color:${t.icoFg};display:grid;place-items:center`}>
+    <Icon name={icon} class="size-6" aria-hidden="true" />
+  </span>
+  <h2 style={`font-family:var(--font-display);font-weight:800;font-size:24px;line-height:1.1;color:${t.fg}`}>{title}</h2>
+  <p style={`color:${t.sub};font-size:16px;line-height:1.5`}>{desc}</p>
+  {bullets.length > 0 && (
+    <ul class="flex flex-col gap-1.5" style={`color:${t.sub};font-size:15px`}>
+      {bullets.map((b) => (
+        <li class="flex items-start gap-2">
+          <span style="flex:none;margin-top:7px;width:8px;height:8px;border-radius:99px;background:#5B3DF5"></span>{b}
+        </li>
+      ))}
+    </ul>
+  )}
+  <a href={href} {...(external ? { target: "_blank", rel: "noopener" } : {})} style={`margin-top:auto;padding-top:8px;font-weight:800;color:${t.go}`}>{cta}</a>
+</article>

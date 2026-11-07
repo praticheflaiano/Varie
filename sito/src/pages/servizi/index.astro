@@ -2,7 +2,6 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import SectionHeading from "~/components/ui/SectionHeading.astro";
-import Card from "~/components/ui/Card.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 import { Icon } from "astro-icon/components";
 import { LANDING } from "~/consts";
@@ -91,27 +90,21 @@ const clusters = [
   <section class="section-tight">
     <h2 class="container-wide mb-6" style="font-size:clamp(28px,3vw,36px)">Tutte le aree</h2>
     <div class="container-wide grid gap-6 lg:grid-cols-3">
-      {clusters.map((c) => (
-        <Card href={c.href} hoverable padded={false} class="group p-7">
-          <div class="flex size-12 items-center justify-center rounded-lg" style={`background-color: color-mix(in oklab, ${c.color} 10%, white); color: ${c.color};`}>
+      {clusters.map((c, i) => (
+        <a href={c.href} class="tile" style={`min-height:0;color:${i === 2 ? "#fff" : "#14142B"};background:${["#F1EEFF", "#FFE3EC", "#14142B"][i]}`}>
+          <span style={`width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:${["#5B3DF5", "#FF5C8A", "#D4FF4F"][i]};color:${i === 2 ? "#14142B" : "#fff"}`}>
             <Icon name={c.icon} class="size-6" aria-hidden="true" />
-          </div>
-          <p class="mt-5 text-xs font-bold uppercase tracking-wider" style={`color: ${c.color}`}>{c.eyebrow}</p>
-          <h2 class="mt-2 font-display text-2xl font-bold text-[var(--color-ink)]">{c.title}</h2>
-          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">{c.desc}</p>
-          <ul class="mt-5 space-y-1.5 text-sm text-[var(--color-ink-soft)]">
+          </span>
+          <span style={`font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${i === 2 ? "#D4FF4F" : "#4B2FE0"}`}>{c.eyebrow}</span>
+          <span style="font-family:var(--font-display);font-weight:800;font-size:28px;line-height:1.05">{c.title}</span>
+          <span style={`font-size:16px;line-height:1.5;color:${i === 2 ? "#D7D7E6" : "#3F3F5A"}`}>{c.desc}</span>
+          <ul class="flex flex-col gap-1.5" style={`font-size:15px;color:${i === 2 ? "#D7D7E6" : "#3F3F5A"}`}>
             {c.items.map((it) => (
-              <li class="flex items-start gap-2">
-                <Icon name="heroicons:check-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" aria-hidden="true" />
-                {it}
-              </li>
+              <li class="flex items-start gap-2"><span style="flex:none;margin-top:7px;width:8px;height:8px;border-radius:99px;background:#5B3DF5"></span>{it}</li>
             ))}
           </ul>
-          <p class="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-brand-700)] group-hover:gap-2 transition-all">
-            Approfondisci
-            <Icon name="heroicons:arrow-right" class="size-4" />
-          </p>
-        </Card>
+          <span class="tile-go" style={`color:${i === 2 ? "#D4FF4F" : "#4B2FE0"}`}>Apri l'area →</span>
+        </a>
       ))}
     </div>
   </section>

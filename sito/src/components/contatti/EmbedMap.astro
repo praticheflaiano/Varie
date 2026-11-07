@@ -5,7 +5,7 @@ import { Icon } from "astro-icon/components";
 const staticMapPlace = `${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality}`;
 ---
 
-<div class="overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)]">
+<div class="overflow-hidden rounded-[28px] bg-[#F7F7FB]">
   <div class="aspect-[16/10] w-full bg-[var(--color-surface-muted)] flex flex-col items-center justify-center text-center p-8 bg-grid-pattern relative">
     <Icon name="heroicons:map-pin-solid" class="size-12 text-[var(--color-brand-900)]" aria-hidden="true" />
     <p class="mt-4 font-display text-lg font-bold text-[var(--color-ink)]">{staticMapPlace}</p>
