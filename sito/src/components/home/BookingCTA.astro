@@ -1,56 +1,23 @@
 ---
-import { BOOKING, CONTACT } from "~/consts";
-import Button from "~/components/ui/Button.astro";
-import { Icon } from "astro-icon/components";
+import { BOOKING, CONTACT, GHL } from "~/consts";
 ---
-
-<section class="section">
-  <div class="container-wide">
-    <div class="relative overflow-hidden rounded-[var(--radius-2xl)] bg-[var(--color-brand-950)] px-6 py-12 text-white md:px-12 md:py-16 lg:px-20 lg:py-20">
-      <!-- Pattern decorativo -->
-      <div class="absolute inset-0 bg-grid-pattern opacity-[0.06]" aria-hidden="true"></div>
-      <div class="absolute -right-20 -top-20 size-80 rounded-full bg-[var(--color-accent-400)] opacity-10 blur-3xl" aria-hidden="true"></div>
-      <div class="absolute -bottom-32 -left-32 size-96 rounded-full bg-[var(--color-brand-500)] opacity-20 blur-3xl" aria-hidden="true"></div>
-
-      <div class="relative grid gap-8 lg:grid-cols-12 lg:items-center">
-        <div class="lg:col-span-7">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-300)]">
-            Pronto a sistemare le tue pratiche?
-          </p>
-          <h2 class="font-display text-white">
-            Prenota un appuntamento, in sede o da remoto.
-          </h2>
-          <p class="mt-4 text-lg text-slate-300 max-w-2xl">
-            Scegli giorno e ora dal nostro calendario online. Ti richiamiamo per confermare e dirti esattamente quali documenti portare.
-          </p>
-        </div>
-
-        <div class="lg:col-span-5 flex flex-col gap-3">
-          <Button variant="accent" size="lg" href={BOOKING.arcanisGroup} external icon="heroicons:calendar-days" iconPosition="left" class="w-full justify-center">
-            Prenota in sede
-          </Button>
-          <Button variant="secondary" size="lg" href={BOOKING.arcanisRemote} external icon="heroicons:video-camera" iconPosition="left" class="w-full justify-center !bg-white/10 !text-white !border-white/20 hover:!bg-white/20">
-            Consulenza da remoto
-          </Button>
-          <div class="mt-2 grid grid-cols-2 gap-3">
-            <a
-              href={`tel:${CONTACT.phone.landlineRaw}`}
-              class="inline-flex items-center justify-center gap-2 rounded-md border border-white/20 bg-white/5 px-4 py-3 text-sm font-semibold text-white hover:bg-white/10 no-underline"
-            >
-              <Icon name="heroicons:phone" class="size-4" />
-              Chiama
-            </a>
-            <a
-              href={CONTACT.whatsapp.link}
-              target="_blank"
-              rel="noopener"
-              class="inline-flex items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1ebe5a] no-underline"
-            >
-              WhatsApp
-            </a>
-          </div>
-        </div>
+<section class="wrap" style="padding-block:56px 88px">
+  <div style="background:#14142B;color:#fff;border-radius:36px;padding:clamp(32px,5vw,56px)" class="grid gap-8 lg:grid-cols-12 lg:items-center">
+    <div class="lg:col-span-7 flex flex-col gap-4">
+      <span class="sticker" style="background:#D4FF4F;color:#14142B;align-self:flex-start">Pronto?</span>
+      <h2 style="color:#fff">Prenota in 30 secondi. <span style="color:#D4FF4F">Al resto pensiamo noi.</span></h2>
+      <p style="color:#D7D7E6;font-size:18px;max-width:620px">
+        Scegli giorno e ora dal calendario: in ufficio a Vigne Nuove o in videochiamata. Ti diciamo noi quali documenti servono.
+      </p>
+    </div>
+    <div class="lg:col-span-5 flex flex-col gap-3">
+      <a class="btn btn-lime btn-lg" href={BOOKING.arcanisGroup} target="_blank" rel="noopener">Prenota in ufficio</a>
+      <a class="btn btn-lg" style="background:#fff;color:#14142B" href={BOOKING.arcanisRemote} target="_blank" rel="noopener">Prenota una videochiamata</a>
+      <div class="grid grid-cols-2 gap-3 mt-1">
+        <a class="btn btn-sm" style="border-color:#33334D;color:#fff" href={`tel:${CONTACT.phone.landlineRaw}`}>Chiama</a>
+        <a class="btn btn-sm" style="background:#25D366;color:#14142B" href={CONTACT.whatsapp.link} target="_blank" rel="noopener">WhatsApp</a>
       </div>
+      <a href={GHL.richiesta} style="color:#D4FF4F;font-weight:700;text-align:center" class="mt-1">Oppure manda una richiesta online →</a>
     </div>
   </div>
 </section>

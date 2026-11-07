@@ -2,9 +2,8 @@
 import { HOURS } from "~/consts";
 import { Icon } from "astro-icon/components";
 
-const today = new Date().getDay(); // 0 dom, 1 lun, ...
-const dayMap = [6, 0, 1, 2, 3, 4, 5];
-const todayIdx = dayMap[today];
+// "oggi" calcolato nel browser (la pagina e statica)
+const todayIdx = -1;
 ---
 
 <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)]">
@@ -17,8 +16,8 @@ const todayIdx = dayMap[today];
       const isToday = i === todayIdx;
       const closed = !h.open;
       return (
-        <div class:list={[
-          "flex items-center justify-between gap-4 rounded-md px-3 py-2",
+        <div data-day={i} class:list={[
+          "flex items-center justify-between gap-4 rounded-xl px-3 py-2",
           isToday && "bg-[var(--color-brand-50)] font-semibold"
         ]}>
           <dt class:list={[
@@ -46,3 +45,14 @@ const todayIdx = dayMap[today];
     })}
   </dl>
 </div>
+<script>
+  const wd = new Intl.DateTimeFormat("it-IT", { timeZone: "Europe/Rome", weekday: "short" }).format(new Date()).toLowerCase();
+  const idx = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"].findIndex((d) => wd.startsWith(d));
+  const row = document.querySelector<HTMLElement>(`[data-day="${idx}"]`);
+  if (row) {
+    row.style.background = "#F1EEFF";
+    row.style.fontWeight = "700";
+    const dt = row.querySelector("dt");
+    if (dt) dt.insertAdjacentHTML("beforeend", ' <span style="margin-left:6px;background:#14142B;color:#fff;border-radius:6px;padding:2px 6px;font-size:10px;text-transform:uppercase">oggi</span>');
+  }
+</script>

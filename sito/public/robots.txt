@@ -51,4 +51,4 @@ Allow: /
 Disallow: /api/
 Disallow: /_astro/
 
-Sitemap: https://praticheflaiano.it/sitemap-index.xml
+Sitemap: https://info.praticheflaiano.it/sitemap-index.xml

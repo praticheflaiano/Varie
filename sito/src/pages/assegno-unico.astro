@@ -1,0 +1,14 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import LandingArticles from "~/components/blog/LandingArticles.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import body from "~/fragments/assegno-unico.html?raw";
+const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Devo rifare la domanda ogni anno?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di solito no, ma l'ISEE va rinnovato ogni anno per avere l'importo giusto.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto mi spetta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Dipende dall'ISEE, dal numero e dall'et\u00e0 dei figli. Lo calcoliamo insieme.\"}}, {\"@type\": \"Question\", \"name\": \"I genitori sono separati: come funziona?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"L'assegno si pu\u00f2 dividere tra i due genitori. Ti spieghiamo le opzioni al primo incontro.\"}}]}";
+---
+<BaseLayout title={"Assegno Unico: domanda da 10 €"} description={"Domanda, rinnovo e variazioni dell'Assegno Unico con ISEE gratuito. In ufficio a Vigne Nuove o online."}>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="assegno-unico" name="Assegno Unico Universale" description={"Domanda, rinnovo e variazioni dell'Assegno Unico per i figli, con ISEE gratuito."} serviceType="Patronato - sostegno famiglie" offers={[{ name: "Domanda in ufficio", price: 15 }, { name: "Domanda online", price: 19 }, { name: "Domanda in ufficio per tesserati", price: 10 }, { name: "Domanda online per tesserati", price: 15 }]} />
+  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <div class="lp"><Fragment set:html={body} /></div>
+  <LandingArticles categories={["assegno-unico", "isee-dsu", "bonus-fiscali"]} />
+</BaseLayout>

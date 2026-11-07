@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 const SITE_URL =
   process.env.PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://praticheflaiano.it";
+  "https://info.praticheflaiano.it";
 
 export default defineConfig({
   site: SITE_URL,

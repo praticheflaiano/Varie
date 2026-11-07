@@ -1,89 +1,45 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
-import SectionHeading from "~/components/ui/SectionHeading.astro";
-import Button from "~/components/ui/Button.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 import Accordion from "~/components/ui/Accordion.svelte";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
-import { Icon } from "astro-icon/components";
-import { TESSERAMENTO, BOOKING, SITE } from "~/consts";
+import { TESSERAMENTO, SITE, GHL } from "~/consts";
 
+/* Solo vantaggi pubblicati su praticheflaiano.it/tesseramento_vantaggi
+   o dati dal titolare. Regola progetto: ZERO invenzioni. */
 const benefits = [
-  { icon: "heroicons:tag", title: "Tariffe agevolate", desc: "Sconto su tutte le pratiche CAF, da 730 a successioni a contratti di affitto." },
-  { icon: "heroicons:bolt", title: "Priorita appuntamenti", desc: "Slot dedicati e tempi di attesa ridotti, anche in alta stagione 730." },
-  { icon: "heroicons:chat-bubble-bottom-center-text", title: "Aggiornamenti WhatsApp", desc: "Canale dedicato con scadenze, novita normative e opportunita di bonus." },
-  { icon: "heroicons:archive-box", title: "Conservazione documenti", desc: "Archiviazione digitale delle tue pratiche: ti bastano un click o una telefonata per recuperarle." },
-  { icon: "heroicons:phone", title: "Consulenza illimitata", desc: "Consulenza fiscale e previdenziale telefonica e via email senza limiti." },
-  { icon: "heroicons:user-group", title: "Valido per tutto il nucleo", desc: "Una sola tessera copre coniuge, figli e familiari conviventi." },
-  { icon: "heroicons:calculator", title: "Simulazioni gratuite", desc: "Calcolo ISEE, simulazioni pensionistiche, verifica idoneita bonus senza costi aggiuntivi." },
-  { icon: "heroicons:gift", title: "Convenzioni esclusive", desc: "Accesso a convenzioni con partner locali (in costante aggiornamento)." },
+  { t: "Consulenze gratuite", d: "Hai un dubbio su tasse, INPS o bonus? Chiedi: per i tesserati la consulenza è gratis.", bg: "#D4FF4F", fg: "#14142B", rot: "-1deg" },
+  { t: "Appuntamenti prioritari", d: "Quando c'è la fila (730, ISEE di gennaio) passi avanti.", bg: "#5B3DF5", fg: "#fff", rot: "1deg" },
+  { t: "Sconti sulle pratiche", d: "Paghi meno le pratiche a pagamento. Esempio: la domanda di Assegno Unico.", bg: "#FFE3EC", fg: "#14142B", rot: "-0.5deg" },
+  { t: "Vale per tutta la famiglia", d: "Una tessera sola per tutto il nucleo familiare.", bg: "#14142B", fg: "#fff", rot: "0.8deg" },
 ];
 
-const comparison = [
-  { service: "Modello 730", non: "da 30 €", soci: "tariffa agevolata" },
-  { service: "ISEE / DSU", non: "in base alla complessita", soci: "tariffa agevolata" },
-  { service: "Calcolo IMU + F24", non: "tariffa standard", soci: "tariffa agevolata" },
-  { service: "Successioni", non: "in base ai beni", soci: "tariffa agevolata" },
-  { service: "Consulenza fiscale telefonica", non: "a chiamata", soci: "INCLUSA" },
-  { service: "Aggiornamenti WhatsApp", non: "no", soci: "INCLUSO" },
-  { service: "Conservazione documenti", non: "no", soci: "INCLUSA" },
-  { service: "Priorita appuntamenti", non: "ordinaria", soci: "PRIORITARIA" },
+const examples = [
+  { s: "ISEE", non: "gratis", soci: "gratis" },
+  { s: "Assegno Unico, domanda in ufficio", non: "15 €", soci: "10 €" },
+  { s: "Assegno Unico, domanda online", non: "19 €", soci: "15 €" },
+  { s: "Domanda NASpI", non: "gratis", soci: "gratis" },
+  { s: "Consulenze", non: "—", soci: "gratis" },
+  { s: "Appuntamenti", non: "ordinari", soci: "prioritari" },
 ];
 
 const faq = [
   {
-    question: "Quanto costa la tessera del Centro Pratiche Flaiano?",
-    answer: `<strong>${TESSERAMENTO.annual.price} € all'anno</strong> oppure <strong>${TESSERAMENTO.semester.price} € a semestre</strong>. La tessera vale per tutto il nucleo familiare, non per il singolo.`,
+    question: "Quanto costa la tessera?",
+    answer: `<strong>${TESSERAMENTO.annual.price} € l'anno</strong> oppure <strong>${TESSERAMENTO.semester.price} € per sei mesi</strong>. Vale per tutto il nucleo familiare, non per una persona sola.`,
   },
   {
-    question: "Devo essere socio per fare il 730 o l'ISEE?",
-    answer: "No. Tutti i servizi sono accessibili anche ai non soci. La tessera ti da pero <strong>tariffe agevolate</strong>, priorita sugli appuntamenti e una serie di servizi inclusi (consulenza illimitata, conservazione documenti, aggiornamenti).",
+    question: "È obbligatoria?",
+    answer: "No. Tutti possono usare i nostri servizi. La tessera conviene se fai più di una pratica nell'anno o se vuoi le consulenze gratuite.",
   },
   {
-    question: "La tessera vale anche per il Patronato?",
-    answer: "Le prestazioni di Patronato (pensioni, NASpI, invalidita, ecc.) sono <strong>gratuite per legge</strong> per tutti, soci e non soci (Legge 152/2001). La tessera quindi e pensata per i servizi CAF e di consulenza, non aggiunge requisiti per le pratiche INPS.",
+    question: "E per le pratiche di patronato?",
+    answer: "Molte pratiche di patronato sono gratuite per tutti, per esempio la domanda NASpI. Dove c'è un costo lo trovi scritto nella pagina del servizio, e con la tessera spesso costa meno (vedi l'Assegno Unico).",
   },
   {
-    question: "Come pago la tessera?",
-    answer: "In sede in <strong>contanti, bancomat o carta di credito</strong>. Per le tessere semestrali e possibile rinnovare alla scadenza con la stessa modalita.",
-  },
-  {
-    question: "Posso disdire la tessera prima della scadenza?",
-    answer: "La tessera ha validita rispettivamente 12 o 6 mesi e non e rimborsabile, ma puoi semplicemente non rinnovarla alla scadenza.",
-  },
-  {
-    question: "Chi fa parte del 'nucleo familiare' della tessera?",
-    answer: "Il <strong>nucleo familiare</strong> coincide con quello indicato nello stato di famiglia anagrafico: coniuge/partner unione civile, figli conviventi, altri familiari conviventi. Per casi particolari ti chiediamo di portare un certificato di stato di famiglia.",
-  },
-  {
-    question: "I miei familiari devono presentarsi per accedere ai servizi agevolati?",
-    answer: "Si: ogni componente del nucleo presenta il proprio documento d'identita e codice fiscale al primo accesso. La tessera e poi valida per tutti.",
-  },
-  {
-    question: "Cosa succede se cambio nucleo familiare durante l'anno?",
-    answer: "Comunicaci la variazione (matrimonio, separazione, ecc.). Per le aggiunte (nuovi figli, coniuge) la tessera si estende automaticamente. Per separazioni, ne valuteremo la gestione caso per caso.",
-  },
-];
-
-const personas = [
-  {
-    title: "Famiglie con figli",
-    desc: "Per chi gestisce ISEE, Assegno Unico, bonus nido e detrazioni figli. Una tessera, tutto il nucleo coperto.",
-    icon: "heroicons:user-group",
-    color: "var(--color-success-600)",
-  },
-  {
-    title: "Pensionati",
-    desc: "Per chi ha bisogno di assistenza ricorrente: 730, modelli RED, INVCIV, ACCAS, successioni, Legge 104.",
-    icon: "heroicons:identification",
-    color: "var(--color-brand-700)",
-  },
-  {
-    title: "Lavoratori dipendenti",
-    desc: "Per chi vuole massimizzare detrazioni e rimborsi e avere un punto di riferimento sicuro per le pratiche fiscali.",
-    icon: "heroicons:briefcase",
-    color: "var(--color-accent-600)",
+    question: "Come faccio la tessera?",
+    answer: `In ufficio, anche durante l'appuntamento per un'altra pratica. Oppure lasciaci i tuoi dati dalla <a href='${GHL.tesseraFunnel}'>pagina tessera</a> e ti richiamiamo.`,
   },
 ];
 
@@ -91,208 +47,94 @@ const offerData = {
   "@context": "https://schema.org",
   "@type": "Product",
   name: "Tessera Centro Pratiche Flaiano",
-  description: "Tessera annuale o semestrale per accedere ai servizi agevolati del Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma. Valida per tutto il nucleo familiare.",
+  description: "Tessera annuale o semestrale per il nucleo familiare: consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche.",
   brand: { "@type": "Organization", name: SITE.name },
   offers: [
-    {
-      "@type": "Offer",
-      name: "Tessera annuale (12 mesi, nucleo familiare)",
-      price: TESSERAMENTO.annual.price,
-      priceCurrency: TESSERAMENTO.currency,
-      availability: "https://schema.org/InStock",
-      url: `${SITE.url}/tesseramento`,
-    },
-    {
-      "@type": "Offer",
-      name: "Tessera semestrale (6 mesi, nucleo familiare)",
-      price: TESSERAMENTO.semester.price,
-      priceCurrency: TESSERAMENTO.currency,
-      availability: "https://schema.org/InStock",
-      url: `${SITE.url}/tesseramento`,
-    },
+    { "@type": "Offer", name: "Tessera annuale (nucleo familiare)", price: TESSERAMENTO.annual.price, priceCurrency: TESSERAMENTO.currency, url: `${SITE.url}/tesseramento` },
+    { "@type": "Offer", name: "Tessera semestrale (nucleo familiare)", price: TESSERAMENTO.semester.price, priceCurrency: TESSERAMENTO.currency, url: `${SITE.url}/tesseramento` },
   ],
 };
 ---
-
 <BaseLayout
-  title="Tesseramento: 30 € all'anno per tutto il nucleo familiare"
-  description="Diventa socio del Centro Pratiche Flaiano: 30 € all'anno (o 20 € a semestre) per tutto il nucleo familiare. Tariffe agevolate, priorita appuntamenti, consulenza illimitata, aggiornamenti WhatsApp. CAF UNSIC + Patronato ENASC a Roma Vigne Nuove."
+  title="Tessera: 30 € l'anno per tutta la famiglia"
+  description="Tessera Centro Pratiche Flaiano: 30 € l'anno (20 € a semestre) per tutto il nucleo familiare. Consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche."
 >
   <JsonLdFaq slot="head" items={faq} />
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(offerData)} />
 
-  <!-- HERO PRICING -->
-  <section class="relative overflow-hidden bg-gradient-to-br from-[var(--color-brand-50)] via-white to-[var(--color-accent-50)]">
-    <div class="absolute inset-0 bg-grid-pattern opacity-20" aria-hidden="true"></div>
-    <div class="container-wide relative pt-10 pb-16 md:pt-12 md:pb-24">
-      <Breadcrumb items={[{ name: "Tesseramento", href: "/tesseramento" }]} class="mb-6" />
-
-      <div class="grid gap-12 lg:grid-cols-12 lg:items-center">
-        <div class="lg:col-span-6">
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-accent-400)] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[var(--color-brand-950)]">
-            <Icon name="heroicons:sparkles-solid" class="size-3.5" /> Diventa socio
-          </span>
-          <h1 class="mt-4 font-display text-balance">
-            Una tessera. Tutto il nucleo. Tutto incluso.
-          </h1>
-          <p class="mt-5 text-lg text-[var(--color-ink-soft)] leading-relaxed max-w-xl">
-            Con la tessera del Centro Pratiche Flaiano accedi a <strong>tariffe agevolate</strong>, priorita sugli appuntamenti, <strong>consulenza fiscale e previdenziale illimitata</strong>, conservazione dei documenti e aggiornamenti diretti via WhatsApp. <strong>Una sola tessera per tutto il nucleo familiare</strong>.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <Button variant="primary" size="lg" href={BOOKING.arcanisGroup} external icon="heroicons:calendar-days" iconPosition="left">
-              Tesserati ora in sede
-            </Button>
-            <Button variant="secondary" size="lg" href="#vantaggi" icon="heroicons:arrow-down">
-              Tutti i vantaggi
-            </Button>
-          </div>
+  <section class="wrap" style="padding-block:32px 56px">
+    <Breadcrumb items={[{ name: "Tessera", href: "/tesseramento" }]} class="mb-8" />
+    <div class="flex flex-wrap items-center gap-12">
+      <div class="flex flex-col gap-6" style="flex:999 1 520px;min-width:0">
+        <span class="eyebrow">Per tutto il nucleo familiare</span>
+        <h1>Una tessera. <span class="hl-lime">Tutta la famiglia.</span></h1>
+        <p style="font-size:20px;line-height:1.5;max-width:600px">
+          Consulenze gratuite, appuntamenti prioritari e sconti sulle pratiche, per tutto il nucleo familiare.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn btn-primary btn-lg" href={GHL.tesseraFunnel}>Voglio la tessera</a>
+          <a class="btn btn-ghost btn-lg" href="/prenota">Falla in ufficio</a>
         </div>
-
-        <!-- Pricing card -->
-        <div class="lg:col-span-6">
-          <div class="grid gap-4 sm:grid-cols-2">
-            <!-- Annuale -->
-            <div class="relative overflow-hidden rounded-[var(--radius-2xl)] border-2 border-[var(--color-brand-900)] bg-white p-7 shadow-[var(--shadow-lift)]">
-              <span class="absolute right-3 top-3 rounded-full bg-[var(--color-brand-900)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">Consigliato</span>
-              <p class="text-xs font-bold uppercase tracking-wider text-[var(--color-brand-700)]">Annuale</p>
-              <p class="mt-2 font-display text-5xl font-extrabold text-[var(--color-brand-950)]">
-                {TESSERAMENTO.annual.price}<span class="text-2xl font-bold text-[var(--color-ink-muted)]">€</span>
-              </p>
-              <p class="text-sm text-[var(--color-ink-muted)]">/ anno / nucleo</p>
-              <ul class="mt-6 space-y-2.5 text-sm">
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Validita 12 mesi</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Tutti i benefit attivi</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Tariffe agevolate piene</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span><strong>Risparmi 10 €</strong> rispetto alla semestrale</span></li>
-              </ul>
-              <Button variant="primary" size="md" href={BOOKING.arcanisGroup} external class="mt-6 w-full justify-center">
-                Scegli annuale
-              </Button>
-            </div>
-
-            <!-- Semestrale -->
-            <div class="relative overflow-hidden rounded-[var(--radius-2xl)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
-              <p class="text-xs font-bold uppercase tracking-wider text-[var(--color-ink-muted)]">Semestrale</p>
-              <p class="mt-2 font-display text-5xl font-extrabold text-[var(--color-ink)]">
-                {TESSERAMENTO.semester.price}<span class="text-2xl font-bold text-[var(--color-ink-muted)]">€</span>
-              </p>
-              <p class="text-sm text-[var(--color-ink-muted)]">/ 6 mesi / nucleo</p>
-              <ul class="mt-6 space-y-2.5 text-sm">
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Validita 6 mesi</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Tutti i benefit attivi</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Per chi vuole provare il servizio</span></li>
-                <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[var(--color-success-600)]" /><span>Rinnovabile a fine periodo</span></li>
-              </ul>
-              <Button variant="secondary" size="md" href={BOOKING.arcanisGroup} external class="mt-6 w-full justify-center">
-                Scegli semestrale
-              </Button>
-            </div>
-          </div>
-
-          <p class="mt-4 text-center text-xs text-[var(--color-ink-muted)]">
-            Pagamenti accettati: contanti, bancomat, carte di credito
-          </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2" style="flex:1 1 440px;min-width:0">
+        <div style="background:#5B3DF5;color:#fff;border-radius:32px;padding:28px;position:relative;transform:rotate(-1.5deg)">
+          <span class="sticker" style="position:absolute;right:-8px;top:-14px;background:#FF5C8A;color:#fff">Consigliata</span>
+          <p style="font-weight:700;color:#E4DEFF">Annuale</p>
+          <p style="font-family:var(--font-display);font-weight:800;font-size:56px;line-height:1;color:#D4FF4F;white-space:nowrap">{TESSERAMENTO.annual.price} €</p>
+          <p style="color:#E4DEFF">12 mesi · tutto il nucleo</p>
+        </div>
+        <div style="background:#F7F7FB;border-radius:32px;padding:28px;transform:rotate(1deg)">
+          <p style="font-weight:700">Semestrale</p>
+          <p style="font-family:var(--font-display);font-weight:800;font-size:56px;line-height:1;color:#5B3DF5;white-space:nowrap">{TESSERAMENTO.semester.price} €</p>
+          <p>6 mesi · tutto il nucleo</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- VANTAGGI -->
-  <section id="vantaggi" class="section">
-    <div class="container-wide">
-      <SectionHeading
-        eyebrow="Tutti i vantaggi"
-        title="Cosa ottieni con la tessera"
-        subtitle="Una sola quota annuale per coprire tutto il nucleo familiare e accedere a un pacchetto completo di servizi."
-      />
-      <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {benefits.map((b) => (
-          <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-soft)]">
-            <div class="flex size-11 items-center justify-center rounded-lg bg-[var(--color-accent-100)] text-[var(--color-accent-700)]">
-              <Icon name={b.icon} class="size-6" aria-hidden="true" />
-            </div>
-            <h3 class="mt-4 font-display text-base font-bold text-[var(--color-ink)]">{b.title}</h3>
-            <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed">{b.desc}</p>
-          </div>
-        ))}
-      </div>
-
-      <p class="mt-8 max-w-2xl text-sm text-[var(--color-ink-muted)] italic">
-        L'elenco delle convenzioni e dei benefit specifici e in costante aggiornamento. Per la lista dettagliata e completa, consulta il regolamento di tesseramento in sede o contattaci.
-      </p>
-      {/* TODO BRAND: la pagina ufficiale praticheflaiano.it/tesseramento_vantaggi
-          attualmente restituisce 503. Quando il cliente fornira il testo originale,
-          sostituire la lista benefits[] con i vantaggi e le convenzioni
-          effettivamente attivi. Regola progetto: ZERO invenzioni. */}
+  <section class="wrap" style="padding-block:40px">
+    <h2 class="mb-6">Cosa ci guadagni</h2>
+    <div class="grid gap-5" style="grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))">
+      {benefits.map((b) => (
+        <div style={`background:${b.bg};color:${b.fg};border-radius:28px;padding:28px;transform:rotate(${b.rot})`}>
+          <p style={`font-family:var(--font-display);font-weight:800;font-size:24px;line-height:1.1;color:${b.fg}`}>{b.t}</p>
+          <p class="mt-2" style={`color:${b.fg};opacity:.9`}>{b.d}</p>
+        </div>
+      ))}
     </div>
   </section>
 
-  <!-- TABELLA CONFRONTO -->
-  <section class="section bg-[var(--color-surface-soft)]">
-    <div class="container-wide">
-      <SectionHeading
-        eyebrow="Confronto"
-        title="Tesserato vs non tesserato"
-        subtitle="Cosa cambia, in concreto, ad averla in tasca."
-        align="center"
-      />
-      <div class="mt-12 overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-card)]">
-        <table class="w-full text-left">
-          <thead class="bg-[var(--color-brand-950)] text-white">
-            <tr>
-              <th class="px-6 py-4 font-display text-sm font-bold uppercase tracking-wider">Servizio</th>
-              <th class="px-6 py-4 font-display text-sm font-bold uppercase tracking-wider text-center">Non tesserato</th>
-              <th class="px-6 py-4 font-display text-sm font-bold uppercase tracking-wider text-center" style="background: var(--color-accent-400); color: var(--color-brand-950);">Tesserato</th>
+  <section class="wrap" style="padding-block:40px">
+    <div style="background:#F7F7FB;border-radius:32px;padding:clamp(24px,4vw,40px)">
+      <h2>Con e senza tessera</h2>
+      <p class="mt-2">Qualche esempio concreto.</p>
+      <div class="mt-6 overflow-x-auto">
+        <table class="w-full text-left" style="border-collapse:separate;border-spacing:0 8px">
+          <thead>
+            <tr style="font-size:14px">
+              <th class="px-3">Pratica</th>
+              <th class="px-3 text-center">Senza tessera</th>
+              <th class="px-3 text-center">Con tessera</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-[var(--color-border)]">
-            {comparison.map((row) => (
-              <tr>
-                <td class="px-6 py-4 text-sm font-semibold text-[var(--color-ink)]">{row.service}</td>
-                <td class="px-6 py-4 text-sm text-[var(--color-ink-muted)] text-center">{row.non}</td>
-                <td class="px-6 py-4 text-sm font-semibold text-[var(--color-brand-900)] text-center bg-[var(--color-accent-50)]">{row.soci}</td>
+          <tbody>
+            {examples.map((r) => (
+              <tr style="background:#fff">
+                <td class="px-3 py-3 font-semibold" style="border-radius:16px 0 0 16px;color:#14142B">{r.s}</td>
+                <td class="px-3 py-3 text-center">{r.non}</td>
+                <td class="px-3 py-3 text-center font-bold" style="border-radius:0 16px 16px 0;background:#D4FF4F;color:#14142B">{r.soci}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <p class="mt-4 text-sm">Il 730 parte da 30 € e, se torni l'anno dopo, il prezzo resta quello. <a href="/730">Tutto sul 730</a>.</p>
     </div>
   </section>
 
-  <!-- PERSONAS -->
-  <section class="section">
-    <div class="container-wide">
-      <SectionHeading
-        eyebrow="Per chi e pensata"
-        title="Una tessera, tre profili tipici di soci"
-        align="center"
-      />
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        {personas.map((p) => (
-          <div class="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-7 shadow-[var(--shadow-soft)]">
-            <div class="flex size-12 items-center justify-center rounded-lg" style={`background-color: color-mix(in oklab, ${p.color} 12%, white); color: ${p.color};`}>
-              <Icon name={p.icon} class="size-6" aria-hidden="true" />
-            </div>
-            <h3 class="mt-5 font-display text-lg font-bold text-[var(--color-ink)]">{p.title}</h3>
-            <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed">{p.desc}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section bg-[var(--color-surface-soft)]">
-    <div class="container-narrow">
-      <SectionHeading
-        eyebrow="Domande frequenti tesseramento"
-        title="Tutto quello che vuoi sapere sulla tessera"
-        align="center"
-      />
-      <div class="mt-10">
-        <Accordion client:visible items={faq} />
-      </div>
-    </div>
+  <section class="container-narrow" style="padding-block:40px">
+    <h2 class="text-center mb-8">Domande sulla tessera</h2>
+    <Accordion client:visible items={faq} />
   </section>
 
   <BookingCTA />

@@ -1,0 +1,14 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import LandingArticles from "~/components/blog/LandingArticles.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import body from "~/fragments/naspi.html?raw";
+const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Se mi sono dimesso mi spetta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di regola no, salvo dimissioni per giusta causa o casi particolari. Raccontaci la tua situazione e verifichiamo.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto prendo e per quanto tempo?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Dipende dagli stipendi e dalle settimane lavorate negli ultimi anni. Lo calcoliamo insieme al primo incontro.\"}}, {\"@type\": \"Question\", \"name\": \"Il SIISL \u00e8 obbligatorio? Posso farlo da solo?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\u00ec, \u00e8 obbligatorio per ricevere la NASpI. Puoi farlo da solo con SPID o CIE sul portale del Ministero del Lavoro, oppure lo facciamo noi a 25 \u20ac.\"}}, {\"@type\": \"Question\", \"name\": \"Se trovo un nuovo lavoro cosa succede?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Va comunicato all'INPS: in alcuni casi la NASpI si riduce, in altri si sospende. Ce ne occupiamo noi.\"}}]}";
+---
+<BaseLayout title={"Domanda NASpI gratis a Roma"} description={"Domanda NASpI gratuita al patronato di Vigne Nuove. Iscrizione SIISL obbligatoria fatta da noi. Anche in videochiamata."}>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="naspi" name="Domanda NASpI" description={"Domanda di indennità di disoccupazione NASpI all'INPS tramite patronato. Gratuita."} serviceType="Patronato - disoccupazione" offers={[{ name: "Domanda NASpI", price: 0 }]} />
+  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <div class="lp"><Fragment set:html={body} /></div>
+  <LandingArticles categories={["naspi-disoccupazione"]} />
+</BaseLayout>

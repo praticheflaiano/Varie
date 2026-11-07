@@ -1,5 +1,5 @@
 ---
-import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE } from "~/consts";
+import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE, LANDING, EXTERNAL_PORTALS } from "~/consts";
 
 const data = {
   "@context": "https://schema.org",
@@ -9,7 +9,7 @@ const data = {
   legalName: SITE.legalName,
   description: SITE.defaultDescription,
   url: SITE.url,
-  logo: `${SITE.url}/img/logo/flaiano-mark.svg`,
+  logo: `${SITE.url}/apple-touch-icon.png`,
   image: `${SITE.url}${SITE.ogImage}`,
   slogan: SITE.claim,
   telephone: CONTACT.phone.landlineRaw,
@@ -34,7 +34,15 @@ const data = {
     "@type": "Place",
     name: `${z.name}, Roma`,
   })),
-  sameAs: [SOCIAL.facebook, SOCIAL.whatsappChannel],
+  sameAs: [SOCIAL.facebook, SOCIAL.whatsappChannel, "https://praticheflaiano.it", EXTERNAL_PORTALS.naspi.url],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Servizi CAF e Patronato",
+    itemListElement: LANDING.map((l) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: l.label, url: `${SITE.url}${l.href}`, "@id": `${SITE.url}${l.href}#service` },
+    })),
+  },
   potentialAction: {
     "@type": "ReserveAction",
     target: {

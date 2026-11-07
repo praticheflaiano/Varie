@@ -1,96 +1,219 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
-import Hero from "~/components/home/Hero.astro";
-import TrustBar from "~/components/home/TrustBar.astro";
-import ServicesGrid from "~/components/home/ServicesGrid.astro";
-import WhyUs from "~/components/home/WhyUs.astro";
-import TesseramentoTeaser from "~/components/home/TesseramentoTeaser.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
-import ZoneSection from "~/components/home/ZoneSection.astro";
-import SectionHeading from "~/components/ui/SectionHeading.astro";
+import OpenNow from "~/components/home/OpenNow.astro";
 import ArticleCard from "~/components/blog/ArticleCard.astro";
 import Accordion from "~/components/ui/Accordion.svelte";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { getVisibleArticles } from "~/utils/articles";
-import { Icon } from "astro-icon/components";
+import { CONTACT, ZONE_SERVITE, TESSERAMENTO, GHL } from "~/consts";
 
 const articles = (await getVisibleArticles()).slice(0, 4);
 
+const top = [
+  { href: "/isee", title: "ISEE", tag: "0 €", desc: "Per Assegno Unico, bonus e università. Redditi e CU li prendiamo noi.", bg: "#D4FF4F", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#14142B", go: "#14142B" },
+  { href: "/730", title: "730", tag: "da 30 €", desc: "Anche da casa. Se torni l'anno dopo, il prezzo non cambia.", bg: "#5B3DF5", fg: "#fff", tagBg: "#D4FF4F", tagFg: "#14142B", sub: "#E4DEFF", go: "#fff" },
+  { href: "/invalidita-104", title: "Invalidità e 104", tag: "1° incontro gratis", desc: "Medico certificatore e patronato nello stesso ufficio. Un posto, zero giri.", bg: "#14142B", fg: "#fff", tagBg: "#FF5C8A", tagFg: "#fff", sub: "#D7D7E6", go: "#D4FF4F" },
+  { href: "/naspi", title: "NASpI", tag: "Domanda gratis", desc: "Hai perso il lavoro? Domanda e anticipo, senza perdere giorni.", bg: "#F1EEFF", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#3F3F5A", go: "#4B2FE0" },
+  { href: "/assegno-unico", title: "Assegno Unico", tag: "da 10 €", desc: "Domanda, rinnovo e variazioni. Con l'ISEE giusto prendi l'importo pieno.", bg: "#FFE3EC", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#3F3F5A", go: "#4B2FE0" },
+  { href: "/successioni", title: "Successioni", tag: "", desc: "Un momento difficile. Dichiarazione, volture e conti li seguiamo noi.", bg: "#FFFFFF", fg: "#14142B", tagBg: "", tagFg: "", sub: "#3F3F5A", go: "#4B2FE0", border: true },
+];
+
+const rest = [
+  { k: "SOLDI E TASSE", t: "IMU", d: "Calcolo e F24 pronto", h: "/blog/categoria/imu-tributi-locali" },
+  { k: "SOLDI E TASSE", t: "Cartelle e rate", d: "Riscossione, rottamazione, avvisi", h: "/servizi/servizi-vari" },
+  { k: "SOLDI E TASSE", t: "Bonus e detrazioni", d: "Ristrutturazione, spese mediche, mobili", h: "/servizi/caf" },
+  { k: "FAMIGLIA E LAVORO", t: "Pensioni", d: "Vecchiaia, anticipata, reversibilità", h: "https://praticheflaiano.it/sai-quando-potrai-andare-in-pensione" },
+  { k: "FAMIGLIA E LAVORO", t: "Maternità e nuovi nati", d: "Indennità, congedi, bonus nido", h: "https://praticheflaiano.it/bonusnido" },
+  { k: "FAMIGLIA E LAVORO", t: "ADI e SFL", d: "Domanda e rinnovo", h: "https://praticheflaiano.it/patronato" },
+  { k: "FAMIGLIA E LAVORO", t: "Dimissioni online", d: "Volontarie, giusta causa, revoca", h: "https://praticheflaiano.it/dimissioni_online-3700" },
+  { k: "FAMIGLIA E LAVORO", t: "RED, ICRIC, ICLAV", d: "Dichiarazioni annuali INPS", h: "https://praticheflaiano.it/red-icric-iclav-accasps" },
+  { k: "FAMIGLIA E LAVORO", t: "Colf e badanti", d: "Assunzione, contributi, chiusura", h: "/servizi/patronato" },
+  { k: "CASA", t: "Contratti di affitto", d: "Registrazione, cedolare, proroghe", h: "/servizi/caf" },
+  { k: "CASA", t: "TARI Roma", d: "Riduzioni e avvisi AMA", h: "https://praticheflaiano.it/tari" },
+  { k: "CASA", t: "Bollette luce e gas", d: "Offerte e bonus sociale", h: "https://praticheflaiano.it/luce_gas" },
+  { k: "CASA", t: "PEC, residenza, certificati", d: "Le pratiche di tutti i giorni", h: "/servizi/servizi-vari" },
+];
+
 const homeFaq = [
   {
-    question: "Devo essere socio per usufruire dei vostri servizi?",
-    answer:
-      "No, alcuni servizi sono accessibili a tutti. La tessera (30 € annuali o 20 € semestrali per nucleo familiare) ti da accesso a <strong>tariffe agevolate</strong>, priorita sugli appuntamenti e consulenza fiscale e previdenziale illimitata.",
+    question: "Devo fare la tessera per usare i vostri servizi?",
+    answer: `No. La tessera è consigliata, non obbligatoria: costa ${TESSERAMENTO.annual.price} € l'anno (${TESSERAMENTO.semester.price} € il semestre) per tutto il nucleo familiare e ti dà consulenze gratuite, appuntamenti prioritari e sconti sulle pratiche. <a href='/tesseramento'>Vedi la tessera</a>.`,
   },
   {
-    question: "Dove si trova la sede del Centro Pratiche Flaiano?",
-    answer:
-      "Siamo a Roma, in <strong>Via Filoteo Alberini 25, interno 10</strong> (Centro Acquisti Flaiano), nel quartiere Vigne Nuove, Municipio III. Serviamo Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma e tutta la zona nord di Roma.",
+    question: "Dove siete?",
+    answer: `In <strong>${CONTACT.address.street}</strong>, dentro il Centro Acquisti Flaiano, quartiere Vigne Nuove (Municipio III). Arrivano da noi da Tufello, Conca d'Oro, Bufalotta, Porta di Roma e da tutta Roma Nord.`,
   },
   {
-    question: "Posso essere seguito anche da remoto?",
-    answer:
-      "Si. Offriamo <strong>consulenza video o telefonica</strong> per chi non puo raggiungere la sede. Puoi prenotare l'appuntamento da remoto direttamente dal sito.",
+    question: "Posso fare tutto senza venire in ufficio?",
+    answer: "Sì, per molte pratiche. Puoi prenotare una videochiamata oppure mandarci una <a href='/richiesta'>richiesta online</a> con i documenti: ti richiamiamo noi.",
   },
   {
-    question: "Quali documenti devo portare per il 730?",
-    answer:
-      "In linea generale: documento d'identita, codice fiscale di tutti i membri del nucleo, Certificazione Unica 2026, ricevute spese sanitarie e altre detraibili, contratti di affitto/mutuo. <a href='/blog/guida-730-2026-documenti-scadenze'>Trovi la lista completa nel nostro articolo dedicato al 730/2026</a>.",
+    question: "Quanto costa il 730?",
+    answer: "Da <strong>30 €</strong>, in base alla tua situazione. Se l'anno dopo torni da noi, il prezzo resta quello. <a href='/730'>Tutto sul 730</a>.",
   },
   {
-    question: "Quanto costa fare il 730?",
-    answer:
-      "Il 730 ha un costo a partire da <strong>30 €</strong> per situazioni semplici. Per i soci tesserati le tariffe sono agevolate. Forniamo sempre un preventivo prima di iniziare la pratica.",
+    question: "L'ISEE si paga?",
+    answer: "No, da noi l'ISEE è gratis. Redditi e CU li recuperiamo noi online. <a href='/isee'>Tutto sull'ISEE</a>.",
   },
 ];
 ---
-
 <BaseLayout
   title=""
-  description="Centro Pratiche Flaiano: CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. 730, ISEE, IMU, successioni, pensioni, NASpI, invalidita civile, assegno unico. Tessera 30 euro/anno per nucleo. Prenota appuntamento."
+  description="CAF UNSIC e Patronato ENASC a Vigne Nuove, Roma: ISEE gratis, 730 da 30 €, NASpI, Assegno Unico, invalidità e 104, successioni. In ufficio, in videochiamata o online."
 >
   <JsonLdFaq slot="head" items={homeFaq} />
 
-  <Hero />
-  <TrustBar />
-  <ServicesGrid />
-  <WhyUs />
-  <TesseramentoTeaser />
+  <!-- HERO -->
+  <section class="wrap" style="padding-top:48px;padding-bottom:56px">
+    <div class="flex flex-wrap items-center gap-12">
+      <div class="flex flex-col gap-6" style="flex:999 1 540px;min-width:0">
+        <OpenNow />
+        <h1 style="max-width:900px">La burocrazia la facciamo noi. <span class="hl-lime">Tu vivi.</span></h1>
+        <p style="font-size:20px;line-height:1.5;max-width:620px">
+          CAF e patronato a Vigne Nuove. Vieni in ufficio, fai una videochiamata o mandaci tutto dal telefono. Scegli cosa ti serve.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn btn-primary btn-lg" href="/prenota">Prenota un appuntamento</a>
+          <a class="btn btn-ghost btn-lg" href={GHL.richiesta}>Richiesta online</a>
+        </div>
+      </div>
+      <div style="flex:1 1 320px;min-width:0;position:relative;padding:16px 8px">
+        <div style="background:#14142B;color:#fff;border-radius:32px;padding:28px;display:flex;flex-direction:column;gap:16px;transform:rotate(1.5deg)">
+          <span style="font-family:var(--font-display);font-weight:800;font-size:26px;line-height:1.05">Tre modi, zero code.</span>
+          {[
+            ["1", "In ufficio", "Ti accogliamo, prendiamo i documenti, ti spieghiamo tutto."],
+            ["2", "In videochiamata", "Dal divano, con i documenti via WhatsApp o email."],
+            ["3", "Online", "Mandi la richiesta, ti richiamiamo noi."],
+          ].map(([n, t, d]) => (
+            <div class="flex gap-3 items-start">
+              <span style="flex:none;width:36px;height:36px;border-radius:12px;background:#D4FF4F;color:#14142B;display:grid;place-items:center;font-weight:800">{n}</span>
+              <span><b style="color:#fff">{t}</b><br /><span style="color:#D7D7E6;font-size:15px">{d}</span></span>
+            </div>
+          ))}
+        </div>
+        <span class="sticker" style="position:absolute;left:-6px;bottom:-6px;background:#FF5C8A;color:#fff">Vigne Nuove · Roma Nord</span>
+      </div>
+    </div>
+  </section>
 
+  <!-- I PIU RICHIESTI -->
+  <section class="wrap" style="padding-bottom:40px">
+    <div class="flex items-baseline justify-between flex-wrap gap-2 mb-5">
+      <h2>I più richiesti</h2>
+      <span style="font-size:14px">Tocca una card per aprire la pagina</span>
+    </div>
+    <div class="grid gap-5" style="grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))">
+      {top.map((c) => (
+        <a href={c.href} class="tile" style={`background:${c.bg};color:${c.fg};${c.border ? "border:2px solid #14142B;" : ""}`}>
+          {c.tag && <span class="tile-tag" style={`background:${c.tagBg};color:${c.tagFg}`}>{c.tag}</span>}
+          <span class="tile-title">{c.title}</span>
+          <span style={`font-size:16px;line-height:1.45;color:${c.sub}`}>{c.desc}</span>
+          <span class="tile-go" style={`color:${c.go}`}>Scopri →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- TUTTO IL RESTO -->
+  <section class="wrap" style="padding-block:40px">
+    <div class="flex items-baseline justify-between flex-wrap gap-2 mb-5">
+      <h2>Tutto il resto</h2>
+      <a href="/servizi" style="font-weight:800">Tutti i servizi →</a>
+    </div>
+    <div class="grid gap-3.5" style="grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))">
+      {rest.map((r) => (
+        <a href={r.h} class="mini">
+          <span style="font-size:13px;font-weight:700;color:#4B2FE0">{r.k}</span>
+          <span style="font-size:19px;font-weight:700">{r.t}</span>
+          <span style="font-size:15px;color:#3F3F5A">{r.d}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- PERCHE NOI -->
+  <section class="wrap" style="padding-block:56px">
+    <div class="grid gap-5" style="grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))">
+      <div style="background:#F1EEFF;border-radius:28px;padding:28px;transform:rotate(-1deg)">
+        <p style="font-family:var(--font-display);font-weight:800;font-size:22px;color:#14142B">CAF UNSIC</p>
+        <p class="mt-2">Centro di assistenza fiscale autorizzato (D.Lgs. 241/1997).</p>
+      </div>
+      <div style="background:#D4FF4F;border-radius:28px;padding:28px;transform:rotate(1deg)">
+        <p style="font-family:var(--font-display);font-weight:800;font-size:22px;color:#14142B">Patronato ENASC</p>
+        <p class="mt-2" style="color:#14142B">Tutela previdenziale e assistenziale (Legge 152/2001).</p>
+      </div>
+      <div style="background:#FFE3EC;border-radius:28px;padding:28px;transform:rotate(-0.5deg)">
+        <p style="font-family:var(--font-display);font-weight:800;font-size:22px;color:#14142B">Medico in sede</p>
+        <p class="mt-2">Per invalidità e 104: certificato e domanda nello stesso ufficio.</p>
+      </div>
+      <div style="background:#14142B;border-radius:28px;padding:28px;transform:rotate(0.8deg)">
+        <p style="font-family:var(--font-display);font-weight:800;font-size:22px;color:#fff">Zero burocratese</p>
+        <p class="mt-2" style="color:#D7D7E6">Ti spieghiamo ogni passaggio in parole semplici. Niente numeri inventati.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESSERA -->
+  <section class="wrap" style="padding-block:24px 56px">
+    <div style="background:#5B3DF5;color:#fff;border-radius:36px;padding:48px" class="flex flex-wrap items-center justify-between gap-7">
+      <div class="flex flex-col gap-3" style="max-width:640px">
+        <span style="font-family:var(--font-display);font-weight:800;font-size:clamp(30px,4vw,44px);line-height:1">
+          Tessera: <span style="color:#D4FF4F">{TESSERAMENTO.annual.price} €</span> l'anno per tutta la famiglia
+        </span>
+        <span style="font-size:17px;line-height:1.5;color:#E4DEFF">
+          Consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche. C'è anche la semestrale a {TESSERAMENTO.semester.price} €.
+        </span>
+      </div>
+      <a href="/tesseramento" class="btn btn-lime btn-lg">Scopri la tessera</a>
+    </div>
+  </section>
+
+  <!-- BLOG -->
   {articles.length > 0 && (
-    <section class="section">
-      <div class="container-wide">
-        <div class="flex items-end justify-between gap-6 flex-wrap">
-          <SectionHeading
-            eyebrow="Aggiornamenti"
-            title="Ultimi articoli dal blog"
-            subtitle="Guide, scadenze e novita normative spiegate in italiano semplice. Sempre con fonti ufficiali."
-          />
-          <a href="/blog" class="inline-flex items-center gap-1.5 font-semibold text-[var(--color-brand-700)] hover:text-[var(--color-brand-900)]">
-            Tutti gli articoli
-            <Icon name="heroicons:arrow-right" class="size-4" />
-          </a>
+    <section class="wrap" style="padding-block:40px">
+      <div class="flex items-end justify-between gap-4 flex-wrap mb-8">
+        <div class="flex flex-col gap-3">
+          <span class="eyebrow">Dal blog</span>
+          <h2>Guide e scadenze, spiegate semplici</h2>
         </div>
-        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {articles.map((a) => <ArticleCard article={a} />)}
-        </div>
+        <a href="/blog" style="font-weight:800">Tutti gli articoli →</a>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {articles.map((a) => <ArticleCard article={a} />)}
       </div>
     </section>
   )}
 
-  <ZoneSection />
-
-  <section class="section">
-    <div class="container-narrow">
-      <SectionHeading
-        eyebrow="Domande frequenti"
-        title="Le risposte alle domande piu comuni"
-        align="center"
-      />
-      <div class="mt-10">
-        <Accordion client:visible items={homeFaq} />
+  <!-- ZONE -->
+  <section class="wrap" style="padding-block:56px">
+    <div style="background:#F7F7FB;border-radius:32px;padding:40px" class="flex flex-wrap gap-8 items-center justify-between">
+      <div class="flex flex-col gap-3" style="max-width:520px">
+        <span class="eyebrow">Dove siamo</span>
+        <h2>Il CAF sotto casa, a Roma Nord</h2>
+        <p>{CONTACT.address.street} · {CONTACT.address.landmark} · {CONTACT.address.municipality}</p>
+        <a href={CONTACT.mapsUrl} target="_blank" rel="noopener" style="font-weight:800">Apri in Google Maps ↗</a>
       </div>
+      <ul class="flex flex-wrap gap-2" style="max-width:520px">
+        {ZONE_SERVITE.map((z) => (
+          <li style={z.primary
+            ? "background:#14142B;color:#fff;padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px"
+            : "background:#fff;border:2px solid #14142B;color:#14142B;padding:6px 12px;border-radius:999px;font-weight:600;font-size:14px"}>
+            {z.name}
+          </li>
+        ))}
+      </ul>
     </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container-narrow" style="padding-block:40px">
+    <div class="flex flex-col gap-3 items-center text-center mb-8">
+      <span class="eyebrow" style="align-self:center">Domande frequenti</span>
+      <h2>Le domande che ci fate sempre</h2>
+    </div>
+    <Accordion client:visible items={homeFaq} />
+    <p class="mt-6 text-center"><a href="/faq" style="font-weight:800">Tutte le FAQ →</a></p>
   </section>
 
   <BookingCTA />

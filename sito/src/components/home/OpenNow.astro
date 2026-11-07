@@ -1,0 +1,29 @@
+---
+/** Pill "aperti ora / chiusi" calcolata nel browser sull'ora di Roma (orari da consts). */
+import { HOURS } from "~/consts";
+const data = JSON.stringify(HOURS);
+---
+<span class="pill pill-live" data-open-now={data} style="align-self:flex-start;font-weight:700">Roma · Vigne Nuove</span>
+<script>
+  const el = document.querySelector<HTMLElement>("[data-open-now]");
+  if (el) {
+    try {
+      const hours = JSON.parse(el.dataset.openNow || "[]");
+      const parts = new Intl.DateTimeFormat("it-IT", { timeZone: "Europe/Rome", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
+      const wd = parts.find((p) => p.type === "weekday")?.value || "";
+      const hh = parts.find((p) => p.type === "hour")?.value || "00";
+      const mm = parts.find((p) => p.type === "minute")?.value || "00";
+      const idx = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"].findIndex((d) => wd.toLowerCase().startsWith(d));
+      const now = `${hh}:${mm}`;
+      const h = hours[idx];
+      const slots = h && h.open ? [[h.open, h.close], ...(h.afternoon ? [[h.afternoon.open, h.afternoon.close]] : [])] : [];
+      const cur = slots.find(([a, b]) => now >= a && now < b);
+      if (cur) {
+        el.textContent = `Aperti ora · fino alle ${cur[1]}`;
+      } else {
+        el.classList.remove("pill-live");
+        el.textContent = "Ora chiusi · prenota online quando vuoi";
+      }
+    } catch { /* lascia il testo di default */ }
+  }
+</script>

@@ -28,25 +28,25 @@ const {
 } = Astro.props;
 
 const base =
-  "inline-flex items-center justify-center gap-2 font-semibold rounded-[var(--radius-md)] transition-all duration-150 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-accent-400 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap";
+  "inline-flex items-center justify-center gap-2 font-bold rounded-full transition-all duration-150 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-center sm:whitespace-nowrap no-underline";
 
 const variants: Record<string, string> = {
   primary:
-    "bg-brand-900 text-white hover:bg-brand-800 active:bg-brand-950 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)]",
+    "bg-[#5B3DF5] text-white hover:text-white shadow-[0_6px_0_#14142B] hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B]",
   secondary:
-    "bg-white text-brand-900 border border-brand-200 hover:border-brand-400 hover:bg-brand-50",
+    "bg-white text-[#14142B] border-2 border-[#14142B] hover:bg-[#14142B] hover:text-white",
   ghost:
-    "bg-transparent text-brand-900 hover:bg-brand-50",
+    "bg-transparent text-[#14142B] hover:bg-[#F1EEFF]",
   accent:
-    "bg-accent-400 text-brand-950 hover:bg-accent-300 active:bg-accent-500 shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)]",
+    "bg-[#D4FF4F] text-[#14142B] hover:text-[#14142B] shadow-[0_6px_0_#14142B] hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B]",
   whatsapp:
-    "bg-[#25D366] text-white hover:bg-[#1ebe5a] shadow-[var(--shadow-soft)]",
+    "bg-[#25D366] text-[#14142B] hover:text-[#14142B] shadow-[0_6px_0_#14142B] hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B]",
 };
 
 const sizes: Record<string, string> = {
   sm: "px-3 py-1.5 text-sm",
-  md: "px-5 py-2.5 text-base",
-  lg: "px-7 py-3.5 text-lg",
+  md: "px-6 py-3 text-base",
+  lg: "px-8 py-4 text-lg",
 };
 
 const cls = [base, variants[variant], sizes[size], className].join(" ");

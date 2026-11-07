@@ -1,0 +1,14 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import LandingArticles from "~/components/blog/LandingArticles.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import body from "~/fragments/successioni.html?raw";
+const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Entro quando va fatta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"C'\u00e8 un termine di legge dalla data del decesso. Al primo incontro ti diciamo la scadenza esatta per il tuo caso.\"}}, {\"@type\": \"Question\", \"name\": \"Serve sempre, anche senza case?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Non sempre. In alcuni casi, con soli conti di importo basso e solo coniuge e figli eredi, non \u00e8 obbligatoria. Lo verifichiamo insieme.\"}}, {\"@type\": \"Question\", \"name\": \"E la pensione di reversibilit\u00e0?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Se ti spetta, la chiediamo noi come patronato, nello stesso percorso.\"}}]}";
+---
+<BaseLayout title={"Dichiarazione di successione a Roma Nord"} description={"Dichiarazione di successione, volture, imposte e conti del defunto. Preventivo chiaro al primo incontro, a Vigne Nuove o in videochiamata."}>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="successioni" name="Dichiarazione di successione" description={"Dichiarazione di successione telematica, volture catastali e pratiche per conti e beni ereditari."} serviceType="Assistenza fiscale - successioni" offers={[]} />
+  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <div class="lp"><Fragment set:html={body} /></div>
+  <LandingArticles categories={["successioni-volture", "imu-tributi-locali"]} />
+</BaseLayout>

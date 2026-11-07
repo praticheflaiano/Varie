@@ -1,138 +1,84 @@
 ---
-import { SITE, CONTACT, HOURS, BOOKING, SOCIAL, ORG_CREDENTIALS, EXTERNAL_PORTALS } from "~/consts";
+import { SITE, CONTACT, HOURS, SOCIAL, ORG_CREDENTIALS, EXTERNAL_PORTALS, LANDING } from "~/consts";
 import { CATEGORY_LIST } from "~/utils/categories";
 import Logo from "~/components/illustrations/Logo.astro";
-import { Icon } from "astro-icon/components";
 
 const year = new Date().getFullYear();
+const fmt = (h: (typeof HOURS)[number]) =>
+  `${h.open}–${h.close}${h.afternoon ? ` e ${h.afternoon.open}–${h.afternoon.close}` : ""}`;
 ---
-
-<footer class="bg-[var(--color-brand-950)] text-slate-300">
-  <div class="container-wide section-tight">
+<footer id="contatti" class="site-footer" style="background:#14142B;color:#D7D7E6;padding-block:72px 32px">
+  <div class="wrap">
     <div class="grid gap-10 lg:grid-cols-12">
-      <!-- Brand + claim -->
-      <div class="lg:col-span-4">
-        <Logo variant="full" class="h-10 w-auto [&_text]:fill-white [&_rect]:fill-white/10" />
-        <p class="mt-6 max-w-sm text-sm leading-relaxed text-slate-400">
-          {SITE.tagline}
+      <div class="lg:col-span-4 flex flex-col gap-5">
+        <a href="/" class="no-underline" aria-label="Home"><Logo dark /></a>
+        <p style="font-family:var(--font-display);font-weight:800;font-size:32px;line-height:1.05;color:#fff">
+          Passa a trovarci.<br /><span style="color:#D4FF4F">O chiamaci.</span>
         </p>
-        <div class="mt-6 flex items-center gap-3">
-          <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-200">
-            CAF UNSIC
-          </span>
-          <span class="rounded-md border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-200">
-            Patronato ENASC
-          </span>
+        <div class="flex flex-wrap gap-2">
+          <span style="border:1px solid #33334D;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:#fff">CAF UNSIC</span>
+          <span style="border:1px solid #33334D;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700;color:#fff">Patronato ENASC</span>
         </div>
-        <div class="mt-6 flex items-center gap-3">
-          <a href={SOCIAL.facebook} target="_blank" rel="noopener" class="text-slate-400 hover:text-white" aria-label="Facebook">
-            <Icon name="lucide:facebook" class="size-5" />
-          </a>
-          <a href={SOCIAL.whatsappChannel} target="_blank" rel="noopener" class="text-slate-400 hover:text-white" aria-label="Canale WhatsApp">
-            <Icon name="lucide:message-circle" class="size-5" />
-          </a>
+        <div class="flex gap-4 text-sm">
+          <a href={SOCIAL.facebook} target="_blank" rel="noopener">Facebook</a>
+          <a href={SOCIAL.whatsappChannel} target="_blank" rel="noopener">Canale WhatsApp</a>
         </div>
       </div>
 
-      <!-- Servizi -->
       <div class="lg:col-span-2">
-        <h3 class="font-display text-base font-semibold text-white">Servizi</h3>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li><a href="/servizi/caf" class="text-slate-400 hover:text-white no-underline">CAF</a></li>
-          <li><a href="/servizi/patronato" class="text-slate-400 hover:text-white no-underline">Patronato</a></li>
-          <li><a href="/servizi/servizi-vari" class="text-slate-400 hover:text-white no-underline">Servizi vari</a></li>
-          <li><a href="/tesseramento" class="text-slate-400 hover:text-white no-underline">Tesseramento</a></li>
-          <li class="pt-2 mt-2 border-t border-white/10">
-            <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-accent-300 hover:text-accent-200 no-underline font-semibold">
-              Portale NASpI
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 17L17 7"/>
-                <polyline points="7 7 17 7 17 17"/>
-              </svg>
-            </a>
-          </li>
+        <h4>Servizi</h4>
+        <ul class="space-y-2 text-sm">
+          {LANDING.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          <li><a href="/servizi">Tutti i servizi</a></li>
+          <li><a href="/tesseramento">Tessera</a></li>
+          <li><a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" style="color:#D4FF4F;font-weight:700">Portale NASpI ↗</a></li>
         </ul>
       </div>
 
-      <!-- Categorie blog -->
       <div class="lg:col-span-3">
-        <h3 class="font-display text-base font-semibold text-white">Argomenti del blog</h3>
-        <ul class="mt-4 grid grid-cols-1 gap-y-2 text-sm">
-          {CATEGORY_LIST.slice(0, 8).map((c) => (
-            <li>
-              <a href={`/blog/categoria/${c.slug}`} class="text-slate-400 hover:text-white no-underline">
-                {c.label}
-              </a>
-            </li>
-          ))}
-          <li><a href="/blog" class="text-accent-300 hover:text-accent-200 no-underline font-semibold">Vai al blog &rarr;</a></li>
+        <h4>Dal blog</h4>
+        <ul class="space-y-2 text-sm">
+          {CATEGORY_LIST.slice(0, 7).map((c) => <li><a href={`/blog/categoria/${c.slug}`}>{c.label}</a></li>)}
+          <li><a href="/blog" style="color:#D4FF4F;font-weight:700">Tutti gli articoli →</a></li>
         </ul>
       </div>
 
-      <!-- Contatti -->
       <div class="lg:col-span-3">
-        <h3 class="font-display text-base font-semibold text-white">Contatti</h3>
-        <address class="mt-4 not-italic text-sm space-y-3 text-slate-400">
-          <div class="flex items-start gap-2">
-            <Icon name="heroicons:map-pin" class="size-5 shrink-0 mt-0.5 text-accent-400" />
-            <span>
-              {CONTACT.address.street}<br />
-              {CONTACT.address.postalCode} {CONTACT.address.locality}<br />
-              <span class="text-slate-500">{CONTACT.address.landmark}</span>
-            </span>
-          </div>
-          <div class="flex items-start gap-2">
-            <Icon name="heroicons:phone" class="size-5 shrink-0 mt-0.5 text-accent-400" />
-            <div>
-              <a href={`tel:${CONTACT.phone.landlineRaw}`} class="block text-white hover:text-accent-300 no-underline">{CONTACT.phone.landline}</a>
-              <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" class="block text-white hover:text-accent-300 no-underline">WhatsApp {CONTACT.phone.mobile}</a>
-            </div>
-          </div>
-          <div class="flex items-start gap-2">
-            <Icon name="heroicons:envelope" class="size-5 shrink-0 mt-0.5 text-accent-400" />
-            <a href={`mailto:${CONTACT.email}`} class="text-white hover:text-accent-300 no-underline break-all">{CONTACT.email}</a>
-          </div>
-          <div class="flex items-start gap-2">
-            <Icon name="heroicons:clock" class="size-5 shrink-0 mt-0.5 text-accent-400" />
-            <div class="space-y-0.5">
-              {HOURS.filter((h) => h.open).map((h) => (
-                <div>
-                  <span class="text-slate-300">{h.day}</span>{" "}
-                  <span>{h.open}-{h.close}{h.afternoon && ` / ${h.afternoon.open}-${h.afternoon.close}`}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        <h4>Dove e quando</h4>
+        <address class="not-italic text-sm space-y-3">
+          <p>
+            <b style="color:#fff">{CONTACT.address.street}</b><br />
+            {CONTACT.address.postalCode} {CONTACT.address.locality} · {CONTACT.address.landmark}
+          </p>
+          <p>
+            {HOURS.filter((h) => h.open).length === 5 && (
+              <>Lun–gio {fmt(HOURS[0])}<br />Ven {fmt(HOURS[4])}</>
+            )}
+          </p>
+          <p>
+            <a href={`tel:${CONTACT.phone.landlineRaw}`} style="color:#fff;font-weight:700">{CONTACT.phone.landline}</a><br />
+            <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="color:#fff;font-weight:700">WhatsApp {CONTACT.phone.mobile}</a><br />
+            <a href={`mailto:${CONTACT.email}`} class="break-all">{CONTACT.email}</a>
+          </p>
         </address>
-        <a
-          href={BOOKING.arcanisGroup}
-          target="_blank"
-          rel="noopener"
-          class="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-accent-400 px-4 py-2.5 text-sm font-semibold text-brand-950 hover:bg-accent-300 no-underline"
-        >
-          Prenota appuntamento
-          <Icon name="heroicons:arrow-top-right-on-square" class="size-4" />
-        </a>
+        <a href="/prenota" class="btn btn-lime btn-sm mt-5" style="box-shadow:none;color:#14142B">Prenota appuntamento</a>
       </div>
     </div>
 
-    <hr class="my-10 border-white/10" />
+    <hr class="my-10" style="border:0;border-top:1px solid #33334D" />
 
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs text-slate-500">
-      <p>
-        &copy; {year} {SITE.legalName}. Tutti i diritti riservati. P.IVA da indicare.
-      </p>
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-xs" style="color:#A3A3BD">
+      <p>&copy; {year} {SITE.legalName} · {ORG_CREDENTIALS.caf.network} e {ORG_CREDENTIALS.patronato.network}</p>
       <ul class="flex flex-wrap gap-x-6 gap-y-2">
-        <li><a href="/privacy" class="hover:text-white no-underline">Privacy</a></li>
-        <li><a href="/cookie" class="hover:text-white no-underline">Cookie</a></li>
-        <li><a href="/note-legali" class="hover:text-white no-underline">Note legali</a></li>
-        <li><a href="/contatti" class="hover:text-white no-underline">Contatti</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/cookie">Cookie</a></li>
+        <li><a href="/note-legali">Note legali</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/contatti">Contatti</a></li>
       </ul>
     </div>
-
-    <p class="mt-4 text-xs text-slate-600">
-      {ORG_CREDENTIALS.caf.fullName} - {ORG_CREDENTIALS.patronato.fullName}.
-      Riferimenti normativi: {ORG_CREDENTIALS.legalReferences.join("; ")}.
+    <p class="mt-4 text-xs" style="color:#6B6B85">
+      {ORG_CREDENTIALS.caf.fullName} · {ORG_CREDENTIALS.patronato.fullName}. Riferimenti: {ORG_CREDENTIALS.legalReferences.join("; ")}.
     </p>
   </div>
 </footer>

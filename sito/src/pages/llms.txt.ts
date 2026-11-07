@@ -1,6 +1,6 @@
 import type { APIContext } from "astro";
 import { getVisibleArticles, articlePath } from "~/utils/articles";
-import { SITE, CONTACT, BOOKING, TESSERAMENTO } from "~/consts";
+import { SITE, CONTACT, BOOKING, TESSERAMENTO, EXTERNAL_PORTALS } from "~/consts";
 import { CATEGORY_LIST } from "~/utils/categories";
 
 /**
@@ -17,8 +17,20 @@ export async function GET(_context: APIContext) {
   lines.push(`> ${SITE.tagline}`);
   lines.push("");
   lines.push(
-    `${SITE.name} e un CAF (Centro di Assistenza Fiscale) UNSIC e un Patronato ENASC con sede a Roma, ${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality} (quartiere Vigne Nuove, Municipio III). Telefono: ${CONTACT.phone.landline}. WhatsApp: ${CONTACT.phone.mobile}. Email: ${CONTACT.email}. Prenotazioni online: ${BOOKING.arcanisGroup}. Tessera: ${TESSERAMENTO.annual.price} EUR all'anno o ${TESSERAMENTO.semester.price} EUR a semestre per nucleo familiare.`,
+    `${SITE.name} (Pratiche Flaiano) e un CAF (Centro di Assistenza Fiscale) UNSIC e un Patronato ENASC con sede a Roma, ${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality} (quartiere Vigne Nuove, Municipio III). Telefono: ${CONTACT.phone.landline}. WhatsApp: ${CONTACT.phone.mobile}. Email: ${CONTACT.email}. Prenotazioni online: ${BOOKING.arcanisGroup}. Tessera: ${TESSERAMENTO.annual.price} EUR all'anno o ${TESSERAMENTO.semester.price} EUR a semestre per nucleo familiare.`,
   );
+  lines.push("");
+  lines.push(`## Servizi principali e prezzi`);
+  lines.push("");
+  lines.push(`- [ISEE](${baseUrl}/isee): calcolo ISEE e invio DSU, gratuito. Redditi e CU li recupera il CAF. Anche in videochiamata o online.`);
+  lines.push(`- [Modello 730](${baseUrl}/730): da 30 EUR; per chi torna l'anno dopo il prezzo resta invariato. Anche da remoto.`);
+  lines.push(`- [Domanda NASpI](${baseUrl}/naspi): domanda di disoccupazione all'INPS tramite patronato, gratuita. Calcolatore e guide su ${EXTERNAL_PORTALS.naspi.url}.`);
+  lines.push(`- [Assegno Unico](${baseUrl}/assegno-unico): domanda 15 EUR in ufficio, 19 EUR online; tesserati 10 EUR in ufficio, 15 EUR online. ISEE gratuito.`);
+  lines.push(`- [Invalidita civile e Legge 104](${baseUrl}/invalidita-104): medico certificatore e patronato nello stesso ufficio; primo incontro gratuito.`);
+  lines.push(`- [Successioni](${baseUrl}/successioni): dichiarazione di successione, volture catastali, conti e beni ereditari.`);
+  lines.push(`- [Richiesta online](${baseUrl}/richiesta): modulo per inviare la richiesta e i documenti, il centro richiama.`);
+  lines.push("");
+  lines.push(`Come prenotare: [pagina prenota](${baseUrl}/prenota) (in ufficio, in videochiamata o richiesta online), telefono ${CONTACT.phone.landline}, WhatsApp ${CONTACT.phone.mobile}.`);
   lines.push("");
   lines.push(`## Pagine principali`);
   lines.push("");
@@ -28,7 +40,7 @@ export async function GET(_context: APIContext) {
   lines.push(`- [Servizi CAF](${baseUrl}/servizi/caf): 730, ISEE, IMU, successioni, contratti di affitto, bonus fiscali.`);
   lines.push(`- [Servizi Patronato](${baseUrl}/servizi/patronato): pensioni, NASpI, invalidita civile, Legge 104, assegno unico, maternita, ADI, RED.`);
   lines.push(`- [Servizi vari](${baseUrl}/servizi/servizi-vari): PEC, utenze, certificati, assicurazioni, comunicazioni con la PA.`);
-  lines.push(`- [Tesseramento](${baseUrl}/tesseramento): vantaggi, prezzi, FAQ tessera (${TESSERAMENTO.annual.price} EUR/anno o ${TESSERAMENTO.semester.price} EUR/semestre per nucleo).`);
+  lines.push(`- [Tesseramento](${baseUrl}/tesseramento): consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche (${TESSERAMENTO.annual.price} EUR/anno o ${TESSERAMENTO.semester.price} EUR/semestre per nucleo familiare).`);
   lines.push(`- [Blog](${baseUrl}/blog): guide, scadenze, novita normative.`);
   lines.push(`- [FAQ](${baseUrl}/faq): domande frequenti su tutti i servizi.`);
   lines.push(`- [Prenota](${baseUrl}/prenota): calendario online appuntamenti, in sede o da remoto.`);

@@ -1,0 +1,14 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import LandingArticles from "~/components/blog/LandingArticles.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import body from "~/fragments/730.html?raw";
+const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Perch\u00e9 non lo faccio da solo col precompilato?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Puoi, ma spesso mancano spese o familiari a carico. Noi controlliamo tutto e mettiamo il visto di conformit\u00e0.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto pago esattamente?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Da 30 \u20ac, in base alla tua situazione. Te lo diciamo prima di iniziare.\"}}, {\"@type\": \"Question\", \"name\": \"Quando arriva il rimborso?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di solito in busta paga o sulla pensione nei mesi estivi, a seconda di quando presenti il 730.\"}}, {\"@type\": \"Question\", \"name\": \"Posso farlo senza venire in ufficio?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\u00ec: videochiamata o richiesta online con le foto delle ricevute.\"}}]}";
+---
+<BaseLayout title={"Modello 730 da 30 € a Roma Nord"} description={"730 da 30 € con controllo di ogni detrazione. In ufficio a Vigne Nuove o da casa. Prezzo bloccato per chi torna."}>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="730" name="Modello 730" description={"Compilazione e invio del modello 730, anche da remoto. Da 30 €; per chi torna l'anno dopo il prezzo resta invariato."} serviceType="Assistenza fiscale - dichiarazione dei redditi" offers={[{ name: "Modello 730 (prezzo di partenza)", price: 30 }]} />
+  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <div class="lp"><Fragment set:html={body} /></div>
+  <LandingArticles categories={["730-redditi", "detrazioni-deduzioni"]} />
+</BaseLayout>

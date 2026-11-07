@@ -9,7 +9,7 @@ export const SITE = {
   legalName: "Centro Pratiche Flaiano",
   url:
     import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://praticheflaiano.it",
+    "https://info.praticheflaiano.it",
   locale: "it-IT",
   language: "it",
   claim: "Risparmia tempo, ci pensiamo noi",
@@ -18,7 +18,7 @@ export const SITE = {
   defaultDescription:
     "Centro Pratiche Flaiano: CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. 730, ISEE, IMU, successioni, pensioni, NASpI, invalidita civile, assegno unico. Prenota appuntamento.",
   ogImage: "/og-default.png",
-  themeColor: "#0B3D91",
+  themeColor: "#5B3DF5",
 } as const;
 
 export const CONTACT = {
@@ -38,15 +38,15 @@ export const CONTACT = {
     mobile: "+39 371 6230 690",
     mobileRaw: "+393716230690",
   },
-  email: "info@praticheflaiano.it",
+  email: "praticheflaiano@gmail.com",
   whatsapp: {
     number: "+393716230690",
     link: "https://wa.me/393716230690",
     channel: "https://whatsapp.com/channel/0029VaVaZQKDDmFc54xFmA2d",
   },
   geo: {
-    latitude: 41.9519,
-    longitude: 12.5347,
+    latitude: 41.9599639,
+    longitude: 12.539951,
   },
   mapsUrl: "https://maps.app.goo.gl/HBKDcNoEWpPyy9x69",
 } as const;
@@ -123,18 +123,41 @@ export const TESSERAMENTO = {
   currency: "EUR",
 } as const;
 
+/** Le 6 pagine servizio-funnel (collegate a calendari e form GHL). */
+export const LANDING = [
+  { label: "ISEE", href: "/isee", tag: "0 €" },
+  { label: "Modello 730", href: "/730", tag: "da 30 €" },
+  { label: "Invalidità e 104", href: "/invalidita-104", tag: "1° incontro gratis" },
+  { label: "NASpI", href: "/naspi", tag: "Domanda gratis" },
+  { label: "Assegno Unico", href: "/assegno-unico", tag: "da 10 €" },
+  { label: "Successioni", href: "/successioni", tag: "" },
+] as const;
+
+/** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */
+export const GHL = {
+  richiesta: "/richiesta",
+  prenotazioniFunnel: "https://praticheflaiano.it/prenotazioni918656",
+  tesseraFunnel: "https://praticheflaiano.it/tesseramento_vantaggi",
+} as const;
+
 export const NAV = [
   { label: "Home", href: "/" },
-  { label: "Chi siamo", href: "/chi-siamo" },
   {
     label: "Servizi",
     href: "/servizi",
     children: [
-      { label: "CAF (730, ISEE, IMU, Successioni)", href: "/servizi/caf" },
-      { label: "Patronato (Pensioni, NASpI, AUU)", href: "/servizi/patronato" },
-      { label: "Servizi vari (PEC, utenze, certificati)", href: "/servizi/servizi-vari" },
+      { label: "ISEE", href: "/isee" },
+      { label: "Modello 730", href: "/730" },
+      { label: "NASpI", href: "/naspi" },
+      { label: "Assegno Unico", href: "/assegno-unico" },
+      { label: "Invalidità e 104", href: "/invalidita-104" },
+      { label: "Successioni", href: "/successioni" },
+      { label: "Tutti i servizi CAF", href: "/servizi/caf" },
+      { label: "Tutti i servizi Patronato", href: "/servizi/patronato" },
+      { label: "Servizi vari", href: "/servizi/servizi-vari" },
     ],
   },
+  { label: "Chi siamo", href: "/chi-siamo" },
   { label: "Tesseramento", href: "/tesseramento" },
   { label: "Blog", href: "/blog" },
   {

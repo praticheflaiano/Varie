@@ -33,7 +33,7 @@
 
 <button
   type="button"
-  class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-[var(--color-brand-900)] hover:bg-[var(--color-brand-50)]"
+  class="md:hidden inline-flex items-center justify-center rounded-xl p-2 text-[var(--color-brand-900)] hover:bg-[var(--color-brand-50)]"
   aria-expanded={open}
   aria-controls="mobile-menu-panel"
   aria-label={open ? "Chiudi menu" : "Apri menu"}
@@ -65,7 +65,7 @@
             {#if item.children}
               <button
                 type="button"
-                class="flex w-full items-center justify-between rounded-md px-4 py-3 text-left text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+                class="flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
                 aria-expanded={openSub === i}
                 onclick={() => (openSub = openSub === i ? null : i)}
               >
@@ -100,7 +100,7 @@
                 href={item.href}
                 target="_blank"
                 rel="noopener"
-                class="flex items-center justify-between rounded-md px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+                class="flex items-center justify-between rounded-xl px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
               >
                 <span>{item.label}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="opacity-60">
@@ -111,7 +111,7 @@
             {:else}
               <a
                 href={item.href}
-                class="block rounded-md px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+                class="block rounded-xl px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
               >
                 {item.label}
               </a>
@@ -125,14 +125,14 @@
           href={bookingUrl}
           target="_blank"
           rel="noopener"
-          class="flex items-center justify-center gap-2 rounded-md bg-[var(--color-brand-900)] px-5 py-3 text-base font-semibold text-white hover:bg-[var(--color-brand-800)]"
+          class="flex items-center justify-center gap-2 rounded-xl bg-[var(--color-brand-900)] px-5 py-3 text-base font-semibold text-white hover:bg-[var(--color-brand-800)]"
         >
           Prenota appuntamento
         </a>
         <div class="grid grid-cols-2 gap-3">
           <a
             href={`tel:${phoneRaw}`}
-            class="flex items-center justify-center gap-2 rounded-md border border-[var(--color-brand-200)] bg-white px-4 py-3 text-sm font-semibold text-[var(--color-brand-900)] hover:border-[var(--color-brand-400)]"
+            class="flex items-center justify-center gap-2 rounded-xl border border-[var(--color-brand-200)] bg-white px-4 py-3 text-sm font-semibold text-[var(--color-brand-900)] hover:border-[var(--color-brand-400)]"
           >
             Chiama
           </a>
@@ -140,7 +140,7 @@
             href={whatsappLink}
             target="_blank"
             rel="noopener"
-            class="flex items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1ebe5a]"
+            class="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1ebe5a]"
           >
             WhatsApp
           </a>

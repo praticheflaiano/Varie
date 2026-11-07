@@ -1,0 +1,31 @@
+---
+/** Articoli del blog collegati a una pagina servizio (per categoria). Se non ce ne sono, non mostra nulla. */
+import ArticleCard from "~/components/blog/ArticleCard.astro";
+import { getVisibleArticles } from "~/utils/articles";
+import { EXTERNAL_PORTALS } from "~/consts";
+interface Props { categories: string[]; }
+const { categories } = Astro.props;
+const all = await getVisibleArticles();
+const list = all.filter((a) => categories.includes(a.data.category)).slice(0, 3);
+const naspi = categories.includes("naspi-disoccupazione");
+---
+{(list.length > 0 || naspi) && (
+  <section class="wrap" style="padding-block:24px 64px">
+    <div class="flex items-end justify-between gap-4 flex-wrap mb-6">
+      <h2 style="font-size:clamp(28px,3vw,36px)">Da leggere prima di venire</h2>
+      <a href="/blog" style="font-weight:800">Tutto il blog →</a>
+    </div>
+    {naspi && (
+      <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" class="mini mb-5" style="background:#D4FF4F">
+        <span style="font-size:13px;font-weight:700;color:#14142B">PORTALE DEDICATO ↗</span>
+        <span style="font-size:20px;font-weight:800">Calcola la tua NASpI su domandedisoccupazione.it</span>
+        <span style="font-size:15px;color:#14142B">Calcolatore, anticipo in unica soluzione e 30+ guide su dimissioni e disoccupazione.</span>
+      </a>
+    )}
+    {list.length > 0 && (
+      <div class="grid gap-5 md:grid-cols-3">
+        {list.map((a) => <ArticleCard article={a} />)}
+      </div>
+    )}
+  </section>
+)}

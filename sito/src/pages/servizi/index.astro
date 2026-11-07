@@ -5,6 +5,7 @@ import SectionHeading from "~/components/ui/SectionHeading.astro";
 import Card from "~/components/ui/Card.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 import { Icon } from "astro-icon/components";
+import { LANDING } from "~/consts";
 
 const clusters = [
   {
@@ -60,7 +61,7 @@ const clusters = [
 
 <BaseLayout
   title="Tutti i servizi: CAF, Patronato e pratiche amministrative"
-  description="I servizi del Centro Pratiche Flaiano a Roma: CAF UNSIC (730, ISEE, IMU, successioni), Patronato ENASC (pensioni, NASpI, AUU, invalidita) e servizi amministrativi (PEC, utenze, certificati)."
+  description="I servizi del Centro Pratiche Flaiano a Roma: CAF UNSIC (730, ISEE, IMU, successioni), Patronato ENASC (pensioni, NASpI, AUU, invalidità) e servizi amministrativi (PEC, utenze, certificati)."
 >
   <section class="bg-mesh-brand">
     <div class="container-wide pt-10 pb-16 md:pt-12 md:pb-20">
@@ -74,7 +75,21 @@ const clusters = [
     </div>
   </section>
 
-  <section class="section">
+  <section class="wrap" style="padding-top:8px">
+    <h2 class="mb-5" style="font-size:clamp(28px,3vw,36px)">I più richiesti</h2>
+    <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))">
+      {LANDING.map((l, i) => (
+        <a href={l.href} class="tile" style={`min-height:150px;background:${["#D4FF4F","#5B3DF5","#14142B","#F1EEFF","#FFE3EC","#F7F7FB"][i]};color:${[1,2].includes(i) ? "#fff" : "#14142B"}`}>
+          {l.tag && <span class="tile-tag" style={`background:${[1,2].includes(i) ? "#D4FF4F" : "#14142B"};color:${[1,2].includes(i) ? "#14142B" : "#fff"}`}>{l.tag}</span>}
+          <span class="tile-title" style="font-size:28px">{l.label}</span>
+          <span class="tile-go">Scopri →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <h2 class="container-wide mb-6" style="font-size:clamp(28px,3vw,36px)">Tutte le aree</h2>
     <div class="container-wide grid gap-6 lg:grid-cols-3">
       {clusters.map((c) => (
         <Card href={c.href} hoverable padded={false} class="group p-7">

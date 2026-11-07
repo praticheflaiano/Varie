@@ -27,7 +27,24 @@ Tutto vive in `sito/src/`:
 | `src/components/illustrations/` | SVG inline custom (Logo, HeroBlob, ZoneMap, FamilyShield, RomaSkyline, DocumentStack) |
 | `src/consts.ts` | Single source of truth: contatti, orari, palette nomi, claim |
 
-## Design system attuale: "Adriatic Blue" (2026-04-28)
+## Design system attuale: "Giovane" (2026-11-07)
+
+Sostituisce "Adriatic Blue" su richiesta del titolare ("troppo vecchio e istituzionale, deve essere giovane ed avvincente").
+
+| Token | Valore |
+|---|---|
+| Primary | `#5B3DF5` (viola) · link `#4B2FE0` |
+| Accent | `#D4FF4F` (lime, solo sfondi) |
+| Rosa | `#FF5C8A` (sticker) |
+| Ink | `#14142B` · testo `#3F3F5A` · lilla `#F1EEFF` |
+| Display font | Bricolage Grotesque 800 |
+| Body font | Inter |
+
+Card grandi (radius 28-32px), sticker ruotati, bottoni pill con ombra piena `0 6px 0 #14142B`, tono "tu". Gli alias `--color-brand-*` / `--color-accent-*` restano mappati ai nuovi colori.
+
+Pagine servizio-funnel (`/isee`, `/730`, `/naspi`, `/assegno-unico`, `/invalidita-104`, `/successioni`, `/richiesta`, `/grazie`): HTML in `src/fragments/*.html` + CSS `public/landing.css`, collegate a calendari e form GHL. Deploy su progetto Vercel `info-praticheflaiano` (dominio info.praticheflaiano.it).
+
+## Design system precedente: "Adriatic Blue" (2026-04-28)
 
 Implementato dal **bundle handoff Claude Design** consegnato dall'utente via `https://api.anthropic.com/v1/design/h/<hash>`. Vedi [[lessons/2026-04-anthropic-design-bundle]] per come decomprimerlo.
 

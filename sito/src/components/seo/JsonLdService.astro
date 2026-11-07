@@ -1,0 +1,37 @@
+---
+/** JSON-LD Service + Breadcrumb per le pagine servizio-funnel. Prezzi solo se confermati dal titolare. */
+import { SITE } from "~/consts";
+interface Offer { name: string; price: number; }
+interface Props { slug: string; name: string; description: string; serviceType: string; offers?: Offer[]; }
+const { slug, name, description, serviceType, offers = [] } = Astro.props;
+const url = `${SITE.url}/${slug}`;
+const data = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": `${url}#service`,
+      name,
+      description,
+      serviceType,
+      url,
+      provider: { "@id": `${SITE.url}/#organization` },
+      areaServed: { "@type": "City", name: "Roma" },
+      availableChannel: [
+        { "@type": "ServiceChannel", name: "In ufficio", serviceLocation: { "@id": `${SITE.url}/#organization` } },
+        { "@type": "ServiceChannel", name: "Videochiamata o richiesta online", serviceUrl: `${SITE.url}/richiesta` },
+      ],
+      ...(offers.length ? { offers: offers.map((o) => ({ "@type": "Offer", name: o.name, price: o.price, priceCurrency: "EUR", url })) } : {}),
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE.url}/` },
+        { "@type": "ListItem", position: 2, name: "Servizi", item: `${SITE.url}/servizi` },
+        { "@type": "ListItem", position: 3, name, item: url },
+      ],
+    },
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)} />

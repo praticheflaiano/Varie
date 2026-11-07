@@ -24,14 +24,14 @@
   }
 </script>
 
-<div class="divide-y divide-[var(--color-border)] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-soft)]">
+<div class="flex flex-col gap-3">
   {#each items as item, i}
     {@const isOpen = openIndices.has(i)}
-    <div>
+    <div class="rounded-[22px] bg-[#F7F7FB]">
       <h3>
         <button
           type="button"
-          class="flex w-full items-start justify-between gap-4 px-6 py-5 text-left font-display text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)] focus-visible:bg-[var(--color-surface-soft)]"
+          class="flex w-full items-start justify-between gap-4 px-6 py-5 text-left text-lg font-bold text-[var(--color-ink)]"
           aria-expanded={isOpen}
           aria-controls={`accordion-panel-${i}`}
           id={`accordion-trigger-${i}`}

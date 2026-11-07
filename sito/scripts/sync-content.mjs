@@ -10,7 +10,7 @@
  *
  * Esclude la cartella _templates (template, non articoli).
  */
-import { cp, mkdir, rm, stat } from "node:fs/promises";
+import { cp, mkdir, rm, stat, readdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
@@ -47,6 +47,26 @@ async function main() {
       return true;
     },
   });
+
+  // Rimuove i commenti HTML (report SEO/fact-check interni) e corregge
+  // i link interni scritti come percorsi ai file .md del repo.
+  const slugs = {};
+  const files = [];
+  for (const e of await readdir(targetDir, { recursive: true })) {
+    if (!e.endsWith(".md")) continue;
+    const full = resolve(targetDir, e);
+    const txt = await readFile(full, "utf8");
+    const m = txt.match(/^slug:\s*"?([^"\n]+)"?/m);
+    if (m) slugs[e.split("/").pop()] = m[1].trim();
+    files.push([full, txt]);
+  }
+  for (const [full, txt] of files) {
+    let out = txt.replace(/<!--[\s\S]*?-->/g, "");
+    out = out.replace(/\]\(\/content\/[^)]*?\/([^/)]+\.md)\)/g, (all, file) =>
+      slugs[file] ? `](/blog/${slugs[file]})` : all,
+    );
+    if (out !== txt) await writeFile(full, out);
+  }
 
   console.log(`[sync-content] OK: ${sourceDir} -> ${targetDir}`);
 }

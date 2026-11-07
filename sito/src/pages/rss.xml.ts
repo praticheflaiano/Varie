@@ -20,7 +20,7 @@ export async function GET(context: APIContext) {
         description: a.data.meta_description,
         link: articlePath(a),
         categories: cat ? [cat.label, ...a.data.tags] : [...a.data.tags],
-        author: `${SITE.name} <info@praticheflaiano.it> (${a.data.author})`,
+        author: `${SITE.name} <praticheflaiano@gmail.com> (${a.data.author})`,
       };
     }),
     customData: `<language>it-IT</language>`,

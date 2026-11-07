@@ -34,7 +34,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Dichiarazione dei redditi, modello 730, oneri detraibili e deducibili, scadenze fiscali.",
     icon: "heroicons:document-text",
-    color: "#1e5bc6",
+    color: "#5B3DF5",
     area: "caf",
   },
   iva: {
@@ -43,7 +43,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Dichiarazione IVA, regimi speciali, scadenze e adempimenti per partite IVA.",
     icon: "heroicons:calculator",
-    color: "#0e3d8a",
+    color: "#14142B",
     area: "caf",
   },
   "isee-dsu": {
@@ -52,7 +52,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Indicatore della Situazione Economica Equivalente, DSU, ISEE corrente, ISEE universitario.",
     icon: "heroicons:chart-bar-square",
-    color: "#0f766e",
+    color: "#0F7A4A",
     area: "caf",
   },
   "bonus-fiscali": {
@@ -61,7 +61,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Bonus ristrutturazione, ecobonus, bonus mobili, agevolazioni edilizie e detrazioni.",
     icon: "heroicons:gift",
-    color: "#d98800",
+    color: "#C2410C",
     area: "caf",
   },
   "assegno-unico": {
@@ -70,7 +70,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Assegno Unico Universale per i figli a carico: importi, ISEE, domanda INPS.",
     icon: "heroicons:user-group",
-    color: "#16a34a",
+    color: "#128C45",
     area: "patronato",
   },
   "naspi-disoccupazione": {
@@ -79,7 +79,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Indennita di disoccupazione NASpI, requisiti, durata, importi, dimissioni online.",
     icon: "heroicons:briefcase",
-    color: "#b91c1c",
+    color: "#E0336B",
     area: "patronato",
   },
   pensioni: {
@@ -88,7 +88,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Pensione di vecchiaia, anticipata, opzione donna, Quota 103, Ape sociale, ricongiunzioni.",
     icon: "heroicons:identification",
-    color: "#7c3aed",
+    color: "#4B2FE0",
     area: "patronato",
   },
   "invalidita-civile": {
@@ -97,7 +97,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Invalidita civile, Legge 104, indennita di accompagnamento, riconoscimento handicap.",
     icon: "heroicons:heart",
-    color: "#db2777",
+    color: "#E0336B",
     area: "patronato",
   },
   "successioni-volture": {
@@ -106,7 +106,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Dichiarazione di successione, voltura catastale, imposta successioni e donazioni.",
     icon: "heroicons:document-duplicate",
-    color: "#0e3d8a",
+    color: "#14142B",
     area: "caf",
   },
   "imu-tributi-locali": {
@@ -115,7 +115,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "IMU, TARI, calcolo, esenzioni, ravvedimento operoso, modello F24.",
     icon: "heroicons:home-modern",
-    color: "#1e5bc6",
+    color: "#5B3DF5",
     area: "caf",
   },
   "red-invciv-accas": {
@@ -124,7 +124,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Modello RED, INVCIV per invalidi civili, ACCAS/PS pensionati: dichiarazioni reddituali INPS.",
     icon: "heroicons:clipboard-document-list",
-    color: "#7c3aed",
+    color: "#4B2FE0",
     area: "patronato",
   },
   "detrazioni-deduzioni": {
@@ -133,7 +133,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Spese sanitarie, mutui, istruzione, sport, animali: tutte le detrazioni IRPEF.",
     icon: "heroicons:receipt-percent",
-    color: "#d98800",
+    color: "#C2410C",
     area: "caf",
   },
   "lavoro-domestico": {
@@ -142,7 +142,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Colf, badanti, baby sitter: contratti, contributi INPS, dimissioni, deduzioni fiscali.",
     icon: "heroicons:home",
-    color: "#0f766e",
+    color: "#0F7A4A",
     area: "patronato",
   },
 };

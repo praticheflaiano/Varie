@@ -1,0 +1,10 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import body from "~/fragments/grazie.html?raw";
+const ld = null;
+---
+<BaseLayout title={"Richiesta ricevuta"} description={"Abbiamo ricevuto la tua richiesta."} noindex>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <div class="lp"><Fragment set:html={body} /></div>
+</BaseLayout>

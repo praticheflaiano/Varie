@@ -102,6 +102,13 @@ const related = await getRelatedArticles(article, 3);
       />
     </div>
 
+    {article.data.deadline && article.data.deadline < new Date() && (
+      <div class="mt-8" style="background:#FFE3EC;border-radius:24px;padding:20px 24px;color:#14142B">
+        <b>Attenzione: la scadenza di questo articolo è passata</b> ({formatDateIt(article.data.deadline)}).
+        Le regole possono essere cambiate: per la tua situazione di oggi <a href="/prenota" style="font-weight:800">chiedi a noi</a>.
+      </div>
+    )}
+
     <div class="prose-article mt-10">
       <slot />
     </div>

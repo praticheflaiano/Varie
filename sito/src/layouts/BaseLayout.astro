@@ -52,21 +52,12 @@ const {
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} - Blog`} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    {/* Font: Newsreader (display serif editoriale) + Public Sans (body) + JetBrains Mono.
-        Design system "Adriatic Blue" - vedi src/styles/global.css.
-        TODO produzione: self-host woff2 subset latin per perf+privacy. */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Public+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap"
-    />
-    <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Public+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&display=swap"
     />
-
     <SEO
       title={title}
       description={description}
@@ -83,7 +74,7 @@ const {
 
     <slot name="head" />
   </head>
-  <body class:list={["min-h-screen flex flex-col bg-[var(--color-bg)] text-[var(--color-ink-soft)] grain", bodyClass]}>
+  <body class:list={["min-h-screen flex flex-col bg-white text-[var(--color-ink-soft)]", bodyClass]}>
     <a href="#main-content" class="skip-link">Vai al contenuto principale</a>
     <Navbar />
     <main id="main-content" class="flex-1">
