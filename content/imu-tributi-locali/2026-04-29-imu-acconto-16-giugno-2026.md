@@ -2,7 +2,7 @@
 title: "IMU Acconto 16 giugno 2026: chi paga, calcolo e F24 | CAF Roma"
 slug: "imu-acconto-16-giugno-2026"
 date: 2026-04-29
-last_updated: 2026-04-29
+last_updated: 2026-11-08
 category: "imu-tributi-locali"
 tags: ["imu", "scadenza", "f24", "guida", "proprietari", "tributi-locali"]
 meta_description: "IMU acconto 16 giugno 2026: chi paga, come si calcola, esenzioni prima casa, codici tributo F24. Guida CAF UNSIC Roma Vigne Nuove."
@@ -25,7 +25,7 @@ image_alt: "Illustrazione editoriale: facciata stilizzata di un edificio italian
 
 # IMU Acconto 16 giugno 2026: chi paga, come si calcola, modello F24
 
-**Ultimo aggiornamento: 29 aprile 2026**
+**Ultimo aggiornamento: 8 novembre 2026** (corrette le aliquote di Roma)
 
 **SCADENZA: 16 giugno 2026 - acconto IMU 2026 (50% dell'imposta annuale)**
 *(Fonte: D.Lgs. 504/1992 e L. 160/2019)*
@@ -114,13 +114,13 @@ Appartamento a Roma in zona Vigne Nuove, categoria catastale A/3, rendita catast
 
 - Rendita rivalutata: 850 × 1,05 = **892,50 €**
 - Base imponibile: 892,50 × 160 = **142.800 €**
-- Aliquota Roma 2026 (immobile diverso da abitazione principale): es. 1,06% (massima)
-- IMU annuale: 142.800 × 1,06% = **1.513,68 €**
-- **Acconto 16 giugno**: 1.513,68 / 2 = **756,84 €**
+- Aliquota Roma per gli "altri fabbricati": **1,14%** (prospetto MEF, delibera n. 182 del 19/12/2024)
+- IMU annuale: 142.800 × 1,14% = **1.627,92 €**
+- **Acconto 16 giugno**: 1.627,92 / 2 = **813,96 €**
 
 ## Aliquote IMU 2026 a Roma
 
-Le aliquote variano da Comune a Comune. Roma Capitale pubblica annualmente la delibera con le aliquote vigenti. Per il 2026, le aliquote tipiche applicate sui principali Municipi di Roma sono nell'**intervallo 0,86%-1,06%** per gli immobili diversi dall'abitazione principale, in base a destinazione e categoria.
+Le aliquote variano da Comune a Comune. Per Roma il prospetto ufficiale pubblicato sul portale del Dipartimento delle Finanze (delibera n. 182 del 19/12/2024) prevede: **0,6%** per l'abitazione principale di lusso, **1,14%** per gli altri fabbricati e le aree fabbricabili, **1,06%** per i fabbricati di gruppo D e i terreni agricoli, **0,1%** per i fabbricati rurali strumentali, con aliquote ridotte allo **0,86%** solo per alcuni casi specifici. Il quadro aggiornato per il saldo è nella [guida al saldo IMU di dicembre](/blog/imu-saldo-16-dicembre-2026-roma).
 
 **Per il calcolo esatto sul tuo immobile a Roma** ti consigliamo di verificare la delibera vigente del Comune di Roma Capitale o di rivolgerti al nostro CAF, che applica le aliquote aggiornate al modello F24.
 
@@ -140,10 +140,7 @@ Il versamento avviene tramite **modello F24** (sezione IMU e altri tributi local
 | **3925** | IMU - immobili ad uso produttivo categoria D (quota Stato) |
 | **3930** | IMU - immobili ad uso produttivo categoria D (quota Comune, incremento) |
 
-Nel campo **"rateazione/mese rif."** indicare:
-- `0101` per acconto in unica soluzione
-- `0606` per acconto al 16 giugno
-- `0102` se si paga in due rate (acconto + saldo)
+Barrare la casella **"Acc."** per l'acconto (oppure sia "Acc." sia "Saldo" se si paga tutto in un'unica soluzione).
 
 Nel campo **"anno di riferimento"** indicare **2026**.
 

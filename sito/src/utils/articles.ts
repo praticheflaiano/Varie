@@ -19,11 +19,19 @@ export async function getVisibleArticles(): Promise<Article[]> {
     ? all
     : all.filter((a) => PUBLIC_STATUS.has(a.data.status));
 
-  return filtered.sort(
-    (a, b) =>
+  // Prima gli articoli ancora attuali (scadenza non passata), poi i piu recenti per data di pubblicazione.
+  const now = Date.now();
+  const expired = (a: Article) => (a.data.deadline ? new Date(a.data.deadline).getTime() < now : false);
+  return filtered.sort((a, b) => {
+    const e = Number(expired(a)) - Number(expired(b));
+    if (e !== 0) return e;
+    const d = new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+    if (d !== 0) return d;
+    return (
       new Date(b.data.last_updated ?? b.data.date).getTime() -
-      new Date(a.data.last_updated ?? a.data.date).getTime(),
-  );
+      new Date(a.data.last_updated ?? a.data.date).getTime()
+    );
+  });
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | undefined> {

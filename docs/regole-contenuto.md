@@ -52,7 +52,7 @@ Una norma che entra in vigore "dal 1 gennaio 2026" si applica ai redditi 2026, q
 
 ### Lingua
 - Esclusivamente in italiano
-- Forma "Lei" quando ci si rivolge al lettore
+- Dal novembre 2026 si usa il **"tu"**, in linea con la nuova grafica "giovane" del sito (info.praticheflaiano.it). Gli articoli precedenti in "Lei" si aggiornano quando vengono rivisti.
 - Spiegare i termini tecnici tra parentesi al primo utilizzo (es. "ISEE - Indicatore della Situazione Economica Equivalente")
 - Niente anglicismi se esiste un equivalente italiano chiaro
 
