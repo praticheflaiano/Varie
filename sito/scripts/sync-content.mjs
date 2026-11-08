@@ -10,6 +10,7 @@
  *
  * Esclude la cartella _templates (template, non articoli).
  */
+const NASPI_URL = "https://domande-disoccupazione-web.vercel.app";
 import { cp, mkdir, rm, stat, readdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -66,6 +67,8 @@ async function main() {
     out = out.replace(/https:\/\/(?:www\.)?praticheflaiano\.it\/blog\//g, "/blog/");
     // voci di elenco che puntano ad articoli non ancora pubblicati
     out = out.replace(/^[ \t]*[-*][^\n]*\[DA PUBBLICARE[^\n]*\n/gim, "");
+    // portale NASpI: indirizzo funzionante finche il DNS del dominio non punta a Vercel
+    out = out.replace(/https:\/\/(?:www\.)?domandedisoccupazione\.it/g, NASPI_URL);
     // email unica del centro (quella pubblicata sul sito)
     out = out.replace(/info@praticheflaiano\.it/g, "praticheflaiano@gmail.com");
     out = out.replace(/\]\(\/content\/[^)]*?\/([^/)]+\.md)\)/g, (all, file) =>

@@ -3,6 +3,9 @@
  * Importato da JSON-LD, Footer, Contatti, Disclaimer articolo, ecc.
  */
 
+/** Indirizzo pubblico del portale NASpI (vedi nota in EXTERNAL_PORTALS). */
+export const NASPI_URL = "https://domande-disoccupazione-web.vercel.app";
+
 export const SITE = {
   name: "Centro Pratiche Flaiano",
   shortName: "Pratiche Flaiano",
@@ -97,7 +100,9 @@ export const SOCIAL = {
 /** Portali esterni del Centro Pratiche Flaiano. Cross-link bidirezionale. */
 export const EXTERNAL_PORTALS = {
   naspi: {
-    url: "https://domandedisoccupazione.it",
+    /* Finche il DNS di domandedisoccupazione.it punta ad Aruba si usa l'indirizzo Vercel.
+       Dopo il cambio DNS: impostare NASPI_URL a "https://domandedisoccupazione.it" (qui e in scripts/sync-content.mjs). */
+    url: NASPI_URL,
     label: "Portale NASpI",
     description:
       "Calcolatore NASpI, anticipo, OCR documenti INPS, 30+ guide su disoccupazione, dimissioni, DIS-COLL.",
