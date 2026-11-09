@@ -11,8 +11,11 @@ import JsonLdService from "~/components/seo/JsonLdService.astro";
  * - INPS circolare 163/2003 (NASpI e giusta causa: dichiarazione e documenti), circolare 154/2025 (dimissioni per fatti concludenti, L. 203/2024)
  * - INPS circolare 98/2025 (13 settimane nel nuovo lavoro se ci sono dimissioni volontarie nei 12 mesi precedenti)
  * - Cassazione ord. 6 aprile 2026 n. 8564 (in giudizio la giusta causa va provata)
- * Prezzi indicati dal titolare il 9/11/2026.
+ * Prezzi indicati dal titolare il 9/11/2026; revoca 5 €, servizio online in tutta Italia e casi particolari
+ * dalla pagina attuale praticheflaiano.it/dimissioni_online-3700.
+ * Modulo online: sondaggio GHL "Dimissioni online – Mandato e pagamento" (14zIQoTpe0cUJhwRPT6t).
  */
+const MANDATO = "https://link.arcanis.it/widget/survey/14zIQoTpe0cUJhwRPT6t";
 
 const faqs = [
   { q: "Posso dimettermi senza SPID?", a: "Sì. Le dimissioni le inviamo noi come patronato, anche se non hai SPID o CIE." },
@@ -22,23 +25,28 @@ const faqs = [
   { q: "Quali sono i casi di giusta causa?", a: "Per esempio stipendi non pagati o pagati in ritardo, contributi non versati, mobbing, molestie, demansionamento, trasferimento senza ragioni comprovate. Ogni caso va valutato con i documenti." },
   { q: "Se mi dimetto per giusta causa devo dare il preavviso?", a: "No. E in più l'azienda deve pagarti l'indennità di mancato preavviso (art. 2119 del codice civile)." },
   { q: "Posso smettere di andare al lavoro per farmi licenziare?", a: "È rischioso: dopo un'assenza ingiustificata oltre i 15 giorni (o il termine del contratto), l'azienda può considerarti dimesso. Sono le dimissioni per fatti concludenti e la NASpI non spetta (INPS, circolare 154/2025)." },
-  { q: "Posso ripensarci?", a: "Sì, entro 7 giorni dall'invio le dimissioni online si possono revocare. La revoca la facciamo noi." },
+  { q: "Posso ripensarci?", a: "Sì, entro 7 giorni dall'invio le dimissioni online si possono revocare: la revoca la facciamo noi a 5 €. Dopo i 7 giorni serve un accordo scritto con il datore di lavoro." },
+  { q: "Che data devo indicare come decorrenza?", a: "Il giorno dopo il tuo ultimo giorno di lavoro, calcolato tenendo conto del preavviso. Te la calcoliamo noi." },
+  { q: "Il datore di lavoro come lo viene a sapere?", a: "Riceve le dimissioni dal sistema del Ministero del Lavoro, via PEC o email. Tu ricevi la ricevuta via email." },
+  { q: "Funziona anche se non abito a Roma?", a: "Sì, il servizio online vale in tutta Italia: compili il mandato, paghi con carta e al resto pensiamo noi." },
   { q: "Mi dimetto e trovo subito un altro lavoro: se lo perdo ho la NASpI?", a: "Attenzione: se nei 12 mesi prima ti sei dimesso volontariamente da un contratto a tempo indeterminato, nel nuovo lavoro servono almeno 13 settimane di contributi (INPS, circolare 98/2025). Valutalo prima di dimetterti." },
-  { q: "Ci sono casi in cui non si fanno online?", a: "Sì: lavoro domestico, periodo di prova, e lavoratrici madri o lavoratori padri nei periodi protetti, che devono convalidare le dimissioni all'Ispettorato del lavoro. Ti diciamo noi la procedura giusta." },
+  { q: "Ci sono casi in cui non si fanno online?", a: "Sì: lavoro domestico, periodo di prova e pubblico impiego seguono altre procedure. In gravidanza o con un figlio sotto i 3 anni (anche in adozione o affido) le dimissioni vanno convalidate all'Ispettorato del lavoro. In questi casi ti diciamo noi come procedere, senza costi." },
 ];
 
 const props = {
   eyebrow: "Dimissioni · Patronato ENASC",
   title: "Ti dimetti?",
   highlight: "Prima fai i conti con noi.",
-  lead: "Il modulo online è la parte facile. Il difficile è non perdere soldi: preavviso sbagliato, trattenute in busta paga, NASpI persa per una scelta sbagliata. Ti facciamo una consulenza prima di inviare e poi le dimissioni le mandiamo noi, anche senza SPID.",
+  lead: "Inviarle è facile: con noi bastano 10 minuti, anche senza SPID e da tutta Italia. Il difficile è non perdere soldi: preavviso sbagliato, trattenute in busta paga, NASpI persa per una scelta sbagliata. Per questo prima di inviare controlliamo tutto con te.",
+  heroCta: { label: "Fai le dimissioni online", href: "#mandato" },
+  online: { href: MANDATO, title: "Dimissioni online", text: "Compili il mandato in 10 minuti, paghi con carta e noi verifichiamo e trasmettiamo. Ricevuta via email.", cta: "Compila il mandato →" },
   chat: {
     q: "Non mi pagano lo stipendio da tre mesi, posso dimettermi e prendere la NASpI?",
     a: "Probabilmente sì, con la giusta causa. Prima però mandiamo la diffida e raccogliamo le prove: vieni con le buste paga.",
     done: "Dimissioni per giusta causa inviate",
   },
   sticker: "Da 15 € con la tessera",
-  strip: ["Calcolo del preavviso", "Giusta causa e NASpI", "Anche senza SPID", "Revoca entro 7 giorni"],
+  strip: ["Anche senza SPID", "In 10 minuti, da tutta Italia", "Calcolo del preavviso", "Giusta causa e NASpI"],
   needTitle: "I 3 errori che costano di più",
   needsLead: "Li vediamo ogni settimana. Bastano pochi minuti di consulenza prima di inviare per evitarli.",
   needs: [
@@ -47,24 +55,25 @@ const props = {
     { t: "Smettere di andare al lavoro", d: "Dopo un'assenza ingiustificata lunga l'azienda può considerarti dimesso: sono le dimissioni per fatti concludenti e la NASpI non spetta." },
   ],
   steps: [
-    { t: "Consulenza", d: "Ci racconti la situazione: capiamo se sono dimissioni volontarie o per giusta causa e calcoliamo il preavviso sul tuo CCNL." },
-    { t: "Inviamo le dimissioni", d: "Compiliamo il modulo con la data giusta e lo inviamo al Ministero del Lavoro come patronato." },
-    { t: "Pensiamo alla NASpI", d: "Se ne hai diritto presentiamo la domanda NASpI (gratis) con la documentazione della giusta causa." },
+    { t: "Compili il mandato", d: "Online in 10 minuti (dati tuoi, dell'azienda, date e documento) e paghi con carta. Oppure vieni in ufficio." },
+    { t: "Controlliamo", d: "Verifichiamo i dati, il tipo di dimissioni e la data di decorrenza con il preavviso giusto. Se qualcosa non torna ti chiamiamo." },
+    { t: "Inviamo e ti mandiamo la ricevuta", d: "Trasmettiamo al Ministero del Lavoro e ti mandiamo la ricevuta via email. Se hai diritto alla NASpI, la domanda da noi è gratis." },
   ],
-  docsTitle: "Cosa portare",
+  docsTitle: "Cosa ti serve",
   docs: [
     "Documento d'identità e codice fiscale",
-    "SPID o CIE, se li hai (costa meno)",
-    "Contratto di lavoro o lettera di assunzione, con CCNL e livello",
-    "Ultime buste paga",
+    "Nome e codice fiscale o partita IVA dell'azienda (li trovi in busta paga)",
+    "Data di inizio del rapporto e data di decorrenza delle dimissioni",
+    "PEC o email dell'azienda, se ce l'hai",
+    "Ultima busta paga e contratto, per calcolare il preavviso",
     "Per la giusta causa: tutto quello che la prova (buste paga mancanti, estratto contributivo, email, messaggi, diffide)",
-    "Email o PEC del datore di lavoro",
   ],
   docsNote: "Non firmare dimissioni su carta e non dare lettere in mano all'azienda: senza la procedura online non sono valide.",
   price: {
     value: "da 15 €",
     badge: "Prezzi chiari",
-    text: "<b>Con SPID, in ufficio:</b> 15 € con la tessera, 20 € senza.<br><b>Senza SPID:</b> 20 € con la tessera, 25 € senza.<br>La consulenza sul preavviso e sulla giusta causa è compresa. La domanda NASpI da noi è gratis.",
+    text: "<b>Online o senza SPID:</b> 20 € con la tessera, 25 € senza.<br><b>In ufficio con il tuo SPID:</b> 15 € con la tessera, 20 € senza.<br><b>Revoca entro 7 giorni:</b> 5 €.<br>Comprendono verifica dei dati, calcolo della decorrenza, invio, ricevuta e assistenza. La domanda NASpI da noi è gratis.",
+    cta: { label: "Compila il mandato online →", href: MANDATO },
   },
   faqs,
   related: [
@@ -86,9 +95,9 @@ const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px
 const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
 ---
 
-<BaseLayout title="Dimissioni online: preavviso, giusta causa e NASpI" description="Dimissioni online a Roma Vigne Nuove da 15 €, anche senza SPID. Calcoliamo il preavviso, valutiamo la giusta causa e presentiamo la NASpI: non perdere soldi.">
+<BaseLayout title="Dimissioni online: preavviso, giusta causa e NASpI" description="Dimissioni online in 10 minuti, anche senza SPID, da 15 €. Patronato ENASC a Roma: calcoliamo il preavviso, valutiamo la giusta causa e la NASpI.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }]} />
+  <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }, { name: "Revoca delle dimissioni", price: 5 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
   <ServiceLanding {...props}>
@@ -182,9 +191,22 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
           </div>
         ))}
       </div>
-      <p style={`${p};max-width:780px`}>Dimissioni e revoca si fanno solo online (D.Lgs. 151/2015): se ci ripensi hai <b>7 giorni</b> per revocarle. Ricorda anche che, se ti dimetti volontariamente da un contratto a tempo indeterminato e il nuovo lavoro finisce entro 12 mesi, per la NASpI ti servono almeno <b>13 settimane</b> di contributi nel nuovo lavoro.</p>
+      <p style={`${p};max-width:780px`}>Ci occupiamo anche di <b>risoluzioni consensuali</b> e <b>revoche</b>. Dimissioni e revoca si fanno solo online (D.Lgs. 151/2015): se ci ripensi hai <b>7 giorni</b> per revocarle. Ricorda anche che, se ti dimetti volontariamente da un contratto a tempo indeterminato e il nuovo lavoro finisce entro 12 mesi, per la NASpI ti servono almeno <b>13 settimane</b> di contributi nel nuovo lavoro.</p>
     </section>
   </ServiceLanding>
+
+  <section id="mandato" style="background:#F1EEFF;scroll-margin-top:80px">
+    <div style="max-width:860px;margin:0 auto;padding:72px 24px;display:flex;flex-direction:column;gap:18px">
+      <span style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Dimissioni online</span>
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1;font-weight:800">Compila il mandato: 10 minuti e hai finito</h2>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#3F3F5A">Nessuno SPID, nessuno sportello. Inserisci i dati, carica il documento e paghi con carta. Noi controlliamo tutto, inviamo e ti mandiamo la ricevuta via email. Se qualcosa non torna, ti chiamiamo prima di inviare.</p>
+      <div style="background:#fff;border-radius:28px;padding:16px">
+        <iframe src={MANDATO} style="width:100%;height:900px;border:none;border-radius:20px" id="inline-14zIQoTpe0cUJhwRPT6t" data-layout="{'id':'INLINE'}" title="Dimissioni online – Mandato"></iframe>
+      </div>
+      <p style="margin:0;font-size:15px;color:#3F3F5A">Preferisci parlarne prima? <a href="https://wa.me/393716230690?text=Ciao%2C%20vorrei%20informazioni%20sulle%20dimissioni%20online" target="_blank" rel="noopener" style="font-weight:800">Scrivici su WhatsApp</a> o <a href="/prenota" style="font-weight:800">prenota un appuntamento</a>.</p>
+    </div>
+    <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
+  </section>
 
   <LandingArticles categories={["naspi-disoccupazione"]} />
 </BaseLayout>

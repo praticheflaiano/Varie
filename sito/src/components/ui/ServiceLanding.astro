@@ -26,13 +26,14 @@ interface Props {
   docsNote?: string;
   price?: { value: string; badge?: string; text: string; cta?: { label: string; href: string } };
   heroCta?: { label: string; href: string };
+  online?: { href: string; title: string; text: string; cta: string };
   faqs: Faq[];
   related: { label: string; href: string }[];
 }
 
 const {
   eyebrow, title, highlight, lead, bookingHref = BOOKING.arcanisGroup, chat, sticker, strip,
-  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs = [], docsGroups, docsNote, price, faqs, related, heroCta,
+  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs = [], docsGroups, docsNote, price, faqs, related, heroCta, online,
 } = Astro.props;
 
 const needClass = ["c39", "c41", "c40"];
@@ -143,7 +144,7 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
     <h2 class="c1">Come preferisci?</h2>
     <div class="c59">
       <a href={bookingHref} class="c14"><span class="c76">Di persona o in video</span><span class="c12">Prenota un appuntamento</span><span class="c77">Scegli giorno e ora. Ti diciamo prima quali documenti portare.</span><span class="c24">Scegli l'orario →</span></a>
-      <a href="/richiesta" class="c15"><span class="c78">Dal telefono, quando vuoi</span><span class="c12">Fai tutto online</span><span class="c79">Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi.</span><span class="c25">Inizia ora →</span></a>
+      <a href={online?.href ?? "/richiesta"} class="c15"><span class="c78">Dal telefono, quando vuoi</span><span class="c12">{online?.title ?? "Fai tutto online"}</span><span class="c79">{online?.text ?? "Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi."}</span><span class="c25">{online?.cta ?? "Inizia ora →"}</span></a>
     </div>
   </section>
 
