@@ -139,6 +139,17 @@ Devono apparire `<title>` corretto, `"@type":"Article"` JSON-LD, `datePublished`
 | Articoli `review` invisibili anche in preview | `SHOW_DRAFTS=false` in preview | Imposta env `SHOW_DRAFTS=true` su Preview |
 | Deploy CLI errore "path does not exist" | CLI lanciato da subdir con rootDirectory configurato | `cd` alla root del repo prima di `vercel --prod` |
 
+## Portale info.praticheflaiano.it (dal 9/11/2026)
+
+Progetto Vercel `info-praticheflaiano` (team `team_3d3wtSuFBvCDAPeG2qcEO8sx`), non collegato a Git. Deploy via API `create_deployment` con due soli file inline:
+
+- `build.sh`: scarica il sorgente da `https://codeload.github.com/praticheflaiano/Varie/tar.gz/<SHA>` (repo pubblico), poi `cd sito && npm ci && npm run build`, copia `sito/dist` in `public/`.
+- `vercel.json`: `buildCommand: "sh build.sh"`, `outputDirectory: "public"`, `installCommand: "echo skip"`, `framework: null`, header di sicurezza.
+
+Procedura: commit + push su `nuova-grafica-info`, poi deploy preview (senza `target`), controllo, poi deploy con `target: production` e lo stesso SHA. Il vecchio metodo con zip caricato sui media GHL non serve più (il token GHL usato allora non è più valido).
+
+DNS (Aruba): `info` CNAME `cname.vercel-dns.com`. Dopo l'aggiornamento: notificare IndexNow (chiave in `sito/public/565a199082274f65a6e10f5bc05d81bf.txt`).
+
 ## Vedi anche
 
 - [[lessons/2026-04-vercel-rootdir-trap]]
