@@ -1,5 +1,5 @@
 ---
-import { SITE } from "~/consts";
+import { SITE, CONTACT } from "~/consts";
 
 interface Props {
   title?: string;
@@ -73,6 +73,6 @@ const ogImageUrl = new URL(ogImage, SITE.url).toString();
 <!-- Localizzazione -->
 <meta name="geo.region" content="IT-RM" />
 <meta name="geo.placename" content="Roma" />
-<meta name="geo.position" content="41.9519;12.5347" />
-<meta name="ICBM" content="41.9519, 12.5347" />
+<meta name="geo.position" content={`${CONTACT.geo.latitude};${CONTACT.geo.longitude}`} />
+<meta name="ICBM" content={`${CONTACT.geo.latitude}, ${CONTACT.geo.longitude}`} />
 <meta name="language" content="Italian" />

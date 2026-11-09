@@ -82,14 +82,6 @@ const websiteData = {
   description: SITE.defaultDescription,
   inLanguage: "it-IT",
   publisher: { "@id": `${SITE.url}/#organization` },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE.url}/blog?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
 };
 ---
 
