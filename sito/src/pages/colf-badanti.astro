@@ -3,13 +3,149 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
-const props = {"eyebrow": "Colf e badanti · Lavoro domestico", "title": "Colf o badante in regola?", "highlight": "Facciamo noi.", "lead": "Assunzione, comunicazione all'INPS, contributi ogni tre mesi, ferie, tredicesima e chiusura del rapporto. Tu pensi alla tua famiglia, alle carte pensiamo noi.", "chat": {"q": "Devo assumere una badante per mia madre, da dove parto?", "a": "Ci servono i tuoi dati, quelli della lavoratrice e gli orari. La comunicazione all'INPS la facciamo noi.", "done": "Assunzione comunicata all'INPS"}, "sticker": "Tutto in regola", "strip": ["Assunzione comunicata all'INPS", "Contributi ogni trimestre", "Variazioni e cessazione", "Anche in videochiamata"], "needs": [{"t": "devi assumere qualcuno", "d": "Colf, badante o babysitter: l'assunzione va comunicata all'INPS prima che inizi il lavoro."}, {"t": "hai già un rapporto in corso", "d": "Contributi trimestrali, aumenti di orario o di stipendio, ferie e tredicesima: teniamo tutto in ordine."}, {"t": "il rapporto finisce", "d": "Dimissioni, licenziamento o decesso dell'assistito: comunichiamo la cessazione e ti diciamo cosa spetta."}], "steps": [{"t": "Ci porti i dati", "d": "I tuoi, quelli del lavoratore, orari e paga concordata."}, {"t": "Comunichiamo all'INPS", "d": "Facciamo l'assunzione e ti diamo il calendario dei contributi da pagare."}, {"t": "Ti seguiamo nel tempo", "d": "Variazioni, contributi e chiusura del rapporto: ti avvisiamo noi quando c'è da fare qualcosa."}], "docs": ["Documento d'identità e codice fiscale del datore di lavoro", "Documento e codice fiscale del lavoratore", "Permesso di soggiorno, se il lavoratore è extra-UE", "Orario settimanale, mansioni e paga concordata", "Data di inizio del lavoro", "SPID o CIE del datore di lavoro"], "docsNote": "L'assunzione va comunicata all'INPS entro il giorno prima dell'inizio: non aspettare l'ultimo momento.", "faqs": [{"q": "Entro quando va comunicata l'assunzione?", "a": "Entro le ore 24 del giorno prima dell'inizio del lavoro, anche se il rapporto inizia di domenica o in un giorno festivo."}, {"q": "Ogni quanto si pagano i contributi?", "a": "Ogni tre mesi, con il bollettino o il pagamento PagoPA dell'INPS. Ti diamo il calendario delle scadenze."}, {"q": "E se il rapporto finisce?", "a": "La cessazione va comunicata all'INPS entro 5 giorni. Ti aiutiamo anche con il calcolo di TFR e ultime spettanze."}, {"q": "Posso detrarre i contributi nel 730?", "a": "I contributi pagati per colf e badanti si possono dedurre nel 730, nei limiti previsti. Te lo facciamo noi nel 730."}], "related": [{"label": "Modello 730", "href": "/730"}, {"label": "Invalidità e 104", "href": "/invalidita-104"}, {"label": "Pensioni", "href": "/pensioni"}, {"label": "ISEE", "href": "/isee"}]};
-const faqLd = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Entro quando va comunicata l'assunzione?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Entro le ore 24 del giorno prima dell'inizio del lavoro, anche se il rapporto inizia di domenica o in un giorno festivo.\"}}, {\"@type\": \"Question\", \"name\": \"Ogni quanto si pagano i contributi?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Ogni tre mesi, con il bollettino o il pagamento PagoPA dell'INPS. Ti diamo il calendario delle scadenze.\"}}, {\"@type\": \"Question\", \"name\": \"E se il rapporto finisce?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"La cessazione va comunicata all'INPS entro 5 giorni. Ti aiutiamo anche con il calcolo di TFR e ultime spettanze.\"}}, {\"@type\": \"Question\", \"name\": \"Posso detrarre i contributi nel 730?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"I contributi pagati per colf e badanti si possono dedurre nel 730, nei limiti previsti. Te lo facciamo noi nel 730.\"}}]}";
+
+/*
+ * Contenuti del servizio (Unsicolf), documenti e voci del contratto: indicati dal titolare il 9/11/2026.
+ * Prezzo: annuo tutto compreso, NON pubblicato di proposito -> si chiede su WhatsApp (lead).
+ */
+const waPrezzo = `https://wa.me/393716230690?text=${encodeURIComponent("Ciao, vorrei sapere il prezzo annuale del servizio colf e badanti.")}`;
+
+const servizi = [
+  ["Contratto di lavoro", "Prepariamo il contratto scritto tra te e la lavoratrice, secondo il contratto nazionale."],
+  ["Assunzione all'INPS", "Facciamo la comunicazione di assunzione all'INPS, nei tempi giusti."],
+  ["Contratto di soggiorno", "Se la lavoratrice è extracomunitaria, prepariamo il contratto di soggiorno."],
+  ["Convivenza", "Se vive in casa con voi, prepariamo la comunicazione di cessione di fabbricato o di ospitalità."],
+  ["Prospetto paga", "Ogni mese o ogni trimestre ti diamo il prospetto paga, da consegnare e far firmare."],
+  ["Ferie", "Calcoliamo e teniamo il conto delle ferie maturate e godute."],
+  ["Malattia", "Gestiamo i giorni di malattia e quanto ti spetta pagare."],
+  ["Contributi trimestrali", "Ti prepariamo il prospetto dei contributi da pagare ogni tre mesi."],
+  ["Riepilogo annuale (CUD)", "A fine anno ti diamo il riepilogo dei costi e la certificazione per la lavoratrice."],
+  ["Assistenza anche al telefono", "Per qualsiasi dubbio sul rapporto di lavoro ci chiami o ci scrivi: rispondiamo noi."],
+];
+
+const contratto = [
+  "la data di inizio del rapporto di lavoro",
+  "l'eventuale data di fine, se è un contratto a termine",
+  "il livello del contratto in cui viene assunta la lavoratrice e la sua anzianità",
+  "la durata del periodo di prova",
+  "l'orario di lavoro",
+  "il giorno di riposo settimanale, se lavora a tempo pieno",
+  "le condizioni di vitto e alloggio",
+];
+
+const faqs = [
+  { q: "Quanto costa il servizio?", a: "Un unico prezzo all'anno, tutto compreso, in base al tipo di rapporto. <a href='" + waPrezzo + "' target='_blank' rel='noopener'>Scrivici su WhatsApp</a> e ti mandiamo il preventivo." },
+  { q: "Entro quando va comunicata l'assunzione?", a: "Entro le ore 24 del giorno prima dell'inizio del lavoro, anche se il rapporto inizia di domenica o in un giorno festivo." },
+  { q: "Il contratto scritto è obbligatorio?", a: "È previsto dal contratto nazionale ed è fortemente consigliato: mette nero su bianco orario, livello, prova, riposo, vitto e alloggio ed evita discussioni. Lo prepariamo noi." },
+  { q: "La badante vive in casa con noi: cosa devo fare?", a: "Oltre all'assunzione va comunicata la cessione di fabbricato o l'ospitalità entro 48 ore. La prepariamo noi." },
+  { q: "La lavoratrice è extracomunitaria: cosa serve?", a: "Un permesso o una carta di soggiorno valido. Se serve, prepariamo anche il contratto di soggiorno." },
+  { q: "Ogni quanto si pagano i contributi?", a: "Ogni tre mesi, con il pagamento PagoPA dell'INPS. Ti prepariamo il prospetto con l'importo e la scadenza." },
+  { q: "E se il rapporto finisce?", a: "La cessazione va comunicata all'INPS entro 5 giorni. Ti aiutiamo anche con il calcolo di TFR e ultime spettanze." },
+  { q: "Posso detrarre i contributi nel 730?", a: "I contributi pagati per colf e badanti si possono dedurre nel 730, nei limiti previsti. Con il riepilogo annuale li inseriamo noi nel tuo 730." },
+];
+
+const props = {
+  eyebrow: "Colf e badanti · Servizio Unsicolf",
+  title: "Colf o badante?",
+  highlight: "In regola tutto l'anno.",
+  lead: "Contratto, assunzione all'INPS, buste paga, contributi ogni tre mesi, ferie e malattia: con un unico servizio annuale pensiamo a tutto noi. E quando hai un dubbio, ci chiami.",
+  heroCta: { label: "Chiedi il prezzo su WhatsApp", href: waPrezzo },
+  chat: {
+    q: "Devo assumere una badante per mia madre, quanto costa il vostro servizio?",
+    a: "Un prezzo all'anno, tutto compreso: contratto, assunzione, buste paga e contributi. Ti mando subito il preventivo.",
+    done: "Badante assunta, tutto in regola",
+  },
+  sticker: "Un prezzo all'anno, tutto compreso",
+  strip: ["Contratto scritto", "Assunzione all'INPS", "Buste paga e contributi", "Assistenza anche al telefono"],
+  needs: [
+    { t: "devi assumere qualcuno", d: "Colf, badante o babysitter: prepariamo il contratto e comunichiamo l'assunzione all'INPS prima che inizi." },
+    { t: "hai già un rapporto in corso", d: "Prospetti paga, contributi, ferie, malattia e tredicesima: prendiamo in mano tutto e lo teniamo in ordine." },
+    { t: "il rapporto finisce", d: "Dimissioni, licenziamento o decesso dell'assistito: comunichiamo la cessazione e calcoliamo cosa spetta." },
+  ],
+  steps: [
+    { t: "Ci scrivi", d: "Su WhatsApp o con la richiesta online: ci racconti il rapporto e ti mandiamo il prezzo annuo." },
+    { t: "Contratto e assunzione", d: "Concordate le condizioni, prepariamo il contratto e facciamo la comunicazione all'INPS." },
+    { t: "Ti seguiamo tutto l'anno", d: "Prospetti paga, contributi, ferie, malattia e riepilogo annuale. E assistenza quando ti serve." },
+  ],
+  docsTitle: "Cosa ti serve",
+  docsGroups: [
+    { title: "Del datore di lavoro", items: ["Documento di riconoscimento", "Codice fiscale", "Numero di telefono o cellulare", "Indirizzo di residenza", "Indirizzo dove si svolge il lavoro"] },
+    { title: "Della lavoratrice o del lavoratore", items: ["Documento di riconoscimento", "Codice fiscale", "Se extracomunitario: permesso o carta di soggiorno", "Residenza anagrafica, se non vive con voi"] },
+  ],
+  docsNote: "Mandaci le foto su WhatsApp: se manca qualcosa te lo diciamo noi.",
+  price: {
+    value: "Un prezzo all'anno",
+    badge: "Tutto compreso",
+    text: "Contratto, assunzione, prospetti paga, contributi, ferie, malattia, riepilogo annuale e assistenza anche al telefono: <b>un solo costo annuo</b>, senza sorprese. Scrivici e ti mandiamo il preventivo per il tuo caso.",
+    cta: { label: "Chiedi il prezzo su WhatsApp →", href: waPrezzo },
+  },
+  faqs,
+  related: [
+    { label: "Modello 730", href: "/730" },
+    { label: "Invalidità e 104", href: "/invalidita-104" },
+    { label: "Pensioni", href: "/pensioni" },
+    { label: "ISEE", href: "/isee" },
+  ],
+};
+
+const faqLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") } })),
+});
+const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:22px;line-height:1.15";
 ---
-<BaseLayout title={"Colf e badanti: assunzione e contributi"} description={"Assumi una colf o una badante a Roma? Comunicazione all'INPS, contratto, contributi trimestrali, buste paga e cessazione: ci pensiamo noi a Vigne Nuove."}>
+
+<BaseLayout title="Colf e badanti: contratto, INPS e buste paga" description="Servizio annuale per colf e badanti a Roma: contratto, assunzione INPS, buste paga, contributi, ferie, malattia e assistenza. Chiedi il prezzo su WhatsApp.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="colf-badanti" name={"Lavoro domestico: colf e badanti"} description={"Assunzione, comunicazioni INPS, contributi trimestrali e cessazione del rapporto di lavoro domestico."} serviceType={"Assistenza - lavoro domestico"} />
+  <JsonLdService slot="head" slug="colf-badanti" name="Lavoro domestico: colf e badanti (Unsicolf)" description="Servizio annuale per datori di lavoro domestico: contratto, comunicazioni INPS, contratto di soggiorno, prospetti paga, contributi trimestrali, ferie, malattia, riepilogo annuale e assistenza." serviceType="Assistenza - lavoro domestico" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
-  <ServiceLanding {...props} />
-  <LandingArticles categories={["lavoro-domestico"]} />
+
+  <ServiceLanding {...props}>
+    <!-- COSA FACCIAMO -->
+    <section class="c46" id="cosa-facciamo">
+      <span style="align-self:flex-start;background:#F1EEFF;color:#5B3DF5;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Il servizio Unsicolf</span>
+      <h2 class="c1">Cosa facciamo per te, tutto l'anno</h2>
+      <p class="c4" style="font-size:18px;max-width:760px">Non solo l'assunzione: ti seguiamo dal primo giorno alla fine del rapporto. Tu pensi alla tua famiglia, alle carte pensiamo noi.</p>
+      <ol style="margin:0;padding:0;list-style:none;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))">
+        {servizi.map(([t, d], i) => (
+          <li style={`border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:8px;${i === 9 ? "background:#5B3DF5;color:#fff" : i % 3 === 0 ? "background:#D4FF4F" : "background:#F7F7FB"}`}>
+            <span style={`font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;color:${i === 9 ? "#D4FF4F" : "#5B3DF5"}`}>{String(i + 1).padStart(2, "0")}</span>
+            <b style="font-size:18px;line-height:1.2">{t}</b>
+            <span style={`font-size:15px;line-height:1.5;color:${i === 9 ? "#E4DEFF" : "#3F3F5A"}`}>{d}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- CONTRATTO -->
+    <section style="background:#14142B;color:#fff">
+      <div class="c46" style="display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));align-items:start">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Il contratto</span>
+          <h2 class="c1" style="color:#fff">Mettilo per iscritto. Lo scriviamo noi.</h2>
+          <p style="margin:0;font-size:18px;line-height:1.55;color:#D7D7E6">Una volta concordate a voce le condizioni, è consigliabile mettere tutto per iscritto: è un vero contratto di lavoro individuale, previsto dal contratto nazionale di categoria, e non deve essere in contrasto con la legge. Evita discussioni e ti tutela se qualcosa va storto.</p>
+          <a href={waPrezzo} target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;padding:14px 22px;border-radius:999px;background:#D4FF4F;color:#14142B;font-weight:800;text-decoration:none">Chiedi il prezzo su WhatsApp →</a>
+        </div>
+        <div style="background:#23233F;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px">
+          <h3 style={`${h3};color:#D4FF4F`}>Cosa deve contenere</h3>
+          <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;color:#fff;font-size:16px;line-height:1.5">
+            {contratto.map((c) => <li>{c}</li>)}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERCHE CONVIENE -->
+    <section class="c46">
+      <h2 class="c1">Perché conviene farlo con noi</h2>
+      <div class="c17">
+        <div class="c9"><h3 style={h3}>Niente errori, niente sorprese</h3><p class="c4">Paga, ferie, malattia, tredicesima e TFR calcolati secondo il contratto nazionale. Sai sempre quanto spendi.</p></div>
+        <div class="c9"><h3 style={h3}>Risparmi nel 730</h3><p class="c4">I contributi pagati si possono dedurre nel 730, nei limiti previsti. Con il riepilogo annuale li inseriamo noi.</p></div>
+        <div class="c21"><h3 style={`${h3};color:#fff`}>Un solo riferimento</h3><p class="c71">Un prezzo all'anno e una persona a cui chiedere, anche al telefono. Niente code, niente moduli da capire da solo.</p></div>
+      </div>
+    </section>
+  </ServiceLanding>
+
+  <LandingArticles categories={["lavoro-domestico", "730-redditi"]} />
 </BaseLayout>

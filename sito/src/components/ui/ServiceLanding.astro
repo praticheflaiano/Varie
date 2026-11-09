@@ -21,16 +21,18 @@ interface Props {
   needs: Card[];
   steps: Card[];
   docsTitle?: string;
-  docs: string[];
+  docs?: string[];
+  docsGroups?: { title: string; items: string[] }[];
   docsNote?: string;
-  price?: { value: string; badge?: string; text: string };
+  price?: { value: string; badge?: string; text: string; cta?: { label: string; href: string } };
+  heroCta?: { label: string; href: string };
   faqs: Faq[];
   related: { label: string; href: string }[];
 }
 
 const {
   eyebrow, title, highlight, lead, bookingHref = BOOKING.arcanisGroup, chat, sticker, strip,
-  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs, docsNote, price, faqs, related,
+  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs = [], docsGroups, docsNote, price, faqs, related, heroCta,
 } = Astro.props;
 
 const needClass = ["c39", "c41", "c40"];
@@ -44,8 +46,17 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
       <h1 class="c34">{title} <span class="c57">{highlight}</span></h1>
       <p class="c63">{lead}</p>
       <div class="c60">
-        <a href={bookingHref} class="c18">Prenota in 30 secondi</a>
-        <a href="/richiesta" class="c20">Fai tutto online</a>
+        {heroCta ? (
+          <>
+            <a href={heroCta.href} class="c18" target={heroCta.href.startsWith("http") ? "_blank" : undefined} rel="noopener">{heroCta.label}</a>
+            <a href={bookingHref} class="c20">Prenota un appuntamento</a>
+          </>
+        ) : (
+          <>
+            <a href={bookingHref} class="c18">Prenota in 30 secondi</a>
+            <a href="/richiesta" class="c20">Fai tutto online</a>
+          </>
+        )}
       </div>
     </div>
     <div class="c73">
@@ -90,11 +101,23 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
   <section class="c32">
     <div class="c23">
       <h2 class="c43">{docsTitle}</h2>
-      <ul class="c27">
-        {docs.map((d) => (
-          <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{d}</span></li>
-        ))}
-      </ul>
+      {docs.length > 0 && (
+        <ul class="c27">
+          {docs.map((d) => (
+            <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{d}</span></li>
+          ))}
+        </ul>
+      )}
+      {docsGroups?.map((g) => (
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:22px">{g.title}</h3>
+          <ul class="c27">
+            {g.items.map((d) => (
+              <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{d}</span></li>
+            ))}
+          </ul>
+        </div>
+      ))}
       {docsNote && <p class="c83">{docsNote}</p>}
     </div>
     <div id="prezzo" class="c45">
@@ -104,6 +127,7 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
         <>
           <p class="c65">{price.value}</p>
           <p class="c84"><Fragment set:html={price.text} /></p>
+          {price.cta && <a href={price.cta.href} target={price.cta.href.startsWith("http") ? "_blank" : undefined} rel="noopener" style="align-self:flex-start;display:inline-flex;padding:14px 22px;border-radius:999px;background:#14142B;color:#fff;font-weight:800;text-decoration:none">{price.cta.label}</a>}
         </>
       ) : (
         <>
