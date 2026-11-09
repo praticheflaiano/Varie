@@ -89,7 +89,7 @@ export const HOURS_SCHEMA = [
 export const BOOKING = {
   arcanisGroup: "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1",
   /** Calendario GHL "Consulenza da remoto" disattivato (404): finche non viene riattivato si prenota via WhatsApp. */
-  arcanisRemote: "https://wa.me/393716230690?text=Ciao%2C%20vorrei%20prenotare%20una%20consulenza%20in%20videochiamata",
+  arcanisRemote: "https://link.arcanis.it/widget/booking/B5HBTQ8m4c7Ab5Ok0zIH",
 } as const;
 
 export const SOCIAL = {
