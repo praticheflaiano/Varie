@@ -23,6 +23,7 @@ export async function GET(_context: APIContext) {
   lines.push(`## Servizi principali e prezzi`);
   lines.push("");
   lines.push(`- [ISEE](${baseUrl}/isee): calcolo ISEE e invio DSU, gratuito. Redditi e CU li recupera il CAF. Anche in videochiamata o online.`);
+  lines.push(`- [Calcolo imposte di successione](${baseUrl}/calcolo-imposte-successione): calcolatore gratuito di imposta di successione per erede, ipotecaria, catastale, tasse e bollo, secondo la guida dell'Agenzia delle Entrate dal 2025.`);
   lines.push(`- [Quale ISEE ti serve](${baseUrl}/quale-isee): test gratuito che indica quale ISEE chiedere (ordinario, minorenni, università, sociosanitario, nucleo ristretto, residenze RSA, corrente) e quali documenti preparare.`);
   lines.push(`- [Modello 730](${baseUrl}/730): da 30 EUR; per chi torna l'anno dopo il prezzo resta invariato. Anche da remoto.`);
   lines.push(`- [Domanda NASpI](${baseUrl}/naspi): domanda di disoccupazione all'INPS tramite patronato, gratuita. Calcolatore e guide su ${EXTERNAL_PORTALS.naspi.url}.`);

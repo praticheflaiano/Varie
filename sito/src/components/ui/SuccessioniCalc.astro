@@ -1,0 +1,285 @@
+---
+/**
+ * Calcolatore delle imposte di successione (successioni aperte dal 1/1/2025, autoliquidazione).
+ * Regole:
+ * - Imposta di successione: algoritmo della "Guida al calcolo dell'imposta di successione (autoliquidazione)"
+ *   dell'Agenzia delle Entrate: AN = QE + QDN - QP; QN = AN - franchigia; PR = 10%(QN - QDN) - QDN (min 0);
+ *   QTI = QN + PR; imposta = QTI x aliquota. Franchigie: 1.000.000 (coniuge e linea retta), 100.000 (fratelli),
+ *   1.500.000 (disabilita grave, prevale la piu alta); aliquote 4%, 6%, 8% (D.Lgs. 346/1990, art. 7).
+ * - Valore immobili: rendita x 1,05 x 110 (prima casa) / 120 (gruppi A e C, esclusi A/10 e C/1) / 140 (B) /
+ *   60 (A/10 e D) / 40,8 (C/1 ed E); terreni agricoli: reddito dominicale x 1,25 x 90; terreni edificabili: valore venale.
+ * - Ipotecaria 2% e catastale 1% sul valore degli immobili senza agevolazione, minimo 200 € ciascuna;
+ *   prima casa: 200 € + 200 € per immobile (basta che un erede abbia i requisiti: art. 69 c. 3 L. 342/2000).
+ * - Istruzioni AdE alla dichiarazione 2025 (quadro EF): tasse ipotecarie e catastali 120 € per conservatoria
+ *   (65 trascrizione + 55 volture), bollo 85 € per conservatoria, attestazione: bollo 32 € + tributi speciali 16 €.
+ * - Esclusi dall'attivo: titoli di Stato e equiparati, veicoli iscritti al PRA, polizze vita (art. 12 TUS).
+ * - Passivita: spese funerarie fino a 1.032,91 €, spese mediche ultimi 6 mesi (art. 24 TUS), debiti documentati.
+ * - Esonero (art. 28 c. 7 TUS): eredi coniuge e linea retta, attivo fino a 100.000 €, nessun immobile.
+ */
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+
+<div class="sc" id="sc-app" data-compact={compact ? "1" : "0"}>
+  <form class="sc-form" onsubmit="return false" novalidate>
+    <fieldset class="sc-box">
+      <legend>1. Case, box e terreni</legend>
+      <p class="sc-hint">La rendita catastale è nella visura o nel rogito. Se non ce l'hai, chiedicela: la visura la facciamo noi.</p>
+      <div id="sc-imm"></div>
+      <button type="button" class="sc-add" id="sc-add-imm">+ Aggiungi un immobile</button>
+      <label class="sc-field sc-inline" id="sc-prov-wrap">In quante province diverse si trovano?
+        <input type="number" id="sc-prov" min="1" max="20" value="1" inputmode="numeric" />
+      </label>
+    </fieldset>
+
+    <fieldset class="sc-box">
+      <legend>2. Soldi e altri beni</legend>
+      <label class="sc-field">Conti correnti, libretti e depositi (saldo alla data del decesso)
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-conti" placeholder="0" /></span></label>
+      <label class="sc-field">Azioni, fondi, obbligazioni non statali
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-titoli" placeholder="0" /></span></label>
+      <label class="sc-field">Titoli di Stato e buoni postali <small>(esenti dall'imposta)</small>
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-bot" placeholder="0" /></span></label>
+      <label class="sc-field">Contanti, gioielli e arredi, se li dichiarate
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-dn" placeholder="0" /></span></label>
+      <p class="sc-hint">Auto, moto e polizze vita non entrano nell'imposta: non vanno inseriti.</p>
+    </fieldset>
+
+    <fieldset class="sc-box">
+      <legend>3. Debiti e spese pagate dagli eredi</legend>
+      <label class="sc-field">Debiti del defunto (mutuo residuo, prestiti, bollette)
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-debiti" placeholder="0" /></span></label>
+      <label class="sc-field">Spese del funerale <small>(si scalano fino a 1.032,91 €)</small>
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-funerale" placeholder="0" /></span></label>
+      <label class="sc-field">Spese mediche degli ultimi 6 mesi
+        <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-mediche" placeholder="0" /></span></label>
+    </fieldset>
+
+    <fieldset class="sc-box">
+      <legend>4. Chi eredita</legend>
+      <div id="sc-eredi"></div>
+      <div class="sc-row-btn">
+        <button type="button" class="sc-add" id="sc-add-erede">+ Aggiungi un erede</button>
+        <button type="button" class="sc-add sc-ghost" id="sc-eq">Dividi in parti uguali</button>
+      </div>
+      <p class="sc-warn" id="sc-quote-warn" hidden></p>
+      <label class="sc-check"><input type="checkbox" id="sc-att" checked /> <span>Serve l'attestazione per la banca (di solito sì)</span></label>
+    </fieldset>
+  </form>
+
+  <div class="sc-res" id="sc-res" aria-live="polite"></div>
+</div>
+
+<script is:inline>
+(function () {
+  var root = document.getElementById('sc-app'); if (!root) return;
+  var TIPI = [
+    ['ab', 'Abitazione (A/2 – A/7)'], ['lusso', 'Abitazione di lusso (A/1, A/8, A/9)'], ['pert', 'Box, cantina, posto auto (C/2, C/6, C/7)'],
+    ['uff', 'Ufficio (A/10)'], ['neg', 'Negozio (C/1)'], ['c345', 'Laboratorio o palestra (C/3, C/4, C/5)'], ['b', 'Gruppo B (collegi, uffici pubblici)'],
+    ['d', 'Capannone o immobile D'], ['e', 'Immobile E'], ['agr', 'Terreno agricolo'], ['edif', 'Terreno edificabile'], ['val', 'Conosco già il valore fiscale']
+  ];
+  var PAR = [
+    ['retta', 'Coniuge, figlio, genitore, nipote in linea retta'], ['fratello', 'Fratello o sorella'],
+    ['parente', 'Altro parente fino al 4° grado, suocero, genero, nuora, cognato'], ['altro', 'Altra persona']
+  ];
+  var RULE = { retta: [0.04, 1000000], fratello: [0.06, 100000], parente: [0.06, 0], altro: [0.08, 0] };
+  var imm = [{ tipo: 'ab', r: '', q: 100, pc: true, pp: false }];
+  var eredi = [{ p: 'retta', q: 100, dis: false }];
+
+  function num(v) { if (v == null) return 0; v = String(v).replace(/\s|€/g, '').replace(/\./g, '').replace(',', '.'); var n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; }
+  function eur(n, dec) { return n.toLocaleString('it-IT', { minimumFractionDigits: dec ? 2 : 0, maximumFractionDigits: dec ? 2 : 0 }) + ' €'; }
+  function $(id) { return document.getElementById(id); }
+  function opt(list, sel) { return list.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === sel ? ' selected' : '') + '>' + o[1] + '</option>'; }).join(''); }
+
+  function valImm(x) {
+    var r = num(x.r), q = Math.min(Math.max(num(x.q) || 0, 0), 100) / 100;
+    var c = 0;
+    if (x.tipo === 'agr') return r * 1.25 * 90 * q;
+    if (x.tipo === 'edif' || x.tipo === 'val') return r * q;
+    if (x.tipo === 'ab') c = x.pc ? 110 : 120;
+    else if (x.tipo === 'pert') c = x.pp ? 110 : 120;
+    else if (x.tipo === 'lusso' || x.tipo === 'c345') c = 120;
+    else if (x.tipo === 'b') c = 140;
+    else if (x.tipo === 'uff' || x.tipo === 'd') c = 60;
+    else if (x.tipo === 'neg' || x.tipo === 'e') c = 40.8;
+    return r * 1.05 * c * q;
+  }
+  function lblR(t) { return t === 'agr' ? 'Reddito dominicale' : t === 'edif' ? 'Valore di mercato' : t === 'val' ? 'Valore fiscale' : 'Rendita catastale'; }
+
+  function renderImm() {
+    var h = '';
+    imm.forEach(function (x, i) {
+      h += '<div class="sc-item"><div class="sc-item-head"><b>Immobile ' + (i + 1) + '</b>' + (imm.length > 0 ? '<button type="button" class="sc-del" data-del-imm="' + i + '" aria-label="Togli immobile ' + (i + 1) + '">Togli</button>' : '') + '</div>'
+        + '<label class="sc-field">Tipo<select data-imm="' + i + '" data-k="tipo">' + opt(TIPI, x.tipo) + '</select></label>'
+        + '<div class="sc-2"><label class="sc-field">' + lblR(x.tipo) + '<span class="sc-eur"><input type="text" inputmode="decimal" data-imm="' + i + '" data-k="r" value="' + (x.r || '') + '" placeholder="0" /></span></label>'
+        + '<label class="sc-field">Quota del defunto<span class="sc-pct"><input type="text" inputmode="decimal" data-imm="' + i + '" data-k="q" value="' + x.q + '" /></span></label></div>';
+      if (x.tipo === 'ab') h += '<label class="sc-check"><input type="checkbox" data-imm="' + i + '" data-k="pc"' + (x.pc ? ' checked' : '') + ' /> <span>Almeno un erede ha i requisiti prima casa <small>(ci vive o ci sposta la residenza entro 18 mesi e non ha altre case nel Comune)</small></span></label>';
+      if (x.tipo === 'pert') h += '<label class="sc-check"><input type="checkbox" data-imm="' + i + '" data-k="pp"' + (x.pp ? ' checked' : '') + ' /> <span>È la pertinenza della prima casa</span></label>';
+      h += '<p class="sc-val">Valore fiscale: <b>' + eur(valImm(x)) + '</b></p></div>';
+    });
+    if (!imm.length) h = '<p class="sc-hint">Nessun immobile: niente imposte ipotecaria e catastale.</p>';
+    $('sc-imm').innerHTML = h;
+    $('sc-prov-wrap').hidden = !imm.length;
+  }
+
+  function renderEredi() {
+    var h = '';
+    eredi.forEach(function (x, i) {
+      h += '<div class="sc-item"><div class="sc-item-head"><b>Erede ' + (i + 1) + '</b>' + (eredi.length > 1 ? '<button type="button" class="sc-del" data-del-erede="' + i + '" aria-label="Togli erede ' + (i + 1) + '">Togli</button>' : '') + '</div>'
+        + '<label class="sc-field">Parentela con il defunto<select data-erede="' + i + '" data-k="p">' + opt(PAR, x.p) + '</select></label>'
+        + '<div class="sc-2"><label class="sc-field">Quota di eredità<span class="sc-pct"><input type="text" inputmode="decimal" data-erede="' + i + '" data-k="q" value="' + x.q + '" /></span></label>'
+        + '<label class="sc-check sc-check-mid"><input type="checkbox" data-erede="' + i + '" data-k="dis"' + (x.dis ? ' checked' : '') + ' /> <span>Disabilità grave (Legge 104, art. 3 c. 3)</span></label></div></div>';
+    });
+    $('sc-eredi').innerHTML = h;
+  }
+
+  function calc() {
+    var tot = { imm: 0, immProp: 0, nPC: 0 };
+    imm.forEach(function (x) {
+      var v = valImm(x); tot.imm += v;
+      var fixed = (x.tipo === 'ab' && x.pc) || (x.tipo === 'pert' && x.pp);
+      if (x.tipo === 'ab' && x.pc) tot.nPC += 1;
+      if (!fixed) tot.immProp += v;
+    });
+    var conti = num($('sc-conti').value), titoli = num($('sc-titoli').value), bot = num($('sc-bot').value), dn = num($('sc-dn').value);
+    var fun = Math.min(num($('sc-funerale').value), 1032.91), deb = num($('sc-debiti').value), med = num($('sc-mediche').value);
+    var pass = fun + deb + med;
+    var qsum = eredi.reduce(function (s, e) { return s + num(e.q); }, 0);
+    var hasImm = imm.some(function (x) { return num(x.r) > 0; });
+    var attivo = tot.imm + conti + titoli + dn;
+    var allRetta = eredi.every(function (e) { return e.p === 'retta'; });
+    var esonero = !hasImm && allRetta && attivo > 0 && attivo <= 100000;
+
+    var perE = eredi.map(function (e) {
+      var q = num(e.q) / 100, rule = RULE[e.p];
+      var QE = q * (tot.imm + conti + titoli), QDN = q * dn, QP = q * pass;
+      var AN = QE + QDN - QP;
+      var FR = Math.max(rule[1], e.dis ? 1500000 : 0);
+      var QN = AN - FR, PR = 0, QTI = 0, imp = 0;
+      if (QN > 0) { PR = Math.max(0.10 * (QN - QDN) - QDN, 0); QTI = QN + PR; imp = Math.round(QTI * rule[0] * 100) / 100; }
+      return { e: e, AN: AN, FR: FR, QN: QN, PR: PR, QTI: QTI, imp: imp, al: rule[0] };
+    });
+    var impSucc = perE.reduce(function (s, x) { return s + x.imp; }, 0);
+
+    var nProv = hasImm ? Math.max(1, Math.round(num($('sc-prov').value) || 1)) : 0;
+    var ipo = 0, cat = 0;
+    if (hasImm) {
+      if (tot.immProp > 0) { ipo += Math.max(Math.round(tot.immProp * 0.02), 200); cat += Math.max(Math.round(tot.immProp * 0.01), 200); }
+      ipo += 200 * tot.nPC; cat += 200 * tot.nPC;
+      if (tot.immProp === 0 && tot.nPC === 0) { ipo = 200; cat = 200; }
+    }
+    var tasse = 120 * nProv, bollo = 85 * nProv;
+    var att = $('sc-att').checked ? 48 : 0;
+    return { tot: tot, conti: conti, titoli: titoli, bot: bot, dn: dn, pass: pass, fun: fun, attivo: attivo, perE: perE, impSucc: impSucc, ipo: ipo, cat: cat, tasse: tasse, bollo: bollo, att: att, nProv: nProv, qsum: qsum, esonero: esonero, hasImm: hasImm };
+  }
+
+  function row(l, v, strong) { return '<tr' + (strong ? ' class="sc-strong"' : '') + '><td>' + l + '</td><td>' + v + '</td></tr>'; }
+
+  function renderRes() {
+    var c = calc();
+    var w = $('sc-quote-warn');
+    if (Math.abs(c.qsum - 100) > 0.01) { w.hidden = false; w.textContent = 'Le quote degli eredi sommano ' + c.qsum.toLocaleString('it-IT') + '%: devono fare 100%.'; } else w.hidden = true;
+    var h = '<h3 class="sc-res-title">Il tuo calcolo</h3>';
+    if (c.attivo <= 0 && c.bot <= 0) { $('sc-res').innerHTML = h + '<p class="sc-empty">Inserisci la rendita di una casa, un conto o un altro bene: il calcolo compare qui.</p>'; return; }
+    if (c.esonero) {
+      h += '<div class="sc-ok"><b>Probabilmente la dichiarazione non serve.</b> Eredi coniuge e parenti in linea retta, nessun immobile e attivo fino a 100.000 €: per la banca basta la dichiarazione di esonero, che prepariamo noi.</div>';
+    }
+    var fisse = c.ipo + c.cat + c.tasse + c.bollo + c.att;
+    var totImp = c.impSucc + fisse;
+    h += '<div class="sc-big"><span>Totale imposte stimate</span><b>' + eur(totImp, true) + '</b></div>';
+    h += '<table class="sc-tab"><tbody>'
+      + '<tr class="sc-sec"><td colspan="2">Da pagare quando si presenta la dichiarazione</td></tr>'
+      + (c.hasImm ? row('Imposta ipotecaria' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(2%, minimo 200 €)</small>'), eur(c.ipo)) + row('Imposta catastale' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(1%, minimo 200 €)</small>'), eur(c.cat))
+        + row('Tasse ipotecarie e catastali <small>(120 € per provincia)</small>', eur(c.tasse)) + row('Imposta di bollo <small>(85 € per provincia)</small>', eur(c.bollo)) : row('Imposte ipotecaria e catastale', 'non dovute: nessun immobile'))
+      + (c.att ? row('Attestazione per la banca <small>(bollo e tributi)</small>', eur(c.att)) : '')
+      + row('Subtotale', eur(fisse), true)
+      + '<tr class="sc-sec"><td colspan="2">Imposta di successione <small>(entro 90 giorni dalla scadenza dei 12 mesi)</small></td></tr>';
+    c.perE.forEach(function (x, i) {
+      var name = 'Erede ' + (i + 1) + ' <small>(' + PAR.filter(function (p) { return p[0] === x.e.p; })[0][1].split(',')[0].toLowerCase() + ', ' + num(x.e.q).toLocaleString('it-IT') + '%)</small>';
+      var det = x.imp > 0
+        ? eur(x.imp, true) + '<br><small>quota netta ' + eur(x.AN) + (x.FR ? ' – franchigia ' + eur(x.FR) : '') + (x.PR ? ' + 10% presunto per arredi e denaro ' + eur(x.PR) : '') + ' = ' + eur(x.QTI) + ' × ' + (x.al * 100) + '%</small>'
+        : '0 €<br><small>quota ' + eur(Math.max(x.AN, 0)) + (x.FR ? ' sotto la franchigia di ' + eur(x.FR) : '') + '</small>';
+      h += row(name, det);
+    });
+    h += row('Totale imposta di successione', eur(c.impSucc, true), true);
+    if (c.impSucc >= 1000) h += '<tr><td colspan="2"><small>Da 1.000 € in su si può pagare il 20% e il resto in 8 rate trimestrali (12 se oltre 20.000 €).</small></td></tr>';
+    h += '</tbody></table>';
+    h += '<div class="sc-tot"><div><span>Imposte</span><b>' + eur(totImp, true) + '</b></div><div><span>Nostro servizio, tutto compreso</span><b>' + (c.esonero ? 'chiedici' : '600 €') + '</b></div><div class="sc-tot-all"><span>Totale</span><b>' + (c.esonero ? eur(totImp, true) + ' + esonero' : eur(totImp + 600, true)) + '</b></div></div>';
+    h += '<p class="sc-small">Valore fiscale degli immobili: ' + eur(c.tot.imm) + '. Titoli di Stato esenti: ' + eur(c.bot) + '. Debiti e spese scalati: ' + eur(c.pass) + (num($('sc-funerale').value) > 1032.91 ? ' (funerale ridotto a 1.032,91 €)' : '') + '. Il calcolo segue la guida dell’Agenzia delle Entrate per le successioni aperte dal 2025 e divide beni e debiti secondo le quote. Non considera donazioni fatte in vita, legati, beni all’estero e agevolazioni particolari: li verifichiamo noi.</p>';
+    var msg = 'Ciao, ho usato il calcolatore della successione: imposte stimate ' + eur(totImp, true) + ' (' + c.perE.length + ' eredi' + (c.hasImm ? ', ' + imm.length + ' immobili' : '') + '). Vorrei un appuntamento.';
+    h += '<div class="sc-cta"><a class="sc-btn sc-btn-main" href="https://link.arcanis.it/widget/bookings/successioni-flaiano" target="_blank" rel="noopener">Fissa il primo colloquio</a><a class="sc-btn sc-btn-dark" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">Manda il calcolo su WhatsApp</a></div>';
+    $('sc-res').innerHTML = h;
+  }
+
+  function full() { renderImm(); renderEredi(); renderRes(); }
+
+  root.addEventListener('input', function (ev) {
+    var t = ev.target, i;
+    if (t.dataset.imm != null) { i = +t.dataset.imm; imm[i][t.dataset.k] = t.type === 'checkbox' ? t.checked : t.value; if (t.dataset.k === 'tipo') { renderImm(); } else { var v = t.closest('.sc-item').querySelector('.sc-val b'); if (v) v.textContent = eur(valImm(imm[i])); } }
+    if (t.dataset.erede != null) { i = +t.dataset.erede; eredi[i][t.dataset.k] = t.type === 'checkbox' ? t.checked : t.value; }
+    renderRes();
+  });
+  root.addEventListener('change', function (ev) { var t = ev.target; if (t.dataset.imm != null && t.type === 'checkbox') { renderImm(); renderRes(); } });
+  root.addEventListener('click', function (ev) {
+    var t = ev.target;
+    if (t.id === 'sc-add-imm') { imm.push({ tipo: 'ab', r: '', q: 100, pc: false, pp: false }); full(); }
+    else if (t.id === 'sc-add-erede') { eredi.push({ p: 'retta', q: 0, dis: false }); equal(); full(); }
+    else if (t.id === 'sc-eq') { equal(); full(); }
+    else if (t.dataset.delImm != null) { imm.splice(+t.dataset.delImm, 1); full(); }
+    else if (t.dataset.delErede != null) { eredi.splice(+t.dataset.delErede, 1); equal(); full(); }
+  });
+  function equal() { var n = eredi.length; eredi.forEach(function (e, i) { e.q = i < n - 1 ? Math.floor(10000 / n) / 100 : Math.round((100 - Math.floor(10000 / n) / 100 * (n - 1)) * 100) / 100; }); }
+  window.__scCalc = calc;
+  full();
+})();
+</script>
+
+<style is:global>
+  .sc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 24px; align-items: start; }
+  .sc-form { display: flex; flex-direction: column; gap: 16px; }
+  .sc-box { border: 0; margin: 0; background: #fff; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+  .sc-box legend { float: left; width: 100%; padding: 0; margin-bottom: 4px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 21px; color: #14142B; }
+  .sc-hint, .sc-small { margin: 0; font-size: 14px; line-height: 1.5; color: #4A4A60; }
+  .sc-field { display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700; color: #24243A; }
+  .sc-field small { font-weight: 500; color: #5B5B72; }
+  .sc-field input, .sc-field select { font: inherit; font-weight: 500; font-size: 17px; padding: 12px 14px; border: 2px solid #E4E0FF; border-radius: 14px; background: #FAFAFF; color: #14142B; width: 100%; box-sizing: border-box; }
+  .sc-field input:focus, .sc-field select:focus { outline: none; border-color: #5B3DF5; background: #fff; }
+  .sc-eur, .sc-pct { position: relative; display: block; }
+  .sc-eur::after, .sc-pct::after { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #5B5B72; font-weight: 700; pointer-events: none; }
+  .sc-eur::after { content: "€"; } .sc-pct::after { content: "%"; }
+  .sc-eur input, .sc-pct input { padding-right: 36px; }
+  .sc-inline input { max-width: 120px; }
+  .sc-item { border: 1px solid #E4E0FF; border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: #FCFCFF; }
+  .sc-item-head { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
+  .sc-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: end; }
+  .sc-check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.4; color: #24243A; }
+  .sc-check input { width: 20px; height: 20px; margin-top: 1px; accent-color: #5B3DF5; flex: 0 0 auto; }
+  .sc-check small { display: block; margin-top: 2px; color: #5B5B72; }
+  .sc-check-mid { padding-bottom: 12px; }
+  .sc-val { margin: 0; font-size: 14px; color: #4A4A60; }
+  .sc-add { align-self: flex-start; font: inherit; font-weight: 800; color: #5B3DF5; background: #F1EEFF; border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; }
+  .sc-ghost { background: none; }
+  .sc-row-btn { display: flex; gap: 8px; flex-wrap: wrap; }
+  .sc-del { font: inherit; font-size: 14px; font-weight: 700; color: #C2185B; background: none; border: 0; cursor: pointer; }
+  .sc-warn { margin: 0; color: #C2185B; font-weight: 700; font-size: 14px; }
+  .sc-res { position: sticky; top: 90px; background: #14142B; color: #fff; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .sc-res-title { margin: 0; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; }
+  .sc-empty { margin: 0; color: #C9C9DA; font-size: 16px; line-height: 1.5; }
+  .sc-ok { background: #D4FF4F; color: #14142B; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.45; }
+  .sc-big { display: flex; flex-direction: column; gap: 2px; } .sc-big span { color: #C9C9DA; font-size: 14px; } .sc-big b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; color: #D4FF4F; }
+  .sc-tab { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .sc-tab td { padding: 8px 0; border-top: 1px solid #2E2E4D; vertical-align: top; line-height: 1.4; }
+  .sc-tab td:last-child { text-align: right; padding-left: 10px; white-space: nowrap; }
+  .sc-tab td small { color: #A9A9C2; white-space: normal; }
+  .sc-tab .sc-sec td { color: #D4FF4F; font-weight: 800; padding-top: 14px; text-align: left; white-space: normal; }
+  .sc-tab .sc-strong td { font-weight: 800; }
+  .sc-tot { display: grid; gap: 8px; background: #23233F; border-radius: 18px; padding: 14px; }
+  .sc-tot div { display: flex; justify-content: space-between; gap: 10px; font-size: 15px; } .sc-tot span { color: #C9C9DA; }
+  .sc-tot-all { border-top: 1px solid #3A3A5C; padding-top: 8px; } .sc-tot-all b { color: #D4FF4F; font-size: 20px; }
+  .sc-res .sc-small { color: #A9A9C2; font-size: 12.5px; }
+  .sc-cta { display: flex; flex-direction: column; gap: 8px; }
+  .sc-btn { display: flex; justify-content: center; padding: 14px 18px; border-radius: 999px; font-weight: 800; text-decoration: none; font-size: 15px; text-align: center; }
+  .sc-btn-main { background: #D4FF4F; color: #14142B; } .sc-btn-dark { background: #fff; color: #14142B; }
+  @media (max-width: 900px) { .sc { grid-template-columns: 1fr; } .sc-res { position: static; } }
+  @media (max-width: 480px) { .sc-2 { grid-template-columns: 1fr; } .sc-check-mid { padding-bottom: 0; } .sc-box { padding: 18px; } }
+</style>

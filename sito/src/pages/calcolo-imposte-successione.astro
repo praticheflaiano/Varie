@@ -1,0 +1,52 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SuccessioniCalc from "~/components/ui/SuccessioniCalc.astro";
+
+const faqs = [
+  { q: "Come si calcola l'imposta di successione?", a: "Per ogni erede si sommano la sua quota di beni (immobili al valore catastale, conti, titoli), si tolgono la sua quota di debiti e spese e la franchigia. Sulla parte che resta si aggiunge il 10% presunto per denaro, gioielli e arredi, se non dichiarati, e si applica l'aliquota: 4%, 6% o 8% in base alla parentela." },
+  { q: "Quanto paga un figlio che eredita una casa?", a: "Di solito niente di imposta di successione, perché figli e coniuge hanno una franchigia di 1 milione di euro a testa. Si pagano però le imposte ipotecaria e catastale sulla casa (2% e 1% del valore catastale, oppure 200 € + 200 € se un erede ha i requisiti prima casa), più tasse e bollo fissi." },
+  { q: "Come si calcola il valore catastale di una casa?", a: "Rendita catastale × 1,05 × 110 se è prima casa, × 120 per le altre abitazioni, box e cantine. Per negozi C/1 si usa 40,8, per uffici A/10 e immobili D 60, per il gruppo B 140. Per i terreni agricoli: reddito dominicale × 1,25 × 90." },
+  { q: "Quanto costano bollo e tasse fisse della successione?", a: "Con immobili, per ogni provincia in cui si trovano: 120 € di tasse ipotecarie e catastali e 85 € di imposta di bollo. Se serve l'attestazione per la banca si aggiungono 48 € (bollo e tributi speciali)." },
+  { q: "Quando si pagano le imposte?", a: "Ipotecaria, catastale, tasse e bollo si pagano quando si presenta la dichiarazione, entro 12 mesi dal decesso. L'imposta di successione, per i decessi dal 2025, entro 90 giorni dalla scadenza della dichiarazione; da 1.000 € in su si può rateizzare." },
+  { q: "I titoli di Stato pagano l'imposta di successione?", a: "No. Titoli di Stato, buoni postali e altri titoli equiparati sono esenti. Sono esclusi anche auto e moto iscritte al PRA e le somme delle polizze vita." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo imposte di successione", url: "https://info.praticheflaiano.it/calcolo-imposte-successione", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
+---
+
+<BaseLayout title="Calcolo imposte di successione 2026: quanto si paga" description="Calcolatore gratuito delle imposte di successione: imposta per ogni erede, ipotecaria, catastale, tasse e bollo. Regole dell'Agenzia delle Entrate dal 2025.">
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <section style="background:#F1EEFF">
+    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 64px;display:flex;flex-direction:column;gap:18px">
+      <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito</span>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Quanto si paga per la successione?</h1>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Inserisci case, conti, debiti ed eredi: ti mostriamo l'imposta di successione di ogni erede, le imposte ipotecaria e catastale, tasse e bollo, e quando si pagano. Il calcolo segue la guida dell'Agenzia delle Entrate per le successioni aperte dal 2025.</p>
+      <SuccessioniCalc />
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:56px 16px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+    <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B">Come funziona il calcolo</h2>
+    <p style="margin:0">Le imposte della successione sono di due tipi. Quelle sugli <b>immobili</b> (ipotecaria, catastale, tasse e bollo) si pagano su ogni casa o terreno, anche se gli eredi sono coniuge e figli. L'<b>imposta di successione</b> vera e propria, invece, la paga ogni erede solo sulla parte della sua quota che supera la <b>franchigia</b>.</p>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:16px;min-width:0">
+      <thead><tr><th style="text-align:left;padding:10px;background:#14142B;color:#fff">Chi eredita</th><th style="text-align:left;padding:10px;background:#14142B;color:#fff">Franchigia a testa</th><th style="text-align:left;padding:10px;background:#14142B;color:#fff">Aliquota</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:10px;border-top:1px solid #E4E0FF">Coniuge e parenti in linea retta</td><td style="padding:10px;border-top:1px solid #E4E0FF">1.000.000 €</td><td style="padding:10px;border-top:1px solid #E4E0FF">4%</td></tr>
+        <tr><td style="padding:10px;border-top:1px solid #E4E0FF">Fratelli e sorelle</td><td style="padding:10px;border-top:1px solid #E4E0FF">100.000 €</td><td style="padding:10px;border-top:1px solid #E4E0FF">6%</td></tr>
+        <tr><td style="padding:10px;border-top:1px solid #E4E0FF">Altri parenti fino al 4° grado, affini in linea retta e collaterali fino al 3°</td><td style="padding:10px;border-top:1px solid #E4E0FF">nessuna</td><td style="padding:10px;border-top:1px solid #E4E0FF">6%</td></tr>
+        <tr><td style="padding:10px;border-top:1px solid #E4E0FF">Altri</td><td style="padding:10px;border-top:1px solid #E4E0FF">nessuna</td><td style="padding:10px;border-top:1px solid #E4E0FF">8%</td></tr>
+        <tr><td style="padding:10px;border-top:1px solid #E4E0FF">Erede con disabilità grave</td><td style="padding:10px;border-top:1px solid #E4E0FF">1.500.000 €</td><td style="padding:10px;border-top:1px solid #E4E0FF">secondo la parentela</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin:0"><b>L'esempio dell'Agenzia delle Entrate.</b> Due fratelli ereditano due immobili da 250.000 e 150.000 €, 5.000 € in contanti e 1.000 € di debiti. A ciascuno spettano 200.000 € di immobili e 2.500 € di contanti, meno 500 € di debiti: 202.000 €. Tolta la franchigia di 100.000 € restano 102.000 €. Si aggiunge il 10% presunto per denaro, gioielli e arredi, meno i contanti già dichiarati (7.450 €): 109.450 € al 6% fanno 6.567 € a testa. Prova a inserirlo nel calcolatore.</p>
+    <p style="margin:0">Per un calcolo sul tuo caso, con visure, quote e agevolazioni verificate, la dichiarazione la prepariamo noi: <a href="/successioni" style="color:#5B3DF5;font-weight:800">600 € tutto compreso</a>.</p>
+
+    <h2 style="margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B">Domande frequenti</h2>
+    {faqs.map((f) => (
+      <details style="background:#F7F7FB;border-radius:18px;padding:16px 20px"><summary style="font-weight:800;cursor:pointer">{f.q}</summary><p style="margin:10px 0 0">{f.a}</p></details>
+    ))}
+    <p style="margin:12px 0 0;font-size:14px;color:#5B5B72">Fonti: Agenzia delle Entrate, guida al calcolo dell'imposta di successione in autoliquidazione e istruzioni alla dichiarazione di successione (2025); D.Lgs. 346/1990 (artt. 7, 9, 12, 14, 24, 28); D.Lgs. 347/1990; art. 69 L. 342/2000; D.Lgs. 139/2024. Il calcolatore dà una stima: non considera donazioni fatte in vita, legati, beni all'estero e agevolazioni particolari.</p>
+  </section>
+</BaseLayout>

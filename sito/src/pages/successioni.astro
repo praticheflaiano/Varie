@@ -3,6 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
+import SuccessioniCalc from "~/components/ui/SuccessioniCalc.astro";
 
 /*
  * Fonti (verificate il 10/11/2026):
@@ -89,7 +90,7 @@ const props = {
   highlight: "Le carte lasciale a noi.",
   lead: "Dichiarazione di successione, volture delle case, conti in banca e imposte: un solo referente, un prezzo chiaro e la lista dei documenti con la spiegazione di dove trovarli. In ufficio a Vigne Nuove o a distanza, anche con eredi in città diverse.",
   bookingHref: BOOK,
-  heroCta: { label: "Verifica cosa serve nel tuo caso", href: "#verifica" },
+  heroCta: { label: "Calcola quanto pagherai", href: "#calcolo" },
   online: { href: CARICA, title: "Carica i documenti", text: "Hai già fatto il primo colloquio? Carica foto o PDF dei documenti dal telefono. In alternativa mandali su WhatsApp.", cta: "Carica i documenti →" },
   chat: {
     q: "È mancato mio padre, c'è la casa e un conto alle Poste. Da dove partiamo?",
@@ -152,6 +153,43 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
   <ServiceLanding {...props}>
+    <!-- INDICE RAPIDO -->
+    <nav aria-label="In questa pagina" style="max-width:1120px;margin:0 auto;padding:8px 24px 0;display:flex;flex-wrap:wrap;gap:8px">
+      {[["#calcolo","Calcola le imposte"],["#regole","Regole e scadenze"],["#errori","Errori da evitare"],["#documenti","Documenti"],["#prezzo","Prezzo"],["#verifica","Verifica il tuo caso"]].map(([h,l]) => (
+        <a href={h} style="text-decoration:none;font-weight:800;font-size:15px;color:#14142B;background:#F1EEFF;border-radius:999px;padding:10px 16px">{l}</a>
+      ))}
+    </nav>
+
+    <!-- CALCOLATORE -->
+    <section id="calcolo" style="background:#F1EEFF;scroll-margin-top:80px;margin-top:40px">
+      <div style="max-width:1120px;margin:0 auto;padding:64px 24px;display:flex;flex-direction:column;gap:18px">
+        <span style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1;font-weight:800">Quanto si paga per la successione?</h2>
+        <p style="margin:0;font-size:18px;line-height:1.5;color:#3F3F5A;max-width:780px">Inserisci case, conti ed eredi: il calcolo segue le regole dell'Agenzia delle Entrate per le successioni dal 2025 e ti mostra ogni imposta, chi la paga e quando. Il risultato si aggiorna mentre scrivi. <a href="/calcolo-imposte-successione" style="color:#5B3DF5;font-weight:800">Apri il calcolatore a tutta pagina</a>.</p>
+        <SuccessioniCalc />
+      </div>
+    </section>
+
+    <!-- ERRORI -->
+    <section class="c46" id="errori">
+      <span style="align-self:flex-start;background:#FFE3EC;color:#C2185B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Attenzione</span>
+      <h2 class="c1">3 errori che costano cari</h2>
+      <div class="c17">
+        <div style={card}>
+          <h3 style={h3}>Lasciar passare i 12 mesi</h3>
+          <p style={p}>Dopo la scadenza arrivano sanzioni e interessi, e la banca non sblocca i conti. Se sei già in ritardo, con il ravvedimento la sanzione si riduce: prima lo fai, meno paghi.</p>
+        </div>
+        <div style={card}>
+          <h3 style={h3}>Usare i soldi del defunto prima di decidere</h3>
+          <p style={p}>Prelevare dal conto o vendere beni dell'eredità può valere come <b>accettazione</b>, debiti compresi. Se temi che ci siano debiti, parlane con noi prima di toccare qualsiasi cosa.</p>
+        </div>
+        <div style={card}>
+          <h3 style={h3}>Perdere l'agevolazione prima casa</h3>
+          <p style={p}>Se la casa ereditata con l'agevolazione si vende entro 5 anni senza ricomprarne un'altra entro un anno, si paga la differenza con sanzione. Valutiamolo prima di decidere.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- SCADENZE, ESONERO, IMPOSTE -->
     <section class="c46" id="regole">
       <span style="align-self:flex-start;background:#F1EEFF;color:#5B3DF5;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Le regole in breve</span>
@@ -194,19 +232,19 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
       <div class="c46">
         <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">I documenti, uno per uno</span>
         <h2 class="c1">Cosa serve, a cosa serve e dove lo trovi</h2>
-        <p style={`${p};font-size:18px;max-width:780px`}>Non devi portare tutto il primo giorno: dopo il colloquio ti mandiamo la lista giusta per il tuo caso. Molte cose le recuperiamo noi, come le <b>visure</b>, l'<b>albero genealogico</b> e, con una delega, i <b>saldi in banca</b>.</p>
-        {docGroups.map((g) => (
-          <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">
-            <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.1">{g.title}</h3>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
-              {g.items.map((d) => (
-                <div style="background:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:8px;border:1px solid #E4E0FF">
-                  <h4 style="margin:0;font-size:18px;line-height:1.25;color:#14142B">{d.t}</h4>
-                  <p style="margin:0;font-size:15px;line-height:1.5;color:#3F3F5A"><b style="color:#5B3DF5">Cos'è.</b> {d.cosa}</p>
-                  <p style="margin:0;font-size:15px;line-height:1.5;color:#3F3F5A"><b style="color:#14142B">Dove lo trovi.</b> {d.dove}</p>
+        <p style={`${p};font-size:18px;max-width:780px`}>Tocca un documento per vedere a cosa serve e dove trovarlo. Non devi portare tutto il primo giorno: dopo il colloquio ti mandiamo la lista giusta per il tuo caso. Molte cose le recuperiamo noi, come le <b>visure</b>, l'<b>albero genealogico</b> e, con una delega, i <b>saldi in banca</b>.</p>
+        {docGroups.map((g, gi) => (
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+            <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1">{g.title}</h3>
+            {g.items.map((d) => (
+              <details class="c11" style="background:#fff">
+                <summary class="c16">{d.t}</summary>
+                <div style="display:flex;flex-direction:column;gap:8px;padding:0 4px 8px">
+                  <p style="margin:0;font-size:16px;line-height:1.5;color:#3F3F5A"><b style="color:#5B3DF5">Cos'è.</b> {d.cosa}</p>
+                  <p style="margin:0;font-size:16px;line-height:1.5;color:#3F3F5A"><b style="color:#14142B">Dove lo trovi.</b> {d.dove}</p>
                 </div>
-              ))}
-            </div>
+              </details>
+            ))}
           </div>
         ))}
         <p style={`${p};margin-top:6px`}><b>Casi particolari</b> da dirci al colloquio: eredi minorenni o con amministratore di sostegno, eredi o beni all'estero, quote di società, donazioni fatte in vita, conti cointestati, cassette di sicurezza.</p>
