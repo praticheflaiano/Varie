@@ -1,0 +1,322 @@
+---
+/**
+ * Strumento interattivo "Quale ISEE ti serve": domande a scelta, risultato con tipo di ISEE,
+ * spiegazione, documenti e contatti. Regole tratte dal DPCM 159/2013 e dalle novita 2026
+ * (L. 199/2025 c. 208, DM 3/2026): vedi l'articolo /blog/tipi-di-isee-differenze-quale-serve.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Quale ISEE ti serve",
+  url: "https://info.praticheflaiano.it/quale-isee",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Web",
+  isAccessibleForFree: true,
+  inLanguage: "it",
+  offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" },
+  provider: { "@type": "LocalBusiness", name: "Centro Pratiche Flaiano", url: "https://info.praticheflaiano.it" },
+  description: "Rispondi a poche domande e scopri quale ISEE ti serve (ordinario, minorenni, università, sociosanitario, ristretto, residenze, corrente) e quali documenti preparare.",
+};
+---
+
+<BaseLayout
+  title="Quale ISEE ti serve? Il test in un minuto"
+  description="Ordinario, minorenni, università, sociosanitario, ristretto, RSA o corrente? Rispondi a poche domande e scopri quale ISEE fare e quali documenti portare. Gratis."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+  <section class="qi">
+    <div class="qi-wrap">
+      <span class="qi-eyebrow">Strumento gratuito</span>
+      <h1 class="qi-title">Quale ISEE ti serve?</h1>
+      <p class="qi-lead">Rispondi a poche domande: ti diciamo quale ISEE chiedere, perché e quali documenti preparare. Ci vuole un minuto e non ti chiediamo nessun dato personale.</p>
+
+      <div class="qi-card" id="qi-app" aria-live="polite">
+        <noscript><p>Per usare il test serve JavaScript. Puoi leggere la <a href="/blog/tipi-di-isee-differenze-quale-serve">guida completa ai tipi di ISEE</a> o chiamarci allo 06 9784 5429.</p></noscript>
+      </div>
+
+      <p class="qi-note">Il risultato è un'indicazione generale basata sulle regole ISEE (DPCM 159/2013 e novità 2026). Ogni bando indica il tipo di ISEE richiesto: in caso di dubbio controlliamo noi, gratis. Approfondisci nella <a href="/blog/tipi-di-isee-differenze-quale-serve">guida a tutti i tipi di ISEE</a>.</p>
+    </div>
+  </section>
+
+  <script is:inline>
+  (function () {
+    var app = document.getElementById('qi-app');
+    if (!app) return;
+    var WA = 'https://wa.me/393716230690?text=';
+
+    var Q = {
+      scopo: {
+        q: "Per cosa ti serve l'ISEE?",
+        help: "Scegli l'aiuto principale. Se sono più di uno, scegli quello più importante per te.",
+        opts: [
+          ['figli', 'Assegno unico, bonus nido, bonus nuovi nati o servizi per i figli (nido, mensa)'],
+          ['incl', 'Assegno di inclusione (ADI) o Supporto per la formazione e il lavoro (SFL)'],
+          ['uni', 'Università: tasse o borsa di studio'],
+          ['disab', 'Assistenza a casa o centro diurno per una persona con disabilità o non autosufficiente'],
+          ['rsa', 'Ricovero in RSA o in un’altra struttura residenziale'],
+          ['bonus', 'Bonus bollette, Carta Dedicata a te, TARI, altri bonus o tariffe'],
+          ['noisee', 'NASpI, pensione, invalidità, accompagnamento o Legge 104'],
+          ['nonso', 'Non lo so ancora']
+        ]
+      },
+      genitori: {
+        q: 'I genitori dei figli sono sposati tra loro oppure vivono insieme?',
+        opts: [['si', 'Sì, sposati o conviventi'], ['no', 'No, non sono sposati e non vivono insieme']]
+      },
+      altroGen: {
+        q: 'Il genitore che non vive con i figli si trova in una di queste situazioni?',
+        opts: [
+          ['escluso', 'Versa un mantenimento deciso dal giudice, è escluso dalla responsabilità genitoriale o è estraneo (accertato dai servizi)'],
+          ['aggiuntivo', 'È sposato con un’altra persona o ha figli con un’altra persona'],
+          ['nessuna', 'Nessuna delle due'],
+          ['nonso', 'Non lo so']
+        ]
+      },
+      autonomo: {
+        q: "Lo studente vive fuori dalla casa dei genitori da almeno 2 anni, in una casa non della famiglia, e ha un proprio reddito da lavoro?",
+        opts: [['si', 'Sì, entrambe le cose'], ['no', 'No, oppure solo una delle due']]
+      },
+      uniGen: {
+        q: 'I genitori dello studente sono sposati tra loro oppure vivono insieme?',
+        opts: [['si', 'Sì'], ['no', 'No, non sono sposati e non vivono insieme']]
+      },
+      maggiorenne: {
+        q: "La persona che riceve l'assistenza è maggiorenne?",
+        opts: [['si', 'Sì, ha almeno 18 anni'], ['no', 'No, è minorenne']]
+      },
+      conParenti: {
+        q: 'Vive con genitori, fratelli o altri parenti che non sono il coniuge o i figli?',
+        opts: [['si', 'Sì'], ['no', 'No, solo con coniuge e figli, oppure da sola']]
+      },
+      figliFuori: {
+        q: 'La persona da ricoverare ha figli che non vivono con lei?',
+        opts: [['si', 'Sì'], ['no', 'No']]
+      },
+      donazioni: {
+        q: 'Negli ultimi 3 anni ha donato case o terreni a coniuge o figli?',
+        opts: [['si', 'Sì'], ['no', 'No'], ['nonso', 'Non lo so']]
+      },
+      calo: {
+        q: 'Negli ultimi mesi qualcuno in famiglia ha perso o ridotto il lavoro, oppure il reddito è sceso molto?',
+        help: "Ci serve per capire se conviene anche l'ISEE corrente.",
+        opts: [['si', 'Sì'], ['no', 'No']]
+      }
+    };
+
+    var a = {};
+    var history = [];
+
+    function next(cur) {
+      if (cur === 'scopo') {
+        if (a.scopo === 'figli') return 'genitori';
+        if (a.scopo === 'uni') return 'autonomo';
+        if (a.scopo === 'disab') return 'maggiorenne';
+        if (a.scopo === 'rsa') return 'figliFuori';
+        if (a.scopo === 'noisee') return null;
+        return 'calo';
+      }
+      if (cur === 'genitori') return a.genitori === 'no' ? 'altroGen' : 'calo';
+      if (cur === 'altroGen') return 'calo';
+      if (cur === 'autonomo') return a.autonomo === 'si' ? 'calo' : 'uniGen';
+      if (cur === 'uniGen') return a.uniGen === 'no' ? 'altroGen' : 'calo';
+      if (cur === 'maggiorenne') return a.maggiorenne === 'si' ? 'conParenti' : 'genitori';
+      if (cur === 'conParenti') return 'calo';
+      if (cur === 'figliFuori') return 'donazioni';
+      if (cur === 'donazioni') return 'calo';
+      return null;
+    }
+
+    var BASE_DOCS = [
+      'Documento e codice fiscale di tutti i componenti del nucleo',
+      'Redditi del secondo anno precedente (730, Redditi PF o CU)',
+      'Saldi e giacenze medie di conti, libretti e carte prepagate al 31 dicembre del secondo anno precedente',
+      'Dati di case e terreni, mutuo residuo, contratto d’affitto registrato se sei in affitto',
+      'Targhe di auto e moto'
+    ];
+
+    function result() {
+      var r = { tipo: '', perche: [], docs: BASE_DOCS.slice(), extra: [] };
+      var s = a.scopo;
+      if (s === 'noisee') {
+        r.tipo = "Probabilmente non ti serve l'ISEE";
+        r.perche.push("NASpI, pensioni, invalidità civile, accompagnamento e permessi della Legge 104 non dipendono dall'ISEE: contano contributi, redditi o il verbale sanitario.");
+        r.perche.push("L'ISEE può servirti per altri aiuti della famiglia, come l'Assegno unico o il bonus bollette: rifai il test scegliendo quell'aiuto.");
+        r.docs = [];
+        r.cta = 'Come patronato presentiamo NASpI, pensioni e domande di invalidità.';
+        return r;
+      }
+      if (s === 'figli' || (s === 'disab' && a.maggiorenne === 'no')) {
+        r.tipo = 'ISEE per le prestazioni ai minorenni';
+        if (s === 'disab') r.perche.push('Per gli aiuti sociosanitari a un minorenne si usa l’ISEE minorenni, non il nucleo ristretto.');
+        if (a.genitori === 'si') {
+          r.perche.push('Con genitori sposati o conviventi il valore è uguale all’ISEE ordinario: basta una normale DSU.');
+        } else {
+          gen(r);
+        }
+        if (s === 'figli') r.perche.push("Per Assegno unico, bonus nido e bonus nuovi nati l'INPS applica da solo il calcolo 2026 più favorevole per le famiglie: non devi chiederlo a parte.");
+        if (s === 'disab') r.extra.push('Verbale di invalidità o di handicap (Legge 104), con data e numero');
+      } else if (s === 'incl') {
+        r.tipo = 'ISEE del nucleo familiare (con il calcolo 2026 per l’inclusione)';
+        r.perche.push("Per ADI e SFL l'INPS usa il nuovo calcolo 2026, con la casa di proprietà esclusa fino a 91.500 € (120.000 € a Roma) e maggiorazioni per i figli. Lo ricava dalla stessa DSU.");
+        r.perche.push('Se in famiglia ci sono figli minorenni con genitori non sposati e non conviventi, servono anche i dati dell’altro genitore.');
+      } else if (s === 'uni') {
+        if (a.autonomo === 'si') {
+          r.tipo = 'ISEE università da studente autonomo';
+          r.perche.push('Vivi fuori casa da almeno 2 anni in un alloggio non della famiglia e hai un reddito tuo: l’ISEE comprende solo te (e l’eventuale coniuge e figli).');
+          r.perche.push('Controlla nel bando dell’ateneo o dell’ente regionale (in Lazio DiSCo) la soglia di reddito richiesta per essere autonomo.');
+          r.extra.push('Contratto d’affitto o residenza fuori casa da almeno 2 anni', 'CU o redditi da lavoro degli ultimi 2 anni');
+        } else {
+          r.tipo = 'ISEE università con la famiglia d’origine';
+          r.perche.push('Lo studente non autonomo entra nel nucleo dei genitori, anche se vive da solo o ha la residenza altrove.');
+          if (a.uniGen === 'no') gen(r);
+          r.extra.push('Documenti e redditi dei genitori', 'Matricola o iscrizione all’università');
+        }
+      } else if (s === 'disab') {
+        if (a.conParenti === 'si') {
+          r.tipo = 'ISEE sociosanitario con nucleo ristretto';
+          r.perche.push('La persona con disabilità maggiorenne può presentare un ISEE con solo sé stessa, il coniuge e i figli: genitori, fratelli e altri parenti conviventi restano fuori.');
+          r.perche.push('Di solito il valore è molto più basso dell’ordinario. Prima di inviarlo calcoliamo entrambi e scegliamo quello più conveniente.');
+        } else {
+          r.tipo = 'ISEE sociosanitario';
+          r.perche.push('Vive solo con coniuge e figli, oppure da sola: nucleo ordinario e ristretto coincidono.');
+        }
+        r.extra.push('Verbale di invalidità o di handicap (Legge 104), con data e numero', 'Ricevute delle spese per assistenza o badante');
+      } else if (s === 'rsa') {
+        r.tipo = 'ISEE sociosanitario per le residenze (RSA)';
+        r.perche.push('Serve per l’aiuto sulla quota sociale della retta. Si può usare anche il nucleo ristretto.');
+        if (a.figliFuori === 'si') {
+          r.perche.push('Per ogni figlio che non vive con lei si aggiunge una quota calcolata sulla sua situazione economica, salvo disabilità o estraneità accertata.');
+          r.extra.push('Codice fiscale, redditi e patrimonio di ogni figlio non convivente');
+        }
+        if (a.donazioni === 'si' || a.donazioni === 'nonso') {
+          r.perche.push('Le case donate a coniuge o figli nei 3 anni prima della richiesta, o dopo, contano ancora nel patrimonio di chi le ha donate.');
+          r.extra.push('Atti di donazione di immobili degli ultimi 3 anni');
+        }
+        r.extra.push('Verbale di invalidità o certificazione di non autosufficienza');
+      } else if (s === 'bonus') {
+        r.tipo = 'ISEE ordinario';
+        r.perche.push('Bonus sociale bollette, Carta Dedicata a te, riduzioni TARI e la maggior parte di bonus e tariffe usano l’ISEE ordinario. Se il bando scrive solo "ISEE in corso di validità", vale questo.');
+        r.perche.push('Il bonus sociale per luce, gas e acqua si attiva da solo quando presenti la DSU, se rientri nella soglia.');
+      } else {
+        r.tipo = 'ISEE ordinario (e gli altri, se servono)';
+        r.perche.push('Con la stessa DSU l’INPS calcola l’ordinario e, se compili i quadri giusti, anche minorenni, università e sociosanitario.');
+        r.perche.push('All’appuntamento ci dici quali aiuti vuoi chiedere e compiliamo la DSU completa, così hai tutti i valori che ti servono.');
+      }
+      if (a.calo === 'si') {
+        r.corrente = true;
+        r.perche.push("Valuta anche l'ISEE corrente: aggiorna l'ISEE con i redditi recenti se hai perso o ridotto il lavoro, se il reddito è sceso di oltre il 25% o il patrimonio di oltre il 20%. Vale 6 mesi.");
+        r.extra.push('Buste paga o redditi degli ultimi 12 mesi (o degli ultimi 2 mesi)', 'Lettera di licenziamento o comunicazione di riduzione dell’orario');
+      }
+      return r;
+    }
+
+    function gen(r) {
+      var g = a.altroGen;
+      if (g === 'escluso') {
+        r.perche.push('Il genitore che non vive con i figli non conta: versa un mantenimento deciso dal giudice, è escluso dalla responsabilità genitoriale o è estraneo.');
+        r.extra.push('Provvedimento del giudice sul mantenimento, oppure atto di esclusione o di accertamento dell’estraneità');
+      } else if (g === 'aggiuntivo') {
+        r.perche.push('Il genitore che non vive con i figli non entra nel nucleo, ma si aggiunge una "componente aggiuntiva" calcolata sulla sua situazione economica.');
+        r.extra.push('Codice fiscale, redditi e patrimonio dell’altro genitore');
+      } else if (g === 'nessuna') {
+        r.perche.push('Il genitore che non vive con i figli entra nel loro nucleo come se ci vivesse: servono i suoi redditi e il suo patrimonio.');
+        r.extra.push('Documento, codice fiscale, redditi e patrimonio dell’altro genitore');
+      } else {
+        r.perche.push('Conta anche il genitore che non vive con i figli, salvo alcuni casi (mantenimento deciso dal giudice, esclusione dalla responsabilità genitoriale, estraneità accertata). Lo verifichiamo insieme.');
+        r.extra.push('Dati dell’altro genitore ed eventuali provvedimenti del giudice');
+      }
+    }
+
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+    function renderQ(key) {
+      var d = Q[key];
+      var step = history.length + 1;
+      var h = '<p class="qi-step">Domanda ' + step + '</p><h2 class="qi-q">' + esc(d.q) + '</h2>';
+      if (d.help) h += '<p class="qi-help">' + esc(d.help) + '</p>';
+      h += '<div class="qi-opts">';
+      d.opts.forEach(function (o) {
+        h += '<button type="button" class="qi-opt" data-v="' + o[0] + '">' + esc(o[1]) + '</button>';
+      });
+      h += '</div>';
+      if (history.length) h += '<button type="button" class="qi-back" data-back="1">← Indietro</button>';
+      app.innerHTML = h;
+      app.querySelectorAll('.qi-opt').forEach(function (b) {
+        b.addEventListener('click', function () {
+          a[key] = b.getAttribute('data-v');
+          history.push(key);
+          var n = next(key);
+          n ? renderQ(n) : renderR();
+          app.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+      var bk = app.querySelector('[data-back]');
+      if (bk) bk.addEventListener('click', back);
+      var f = app.querySelector('.qi-q'); if (f && step > 1) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
+    }
+
+    function back() {
+      var k = history.pop();
+      if (!k) return;
+      delete a[k];
+      renderQ(k);
+    }
+
+    function renderR() {
+      var r = result();
+      var docs = r.docs.concat(r.extra);
+      var msg = 'Ciao, ho fatto il test sul vostro sito: mi serve "' + r.tipo + '". Vorrei fare l’ISEE.';
+      var h = '<p class="qi-step">Il tuo risultato</p><h2 class="qi-res">' + esc(r.tipo) + '</h2>';
+      if (r.corrente) h += '<p class="qi-tag">+ valuta l’ISEE corrente</p>';
+      h += '<h3 class="qi-h3">Perché</h3><ul class="qi-list">' + r.perche.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>';
+      if (docs.length) h += '<h3 class="qi-h3">Cosa preparare</h3><ul class="qi-list qi-check">' + docs.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>';
+      if (a.scopo !== 'noisee') h += '<p class="qi-help">Ogni ISEE scade il 31 dicembre dell’anno in cui presenti la DSU. Al Centro Pratiche Flaiano tutti i tipi di ISEE sono <b>gratis</b>.</p>';
+      else if (r.cta) h += '<p class="qi-help">' + esc(r.cta) + '</p>';
+      h += '<div class="qi-cta"><a class="qi-btn qi-btn-main" href="/prenota">Prenota in ufficio o in videochiamata</a>'
+        + '<a class="qi-btn qi-btn-wa" href="' + WA + encodeURIComponent(msg) + '" target="_blank" rel="noopener">Scrivici su WhatsApp</a></div>';
+      h += '<div class="qi-row"><button type="button" class="qi-back" data-back="1">← Cambia l’ultima risposta</button><button type="button" class="qi-back" data-reset="1">Ricomincia</button></div>';
+      app.innerHTML = h;
+      app.querySelector('[data-back]').addEventListener('click', back);
+      app.querySelector('[data-reset]').addEventListener('click', function () { a = {}; history = []; renderQ('scopo'); });
+      var t = app.querySelector('.qi-res'); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
+      try { window.dataLayer && window.dataLayer.push({ event: 'quale_isee_result', tipo: r.tipo }); } catch (e) {}
+    }
+
+    renderQ('scopo');
+  })();
+  </script>
+
+  <style is:global>
+    .qi { background: #F1EEFF; padding: 40px 16px 64px; }
+    .qi-wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+    .qi-eyebrow { align-self: flex-start; background: #D4FF4F; color: #14142B; font-weight: 800; font-size: 14px; padding: 6px 14px; border-radius: 999px; }
+    .qi-title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 7vw, 56px); line-height: 1.02; color: #14142B; letter-spacing: -1px; }
+    .qi-lead { margin: 0; font-size: 18px; line-height: 1.5; color: #34344A; }
+    .qi-card { background: #fff; border-radius: 28px; padding: 28px; box-shadow: 0 10px 40px rgba(91, 61, 245, .12); display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 90px; }
+    .qi-step { margin: 0; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: #5B3DF5; }
+    .qi-q, .qi-res { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(22px, 4.5vw, 30px); line-height: 1.15; color: #14142B; outline: none; }
+    .qi-res { color: #5B3DF5; }
+    .qi-help { margin: 0; color: #4A4A60; font-size: 16px; line-height: 1.5; }
+    .qi-opts { display: flex; flex-direction: column; gap: 10px; }
+    .qi-opt { text-align: left; font: inherit; font-size: 17px; line-height: 1.35; padding: 16px 18px; border-radius: 16px; border: 2px solid #E4E0FF; background: #FAFAFF; color: #14142B; cursor: pointer; transition: border-color .15s, background .15s; }
+    .qi-opt:hover, .qi-opt:focus-visible { border-color: #5B3DF5; background: #F1EEFF; outline: none; }
+    .qi-back { align-self: flex-start; font: inherit; font-weight: 700; color: #5B3DF5; background: none; border: 0; padding: 6px 0; cursor: pointer; }
+    .qi-row { display: flex; gap: 20px; flex-wrap: wrap; }
+    .qi-tag { align-self: flex-start; margin: 0; background: #FF5C8A; color: #fff; font-weight: 800; font-size: 14px; padding: 6px 12px; border-radius: 10px; }
+    .qi-h3 { margin: 6px 0 0; font-size: 18px; font-weight: 800; color: #14142B; }
+    .qi-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 16px; line-height: 1.5; color: #24243A; }
+    .qi-check { list-style: none; padding-left: 0; }
+    .qi-check li { position: relative; padding-left: 30px; }
+    .qi-check li::before { content: ""; position: absolute; left: 0; top: 3px; width: 20px; height: 20px; border-radius: 6px; background: #D4FF4F url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314142B' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/14px no-repeat; }
+    .qi-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+    .qi-btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 999px; font-weight: 800; text-decoration: none; font-size: 16px; }
+    .qi-btn-main { background: #5B3DF5; color: #fff; }
+    .qi-btn-wa { background: #14142B; color: #fff; }
+    .qi-note { margin: 0; font-size: 14px; line-height: 1.5; color: #4A4A60; }
+    .qi-note a, .qi-card a:not(.qi-btn) { color: #5B3DF5; font-weight: 700; }
+    @media (max-width: 560px) { .qi-card { padding: 20px; border-radius: 22px; } .qi-btn { width: 100%; } }
+  </style>
+</BaseLayout>
