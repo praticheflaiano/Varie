@@ -10,7 +10,7 @@
  *
  * Esclude la cartella _templates (template, non articoli).
  */
-const NASPI_URL = "https://domande-disoccupazione-web.vercel.app";
+const NASPI_URL = "https://domandedisoccupazione.it";
 import { cp, mkdir, rm, stat, readdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
