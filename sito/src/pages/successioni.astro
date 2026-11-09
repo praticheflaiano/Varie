@@ -1,14 +1,231 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
-import body from "~/fragments/successioni.html?raw";
-const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Entro quando va fatta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"C'\u00e8 un termine di legge dalla data del decesso. Al primo incontro ti diciamo la scadenza esatta per il tuo caso.\"}}, {\"@type\": \"Question\", \"name\": \"Serve sempre, anche senza case?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Non sempre. In alcuni casi, con soli conti di importo basso e solo coniuge e figli eredi, non \u00e8 obbligatoria. Lo verifichiamo insieme.\"}}, {\"@type\": \"Question\", \"name\": \"E la pensione di reversibilit\u00e0?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Se ti spetta, la chiediamo noi come patronato, nello stesso percorso.\"}}]}";
+
+/*
+ * Fonti (verificate il 10/11/2026):
+ * - Pagina del titolare praticheflaiano.it/successioni (aggiornata al 18/10/2026): prezzo 600 € tutto compreso,
+ *   acconto 150 €, rimborso meno 49 €, 30 giorni lavorativi, esonero, volture, IMU, FAQ, moduli GHL.
+ * - Elenco documenti fornito dal titolare il 10/11/2026.
+ * - D.Lgs. 346/1990 (TUS): art. 7 (aliquote e franchigie), art. 24 (spese mediche ultimi 6 mesi, funerarie fino a 1.032,91 €),
+ *   art. 28 (esonero: coniuge e linea retta, attivo fino a 100.000 €, niente immobili), art. 31 (12 mesi).
+ * - D.Lgs. 139/2024 e circolare AdE 3/E del 16/4/2025: autoliquidazione per le successioni aperte dal 1/1/2025,
+ *   imposta di successione entro 90 giorni dal termine della dichiarazione, rate se almeno 1.000 €.
+ * - Moduli GHL: "Pre-valutazione successione" (ioylPrrDs1drqeYIpnW8), "Documenti successione" (3xkSAVCqTF0Rdqh652QV);
+ *   calendario dedicato link.arcanis.it/widget/bookings/successioni-flaiano.
+ */
+const VERIFICA = "https://link.arcanis.it/widget/form/ioylPrrDs1drqeYIpnW8";
+const CARICA = "https://link.arcanis.it/widget/form/3xkSAVCqTF0Rdqh652QV";
+const BOOK = "https://link.arcanis.it/widget/bookings/successioni-flaiano";
+const WA = "https://wa.me/393716230690?text=" + encodeURIComponent("Ciao, vorrei informazioni sulla dichiarazione di successione.");
+
+const docGroups = [
+  {
+    title: "Chi è mancato e chi eredita",
+    items: [
+      { t: "Documento d'identità degli eredi e del defunto", cosa: "Carta d'identità, passaporto o patente di ogni erede, e l'ultimo documento della persona scomparsa.", dove: "Li avete in casa. Se il documento del defunto non si trova, ditecelo al colloquio: vediamo come procedere." },
+      { t: "Codice fiscale degli eredi e del defunto", cosa: "Serve per indicare tutti nella dichiarazione e per le volture delle case.", dove: "È sulla tessera sanitaria. Se è persa, il duplicato si chiede all'Agenzia delle Entrate, anche online." },
+      { t: "Permesso di soggiorno", cosa: "Solo per gli eredi cittadini di Paesi fuori dall'Unione europea.", dove: "È il permesso o la carta di soggiorno rilasciati dalla Questura." },
+      { t: "Telefono ed email", cosa: "Per tenervi aggiornati e per ricevere le ricevute dell'Agenzia delle Entrate.", dove: "Basta quello di chi firma la dichiarazione." },
+      { t: "Residenza degli eredi e ultima residenza del defunto", cosa: "L'ultima residenza del defunto stabilisce quale ufficio dell'Agenzia delle Entrate è competente.", dove: "Di solito basta indicarla. Se serve un certificato, si chiede all'Anagrafe del Comune; quelli degli eredi si scaricano anche dall'Anagrafe nazionale (ANPR) con SPID o CIE." },
+      { t: "Stato civile del defunto", cosa: "Dice chi sono gli eredi: il coniuge separato di solito eredita, quello divorziato no. Per questo, se c'è stata separazione o divorzio, serve la sentenza o l'omologa.", dove: "La sentenza la ha chi era parte nella causa o l'avvocato; l'estratto di matrimonio con le annotazioni si chiede al Comune." },
+      { t: "Dichiarazione sostitutiva di atto di notorietà", cosa: "È la dichiarazione firmata da un erede che indica chi sono tutti gli eredi e la loro parentela. La chiedono anche le banche per sbloccare i conti.", dove: "La prepariamo noi con l'albero genealogico. Alcune banche la vogliono autenticata in Comune o dal notaio: ve lo diciamo noi." },
+      { t: "Certificato di morte", cosa: "Attesta data e luogo del decesso, da cui partono i 12 mesi.", dove: "Si chiede all'ufficio di Stato civile del Comune dove è avvenuto il decesso o di ultima residenza. Spesso basta una dichiarazione sostitutiva, che controlliamo noi." },
+    ],
+  },
+  {
+    title: "Case, box e terreni",
+    items: [
+      { t: "Atto di provenienza degli immobili", cosa: "Il documento con cui il defunto era diventato proprietario: rogito di acquisto, precedente successione, donazione.", dove: "Di solito è tra le carte di casa. Altrimenti si chiede una copia al notaio che ha fatto l'atto o all'Archivio notarile." },
+      { t: "Planimetrie e visure catastali", cosa: "Descrivono l'immobile e la sua rendita, da cui si calcolano le imposte.", dove: "Le visure le facciamo noi. Le planimetrie si recuperano dal Catasto (Agenzia delle Entrate): se servono, ve lo diciamo." },
+      { t: "Certificato di destinazione urbanistica (terreni)", cosa: "Dice se un terreno è agricolo o edificabile. Cambia il valore da dichiarare e quindi le imposte.", dove: "Si chiede all'ufficio urbanistica del Comune dove si trova il terreno. In alcuni casi basta una dichiarazione sostitutiva: lo valutiamo insieme." },
+      { t: "Mutuo ipotecario", cosa: "Il debito residuo alla data del decesso si sottrae dall'eredità.", dove: "Contratto di mutuo e attestato del debito residuo, chiesti alla banca. Controllate anche se c'era un'assicurazione sul mutuo." },
+    ],
+  },
+  {
+    title: "Conti, libretti e debiti",
+    items: [
+      { t: "Certificazione di credito o di debito", cosa: "La banca o le Poste attestano saldo di conti, libretti, titoli e debiti alla data del decesso. Sono i valori da dichiarare.", dove: "Si chiede alla filiale di ogni banca e alle Poste. Con una delega degli eredi, possiamo chiederla noi." },
+      { t: "IBAN dell'erede che firma", cosa: "Le imposte e i bolli della dichiarazione si pagano con addebito sul conto di chi la presenta.", dove: "Basta il codice IBAN di un conto intestato a lui." },
+    ],
+  },
+  {
+    title: "Testamento e rinunce",
+    items: [
+      { t: "Testamento", cosa: "Se c'è, decide chi eredita e in che quote. Il testamento scritto a mano va prima pubblicato dal notaio.", dove: "Copia del testamento e del verbale di pubblicazione, dal notaio." },
+      { t: "Atti di rinuncia all'eredità", cosa: "Se qualcuno non vuole l'eredità (ad esempio perché ci sono debiti), deve rinunciare con un atto formale. Chi rinuncia non compare tra gli eredi.", dove: "La rinuncia si fa dal notaio o in cancelleria del Tribunale: serve la copia dell'atto." },
+    ],
+  },
+  {
+    title: "Redditi e spese da scalare",
+    items: [
+      { t: "Ultimo 730 o modello Redditi del defunto", cosa: "Serve per controllare redditi e rimborsi IRPEF ancora da incassare, e per la dichiarazione dei redditi del defunto che gli eredi devono presentare per l'anno del decesso.", dove: "Tra le carte di casa, o dal CAF che l'ha presentato. Possiamo recuperarlo noi con le deleghe." },
+      { t: "Fattura delle spese funerarie", cosa: "Se le ha pagate un erede, si sottraggono dall'eredità fino a 1.032,91 €. Chi le ha pagate le può usare anche nel proprio 730.", dove: "La rilascia l'agenzia funebre: deve essere intestata all'erede che ha pagato." },
+      { t: "Spese mediche degli ultimi 6 mesi", cosa: "Ricoveri, medicinali e protesi del defunto negli ultimi sei mesi di vita, se pagati dagli eredi, si sottraggono dall'eredità.", dove: "Fatture, ricevute e scontrini parlanti, intestati all'erede che ha pagato." },
+    ],
+  },
+];
+
+const faqs = [
+  { q: "Entro quando va presentata la dichiarazione di successione?", a: "Entro 12 mesi dalla data del decesso. Se il termine è scaduto si può presentare lo stesso, con una sanzione ridotta (ravvedimento) che calcoliamo noi." },
+  { q: "Quando non serve?", a: "Quando ci sono insieme tre condizioni: eredi solo coniuge e figli (o altri parenti in linea retta), eredità fino a 100.000 € e nessuna casa, terreno o diritto su immobili. In quel caso prepariamo la dichiarazione di esonero per la banca." },
+  { q: "Chi deve presentarla?", a: "Gli eredi, i chiamati all'eredità o i legatari. Ne basta una sola per tutti, firmata da uno di loro." },
+  { q: "Quanto si paga di imposte?", a: "Dipende dalla parentela e da cosa c'è nell'eredità. Coniuge e figli pagano il 4% solo sulla parte oltre 1 milione di euro ciascuno, quindi spesso niente. Con immobili ci sono le imposte ipotecaria (2%) e catastale (1%), che con l'agevolazione prima casa diventano 200 € ciascuna. Il conto esatto te lo mostriamo prima della firma." },
+  { q: "Quanto costa il vostro servizio?", a: "600 € tutto compreso: dichiarazione, volture e documenti per la banca, senza limiti di eredi o immobili. Imposte e bolli dello Stato sono a parte e te li diciamo prima. Solo per casi molto particolari facciamo un preventivo scritto." },
+  { q: "Le volture delle case sono comprese?", a: "Sì. Le chiediamo con la dichiarazione telematica e di solito il Catasto le esegue in automatico: controlliamo noi l'esito." },
+  { q: "Devo fare la dichiarazione IMU?", a: "No: se nella successione ci sono immobili, l'Agenzia delle Entrate la trasmette al Comune. L'IMU però va pagata dagli eredi: ti diciamo noi come." },
+  { q: "Le polizze vita entrano nella successione?", a: "No. Le somme delle assicurazioni sulla vita vanno ai beneficiari indicati nella polizza e non si dichiarano. Si chiedono direttamente alla compagnia." },
+  { q: "Serve il notaio?", a: "Per la dichiarazione di successione no. Può servire per pubblicare un testamento scritto a mano, per una rinuncia all'eredità o per vendere la casa." },
+  { q: "Gli eredi abitano in città diverse: come facciamo?", a: "Tutto a distanza: colloquio al telefono o in videochiamata, documenti inviati online, firme da telefono." },
+  { q: "In quanto tempo è pronta?", a: "La presentiamo appena arrivano documenti e acconto. Di solito consegniamo in 30 giorni lavorativi. Poi i tempi di sblocco dei conti dipendono dalla banca." },
+  { q: "C'è da pagare un acconto?", a: "Sì, 150 € quando ci consegni i documenti; il saldo alla consegna della pratica. Se la pratica non si può fare, l'acconto ti viene restituito meno 49 € di spese di gestione. Tutte le condizioni sono nell'incarico che firmi prima di iniziare." },
+];
+
+const props = {
+  eyebrow: "Successioni · Roma Nord e online",
+  title: "Un momento difficile.",
+  highlight: "Le carte lasciale a noi.",
+  lead: "Dichiarazione di successione, volture delle case, conti in banca e imposte: un solo referente, un prezzo chiaro e la lista dei documenti con la spiegazione di dove trovarli. In ufficio a Vigne Nuove o a distanza, anche con eredi in città diverse.",
+  bookingHref: BOOK,
+  heroCta: { label: "Verifica cosa serve nel tuo caso", href: "#verifica" },
+  online: { href: CARICA, title: "Carica i documenti", text: "Hai già fatto il primo colloquio? Carica foto o PDF dei documenti dal telefono. In alternativa mandali su WhatsApp.", cta: "Carica i documenti →" },
+  chat: {
+    q: "È mancato mio padre, c'è la casa e un conto alle Poste. Da dove partiamo?",
+    a: "Ci vediamo anche in video: ti mandiamo la lista dei documenti, le visure le facciamo noi.",
+    done: "Successione presentata, volture fatte",
+  },
+  sticker: "600 € tutto compreso",
+  strip: ["Un solo referente", "Prezzo chiaro: 600 €", "Volture e banca comprese", "Anche a distanza"],
+  needTitle: "Da dove partire",
+  needs: [
+    { t: "C'è una casa", d: "Va dichiarata e intestata agli eredi con la voltura. Calcoliamo le imposte e verifichiamo l'agevolazione prima casa." },
+    { t: "C'è un conto in banca", d: "Per sbloccarlo la banca chiede la successione o la dichiarazione di esonero. Prepariamo tutto quello che vuole la tua banca." },
+    { t: "Non sai se conviene accettare", d: "Ci sono debiti o dubbi? Valutiamo insieme rinuncia o accettazione con beneficio d'inventario, prima di fare passi irreversibili." },
+  ],
+  steps: [
+    { t: "Ci racconti la situazione", d: "In ufficio, al telefono o in video. Ti diciamo se la dichiarazione serve, entro quando e quali documenti preparare." },
+    { t: "Raccogliamo e calcoliamo", d: "Visure, albero genealogico e saldi li recuperiamo noi. Prima della firma ti mostriamo quote e imposte voce per voce." },
+    { t: "Presentiamo e chiudiamo", d: "Inviamo all'Agenzia delle Entrate con le volture e ti consegniamo ricevuta, attestazione e documenti per la banca." },
+  ],
+  docsTitle: "Per il primo incontro bastano",
+  docs: [
+    "Certificato di morte o data e luogo del decesso",
+    "Documenti e codici fiscali degli eredi",
+    "Testamento, se c'è",
+    "Indirizzi di case e terreni (le visure le facciamo noi)",
+    "Banche e Poste dove il defunto aveva conti o libretti",
+  ],
+  docsNote: "Non hai tutto? Non importa: partiamo e ti diciamo cosa recuperare. Qui sotto trovi l'elenco completo, con dove si trova ogni documento.",
+  price: {
+    value: "600 €",
+    badge: "Tutto compreso",
+    text: "Dichiarazione di successione, <b>volture catastali</b> e <b>documenti per lo svincolo in banca</b>, senza limiti di eredi o immobili. Imposte e bolli dello Stato a parte, calcolati e mostrati prima della firma. Acconto di 150 € alla consegna dei documenti, saldo alla consegna della pratica.",
+    cta: { label: "Fissa il primo colloquio →", href: BOOK },
+  },
+  faqs,
+  related: [
+    { label: "Pensione di reversibilità", href: "/pensioni" },
+    { label: "730 per conto del defunto", href: "/730" },
+    { label: "IMU", href: "/blog/imu-saldo-16-dicembre-2026-roma" },
+    { label: "TARI Roma", href: "/blog/tari-roma-esenzione-bonus-sociale-riduzioni" },
+  ],
+};
+
+const faqLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+});
+
+const card = "background:#fff;border:2px solid #14142B;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px";
+const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1";
+const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
+const th = "text-align:left;padding:14px 16px;font-size:15px;background:#14142B;color:#fff";
+const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px solid #E4E0FF;vertical-align:top";
 ---
-<BaseLayout title={"Dichiarazione di successione a Roma Nord"} description={"Dichiarazione di successione, volture, imposte e conti del defunto. Preventivo chiaro al primo incontro, a Vigne Nuove o in videochiamata."}>
+
+<BaseLayout title="Dichiarazione di successione a Roma: 600 € tutto compreso" description="Dichiarazione di successione, volture e svincolo dei conti a 600 € tutto compreso. CAF a Vigne Nuove, Roma Nord, o a distanza. Documenti spiegati uno per uno.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="successioni" name="Dichiarazione di successione" description={"Dichiarazione di successione telematica, volture catastali e pratiche per conti e beni ereditari."} serviceType="Assistenza fiscale - successioni" offers={[]} />
-  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
-  <div class="lp"><Fragment set:html={body} /></div>
+  <JsonLdService slot="head" slug="successioni" name="Dichiarazione di successione" description="Dichiarazione di successione telematica, volture catastali e documenti per lo svincolo dei conti, senza limiti di eredi o immobili." serviceType="Assistenza fiscale - successioni" offers={[{ name: "Dichiarazione di successione tutto compreso (imposte escluse)", price: 600 }]} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <ServiceLanding {...props}>
+    <!-- SCADENZE, ESONERO, IMPOSTE -->
+    <section class="c46" id="regole">
+      <span style="align-self:flex-start;background:#F1EEFF;color:#5B3DF5;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Le regole in breve</span>
+      <h2 class="c1">Serve davvero, entro quando e quanto si paga</h2>
+      <div class="c17">
+        <div style={card}>
+          <h3 style={h3}>Entro 12 mesi</h3>
+          <p style={p}>La dichiarazione va presentata <b>entro 12 mesi dal decesso</b>. Se sono passati, si può fare lo stesso con una sanzione ridotta: la calcoliamo noi con il ravvedimento.</p>
+        </div>
+        <div style={card}>
+          <h3 style={h3}>Quando non serve</h3>
+          <p style={p}>Solo se ci sono <b>tutte e tre</b> le condizioni: eredi coniuge e figli (o altri parenti in linea retta), eredità <b>fino a 100.000 €</b> e <b>nessun immobile</b>. Allora per la banca basta la dichiarazione di esonero, che prepariamo noi.</p>
+        </div>
+        <div style="background:#5B3DF5;color:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px">
+          <h3 style={`${h3};color:#fff`}>Volture e IMU incluse</h3>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Con la dichiarazione chiediamo anche le <b style="color:#fff">volture</b> delle case. La dichiarazione IMU non serve: l'Agenzia delle Entrate la manda al Comune.</p>
+        </div>
+      </div>
+
+      <div style="background:#fff;border-radius:28px;overflow:hidden;border:2px solid #14142B;margin-top:8px">
+        <div>
+          <table style="width:100%;border-collapse:collapse">
+            <caption style="text-align:left;padding:18px 16px 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px">L'imposta di successione</caption>
+            <thead><tr><th style={th}>Chi eredita</th><th style={th}>Quanto si paga</th></tr></thead>
+            <tbody>
+              <tr><td style={td}>Coniuge, figli, genitori, nipoti in linea retta</td><td style={td}><b>4%</b> solo sulla parte oltre <b>1.000.000 €</b> a testa</td></tr>
+              <tr><td style={td}>Fratelli e sorelle</td><td style={td}><b>6%</b> sulla parte oltre <b>100.000 €</b> a testa</td></tr>
+              <tr><td style={td}>Altri parenti fino al 4° grado e affini fino al 3°</td><td style={td}><b>6%</b> su tutto</td></tr>
+              <tr><td style={td}>Tutti gli altri</td><td style={td}><b>8%</b> su tutto</td></tr>
+              <tr><td style={td}>Erede con disabilità grave (Legge 104)</td><td style={td}>aliquota della sua parentela, sulla parte oltre <b>1.500.000 €</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin:0;padding:16px;font-size:15px;line-height:1.55;color:#3F3F5A;border-top:1px solid #E4E0FF">Se ci sono <b>immobili</b> si pagano anche l'imposta <b>ipotecaria (2%)</b> e <b>catastale (1%)</b>, minimo 200 € ciascuna: con l'agevolazione <b>prima casa</b> diventano <b>200 € fisse</b> ciascuna. Si aggiungono bolli e tasse fisse. Per i decessi dal 2025 l'imposta di successione la calcola chi presenta la dichiarazione e si paga entro 90 giorni dalla scadenza; da 1.000 € in su si può rateizzare. Il conto completo te lo mostriamo prima della firma.</p>
+      </div>
+    </section>
+
+    <!-- DOCUMENTI SPIEGATI -->
+    <section style="background:#F7F7FB" id="documenti">
+      <div class="c46">
+        <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">I documenti, uno per uno</span>
+        <h2 class="c1">Cosa serve, a cosa serve e dove lo trovi</h2>
+        <p style={`${p};font-size:18px;max-width:780px`}>Non devi portare tutto il primo giorno: dopo il colloquio ti mandiamo la lista giusta per il tuo caso. Molte cose le recuperiamo noi, come le <b>visure</b>, l'<b>albero genealogico</b> e, con una delega, i <b>saldi in banca</b>.</p>
+        {docGroups.map((g) => (
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">
+            <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.1">{g.title}</h3>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+              {g.items.map((d) => (
+                <div style="background:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:8px;border:1px solid #E4E0FF">
+                  <h4 style="margin:0;font-size:18px;line-height:1.25;color:#14142B">{d.t}</h4>
+                  <p style="margin:0;font-size:15px;line-height:1.5;color:#3F3F5A"><b style="color:#5B3DF5">Cos'è.</b> {d.cosa}</p>
+                  <p style="margin:0;font-size:15px;line-height:1.5;color:#3F3F5A"><b style="color:#14142B">Dove lo trovi.</b> {d.dove}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <p style={`${p};margin-top:6px`}><b>Casi particolari</b> da dirci al colloquio: eredi minorenni o con amministratore di sostegno, eredi o beni all'estero, quote di società, donazioni fatte in vita, conti cointestati, cassette di sicurezza.</p>
+      </div>
+    </section>
+
+    <!-- VERIFICA -->
+    <section id="verifica" style="background:#F1EEFF;scroll-margin-top:80px">
+      <div style="max-width:860px;margin:0 auto;padding:72px 24px;display:flex;flex-direction:column;gap:18px">
+        <span style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Senza impegno</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1;font-weight:800">Verifica cosa serve nel tuo caso</h2>
+        <p style="margin:0;font-size:18px;line-height:1.5;color:#3F3F5A">Rispondi a poche domande: ti diciamo se la dichiarazione serve, entro quando e quali documenti preparare. Ti richiamiamo noi negli orari d'ufficio.</p>
+        <div style="background:#fff;border-radius:28px;padding:16px">
+          <iframe src={VERIFICA} style="width:100%;height:900px;border:none;border-radius:20px" id="inline-ioylPrrDs1drqeYIpnW8" data-layout="{'id':'INLINE'}" title="Pre-valutazione successione"></iframe>
+        </div>
+        <p style="margin:0;font-size:15px;color:#3F3F5A">Il modulo non si carica? <a href={VERIFICA} target="_blank" rel="noopener" style="font-weight:800">Aprilo in una nuova pagina</a>, <a href={WA} target="_blank" rel="noopener" style="font-weight:800">scrivici su WhatsApp</a> o chiamaci allo <a href="tel:+390697845429" style="font-weight:800">06 9784 5429</a>.</p>
+      </div>
+      <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
+    </section>
+  </ServiceLanding>
   <LandingArticles categories={["successioni-volture", "imu-tributi-locali"]} />
 </BaseLayout>
