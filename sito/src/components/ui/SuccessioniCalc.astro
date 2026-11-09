@@ -27,14 +27,14 @@ const { compact = false } = Astro.props;
       <p class="sc-hint">La rendita catastale è nella visura o nel rogito. Se non ce l'hai, chiedicela: la visura la facciamo noi.</p>
       <div id="sc-imm"></div>
       <button type="button" class="sc-add" id="sc-add-imm">+ Aggiungi un immobile</button>
-      <label class="sc-field sc-inline" id="sc-prov-wrap">In quante province diverse si trovano?
+      <label class="sc-field sc-inline" id="sc-prov-wrap">Uffici dei registri immobiliari coinvolti <small>(di solito uno per provincia; nelle grandi città come Roma possono essere di più: nel dubbio lascia 1, lo verifichiamo noi)</small>
         <input type="number" id="sc-prov" min="1" max="20" value="1" inputmode="numeric" />
       </label>
     </fieldset>
 
     <fieldset class="sc-box">
       <legend>2. Soldi e altri beni</legend>
-      <label class="sc-field">Conti correnti, libretti e depositi (saldo alla data del decesso)
+      <label class="sc-field">Conti correnti, libretti e depositi (saldo alla data del decesso) <small>(se cointestati, solo la parte del defunto: di solito la metà)</small>
         <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-conti" placeholder="0" /></span></label>
       <label class="sc-field">Azioni, fondi, obbligazioni non statali
         <span class="sc-eur"><input type="text" inputmode="decimal" id="sc-titoli" placeholder="0" /></span></label>
@@ -148,7 +148,7 @@ const { compact = false } = Astro.props;
     var hasImm = imm.some(function (x) { return num(x.r) > 0; });
     var attivo = tot.imm + conti + titoli + dn;
     var allRetta = eredi.every(function (e) { return e.p === 'retta'; });
-    var esonero = !hasImm && allRetta && attivo > 0 && attivo <= 100000;
+    var esonero = !hasImm && allRetta && (attivo > 0 || bot > 0) && attivo <= 100000;
 
     var perE = eredi.map(function (e) {
       var q = num(e.q) / 100, rule = RULE[e.p];
@@ -190,7 +190,7 @@ const { compact = false } = Astro.props;
     h += '<table class="sc-tab"><tbody>'
       + '<tr class="sc-sec"><td colspan="2">Da pagare quando si presenta la dichiarazione</td></tr>'
       + (c.hasImm ? row('Imposta ipotecaria' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(2%, minimo 200 €)</small>'), eur(c.ipo)) + row('Imposta catastale' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(1%, minimo 200 €)</small>'), eur(c.cat))
-        + row('Tasse ipotecarie e catastali <small>(120 € per provincia)</small>', eur(c.tasse)) + row('Imposta di bollo <small>(85 € per provincia)</small>', eur(c.bollo)) : row('Imposte ipotecaria e catastale', 'non dovute: nessun immobile'))
+        + row('Tasse ipotecarie e catastali <small>(120 € per ufficio)</small>', eur(c.tasse)) + row('Imposta di bollo <small>(85 € per ufficio)</small>', eur(c.bollo)) : row('Imposte ipotecaria e catastale', 'non dovute: nessun immobile'))
       + (c.att ? row('Attestazione per la banca <small>(bollo e tributi)</small>', eur(c.att)) : '')
       + row('Subtotale', eur(fisse), true)
       + '<tr class="sc-sec"><td colspan="2">Imposta di successione <small>(entro 90 giorni dalla scadenza dei 12 mesi)</small></td></tr>';
