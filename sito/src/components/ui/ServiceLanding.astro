@@ -17,6 +17,7 @@ interface Props {
   sticker: string;
   strip: string[];
   needTitle?: string;
+  needsLead?: string;
   needs: Card[];
   steps: Card[];
   docsTitle?: string;
@@ -29,7 +30,7 @@ interface Props {
 
 const {
   eyebrow, title, highlight, lead, bookingHref = BOOKING.arcanisGroup, chat, sticker, strip,
-  needTitle = "Ti serve se…", needs, steps, docsTitle = "Cosa ti serve", docs, docsNote, price, faqs, related,
+  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs, docsNote, price, faqs, related,
 } = Astro.props;
 
 const needClass = ["c39", "c41", "c40"];
@@ -65,6 +66,7 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
 
   <section class="c42">
     <h2 class="c1">{needTitle}</h2>
+    {needsLead && <p class="c4" style="font-size:18px;max-width:760px;margin-top:-12px">{needsLead}</p>}
     <div class="c17">
       {needs.map((n, i) => (
         <div class={needClass[i % 3]}><h3 class="c8">{n.t}</h3><p class="c4">{n.d}</p></div>
@@ -72,13 +74,15 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
     </div>
   </section>
 
+  <slot />
+
   <section class="c46">
     <h2 class="c1">Fatto in 3 mosse</h2>
     <div class="c17">
       {steps.map((s, i) => i < 2 ? (
         <div class="c9"><span class="c7">0{i + 1}</span><h3 style="margin:0;font-size:21px">{s.t}</h3><p class="c4">{s.d}</p></div>
       ) : (
-        <div class="c21"><span class="c35">0{i + 1}</span><h3 style="margin:0;font-size:21px">{s.t}</h3><p class="c71">{s.d}</p></div>
+        <div class="c21"><span class="c35">0{i + 1}</span><h3 style="margin:0;font-size:21px;color:#fff">{s.t}</h3><p class="c71">{s.d}</p></div>
       ))}
     </div>
   </section>

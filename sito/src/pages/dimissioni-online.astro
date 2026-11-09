@@ -3,13 +3,188 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
-const props = {"eyebrow": "Dimissioni online · Patronato", "title": "Vuoi dimetterti?", "highlight": "Facciamolo bene.", "lead": "Le dimissioni si fanno solo online. Le inviamo noi come patronato, anche se non hai lo SPID, e prima ti diciamo se con la giusta causa puoi avere la NASpI.", "chat": {"q": "Non mi pagano lo stipendio da tre mesi, posso dimettermi e prendere la NASpI?", "a": "In molti casi sì, con le dimissioni per giusta causa. Vieni con le buste paga: controlliamo e le inviamo noi.", "done": "Dimissioni inviate"}, "sticker": "Anche senza SPID", "strip": ["Anche senza SPID", "Giusta causa e NASpI", "Revoca entro 7 giorni", "Domanda NASpI gratis"], "needs": [{"t": "vuoi cambiare lavoro", "d": "Dimissioni volontarie con il giusto preavviso, per non dover pagare penali al datore di lavoro."}, {"t": "il lavoro è diventato impossibile", "d": "Stipendi non pagati, contributi non versati, mobbing: con la giusta causa puoi avere la NASpI."}, {"t": "ci hai ripensato", "d": "Le dimissioni online si possono revocare entro 7 giorni. Se serve, la revoca la facciamo noi."}], "steps": [{"t": "Ci racconti la situazione", "d": "Capiamo se sono dimissioni volontarie o per giusta causa e quale preavviso serve."}, {"t": "Inviamo le dimissioni", "d": "Compiliamo e inviamo il modulo al Ministero del Lavoro come patronato."}, {"t": "Pensiamo alla NASpI", "d": "Se ne hai diritto, presentiamo subito la domanda NASpI, gratis."}], "docs": ["Documento d'identità e codice fiscale", "Contratto di lavoro o lettera di assunzione", "Ultime buste paga", "Data da cui vuoi che decorrano le dimissioni", "Per la giusta causa: documenti che la provano (stipendi non pagati, comunicazioni)", "Indirizzo email o PEC del datore di lavoro"], "docsNote": "Non firmare dimissioni su carta: senza la procedura online non sono valide.", "faqs": [{"q": "Posso dimettermi senza SPID?", "a": "Sì, tramite un patronato come il nostro: le inviamo noi per te."}, {"q": "Con le dimissioni prendo la NASpI?", "a": "Con le dimissioni volontarie no. Con le dimissioni per giusta causa sì, se hai i requisiti. Valutiamo insieme la tua situazione. <a href='/naspi'>Tutto sulla NASpI</a>."}, {"q": "Posso ripensarci?", "a": "Sì, entro 7 giorni dall'invio le dimissioni si possono revocare."}, {"q": "Ci sono casi in cui non si fanno online?", "a": "Sì, per esempio nel lavoro domestico, durante il periodo di prova o per le lavoratrici madri e i lavoratori padri nei periodi protetti, che seguono una procedura diversa. Ti diciamo noi cosa fare."}], "related": [{"label": "NASpI", "href": "/naspi"}, {"label": "Portale NASpI", "href": "https://domandedisoccupazione.it"}, {"label": "Checklist primi 7 giorni", "href": "/blog/checklist-primi-7-giorni-perdita-lavoro-roma"}, {"label": "ADI e SFL", "href": "/adi-sfl"}]};
-const faqLd = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Posso dimettermi senza SPID?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Sì, tramite un patronato come il nostro: le inviamo noi per te.\"}}, {\"@type\": \"Question\", \"name\": \"Con le dimissioni prendo la NASpI?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Con le dimissioni volontarie no. Con le dimissioni per giusta causa sì, se hai i requisiti. Valutiamo insieme la tua situazione. Tutto sulla NASpI.\"}}, {\"@type\": \"Question\", \"name\": \"Posso ripensarci?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Sì, entro 7 giorni dall'invio le dimissioni si possono revocare.\"}}, {\"@type\": \"Question\", \"name\": \"Ci sono casi in cui non si fanno online?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Sì, per esempio nel lavoro domestico, durante il periodo di prova o per le lavoratrici madri e i lavoratori padri nei periodi protetti, che seguono una procedura diversa. Ti diciamo noi cosa fare.\"}}]}";
+
+/*
+ * Fonti verificate (9/11/2026):
+ * - D.Lgs. 151/2015 art. 26 (dimissioni telematiche, revoca entro 7 giorni, esclusioni)
+ * - Codice civile art. 2118 (preavviso e indennità sostitutiva) e art. 2119 (giusta causa: niente preavviso, l'indennità spetta al lavoratore)
+ * - INPS circolare 163/2003 (NASpI e giusta causa: dichiarazione e documenti), circolare 154/2025 (dimissioni per fatti concludenti, L. 203/2024)
+ * - INPS circolare 98/2025 (13 settimane nel nuovo lavoro se ci sono dimissioni volontarie nei 12 mesi precedenti)
+ * - Cassazione ord. 6 aprile 2026 n. 8564 (in giudizio la giusta causa va provata)
+ * Prezzi indicati dal titolare il 9/11/2026.
+ */
+
+const faqs = [
+  { q: "Posso dimettermi senza SPID?", a: "Sì. Le dimissioni le inviamo noi come patronato, anche se non hai SPID o CIE." },
+  { q: "Quanti giorni di preavviso devo dare?", a: "Lo decide il tuo contratto collettivo (CCNL), in base a livello e anzianità. Noi leggiamo il tuo CCNL e ti diciamo i giorni esatti e la data giusta da mettere nel modulo." },
+  { q: "Cosa succede se non rispetto il preavviso?", a: "L'azienda può trattenere dalle ultime spettanze (busta paga e TFR) un'indennità pari allo stipendio dei giorni di preavviso che mancano (art. 2118 del codice civile)." },
+  { q: "Con le dimissioni prendo la NASpI?", a: "Con le dimissioni volontarie no. Con le dimissioni per giusta causa sì, se hai i requisiti. Valutiamo con te se la giusta causa c'è e come documentarla. <a href='/naspi'>Tutto sulla NASpI</a>." },
+  { q: "Quali sono i casi di giusta causa?", a: "Per esempio stipendi non pagati o pagati in ritardo, contributi non versati, mobbing, molestie, demansionamento, trasferimento senza ragioni comprovate. Ogni caso va valutato con i documenti." },
+  { q: "Se mi dimetto per giusta causa devo dare il preavviso?", a: "No. E in più l'azienda deve pagarti l'indennità di mancato preavviso (art. 2119 del codice civile)." },
+  { q: "Posso smettere di andare al lavoro per farmi licenziare?", a: "È rischioso: dopo un'assenza ingiustificata oltre i 15 giorni (o il termine del contratto), l'azienda può considerarti dimesso. Sono le dimissioni per fatti concludenti e la NASpI non spetta (INPS, circolare 154/2025)." },
+  { q: "Posso ripensarci?", a: "Sì, entro 7 giorni dall'invio le dimissioni online si possono revocare. La revoca la facciamo noi." },
+  { q: "Mi dimetto e trovo subito un altro lavoro: se lo perdo ho la NASpI?", a: "Attenzione: se nei 12 mesi prima ti sei dimesso volontariamente da un contratto a tempo indeterminato, nel nuovo lavoro servono almeno 13 settimane di contributi (INPS, circolare 98/2025). Valutalo prima di dimetterti." },
+  { q: "Ci sono casi in cui non si fanno online?", a: "Sì: lavoro domestico, periodo di prova, e lavoratrici madri o lavoratori padri nei periodi protetti, che devono convalidare le dimissioni all'Ispettorato del lavoro. Ti diciamo noi la procedura giusta." },
+];
+
+const props = {
+  eyebrow: "Dimissioni · Patronato ENASC",
+  title: "Ti dimetti?",
+  highlight: "Prima fai i conti con noi.",
+  lead: "Il modulo online è la parte facile. Il difficile è non perdere soldi: preavviso sbagliato, trattenute in busta paga, NASpI persa per una scelta sbagliata. Ti facciamo una consulenza prima di inviare e poi le dimissioni le mandiamo noi, anche senza SPID.",
+  chat: {
+    q: "Non mi pagano lo stipendio da tre mesi, posso dimettermi e prendere la NASpI?",
+    a: "Probabilmente sì, con la giusta causa. Prima però mandiamo la diffida e raccogliamo le prove: vieni con le buste paga.",
+    done: "Dimissioni per giusta causa inviate",
+  },
+  sticker: "Da 15 € con la tessera",
+  strip: ["Calcolo del preavviso", "Giusta causa e NASpI", "Anche senza SPID", "Revoca entro 7 giorni"],
+  needTitle: "I 3 errori che costano di più",
+  needsLead: "Li vediamo ogni settimana. Bastano pochi minuti di consulenza prima di inviare per evitarli.",
+  needs: [
+    { t: "Sbagliare il preavviso", d: "Se te ne vai prima della fine del preavviso, l'azienda può trattenerti lo stipendio dei giorni mancanti dall'ultima busta paga e dal TFR." },
+    { t: "Dimettersi volontariamente quando c'era la giusta causa", d: "Con le dimissioni volontarie perdi la NASpI e l'indennità di mancato preavviso. Con la giusta causa, se è fondata e documentata, le conservi." },
+    { t: "Smettere di andare al lavoro", d: "Dopo un'assenza ingiustificata lunga l'azienda può considerarti dimesso: sono le dimissioni per fatti concludenti e la NASpI non spetta." },
+  ],
+  steps: [
+    { t: "Consulenza", d: "Ci racconti la situazione: capiamo se sono dimissioni volontarie o per giusta causa e calcoliamo il preavviso sul tuo CCNL." },
+    { t: "Inviamo le dimissioni", d: "Compiliamo il modulo con la data giusta e lo inviamo al Ministero del Lavoro come patronato." },
+    { t: "Pensiamo alla NASpI", d: "Se ne hai diritto presentiamo la domanda NASpI (gratis) con la documentazione della giusta causa." },
+  ],
+  docsTitle: "Cosa portare",
+  docs: [
+    "Documento d'identità e codice fiscale",
+    "SPID o CIE, se li hai (costa meno)",
+    "Contratto di lavoro o lettera di assunzione, con CCNL e livello",
+    "Ultime buste paga",
+    "Per la giusta causa: tutto quello che la prova (buste paga mancanti, estratto contributivo, email, messaggi, diffide)",
+    "Email o PEC del datore di lavoro",
+  ],
+  docsNote: "Non firmare dimissioni su carta e non dare lettere in mano all'azienda: senza la procedura online non sono valide.",
+  price: {
+    value: "da 15 €",
+    badge: "Prezzi chiari",
+    text: "<b>Con SPID, in ufficio:</b> 15 € con la tessera, 20 € senza.<br><b>Senza SPID:</b> 20 € con la tessera, 25 € senza.<br>La consulenza sul preavviso e sulla giusta causa è compresa. La domanda NASpI da noi è gratis.",
+  },
+  faqs,
+  related: [
+    { label: "NASpI", href: "/naspi" },
+    { label: "Portale NASpI e calcolatore", href: "https://domandedisoccupazione.it" },
+    { label: "Checklist primi 7 giorni", href: "/blog/checklist-primi-7-giorni-perdita-lavoro-roma" },
+    { label: "ADI e SFL", href: "/adi-sfl" },
+  ],
+};
+
+const faqLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") } })),
+});
+
+const card = "background:#fff;border:2px solid #14142B;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px";
+const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1";
+const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
 ---
-<BaseLayout title={"Dimissioni online: le inviamo noi a Roma"} description={"Dimissioni volontarie o per giusta causa e revoca: le inviamo noi come patronato, anche senza SPID. Ti diciamo se hai diritto alla NASpI. Vigne Nuove, Roma."}>
+
+<BaseLayout title="Dimissioni online: preavviso, giusta causa e NASpI" description="Dimissioni online a Roma Vigne Nuove da 15 €, anche senza SPID. Calcoliamo il preavviso, valutiamo la giusta causa e presentiamo la NASpI: non perdere soldi.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="dimissioni-online" name={"Dimissioni telematiche"} description={"Invio delle dimissioni volontarie, per giusta causa e delle revoche tramite patronato, con verifica del diritto alla NASpI."} serviceType={"Patronato - lavoro"} />
+  <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
-  <ServiceLanding {...props} />
+
+  <ServiceLanding {...props}>
+    <!-- PREAVVISO -->
+    <section class="c46" id="preavviso">
+      <span style="align-self:flex-start;background:#F1EEFF;color:#5B3DF5;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Il preavviso</span>
+      <h2 class="c1">Quanti giorni devi dare, e cosa rischi se sbagli</h2>
+      <p style={`${p};font-size:18px;max-width:780px`}>Quando ti dimetti volontariamente devi lavorare ancora per un periodo, il <b>preavviso</b>. Non lo decidi tu e non lo decide l'azienda: lo stabilisce il tuo <b>contratto collettivo (CCNL)</b>, in base al livello e agli anni di servizio. Nel modulo online va indicata la <b>data di fine rapporto</b>, e un errore di pochi giorni si paga.</p>
+      <div class="c17">
+        <div style={card}>
+          <h3 style={h3}>Se non lo rispetti</h3>
+          <p style={p}>L'azienda può trattenerti un'<b>indennità pari allo stipendio dei giorni mancanti</b> (art. 2118 del codice civile). Di solito la scala dall'ultima busta paga e, se non basta, dal TFR.</p>
+        </div>
+        <div style={card}>
+          <h3 style={h3}>Un esempio</h3>
+          <p style={p}>Se il tuo CCNL prevede 30 giorni di preavviso e te ne vai dopo 10, l'azienda può trattenerti lo stipendio di 20 giorni. Con il calcolo giusto quei soldi restano a te.</p>
+        </div>
+        <div style="background:#5B3DF5;color:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px">
+          <h3 style={`${h3};color:#fff`}>Cosa facciamo noi</h3>
+          <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Leggiamo il tuo CCNL, livello e anzianità, calcoliamo i giorni e la data giusta da mettere nel modulo. Se hai fretta di cambiare lavoro, ti spieghiamo come chiedere all'azienda di rinunciare al preavviso, per iscritto.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIUSTA CAUSA -->
+    <section style="background:#14142B;color:#fff" id="giusta-causa">
+      <div class="c46">
+        <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Giusta causa e NASpI</span>
+        <h2 class="c1" style="color:#fff">Se il lavoro è diventato impossibile, non regalare la NASpI</h2>
+        <p style="margin:0;font-size:18px;line-height:1.55;color:#D7D7E6;max-width:780px">Quando è il datore di lavoro a non rispettare i suoi obblighi, puoi dimetterti <b style="color:#fff">per giusta causa</b>: senza preavviso, con l'<b style="color:#fff">indennità di mancato preavviso</b> che ti deve l'azienda (art. 2119 del codice civile) e con la <b style="color:#fff">NASpI</b>, se hai i requisiti. Ma la giusta causa va preparata bene.</p>
+
+        <div class="c17">
+          <div style="background:#23233F;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px">
+            <h3 style={`${h3};color:#D4FF4F`}>I casi più comuni</h3>
+            <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:#D7D7E6;font-size:16px;line-height:1.5">
+              <li>stipendi non pagati o pagati in ritardo</li>
+              <li>contributi non versati</li>
+              <li>mobbing o comportamenti offensivi dei superiori</li>
+              <li>molestie sul lavoro</li>
+              <li>demansionamento: mansioni peggiori di quelle del contratto</li>
+              <li>trasferimento senza ragioni tecniche, organizzative o produttive</li>
+              <li>richiesta di fare cose illecite</li>
+            </ul>
+          </div>
+          <div style="background:#23233F;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px">
+            <h3 style={`${h3};color:#D4FF4F`}>Ti aiutiamo a capire se c'è</h3>
+            <p style="margin:0;font-size:16px;line-height:1.55;color:#D7D7E6">Non basta che il lavoro sia pesante: serve un <b style="color:#fff">inadempimento grave</b> del datore, tale da non permettere di continuare. Guardiamo i tuoi documenti e ti diciamo con franchezza se il presupposto c'è, se va rafforzato o se è meglio un'altra strada.</p>
+            <p style="margin:0;font-size:16px;line-height:1.55;color:#D7D7E6">Se serve, ti mettiamo in contatto con l'<b style="color:#fff">avvocato</b> con cui collaboriamo.</p>
+          </div>
+          <div style="background:#D4FF4F;color:#14142B;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:10px">
+            <h3 style={h3}>Attenzione</h3>
+            <p style="margin:0;font-size:16px;line-height:1.55">Per l'INPS basta una dichiarazione con i documenti. Ma se l'azienda contesta, davanti al giudice la giusta causa va <b>provata</b>: una lettera dell'avvocato da sola non basta (Cassazione, ordinanza n. 8564/2026). Per questo le prove si raccolgono <b>prima</b> di dimettersi.</p>
+          </div>
+        </div>
+
+        <h3 style="margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:32px;color:#fff">La procedura giusta, passo per passo</h3>
+        <ol style="margin:0;padding:0;list-style:none;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))">
+          {[
+            ["Raccogli le prove", "Buste paga, estratto contributivo INPS, email, messaggi, certificati, nomi di colleghi che possono testimoniare."],
+            ["Mettici in mora", "Una diffida scritta (PEC o raccomandata) chiede all'azienda di rimediare e dimostra che hai reagito subito."],
+            ["Dimettiti senza aspettare", "Se l'azienda non rimedia, le dimissioni vanno inviate in tempi brevi, indicando la giusta causa. Le inviamo noi."],
+            ["Chiedi la NASpI", "Entro 68 giorni, con la dichiarazione e i documenti che provano la giusta causa. La domanda da noi è gratis."],
+            ["Recupera i soldi", "Stipendi arretrati, TFR e indennità di mancato preavviso si chiedono all'azienda; se è insolvente, in certi casi interviene il Fondo di garanzia INPS."],
+          ].map(([t, d], i) => (
+            <li style="background:#fff;color:#14142B;border-radius:24px;padding:22px;display:flex;flex-direction:column;gap:8px">
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;color:#5B3DF5">{String(i + 1).padStart(2, "0")}</span>
+              <b style="font-size:18px">{t}</b>
+              <span style="font-size:15px;line-height:1.5;color:#3F3F5A">{d}</span>
+            </li>
+          ))}
+        </ol>
+        <p style="margin:0;font-size:15px;line-height:1.55;color:#A3A3BD">In gravidanza e fino al primo anno del bambino le regole sono diverse: le dimissioni della lavoratrice (e, in alcuni casi, del padre) si convalidano all'Ispettorato del lavoro, senza preavviso, e danno diritto alla NASpI. Ti accompagniamo anche in questo caso.</p>
+      </div>
+    </section>
+
+    <!-- CONFRONTO -->
+    <section class="c46">
+      <h2 class="c1">Volontarie o per giusta causa?</h2>
+      <div class="c17">
+        {[
+          { t: "Dimissioni volontarie", bg: "#F7F7FB", fg: "#14142B", rows: [["Preavviso", "Lo devi dare: se manca, l'azienda può trattenerti l'indennità"], ["Indennità di mancato preavviso", "Non ti spetta"], ["NASpI", "No"], ["Cosa serve", "Il calcolo giusto del preavviso"]] },
+          { t: "Per giusta causa", bg: "#D4FF4F", fg: "#14142B", rows: [["Preavviso", "Non lo devi dare"], ["Indennità di mancato preavviso", "Te la deve l'azienda"], ["NASpI", "Sì, se hai i requisiti"], ["Cosa serve", "Le prove dell'inadempimento del datore"]] },
+        ].map((c) => (
+          <div style={`background:${c.bg};color:${c.fg};border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:14px`}>
+            <h3 style={h3}>{c.t}</h3>
+            <dl style="margin:0;display:flex;flex-direction:column;gap:12px">
+              {c.rows.map(([k, v]) => (
+                <div style="border-top:1px solid rgba(20,20,43,.12);padding-top:10px"><dt style="font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;color:#5B3DF5">{k}</dt><dd style="margin:4px 0 0;font-size:16px;line-height:1.45">{v}</dd></div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+      <p style={`${p};max-width:780px`}>Dimissioni e revoca si fanno solo online (D.Lgs. 151/2015): se ci ripensi hai <b>7 giorni</b> per revocarle. Ricorda anche che, se ti dimetti volontariamente da un contratto a tempo indeterminato e il nuovo lavoro finisce entro 12 mesi, per la NASpI ti servono almeno <b>13 settimane</b> di contributi nel nuovo lavoro.</p>
+    </section>
+  </ServiceLanding>
+
   <LandingArticles categories={["naspi-disoccupazione"]} />
 </BaseLayout>
