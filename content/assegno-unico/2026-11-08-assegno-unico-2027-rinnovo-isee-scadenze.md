@@ -1,5 +1,6 @@
 ---
 title: "Assegno unico 2027: rinnovo dell'ISEE, scadenze e cosa fare per non prendere il minimo"
+seo_title: "Assegno unico 2027: rinnovo ISEE e scadenze"
 slug: "assegno-unico-2027-rinnovo-isee-scadenze"
 date: 2026-11-08
 last_updated: 2026-11-08

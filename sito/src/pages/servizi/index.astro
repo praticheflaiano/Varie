@@ -75,11 +75,11 @@ const clusters = [
   </section>
 
   <section class="wrap" style="padding-top:8px">
-    <h2 class="mb-5" style="font-size:clamp(28px,3vw,36px)">I più richiesti</h2>
+    <h2 class="mb-5" style="font-size:clamp(28px,3vw,36px)">Scegli il servizio</h2>
     <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr))">
       {LANDING.map((l, i) => (
-        <a href={l.href} class="tile" style={`min-height:150px;background:${["#D4FF4F","#5B3DF5","#14142B","#F1EEFF","#FFE3EC","#F7F7FB"][i]};color:${[1,2].includes(i) ? "#fff" : "#14142B"}`}>
-          {l.tag && <span class="tile-tag" style={`background:${[1,2].includes(i) ? "#D4FF4F" : "#14142B"};color:${[1,2].includes(i) ? "#14142B" : "#fff"}`}>{l.tag}</span>}
+        <a href={l.href} class="tile" style={`min-height:150px;background:${["#D4FF4F","#5B3DF5","#14142B","#F1EEFF","#FFE3EC","#F7F7FB"][i % 6]};color:${[1,2].includes(i % 6) ? "#fff" : "#14142B"}`}>
+          {l.tag && <span class="tile-tag" style={`background:${[1,2].includes(i % 6) ? "#D4FF4F" : "#14142B"};color:${[1,2].includes(i % 6) ? "#14142B" : "#fff"}`}>{l.tag}</span>}
           <span class="tile-title" style="font-size:28px">{l.label}</span>
           <span class="tile-go">Scopri →</span>
         </a>

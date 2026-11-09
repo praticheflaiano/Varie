@@ -51,6 +51,7 @@ const articles = defineCollection({
   }),
   schema: z.object({
     title: z.string().min(1).max(120),
+    seo_title: z.string().max(65).optional(),
     slug: z.string().regex(/^[a-z0-9-]+$/, "Slug deve essere kebab-case"),
     date: z.coerce.date(),
     last_updated: z.coerce.date().optional(),

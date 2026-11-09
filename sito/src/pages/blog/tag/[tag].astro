@@ -23,6 +23,7 @@ const { tag, items } = Astro.props;
 
 <BaseLayout
   title={`#${tag}: articoli e guide`}
+  noindex={items.length < 3}
   description={`Tutti gli articoli con tag #${tag} del blog del Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma.`}
 >
   <section class="bg-mesh-brand">

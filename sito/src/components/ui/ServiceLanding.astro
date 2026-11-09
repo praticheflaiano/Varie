@@ -1,0 +1,135 @@
+---
+/**
+ * Pagina servizio nello stesso stile delle landing (ISEE, 730, NASpI...): usa le classi di /landing.css.
+ * Mostrare solo prezzi gia pubblicati: se il prezzo non e pubblico, si usa il riquadro "te lo diciamo prima".
+ */
+import { BOOKING } from "~/consts";
+
+interface Card { t: string; d: string }
+interface Faq { q: string; a: string }
+interface Props {
+  eyebrow: string;
+  title: string;
+  highlight: string;
+  lead: string;
+  bookingHref?: string;
+  chat: { q: string; a: string; done: string };
+  sticker: string;
+  strip: string[];
+  needTitle?: string;
+  needs: Card[];
+  steps: Card[];
+  docsTitle?: string;
+  docs: string[];
+  docsNote?: string;
+  price?: { value: string; badge?: string; text: string };
+  faqs: Faq[];
+  related: { label: string; href: string }[];
+}
+
+const {
+  eyebrow, title, highlight, lead, bookingHref = BOOKING.arcanisGroup, chat, sticker, strip,
+  needTitle = "Ti serve se…", needs, steps, docsTitle = "Cosa ti serve", docs, docsNote, price, faqs, related,
+} = Astro.props;
+
+const needClass = ["c39", "c41", "c40"];
+const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF4F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>`;
+---
+
+<div class="lp"><div class="c36">
+  <section class="c28">
+    <div class="c61">
+      <span class="c26">{eyebrow}</span>
+      <h1 class="c34">{title} <span class="c57">{highlight}</span></h1>
+      <p class="c63">{lead}</p>
+      <div class="c60">
+        <a href={bookingHref} class="c18">Prenota in 30 secondi</a>
+        <a href="/richiesta" class="c20">Fai tutto online</a>
+      </div>
+    </div>
+    <div class="c73">
+      <div style="background:#5B3DF5;border-radius:32px;padding:28px;display:flex;flex-direction:column;gap:14px;transform:rotate(2deg)">
+        <div style="display:flex;align-items:center;gap:10px;color:#fff">
+          <span style="width:40px;height:40px;border-radius:999px;background:#D4FF4F;color:#14142B;display:flex;align-items:center;justify-content:center;font-weight:800">PF</span>
+          <span style="display:flex;flex-direction:column;line-height:1.2"><b>Pratiche Flaiano</b><span style="font-size:13px;color:#DCD5FF">su WhatsApp</span></span>
+        </div>
+        <p style="margin:0;align-self:flex-end;max-width:78%;background:#fff;color:#14142B;border-radius:18px 18px 4px 18px;padding:12px 16px;font-size:15px;line-height:1.4">{chat.q}</p>
+        <p style="margin:0;align-self:flex-start;max-width:82%;background:#D4FF4F;color:#14142B;border-radius:18px 18px 18px 4px;padding:12px 16px;font-size:15px;line-height:1.4">{chat.a}</p>
+        <p style="margin:0;align-self:flex-start;max-width:82%;background:#D4FF4F;color:#14142B;border-radius:18px 18px 18px 4px;padding:12px 16px;font-size:15px;line-height:1.4;display:flex;align-items:center;gap:8px"><Fragment set:html={check.replace('#D4FF4F', '#14142B')} />{chat.done}</p>
+      </div>
+      <span class="c29">{sticker}</span>
+    </div>
+  </section>
+
+  <section class="c85"><div class="c10">{strip.map((s) => <span>{s}</span>)}</div></section>
+
+  <section class="c42">
+    <h2 class="c1">{needTitle}</h2>
+    <div class="c17">
+      {needs.map((n, i) => (
+        <div class={needClass[i % 3]}><h3 class="c8">{n.t}</h3><p class="c4">{n.d}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="c46">
+    <h2 class="c1">Fatto in 3 mosse</h2>
+    <div class="c17">
+      {steps.map((s, i) => i < 2 ? (
+        <div class="c9"><span class="c7">0{i + 1}</span><h3 style="margin:0;font-size:21px">{s.t}</h3><p class="c4">{s.d}</p></div>
+      ) : (
+        <div class="c21"><span class="c35">0{i + 1}</span><h3 style="margin:0;font-size:21px">{s.t}</h3><p class="c71">{s.d}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="c32">
+    <div class="c23">
+      <h2 class="c43">{docsTitle}</h2>
+      <ul class="c27">
+        {docs.map((d) => (
+          <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{d}</span></li>
+        ))}
+      </ul>
+      {docsNote && <p class="c83">{docsNote}</p>}
+    </div>
+    <div id="prezzo" class="c45">
+      {price?.badge && <span class="c31">{price.badge}</span>}
+      <p class="c82">Quanto costa</p>
+      {price ? (
+        <>
+          <p class="c65">{price.value}</p>
+          <p class="c84"><Fragment set:html={price.text} /></p>
+        </>
+      ) : (
+        <>
+          <p class="c65" style="font-size:clamp(34px,6vw,52px);line-height:1.05">Te lo diciamo prima</p>
+          <p class="c84">Prima di iniziare ti diciamo il costo, senza sorprese. Con la <b>tessera a 30 € l'anno</b> per tutta la famiglia hai consulenze gratis, appuntamenti prioritari e sconti sulle pratiche.</p>
+        </>
+      )}
+      <a href="/tesseramento" class="c64">Scopri la tessera →</a>
+    </div>
+  </section>
+
+  <section class="c44">
+    <h2 class="c1">Come preferisci?</h2>
+    <div class="c59">
+      <a href={bookingHref} class="c14"><span class="c76">Di persona o in video</span><span class="c12">Prenota un appuntamento</span><span class="c77">Scegli giorno e ora. Ti diciamo prima quali documenti portare.</span><span class="c24">Scegli l'orario →</span></a>
+      <a href="/richiesta" class="c15"><span class="c78">Dal telefono, quando vuoi</span><span class="c12">Fai tutto online</span><span class="c79">Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi.</span><span class="c25">Inizia ora →</span></a>
+    </div>
+  </section>
+
+  <section style="background:#F7F7FB">
+    <div class="c48">
+      <h2 class="c22">Domande veloci</h2>
+      {faqs.map((f) => (
+        <details class="c11"><summary class="c16">{f.q}</summary><p class="c6"><Fragment set:html={f.a} /></p></details>
+      ))}
+    </div>
+  </section>
+
+  <section class="c47">
+    <h2 class="c55">Già che ci sei</h2>
+    <div class="c60">{related.map((r) => <a href={r.href} class="c2">{r.label}</a>)}</div>
+  </section>
+</div></div>

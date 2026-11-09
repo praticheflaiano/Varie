@@ -11,6 +11,7 @@ import Disclaimer from "~/components/blog/Disclaimer.astro";
 import RelatedArticles from "~/components/blog/RelatedArticles.astro";
 import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
 import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { SITE } from "~/consts";
 import { Icon } from "astro-icon/components";
 
@@ -32,10 +33,20 @@ const breadcrumbs = [
 ];
 
 const related = await getRelatedArticles(article, 3);
+
+// Domande frequenti scritte nell'articolo ("**Domanda?**" + risposta) -> dati strutturati FAQPage
+const faqBlock = rawBody.split(/^## Domande frequenti\s*$/m)[1]?.split(/^## /m)[0] ?? "";
+const faqItems = [...faqBlock.matchAll(/^\*\*(.+?\?)\*\*\s*\n([\s\S]*?)(?=\n\s*\n|$)/gm)]
+  .map((m) => ({
+    question: m[1].trim(),
+    answer: m[2].replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_\x60]/g, "").trim(),
+  }))
+  .filter((f) => f.answer.length > 0);
+const sourcesCount = article.data.sources?.length ?? 0;
 ---
 
 <BaseLayout
-  title={article.data.title}
+  title={article.data.seo_title ?? article.data.title}
   description={article.data.meta_description}
   canonical={url}
   ogType="article"
@@ -57,6 +68,7 @@ const related = await getRelatedArticles(article, 3);
     category={cat?.label}
     keywords={[...article.data.tags]}
   />
+  {faqItems.length >= 2 && <JsonLdFaq slot="head" items={faqItems} />}
 
   <article class="container-narrow py-10 md:py-16">
     <Breadcrumb items={breadcrumbs} class="mb-6" />
@@ -86,6 +98,7 @@ const related = await getRelatedArticles(article, 3);
           width="1200"
           height="630"
           loading="eager"
+          fetchpriority="high"
           decoding="async"
           class="w-full h-auto block"
         />
@@ -100,6 +113,12 @@ const related = await getRelatedArticles(article, 3);
         readingTime={minutes}
         type={article.data.type}
       />
+      {sourcesCount > 0 && (
+        <p class="mt-3 flex items-center gap-2 text-sm font-semibold" style="color:#3B3B55">
+          <Icon name="heroicons:check-badge" class="size-5" style="color:#5B3DF5" aria-hidden="true" />
+          Controllato su {sourcesCount} {sourcesCount === 1 ? "fonte" : "fonti"} (le trovi in fondo) · scritto da chi fa queste pratiche ogni giorno
+        </p>
+      )}
     </div>
 
     {article.data.deadline && article.data.deadline < new Date() && (

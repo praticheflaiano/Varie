@@ -86,7 +86,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     slug: "pensioni",
     label: "Pensioni",
     description:
-      "Pensione di vecchiaia, anticipata, opzione donna, Quota 103, Ape sociale, ricongiunzioni.",
+      "Pensione di vecchiaia, anticipata, APE sociale, reversibilità, ricongiunzioni.",
     icon: "heroicons:identification",
     color: "#4B2FE0",
     area: "patronato",

@@ -24,6 +24,7 @@ const { category, items } = Astro.props;
 
 <BaseLayout
   title={`${category.label}: articoli e guide`}
+  noindex={items.length === 0}
   description={`${category.description} Tutti gli articoli della categoria ${category.label} del blog del Centro Pratiche Flaiano a Roma.`}
 >
   <section class="bg-mesh-brand">

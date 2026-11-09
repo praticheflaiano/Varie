@@ -1,5 +1,6 @@
 ---
 title: "Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dicembre"
+seo_title: "Carta Dedicata a te 2026: primo acquisto entro il 16/12"
 slug: "carta-dedicata-a-te-2026-2027-scadenza-16-dicembre"
 date: 2026-11-09
 last_updated: 2026-11-09

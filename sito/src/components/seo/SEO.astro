@@ -27,23 +27,33 @@ const {
   tags,
 } = Astro.props;
 
-const fullTitle = title
-  ? `${title} | ${SITE.name}`
-  : `${SITE.name} - ${SITE.claim}`;
+// Titolo: il marchio si aggiunge solo se il titolo resta entro ~60 caratteri (Google tronca oltre).
+const withBrand = title ? `${title} | ${SITE.name}` : `${SITE.name} - ${SITE.claim}`;
+const fullTitle = title && withBrand.length > 62 ? title : withBrand;
 
-const url = canonical ?? new URL(Astro.url.pathname, SITE.url).toString();
+// Description: max ~158 caratteri, tagliata a fine parola.
+const clip = (s: string, n = 158) => {
+  const t = s.replace(/\s+/g, " ").trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n - 1);
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:.\-–]+$/, "") + "…";
+};
+const metaDescription = clip(description);
+
+// URL canonico senza "/" finale (Vercel serve /pagina, e /pagina/ reindirizza)
+const url = (canonical ?? new URL(Astro.url.pathname, SITE.url).toString()).replace(/(\.it\/.+?)\/$/, "$1");
 const ogImageUrl = new URL(ogImage, SITE.url).toString();
 ---
 
 <title>{fullTitle}</title>
-<meta name="description" content={description} />
+<meta name="description" content={metaDescription} />
 <link rel="canonical" href={url} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{noindex && <meta name="robots" content="noindex, follow" />}
 
 <!-- Open Graph -->
 <meta property="og:type" content={ogType} />
 <meta property="og:title" content={fullTitle} />
-<meta property="og:description" content={description} />
+<meta property="og:description" content={metaDescription} />
 <meta property="og:url" content={url} />
 <meta property="og:image" content={ogImageUrl} />
 <meta property="og:image:width" content="1200" />

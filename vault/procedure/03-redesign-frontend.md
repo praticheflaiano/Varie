@@ -150,3 +150,12 @@ Non lasciarli ambigui: se un componente usa `font-display` su una label uppercas
 - [[lessons/2026-04-licenza-skill-commerciali]]
 - [[procedure/02-deploy-vercel]]
 - File chiave: `sito/src/styles/global.css`, `sito/src/layouts/BaseLayout.astro`, `sito/src/components/home/Hero.astro`
+
+## Aggiornamento 9/11/2026: conversione e SEO
+
+- `src/components/ui/ServiceLanding.astro`: modello per nuove pagine servizio nello stile delle landing (classi di `/landing.css`). Usato da `/pensioni`, `/adi-sfl`, `/colf-badanti`, `/contratti-affitto`, `/dimissioni-online`. Se il prezzo non è pubblicato si mostra "Te lo diciamo prima" (mai inventare prezzi).
+- `src/components/layout/MobileActionBar.astro`: barra fissa su smartphone (Prenota · WhatsApp · Chiama); su mobile nasconde il bottone WhatsApp flottante.
+- `scripts/sync-content.mjs`: toglie il `# Titolo` iniziale dagli articoli (un solo H1) e inserisce un box CTA (`.cta-inline`) prima della terza sezione H2, scelto per categoria (mappa `INLINE_CTA`).
+- `ArticleLayout`: FAQPage automatica dalla sezione "Domande frequenti" (formato `**Domanda?**` + risposta), riga "Controllato su N fonti", `seo_title` opzionale (max 65) per titoli lunghi.
+- `SEO.astro`: marchio nel title solo se resta entro ~62 caratteri; description tagliata a ~158; canonical senza "/" finale.
+- Tag con meno di 3 articoli e categorie vuote: `noindex, follow` ed esclusi dalla sitemap (`astro.config.mjs`).

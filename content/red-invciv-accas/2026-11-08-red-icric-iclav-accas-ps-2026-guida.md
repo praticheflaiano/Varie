@@ -1,5 +1,6 @@
 ---
 title: "Modello RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli e cosa rischi se li salti"
+seo_title: "Modello RED, ICRIC, ICLAV e ACC.AS/PS: guida 2026"
 slug: "red-icric-iclav-accas-ps-2026-guida"
 date: 2026-11-08
 last_updated: 2026-11-08

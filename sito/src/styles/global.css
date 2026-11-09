@@ -619,3 +619,22 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
 }
 .prose-article pre, .prose-article code { overflow-wrap: anywhere; }
 .prose-article a, .prose-article p, .prose-article li { overflow-wrap: anywhere; }
+
+/* Box CTA contestuale dentro gli articoli */
+.prose-article .cta-inline {
+  margin-block: 2em;
+  padding: 22px 24px;
+  border-radius: 24px;
+  background: #5B3DF5;
+  color: #fff;
+  box-shadow: 0 6px 0 #14142B;
+}
+.prose-article .cta-inline p { margin: 0; }
+.prose-article .cta-inline__t { font-family: var(--font-display, "Bricolage Grotesque"), sans-serif; font-weight: 800; font-size: 1.35rem; line-height: 1.15; }
+.prose-article .cta-inline__d { margin-top: 6px !important; color: #E4DEFF; font-size: 1rem; }
+.prose-article .cta-inline__a { margin-top: 14px !important; display: flex; flex-wrap: wrap; gap: 10px; }
+.prose-article .cta-inline__a a {
+  display: inline-flex; align-items: center; padding: 10px 18px; border-radius: 999px;
+  background: #D4FF4F; color: #14142B; font-weight: 800; text-decoration: none;
+}
+.prose-article .cta-inline__a a.cta-inline__alt { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }

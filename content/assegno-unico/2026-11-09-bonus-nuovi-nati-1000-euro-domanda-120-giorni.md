@@ -1,5 +1,6 @@
 ---
 title: "Bonus nuovi nati: 1.000 euro per ogni figlio, domanda entro 120 giorni"
+seo_title: "Bonus nuovi nati 1.000 €: domanda entro 120 giorni"
 slug: "bonus-nuovi-nati-1000-euro-domanda-120-giorni"
 date: 2026-11-09
 last_updated: 2026-11-09

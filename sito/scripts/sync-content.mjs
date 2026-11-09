@@ -21,6 +21,26 @@ const projectRoot = resolve(__dirname, "..");
 const sourceDir = resolve(projectRoot, "..", "content");
 const targetDir = resolve(projectRoot, ".content-mirror");
 
+// Box CTA contestuale inserito negli articoli (prima della terza sezione H2).
+// Solo prezzi gia pubblicati sul sito.
+const INLINE_CTA = {
+  "730-redditi": { t: "Il 730 lo facciamo noi", d: "Da 30 €, in ufficio a Vigne Nuove o da casa. Se torni l'anno dopo il prezzo non cambia.", h: "/730", b: "Scopri il 730" },
+  "detrazioni-deduzioni": { t: "Non perdere nessuna detrazione", d: "Controlliamo spese e ricevute e le mettiamo nel 730. Da 30 €.", h: "/730", b: "Fai il 730 con noi" },
+  "isee-dsu": { t: "L'ISEE da noi è gratis", d: "Redditi e CU li recuperiamo noi. In ufficio o in videochiamata.", h: "/isee", b: "Fai l'ISEE gratis" },
+  "bonus-fiscali": { t: "Per quasi ogni bonus serve l'ISEE", d: "Da noi è gratis e ti diciamo a quali aiuti hai diritto.", h: "/isee", b: "Fai l'ISEE gratis" },
+  "assegno-unico": { t: "Assegno Unico senza pensieri", d: "Domanda e variazioni da 10 € con la tessera, ISEE gratis.", h: "/assegno-unico", b: "Scopri come funziona" },
+  "naspi-disoccupazione": { t: "Hai perso il lavoro?", d: "La domanda NASpI da noi è gratis. Non perdere i giorni.", h: "/naspi", b: "Chiedi la NASpI" },
+  "imu-tributi-locali": { t: "IMU e TARI: controlliamo noi", d: "Calcolo, F24, avvisi AMA e richieste di esenzione.", h: "/prenota", b: "Prenota un appuntamento" },
+  "red-invciv-accas": { t: "Dichiarazioni INPS: le inviamo noi", d: "RED, ICRIC, ICLAV e ACC.AS/PS senza rischiare la pensione.", h: "/pensioni", b: "Patronato pensioni" },
+  "pensioni": { t: "Quando puoi andare in pensione?", d: "Controlliamo il tuo estratto contributivo e ti diciamo le strade possibili.", h: "/pensioni", b: "Patronato pensioni" },
+  "invalidita-civile": { t: "Invalidità e 104 in un solo posto", d: "Medico certificatore e patronato nello stesso ufficio. Il primo incontro è gratis.", h: "/invalidita-104", b: "Scopri come funziona" },
+  "successioni-volture": { t: "Successione: ti seguiamo noi", d: "Dichiarazione, volture e pratiche con banche e catasto.", h: "/successioni", b: "Scopri il servizio" },
+  "lavoro-domestico": { t: "Colf e badanti in regola", d: "Assunzione, contributi e chiusura del rapporto all'INPS.", h: "/colf-badanti", b: "Scopri il servizio" },
+  "iva": { t: "Partita IVA e dichiarazioni", d: "Ti diciamo cosa ti serve e quanto costa prima di iniziare.", h: "/prenota", b: "Prenota un appuntamento" },
+};
+const ctaHtml = (c) =>
+  `<aside class="cta-inline"><p class="cta-inline__t">${c.t}</p><p class="cta-inline__d">${c.d}</p><p class="cta-inline__a"><a href="${c.h}">${c.b} →</a> <a href="https://wa.me/393716230690" class="cta-inline__alt" rel="noopener">Scrivici su WhatsApp</a></p></aside>`;
+
 async function main() {
   if (!existsSync(sourceDir)) {
     console.warn(`[sync-content] Sorgente non trovata: ${sourceDir}`);
@@ -74,6 +94,18 @@ async function main() {
     out = out.replace(/\]\(\/content\/[^)]*?\/([^/)]+\.md)\)/g, (all, file) =>
       slugs[file] ? `](/blog/${slugs[file]})` : all,
     );
+    // un solo H1 per pagina: il titolo lo stampa il layout, quindi si toglie il "# Titolo" iniziale
+    out = out.replace(/^(---\n[\s\S]*?\n---\n\s*)# [^\n]*\n/, "$1");
+    // box di invito all'azione dopo la seconda sezione, in base alla categoria
+    const cat = (out.match(/^category:\s*"?([^"\n]+)"?/m) || [])[1];
+    const cta = INLINE_CTA[cat];
+    if (cta) {
+      let n = 0;
+      out = out.replace(/^## [^\n]*$/gm, (h) => {
+        n += 1;
+        return n === 3 ? `${ctaHtml(cta)}\n\n${h}` : h;
+      });
+    }
     if (out !== txt) await writeFile(full, out);
   }
 

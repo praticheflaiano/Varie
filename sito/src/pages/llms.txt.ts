@@ -28,6 +28,11 @@ export async function GET(_context: APIContext) {
   lines.push(`- [Assegno Unico](${baseUrl}/assegno-unico): domanda 15 EUR in ufficio, 19 EUR online; tesserati 10 EUR in ufficio, 15 EUR online. ISEE gratuito.`);
   lines.push(`- [Invalidita civile e Legge 104](${baseUrl}/invalidita-104): medico certificatore e patronato nello stesso ufficio; primo incontro gratuito.`);
   lines.push(`- [Successioni](${baseUrl}/successioni): dichiarazione di successione, volture catastali, conti e beni ereditari.`);
+  lines.push(`- [Pensioni](${baseUrl}/pensioni): controllo dell'estratto contributivo, calcolo delle date di uscita, domanda di pensione (vecchiaia, anticipata, APE sociale, reversibilita) tramite patronato.`);
+  lines.push(`- [ADI e SFL](${baseUrl}/adi-sfl): Assegno di inclusione e Supporto formazione e lavoro: verifica requisiti, ISEE gratuito, domanda INPS e iscrizione SIISL.`);
+  lines.push(`- [Dimissioni online](${baseUrl}/dimissioni-online): dimissioni volontarie, per giusta causa e revoca tramite patronato, anche senza SPID; verifica del diritto alla NASpI.`);
+  lines.push(`- [Colf e badanti](${baseUrl}/colf-badanti): assunzione e comunicazioni INPS, contributi trimestrali, variazioni e cessazione del rapporto di lavoro domestico.`);
+  lines.push(`- [Contratti d'affitto](${baseUrl}/contratti-affitto): registrazione dei contratti di locazione, cedolare secca, proroghe, subentri e risoluzioni all'Agenzia delle Entrate.`);
   lines.push(`- [Richiesta online](${baseUrl}/richiesta): modulo per inviare la richiesta e i documenti, il centro richiama.`);
   lines.push("");
   lines.push(`Come prenotare: [pagina prenota](${baseUrl}/prenota) (in ufficio, in videochiamata o richiesta online), telefono ${CONTACT.phone.landline}, WhatsApp ${CONTACT.phone.mobile}.`);

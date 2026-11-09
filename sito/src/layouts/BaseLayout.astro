@@ -6,6 +6,7 @@ import JsonLdLocalBusiness from "~/components/seo/JsonLdLocalBusiness.astro";
 import Navbar from "~/components/layout/Navbar.astro";
 import Footer from "~/components/layout/Footer.astro";
 import WhatsAppFab from "~/components/layout/WhatsAppFab.astro";
+import MobileActionBar from "~/components/layout/MobileActionBar.astro";
 
 interface Props {
   title?: string;
@@ -82,5 +83,6 @@ const {
     </main>
     <Footer />
     {!hideWhatsAppFab && <WhatsAppFab />}
+    {!hideWhatsAppFab && <MobileActionBar />}
   </body>
 </html>

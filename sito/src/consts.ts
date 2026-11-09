@@ -135,6 +135,11 @@ export const LANDING = [
   { label: "NASpI", href: "/naspi", tag: "Domanda gratis" },
   { label: "Assegno Unico", href: "/assegno-unico", tag: "da 10 €" },
   { label: "Successioni", href: "/successioni", tag: "" },
+  { label: "Pensioni", href: "/pensioni", tag: "" },
+  { label: "ADI e SFL", href: "/adi-sfl", tag: "" },
+  { label: "Dimissioni online", href: "/dimissioni-online", tag: "" },
+  { label: "Colf e badanti", href: "/colf-badanti", tag: "" },
+  { label: "Contratti d'affitto", href: "/contratti-affitto", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */
@@ -156,6 +161,11 @@ export const NAV = [
       { label: "Assegno Unico", href: "/assegno-unico" },
       { label: "Invalidità e 104", href: "/invalidita-104" },
       { label: "Successioni", href: "/successioni" },
+      { label: "Pensioni", href: "/pensioni" },
+      { label: "ADI e SFL", href: "/adi-sfl" },
+      { label: "Dimissioni online", href: "/dimissioni-online" },
+      { label: "Colf e badanti", href: "/colf-badanti" },
+      { label: "Contratti d'affitto", href: "/contratti-affitto" },
       { label: "Tutti i servizi CAF", href: "/servizi/caf" },
       { label: "Tutti i servizi Patronato", href: "/servizi/patronato" },
       { label: "Servizi vari", href: "/servizi/servizi-vari" },
