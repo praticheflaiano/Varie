@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:3.0
+N:;Centro Pratiche Flaiano;;;
+FN:Centro Pratiche Flaiano
+ORG:Centro Pratiche Flaiano - CAF UNSIC e Patronato ENASC
+TEL;TYPE=WORK,VOICE:+390697845429
+TEL;TYPE=CELL,WHATSAPP:+393716230690
+EMAIL;TYPE=WORK:praticheflaiano@gmail.com
+ADR;TYPE=WORK:;int. 10;Via Filoteo Alberini 25;Roma;RM;00139;Italia
+URL:https://praticheflaiano.it
+NOTE:Orari: lun-gio 9:30-13:00 e 15:30-18:00, ven 9:30-14:00. Dentro il Centro Acquisti Flaiano, Vigne Nuove.
+END:VCARD
