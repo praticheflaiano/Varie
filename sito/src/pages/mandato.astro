@@ -1,0 +1,67 @@
+---
+/**
+ * Compilazione del mandato di patronato: stesso sondaggio GHL "Compilazione Mandato" della pagina
+ * che stava su praticheflaiano.it/termini_e_condizioni-mandato. Il testo dei termini è riportato
+ * com'era sulla pagina originale (testo del Patronato ENASC): non modificarlo senza indicazione del titolare.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+const SURVEY_ID = "RZ8gmVl5ZxSDwY9khocS";
+const terms = [
+  { h: "1. Mandato di Assistenza e Rappresentanza", p: [
+    "1.1 Con l'accettazione di questi Termini e Condizioni, l'Assistito conferisce mandato al Patronato ENASC per rappresentarlo e assisterlo gratuitamente ai sensi dell'art. 13 della legge 30 marzo 2001, n. 152 e del D.M. 10.10.2008, n. 193.",
+    "1.2 L'Assistito elegge domicilio presso la sede del Patronato ENASC ai sensi dell'art. 47 c.c.",
+    "1.3 Il mandato può essere revocato solo per iscritto." ] },
+  { h: "2. Trattamento dei Dati Personali", p: [
+    "2.1 Il Patronato ENASC tratterà i dati personali dell'Assistito in conformità al D.Lgs. 30 giugno 2003, n. 196.",
+    "2.2 I dati personali, inclusi quelli sensibili, saranno utilizzati per l'espletamento del mandato di assistenza.",
+    "2.3 I dati potranno essere comunicati a enti o organismi pubblici o privati, nazionali o esteri, per l'adempimento dell'incarico conferito.",
+    "2.4 Il trattamento sarà effettuato manualmente e/o in forma automatizzata, nel rispetto delle misure di sicurezza previste dalla legge." ] },
+  { h: "3. Consenso al Trattamento dei Dati", p: [
+    "3.1 L'Assistito fornisce il consenso al trattamento dei propri dati personali, compresi i dati sensibili, per le finalità del mandato e per l'adempimento degli obblighi connessi.",
+    "3.2 L'Assistito autorizza il Patronato ENASC ad accedere alle banche dati degli enti eroganti le prestazioni, ai sensi dell'art. 116 della Legge." ] },
+  { h: "4. Utilizzo dei Dati per Altre Finalità (Facoltativo)", p: [
+    "4.1 L'Assistito può consentire al Patronato ENASC di utilizzare i dati non sensibili per attività statutarie, informazione e promozione dei propri servizi.",
+    "4.2 L'Assistito può autorizzare la comunicazione dei dati personali ad altri soggetti o organismi appartenenti o aderenti all'UNSIC per finalità proprie dell'Associazione." ] },
+  { h: "5. Diritti dell'Assistito", p: [
+    "5.1 L'Assistito può esercitare i diritti riconosciuti dall'art. 7 del D.Lgs. 196/2003, anche tramite delega o procura." ] },
+  { h: "6. Titolare e Responsabile del Trattamento", p: [
+    "6.1 Il titolare del trattamento dei dati è il Patronato ENASC, rappresentato dal Presidente Nazionale.",
+    "6.2 Il responsabile del trattamento ai fini dell'esercizio dei diritti dell'art. 7 è il Direttore/Responsabile pro-tempore della Sede Provinciale del Patronato ENASC." ] },
+  { h: "7. Modifiche ai Termini e Condizioni", p: [
+    "7.1 Il Patronato ENASC si riserva il diritto di modificare questi Termini e Condizioni in qualsiasi momento, notificando le modifiche all'Assistito." ] },
+  { h: "8. Legge Applicabile e Foro Competente", p: [
+    "8.1 Questi Termini e Condizioni sono regolati dalla legge italiana.",
+    "8.2 Per ogni controversia sarà competente il foro della sede legale del Patronato ENASC." ] },
+];
+---
+<BaseLayout title="Compilazione mandato di patronato" description="Compila online il mandato di assistenza al Patronato ENASC: serve per presentare le pratiche per tuo conto. Termini e condizioni del mandato." hideWhatsAppFab={true}>
+  <section class="mz">
+    <header class="mz-head">
+      <span class="mz-tag">Patronato ENASC</span>
+      <h1>Compilazione mandato</h1>
+      <p>Il mandato ci autorizza ad assisterti e a presentare le pratiche per tuo conto. Compilarlo richiede pochi minuti.</p>
+    </header>
+    <div class="mz-form">
+      <iframe src={`https://link.arcanis.it/widget/survey/${SURVEY_ID}`} id={SURVEY_ID} title="Compilazione Mandato" scrolling="no" style="border:none;width:100%;min-height:560px"></iframe>
+    </div>
+    <article class="mz-terms" id="termini">
+      <h2>Termini e condizioni del mandato</h2>
+      {terms.map((t) => (<section><h3>{t.h}</h3>{t.p.map((x) => <p>{x}</p>)}</section>))}
+    </article>
+  </section>
+  <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
+</BaseLayout>
+
+<style is:global>
+  .mz { max-width: 820px; margin: 0 auto; padding: 28px 16px 64px; display: flex; flex-direction: column; gap: 20px; color: #14142B; }
+  .mz-head { background: #F1EEFF; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .mz-tag { align-self: flex-start; background: #D4FF4F; color: #14142B; font-weight: 800; font-size: 14px; border-radius: 999px; padding: 6px 14px; }
+  .mz-head h1 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 6vw, 42px); line-height: 1.05; letter-spacing: -0.02em; }
+  .mz-head p { margin: 0; font-size: 17px; line-height: 1.5; color: #34344A; max-width: 60ch; }
+  .mz-form { background: #fff; border: 2px solid #14142B; border-radius: 28px; padding: 12px; min-width: 0; }
+  .mz-terms { display: flex; flex-direction: column; gap: 16px; font-size: 15px; line-height: 1.6; color: #34344A; }
+  .mz-terms h2 { margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; color: #14142B; }
+  .mz-terms section { display: flex; flex-direction: column; gap: 6px; }
+  .mz-terms h3 { margin: 0; font-size: 17px; color: #14142B; }
+  .mz-terms p { margin: 0; }
+</style>

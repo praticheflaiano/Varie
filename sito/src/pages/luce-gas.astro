@@ -1,0 +1,73 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+/** Calendario GHL "Centro pratiche Flaiano – Appuntamenti IN SEDE" (luce, gas, bollette), lo stesso della vecchia pagina /luce_gas. */
+const CAL = "https://link.arcanis.it/widget/booking/K5geXmjt2N7PefI1LOqM";
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, vorrei far controllare la mia bolletta di luce/gas. Vi mando la foto dell'ultima bolletta.")}`;
+
+const props = {
+  eyebrow: "Luce e gas · Vigne Nuove",
+  title: "Bolletta troppo alta?",
+  highlight: "La controlliamo gratis.",
+  lead: "Mandaci l'ultima bolletta di luce o gas: un nostro consulente la legge voce per voce, ti spiega cosa stai pagando e ti dice se esiste un'offerta più conveniente. Nessun contratto senza il tuo sì.",
+  bookingHref: CAL,
+  heroCta: { label: "Manda la bolletta su WhatsApp", href: WA },
+  chat: {
+    q: "Mi è arrivata una bolletta della luce molto più alta del solito, potete guardarla?",
+    a: "Certo. Mandaci la foto della bolletta: controlliamo consumi, prezzo e costi fissi e ti richiamiamo per spiegarti cosa conviene fare.",
+    done: "Bolletta controllata",
+  },
+  sticker: "Valutazione gratuita",
+  strip: ["Controllo della bolletta", "Confronto delle offerte", "Cambio fornitore", "Voltura e subentro"],
+  needTitle: "Ti serve se…",
+  needs: [
+    { t: "la bolletta è salita e non sai perché", d: "La leggiamo con te: consumi, prezzo dell'energia, costi fissi e voci che spesso sfuggono." },
+    { t: "vuoi capire se stai pagando troppo", d: "Confrontiamo la tua offerta con quelle disponibili e ti diciamo se conviene cambiare ora o aspettare." },
+    { t: "cambi casa o intestatario", d: "Ci occupiamo di voltura, subentro e nuova attivazione delle forniture." },
+    { t: "hai ricevuto una lettera dal fornitore", d: "Modifiche di prezzo, solleciti, conguagli: ti spieghiamo cosa dice e come rispondere." },
+  ],
+  steps: [
+    { t: "Ci mandi la bolletta", d: "Una foto su WhatsApp basta. Se preferisci puoi coprire i codici POD e PDR: ci servono solo i consumi e il nome del fornitore." },
+    { t: "Un consulente la controlla", d: "Guarda consumi e costi e valuta quale offerta è più adatta a te. In questa fase non si firma niente." },
+    { t: "Ti richiamiamo e decidi tu", d: "Ti spieghiamo la bolletta e le alternative. Se vuoi cambiare, lo fai online o in ufficio; se no, resta tutto com'è." },
+  ],
+  docsTitle: "Cosa portare",
+  docs: [
+    "L'ultima bolletta di luce e di gas, completa di tutte le pagine",
+    "Documento d'identità e codice fiscale dell'intestatario",
+    "Per voltura o subentro: dati dell'immobile e lettura del contatore",
+    "IBAN, se vuoi la domiciliazione bancaria",
+    "Lettere o solleciti ricevuti dal fornitore, se ce ne sono",
+  ],
+  docsNote: "Hai l'ISEE basso? Il bonus sociale sulle bollette arriva in automatico se l'ISEE è in corso di validità: lo facciamo noi, gratis.",
+  price: {
+    value: "Gratis",
+    badge: "la valutazione",
+    text: "Il controllo della bolletta e il confronto delle offerte sono <b>gratuiti e senza impegno</b>. Decidi tu se e quando cambiare fornitore.",
+  },
+  faqs: [
+    { q: "La valutazione è davvero gratuita?", a: "Sì. Controlliamo la bolletta e ti diciamo cosa conviene senza costi e senza obbligo di cambiare fornitore." },
+    { q: "Fate voi il contratto senza chiedermelo?", a: "No. Nessuno attiva contratti senza la tua decisione: ti spieghiamo le alternative e scegli tu se procedere, online o in ufficio." },
+    { q: "Devo darvi i codici POD e PDR?", a: "Per la sola valutazione no: puoi coprirli sulla foto. Ci servono i consumi e il nome del fornitore attuale. Servono invece se decidi di cambiare fornitore." },
+    { q: "Cambiando fornitore resto senza luce o gas?", a: "No. Il cambio di fornitore è solo amministrativo: contatore e rete restano gli stessi e la fornitura non si interrompe." },
+    { q: "Posso venire in ufficio invece di mandare la bolletta?", a: "Sì, prenota un appuntamento in sede: porti le bollette e le guardiamo insieme." },
+    { q: "Come funziona il bonus sociale sulle bollette?", a: "Non serve una domanda: se hai un ISEE valido sotto la soglia prevista, lo sconto arriva direttamente in bolletta. Per questo conviene rinnovare l'ISEE ogni anno." },
+  ],
+  related: [
+    { label: "ISEE gratis", href: "/isee" },
+    { label: "IMU e TARI", href: "/imu-tari" },
+    { label: "Raccomandate SEND", href: "/raccomandata-send" },
+    { label: "Tutti i servizi", href: "/servizi" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+---
+<BaseLayout title="Controllo bollette luce e gas a Roma, gratis | Pratiche Flaiano" description="Bolletta di luce o gas troppo alta? A Vigne Nuove la controlliamo gratis, confrontiamo le offerte e seguiamo cambio fornitore, voltura e subentro. Senza impegno.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="luce-gas" name="Controllo bollette luce e gas" description="Valutazione gratuita delle bollette di luce e gas, confronto delle offerte, cambio fornitore, voltura e subentro." serviceType="Consulenza utenze luce e gas" offers={[{ name: "Valutazione della bolletta", price: 0 }]} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props} />
+</BaseLayout>

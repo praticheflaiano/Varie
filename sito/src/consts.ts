@@ -148,6 +148,7 @@ export const LANDING = [
   { label: "RED e INVCIV", href: "/red-invciv", tag: "" },
   { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "" },
   { label: "Raccomandate SEND", href: "/raccomandata-send", tag: "" },
+  { label: "Luce e gas", href: "/luce-gas", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */
