@@ -86,6 +86,9 @@ export const HOURS_SCHEMA = [
   },
 ] as const;
 
+/** Valutazione Google verificata il 10/11/2026 (5,0 con 298 recensioni). Aggiornare a mano. */
+export const REVIEWS = { rating: "5,0", label: "oltre 290 recensioni" } as const;
+
 export const BOOKING = {
   arcanisGroup: "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1",
   /** Calendario GHL "Consulenza da remoto" disattivato (404): finche non viene riattivato si prenota via WhatsApp. */
