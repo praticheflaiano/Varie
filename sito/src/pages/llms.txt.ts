@@ -39,6 +39,8 @@ export async function GET(_context: APIContext) {
   lines.push(`- [Bonus famiglia](${baseUrl}/bonus-famiglia): bonus nuovi nati 1.000 EUR (domanda entro 120 giorni), bonus asilo nido fino a 3.600 EUR, maternità e congedi, con ISEE minorenni gratuito.`);
   lines.push(`- [Modello RED e INVCIV](${baseUrl}/red-invciv): invio all'INPS di RED, ICRIC, ICLAV e ACC.AS/PS per pensionati e invalidi civili.`);
   lines.push(`- [Cartelle e rateizzazione](${baseUrl}/cartelle-rateizzazione): estratto di ruolo, rateizzazione delle cartelle AdER fino a 84 rate per debiti fino a 120.000 EUR, piani decaduti e definizioni agevolate.`);
+  lines.push(`- [Disability Card](${baseUrl}/disability-card): Carta europea della disabilità: a chi spetta, dove si usa, durata; richiesta in ufficio a 10 EUR con tessera, 15 EUR senza (la Carta è gratuita, la rilascia l'INPS).`);
+  lines.push(`- [Contrassegno CUDE](${baseUrl}/cude): contrassegno disabili a Roma: requisiti, documenti, costi di Roma Servizi per la Mobilità, ZTL e targhe, strisce blu, rinnovo.`);
   lines.push(`- [Raccomandate SEND](${baseUrl}/raccomandata-send): punto di ritiro SEND a Vigne Nuove, stampa dell'atto notificato (la prima gratis, poi 1,40 EUR + IVA) e consulenza su multe, cartelle, TARI e avvisi INPS; comunicazione del conducente via PEC a 15 EUR.`);
   lines.push(`- [Luce e gas](${baseUrl}/luce-gas): controllo gratuito delle bollette di luce e gas, confronto delle offerte, cambio fornitore, voltura e subentro.`);
   lines.push(`- [Richiesta online](${baseUrl}/richiesta): modulo per inviare la richiesta e i documenti, il centro richiama.`);

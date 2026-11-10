@@ -159,6 +159,8 @@ export const LANDING = [
   { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "" },
   { label: "Raccomandate SEND", href: "/raccomandata-send", tag: "" },
   { label: "Luce e gas", href: "/luce-gas", tag: "" },
+  { label: "Disability Card", href: "/disability-card", tag: "" },
+  { label: "Contrassegno CUDE", href: "/cude", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */

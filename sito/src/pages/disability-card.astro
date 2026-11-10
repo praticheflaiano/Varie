@@ -1,0 +1,106 @@
+---
+/**
+ * Carta europea della disabilità (Disability Card).
+ * Fonti: scheda INPS n. 58828 (aggiornata al 18/6/2026): platea (all. 3 DPCM 159/2013), domanda online o tramite
+ * ANMIC, UICI, ENS, ANFFAS, foto tessera, 60 giorni, durata max 10 anni, smarrimento, QR code; Ministero della Cultura
+ * (ingresso gratuito nei musei statali per persona con disabilità e accompagnatore); convenzioni sul sito del Ministro
+ * per le disabilità; direttiva (UE) 2024/2841.
+ * Prezzo del servizio confermato da Antonio il 10/11/2026: 10 € tesserati, 15 € non tesserati.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, vorrei richiedere la Disability Card con voi. Cosa devo portare?")}`;
+const CONVENZIONI = "https://www.disabilita.governo.it/it/carta-europea-disabilita-ced/come-funziona-la-carta/";
+
+const props = {
+  eyebrow: "Disability Card · Carta europea della disabilità",
+  title: "Disability Card:",
+  highlight: "la tua disabilità in una tessera.",
+  lead: "È la tessera gratuita dell'INPS che dimostra la tua condizione di disabilità senza portare con te i verbali. Ti dà accesso a ingressi gratuiti e sconti per trasporti, cultura e tempo libero, in Italia e in altri Paesi europei. La richiesta la prepariamo e la inviamo noi: 10 € con la tessera, 15 € senza.",
+  heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  chat: {
+    q: "Ho un'invalidità del 75%. Posso avere la Disability Card?",
+    a: "Sì, spetta dal 67% in su. Vieni con documento, SPID o CIE e una fototessera: la chiediamo insieme e ti arriva a casa per posta.",
+    done: "Domanda inviata all'INPS",
+  },
+  sticker: "Arriva a casa",
+  strip: ["La Carta è gratuita", "Vale fino a 10 anni", "Al posto dei verbali", "Con noi: 10 € o 15 €"],
+  needTitle: "Puoi averla se…",
+  needsLead: "La Carta è per chi ha una disabilità media, grave o è non autosufficiente. L'INPS controlla i requisiti nei propri archivi.",
+  needs: [
+    { t: "hai un'invalidità civile dal 67% in su", d: "Oppure sei un invalido civile minorenne, o ricevi l'indennità di accompagnamento." },
+    { t: "hai la Legge 104 con gravità", d: "Cioè la certificazione dell'articolo 3, comma 3, della legge 104 del 1992." },
+    { t: "sei cieco civile, sordo civile o invalido del lavoro", d: "Rientrano anche gli invalidi sul lavoro oltre il 35%, gli invalidi e inabili INPS (legge 222/1984), gli inabili alle mansioni e chi ha trattamenti di privilegio o di guerra." },
+  ],
+  steps: [
+    { t: "Prenoti e porti i documenti", d: "Bastano documento, SPID o CIE e una fototessera. Se hai il verbale, portalo: controlliamo subito se rientri." },
+    { t: "Inviamo la domanda all'INPS", d: "L'INPS verifica i requisiti e chiude la pratica entro 60 giorni dalla domanda completa." },
+    { t: "La Carta arriva a casa", d: "La stampa il Poligrafico dello Stato e la spedisce Poste Italiane al tuo indirizzo di residenza, o a un altro recapito che indichi." },
+  ],
+  docsTitle: "Cosa portare",
+  docs: [
+    "Documento d'identità e codice fiscale",
+    "SPID o CIE con PIN. Se non li hai, diccelo quando prenoti",
+    "Una fototessera recente",
+    "Il verbale di invalidità o della Legge 104, se lo hai: va allegato solo se è cartaceo e precedente al 2010, o rilasciato in Valle d'Aosta, a Trento o a Bolzano",
+    "Se l'invalidità è stata riconosciuta dal giudice: tribunale e data della sentenza o del decreto di omologa",
+  ],
+  docsNote: "Per un minorenne viene il genitore, con il proprio documento e quello del figlio.",
+  price: {
+    value: "10 €",
+    badge: "con la tessera",
+    text: "<b>15 €</b> senza tessera. È il costo del nostro servizio: prepariamo la domanda, la inviamo e la seguiamo. La <b>Carta in sé è gratuita</b>, la rilascia l'INPS. Puoi anche chiederla da solo sul sito INPS o tramite le associazioni ANMIC, UICI, ENS e ANFFAS.",
+  },
+  faqs: [
+    { q: "La Disability Card si paga?", a: "No, la Carta è gratuita: la rilascia l'INPS. Si paga solo il nostro servizio se vuoi che la domanda la prepariamo e la inviamo noi: 10 € con la tessera, 15 € senza." },
+    { q: "Quanto dura?", a: "Vale finché dura la condizione di disabilità e comunque non più di dieci anni dal rilascio." },
+    { q: "In quanto tempo arriva?", a: "L'INPS chiude la pratica entro 60 giorni dalla domanda completa. Poi la Carta viene stampata dal Poligrafico dello Stato e spedita da Poste Italiane." },
+    { q: "Sostituisce il verbale di invalidità?", a: "Per dimostrare la tua condizione sì: l'INPS scrive che la Carta esonera dal possesso di altre certificazioni sulla disabilità. Chi deve verificarla legge il QR code e controlla i dati aggiornati sul servizio dell'INPS. Il verbale resta però il documento su cui si basano pensioni, permessi e altre prestazioni: conservalo." },
+    { q: "Dà diritto a soldi o a permessi dal lavoro?", a: "No. La Carta non è una prestazione economica: serve a farti riconoscere e ad avere le agevolazioni previste dalle convenzioni. Per pensioni, accompagnamento e permessi della 104 ci sono domande diverse, che seguiamo come patronato." },
+    { q: "È la stessa cosa del contrassegno per l'auto?", a: "No. Per parcheggi riservati e ZTL serve il contrassegno CUDE, che a Roma rilascia Roma Servizi per la Mobilità. Trovi tutto nella <a href='/cude'>pagina sul CUDE</a>." },
+    { q: "Cosa faccio se la perdo o me la rubano?", a: "Va fatta denuncia e portata in copia alla sede INPS: la Carta viene annullata e si può presentare una nuova richiesta." },
+  ],
+  related: [
+    { label: "Contrassegno CUDE", href: "/cude" },
+    { label: "Invalidità e 104", href: "/invalidita-104" },
+    { label: "Tessera", href: "/tesseramento" },
+    { label: "Contatti e orari", href: "/info" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") } })) });
+const usi = [
+  { k: "Al posto dei verbali", t: "Mostri la Carta e basta", d: "Non devi più portare con te verbali e certificati. Chi deve controllare legge il QR code e vede, sul servizio dell'INPS, se la tua condizione è ancora valida.", tone: "c39" },
+  { k: "Musei e cultura", t: "Ingressi gratuiti o ridotti", d: "Nei musei e nei luoghi della cultura dello Stato l'ingresso è gratuito per la persona con disabilità e per un accompagnatore: la Carta è il modo più semplice per dimostrarlo. Molti Comuni e fondazioni hanno firmato convenzioni per i propri musei e parchi archeologici.", tone: "c41" },
+  { k: "Treni e trasporti", t: "Agevolazioni sui viaggi", d: "Tra le convenzioni c'è quella con Trenitalia: se sulla Carta c'è la lettera A, che indica il diritto all'accompagnatore, chi ti accompagna viaggia gratis. Condizioni e altre aziende sono nell'elenco ufficiale.", tone: "c40" },
+  { k: "In Europa", t: "Vale anche fuori dall'Italia", d: "La Carta nasce da un progetto europeo ed è riconosciuta negli altri Paesi dell'Unione che vi aderiscono. Una direttiva europea del 2024 la estenderà a tutti i Paesi UE per i soggiorni brevi.", tone: "c39" },
+];
+---
+<BaseLayout title="Disability Card a Roma: cos'è, a chi spetta, come richiederla | Pratiche Flaiano" description="Disability Card (Carta europea della disabilità): a chi spetta, dove si usa, quanto dura e come richiederla. A Vigne Nuove la domanda la facciamo noi: 10 € con tessera, 15 € senza.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="disability-card" name="Richiesta Disability Card (Carta europea della disabilità)" description="Preparazione e invio all'INPS della domanda di Carta europea della disabilità." serviceType="Richiesta Disability Card" offers={[{ name: "Richiesta Disability Card", price: 15 }, { name: "Richiesta Disability Card, con tessera", price: 10 }]} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props}>
+    <section class="c46" id="dove-si-usa">
+      <h2 class="c43">Dove si usa e cosa ti dà</h2>
+      <p class="c63">Le agevolazioni nascono da convenzioni con enti, aziende e Comuni: cambiano nel tempo e da un posto all'altro.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px">
+        {usi.map((x) => (
+          <div class={x.tone}>
+            <span class="c56">{x.k}</span>
+            <h3 class="c55">{x.t}</h3>
+            <p class="c84">{x.d}</p>
+          </div>
+        ))}
+      </div>
+      <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:10px">
+        <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">Prima di partire, controlla l'elenco ufficiale</b>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Le convenzioni attive sono pubblicate sul sito del Ministro per le disabilità. Lì trovi cosa spetta, dove e a quali condizioni.</p>
+        <a href={CONVENZIONI} target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;padding:13px 22px;border-radius:999px;background:#D4FF4F;color:#14142B;font-weight:800;text-decoration:none">Apri il sito del Ministro per le disabilità ↗</a>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#4A4A63">Fonti: INPS, scheda "Carta europea della disabilità - Disability Card" (aggiornata al 18 giugno 2026); Ministero della Cultura, ingresso gratuito nei musei statali per le persone con disabilità e i loro accompagnatori; direttiva (UE) 2024/2841.</p>
+    </section>
+  </ServiceLanding>
+</BaseLayout>

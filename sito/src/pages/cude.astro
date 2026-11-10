@@ -1,0 +1,105 @@
+---
+/**
+ * CUDE - Contrassegno Unificato Disabili Europeo, a Roma.
+ * Fonti: Roma Servizi per la Mobilità, pagine "Contrassegno Unico Disabili Europeo - CUDE" (agg. 15/10/2026),
+ * "Richiesta CUDE" e "Rinnovo/duplicato": requisiti sanitari, documenti, canali (online con SPID/CIE, sportello di
+ * via Silvio D'Amico 38 su appuntamento, patronati indicati dal sito per chi non ha SPID), provvisorio 60 giorni,
+ * costi 6,16 € / 22,16 € + 16 € di bollo, due targhe (dal 21/8/2026 solo la principale per ZTL e corsie);
+ * art. 381 DPR 495/1992; art. 188 e 188 comma 3-bis del Codice della strada.
+ * Costo del servizio dell'ufficio: NON ancora confermato da Antonio -> riquadro "te lo diciamo prima".
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, vorrei richiedere il contrassegno disabili (CUDE). Vi mando la foto del verbale?")}`;
+
+const props = {
+  eyebrow: "CUDE · contrassegno disabili a Roma",
+  title: "Il contrassegno per l'auto,",
+  highlight: "senza giri a vuoto.",
+  lead: "Il CUDE è il contrassegno europeo che permette alla persona con disabilità di sostare nei posti riservati e di entrare nelle ZTL. È della persona, non dell'auto. A Roma lo rilascia Roma Servizi per la Mobilità: controlliamo se ne hai diritto e prepariamo la domanda con te.",
+  heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  chat: {
+    q: "Mia madre ha l'accompagnamento. Può avere il contrassegno per l'auto?",
+    a: "Dipende da cosa c'è scritto nel verbale: serve la capacità di camminare molto ridotta, oppure la cecità. Portalo, lo leggiamo insieme e facciamo la domanda.",
+    done: "Domanda inviata a Roma Mobilità",
+  },
+  sticker: "Provvisorio subito",
+  strip: ["È della persona, non dell'auto", "Vale in tutta Italia", "A Roma due targhe registrate", "Provvisorio per 60 giorni"],
+  needTitle: "Ne hai diritto se…",
+  needsLead: "Non basta la percentuale di invalidità: conta cosa attesta il certificato medico. Lo controlliamo noi prima di fare la domanda.",
+  needs: [
+    { t: "cammini con molta difficoltà", d: "Serve un certificato che attesti una capacità di deambulazione impedita o sensibilmente ridotta, come prevede l'articolo 381 del regolamento del Codice della strada." },
+    { t: "sei non vedente", d: "Il contrassegno spetta anche alle persone cieche, con la certificazione che lo attesta." },
+    { t: "hai un problema temporaneo", d: "Dopo un intervento o un infortunio si può chiedere un contrassegno a tempo, valido per il periodo indicato nel certificato." },
+  ],
+  steps: [
+    { t: "Ci porti il certificato", d: "Il verbale INPS o il certificato del medico legale della ASL. Verifichiamo che riporti la ridotta capacità di camminare o la cecità." },
+    { t: "Facciamo la domanda online", d: "Con il tuo SPID o la tua CIE, sullo sportello online di Roma Servizi per la Mobilità. Ricevi subito un contrassegno provvisorio valido 60 giorni." },
+    { t: "Il CUDE arriva a casa", d: "Quello definitivo viene spedito con raccomandata. Registriamo anche le targhe per la ZTL: una principale e una secondaria." },
+  ],
+  docsTitle: "Cosa portare",
+  docsGroups: [
+    { title: "Primo rilascio", items: [
+      "Certificato del medico legale della ASL che attesta la ridotta capacità di deambulazione o la cecità (D.P.R. 495/1992)",
+      "Oppure il verbale INPS che riporta espressamente la ridotta capacità di deambulazione o la cecità, con la lettera dell'INPS che chiude l'iter sanitario",
+      "Una fototessera del titolare",
+      "Documento d'identità del titolare",
+      "SPID o CIE del titolare",
+      "Le targhe dei veicoli da registrare: una principale e una secondaria",
+    ] },
+    { title: "Rinnovo", items: [
+      "Per un contrassegno da 5 anni: certificato del medico di base che conferma che la disabilità persiste",
+      "Per un contrassegno a tempo: la nuova certificazione medico-legale",
+      "Il vecchio contrassegno, da restituire in originale. In caso di furto o smarrimento, la denuncia con il numero del contrassegno",
+    ] },
+  ],
+  docsNote: "Senza SPID né CIE la domanda si presenta allo sportello di Roma Servizi per la Mobilità, in via Silvio D'Amico 38, solo su appuntamento (06 57003), oppure presso i patronati indicati sul loro sito. Per minori e persone tutelate può fare tutto il genitore o il tutore.",
+  faqs: [
+    { q: "Quanto dura il CUDE?", a: "Se la disabilità è permanente, 5 anni. Se è temporanea, dura quanto indicato nel certificato medico: a Roma si aggiungono 45 giorni." },
+    { q: "Quanto costa?", a: "A Roma Servizi per la Mobilità si pagano 6,16 € per il contrassegno da 5 anni o permanente. Per quello con validità inferiore a 5 anni si pagano 22,16 € più 16 € di marca da bollo. Il costo del nostro servizio te lo diciamo prima di iniziare." },
+    { q: "Posso usarlo su qualsiasi auto?", a: "Sì: il contrassegno è personale e segue la persona, non il veicolo. Va esposto in originale sul parabrezza e si usa solo quando il titolare è a bordo o viene accompagnato. A Roma, per ZTL e corsie preferenziali, vanno però registrate le targhe." },
+    { q: "Quante targhe posso registrare a Roma?", a: "Due: una principale e una secondaria, che puoi cambiare online in ogni momento. Dal 21 agosto 2026, per ZTL e corsie preferenziali è autorizzata solo la targa principale, con la persona con disabilità a bordo." },
+    { q: "Con il CUDE posso parcheggiare sulle strisce blu?", a: "Se i posti riservati sono già occupati o non disponibili, sì, gratis: lo prevede dal 2022 l'articolo 188, comma 3-bis, del Codice della strada." },
+    { q: "Vale fuori Roma?", a: "Sì, il contrassegno vale in tutta Italia ed è il modello riconosciuto negli altri Paesi dell'Unione europea. Per le ZTL degli altri Comuni però le regole cambiano: esiste una piattaforma nazionale del Ministero dei Trasporti, ma funziona solo nei Comuni che hanno aderito. Prima di entrare, verifica sul sito di quel Comune." },
+    { q: "È la stessa cosa della Disability Card?", a: "No. La Disability Card dimostra la disabilità e dà sconti e ingressi gratuiti; il CUDE riguarda sosta e circolazione. Si chiedono a enti diversi. Trovi tutto nella <a href='/disability-card'>pagina sulla Disability Card</a>." },
+    { q: "L'ho perso o me l'hanno rubato: cosa faccio?", a: "Serve la denuncia con il numero del contrassegno, poi si chiede il duplicato a Roma Servizi per la Mobilità, con gli stessi costi del rilascio." },
+  ],
+  related: [
+    { label: "Disability Card", href: "/disability-card" },
+    { label: "Invalidità e 104", href: "/invalidita-104" },
+    { label: "Tessera", href: "/tesseramento" },
+    { label: "Contatti e orari", href: "/info" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") } })) });
+const usi = [
+  { k: "Sosta", t: "Posti riservati e strisce blu", d: "Puoi sostare nei posti riservati alle persone con disabilità. Se sono occupati o mancano, la sosta sulle strisce blu è gratuita (articolo 188, comma 3-bis, del Codice della strada).", tone: "c39" },
+  { k: "ZTL a Roma", t: "Ingresso con la targa registrata", d: "Con la persona con disabilità a bordo puoi entrare in ZTL e usare le corsie preferenziali. Dal 21 agosto 2026 vale solo la targa principale tra le due registrate.", tone: "c41" },
+  { k: "Senza il titolare a bordo", t: "Va comunicato", d: "Se devi entrare in ZTL senza il titolare a bordo, l'ingresso si comunica a ChiamaRoma 060606 o con l'app Julia.", tone: "c40" },
+  { k: "Costi del Comune", t: "6,16 € o 22,16 € più bollo", d: "6,16 € per il contrassegno da 5 anni o permanente. 22,16 € più 16 € di marca da bollo per quello con validità inferiore a 5 anni. Si paga con pagoPA.", tone: "c39" },
+];
+---
+<BaseLayout title="CUDE a Roma: contrassegno disabili, requisiti e domanda | Pratiche Flaiano" description="Contrassegno disabili CUDE a Roma: chi ne ha diritto, documenti, costi, ZTL, strisce blu e rinnovo. A Vigne Nuove controlliamo il verbale e prepariamo la domanda con te.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="cude" name="Richiesta contrassegno disabili CUDE a Roma" description="Verifica dei requisiti e preparazione della domanda di Contrassegno Unificato Disabili Europeo a Roma Servizi per la Mobilità." serviceType="Richiesta contrassegno CUDE" />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props}>
+    <section class="c46" id="cosa-permette">
+      <h2 class="c43">Cosa puoi fare con il CUDE</h2>
+      <p class="c63">Le regole sulla sosta valgono in tutta Italia. Quelle su ZTL e targhe sono di Roma.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px">
+        {usi.map((x) => (
+          <div class={x.tone}>
+            <span class="c56">{x.k}</span>
+            <h3 class="c55">{x.t}</h3>
+            <p class="c84">{x.d}</p>
+          </div>
+        ))}
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#4A4A63">Fonti: Roma Servizi per la Mobilità, pagine sul Contrassegno Unico Disabili Europeo (aggiornate al 15 ottobre 2026); articolo 381 del D.P.R. 495/1992; articolo 188 del Codice della strada. Le regole possono cambiare: per ZTL e targhe fa fede il sito di Roma Servizi per la Mobilità.</p>
+    </section>
+  </ServiceLanding>
+</BaseLayout>
