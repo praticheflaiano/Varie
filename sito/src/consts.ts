@@ -147,6 +147,7 @@ export const LANDING = [
   { label: "Bonus famiglia", href: "/bonus-famiglia", tag: "" },
   { label: "RED e INVCIV", href: "/red-invciv", tag: "" },
   { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "" },
+  { label: "Raccomandate SEND", href: "/raccomandata-send", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */

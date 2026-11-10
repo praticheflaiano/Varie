@@ -1,0 +1,95 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, mi è arrivato un avviso SEND (raccomandata). Posso passare a ritirarla? Vi mando la foto dell'avviso.")}`;
+
+const props = {
+  eyebrow: "Raccomandata SEND · Vigne Nuove",
+  title: "Ti è arrivato un avviso SEND?",
+  highlight: "Te la stampiamo gratis.",
+  lead: "Nella cassetta della posta trovi un avviso con un codice QR: è una notifica della Pubblica Amministrazione, spesso una multa, una cartella o un avviso del Comune. Passa in ufficio con l'avviso e un documento: ti stampiamo l'atto e ti spieghiamo cosa fare. La prima è gratis.",
+  heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  chat: {
+    q: "Mi è arrivato un foglio con scritto SEND e un QR code, cos'è?",
+    a: "È un avviso di avvenuta ricezione: c'è un atto per te sulla piattaforma SEND. Passa con l'avviso e un documento, te lo stampiamo e lo guardiamo insieme.",
+    done: "Atto stampato e spiegato",
+  },
+  sticker: "La prima è gratis",
+  strip: ["Stampa dell'atto in ufficio", "Prima raccomandata gratis", "Ti spieghiamo cosa è arrivato", "Multe: comunicazione del conducente"],
+  needTitle: "Passa da noi se…",
+  needs: [
+    { t: "hai trovato un avviso SEND nella cassetta", d: "Un foglio con QR code e codice IUN: l'atto vero è sulla piattaforma SEND. Te lo stampiamo noi, senza SPID e senza app." },
+    { t: "non usi SPID, app IO o PEC", d: "Senza strumenti digitali l'atto non lo puoi leggere da casa. Allo sportello lo ritiri su carta con il tuo documento." },
+    { t: "non capisci cosa ti chiedono", d: "Multa, cartella, TARI, avviso INPS: ti diciamo di cosa si tratta, entro quando rispondere e cosa conviene fare." },
+    { t: "è una multa e non guidavi tu", d: "Compiliamo la comunicazione dei dati del conducente e la mandiamo noi via PEC all'ente che ha fatto la multa." },
+  ],
+  steps: [
+    { t: "Vieni con l'avviso", d: "Porta l'avviso che hai trovato nella cassetta, un documento d'identità e il codice fiscale. Se ritiri per un familiare, serve anche la delega firmata che trovi sull'avviso." },
+    { t: "Ti stampiamo l'atto", d: "Leggiamo il codice e stampiamo l'atto notificato. La prima raccomandata è gratis." },
+    { t: "Lo guardiamo insieme", d: "Ti spieghiamo cos'è, le scadenze e le strade possibili: pagare, chiedere le rate, fare ricorso o contestare." },
+  ],
+  docsTitle: "Cosa portare",
+  docs: [
+    "L'avviso di avvenuta ricezione (il foglio con QR code e codice IUN)",
+    "Documento d'identità valido",
+    "Codice fiscale o tessera sanitaria",
+    "Se ritiri per un'altra persona: la delega compilata e firmata sull'avviso, con copia del suo documento e del suo codice fiscale",
+  ],
+  docsNote: "Hai perso l'avviso? Portaci comunque documento e codice fiscale: vediamo insieme come recuperare la notifica.",
+  price: {
+    value: "Gratis",
+    badge: "la prima",
+    text: "La prima raccomandata SEND te la stampiamo <b>gratis</b>. Dalla seconda il costo è quello previsto dal servizio: <b>1,40 € + IVA</b>. Per le multe, la <b>comunicazione del conducente via PEC</b> costa <b>15 €</b> tutto compreso.",
+  },
+  faqs: [
+    { q: "Cos'è SEND?", a: "È il Servizio Notifiche Digitali della Pubblica Amministrazione. Comuni, Agenzia delle Entrate, INPS e altri enti lo usano per mandare atti con valore legale, come multe, cartelle e avvisi di pagamento." },
+    { q: "Perché mi è arrivato un foglio e non la busta con l'atto?", a: "Se non hai un domicilio digitale (PEC o app IO attiva) ti arriva per posta un avviso di avvenuta ricezione con un QR code. L'atto vero si legge su SEND con SPID o CIE, oppure si ritira stampato in un punto di ritiro come il nostro ufficio." },
+    { q: "Se non lo ritiro cosa succede?", a: "La notifica vale lo stesso. Con la raccomandata, si considera ricevuta dopo 10 giorni dalla consegna o dal ritiro; se non la ritiri, dopo 20 giorni dall'avviso di giacenza. Da quel momento partono i termini per pagare o fare ricorso." },
+    { q: "Quanto costa?", a: "La prima raccomandata te la stampiamo gratis. Dalla seconda il costo previsto dal servizio è 1,40 € + IVA. La comunicazione del conducente per una multa, compilata e mandata via PEC, costa 15 €." },
+    { q: "È una multa ma non guidavo io: cosa devo fare?", a: "Va comunicato chi guidava entro 60 giorni dalla notifica (art. 126-bis del Codice della strada). Se non lo fai arriva una seconda sanzione. Compiliamo noi il modulo e lo mandiamo via PEC all'ente." },
+    { q: "Posso ritirarla per un familiare?", a: "Sì, con la delega che trovi sull'avviso, compilata e firmata dal destinatario, più il tuo documento e una copia del documento e del codice fiscale del destinatario." },
+    { q: "E se mi chiedono soldi che non devo?", a: "Succede, per esempio con la TARI o con cartelle già pagate o prescritte. Controlliamo l'atto e, se non è dovuto, prepariamo la richiesta di annullamento o di rettifica." },
+  ],
+  related: [
+    { label: "Cartelle e rateizzazione", href: "/cartelle-rateizzazione" },
+    { label: "IMU e TARI", href: "/imu-tari" },
+    { label: "Tessera", href: "/tesseramento" },
+    { label: "Contatti e orari", href: "/info" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const kinds = [
+  { k: "Multa", t: "Verbale del Codice della strada", d: "Hai 5 giorni per pagare con lo sconto del 30% e 60 giorni per pagare o fare ricorso al Prefetto. Se non guidavi tu, il conducente va comunicato entro 60 giorni.", cta: "Comunicazione conducente via PEC: 15 €", tone: "c41" },
+  { k: "Agenzia delle Entrate", t: "Avvisi, cartelle, accertamenti", d: "Ti spieghiamo cosa ti contestano e le strade possibili: pagare, chiedere le rate, verificare se l'importo è davvero dovuto.", cta: "Vedi cartelle e rate", href: "/cartelle-rateizzazione", tone: "c39" },
+  { k: "Comune", t: "TARI, IMU e tributi locali", d: "A volte gli importi non sono dovuti: metri quadri sbagliati, casa venduta, esenzioni non applicate. Controlliamo e prepariamo la richiesta.", cta: "Vedi IMU e TARI", href: "/imu-tari", tone: "c40" },
+  { k: "INPS", t: "Comunicazioni e richieste di rimborso", d: "Indebiti, prestazioni sospese, richieste di documenti: come patronato vediamo la tua posizione e rispondiamo per te.", cta: "Vedi servizi del patronato", href: "/servizi/patronato", tone: "c39" },
+];
+---
+<BaseLayout title="Raccomandata SEND a Roma: ritiro gratis in ufficio | Pratiche Flaiano" description="Avviso SEND nella cassetta? Al CAF di Vigne Nuove ti stampiamo l'atto (la prima è gratis) e ti spieghiamo cosa fare: multe, cartelle, TARI, INPS. Comunicazione del conducente via PEC a 15 €.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="raccomandata-send" name="Ritiro raccomandate SEND" description="Stampa degli atti notificati tramite SEND (Servizio Notifiche Digitali) e consulenza su multe, cartelle, TARI e avvisi INPS. La prima stampa è gratuita." serviceType="Ritiro notifiche SEND" offers={[{ name: "Prima raccomandata SEND", price: 0 }, { name: "Comunicazione dati del conducente via PEC", price: 15 }]} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props}>
+    <section class="c46" id="cosa-arriva">
+      <h2 class="c43">Cosa c'è di solito dentro</h2>
+      <p class="c63">Ogni atto ha scadenze diverse. Dopo averlo stampato lo leggiamo con te e ti diciamo cosa fare.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px">
+        {kinds.map((x) => (
+          <div class={x.tone}>
+            <span class="c56">{x.k}</span>
+            <h3 class="c55">{x.t}</h3>
+            <p class="c84">{x.d}</p>
+            {x.href ? <a href={x.href} class="c64">{x.cta} →</a> : <span class="c64">{x.cta}</span>}
+          </div>
+        ))}
+      </div>
+      <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:8px">
+        <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">Non lasciare l'avviso nel cassetto</b>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">La notifica vale anche se non la ritiri: con la raccomandata si considera ricevuta 10 giorni dopo la consegna, oppure 20 giorni dopo l'avviso di giacenza se non la ritiri. Da lì partono i termini per pagare con lo sconto, chiedere le rate o fare ricorso.</p>
+      </div>
+    </section>
+  </ServiceLanding>
+</BaseLayout>
