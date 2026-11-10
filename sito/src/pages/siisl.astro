@@ -2,13 +2,17 @@
 /**
  * SIISL per chi prende NASpI o DIS-COLL. Fonti: messaggio INPS n. 4011 del 28/11/2024;
  * indicazioni operative Ministero del Lavoro (dicembre 2024); art. 25 d.l. 60/2024; art. 21 d.lgs. 150/2015.
- * Prezzo 25 €: confermato da Antonio (servizio in ufficio, facoltativo).
+ * Prezzo 25 € per i non tesserati, confermato da Antonio il 10/11/2026: comprende la redazione del curriculum online.
+ * Con SPID/CIE del cittadino: calendario CAF (mattina e pomeriggio). Senza SPID: lo fa il patronato, sempre a pagamento
+ * (non è una prestazione rimborsata dall'INPS), calendario Patronato (solo mattina).
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import { CONTACT } from "~/consts";
 
+const CAL_CAF = "https://link.arcanis.it/widget/booking/zHBu5s4PxMYtIC18QbIz";
+const CAL_PATRONATO = "https://link.arcanis.it/widget/booking/jQuQoR920Pc9umdvJnlI";
 const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, prendo la NASpI e devo fare il SIISL. Posso venire in ufficio per compilarlo con voi?")}`;
 
 const props = {
@@ -17,18 +21,19 @@ const props = {
   highlight: "Hai 15 giorni per il SIISL.",
   lead: "L'INPS ti iscrive in automatico alla piattaforma SIISL del Ministero del Lavoro. Poi tocca a te: entro 15 giorni dall'inizio della NASpI devi entrare, compilare il curriculum e firmare il Patto di attivazione digitale. Puoi farlo da solo, gratis. Se preferisci, lo compiliamo noi in ufficio.",
   heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  bookingHref: "#prenota-siisl",
   chat: {
     q: "Mi è arrivato un SMS: sono iscritto al SIISL. Devo fare qualcosa?",
     a: "Sì: entro 15 giorni entra con SPID o CIE, compila il curriculum e firma il Patto di attivazione digitale. Se vuoi, lo facciamo insieme in ufficio.",
     done: "Patto firmato",
   },
   sticker: "15 giorni",
-  strip: ["Da solo è gratis", "Serve SPID o CIE", "In ufficio lo compiliamo noi: 25 €", "La domanda NASpI resta gratuita"],
+  strip: ["Da solo è gratis", "In ufficio lo compiliamo noi: 25 €", "Anche senza SPID", "La domanda NASpI resta gratuita"],
   needTitle: "Ti riguarda se…",
   needs: [
     { t: "hai chiesto la NASpI", d: "Dal 24 novembre 2024 chi chiede la NASpI viene iscritto d'ufficio al SIISL dall'INPS. Arriva un SMS di conferma." },
     { t: "prendi la DIS-COLL", d: "Vale la stessa regola: iscrizione automatica e 15 giorni per completare i passaggi." },
-    { t: "non hai SPID o CIE, o non sai da dove iniziare", d: "Sul SIISL si entra solo con SPID o CIE. Se non li hai o ti blocchi, passa in ufficio: vediamo insieme come fare." },
+    { t: "non hai SPID o CIE, o non sai da dove iniziare", d: "Con il tuo SPID o la tua CIE lo compiliamo insieme sul portale. Se non li hai, possiamo farlo lo stesso come patronato." },
   ],
   steps: [
     { t: "Entra sul SIISL", d: "Vai su siisl.lavoro.gov.it e accedi con SPID o CIE. Controlla email e cellulare: la piattaforma li verifica con un codice." },
@@ -37,7 +42,8 @@ const props = {
   ],
   docsTitle: "Cosa portare se lo fai con noi",
   docs: [
-    "SPID o CIE con PIN, e il telefono per i codici di accesso",
+    "Il tuo SPID o la tua CIE con PIN, e il telefono per i codici di accesso. Se non li hai, diccelo quando prenoti",
+    "Il tuo curriculum, se ne hai già uno: lo usiamo come base",
     "Email e cellulare che usi davvero: vengono verificati con un codice",
     "Titoli di studio e corsi fatti",
     "Elenco dei lavori svolti, con date e mansioni",
@@ -47,7 +53,7 @@ const props = {
   price: {
     value: "25 €",
     badge: "in ufficio",
-    text: "Fare il SIISL <b>da solo è gratis</b>: basta SPID o CIE su siisl.lavoro.gov.it. I <b>25 €</b> si pagano solo se vuoi che curriculum e Patto di attivazione li compiliamo noi in ufficio. La <b>domanda NASpI</b> è un'altra cosa e resta <b>gratuita per tutti</b>.",
+    text: "Fare il SIISL <b>da solo è gratis</b>: basta SPID o CIE su siisl.lavoro.gov.it. I <b>25 €</b> (prezzo per chi non ha la tessera) si pagano solo se vuoi che lo compiliamo noi in ufficio, e comprendono la <b>redazione del curriculum online</b>. Il costo c'è anche quando lo facciamo come patronato senza il tuo SPID: non è una prestazione rimborsata dall'INPS. La <b>domanda NASpI</b> è un'altra cosa e resta <b>gratuita per tutti</b>.",
     cta: { label: "Vai alla domanda NASpI", href: "/naspi" },
   },
   faqs: [
@@ -55,7 +61,9 @@ const props = {
     { q: "Entro quando devo farlo?", a: "Entro 15 giorni dall'inizio della prestazione: accesso al SIISL, curriculum e firma del Patto di attivazione digitale. Prima della scadenza la piattaforma manda un promemoria, ma l'obbligo vale anche se non lo ricevi." },
     { q: "Cosa succede se non lo faccio?", a: "Ricevi un invito a contattare il Centro per l'impiego per il Patto di servizio personalizzato. Se non ti presenti senza un motivo giustificato, si applicano le sanzioni dell'art. 21, comma 7, lettera a) del d.lgs. 150/2015: riduzione dell'indennità e, se le assenze si ripetono, decadenza." },
     { q: "Posso farlo da solo?", a: "Sì, ed è gratis. Si entra con SPID o CIE su siisl.lavoro.gov.it. Può aiutarti anche il Centro per l'impiego." },
-    { q: "Quanto costa farlo con voi?", a: "25 € per la compilazione in ufficio di curriculum e Patto di attivazione digitale. È un servizio facoltativo e separato dalla domanda NASpI, che è gratuita." },
+    { q: "Quanto costa farlo con voi?", a: "25 € per chi non ha la tessera, compresa la redazione del curriculum online. È un servizio facoltativo e separato dalla domanda NASpI, che è gratuita." },
+    { q: "Non ho SPID né CIE: posso farlo lo stesso?", a: "Sì. Possiamo presentarlo noi come patronato. Il servizio resta a pagamento, perché non rientra tra le prestazioni rimborsate dall'INPS, e l'appuntamento va preso sul calendario del patronato, che riceve solo la mattina." },
+    { q: "Ho già un curriculum: mi serve?", a: "Sì, portalo. Lo usiamo come base per compilare quello online sul SIISL." },
     { q: "Il SIISL serve anche per ADI e SFL?", a: "Sì, ma con regole e passaggi diversi. Li trovi nella pagina dedicata ad ADI e SFL." },
   ],
   related: [
@@ -72,6 +80,24 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
   <JsonLdService slot="head" slug="siisl" name="Compilazione SIISL per NASpI e DIS-COLL" description="Assistenza in ufficio per curriculum e Patto di attivazione digitale sulla piattaforma SIISL, per chi percepisce NASpI o DIS-COLL." serviceType="Assistenza SIISL" offers={[{ name: "Compilazione SIISL in ufficio", price: 25 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
   <ServiceLanding {...props}>
+    <section class="c46" id="prenota-siisl" style="scroll-margin-top:90px">
+      <h2 class="c43">Prenota l'appuntamento giusto</h2>
+      <p class="c63">Il calendario cambia a seconda che tu abbia o no SPID o CIE.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px">
+        <div class="c39">
+          <span class="c56">Hai SPID o CIE</span>
+          <h3 class="c55">Mattina o pomeriggio</h3>
+          <p class="c84">Lo compiliamo insieme sul portale con il tuo SPID o la tua CIE. Porta il telefono per i codici e, se ce l'hai, il curriculum.</p>
+          <a href={CAL_CAF} target="_blank" rel="noopener" class="c64">Prenota sul calendario CAF →</a>
+        </div>
+        <div class="c41">
+          <span class="c56">Non hai SPID né CIE</span>
+          <h3 class="c55">Solo la mattina</h3>
+          <p class="c84">Lo presentiamo noi come patronato. Il servizio è comunque a pagamento: non è rimborsato dall'INPS.</p>
+          <a href={CAL_PATRONATO} target="_blank" rel="noopener" class="c64">Prenota sul calendario Patronato →</a>
+        </div>
+      </div>
+    </section>
     <section class="c46">
       <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:8px">
         <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">Fonti ufficiali</b>
