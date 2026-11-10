@@ -2,7 +2,7 @@
 /**
  * SIISL per chi prende NASpI o DIS-COLL. Fonti: messaggio INPS n. 4011 del 28/11/2024;
  * indicazioni operative Ministero del Lavoro (dicembre 2024); art. 25 d.l. 60/2024; art. 21 d.lgs. 150/2015.
- * Prezzo 25 € per i non tesserati, confermato da Antonio il 10/11/2026: comprende la redazione del curriculum online.
+ * Prezzo 25 € per i non tesserati e 20 € per i tesserati, confermato da Antonio il 10/11/2026: comprende la redazione del curriculum online.
  * Con SPID/CIE del cittadino: calendario CAF (mattina e pomeriggio). Senza SPID: lo fa il patronato, sempre a pagamento
  * (non è una prestazione rimborsata dall'INPS), calendario Patronato (solo mattina).
  */
@@ -28,7 +28,7 @@ const props = {
     done: "Patto firmato",
   },
   sticker: "15 giorni",
-  strip: ["Da solo è gratis", "In ufficio lo compiliamo noi: 25 €", "Anche senza SPID", "La domanda NASpI resta gratuita"],
+  strip: ["Da solo è gratis", "In ufficio: 25 €, 20 € con la tessera", "Anche senza SPID", "La domanda NASpI resta gratuita"],
   needTitle: "Ti riguarda se…",
   needs: [
     { t: "hai chiesto la NASpI", d: "Dal 24 novembre 2024 chi chiede la NASpI viene iscritto d'ufficio al SIISL dall'INPS. Arriva un SMS di conferma." },
@@ -53,15 +53,15 @@ const props = {
   price: {
     value: "25 €",
     badge: "in ufficio",
-    text: "Fare il SIISL <b>da solo è gratis</b>: basta SPID o CIE su siisl.lavoro.gov.it. I <b>25 €</b> (prezzo per chi non ha la tessera) si pagano solo se vuoi che lo compiliamo noi in ufficio, e comprendono la <b>redazione del curriculum online</b>. Il costo c'è anche quando lo facciamo come patronato senza il tuo SPID: non è una prestazione rimborsata dall'INPS. La <b>domanda NASpI</b> è un'altra cosa e resta <b>gratuita per tutti</b>.",
-    cta: { label: "Vai alla domanda NASpI", href: "/naspi" },
+    text: "Fare il SIISL <b>da solo è gratis</b>: basta SPID o CIE su siisl.lavoro.gov.it. I <b>25 €</b> (<b>20 €</b> con la tessera) si pagano solo se vuoi che lo compiliamo noi in ufficio, e comprendono la <b>redazione del curriculum online</b>. Il costo c'è anche quando lo facciamo come patronato senza il tuo SPID: non è una prestazione rimborsata dall'INPS. La <b>domanda NASpI</b> è un'altra cosa e resta <b>gratuita per tutti</b>.",
+    cta: { label: "Scopri la tessera", href: "/tesseramento" },
   },
   faqs: [
     { q: "Devo iscrivermi io al SIISL?", a: "No. Dal 24 novembre 2024 l'INPS iscrive d'ufficio chi chiede NASpI o DIS-COLL (messaggio INPS n. 4011 del 28 novembre 2024). A te resta da entrare e completare i passaggi." },
     { q: "Entro quando devo farlo?", a: "Entro 15 giorni dall'inizio della prestazione: accesso al SIISL, curriculum e firma del Patto di attivazione digitale. Prima della scadenza la piattaforma manda un promemoria, ma l'obbligo vale anche se non lo ricevi." },
     { q: "Cosa succede se non lo faccio?", a: "Ricevi un invito a contattare il Centro per l'impiego per il Patto di servizio personalizzato. Se non ti presenti senza un motivo giustificato, si applicano le sanzioni dell'art. 21, comma 7, lettera a) del d.lgs. 150/2015: riduzione dell'indennità e, se le assenze si ripetono, decadenza." },
     { q: "Posso farlo da solo?", a: "Sì, ed è gratis. Si entra con SPID o CIE su siisl.lavoro.gov.it. Può aiutarti anche il Centro per l'impiego." },
-    { q: "Quanto costa farlo con voi?", a: "25 € per chi non ha la tessera, compresa la redazione del curriculum online. È un servizio facoltativo e separato dalla domanda NASpI, che è gratuita." },
+    { q: "Quanto costa farlo con voi?", a: "25 €, oppure 20 € per chi ha la tessera, compresa la redazione del curriculum online. È un servizio facoltativo e separato dalla domanda NASpI, che è gratuita." },
     { q: "Non ho SPID né CIE: posso farlo lo stesso?", a: "Sì. Possiamo presentarlo noi come patronato. Il servizio resta a pagamento, perché non rientra tra le prestazioni rimborsate dall'INPS, e l'appuntamento va preso sul calendario del patronato, che riceve solo la mattina." },
     { q: "Ho già un curriculum: mi serve?", a: "Sì, portalo. Lo usiamo come base per compilare quello online sul SIISL." },
     { q: "Il SIISL serve anche per ADI e SFL?", a: "Sì, ma con regole e passaggi diversi. Li trovi nella pagina dedicata ad ADI e SFL." },
@@ -75,9 +75,9 @@ const props = {
 };
 const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
 ---
-<BaseLayout title="SIISL e NASpI: cosa fare entro 15 giorni | Pratiche Flaiano" description="Prendi la NASpI? L'INPS ti iscrive al SIISL: entro 15 giorni curriculum e Patto di attivazione digitale. Da solo è gratis, in ufficio a Vigne Nuove lo compiliamo noi a 25 €.">
+<BaseLayout title="SIISL e NASpI: cosa fare entro 15 giorni | Pratiche Flaiano" description="Prendi la NASpI? L'INPS ti iscrive al SIISL: entro 15 giorni curriculum e Patto di attivazione digitale. Da solo è gratis, in ufficio a Vigne Nuove lo compiliamo noi a 25 € (20 € con la tessera).">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="siisl" name="Compilazione SIISL per NASpI e DIS-COLL" description="Assistenza in ufficio per curriculum e Patto di attivazione digitale sulla piattaforma SIISL, per chi percepisce NASpI o DIS-COLL." serviceType="Assistenza SIISL" offers={[{ name: "Compilazione SIISL in ufficio", price: 25 }]} />
+  <JsonLdService slot="head" slug="siisl" name="Compilazione SIISL per NASpI e DIS-COLL" description="Assistenza in ufficio per curriculum e Patto di attivazione digitale sulla piattaforma SIISL, per chi percepisce NASpI o DIS-COLL." serviceType="Assistenza SIISL" offers={[{ name: "Compilazione SIISL in ufficio", price: 25 }, { name: "Compilazione SIISL in ufficio, con tessera", price: 20 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
   <ServiceLanding {...props}>
     <section class="c46" id="prenota-siisl" style="scroll-margin-top:90px">
