@@ -1,0 +1,173 @@
+---
+/**
+ * Caregiver familiare: cosa spetta, distinto per livello (Stato/INPS, fisco, Regione Lazio, Roma Capitale).
+ * Fonti verificate il 10/11/2026:
+ * - L. 205/2017 art. 1 c. 255 (definizione), dal dossier Camera dei deputati "Normativa vigente e proposte di legge
+ *   sulla figura del caregiver familiare";
+ * - INPS, scheda "Permessi legge 104/1992" e scheda "Domande di congedi straordinari" (agg. 21/10/2026);
+ * - INPS, APE sociale: scheda verifica requisiti e notizia 15/1/2026 (messaggio n. 128 del 14/1/2026): proroga a chi
+ *   matura i requisiti entro il 31/12/2026, domande di verifica entro 31/3, 15/7 e non oltre il 30/11/2026;
+ * - Regione Lazio, pagina "Caregiver familiare" (agg. 4/3/2026): L.R. 5/2024, riconoscimento al PUA, Card Giver, DGR 751/2024;
+ * - Roma Capitale, schede "Assegno di cura e contributo caregiver familiare per disabilità gravissima" e
+ *   "Caregiver familiare": importi 500-800 € e 400-700 € al mese, domanda ai Servizi sociali/PUA del Municipio;
+ * - TUIR art. 15 c. 1 lett. i-septies e art. 10 c. 2 (detrazione e deduzione per l'assistenza);
+ * - Disegno di legge C. 2789-A approvato dalla Camera il 14/10/2026, all'esame del Senato: NON è ancora legge
+ *   (notizie di stampa specializzata: i requisiti economici possono cambiare, non riportare soglie ISEE).
+ * Nessun prezzo pubblicato per questi servizi: riquadro "te lo diciamo prima".
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, assisto un familiare e vorrei capire quali aiuti mi spettano. Posso mandarvi il verbale?")}`;
+
+const props = {
+  eyebrow: "Caregiver familiare · Roma e Lazio",
+  title: "Assisti un familiare?",
+  highlight: "Ecco cosa ti spetta.",
+  lead: "Permessi e congedi dal lavoro, pensione anticipata, detrazioni, riconoscimento della Regione Lazio e contributi del Comune di Roma. Gli aiuti per chi si prende cura di un familiare non autosufficiente esistono, ma dipendono da enti diversi e hanno regole diverse. Li mettiamo in fila e prepariamo le domande con te.",
+  heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  chat: {
+    q: "Assisto mia madre, che ha l'accompagnamento, e lavoro. Cosa posso chiedere?",
+    a: "Di solito i permessi della 104 e, se vivete insieme, il congedo fino a due anni. Se la disabilità è gravissima, a Roma c'è anche il contributo di cura. Portaci verbale e ISEE.",
+    done: "Domande presentate",
+  },
+  sticker: "Tutto in ordine",
+  strip: ["Permessi e congedo INPS", "Pensione con l'APE sociale", "Card e sostegni della Regione Lazio", "Contributo di cura a Roma"],
+  needTitle: "Sei un caregiver familiare se…",
+  needsLead: "Lo dice la legge 205 del 2017: è caregiver chi assiste e si prende cura di un familiare, gratis e non per mestiere.",
+  needs: [
+    { t: "assisti il coniuge, il partner o il convivente", d: "Vale per il matrimonio, l'unione civile e la convivenza di fatto." },
+    { t: "assisti un genitore, un figlio, un fratello, un nonno, un suocero", d: "Cioè un familiare o un affine entro il secondo grado. In alcuni casi si arriva al terzo grado, per esempio zii e nipoti." },
+    { t: "la persona non è autosufficiente", d: "Ha l'handicap grave della legge 104 (articolo 3, comma 3) oppure l'indennità di accompagnamento, e ha bisogno di assistenza continua." },
+  ],
+  steps: [
+    { t: "Ci racconti la situazione", d: "Chi assisti, se vivete insieme, se lavori e con che contratto. Guardiamo insieme il verbale di invalidità e della 104." },
+    { t: "Ti diciamo cosa spetta", d: "Per ogni aiuto: chi lo dà, quanto vale, cosa serve e se è compatibile con gli altri. Senza promettere quello che non c'è." },
+    { t: "Prepariamo le domande", d: "All'INPS presentiamo noi permessi, congedo e pensione. Per Municipio e Regione prepariamo ISEE e documenti, e ti diciamo a quale sportello andare." },
+  ],
+  docsTitle: "Cosa portare",
+  docs: [
+    "Verbale di invalidità civile e verbale della legge 104 della persona assistita",
+    "Documento e codice fiscale tuo e della persona assistita",
+    "Se lavori: l'ultima busta paga e il nome del contratto",
+    "Per il congedo: la residenza di entrambi, perché serve la convivenza",
+    "ISEE in corso di validità, se ce l'hai. Per il Comune di Roma servono sia l'ISEE ordinario sia quello sociosanitario: li facciamo noi",
+    "Per la pensione: l'estratto contributivo, oppure lo scarichiamo noi",
+  ],
+  docsNote: "Non hai ancora il verbale della 104 o l'accompagnamento? Si parte da lì: seguiamo noi la domanda di invalidità.",
+  faqs: [
+    { q: "Il caregiver riceve uno stipendio dallo Stato?", a: "Oggi no. Esistono permessi e congedi retribuiti per chi lavora, la pensione anticipata in alcuni casi e, per le disabilità gravissime, contributi dei Comuni. Una legge nazionale con un contributo economico è stata approvata dalla Camera il 14 ottobre 2026, ma deve ancora passare al Senato: finché non è legge non c'è nessuna domanda da presentare." },
+    { q: "Siamo più fratelli: chi prende i permessi della 104?", a: "Potete averli in più di uno e alternarvi, ma il totale resta di tre giorni al mese per la stessa persona assistita." },
+    { q: "Faccio la colf o lavoro in proprio: ho diritto a permessi e congedo?", a: "No. Permessi della 104 e congedo straordinario sono per i lavoratori dipendenti. Sono esclusi i lavoratori domestici, a domicilio, autonomi e parasubordinati. I dipendenti pubblici fanno domanda al proprio ente." },
+    { q: "Per il congedo di due anni devo vivere con la persona che assisto?", a: "Sì. La convivenza deve iniziare al più tardi insieme al congedo e durare per tutto il periodo. Conta anche un ordine di priorità: prima il coniuge o il convivente, poi i genitori, i figli, i fratelli e infine gli altri parenti conviventi fino al terzo grado." },
+    { q: "Come ottengo il riconoscimento di caregiver nel Lazio?", a: "Si chiede al Punto Unico di Accesso (PUA) del proprio distretto. Il riconoscimento avviene nella valutazione della persona assistita e dà diritto al tesserino \"Card Giver\". Di regola è riconosciuto un solo caregiver per assistito, salvo i genitori di figli minori e il giovane caregiver." },
+    { q: "Il contributo di cura di Roma si perde se c'è l'accompagnamento?", a: "No. Il Comune indica che assegno e contributo di cura sono compatibili con pensioni, indennità di accompagnamento e con l'assistenza domiciliare dei Municipi." },
+    { q: "Quanto si aspetta per il contributo del Comune di Roma?", a: "I servizi sociali compilano la scheda di valutazione entro 90 giorni. Il contributo viene poi riconosciuto in ordine cronologico di domanda, finché ci sono risorse: per questo conviene presentarla presto." },
+    { q: "Il contributo di Roma va rinnovato ogni anno?", a: "No, chi è già in carico continua a riceverlo senza ripresentare la domanda. Va avvisato il Segretariato sociale se cambiano l'ISEE, il caregiver, i servizi attivi o le condizioni di salute." },
+  ],
+  related: [
+    { label: "Invalidità e 104", href: "/invalidita-104" },
+    { label: "Pensioni", href: "/pensioni" },
+    { label: "ISEE", href: "/isee" },
+    { label: "Colf e badanti", href: "/colf-badanti" },
+    { label: "Disability Card", href: "/disability-card" },
+    { label: "Contrassegno CUDE", href: "/cude" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+
+const livelli = [
+  {
+    ente: "INPS · tutta Italia", t: "Permessi della legge 104", tone: "c39",
+    righe: [
+      "Tre giorni di permesso retribuito al mese, anche divisi in ore.",
+      "Per coniuge, convivente, genitori, parenti e affini. Per il terzo grado solo in casi particolari.",
+      "Più familiari possono alternarsi, ma i giorni restano tre al mese in tutto.",
+    ],
+    chi: "Lavoratori dipendenti. Domanda all'INPS, anche tramite patronato.",
+  },
+  {
+    ente: "INPS · tutta Italia", t: "Congedo straordinario fino a 2 anni", tone: "c41",
+    righe: [
+      "Fino a due anni in tutta la vita lavorativa, anche a periodi.",
+      "Indennità pari all'ultima retribuzione, entro un tetto annuo, e contributi figurativi per la pensione.",
+      "Serve la convivenza con la persona assistita, che deve avere l'handicap grave.",
+    ],
+    chi: "Lavoratori dipendenti, secondo un ordine di priorità tra i familiari.",
+  },
+  {
+    ente: "INPS · tutta Italia", t: "Pensione prima: APE sociale", tone: "c40",
+    righe: [
+      "Per chi assiste da almeno sei mesi il coniuge o un parente di primo grado convivente con handicap grave.",
+      "Servono 63 anni e 5 mesi di età e 30 anni di contributi. Per le donne un anno in meno per ogni figlio, fino a due.",
+      "Vale per chi matura i requisiti entro il 31 dicembre 2026. L'ultima scadenza per la domanda di verifica è il 30 novembre 2026.",
+    ],
+    chi: "Chi ha smesso di lavorare e non ha già una pensione diretta. Per chi ha iniziato a lavorare molto giovane c'è anche la pensione dei lavoratori precoci.",
+  },
+  {
+    ente: "Fisco · tutta Italia", t: "Detrazioni nel 730", tone: "c39",
+    righe: [
+      "Detrazione del 19% sulle spese per la badante di una persona non autosufficiente, fino a 2.100 € l'anno, se il reddito non supera 40.000 €.",
+      "Deduzione dei contributi versati per colf e badanti, fino a 1.549,37 € l'anno.",
+      "Spese mediche e di assistenza specifica della persona con disabilità.",
+    ],
+    chi: "Chi sostiene la spesa, anche per un familiare. Le vediamo insieme nel 730.",
+  },
+  {
+    ente: "Regione Lazio", t: "Riconoscimento e Card Giver", tone: "c41",
+    righe: [
+      "La legge regionale 5 del 2024 riconosce il caregiver familiare, anche convivente senza legami di parentela.",
+      "Il riconoscimento si chiede al Punto Unico di Accesso (PUA) e dà diritto al tesserino \"Card Giver\".",
+      "Apre l'accesso a formazione, sostegno psicologico e interventi di sollievo, cioè la sostituzione temporanea nell'assistenza.",
+    ],
+    chi: "C'è anche il giovane caregiver, tra 16 e 28 anni, con agevolazioni per lo studio.",
+  },
+  {
+    ente: "Comune di Roma", t: "Assegno e contributo di cura", tone: "c40",
+    righe: [
+      "Per le persone con disabilità gravissima residenti a Roma, di qualsiasi età.",
+      "Contributo di cura da 400 a 700 € al mese se assiste il caregiver familiare. Assegno di cura da 500 a 800 € al mese se si assume un assistente.",
+      "L'importo dipende dall'ISEE sociosanitario e dagli altri servizi attivi. La domanda si presenta in qualsiasi momento ai Servizi sociali o al PUA del Municipio.",
+    ],
+    chi: "Viene pagato alla persona assistita, in ordine di domanda e finché ci sono risorse.",
+  },
+];
+---
+<BaseLayout title="Caregiver familiare a Roma: permessi, pensione e contributi | Pratiche Flaiano" description="Assisti un familiare non autosufficiente? Permessi 104, congedo di due anni, APE sociale, detrazioni, Card Giver della Regione Lazio e contributo di cura del Comune di Roma, con le fonti.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="caregiver" name="Assistenza al caregiver familiare" description="Verifica degli aiuti per chi assiste un familiare non autosufficiente e presentazione delle domande: permessi legge 104, congedo straordinario, APE sociale, ISEE sociosanitario." serviceType="Patronato - caregiver familiare" />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props}>
+    <section class="c46" id="aiuti">
+      <h2 class="c43">Chi dà cosa: Stato, Regione, Comune</h2>
+      <p class="c63">Ogni aiuto ha il suo ente e le sue regole. Alcuni valgono in tutta Italia, altri solo nel Lazio o solo a Roma.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(440px,100%),1fr));gap:20px">
+        {livelli.map((x) => (
+          <div class={x.tone}>
+            <span class="c56">{x.ente}</span>
+            <h3 class="c55">{x.t}</h3>
+            <ul style="margin:0;padding-left:20px;list-style:disc;display:flex;flex-direction:column;gap:8px;font-size:16px;line-height:1.5">
+              {x.righe.map((r) => <li>{r}</li>)}
+            </ul>
+            <p style="margin:0;font-size:15px;line-height:1.45"><b>Per chi:</b> {x.chi}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="c46" id="disabilita-gravissima">
+      <div style="background:#F1EEFF;border-radius:28px;padding:26px 28px;display:flex;flex-direction:column;gap:12px">
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,5vw,36px);line-height:1.05">Cosa vuol dire "disabilità gravissima"</h2>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#34344A;max-width:75ch">Per il contributo del Comune di Roma non basta l'invalidità al 100%. Serve l'indennità di accompagnamento, o la non autosufficienza, insieme ad almeno una delle condizioni elencate dal decreto ministeriale del 26 settembre 2016. Tra queste: stato vegetativo o di minima coscienza, ventilazione meccanica continua, demenza grave o gravissima, lesioni spinali alte, gravissima compromissione motoria per malattie neurologiche o muscolari, cecità insieme a sordità gravi, autismo di livello 3, ritardo mentale grave o profondo, o comunque il bisogno di assistenza e monitoraggio 24 ore su 24.</p>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#34344A;max-width:75ch">Alla domanda si allegano la certificazione di un medico specialista di struttura pubblica, i verbali di invalidità, accompagnamento e 104, l'ISEE ordinario e quello sociosanitario, e i documenti di identità.</p>
+      </div>
+      <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:8px">
+        <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">La legge nazionale sul caregiver non c'è ancora</b>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Il 14 ottobre 2026 la Camera ha approvato un disegno di legge che riconosce il caregiver familiare tramite l'INPS e prevede un contributo fino a 1.200 € a trimestre per chi convive con la persona assistita, la segue per almeno 91 ore a settimana e ha redditi bassi. Il testo è ora al Senato e può cambiare. Finché non diventa legge non esiste nessuna domanda: appena ci saranno regole certe aggiorniamo questa pagina.</p>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#4A4A63">Fonti, controllate il 10 novembre 2026: legge 205/2017, articolo 1, comma 255; INPS, schede "Permessi legge 104/1992" e "Congedi straordinari" (aggiornate al 21 ottobre 2026) e messaggio n. 128 del 14 gennaio 2026 sull'APE sociale; Regione Lazio, pagina "Caregiver familiare" e legge regionale 5/2024; Roma Capitale, schede "Assegno di cura e contributo caregiver familiare per disabilità gravissima" e "Caregiver familiare"; Testo unico delle imposte sui redditi, articoli 10 e 15. Importi e requisiti possono cambiare: prima di decidere li ricontrolliamo con te.</p>
+    </section>
+  </ServiceLanding>
+</BaseLayout>

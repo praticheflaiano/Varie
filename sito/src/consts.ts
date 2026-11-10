@@ -161,6 +161,7 @@ export const LANDING = [
   { label: "Luce e gas", href: "/luce-gas", tag: "" },
   { label: "Disability Card", href: "/disability-card", tag: "" },
   { label: "Contrassegno CUDE", href: "/cude", tag: "" },
+  { label: "Caregiver familiare", href: "/caregiver", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */
