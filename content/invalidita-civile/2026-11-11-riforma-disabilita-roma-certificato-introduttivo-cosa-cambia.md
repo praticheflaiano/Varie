@@ -16,7 +16,7 @@ sources:
   - "INPS, Messaggi n. 635, n. 637 e n. 639 del 23 febbraio 2026"
   - "INPS, brochure Riforma della disabilità, quarta edizione, maggio 2026 - https://www.inps.it/content/dam/inps-site/pdf/schede-servizio/documents/Brochure_Riforma_Disabilit%C3%A0.pdf"
   - "INPS, dossier Riforma della disabilità, fase sperimentale - https://www.inps.it/it/it/inps-comunica/dossier/riforma-della-disabilita/fase-sperimentale.html"
-status: draft
+status: published
 type: guida
 image: "/og/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia.jpg"
 image_alt: "Riforma della disabilità a Roma: basta il certificato del medico"
@@ -90,7 +90,7 @@ Nelle 40 province entrate a marzo, i certificati fatti **fino al 28 febbraio 202
 
 Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti Flaiano di **Vigne Nuove** (Municipio III), con il **medico certificatore in sede**.
 
-Guardiamo insieme i referti, il medico prepara e invia il certificato, e dopo il riconoscimento ci occupiamo dei dati socio-economici e dei benefici collegati.
+Vieni da noi e pensiamo a tutto: raccogliamo con te la documentazione, ti spieghiamo cosa chiedere, valutiamo il tuo caso e ti prepariamo alla visita. Ti seguiamo prima e dopo, fino ai benefici collegati.
 
 ## Vuoi capire cosa chiedere?
 
