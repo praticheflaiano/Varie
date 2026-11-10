@@ -3,6 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import body from "~/fragments/naspi.html?raw";
+const NASPI_SURVEY = "https://link.arcanis.it/widget/survey/sImJrbagruVY43JLeqA9";
 const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Se mi sono dimesso mi spetta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di regola no, salvo dimissioni per giusta causa o casi particolari. Raccontaci la tua situazione e verifichiamo.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto prendo e per quanto tempo?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Dipende dagli stipendi e dalle settimane lavorate negli ultimi anni. Lo calcoliamo insieme al primo incontro.\"}}, {\"@type\": \"Question\", \"name\": \"Il SIISL \u00e8 obbligatorio? Posso farlo da solo?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\u00ec, \u00e8 obbligatorio per ricevere la NASpI. Puoi farlo da solo con SPID o CIE sul portale del Ministero del Lavoro, oppure lo facciamo noi a 25 \u20ac.\"}}, {\"@type\": \"Question\", \"name\": \"Se trovo un nuovo lavoro cosa succede?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Va comunicato all'INPS: in alcuni casi la NASpI si riduce, in altri si sospende. Ce ne occupiamo noi.\"}}]}";
 ---
 <BaseLayout title={"Domanda NASpI gratis a Roma"} description={"Domanda NASpI gratuita al patronato di Vigne Nuove. Iscrizione SIISL obbligatoria fatta da noi. Anche in videochiamata."}>
@@ -10,5 +11,15 @@ const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mai
   <JsonLdService slot="head" slug="naspi" name="Domanda NASpI" description={"Domanda di indennità di disoccupazione NASpI all'INPS tramite patronato. Gratuita."} serviceType="Patronato - disoccupazione" offers={[{ name: "Domanda NASpI", price: 0 }]} />
   {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
   <div class="lp"><Fragment set:html={body} /></div>
+  <section id="richiesta-online" style="background:#F1EEFF;scroll-margin-top:80px">
+    <div style="max-width:820px;margin:0 auto;padding:48px 16px;display:flex;flex-direction:column;gap:16px">
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,5vw,38px);line-height:1.1;color:#14142B">Richiedi la NASpI online</h2>
+      <p style="margin:0;font-size:17px;line-height:1.5;color:#34344A;max-width:60ch">Compila il modulo: ti richiamiamo noi per completare la domanda.</p>
+      <div style="background:#fff;border:2px solid #14142B;border-radius:28px;padding:12px;min-width:0">
+        <iframe src={NASPI_SURVEY} style="width:100%;min-height:620px;border:none;border-radius:20px" id="sImJrbagruVY43JLeqA9" scrolling="no" title="Richiesta NASpI"></iframe>
+      </div>
+    </div>
+  </section>
+  <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
   <LandingArticles categories={["naspi-disoccupazione"]} />
 </BaseLayout>
