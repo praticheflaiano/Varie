@@ -140,6 +140,10 @@ export const LANDING = [
   { label: "Dimissioni online", href: "/dimissioni-online", tag: "" },
   { label: "Colf e badanti", href: "/colf-badanti", tag: "" },
   { label: "Contratti d'affitto", href: "/contratti-affitto", tag: "" },
+  { label: "IMU e TARI", href: "/imu-tari", tag: "" },
+  { label: "Bonus famiglia", href: "/bonus-famiglia", tag: "" },
+  { label: "RED e INVCIV", href: "/red-invciv", tag: "" },
+  { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */

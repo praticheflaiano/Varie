@@ -2,12 +2,14 @@
 title: "Bonus Asilo Nido 2026: fino a 3.600 € | Domanda INPS, ISEE | CAF Roma"
 slug: "bonus-asilo-nido-2026-3600-euro-domanda-inps"
 date: 2026-04-29
-last_updated: 2026-04-29
+last_updated: 2026-11-10
 category: "bonus-fiscali"
 tags: ["bonus", "guida", "famiglie", "inps", "asilo-nido", "isee"]
 meta_description: "Bonus Asilo Nido 2026: fino a 3.600 euro per famiglie con ISEE minorenni sotto 40.000. Domanda INPS aperta. Documenti, scadenze. CAF Roma Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS - Circolare 27 marzo 2026, n. 29 (istruzioni bonus asilo nido 2026)"
+  - "Legge 30 dicembre 2024, n. 207 (legge di bilancio 2025): eliminato il requisito dell'altro figlio sotto i 10 anni per l'importo maggiorato"
   - "INPS - Messaggio 31 marzo 2026, n. 1136 (apertura servizio domanda Bonus Asilo Nido 2026)"
   - "Portale INPS - Bonus asilo nido 2026: attivo il servizio per la domanda (notizia inps.it)"
   - "Portale INPS - Scheda Bonus asilo nido e forme di supporto presso la propria abitazione"
@@ -24,7 +26,7 @@ image_alt: "Illustrazione editoriale: edificio asilo nido geometrico con blocchi
 
 # Bonus Asilo Nido 2026: fino a 3.600 euro per famiglie - domanda INPS aperta
 
-**Ultimo aggiornamento: 29 aprile 2026**
+**Ultimo aggiornamento: 10 novembre 2026**
 
 Famiglie con figli da 0 a 3 anni che frequentano l'asilo nido (pubblico o privato) o che hanno bambini gravemente affetti da patologie croniche assistiti a domicilio: il **Bonus Asilo Nido 2026** vale fino a **3.600 € all'anno** e la domanda INPS e **aperta dal 31 marzo 2026** (Messaggio INPS n. 1136). Il **Centro Pratiche Flaiano** (Patronato ENASC e CAF UNSIC con sede a Roma Vigne Nuove) puo seguirti per la domanda completa: ISEE, documenti spese, presentazione telematica.
 
@@ -46,7 +48,7 @@ Gli importi 2026 sono confermati su tre fasce in base all'**ISEE minorenni** (ca
 | ISEE tra 25.001 e 40.000 € | **2.500 €** | 227,28 € (10 rate) + 227,20 € (1 rata) |
 | ISEE fino a 25.000 € | **3.000 €** | 272,73 € (10 rate) + 272,70 € (1 rata) |
 
-**Importo MAGGIORATO a 3.600 €**: spetta esclusivamente per i **bambini nati a partire dal 1° gennaio 2024**, in famiglie con **ISEE minorenni fino a 40.000 €**, a condizione che nel nucleo sia presente almeno un altro figlio sotto i 10 anni. Il pagamento avviene in **10 rate da 327,27 € + 1 rata da 327,30 €**.
+**Importo MAGGIORATO a 3.600 €**: spetta esclusivamente per i **bambini nati a partire dal 1° gennaio 2024**, in famiglie con **ISEE minorenni fino a 40.000 €**. Non serve più che in famiglia ci sia un altro figlio sotto i 10 anni: il requisito è stato eliminato dalla legge di bilancio 2025. Dal 2026, inoltre, dall'ISEE si toglie l'Assegno unico ricevuto. Il pagamento avviene in **10 rate da 327,27 € + 1 rata da 327,30 €**.
 
 L'importo e calcolato in base alla **data di nascita** del minore e all'ISEE. Si erogano **fino a 11 mensilita** corrispondenti ai mesi in cui si e effettivamente pagata la retta.
 
@@ -54,7 +56,7 @@ L'importo e calcolato in base alla **data di nascita** del minore e all'ISEE. Si
 
 La principale **novita 2026** introdotta dalla Legge di Bilancio 2025 e gia confermata e:
 
-- **Importo maggiorato 3.600 €** per i nati dal 1° gennaio 2024 con almeno un altro figlio sotto i 10 anni in famiglia e ISEE minorenni fino a 40.000 €
+- **Importo maggiorato 3.600 €** per i nati dal 1° gennaio 2024 con ISEE minorenni fino a 40.000 €, senza più il requisito di un altro figlio sotto i 10 anni
 - **Domanda semplificata**: l'INPS, con il Messaggio n. 1136/2026, ha attivato dal 31 marzo 2026 una **procedura digitale piu lineare** che riduce gli step necessari
 - Conferma dei tre tetti annui (1.500 / 2.500 / 3.000 € per le fasce ordinarie)
 
