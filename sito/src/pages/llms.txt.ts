@@ -26,7 +26,7 @@ export async function GET(_context: APIContext) {
   lines.push(`- [Calcolo imposte di successione](${baseUrl}/calcolo-imposte-successione): calcolatore gratuito di imposta di successione per erede, ipotecaria, catastale, tasse e bollo, secondo la guida dell'Agenzia delle Entrate dal 2025.`);
   lines.push(`- [Quale ISEE ti serve](${baseUrl}/quale-isee): test gratuito che indica quale ISEE chiedere (ordinario, minorenni, università, sociosanitario, nucleo ristretto, residenze RSA, corrente) e quali documenti preparare.`);
   lines.push(`- [Modello 730](${baseUrl}/730): da 30 EUR; per chi torna l'anno dopo il prezzo resta invariato. Anche da remoto.`);
-  lines.push(`- [Domanda NASpI](${baseUrl}/naspi): domanda di disoccupazione all'INPS tramite patronato, gratuita. Calcolatore e guide su ${EXTERNAL_PORTALS.naspi.url}.`);
+  lines.push(`- [Domanda NASpI](${baseUrl}/naspi): domanda di disoccupazione all'INPS tramite patronato, gratuita per tutti. SIISL: guida su ${baseUrl}/siisl (da soli gratis, in ufficio 25 €). Calcolatore e guide su ${EXTERNAL_PORTALS.naspi.url}.`);
   lines.push(`- [Assegno Unico](${baseUrl}/assegno-unico): domanda 15 EUR in ufficio, 19 EUR online; tesserati 10 EUR in ufficio, 15 EUR online. ISEE gratuito.`);
   lines.push(`- [Invalidita civile e Legge 104](${baseUrl}/invalidita-104): medico certificatore e patronato nello stesso ufficio; primo incontro gratuito.`);
   lines.push(`- [Successioni](${baseUrl}/successioni): dichiarazione di successione, volture catastali, conti e beni ereditari.`);

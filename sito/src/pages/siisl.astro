@@ -1,0 +1,82 @@
+---
+/**
+ * SIISL per chi prende NASpI o DIS-COLL. Fonti: messaggio INPS n. 4011 del 28/11/2024;
+ * indicazioni operative Ministero del Lavoro (dicembre 2024); art. 25 d.l. 60/2024; art. 21 d.lgs. 150/2015.
+ * Prezzo 25 €: confermato da Antonio (servizio in ufficio, facoltativo).
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import ServiceLanding from "~/components/ui/ServiceLanding.astro";
+import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
+
+const WA = `${CONTACT.whatsapp.link}?text=${encodeURIComponent("Buongiorno, prendo la NASpI e devo fare il SIISL. Posso venire in ufficio per compilarlo con voi?")}`;
+
+const props = {
+  eyebrow: "SIISL · NASpI e DIS-COLL",
+  title: "Prendi la NASpI?",
+  highlight: "Hai 15 giorni per il SIISL.",
+  lead: "L'INPS ti iscrive in automatico alla piattaforma SIISL del Ministero del Lavoro. Poi tocca a te: entro 15 giorni dall'inizio della NASpI devi entrare, compilare il curriculum e firmare il Patto di attivazione digitale. Puoi farlo da solo, gratis. Se preferisci, lo compiliamo noi in ufficio.",
+  heroCta: { label: "Scrivici su WhatsApp", href: WA },
+  chat: {
+    q: "Mi è arrivato un SMS: sono iscritto al SIISL. Devo fare qualcosa?",
+    a: "Sì: entro 15 giorni entra con SPID o CIE, compila il curriculum e firma il Patto di attivazione digitale. Se vuoi, lo facciamo insieme in ufficio.",
+    done: "Patto firmato",
+  },
+  sticker: "15 giorni",
+  strip: ["Da solo è gratis", "Serve SPID o CIE", "In ufficio lo compiliamo noi: 25 €", "La domanda NASpI resta gratuita"],
+  needTitle: "Ti riguarda se…",
+  needs: [
+    { t: "hai chiesto la NASpI", d: "Dal 24 novembre 2024 chi chiede la NASpI viene iscritto d'ufficio al SIISL dall'INPS. Arriva un SMS di conferma." },
+    { t: "prendi la DIS-COLL", d: "Vale la stessa regola: iscrizione automatica e 15 giorni per completare i passaggi." },
+    { t: "non hai SPID o CIE, o non sai da dove iniziare", d: "Sul SIISL si entra solo con SPID o CIE. Se non li hai o ti blocchi, passa in ufficio: vediamo insieme come fare." },
+  ],
+  steps: [
+    { t: "Entra sul SIISL", d: "Vai su siisl.lavoro.gov.it e accedi con SPID o CIE. Controlla email e cellulare: la piattaforma li verifica con un codice." },
+    { t: "Compila il curriculum", d: "Studi, lingue, competenze informatiche, patenti, esperienze di lavoro e il lavoro che cerchi. Puoi aggiornarlo quando vuoi." },
+    { t: "Firma il Patto di attivazione digitale", d: "Dichiari la disponibilità al lavoro (DID), scegli se mandare il curriculum alle agenzie per il lavoro e firmi. Poi il Centro per l'impiego completa con te il Patto di servizio." },
+  ],
+  docsTitle: "Cosa portare se lo fai con noi",
+  docs: [
+    "SPID o CIE con PIN, e il telefono per i codici di accesso",
+    "Email e cellulare che usi davvero: vengono verificati con un codice",
+    "Titoli di studio e corsi fatti",
+    "Elenco dei lavori svolti, con date e mansioni",
+    "Patenti e abilitazioni, se ne hai",
+  ],
+  docsNote: "Il curriculum resta tuo: lo puoi aggiornare da solo in ogni momento.",
+  price: {
+    value: "25 €",
+    badge: "in ufficio",
+    text: "Fare il SIISL <b>da solo è gratis</b>: basta SPID o CIE su siisl.lavoro.gov.it. I <b>25 €</b> si pagano solo se vuoi che curriculum e Patto di attivazione li compiliamo noi in ufficio. La <b>domanda NASpI</b> è un'altra cosa e resta <b>gratuita per tutti</b>.",
+    cta: { label: "Vai alla domanda NASpI", href: "/naspi" },
+  },
+  faqs: [
+    { q: "Devo iscrivermi io al SIISL?", a: "No. Dal 24 novembre 2024 l'INPS iscrive d'ufficio chi chiede NASpI o DIS-COLL (messaggio INPS n. 4011 del 28 novembre 2024). A te resta da entrare e completare i passaggi." },
+    { q: "Entro quando devo farlo?", a: "Entro 15 giorni dall'inizio della prestazione: accesso al SIISL, curriculum e firma del Patto di attivazione digitale. Prima della scadenza la piattaforma manda un promemoria, ma l'obbligo vale anche se non lo ricevi." },
+    { q: "Cosa succede se non lo faccio?", a: "Ricevi un invito a contattare il Centro per l'impiego per il Patto di servizio personalizzato. Se non ti presenti senza un motivo giustificato, si applicano le sanzioni dell'art. 21, comma 7, lettera a) del d.lgs. 150/2015: riduzione dell'indennità e, se le assenze si ripetono, decadenza." },
+    { q: "Posso farlo da solo?", a: "Sì, ed è gratis. Si entra con SPID o CIE su siisl.lavoro.gov.it. Può aiutarti anche il Centro per l'impiego." },
+    { q: "Quanto costa farlo con voi?", a: "25 € per la compilazione in ufficio di curriculum e Patto di attivazione digitale. È un servizio facoltativo e separato dalla domanda NASpI, che è gratuita." },
+    { q: "Il SIISL serve anche per ADI e SFL?", a: "Sì, ma con regole e passaggi diversi. Li trovi nella pagina dedicata ad ADI e SFL." },
+  ],
+  related: [
+    { label: "Domanda NASpI", href: "/naspi" },
+    { label: "ADI e SFL", href: "/adi-sfl" },
+    { label: "Dimissioni online", href: "/dimissioni-online" },
+    { label: "Contatti e orari", href: "/info" },
+  ],
+};
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+---
+<BaseLayout title="SIISL e NASpI: cosa fare entro 15 giorni | Pratiche Flaiano" description="Prendi la NASpI? L'INPS ti iscrive al SIISL: entro 15 giorni curriculum e Patto di attivazione digitale. Da solo è gratis, in ufficio a Vigne Nuove lo compiliamo noi a 25 €.">
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <JsonLdService slot="head" slug="siisl" name="Compilazione SIISL per NASpI e DIS-COLL" description="Assistenza in ufficio per curriculum e Patto di attivazione digitale sulla piattaforma SIISL, per chi percepisce NASpI o DIS-COLL." serviceType="Assistenza SIISL" offers={[{ name: "Compilazione SIISL in ufficio", price: 25 }]} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <ServiceLanding {...props}>
+    <section class="c46">
+      <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:8px">
+        <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">Fonti ufficiali</b>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Messaggio INPS n. 4011 del 28 novembre 2024; indicazioni operative del Ministero del Lavoro per i beneficiari NASpI e DIS-COLL; art. 25 del d.l. 60/2024; art. 21 del d.lgs. 150/2015. Piattaforma: <a href="https://siisl.lavoro.gov.it" target="_blank" rel="noopener" style="color:#D4FF4F;font-weight:800">siisl.lavoro.gov.it</a>.</p>
+      </div>
+    </section>
+  </ServiceLanding>
+</BaseLayout>
