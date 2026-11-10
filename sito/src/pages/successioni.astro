@@ -90,7 +90,7 @@ const props = {
   highlight: "Le carte lasciale a noi.",
   lead: "Dichiarazione di successione, volture delle case, conti in banca e imposte: un solo referente, un prezzo chiaro e la lista dei documenti con la spiegazione di dove trovarli. In ufficio a Vigne Nuove o a distanza, anche con eredi in città diverse.",
   bookingHref: BOOK,
-  heroCta: { label: "Calcola quanto pagherai", href: "#calcolo" },
+  heroCta: { label: "Calcola le tasse di successione", href: "#calcolo" },
   online: { href: CARICA, title: "Carica i documenti", text: "Hai già fatto il primo colloquio? Carica foto o PDF dei documenti dal telefono. In alternativa mandali su WhatsApp.", cta: "Carica i documenti →" },
   chat: {
     q: "È mancato mio padre, c'è la casa e un conto alle Poste. Da dove partiamo?",
@@ -163,9 +163,9 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
     <!-- CALCOLATORE -->
     <section id="calcolo" style="background:#F1EEFF;scroll-margin-top:80px;margin-top:40px">
       <div style="max-width:1120px;margin:0 auto;padding:64px 24px;display:flex;flex-direction:column;gap:18px">
-        <span style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito</span>
-        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1;font-weight:800">Quanto si paga per la successione?</h2>
-        <p style="margin:0;font-size:18px;line-height:1.5;color:#3F3F5A;max-width:780px">Inserisci case, conti ed eredi: il calcolo segue le regole dell'Agenzia delle Entrate per le successioni dal 2025 e ti mostra ogni imposta, chi la paga e quando. Il risultato si aggiorna mentre scrivi. <a href="/calcolo-imposte-successione" style="color:#5B3DF5;font-weight:800">Apri il calcolatore a tutta pagina</a>.</p>
+        <span style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore delle tasse, gratuito</span>
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(32px,5vw,48px);line-height:1;font-weight:800">Quante tasse si pagano allo Stato?</h2>
+        <p style="margin:0;font-size:18px;line-height:1.5;color:#3F3F5A;max-width:780px">Il nostro prezzo è sempre 600 €. Questo calcolatore serve solo a stimare le imposte dello Stato. Inserisci case, conti ed eredi: il calcolo segue le regole dell'Agenzia delle Entrate per le successioni dal 2025 e ti mostra ogni imposta, chi la paga e quando. Il risultato si aggiorna mentre scrivi. <a href="/calcolo-imposte-successione" style="color:#5B3DF5;font-weight:800">Apri il calcolatore a tutta pagina</a>.</p>
         <SuccessioniCalc />
       </div>
     </section>

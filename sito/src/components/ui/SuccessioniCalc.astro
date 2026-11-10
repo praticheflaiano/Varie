@@ -20,6 +20,10 @@ interface Props { compact?: boolean }
 const { compact = false } = Astro.props;
 ---
 
+<div class="sc-two">
+  <div class="sc-two-a"><span>Il nostro servizio</span><b>600 €</b><small>Prezzo fisso, tutto compreso: dichiarazione, volture e documenti per la banca. Non cambia con il valore dell'eredità.</small></div>
+  <div class="sc-two-b"><span>Le tasse dello Stato</span><b>dipendono dai beni</b><small>Imposte e bolli vanno allo Stato, non a noi. È quello che calcoli qui sotto.</small></div>
+</div>
 <div class="sc" id="sc-app" data-compact={compact ? "1" : "0"}>
   <form class="sc-form" onsubmit="return false" novalidate>
     <fieldset class="sc-box">
@@ -179,14 +183,14 @@ const { compact = false } = Astro.props;
     var c = calc();
     var w = $('sc-quote-warn');
     if (Math.abs(c.qsum - 100) > 0.01) { w.hidden = false; w.textContent = 'Le quote degli eredi sommano ' + c.qsum.toLocaleString('it-IT') + '%: devono fare 100%.'; } else w.hidden = true;
-    var h = '<h3 class="sc-res-title">Il tuo calcolo</h3>';
+    var h = '<h3 class="sc-res-title">Tasse dello Stato: il tuo calcolo</h3>';
     if (c.attivo <= 0 && c.bot <= 0) { $('sc-res').innerHTML = h + '<p class="sc-empty">Inserisci la rendita di una casa, un conto o un altro bene: il calcolo compare qui.</p>'; return; }
     if (c.esonero) {
       h += '<div class="sc-ok"><b>Probabilmente la dichiarazione non serve.</b> Eredi coniuge e parenti in linea retta, nessun immobile e attivo fino a 100.000 €: per la banca basta la dichiarazione di esonero, che prepariamo noi.</div>';
     }
     var fisse = c.ipo + c.cat + c.tasse + c.bollo + c.att;
     var totImp = c.impSucc + fisse;
-    h += '<div class="sc-big"><span>Totale imposte stimate</span><b>' + eur(totImp, true) + '</b></div>';
+    h += '<div class="sc-big"><span>Imposte e tasse da versare allo Stato (stima)</span><b>' + eur(totImp, true) + '</b><small class="sc-note">Non è il nostro prezzo: questi soldi vanno allo Stato.</small></div>';
     h += '<table class="sc-tab"><tbody>'
       + '<tr class="sc-sec"><td colspan="2">Da pagare quando si presenta la dichiarazione</td></tr>'
       + (c.hasImm ? row('Imposta ipotecaria' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(2%, minimo 200 €)</small>'), eur(c.ipo)) + row('Imposta catastale' + (c.tot.nPC ? ' <small>(prima casa: 200 € fissi)</small>' : ' <small>(1%, minimo 200 €)</small>'), eur(c.cat))
@@ -204,7 +208,7 @@ const { compact = false } = Astro.props;
     h += row('Totale imposta di successione', eur(c.impSucc, true), true);
     if (c.impSucc >= 1000) h += '<tr><td colspan="2"><small>Da 1.000 € in su si può pagare il 20% e il resto in 8 rate trimestrali (12 se oltre 20.000 €).</small></td></tr>';
     h += '</tbody></table>';
-    h += '<div class="sc-tot"><div><span>Imposte</span><b>' + eur(totImp, true) + '</b></div><div><span>Nostro servizio, tutto compreso</span><b>' + (c.esonero ? 'chiedici' : '600 €') + '</b></div><div class="sc-tot-all"><span>Totale</span><b>' + (c.esonero ? eur(totImp, true) + ' + esonero' : eur(totImp + 600, true)) + '</b></div></div>';
+    h += '<div class="sc-tot"><div><span>Tasse allo Stato (stima)</span><b>' + eur(totImp, true) + '</b></div><div><span>Compenso del nostro ufficio: fisso, tutto compreso</span><b>' + (c.esonero ? 'chiedici' : '600 €') + '</b></div><div class="sc-tot-all"><span>Spesa complessiva stimata</span><b>' + (c.esonero ? eur(totImp, true) + ' + esonero' : eur(totImp + 600, true)) + '</b></div></div>';
     h += '<p class="sc-small">Valore fiscale degli immobili: ' + eur(c.tot.imm) + '. Titoli di Stato esenti: ' + eur(c.bot) + '. Debiti e spese scalati: ' + eur(c.pass) + (num($('sc-funerale').value) > 1032.91 ? ' (funerale ridotto a 1.032,91 €)' : '') + '. Il calcolo segue la guida dell’Agenzia delle Entrate per le successioni aperte dal 2025 e divide beni e debiti secondo le quote. Non considera donazioni fatte in vita, legati, beni all’estero e agevolazioni particolari: li verifichiamo noi.</p>';
     var msg = 'Ciao, ho usato il calcolatore della successione: imposte stimate ' + eur(totImp, true) + ' (' + c.perE.length + ' eredi' + (c.hasImm ? ', ' + imm.length + ' immobili' : '') + '). Vorrei un appuntamento.';
     h += '<div class="sc-cta"><a class="sc-btn sc-btn-main" href="https://link.arcanis.it/widget/bookings/successioni-flaiano" target="_blank" rel="noopener">Fissa il primo colloquio</a><a class="sc-btn sc-btn-dark" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '" target="_blank" rel="noopener">Manda il calcolo su WhatsApp</a></div>';
@@ -263,6 +267,11 @@ const { compact = false } = Astro.props;
   .sc-del { font: inherit; font-size: 14px; font-weight: 700; color: #C2185B; background: none; border: 0; cursor: pointer; }
   .sc-warn { margin: 0; color: #C2185B; font-weight: 700; font-size: 14px; }
   .sc-res { position: sticky; top: 90px; background: #14142B; color: #fff; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .sc-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 12px; }
+  .sc-two > div { border-radius: 22px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .sc-two span { font-weight: 800; font-size: 14px; } .sc-two b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; line-height: 1.1; } .sc-two small { font-size: 14px; line-height: 1.45; }
+  .sc-two-a { background: #D4FF4F; color: #14142B; } .sc-two-b { background: #14142B; color: #fff; } .sc-two-b small { color: #D7D7E6; }
+  .sc-note { color: #D4FF4F; font-size: 14px; font-weight: 700; }
   .sc-res-title { margin: 0; color: #fff; font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; }
   .sc-empty { margin: 0; color: #C9C9DA; font-size: 16px; line-height: 1.5; }
   .sc-ok { background: #D4FF4F; color: #14142B; border-radius: 16px; padding: 14px; font-size: 15px; line-height: 1.45; }
