@@ -78,7 +78,10 @@ Le scadenze di ICRIC, ICLAV e ACC.AS/PS le fissa l'INPS per ogni campagna, e neg
 
 ## Come si presentano
 
-Solo **online**: dal sito INPS con SPID o CIE, tramite il Contact Center INPS, oppure tramite un **CAF** o un **patronato**. La strada più semplice è farlo con noi: ci porti la lettera INPS (se l'hai ricevuta) e i documenti, al resto pensiamo noi.
+- **RED e ACC.AS/PS**: online sul sito INPS con SPID, CIE o CNS, in sede INPS oppure tramite un **CAF convenzionato**, come il nostro, che li trasmette per te.
+- **ICRIC e ICLAV**: solo **online** con le tue credenziali o con il **Contact Center INPS** (803 164 da rete fissa, 06 164 164 da cellulare). Il CAF non può trasmetterle: le compiliamo con te in ufficio, con il tuo SPID o la tua CIE.
+
+Per i **ricoveri** porta la lettera di dimissione o l'attestazione della struttura con le date di ingresso e di uscita. Per l'accompagnamento contano i ricoveri gratuiti di **30 giorni o più** (messaggio INPS 18291/2011); i dettagli sono nell'[articolo sulla campagna 2026](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568).
 
 ## Documenti da portare
 
@@ -117,7 +120,7 @@ L'INPS sollecita, poi applica una trattenuta e sospende la prestazione; alla fin
 Dipende: se nell'ultima dichiarazione avevi almeno un reddito, o in famiglia c'è qualcuno sotto i 76 anni con redditi, sì.
 
 **Posso presentarli da solo?**
-Sì, online sul sito INPS con SPID o CIE. Se preferisci, li inviamo noi.
+Sì, online sul sito INPS con SPID, CIE o CNS. Se preferisci, RED e ACC.AS/PS li trasmettiamo noi come CAF; ICRIC e ICLAV li facciamo insieme in ufficio con le tue credenziali.
 
 ## Articoli correlati
 

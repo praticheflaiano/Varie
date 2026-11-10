@@ -1,12 +1,12 @@
 ---
-title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, entro il 28 febbraio 2027 e perché al CAF è gratis"
+title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (28 febbraio 2027)"
 seo_title: "RED 2026: scadenza 28 febbraio 2027, chi deve farlo"
 slug: "red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568"
 date: 2026-11-10
 last_updated: 2026-11-10
 category: "red-invciv-accas"
 tags: ["inps", "pensionati", "red", "assegno sociale", "caf", "novita"]
-meta_description: "Messaggio INPS 3568/2026: RED sui redditi 2025 e ACC.AS/PS entro il 28 febbraio 2027. Chi deve farli, documenti, rischi. Al CAF convenzionato è gratis."
+meta_description: "Messaggio INPS 3568/2026: RED sui redditi 2025 e ACC.AS/PS entro il 28 febbraio 2027. Chi deve farli, documenti, ricoveri e rischi. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Messaggio 3 novembre 2026, n. 3568 - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3568-del-03-11-2026_16406.html"
@@ -15,13 +15,17 @@ sources:
   - "Legge 30 dicembre 1991, n. 412, art. 13, comma 2 (verifica annuale dei redditi dei pensionati)"
   - "D.L. 30 dicembre 2008, n. 207, art. 35, comma 10-bis (sospensione e revoca delle prestazioni se i redditi non vengono comunicati)"
   - "Legge 8 agosto 1995, n. 335, art. 3, commi 6 e 7 (assegno sociale: residenza stabile e continuativa in Italia)"
+  - "INPS, scheda Assegno sociale e pensione sociale: dichiarazioni di responsabilità (aggiornata al 4 novembre 2025) - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-sociale-e-pensione-sociale--dichiarazioni-di-responsabilit-.html"
+  - "INPS, scheda Dichiarazioni di responsabilità e ricoveri indennizzati (aggiornata al 20 novembre 2025) - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.Dichiarazioni-di-responsabilita-e-ricoveri-indennizzati.html"
+  - "INPS, Messaggio 26 settembre 2011, n. 18291 (indennità di accompagnamento e ricovero)"
+  - "INPS, Messaggio 4 ottobre 2024, n. 3301 (servizio RED Precompilato)"
 status: published
 type: novita
 image: "/og/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568.jpg"
 image_alt: "Modello RED 2026: scadenza 28 febbraio 2027"
 ---
 
-# Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, entro il 28 febbraio 2027 e perché al CAF è gratis
+# Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (28 febbraio 2027)
 
 **Ultimo aggiornamento: 10 novembre 2026**
 
@@ -35,7 +39,7 @@ Con il **messaggio n. 3568 del 3 novembre 2026** l'INPS ha fissato le regole del
 | **ACC.AS/PS 2026** | Chi prende pensione sociale, assegno sociale o assegno sociale sostitutivo dell'invalidità civile | **28 febbraio 2027** |
 | **RED solleciti 2025** (redditi 2024) | Chi non ha risposto alla verifica dell'anno scorso | **28 febbraio 2027** |
 
-Le prime due campagne sono partite il **1° settembre 2026**; la data di avvio dei solleciti la comunica l'INPS almeno 15 giorni prima. Al CAF convenzionato sono tutte **gratuite**.
+Le prime due campagne sono partite il **1° settembre 2026**; la data di avvio dei solleciti la comunica l'INPS almeno 15 giorni prima.
 
 Le campagne dell'anno dopo (RED 2027 sui redditi 2026, ACC.AS/PS 2027 e solleciti 2026) vanno dal **1° settembre 2027 al 2 marzo 2028**.
 
@@ -69,7 +73,7 @@ La dichiarazione di responsabilità **ACC.AS/PS** riguarda solo chi prende la **
 
 Anche questa campagna va dal **1° settembre 2026 al 28 febbraio 2027**.
 
-Le dichiarazioni **ICRIC e ICLAV** degli invalidi civili non rientrano in questo messaggio: hanno una campagna a parte, che trovi spiegata nella nostra [guida a RED, ICRIC, ICLAV e ACC.AS/PS](/blog/red-icric-iclav-accas-ps-2026-guida).
+Le dichiarazioni **ICRIC e ICLAV** degli invalidi civili non rientrano in questo messaggio e non si possono presentare tramite CAF: si fanno online o con il Contact Center INPS. Le trovi spiegate nella nostra [guida a RED, ICRIC, ICLAV e ACC.AS/PS](/blog/red-icric-iclav-accas-ps-2026-guida).
 
 ## Cosa rischi se non lo fai
 
@@ -85,13 +89,53 @@ Se invece la dichiarazione arriva entro i 60 giorni, l'INPS ripristina la presta
 
 Hai tre strade:
 
-- **Da solo online**, sul sito INPS con SPID, CIE o CNS, usando i servizi **"RED Precompilato"** e **"Dichiarazioni di responsabilità"**.
-- **In una sede INPS**.
+- **Da solo online**, sul sito INPS. Per il RED c'è il servizio **"RED Precompilato"**: l'INPS ti mostra i redditi che conosce già e tu li confermi, li integri o li correggi prima di inviarli. Per l'ACC.AS/PS c'è il servizio **"Dichiarazioni di responsabilità"**. Si entra con **SPID** (almeno di livello 2), **CIE**, **CNS** o **eIDAS**.
+- **In una sede INPS**. Per l'ACC.AS/PS anche con il **Contact Center** al numero **803 164** da rete fissa o **06 164 164** da cellulare.
 - **In un CAF convenzionato con l'INPS**. Firmi una **delega** con una copia del tuo documento, il CAF fa un'intervista per capire quali redditi vanno dichiarati, controlla i documenti e trasmette il modello all'INPS **entro 30 giorni**. Alla fine ti deve consegnare la **ricevuta**.
 
-### Al CAF convenzionato è gratuito
+### Il RED precompilato lo facciamo con te, in ufficio
 
-La convenzione è chiara: il CAF **non può chiederti nessun pagamento** per il RED e per l'ACC.AS/PS (art. 13, comma 9). Il servizio lo paga l'INPS. Con l'Addendum di ottobre 2026 i compensi per i RED sono aumentati del 20%: per esempio **9,72 €** per una dichiarazione documentale. Per l'ACC.AS/PS restano **5,50 €** a dichiarazione.
+Se preferisci la strada online ma non te la senti da solo, vieni da noi con il tuo **SPID** o la tua **CIE**. Entri tu nel tuo profilo INPS, poi compiliamo insieme il RED precompilato: controlliamo i redditi che l'INPS ha già, aggiungiamo quelli che mancano e lo inviamo davanti a te. Allo stesso modo ti aiutiamo con le dichiarazioni che il CAF non può trasmettere, come quelle sui ricoveri.
+
+## Se hai redditi che INPS e Agenzia delle Entrate non conoscono
+
+È il caso più comune per cui serve il RED: interessi di conti e libretti, titoli e buoni postali, redditi esteri, redditi esenti, redditi di familiari che non fanno il 730. Per questi redditi l'importo non lo trova nessuno al posto tuo: va indicato da te, e per ogni voce il CAF deve segnalare all'INPS se il dato viene da un **documento** o da una tua **autocertificazione** (convenzione, art. 5).
+
+Per questo ti chiediamo di portare **i documenti da cui si legge l'importo esatto** di ogni reddito, per esempio:
+
+- per gli **interessi**: il rendiconto della banca o di Poste con gli interessi incassati nel 2025, al netto della ritenuta;
+- per **titoli e buoni postali**: il prospetto annuale degli interessi o dei rendimenti;
+- per una **pensione o un lavoro all'estero**: la certificazione dell'ente o del datore di lavoro estero con gli importi dell'anno;
+- per i **redditi dei familiari** che contano per la tua prestazione: la loro CU o la loro dichiarazione dei redditi.
+
+Con i documenti in mano dichiariamo la cifra giusta, e se l'INPS chiede chiarimenti la prova c'è già.
+
+## Ricoveri: cosa conta e cosa portare
+
+### Se prendi l'assegno sociale
+
+Con l'ACC.AS/PS chi prende l'**assegno sociale** può dichiarare anche i **ricoveri gratuiti** avvenuti nell'anno. Se la dichiarazione la presenta il CAF, riguarda **solo la residenza in Italia**: i ricoveri l'INPS li prende direttamente dal **Ministero della Salute**. Se invece vuoi dichiararli tu, si fa online, in sede INPS o con il Contact Center.
+
+Il ricovero conta perché l'assegno sociale viene **ridotto** per chi è ricoverato in istituti o comunità con la **retta pagata da enti pubblici** (circolare INPS 65/2003). Se la retta la paghi tu o la tua famiglia, nel modello vanno indicati nome dell'istituto, comune e provincia, **periodo del ricovero** con date di inizio e fine e **importo versato**.
+
+Chi prende l'assegno sociale deve dichiarare anche i **periodi passati all'estero**. Se resti fuori dall'Italia **più di 29 giorni di seguito**, l'assegno viene sospeso dal primo giorno del mese in cui sei partito e l'INPS recupera quanto pagato da quando eri all'estero, salvo gravi motivi di salute documentati (messaggio INPS 3239/2017).
+
+### Se prendi l'indennità di accompagnamento
+
+L'accompagnamento **non viene pagato per il periodo di ricovero gratuito**, cioè con retta interamente a carico di un ente pubblico, e riprende dopo le dimissioni. L'INPS ha chiarito quali casi contano (messaggio 18291/2011):
+
+- contano solo i ricoveri di **30 giorni o più**;
+- **lungodegenza e riabilitazione** in regime gratuito: l'indennità non spetta per quel periodo;
+- **hospice**: è gratuito, quindi l'indennità è sospesa per il periodo di permanenza;
+- **RSA** con una quota pagata da te o dalla famiglia: è un ricovero a pagamento e l'indennità spetta;
+- **day hospital**: non è un ricovero e non conta.
+
+I ricoveri si dichiarano con il modello **ICRIC**, che non passa dal CAF: si fa online o con il Contact Center. Lo compiliamo con te in ufficio, con il tuo SPID o la tua CIE.
+
+### Cosa portare per i ricoveri
+
+- la **lettera di dimissione** dell'ospedale o l'**attestazione della struttura** con le date esatte di ingresso e di uscita;
+- per i ricoveri **a pagamento**: le **ricevute o fatture della retta** e, se una parte la paga un ente pubblico, il documento della struttura che indica la quota pubblica e quella a tuo carico.
 
 ## Documenti da portare
 
@@ -124,7 +168,7 @@ Il messaggio permette ai CAF e ai professionisti abilitati di firmare la convenz
 
 Siamo **CAF UNSIC** e **Patronato ENASC** a **Roma Nord**, nel Centro Acquisti Flaiano di **Vigne Nuove** (Municipio III). Seguiamo i pensionati di Tufello, Conca d'Oro, Bufalotta, Porta di Roma e di tutta Roma.
 
-Guardiamo insieme a te la lettera dell'INPS, verifichiamo se il RED serve davvero o se i tuoi redditi sono già tutti nel 730, e se serve lo trasmettiamo noi. Se ti è già arrivata una trattenuta o una sospensione, controlliamo come rimettere a posto la posizione.
+Siamo **CAF convenzionato con l'INPS** per il RED e l'ACC.AS/PS. Guardiamo insieme a te la lettera dell'INPS, verifichiamo se il RED serve davvero o se i tuoi redditi sono già tutti nel 730, e se serve lo trasmettiamo noi oppure lo facciamo online insieme a te con il tuo SPID o la tua CIE. Se ti è già arrivata una trattenuta o una sospensione, controlliamo come rimettere a posto la posizione.
 
 ## Non aspettare febbraio: portaci la lettera INPS
 
@@ -140,8 +184,11 @@ La campagna ordinaria sui redditi 2025 va dal 1° settembre 2026 al 28 febbraio 
 **Ho fatto il 730: devo fare anche il RED?**
 No, se tu e i familiari che contano avete dichiarato nel 730 tutti i redditi che servono all'INPS. Se però hai interessi su conti, titoli o buoni postali, redditi esteri o redditi esenti non presenti nel 730, il RED serve.
 
-**Quanto costa farlo al CAF?**
-Niente, se il CAF è convenzionato con l'INPS: la convenzione vieta di chiedere soldi al cittadino. Il servizio lo paga l'INPS.
+**Posso fare il RED precompilato da solo?**
+Sì, sul sito INPS con SPID, CIE o CNS: l'INPS ti mostra i redditi che conosce, tu confermi o correggi. Se preferisci, lo facciamo insieme in ufficio con le tue credenziali.
+
+**Sono stato ricoverato: devo dichiararlo?**
+Dipende dalla prestazione. Per l'accompagnamento contano i ricoveri gratuiti di 30 giorni o più, da dichiarare con l'ICRIC. Per l'assegno sociale i ricoveri gratuiti si possono dichiarare online con l'ACC.AS/PS; se passi dal CAF, l'INPS li acquisisce dal Ministero della Salute. In ogni caso porta la lettera di dimissione con le date.
 
 **Prendo l'assegno sociale: cosa devo presentare?**
 La dichiarazione ACC.AS/PS, che conferma che vivi stabilmente in Italia. Se hai anche redditi da comunicare, pure il RED.
