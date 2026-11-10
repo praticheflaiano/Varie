@@ -1,0 +1,167 @@
+---
+/**
+ * Pulsanti "Condividi": WhatsApp, Facebook, email, copia link e, sui telefoni,
+ * il menu di condivisione del sistema. Solo link e poche righe di script: nessun servizio esterno.
+ */
+import { SITE } from "~/consts";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  title?: string;
+  url?: string;
+  variant?: "band" | "inline";
+  heading?: string;
+}
+
+const { title = SITE.name, variant = "band", heading = "Può servire a qualcuno che conosci?" } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const url = Astro.props.url ?? new URL(path, SITE.url).toString();
+const clean = title.split(" | ")[0].trim();
+const text = `${clean} ${url}`;
+const wa = `https://wa.me/?text=${encodeURIComponent(text)}`;
+const fb = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+const mail = `mailto:?subject=${encodeURIComponent(clean)}&body=${encodeURIComponent(`${clean}\n${url}`)}`;
+---
+
+<div class:list={["share", `share-${variant}`]} data-share data-share-title={clean} data-share-url={url} data-pagefind-ignore>
+  {variant === "band" && <p class="share-heading">{heading} <span>Mandagli questa pagina.</span></p>}
+  {variant === "inline" && <span class="share-label">Condividi:</span>}
+  <div class="share-buttons">
+    <a class="btn btn-wa btn-sm" href={wa} target="_blank" rel="noopener nofollow" aria-label="Invia questa pagina su WhatsApp">
+      <Icon name="heroicons:chat-bubble-oval-left-ellipsis" class="size-5" aria-hidden="true" />
+      Invia su WhatsApp
+    </a>
+    <a class="btn btn-ghost btn-sm" href={fb} target="_blank" rel="noopener nofollow" aria-label="Condividi questa pagina su Facebook">
+      <Icon name="heroicons:share" class="size-5" aria-hidden="true" />
+      Facebook
+    </a>
+    <a class="btn btn-ghost btn-sm share-mail" href={mail} aria-label="Invia questa pagina per email">
+      <Icon name="heroicons:envelope" class="size-5" aria-hidden="true" />
+      Email
+    </a>
+    <button type="button" class="btn btn-ghost btn-sm" data-share-copy aria-label="Copia il link di questa pagina">
+      <Icon name="heroicons:link" class="size-5" aria-hidden="true" />
+      <span data-share-copy-label>Copia link</span>
+    </button>
+    <button type="button" class="btn btn-ghost btn-sm" data-share-native hidden aria-label="Apri le altre app per condividere">
+      <Icon name="heroicons:arrow-up-on-square" class="size-5" aria-hidden="true" />
+      Altro
+    </button>
+  </div>
+</div>
+
+<style>
+  .share-band {
+    background: #f1eeff;
+    border-radius: 28px;
+    padding: 22px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px 24px;
+  }
+  .share-heading {
+    margin: 0;
+    font-family: var(--font-display, inherit);
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #14142b;
+  }
+  .share-heading span {
+    display: block;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 15px;
+    color: #3b3b55;
+    margin-top: 4px;
+  }
+  .share-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+  }
+  .share-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3b3b55;
+  }
+  .share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .share .btn {
+    box-shadow: none;
+    gap: 8px;
+  }
+  .share .btn:hover {
+    transform: none;
+  }
+  .share-inline .btn {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+  .share-inline .share-mail {
+    display: none;
+  }
+  @media (max-width: 480px) {
+    .share-band {
+      padding: 20px 18px;
+    }
+    .share-band .share-buttons {
+      width: 100%;
+    }
+    .share-band .btn-wa {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+    .share-band .btn-ghost {
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll("[data-share]:not([data-share-bound])").forEach(function (box) {
+      box.setAttribute("data-share-bound", "");
+      var url = box.getAttribute("data-share-url");
+      var title = box.getAttribute("data-share-title");
+      var copy = box.querySelector("[data-share-copy]");
+      var label = box.querySelector("[data-share-copy-label]");
+      var native = box.querySelector("[data-share-native]");
+      if (copy) {
+        copy.addEventListener("click", function () {
+          var done = function () {
+            if (!label) return;
+            label.textContent = "Link copiato";
+            setTimeout(function () { label.textContent = "Copia link"; }, 2500);
+          };
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(url).then(done, function () {});
+          } else {
+            var t = document.createElement("textarea");
+            t.value = url;
+            t.setAttribute("readonly", "");
+            t.style.position = "fixed";
+            t.style.opacity = "0";
+            document.body.appendChild(t);
+            t.select();
+            try { document.execCommand("copy"); done(); } catch (e) {}
+            document.body.removeChild(t);
+          }
+        });
+      }
+      if (native && navigator.share) {
+        native.hidden = false;
+        native.addEventListener("click", function () {
+          navigator.share({ title: title, text: title, url: url }).catch(function () {});
+        });
+      }
+    });
+  })();
+</script>

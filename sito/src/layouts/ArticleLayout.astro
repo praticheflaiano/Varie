@@ -10,6 +10,7 @@ import ArticleMeta from "~/components/blog/ArticleMeta.astro";
 import Disclaimer from "~/components/blog/Disclaimer.astro";
 import RelatedArticles from "~/components/blog/RelatedArticles.astro";
 import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
+import ShareBar from "~/components/ui/ShareBar.astro";
 import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { SITE } from "~/consts";
@@ -55,6 +56,7 @@ const sourcesCount = article.data.sources?.length ?? 0;
   modifiedTime={toISODate(lastUpdated)}
   author={article.data.author}
   tags={[...article.data.tags]}
+  share={false}
 >
   <JsonLdArticle
     slot="head"
@@ -119,6 +121,9 @@ const sourcesCount = article.data.sources?.length ?? 0;
           Controllato su {sourcesCount} {sourcesCount === 1 ? "fonte" : "fonti"} (le trovi in fondo) · scritto da chi fa queste pratiche ogni giorno
         </p>
       )}
+      <div class="mt-4">
+        <ShareBar title={article.data.title} url={url} variant="inline" />
+      </div>
     </div>
 
     {article.data.deadline && article.data.deadline < new Date() && (
@@ -130,6 +135,10 @@ const sourcesCount = article.data.sources?.length ?? 0;
 
     <div class="prose-article mt-10">
       <slot />
+    </div>
+
+    <div class="mt-10">
+      <ShareBar title={article.data.title} url={url} heading="Conosci qualcuno a cui può servire?" />
     </div>
 
     {article.data.tags.length > 0 && (

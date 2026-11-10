@@ -8,6 +8,7 @@ import ClosureNotice from "~/components/layout/ClosureNotice.astro";
 import Footer from "~/components/layout/Footer.astro";
 import WhatsAppFab from "~/components/layout/WhatsAppFab.astro";
 import MobileActionBar from "~/components/layout/MobileActionBar.astro";
+import ShareBar from "~/components/ui/ShareBar.astro";
 import fs from "node:fs";
 
 interface Props {
@@ -23,6 +24,8 @@ interface Props {
   tags?: string[];
   hideWhatsAppFab?: boolean;
   bodyClass?: string;
+  /** Fascia "Condividi" in fondo alla pagina: automatica sulle pagine di servizio. */
+  share?: boolean;
 }
 
 const {
@@ -38,10 +41,15 @@ const {
   tags,
   hideWhatsAppFab = false,
   bodyClass = "",
+  share,
 } = Astro.props;
 
 // Anteprima per WhatsApp/Facebook: se esiste public/og/p-<pagina>.jpg la usa, altrimenti quella generica.
 const ogSlug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-");
+// Fascia "Condividi": su tutte le pagine tranne home, moduli, pagine di servizio interne ed elenchi del blog.
+const sharePath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const NO_SHARE = ["/", "/grazie", "/cerca", "/404", "/certificazioni", "/mandato", "/richiesta", "/prenota", "/info", "/privacy", "/cookie", "/note-legali", "/blog"];
+const showShare = share ?? (!noindex && !NO_SHARE.includes(sharePath) && !sharePath.startsWith("/blog/"));
 const ogAuto = ogSlug && fs.existsSync(`public/og/p-${ogSlug}.jpg`) ? `/og/p-${ogSlug}.jpg` : undefined;
 ---
 
@@ -88,6 +96,11 @@ const ogAuto = ogSlug && fs.existsSync(`public/og/p-${ogSlug}.jpg`) ? `/og/p-${o
     <main id="main-content" class="flex-1" data-pagefind-body>
       {title && <span hidden data-pagefind-meta={`title:${title.split(" | ")[0]}`}></span>}
       <slot />
+      {showShare && (
+        <div class="wrap" style="padding-top:8px;padding-bottom:48px">
+          <ShareBar title={title} />
+        </div>
+      )}
     </main>
     <Footer />
     {!hideWhatsAppFab && <WhatsAppFab />}
