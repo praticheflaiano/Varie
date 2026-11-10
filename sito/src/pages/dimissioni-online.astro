@@ -95,7 +95,7 @@ const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px
 const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
 ---
 
-<BaseLayout title="Dimissioni online: preavviso, giusta causa e NASpI" description="Dimissioni online in 10 minuti, anche senza SPID, da 15 €. Patronato ENASC a Roma: calcoliamo il preavviso, valutiamo la giusta causa e la NASpI.">
+<BaseLayout title="Dimissioni online senza SPID a Roma: preavviso e giusta causa" description="Dimissioni online in 10 minuti, anche senza SPID, da 15 €. Patronato ENASC a Roma: calcoliamo il preavviso, valutiamo la giusta causa e la NASpI.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }, { name: "Revoca delle dimissioni", price: 5 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
