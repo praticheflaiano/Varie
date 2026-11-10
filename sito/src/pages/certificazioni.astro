@@ -1,0 +1,40 @@
+---
+/**
+ * Richiesta certificazioni INPS: stesso indirizzo (/certificazioni) e stesso sondaggio GHL
+ * della pagina che stava su praticheflaiano.it ("RICHIESTE CERTIFICAZIONI sondaggio").
+ * Pagina operativa usata ogni giorno: non cambiare l'indirizzo né l'id del sondaggio.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+const SURVEY_ID = "P3FbJB9wj14iplGZxaFF";
+const MANDATO = "https://drive.google.com/file/d/1FyKOORXwWaYWS83hK5XOXYQuYi6Soo3I/view?usp=sharing";
+---
+<BaseLayout title="Richiesta certificazioni INPS" description="Richiedi qui la CU INPS, l'Obis-M della pensione o l'estratto contributivo." hideWhatsAppFab={true}>
+  <section class="cz">
+    <header class="cz-head">
+      <span class="cz-tag">Certificazioni INPS</span>
+      <h1>Richiesta certificazioni INPS</h1>
+      <p>CU INPS, Obis-M della pensione o estratto contributivo. Compila il modulo: la certificazione arriva all'indirizzo email che indichi.</p>
+      <div class="cz-actions">
+        <a class="cz-btn cz-primary" href="/certificazioni">Nuova certificazione</a>
+        <a class="cz-btn" href={MANDATO} target="_blank" rel="noopener">Scarica mandato</a>
+      </div>
+    </header>
+    <div class="cz-form">
+      <iframe src={`https://link.arcanis.it/widget/survey/${SURVEY_ID}`} id={SURVEY_ID} title="RICHIESTE CERTIFICAZIONI sondaggio" scrolling="no" style="border:none;width:100%;min-height:616px"></iframe>
+    </div>
+  </section>
+  <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
+</BaseLayout>
+
+<style is:global>
+  .cz { max-width: 820px; margin: 0 auto; padding: 28px 16px 64px; display: flex; flex-direction: column; gap: 20px; color: #14142B; }
+  .cz-head { background: #F1EEFF; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+  .cz-tag { align-self: flex-start; background: #D4FF4F; color: #14142B; font-weight: 800; font-size: 14px; border-radius: 999px; padding: 6px 14px; }
+  .cz-head h1 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 6vw, 42px); line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance; }
+  .cz-head p { margin: 0; font-size: 17px; line-height: 1.5; color: #34344A; max-width: 60ch; }
+  .cz-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cz-btn { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 999px; border: 2px solid #14142B; color: #14142B; font-weight: 800; text-decoration: none; }
+  .cz-btn.cz-primary { background: #14142B; color: #fff; }
+  .cz-btn:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+  .cz-form { background: #fff; border: 2px solid #14142B; border-radius: 28px; padding: 12px; min-width: 0; }
+</style>
