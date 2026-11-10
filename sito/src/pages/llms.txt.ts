@@ -83,8 +83,8 @@ export async function GET(_context: APIContext) {
   lines.push("");
   lines.push(`## Orari di apertura`);
   lines.push("");
-  lines.push(`- Lunedi-Giovedi: 9:30-13:00 e 15:30-18:00`);
-  lines.push(`- Venerdi: 9:30-14:00`);
+  lines.push(`- Lunedì-Giovedì: 9:30-13:00 e 15:30-18:00`);
+  lines.push(`- Venerdì: 9:30-14:00`);
   lines.push(`- Sabato e Domenica: chiuso`);
   lines.push("");
   lines.push(`## Zone servite`);

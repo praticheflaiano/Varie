@@ -55,11 +55,11 @@ export const CONTACT = {
 } as const;
 
 export const HOURS = [
-  { day: "Lunedi", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
-  { day: "Martedi", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
-  { day: "Mercoledi", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
-  { day: "Giovedi", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
-  { day: "Venerdi", open: "09:30", close: "14:00", afternoon: null },
+  { day: "Lunedì", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
+  { day: "Martedì", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
+  { day: "Mercoledì", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
+  { day: "Giovedì", open: "09:30", close: "13:00", afternoon: { open: "15:30", close: "18:00" } },
+  { day: "Venerdì", open: "09:30", close: "14:00", afternoon: null },
   { day: "Sabato", open: null, close: null, afternoon: null },
   { day: "Domenica", open: null, close: null, afternoon: null },
 ] as const;

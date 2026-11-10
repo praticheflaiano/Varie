@@ -7,6 +7,7 @@ import Navbar from "~/components/layout/Navbar.astro";
 import Footer from "~/components/layout/Footer.astro";
 import WhatsAppFab from "~/components/layout/WhatsAppFab.astro";
 import MobileActionBar from "~/components/layout/MobileActionBar.astro";
+import fs from "node:fs";
 
 interface Props {
   title?: string;
@@ -37,6 +38,10 @@ const {
   hideWhatsAppFab = false,
   bodyClass = "",
 } = Astro.props;
+
+// Anteprima per WhatsApp/Facebook: se esiste public/og/p-<pagina>.jpg la usa, altrimenti quella generica.
+const ogSlug = Astro.url.pathname.replace(/^\/|\/$/g, "").replace(/\//g, "-");
+const ogAuto = ogSlug && fs.existsSync(`public/og/p-${ogSlug}.jpg`) ? `/og/p-${ogSlug}.jpg` : undefined;
 ---
 
 <!doctype html>
@@ -63,7 +68,7 @@ const {
       title={title}
       description={description}
       canonical={canonical}
-      ogImage={ogImage}
+      ogImage={ogImage ?? ogAuto}
       ogType={ogType}
       noindex={noindex}
       publishedTime={publishedTime}
