@@ -11,7 +11,7 @@ const faqs = [
   { q: "I titoli di Stato pagano l'imposta di successione?", a: "No. Titoli di Stato, buoni postali e altri titoli equiparati sono esenti. Sono esclusi anche auto e moto iscritte al PRA e le somme delle polizze vita." },
 ];
 const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
-const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo imposte di successione", url: "https://info.praticheflaiano.it/calcolo-imposte-successione", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo imposte di successione", url: "https://praticheflaiano.it/calcolo-imposte-successione", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
 ---
 
 <BaseLayout title="Calcolo imposte di successione 2026: quanto si paga" description="Calcolatore gratuito delle imposte di successione: imposta per ogni erede, ipotecaria, catastale, tasse e bollo. Regole dell'Agenzia delle Entrate dal 2025.">

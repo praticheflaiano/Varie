@@ -12,7 +12,7 @@ export const SITE = {
   legalName: "Centro Pratiche Flaiano",
   url:
     import.meta.env.PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-    "https://info.praticheflaiano.it",
+    "https://praticheflaiano.it",
   locale: "it-IT",
   language: "it",
   claim: "Risparmia tempo, ci pensiamo noi",

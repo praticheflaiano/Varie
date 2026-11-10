@@ -35,7 +35,7 @@ const THIN = thinTaxonomy();
 
 const SITE_URL =
   process.env.PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://info.praticheflaiano.it";
+  "https://praticheflaiano.it";
 
 export default defineConfig({
   site: SITE_URL,
