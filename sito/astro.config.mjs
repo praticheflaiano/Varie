@@ -41,6 +41,13 @@ export default defineConfig({
   site: SITE_URL,
   output: "static",
   trailingSlash: "ignore",
+  // Vecchi indirizzi di articoli che Google conosce ancora: portano all'articolo attuale.
+  redirects: {
+    "/blog/guida-730-2026": "/blog/guida-730-2026-documenti-scadenze",
+    "/blog/documenti-730-2026-checklist-completa": "/blog/guida-730-2026-documenti-scadenze",
+    "/blog/730-precompilato-online-come-accedere-2026": "/blog/precompilata-2026-30-aprile-14-maggio",
+    "/blog/730-precompilato-2026-date-novita-guida": "/blog/precompilata-2026-30-aprile-14-maggio",
+  },
   build: {
     format: "directory",
     inlineStylesheets: "auto",
