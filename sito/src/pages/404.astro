@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Button from "~/components/ui/Button.astro";
+import SearchBox from "~/components/search/SearchBox.astro";
 import HeroBlob from "~/components/illustrations/HeroBlob.astro";
 ---
 
@@ -11,10 +12,11 @@ import HeroBlob from "~/components/illustrations/HeroBlob.astro";
     </div>
     <div class="container-narrow relative py-24 text-center md:py-32">
       <p class="font-display text-7xl font-extrabold text-[var(--color-brand-900)] md:text-9xl">404</p>
-      <h1 class="mt-6 font-display">Questa pagina non c'e</h1>
+      <h1 class="mt-6 font-display">Questa pagina non c'è</h1>
       <p class="mt-4 text-lg text-[var(--color-ink-soft)]">
         Forse hai seguito un link vecchio, oppure abbiamo rimosso o spostato la pagina. Da qui puoi ripartire:
       </p>
+      <div class="mt-8 flex justify-center text-left"><SearchBox id="nf-q" label="Cerca nel sito" /></div>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
         <Button variant="primary" size="lg" href="/" icon="heroicons:home" iconPosition="left">
           Torna alla home

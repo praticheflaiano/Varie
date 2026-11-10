@@ -1,5 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import SearchBox from "~/components/search/SearchBox.astro";
+import GoogleReviews from "~/components/ui/GoogleReviews.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 import OpenNow from "~/components/home/OpenNow.astro";
 import ArticleCard from "~/components/blog/ArticleCard.astro";
@@ -77,6 +79,7 @@ const homeFaq = [
           <a class="btn btn-primary btn-lg" href="/prenota">Prenota un appuntamento</a>
           <a class="btn btn-ghost btn-lg" href={GHL.richiesta}>Richiesta online</a>
         </div>
+        <SearchBox id="home-q" label="Oppure cerca quello che ti serve" />
       </div>
       <div style="flex:1 1 320px;min-width:0;position:relative;padding:16px 8px">
         <div style="background:#14142B;color:#fff;border-radius:32px;padding:28px;display:flex;flex-direction:column;gap:16px;transform:rotate(1.5deg)">
@@ -184,6 +187,11 @@ const homeFaq = [
       </div>
     </section>
   )}
+
+  <!-- RECENSIONI -->
+  <div class="wrap" style="padding-block:40px">
+    <GoogleReviews limit={6} />
+  </div>
 
   <!-- ZONE -->
   <section class="wrap" style="padding-block:56px">

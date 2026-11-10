@@ -1,0 +1,61 @@
+---
+/** Recensioni Google trascritte, con il link per verificarle sulla scheda. */
+import { REVIEWS } from "~/consts";
+import { RECENSIONI, REVIEWS_URL } from "~/data/recensioni";
+interface Props { limit?: number; heading?: "h1" | "h2"; title?: string; showAllLink?: boolean }
+const { limit, heading = "h2", title = "Cosa dice chi è già passato da noi", showAllLink = true } = Astro.props;
+const items = limit ? RECENSIONI.slice(0, limit) : RECENSIONI;
+const H = heading;
+---
+<section class="grv">
+  <div class="grv-head">
+    <div class="grv-titles">
+      <span class="grv-tag">Recensioni vere, da Google</span>
+      <H class="grv-title">{title}</H>
+    </div>
+    <a class="grv-score" href={REVIEWS_URL} target="_blank" rel="noopener">
+      <span class="grv-stars" aria-hidden="true">★★★★★</span>
+      <b>{REVIEWS.rating} su Google</b>
+      <span>{REVIEWS.label}</span>
+    </a>
+  </div>
+  <ul class="grv-list">
+    {items.map((r) => (
+      <li class="grv-card">
+        <p class="grv-text">«{r.testo}»</p>
+        <p class="grv-who"><b>{r.nome}</b><span>recensione su Google</span></p>
+      </li>
+    ))}
+  </ul>
+  <div class="grv-foot">
+    <a class="grv-btn" href={REVIEWS_URL} target="_blank" rel="noopener">Verifica e leggi tutte le recensioni su Google ↗</a>
+    {showAllLink && limit && limit < RECENSIONI.length && <a class="grv-link" href="/recensioni">Vedi altre recensioni</a>}
+  </div>
+  <p class="grv-note">Testi trascritti dalla nostra scheda Google, senza modifiche. Per riservatezza mostriamo solo nome e iniziale.</p>
+</section>
+
+<style is:global>
+  .grv { display: flex; flex-direction: column; gap: 20px; color: #14142B; }
+  .grv-head { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: flex-end; justify-content: space-between; }
+  .grv-titles { display: flex; flex-direction: column; gap: 10px; min-width: 0; flex: 999 1 420px; }
+  .grv-tag { align-self: flex-start; background: #D4FF4F; color: #14142B; font-weight: 800; font-size: 14px; border-radius: 999px; padding: 6px 14px; }
+  .grv-title { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.03; letter-spacing: -0.02em; text-wrap: balance; }
+  .grv-score { flex: 0 1 auto; display: flex; flex-direction: column; gap: 2px; background: #14142B; color: #fff; border-radius: 22px; padding: 14px 20px; text-decoration: none; }
+  .grv-score:hover { background: #5B3DF5; }
+  .grv-score:focus-visible, .grv-btn:focus-visible, .grv-link:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+  .grv-stars { color: #F5B400; letter-spacing: 2px; font-size: 18px; }
+  .grv-score b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; line-height: 1.1; color: #fff; }
+  .grv-score span:last-child { font-size: 14px; color: #D7D7E6; }
+  .grv-list { list-style: none; margin: 0; padding: 0; columns: 3 300px; column-gap: 16px; }
+  .grv-card { break-inside: avoid; margin: 0 0 16px; background: #F1EEFF; border-radius: 24px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+  .grv-card:nth-child(3n+2) { background: #F7F7FB; }
+  .grv-card:nth-child(4n) { background: #FFE3EC; }
+  .grv-text { margin: 0; font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+  .grv-who { margin: 0; display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; font-size: 14px; }
+  .grv-who span { color: #4A4A63; }
+  .grv-foot { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+  .grv-btn { display: inline-flex; align-items: center; padding: 13px 22px; border-radius: 999px; background: #14142B; color: #fff; font-weight: 800; text-decoration: none; }
+  .grv-btn:hover { background: #5B3DF5; }
+  .grv-link { font-weight: 800; color: #3D2BB8; }
+  .grv-note { margin: 0; font-size: 13px; color: #4A4A63; }
+</style>

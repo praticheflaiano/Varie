@@ -35,6 +35,9 @@ const serviziActive = serviziPaths.some((p) => path === p || path.startsWith(p +
 
     <div class="header-cta">
       <a class="btn btn-ghost btn-sm hide-sm" href={`tel:${CONTACT.phone.landlineRaw}`}>06 9784 5429</a>
+      <a class="header-search" href="/cerca" aria-label="Cerca nel sito" title="Cerca nel sito">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+      </a>
       <a class="btn btn-dark btn-sm" href="/prenota">Prenota</a>
       <MobileMenu
         client:load

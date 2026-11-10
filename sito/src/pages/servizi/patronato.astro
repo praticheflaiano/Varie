@@ -25,7 +25,7 @@ const services = [
   {
     title: "NASpI e disoccupazione",
     href: "/naspi",
-    desc: "Domanda NASpI, dimissioni online, indennita di disoccupazione, ricalcoli e integrazioni reddituali. Importante: la domanda va presentata <strong>entro 68 giorni</strong> dalla cessazione.",
+    desc: "Domanda NASpI, dimissioni online, indennità di disoccupazione, ricalcoli e integrazioni reddituali. Importante: la domanda va presentata <strong>entro 68 giorni</strong> dalla cessazione.",
     icon: "heroicons:briefcase",
     bullets: [
       "Presentazione domanda NASpI",
@@ -37,10 +37,10 @@ const services = [
   {
     title: "Invalidità civile e Legge 104",
     href: "/invalidita-104",
-    desc: "Domanda di invalidita civile, indennita di accompagnamento, riconoscimento handicap (L. 104), aggravamento, integrazioni reddituali per invalidi civili.",
+    desc: "Domanda di invalidità civile, indennità di accompagnamento, riconoscimento handicap (L. 104), aggravamento, integrazioni reddituali per invalidi civili.",
     icon: "heroicons:heart",
     bullets: [
-      "Domanda di invalidita civile",
+      "Domanda di invalidità civile",
       "Riconoscimento Legge 104 (3 e 3 comma 3)",
       "Indennita di accompagnamento",
       "Aggravamento e ricorsi",
@@ -61,10 +61,10 @@ const services = [
   {
     title: "Maternità e bonus famiglia",
     href: "/bonus-famiglia",
-    desc: "Indennita di maternita, congedi parentali, bonus nido, bonus genitori, congedo di paternita.",
+    desc: "Indennita di maternità, congedi parentali, bonus nido, bonus genitori, congedo di paternità.",
     icon: "heroicons:heart",
     bullets: [
-      "Indennita di maternita lavoratrici",
+      "Indennita di maternità lavoratrici",
       "Congedo parentale",
       "Bonus asilo nido",
       "Bonus mamme e bonus genitori",
@@ -73,7 +73,7 @@ const services = [
   {
     title: "ADI, SFL e sostegno reddito",
     href: "/adi-sfl",
-    desc: "Assegno di Inclusione, Supporto Formazione e Lavoro, sostegno per famiglie e singoli in difficolta economica.",
+    desc: "Assegno di Inclusione, Supporto Formazione e Lavoro, sostegno per famiglie e singoli in difficoltà economica.",
     icon: "heroicons:lifebuoy",
     bullets: [
       "Domanda ADI (Assegno di Inclusione)",
@@ -114,26 +114,26 @@ const faq = [
     answer: "La domanda di NASpI va presentata <strong>entro 68 giorni</strong> dalla cessazione del rapporto di lavoro. Oltre questo termine il diritto decade.",
   },
   {
-    question: "Quanto dura la pratica di invalidita civile?",
+    question: "Quanto dura la pratica di invalidità civile?",
     answer: "Dipende dai tempi di convocazione della visita, che cambiano da zona a zona. Il primo passo è il certificato medico introduttivo: da noi il medico certificatore è nello stesso ufficio del patronato. <a href='/invalidita-104'>Come funziona</a>.",
   },
   {
     question: "Per l'Assegno Unico devo rifare l'ISEE ogni anno?",
-    answer: "Si. L'ISEE scade il 31 dicembre di ogni anno: per ricevere l'AUU pieno da gennaio devi rinnovarlo. Se non lo rinnovi, ricevi l'importo minimo.",
+    answer: "Sì. L'ISEE scade il 31 dicembre di ogni anno: per ricevere l'AUU pieno da gennaio devi rinnovarlo. Se non lo rinnovi, ricevi l'importo minimo.",
   },
   {
     question: "Devo essere socio per usare il Patronato?",
     answer: "No. Molte pratiche di patronato sono gratuite per tutti (per esempio la domanda NASpI). Dove c'è un costo lo trovi nella pagina del servizio, e con la <a href='/tesseramento'>tessera</a> spesso costa meno.",
   },
   {
-    question: "Posso ottenere la Legge 104 e l'invalidita civile contemporaneamente?",
-    answer: "Si, sono due benefici diversi. L'invalidita civile e di natura economica (assegno o pensione di invalidita); la Legge 104 e di natura assistenziale (permessi lavorativi, agevolazioni fiscali, parcheggi). Spesso si richiedono insieme.",
+    question: "Posso ottenere la Legge 104 e l'invalidità civile contemporaneamente?",
+    answer: "Sì, sono due benefici diversi. L'invalidità civile è di natura economica (assegno o pensione di invalidità); la Legge 104 è di natura assistenziale (permessi lavorativi, agevolazioni fiscali, parcheggi). Spesso si richiedono insieme.",
   },
 ];
 ---
 
 <BaseLayout
-  title="Servizi Patronato: pensioni, NASpI, invalidita, assegno unico"
+  title="Servizi Patronato: pensioni, NASpI, invalidità, assegno unico"
   description="Patronato ENASC del Centro Pratiche Flaiano a Roma: pensioni, NASpI e disoccupazione, invalidità civile, Legge 104, assegno unico, maternità, ADI, RED."
 >
   <JsonLdFaq slot="head" items={faq} />
@@ -146,7 +146,7 @@ const faq = [
       </span>
       <SectionHeading
         title="Pratiche previdenziali e assistenziali"
-        subtitle="Il nostro Patronato ENASC tutela i tuoi diritti previdenziali e assistenziali. Pensioni, disoccupazione, invalidita, sostegno al reddito: ti seguiamo in tutte le pratiche INPS."
+        subtitle="Il nostro Patronato ENASC tutela i tuoi diritti previdenziali e assistenziali. Pensioni, disoccupazione, invalidità, sostegno al reddito: ti seguiamo in tutte le pratiche INPS."
         class="mt-3"
         level="h1"
       />
@@ -203,7 +203,7 @@ const faq = [
 
   <section class="section bg-[var(--color-surface-soft)]">
     <div class="container-narrow">
-      <SectionHeading eyebrow="Domande frequenti Patronato" title="Le risposte alle domande piu comuni" align="center" />
+      <SectionHeading eyebrow="Domande frequenti Patronato" title="Le risposte alle domande più comuni" align="center" />
       <div class="mt-10">
         <Accordion client:visible items={faq} />
       </div>

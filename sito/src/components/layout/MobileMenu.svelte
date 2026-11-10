@@ -59,6 +59,11 @@
     aria-label="Menu di navigazione"
   >
     <nav class="px-4 py-6">
+      <form action="/cerca" method="get" role="search" class="mb-4 flex items-center gap-2 rounded-full border-2 border-[var(--color-ink)] bg-white py-1 pl-4 pr-1">
+        <label for="mm-q" class="sr-only">Cerca nel sito</label>
+        <input id="mm-q" type="search" name="q" placeholder="Cerca: ISEE, 730, NASpI…" autocomplete="off" enterkeyhint="search" class="min-w-0 flex-1 border-0 bg-transparent py-2 text-base text-[var(--color-ink)] outline-none" />
+        <button type="submit" class="rounded-full bg-[var(--color-ink)] px-4 py-2 text-sm font-extrabold text-white">Cerca</button>
+      </form>
       <ul class="space-y-1">
         {#each items as item, i}
           <li>

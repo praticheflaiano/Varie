@@ -1,0 +1,98 @@
+---
+/**
+ * Ricerca interna. L'indice è creato da Pagefind a fine build (dist/pagefind) e letto dal browser:
+ * nessun servizio esterno, nessun dato inviato fuori dal sito.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import SearchBox from "~/components/search/SearchBox.astro";
+const quick = [
+  ["ISEE", "/isee"], ["730", "/730"], ["NASpI", "/naspi"], ["Successioni", "/successioni"], ["Pensioni", "/pensioni"],
+  ["Invalidità e 104", "/invalidita-104"], ["Assegno Unico", "/assegno-unico"], ["Dimissioni online", "/dimissioni-online"],
+  ["IMU e TARI", "/imu-tari"], ["Orari e contatti", "/info"],
+];
+---
+<BaseLayout title="Cerca nel sito" description="Cerca un servizio, una guida o una scadenza nel sito del Centro Pratiche Flaiano." noindex>
+  <section class="cerca" data-pagefind-ignore>
+    <h1>Cerca nel sito</h1>
+    <SearchBox id="cerca-q" label="Scrivi cosa ti serve" autofocus />
+    <p id="cerca-stato" class="cerca-stato" aria-live="polite"></p>
+    <ol id="cerca-ris" class="cerca-ris"></ol>
+    <div id="cerca-rapidi" class="cerca-rapidi">
+      <h2>I più cercati</h2>
+      <div class="cerca-chips">
+        {quick.map(([l, h]) => <a href={h}>{l}</a>)}
+      </div>
+    </div>
+    <p class="cerca-aiuto">Non trovi quello che cerchi? <a href="https://wa.me/393716230690?text=Ciao%2C%20cerco%20informazioni%20su..." target="_blank" rel="noopener">Scrivici su WhatsApp</a> o <a href="/contatti">chiamaci</a>.</p>
+  </section>
+
+  <script is:inline>
+  (function () {
+    var input = document.getElementById('cerca-q');
+    var stato = document.getElementById('cerca-stato');
+    var lista = document.getElementById('cerca-ris');
+    var rapidi = document.getElementById('cerca-rapidi');
+    var pf = null, seq = 0, timer = null;
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function carica() {
+      if (pf) return Promise.resolve(pf);
+      return import('/pagefind/pagefind.js').then(function (m) { pf = m; return m.options({ excerptLength: 24 }).then(function () { return m; }); });
+    }
+    function tipo(url) { return url.indexOf('/blog/') === 0 ? 'Guida' : 'Servizio'; }
+    function cerca(q) {
+      var mio = ++seq;
+      q = q.trim();
+      try { history.replaceState(null, '', q ? '/cerca?q=' + encodeURIComponent(q) : '/cerca'); } catch (e) {}
+      if (q.length < 2) { lista.innerHTML = ''; stato.textContent = ''; rapidi.hidden = false; return; }
+      stato.textContent = 'Cerco…';
+      carica().then(function (m) { return m.search(q); }).then(function (r) {
+        if (mio !== seq) return;
+        return Promise.all(r.results.slice(0, 24).map(function (x) { return x.data(); })).then(function (dati) {
+          if (mio !== seq) return;
+          // Fuori gli elenchi (tag, categorie, indice blog) e le pagine di servizio interno: non sono risposte.
+          dati = dati.filter(function (d) { return !/^\/(blog\/?$|blog\/(tag|categoria)\/|grazie|cerca|404|certificazioni)/.test(d.url) && d.excerpt.indexOf('<mark>') !== -1; }).slice(0, 12);
+          rapidi.hidden = dati.length > 0;
+          if (!dati.length) { lista.innerHTML = ''; stato.textContent = 'Nessun risultato per "' + q + '". Prova con una parola sola, per esempio ISEE o pensione.'; return; }
+          stato.textContent = dati.length + (dati.length === 1 ? ' risultato' : ' risultati');
+          // Prima le pagine servizio che hanno la parola nel titolo, poi le pagine elenco, poi le guide del blog.
+          var chiave = q.toLowerCase().split(/\s+/)[0].slice(0, 6);
+          function peso(d) {
+            var t = ((d.meta && d.meta.title) || '').toLowerCase();
+            return (d.url.indexOf('/blog/') === 0 ? 4 : 0) + (t.indexOf(chiave) === -1 ? 2 : 0) + (/^\/servizi/.test(d.url) ? 1 : 0);
+          }
+          dati = dati.map(function (d, i) { return [peso(d), i, d]; }).sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; }).map(function (x) { return x[2]; });
+          lista.innerHTML = dati.map(function (d) {
+            var url = d.url.replace(/\/$/, '') || '/';
+            return '<li><a href="' + esc(url) + '"><span class="cerca-tipo">' + tipo(d.url) + '</span><b>' + esc((d.meta && d.meta.title) || url) + '</b><span class="cerca-ex">' + d.excerpt + '</span></a></li>';
+          }).join('');
+        });
+      }).catch(function () { if (mio === seq) stato.textContent = 'La ricerca non è disponibile in questo momento. Usa il menu o scrivici su WhatsApp.'; });
+    }
+    var q0 = new URLSearchParams(location.search).get('q') || '';
+    if (q0) { input.value = q0; cerca(q0); }
+    input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { cerca(input.value); }, 180); });
+    input.form.addEventListener('submit', function (e) { e.preventDefault(); cerca(input.value); input.blur(); });
+  })();
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .cerca { max-width: 820px; margin: 0 auto; padding: 36px 16px 72px; display: flex; flex-direction: column; gap: 18px; color: #14142B; }
+  .cerca h1 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(32px, 7vw, 52px); line-height: 1.02; letter-spacing: -0.02em; }
+  .cerca h2 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; }
+  .cerca .sbox { max-width: none; }
+  .cerca-stato { margin: 0; min-height: 1.4em; font-size: 15px; color: #4A4A63; }
+  .cerca-ris { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .cerca-ris a { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 2px solid #E4E0FF; border-radius: 20px; padding: 16px 18px; text-decoration: none; color: #14142B; min-width: 0; }
+  .cerca-ris a:hover, .cerca-ris a:focus-visible { border-color: #5B3DF5; outline: none; }
+  .cerca-ris b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; line-height: 1.15; overflow-wrap: anywhere; }
+  .cerca-tipo { align-self: flex-start; font-size: 12px; font-weight: 800; background: #F1EEFF; color: #3D2BB8; border-radius: 999px; padding: 3px 10px; }
+  .cerca-ex { font-size: 15px; line-height: 1.5; color: #4A4A63; overflow-wrap: anywhere; }
+  .cerca-ex mark { background: #D4FF4F; color: #14142B; border-radius: 4px; padding: 0 2px; }
+  .cerca-rapidi { display: flex; flex-direction: column; gap: 10px; }
+  .cerca-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cerca-chips a { background: #F1EEFF; color: #14142B; font-weight: 700; border-radius: 999px; padding: 10px 16px; text-decoration: none; }
+  .cerca-chips a:hover { background: #D4FF4F; }
+  .cerca-aiuto { margin: 0; font-size: 15px; color: #4A4A63; }
+  .cerca-aiuto a { color: #3D2BB8; font-weight: 800; }
+</style>

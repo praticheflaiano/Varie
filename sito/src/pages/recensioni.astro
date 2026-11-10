@@ -1,0 +1,16 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import GoogleReviews from "~/components/ui/GoogleReviews.astro";
+---
+<BaseLayout title="Recensioni del Centro Pratiche Flaiano" description="Le recensioni dei clienti del CAF e patronato Centro Pratiche Flaiano di Vigne Nuove, Roma: trascritte da Google, con il link per verificarle.">
+  <div class="wrap" style="padding-block:40px 64px;display:flex;flex-direction:column;gap:28px">
+    <GoogleReviews heading="h1" title="Le recensioni dei nostri clienti" showAllLink={false} />
+    <div style="background:#14142B;color:#fff;border-radius:28px;padding:26px 28px;display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between">
+      <div style="display:flex;flex-direction:column;gap:6px;max-width:60ch">
+        <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;color:#D4FF4F;line-height:1.1">Vuoi provare anche tu?</b>
+        <span style="color:#E4DEFF;font-size:16px;line-height:1.5">Prenota un appuntamento in ufficio a Vigne Nuove o in videochiamata.</span>
+      </div>
+      <a href="/prenota" style="display:inline-flex;align-items:center;padding:14px 24px;border-radius:999px;background:#D4FF4F;color:#14142B;font-weight:800;text-decoration:none">Prenota un appuntamento</a>
+    </div>
+  </div>
+</BaseLayout>

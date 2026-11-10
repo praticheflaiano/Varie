@@ -19,7 +19,7 @@ export const SITE = {
   tagline:
     "CAF UNSIC e Patronato ENASC a Roma Nord. Servizi fiscali, previdenziali e amministrativi per famiglie, lavoratori e pensionati.",
   defaultDescription:
-    "Centro Pratiche Flaiano: CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. 730, ISEE, IMU, successioni, pensioni, NASpI, invalidita civile, assegno unico. Prenota appuntamento.",
+    "Centro Pratiche Flaiano: CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. 730, ISEE, IMU, successioni, pensioni, NASpI, invalidità civile, assegno unico. Prenota appuntamento.",
   ogImage: "/og-default.png",
   themeColor: "#5B3DF5",
 } as const;
@@ -91,7 +91,7 @@ export const REVIEWS = { rating: "5,0", label: "oltre 290 recensioni" } as const
 
 export const BOOKING = {
   arcanisGroup: "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1",
-  /** Calendario GHL "Consulenza da remoto" disattivato (404): finche non viene riattivato si prenota via WhatsApp. */
+  /** Calendario GHL "Consulenza da remoto" disattivato (404): finché non viene riattivato si prenota via WhatsApp. */
   arcanisRemote: "https://link.arcanis.it/widget/booking/B5HBTQ8m4c7Ab5Ok0zIH",
 } as const;
 
@@ -193,7 +193,7 @@ export const NAV = [
 ] as const;
 
 /** Disclaimer obbligatorio sotto ogni articolo (regola ZERO invenzioni). */
-export const DISCLAIMER = `Le informazioni contenute in questo articolo hanno valore puramente informativo e divulgativo e non sostituiscono la consulenza personalizzata di un professionista. Norme, importi e scadenze possono variare: verifica sempre le fonti ufficiali (Agenzia delle Entrate, INPS, Gazzetta Ufficiale) o prenota un appuntamento al Centro Pratiche Flaiano. L'articolo riporta la data di "ultimo aggiornamento" indicata in alto: dopo tale data le informazioni potrebbero non essere piu valide.`;
+export const DISCLAIMER = `Le informazioni contenute in questo articolo hanno valore puramente informativo e divulgativo e non sostituiscono la consulenza personalizzata di un professionista. Norme, importi e scadenze possono variare: verifica sempre le fonti ufficiali (Agenzia delle Entrate, INPS, Gazzetta Ufficiale) o prenota un appuntamento al Centro Pratiche Flaiano. L'articolo riporta la data di "ultimo aggiornamento" indicata in alto: dopo tale data le informazioni potrebbero non essere più valide.`;
 
 export const ORG_CREDENTIALS = {
   caf: {

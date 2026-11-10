@@ -365,6 +365,14 @@
     gap: 10px;
     align-items: center;
   }
+  .nav-main a { white-space: nowrap; }
+  @media (min-width: 1024px) { .site-header .brand-mark { flex: none; white-space: nowrap; } }
+  @media (max-width: 419px) { .site-header .header-search { display: none; } }
+  .site-header .nav-main a { padding-inline: 10px; }
+  @media (max-width: 1199px) { .header-cta .btn-ghost { display: none; } }
+  .header-search { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 999px; color: var(--color-ink); border: 2px solid var(--color-ink); background: #fff; flex: none; }
+  .header-search:hover { background: var(--color-lilac); }
+  .header-search:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
   @media (max-width: 1023px) {
     .nav-main { display: none; }
     .header-cta .hide-sm { display: none; }

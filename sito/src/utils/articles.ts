@@ -19,7 +19,7 @@ export async function getVisibleArticles(): Promise<Article[]> {
     ? all
     : all.filter((a) => PUBLIC_STATUS.has(a.data.status));
 
-  // Prima gli articoli ancora attuali (scadenza non passata), poi i piu recenti per data di pubblicazione.
+  // Prima gli articoli ancora attuali (scadenza non passata), poi i più recenti per data di pubblicazione.
   const now = Date.now();
   const expired = (a: Article) => (a.data.deadline ? new Date(a.data.deadline).getTime() < now : false);
   return filtered.sort((a, b) => {

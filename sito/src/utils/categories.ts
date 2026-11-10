@@ -93,9 +93,9 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
   },
   "invalidita-civile": {
     slug: "invalidita-civile",
-    label: "Invalidita civile",
+    label: "Invalidità civile",
     description:
-      "Invalidita civile, Legge 104, indennita di accompagnamento, riconoscimento handicap.",
+      "Invalidità civile, Legge 104, indennità di accompagnamento, riconoscimento handicap.",
     icon: "heroicons:heart",
     color: "#E0336B",
     area: "patronato",

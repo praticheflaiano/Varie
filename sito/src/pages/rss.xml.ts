@@ -10,7 +10,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: `${SITE.name} - Blog`,
     description:
-      "Guide, scadenze e novita normative dal CAF UNSIC e Patronato ENASC del Centro Pratiche Flaiano a Roma Vigne Nuove. Verificato, sempre con fonti ufficiali.",
+      "Guide, scadenze e novità normative dal CAF UNSIC e Patronato ENASC del Centro Pratiche Flaiano a Roma Vigne Nuove. Verificato, sempre con fonti ufficiali.",
     site: context.site ?? SITE.url,
     items: articles.map((a) => {
       const cat = getCategory(a.data.category);

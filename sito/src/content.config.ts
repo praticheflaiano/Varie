@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 /**
  * Content Layer: gli articoli vivono in ../content/ (workflow editoriale invariato).
  * In CI/build deterministica, scripts/sync-content.mjs crea .content-mirror/.
- * Se il mirror esiste, ha priorita; altrimenti loader fallback su ../content.
+ * Se il mirror esiste, ha priorità; altrimenti loader fallback su ../content.
  */
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 const mirrorPath = resolve(projectRoot, "..", ".content-mirror");

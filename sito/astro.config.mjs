@@ -61,7 +61,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const p = new URL(page).pathname.replace(/\/$/, "");
-        if (p === "/grazie" || p === "/404") return false;
+        if (p === "/grazie" || p === "/404" || p === "/cerca") return false;
         const t = p.match(/^\/blog\/tag\/([^/]+)$/);
         if (t && THIN.tags.has(t[1])) return false;
         const c = p.match(/^\/blog\/categoria\/([^/]+)$/);
