@@ -64,6 +64,16 @@ export const HOURS = [
   { day: "Domenica", open: null, close: null, afternoon: null },
 ] as const;
 
+/**
+ * Chiusure straordinarie (confermate da Antonio il 10/11/2026). Date in formato AAAA-MM-GG, estremi compresi.
+ * Usate da: avviso in cima al sito, stato "aperti ora", pagina contatti, dati strutturati.
+ * "avviso" = quanti giorni prima mostrare l'avviso in cima alle pagine.
+ */
+export const CLOSURES = [
+  { from: "2026-12-08", to: "2026-12-08", avviso: 7, testo: "Martedì 8 dicembre siamo chiusi.", breve: "8 dicembre 2026" },
+  { from: "2026-12-23", to: "2027-01-10", avviso: 14, testo: "Chiusi per le feste dal 23 dicembre al 10 gennaio. Riapriamo lunedì 11 gennaio.", breve: "dal 23 dicembre 2026 al 10 gennaio 2027 (riapriamo lunedì 11 gennaio)" },
+] as const;
+
 /** Schema.org openingHoursSpecification format */
 export const HOURS_SCHEMA = [
   {

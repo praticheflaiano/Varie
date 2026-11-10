@@ -1,9 +1,10 @@
 ---
 /** Pill "aperti ora / chiusi" calcolata nel browser sull'ora di Roma (orari da consts). */
-import { HOURS } from "~/consts";
+import { HOURS, CLOSURES } from "~/consts";
 const data = JSON.stringify(HOURS);
+const closures = JSON.stringify(CLOSURES.map((c) => [c.from, c.to]));
 ---
-<span class="pill pill-live" data-open-now={data} style="align-self:flex-start;font-weight:700">Roma · Vigne Nuove</span>
+<span class="pill pill-live" data-open-now={data} data-closures={closures} style="align-self:flex-start;font-weight:700">Roma · Vigne Nuove</span>
 <script>
   const el = document.querySelector<HTMLElement>("[data-open-now]");
   if (el) {
@@ -17,7 +18,9 @@ const data = JSON.stringify(HOURS);
       const now = `${hh}:${mm}`;
       const h = hours[idx];
       const slots = h && h.open ? [[h.open, h.close], ...(h.afternoon ? [[h.afternoon.open, h.afternoon.close]] : [])] : [];
-      const cur = slots.find(([a, b]) => now >= a && now < b);
+      const oggi = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
+      const festa = (JSON.parse(el.dataset.closures || "[]") as [string, string][]).some(([a, b]) => oggi >= a && oggi <= b);
+      const cur = festa ? undefined : slots.find(([a, b]) => now >= a && now < b);
       if (cur) {
         el.textContent = `Aperti ora · fino alle ${cur[1]}`;
       } else {

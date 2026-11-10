@@ -1,5 +1,5 @@
 ---
-import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE, LANDING, EXTERNAL_PORTALS } from "~/consts";
+import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE, LANDING, EXTERNAL_PORTALS, CLOSURES } from "~/consts";
 
 const data = {
   "@context": "https://schema.org",
@@ -30,6 +30,7 @@ const data = {
   },
   hasMap: CONTACT.mapsUrl,
   openingHoursSpecification: HOURS_SCHEMA,
+  specialOpeningHoursSpecification: CLOSURES.map((c) => ({ "@type": "OpeningHoursSpecification", opens: "00:00", closes: "00:00", validFrom: c.from, validThrough: c.to })),
   areaServed: ZONE_SERVITE.map((z) => ({
     "@type": "Place",
     name: `${z.name}, Roma`,

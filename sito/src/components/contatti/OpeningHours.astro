@@ -1,5 +1,7 @@
 ---
-import { HOURS } from "~/consts";
+import { HOURS, CLOSURES } from "~/consts";
+const oggiBuild = new Date().toISOString().slice(0, 10);
+const prossime = CLOSURES.filter((c) => c.to >= oggiBuild);
 import { Icon } from "astro-icon/components";
 
 // "oggi" calcolato nel browser (la pagina e statica)
@@ -44,6 +46,14 @@ const todayIdx = -1;
       );
     })}
   </dl>
+  {prossime.length > 0 && (
+    <div class="mt-4 rounded-xl bg-[#FFE3EC] px-3 py-3 text-sm text-[var(--color-ink)]">
+      <strong>Prossime chiusure:</strong>
+      <ul class="mt-1 list-disc pl-5">
+        {prossime.map((c) => <li>{c.breve}</li>)}
+      </ul>
+    </div>
+  )}
 </div>
 <script>
   const wd = new Intl.DateTimeFormat("it-IT", { timeZone: "Europe/Rome", weekday: "short" }).format(new Date()).toLowerCase();

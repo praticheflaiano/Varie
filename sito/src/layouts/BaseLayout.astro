@@ -4,6 +4,7 @@ import { SITE } from "~/consts";
 import SEO from "~/components/seo/SEO.astro";
 import JsonLdLocalBusiness from "~/components/seo/JsonLdLocalBusiness.astro";
 import Navbar from "~/components/layout/Navbar.astro";
+import ClosureNotice from "~/components/layout/ClosureNotice.astro";
 import Footer from "~/components/layout/Footer.astro";
 import WhatsAppFab from "~/components/layout/WhatsAppFab.astro";
 import MobileActionBar from "~/components/layout/MobileActionBar.astro";
@@ -83,6 +84,7 @@ const ogAuto = ogSlug && fs.existsSync(`public/og/p-${ogSlug}.jpg`) ? `/og/p-${o
   <body class:list={["min-h-screen flex flex-col bg-white text-[var(--color-ink-soft)]", bodyClass]}>
     <a href="#main-content" class="skip-link">Vai al contenuto principale</a>
     <Navbar />
+    <ClosureNotice />
     <main id="main-content" class="flex-1" data-pagefind-body>
       {title && <span hidden data-pagefind-meta={`title:${title.split(" | ")[0]}`}></span>}
       <slot />

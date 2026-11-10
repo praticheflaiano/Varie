@@ -1,0 +1,29 @@
+---
+/** Avviso di chiusura: compare da solo nei giorni prima e durante la chiusura, poi sparisce (data di Roma, nel browser). */
+import { CLOSURES } from "~/consts";
+---
+<div id="closure-notice" class="closure-notice" data-closures={JSON.stringify(CLOSURES)} hidden role="status">
+  <span id="closure-text"></span> <a href="/prenota">Prenota online</a>
+</div>
+<script is:inline>
+  (function () {
+    try {
+      var el = document.getElementById("closure-notice");
+      var list = JSON.parse(el.getAttribute("data-closures") || "[]");
+      var oggi = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
+      function menoGiorni(d, n) { var t = new Date(d + "T12:00:00Z"); t.setUTCDate(t.getUTCDate() - n); return t.toISOString().slice(0, 10); }
+      for (var i = 0; i < list.length; i++) {
+        var c = list[i];
+        if (oggi >= menoGiorni(c.from, c.avviso) && oggi <= c.to) {
+          document.getElementById("closure-text").textContent = c.testo;
+          el.hidden = false;
+          break;
+        }
+      }
+    } catch (e) {}
+  })();
+</script>
+<style is:global>
+  .closure-notice { background: #FF5C8A; color: #14142B; font-weight: 700; font-size: 15px; line-height: 1.4; text-align: center; padding: 10px 16px; }
+  .closure-notice a { color: #14142B; font-weight: 800; text-decoration: underline; white-space: nowrap; }
+</style>

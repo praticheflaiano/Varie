@@ -5,7 +5,8 @@
  * quindi i contatti arrivano nel CRM come oggi.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
-import { CONTACT, BOOKING, SOCIAL, REVIEWS } from "~/consts";
+import { CONTACT, BOOKING, SOCIAL, REVIEWS, CLOSURES } from "~/consts";
+const CLOSED_RANGES = JSON.stringify(CLOSURES.map((c) => [c.from, c.to]));
 const REMOTE = "https://link.arcanis.it/widget/bookings/consulenza_da_remoto";
 const FORM_ID = "SIpBJREup0FjgpDAlprn";
 const waText = encodeURIComponent("Buongiorno, vi scrivo dal vostro biglietto da visita. Vorrei informazioni su: ");
@@ -79,7 +80,7 @@ const hours = [
     </div>
   </section>
   <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
-  <script is:inline>
+  <script is:inline define:vars={{ CLOSED_RANGES }}>
     (function () {
       try {
         var parts = new Intl.DateTimeFormat("it-IT", { timeZone: "Europe/Rome", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date());
@@ -88,7 +89,9 @@ const hours = [
         var day = map[get("weekday").toLowerCase().slice(0, 3)];
         var m = parseInt(get("hour"), 10) * 60 + parseInt(get("minute"), 10);
         var slots = day >= 1 && day <= 4 ? [[570, 780], [930, 1080]] : day === 5 ? [[570, 840]] : [];
-        var open = slots.some(function (s) { return m >= s[0] && m < s[1]; });
+        var oggi = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
+        var festa = JSON.parse(CLOSED_RANGES).some(function (r) { return oggi >= r[0] && oggi <= r[1]; });
+        var open = !festa && slots.some(function (s) { return m >= s[0] && m < s[1]; });
         var el = document.getElementById("bc-open");
         if (el) { el.textContent = open ? "Aperto ora" : "Chiuso ora"; el.classList.add(open ? "is-open" : "is-closed"); }
         var li = document.querySelector('#bc-hours li[data-day="' + (day === 0 ? 6 : day) + '"]');
