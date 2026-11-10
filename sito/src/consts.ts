@@ -146,6 +146,7 @@ export const LANDING = [
   { label: "Modello 730", href: "/730", tag: "da 30 €" },
   { label: "Invalidità e 104", href: "/invalidita-104", tag: "1° incontro gratis" },
   { label: "NASpI", href: "/naspi", tag: "Domanda gratis" },
+  { label: "SIISL dopo la NASpI", href: "/siisl", tag: "" },
   { label: "Assegno Unico", href: "/assegno-unico", tag: "da 10 €" },
   { label: "Successioni", href: "/successioni", tag: "" },
   { label: "Pensioni", href: "/pensioni", tag: "" },
