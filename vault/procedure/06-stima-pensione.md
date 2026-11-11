@@ -14,8 +14,8 @@ Il cliente compila questionario e carica i documenti **prima** del pagamento.
 
 Fatto:
 - `sito/src/pages/stima-pensione.astro`: pagina del servizio.
-- `sito/src/components/pensione/StimaPensioneForm.svelte`: questionario in 6 passi
-  (dati, lavoro, contributi, salute e famiglia, documenti, riepilogo con consensi).
+- `sito/src/components/pensione/StimaPensioneForm.svelte`: questionario in 7 passi
+  (estratto, dati, lavoro, contributi, salute e famiglia, altri documenti, riepilogo con consensi).
 - Opzione "richiedetelo voi" per l'estratto: incorpora lo stesso sondaggio GHL di
   `/certificazioni` (`P3FbJB9wj14iplGZxaFF`) e lo stesso mandato.
 - `sito/api/_pensione/`: motore deterministico della skill `conteggi-pensionistici`
@@ -23,6 +23,20 @@ Fatto:
 
 Finché `PUBLIC_STIMA_PENSIONE_API` è vuota la pagina è `noindex`, fuori da sitemap e
 ricerca interna, e l'ultimo passo non invia nulla.
+
+## Lettura automatica dell'estratto (primo passo)
+
+Il primo passo del questionario è il caricamento dell'estratto contributivo (o la scelta
+"richiedetelo voi"). `sito/src/utils/estrattoInps.ts` legge il PDF **nel browser** con
+`pdfjs-dist` (il file non viene inviato) e ricava: intestatario, codice fiscale, data di
+nascita e sesso (dal codice fiscale), data dell'estratto, periodi, settimane e retribuzioni
+per anno, situazione lavorativa e ultima retribuzione. I campi vuoti del questionario
+vengono precompilati; il cliente vede tutto e può correggere.
+
+**Limite noto**: le regole di lettura sono euristiche sul formato tipico dell'estratto e
+sono state provate solo su un PDF di esempio costruito a mano, non su estratti INPS reali.
+Vanno verificate su file veri (gestione pubblica, più gestioni, contributi in mesi/giorni)
+prima di attivare il servizio. XML e scansioni non vengono letti in automatico.
 
 ## Modalità prova (solo anteprime)
 

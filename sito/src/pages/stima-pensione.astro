@@ -21,8 +21,8 @@ const ricevi = [
   { t: "Scadenze e documenti", d: "Le date da non perdere e cosa preparare per la domanda di pensione." },
 ];
 const passi = [
-  "Rispondi al questionario: lavoro, contributi, invalidità, assistenza a familiari.",
-  `Carichi l'estratto conto contributivo INPS (e, se li hai, simulazione INPS, busta paga, verbale). Se non ce l'hai, lo richiediamo noi con ${PREZZO_ESTRATTO} in più.`,
+  `Carichi l'estratto conto contributivo INPS: lo leggiamo subito e compiliamo noi i dati che contiene. Se non ce l'hai, lo richiediamo noi con ${PREZZO_ESTRATTO} in più.`,
+  "Controlli i dati letti e rispondi alle domande che restano: lavoro, invalidità, assistenza a familiari.",
   `Paghi ${PREZZO} in modo sicuro.`,
   "Controlli il riepilogo dei contributi letti dal tuo estratto e confermi.",
   "Ricevi il prospetto in PDF via email.",
@@ -47,7 +47,7 @@ const faqs = [
     <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-[#14142B] sm:text-6xl">Stima e Calcolo <span class="text-[#5B3DF5]">della pensione</span></h1>
     <p class="mt-5 max-w-3xl text-lg text-[#3F3F5A] sm:text-xl">Quando puoi andare in pensione e con quale importo? Carichi il tuo estratto conto INPS, rispondi ad alcune domande e ricevi un prospetto personale in PDF.</p>
     <div class="mt-7 flex flex-wrap items-center gap-4">
-      <a href="#stima-form" class="rounded-full bg-[#5B3DF5] px-7 py-3.5 font-bold text-white no-underline shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:text-white hover:shadow-[0_3px_0_#14142B]">Inizia il questionario</a>
+      <a href="#stima-form" class="rounded-full bg-[#5B3DF5] px-7 py-3.5 font-bold text-white no-underline shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:text-white hover:shadow-[0_3px_0_#14142B]">Carica il tuo estratto</a>
       <span class="rounded-full bg-[#D4FF4F] px-5 py-3 text-lg font-extrabold text-[#14142B]">{PREZZO} una tantum</span>
     </div>
     {!attivo && <p class="mt-6 max-w-3xl rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Servizio in fase di attivazione: puoi vedere il questionario, ma l'invio e il pagamento non sono ancora disponibili.</p>}
@@ -85,7 +85,7 @@ const faqs = [
     <div class="rounded-[28px] bg-[#F1EEFF] p-6 sm:p-8">
       <span class="inline-block rounded-full bg-[#D4FF4F] px-4 py-1.5 text-sm font-extrabold text-[#14142B]">+{PREZZO_ESTRATTO}</span>
       <h2 class="mt-3 text-3xl font-extrabold text-[#14142B]">Non hai l'estratto contributivo? Lo richiediamo noi</h2>
-      <p class="mt-3 max-w-3xl text-lg text-[#3F3F5A]">Se non hai SPID o non riesci a scaricarlo, nel passo "Documenti" del questionario scegli "No, richiedetelo voi": compili il modulo di richiesta e pensiamo noi a ottenerlo dall'INPS. La stima parte quando l'estratto è disponibile.</p>
+      <p class="mt-3 max-w-3xl text-lg text-[#3F3F5A]">Se non hai SPID o non riesci a scaricarlo, nel primo passo del questionario scegli "No, richiedetelo voi": compili il modulo di richiesta e pensiamo noi a ottenerlo dall'INPS. La stima parte quando l'estratto è disponibile.</p>
       <div class="mt-5 flex flex-wrap gap-3">
         <a href="#stima-form" class="rounded-full bg-[#14142B] px-6 py-3 font-bold text-white no-underline hover:text-white">Vai al questionario</a>
         <a href={MANDATO} target="_blank" rel="noopener" class="rounded-full border-2 border-[#14142B] px-6 py-3 font-bold text-[#14142B] no-underline">Scarica mandato</a>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { leggiEstrattoPdf, type EstrattoLetto } from "~/utils/estrattoInps";
   // Questionario "Stima e Calcolo della pensione".
   // Raccoglie dati e documenti PRIMA del pagamento; l'invio va all'endpoint
   // `apiUrl`. Finché non è configurato, l'ultimo passo mostra un avviso e non
@@ -16,7 +17,7 @@
   let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "" }: Props = $props();
 
   const MAX_MB = 10;
-  const STEPS = ["Tu", "Lavoro", "Contributi", "Salute e famiglia", "Documenti", "Riepilogo"];
+  const STEPS = ["Estratto", "Tu", "Lavoro", "Contributi", "Salute e famiglia", "Altri documenti", "Riepilogo"];
 
   let step = $state(0);
 
@@ -126,6 +127,44 @@
     a.mancanti = a.mancanti.includes(v) ? a.mancanti.filter((x) => x !== v) : [...a.mancanti, v];
   }
 
+  // Estratto letto in automatico nel browser (vedi utils/estrattoInps.ts).
+  let letto = $state<EstrattoLetto | null>(null);
+  let leggendo = $state(false);
+  let compilati = $state<string[]>([]);
+
+  async function onEstratto(e: Event) {
+    onFile("estratto", e);
+    letto = null;
+    compilati = [];
+    const f = files.estratto;
+    if (!f) return;
+    if (!/\.pdf$/i.test(f.name)) {
+      errors = ["Riusciamo a leggere in automatico solo il PDF: questo file lo esaminiamo noi dopo l'invio."];
+      return;
+    }
+    leggendo = true;
+    try {
+      const r = await leggiEstrattoPdf(f);
+      letto = r;
+      // Precompila solo i campi ancora vuoti: quello che hai già scritto non si tocca.
+      const fatto: string[] = [];
+      const metti = (campo: "nome" | "cognome" | "nascita" | "sesso" | "situazione" | "retribuzione", v: string, etichetta: string) => {
+        if (v && !a[campo]) { a[campo] = v; fatto.push(etichetta); }
+      };
+      metti("nome", r.nome, "nome");
+      metti("cognome", r.cognome, "cognome");
+      metti("nascita", r.nascita, "data di nascita");
+      metti("sesso", r.sesso, "sesso");
+      metti("situazione", r.situazione, "situazione lavorativa");
+      metti("retribuzione", r.ultimaRetribuzione ? String(Math.round(r.ultimaRetribuzione)) : "", "retribuzione annua");
+      compilati = fatto;
+    } catch {
+      errors = ["Non siamo riusciti a leggere il file in automatico. Puoi proseguire: lo esaminiamo noi dopo l'invio."];
+    } finally {
+      leggendo = false;
+    }
+  }
+
   function onFile(key: string, e: Event) {
     const f = (e.currentTarget as HTMLInputElement).files?.[0] ?? null;
     if (f && f.size > MAX_MB * 1024 * 1024) {
@@ -141,6 +180,10 @@
   function validate(s: number): string[] {
     const e: string[] = [];
     if (s === 0) {
+      if (leggendo) e.push("Stiamo ancora leggendo il file: attendi qualche secondo.");
+      else if (!files.estratto && !a.richiediEstratto) e.push("Carica l'estratto conto contributivo INPS oppure scegli di farlo richiedere a noi.");
+    }
+    if (s === 1) {
       if (!a.nome.trim() || !a.cognome.trim()) e.push("Inserisci nome e cognome.");
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)) e.push("Inserisci un indirizzo email valido: lì ricevi il prospetto.");
       if (!a.nascita) e.push("Inserisci la data di nascita.");
@@ -150,26 +193,25 @@
       }
       if (!a.sesso) e.push("Indica il sesso: i requisiti della pensione anticipata sono diversi.");
     }
-    if (s === 1) {
+    if (s === 2) {
       if (!a.situazione) e.push("Indica la tua situazione lavorativa.");
       if (!disoccupato && a.situazione && !a.continua) e.push("Indica se pensi di continuare a lavorare.");
       if (a.continua === "data" && !a.finoA) e.push("Indica fino a quando pensi di lavorare.");
       if (disoccupato && !a.naspi) e.push("Indica la situazione della NASpI.");
     }
-    if (s === 2) {
+    if (s === 3) {
       if (!a.precoce) e.push("Rispondi alla domanda sul lavoro prima dei 19 anni.");
     }
-    if (s === 3) {
+    if (s === 4) {
       if (!a.invalidita) e.push("Rispondi alla domanda sull'invalidità.");
       if (haInvalidita && !a.invaliditaPct) e.push("Indica la percentuale di invalidità.");
       if (!a.caregiver) e.push("Rispondi alla domanda sull'assistenza a un familiare.");
       if (!a.mansione) e.push("Rispondi alla domanda sulle mansioni.");
       if (!a.obiettivo) e.push("Indica il tuo obiettivo.");
     }
-    if (s === 4) {
-      if (!files.estratto && !a.richiediEstratto) e.push("Carica l'estratto conto contributivo INPS oppure scegli di farlo richiedere a noi.");
-    }
     if (s === 5) {
+    }
+    if (s === 6) {
       if (!a.privacy || !a.condizioni) e.push("Per procedere servono l'accettazione dell'informativa privacy e delle condizioni del servizio.");
       if (!a.salute) e.push("Per valutare invalidità e assistenza a familiari serve il consenso al trattamento dei dati sulla salute.");
     }
@@ -192,7 +234,7 @@
   }
 
   async function submit() {
-    errors = validate(5);
+    errors = validate(6);
     if (errors.length) return;
     if (demo) return void vaiA("pagamento");
     if (!apiUrl) return;
@@ -201,6 +243,7 @@
     try {
       const body = new FormData();
       body.append("risposte", JSON.stringify(a));
+      if (letto) body.append("estratto_letto", JSON.stringify(letto));
       for (const [k, f] of Object.entries(files)) if (f) body.append(k, f, f.name);
       const res = await fetch(apiUrl, { method: "POST", body });
       if (!res.ok) throw new Error(String(res.status));
@@ -254,18 +297,24 @@
     </div>
   {:else if fase === "conferma" && esempio}
     <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento ricevuto. Controlla i tuoi contributi</h2>
-    <p class="text-[#3F3F5A]">Dopo il pagamento il cliente vede quello che abbiamo letto dal suo estratto e lo conferma. <strong>In prova la tabella mostra un caso di esempio, non il file che hai caricato.</strong></p>
+    <p class="text-[#3F3F5A]">Dopo il pagamento il cliente vede quello che abbiamo letto dal suo estratto e lo conferma. {#if letto?.anni.length}<strong>Questa è la lettura automatica del file che hai caricato.</strong>{:else}<strong>In prova la tabella mostra un caso di esempio, non il file che hai caricato.</strong>{/if}</p>
     <div class="mt-4 max-h-80 overflow-auto rounded-2xl bg-white">
       <table class="w-full text-left text-sm text-[#14142B]">
         <thead class="sticky top-0 bg-[#14142B] text-white"><tr><th class="px-4 py-2">Anno</th><th class="px-4 py-2">Gestione</th><th class="px-4 py-2">Settimane</th><th class="px-4 py-2">Retribuzione</th></tr></thead>
         <tbody>
+          {#if letto?.anni.length}
+            {#each letto.anni as y}
+              <tr class="border-t border-[#E4E4EE]"><td class="px-4 py-1.5">{y.anno}</td><td class="px-4 py-1.5">—</td><td class="px-4 py-1.5">{y.settimane}</td><td class="px-4 py-1.5">{y.imponibile ? euro(y.imponibile) : "—"}</td></tr>
+            {/each}
+          {:else}
           {#each esempio.input.contributi as c}
             <tr class="border-t border-[#E4E4EE]"><td class="px-4 py-1.5">{c.anno}</td><td class="px-4 py-1.5">{c.gestione ?? esempio.input.gestione_principale}</td><td class="px-4 py-1.5">{c.settimane}</td><td class="px-4 py-1.5">{euro(c.imponibile)}</td></tr>
           {/each}
+          {/if}
         </tbody>
       </table>
     </div>
-    <p class="mt-3 font-semibold text-[#14142B]">Totale letto: {esempio.esito.contributi_ad_oggi} ({esempio.esito.settimane_ad_oggi} settimane).</p>
+    <p class="mt-3 font-semibold text-[#14142B]">Totale letto: {#if letto?.anni.length}{letto.totaleSettimane} settimane.{:else}{esempio.esito.contributi_ad_oggi} ({esempio.esito.settimane_ad_oggi} settimane).{/if}</p>
     <div class="mt-6 flex flex-wrap gap-3">
       <button type="button" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={() => vaiA("prospetto")}>I dati sono corretti: calcola</button>
       <button type="button" class="rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
@@ -310,6 +359,74 @@
 
   <form onsubmit={(e) => { e.preventDefault(); step === STEPS.length - 1 ? submit() : next(); }} novalidate>
     {#if step === 0}
+      <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Carica il tuo estratto contributivo</h2>
+      <p class="mb-5 text-[#3F3F5A]">Lo leggiamo subito e compiliamo noi i dati che contiene: tu controlli e rispondi solo alle domande che restano. La lettura avviene sul tuo dispositivo: in questo passo il file non viene inviato.</p>
+      <fieldset class="mb-5"><legend class={label}>Hai già l'estratto conto contributivo INPS?</legend>
+        <div class="grid gap-2 sm:grid-cols-2" role="radiogroup">
+          <label class={chip(!a.richiediEstratto)}>
+            <input type="radio" class="sr-only" name="haEstratto" checked={!a.richiediEstratto} onchange={() => (a.richiediEstratto = false)} />
+            Sì, lo carico io
+          </label>
+          <label class={chip(a.richiediEstratto)}>
+            <input type="radio" class="sr-only" name="haEstratto" checked={a.richiediEstratto} onchange={() => { a.richiediEstratto = true; files.estratto = null; letto = null; compilati = []; errors = []; }} />
+            No, richiedetelo voi (+{prezzoEstratto} €)
+          </label>
+        </div>
+      </fieldset>
+      {#if a.richiediEstratto}
+        <div id="richiesta-estratto" class="mb-5 rounded-2xl border-2 border-[#14142B] bg-white p-4">
+          <h3 class="text-lg font-extrabold text-[#14142B]">Richiediamo noi il tuo estratto contributivo</h3>
+          <p class="mt-1 text-[#3F3F5A]">Costo aggiuntivo {prezzoEstratto} €, totale {totale} €. Compila il modulo qui sotto scegliendo "estratto contributivo": la stima parte quando l'INPS ce lo rende disponibile.</p>
+          {#if mandatoUrl}<p class="mt-2"><a class="font-bold text-[#4B2FE0] underline" href={mandatoUrl} target="_blank" rel="noopener">Scarica il mandato</a></p>{/if}
+          {#if surveyId}
+            <iframe src={`https://link.arcanis.it/widget/survey/${surveyId}`} id={surveyId} title="Richiesta estratto contributivo INPS" scrolling="no" class="mt-3 w-full border-0" style="min-height:616px"></iframe>
+          {/if}
+        </div>
+      {/if}
+      {#if !a.richiediEstratto}
+        <div class="rounded-2xl bg-white p-4">
+          <label class={label} for="sp-file-estratto">Estratto conto contributivo INPS (PDF)</label>
+          <input id="sp-file-estratto" type="file" accept=".pdf,.xml" class="block w-full text-sm text-[#3F3F5A] file:mr-3 file:rounded-full file:border-0 file:bg-[#14142B] file:px-4 file:py-2 file:font-bold file:text-white" onchange={onEstratto} />
+          <p class={help}>Lo scarichi dal sito INPS con SPID o CIE: Fascicolo previdenziale → Estratto conto. Massimo {MAX_MB} MB.</p>
+          {#if leggendo}<p class="mt-2 font-semibold text-[#4B2FE0]" role="status">Lettura dell'estratto in corso…</p>{/if}
+        </div>
+        {#if letto}
+          <div id="estratto-letto" class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
+            <h3 class="text-lg font-extrabold">Ecco cosa abbiamo letto</h3>
+            <dl class="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+              <div><dt class="text-sm text-[#6B6B85]">Intestatario</dt><dd class="font-semibold">{[letto.nome, letto.cognome].filter(Boolean).join(" ") || "non trovato"}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Codice fiscale</dt><dd class="font-semibold">{letto.codiceFiscale || "non trovato"}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Data di nascita</dt><dd class="font-semibold">{letto.nascita ? dataIt(letto.nascita) : "non trovata"}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Estratto aggiornato al</dt><dd class="font-semibold">{letto.dataEstratto ? dataIt(letto.dataEstratto) : "non indicato"}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Periodi trovati</dt><dd class="font-semibold">{letto.righe.length}{#if letto.anni.length} · dal {letto.anni[0].anno} al {letto.anni[letto.anni.length - 1].anno}{/if}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Contributi letti</dt><dd class="font-semibold">{letto.totaleSettimane} settimane (circa {Math.floor(letto.totaleSettimane / 52)} anni e {Math.round((letto.totaleSettimane % 52) / 4.33)} mesi)</dd></div>
+            </dl>
+            {#if letto.anni.length}
+              <details class="mt-3">
+                <summary class="cursor-pointer font-bold text-[#4B2FE0]">Vedi il dettaglio anno per anno</summary>
+                <div class="mt-2 max-h-72 overflow-auto rounded-xl border border-[#E4E4EE]">
+                  <table class="w-full text-left text-sm">
+                    <thead class="sticky top-0 bg-[#14142B] text-white"><tr><th class="px-3 py-2">Anno</th><th class="px-3 py-2">Settimane</th><th class="px-3 py-2">di cui figurative</th><th class="px-3 py-2">Retribuzione</th></tr></thead>
+                    <tbody>
+                      {#each letto.anni as y}
+                        <tr class="border-t border-[#E4E4EE]"><td class="px-3 py-1.5">{y.anno}</td><td class="px-3 py-1.5">{y.settimane}</td><td class="px-3 py-1.5">{y.figurative || "—"}</td><td class="px-3 py-1.5">{y.imponibile ? euro(y.imponibile) : "—"}</td></tr>
+                      {/each}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            {/if}
+            {#if letto.avvisi.length}
+              <ul class="mt-3 list-disc rounded-xl bg-[#FFE3EC] py-3 pl-8 pr-4 text-sm font-semibold">{#each letto.avvisi as v}<li>{v}</li>{/each}</ul>
+            {/if}
+            <p class="mt-3 text-sm text-[#6B6B85]">Controlla che i totali corrispondano al tuo estratto. Se qualcosa non torna puoi proseguire lo stesso: lo verifichiamo prima del calcolo.</p>
+          </div>
+        {/if}
+      {/if}
+    {:else if step === 1}
+      {#if compilati.length}
+        <p class="mb-4 rounded-2xl bg-[#D4FF4F] p-3 font-semibold text-[#14142B]">Dal tuo estratto abbiamo già compilato: {compilati.join(", ")}. Controlla e correggi se serve.</p>
+      {/if}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">Chi sei</h2>
       <div class="grid gap-4 sm:grid-cols-2">
         <div><label class={label} for="sp-nome">Nome</label><input id="sp-nome" class={input} autocomplete="given-name" bind:value={a.nome} /></div>
@@ -326,7 +443,7 @@
       <fieldset class="mt-4"><legend class={label}>Sesso</legend>
         {@render scelta("sesso", a.sesso, [{ v: "F", l: "Donna" }, { v: "M", l: "Uomo" }], (v) => (a.sesso = v))}
       </fieldset>
-    {:else if step === 1}
+    {:else if step === 2}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">Il tuo lavoro oggi</h2>
       <fieldset><legend class={label}>Qual è la tua situazione?</legend>
         {@render scelta("situazione", a.situazione, [
@@ -366,7 +483,7 @@
       <fieldset class="mt-5"><legend class={label}>La tua azienda ha proposto uscite anticipate (isopensione, fondo di solidarietà)?</legend>
         {@render scelta("esuberi", a.esuberi, [{ v: "si", l: "Sì" }, { v: "no", l: "No" }, { v: "non-so", l: "Non so" }], (v) => (a.esuberi = v))}
       </fieldset>
-    {:else if step === 2}
+    {:else if step === 3}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">I tuoi contributi</h2>
       <fieldset><legend class={label}>Hai periodi che potrebbero non risultare nell'estratto INPS?</legend>
         <div class="grid gap-2 sm:grid-cols-2">
@@ -387,7 +504,7 @@
       <fieldset class="mt-5"><legend class={label}>Hai lavorato almeno 12 mesi, con contributi, prima di compiere 19 anni?</legend>
         {@render scelta("precoce", a.precoce, [{ v: "si", l: "Sì" }, { v: "no", l: "No" }, { v: "non-so", l: "Non so" }], (v) => (a.precoce = v))}
       </fieldset>
-    {:else if step === 3}
+    {:else if step === 4}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">Salute, famiglia e mansioni</h2>
       <p class="mb-5 text-[#3F3F5A]">Queste risposte servono a capire se hai diritto a uscite anticipate come APE sociale, lavoratori precoci o pensione di vecchiaia per invalidi.</p>
       <fieldset><legend class={label}>Hai un'invalidità riconosciuta?</legend>
@@ -429,32 +546,11 @@
           { v: "capire", l: "Capire tutte le possibilità" },
         ], (v) => (a.obiettivo = v))}
       </fieldset>
-    {:else if step === 4}
-      <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">I documenti</h2>
-      <fieldset class="mb-5"><legend class={label}>Hai già l'estratto conto contributivo INPS?</legend>
-        <div class="grid gap-2 sm:grid-cols-2" role="radiogroup">
-          <label class={chip(!a.richiediEstratto)}>
-            <input type="radio" class="sr-only" name="haEstratto" checked={!a.richiediEstratto} onchange={() => (a.richiediEstratto = false)} />
-            Sì, lo carico io
-          </label>
-          <label class={chip(a.richiediEstratto)}>
-            <input type="radio" class="sr-only" name="haEstratto" checked={a.richiediEstratto} onchange={() => { a.richiediEstratto = true; files.estratto = null; errors = []; }} />
-            No, richiedetelo voi (+{prezzoEstratto} €)
-          </label>
-        </div>
-      </fieldset>
-      {#if a.richiediEstratto}
-        <div id="richiesta-estratto" class="mb-5 rounded-2xl border-2 border-[#14142B] bg-white p-4">
-          <h3 class="text-lg font-extrabold text-[#14142B]">Richiediamo noi il tuo estratto contributivo</h3>
-          <p class="mt-1 text-[#3F3F5A]">Costo aggiuntivo {prezzoEstratto} €, totale {totale} €. Compila il modulo qui sotto scegliendo "estratto contributivo": la stima parte quando l'INPS ce lo rende disponibile.</p>
-          {#if mandatoUrl}<p class="mt-2"><a class="font-bold text-[#4B2FE0] underline" href={mandatoUrl} target="_blank" rel="noopener">Scarica il mandato</a></p>{/if}
-          {#if surveyId}
-            <iframe src={`https://link.arcanis.it/widget/survey/${surveyId}`} id={surveyId} title="Richiesta estratto contributivo INPS" scrolling="no" class="mt-3 w-full border-0" style="min-height:616px"></iframe>
-          {/if}
-        </div>
-      {/if}
+    {:else if step === 5}
+      <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Altri documenti</h2>
+      <p class="mb-5 text-[#3F3F5A]">Sono tutti facoltativi, ma rendono la stima più precisa.</p>
       <div class="flex flex-col gap-4">
-        {#each DOCS.filter((d) => !(a.richiediEstratto && d.key === "estratto")) as d}
+        {#each DOCS.filter((d) => d.key !== "estratto") as d}
           <div class="rounded-2xl bg-white p-4">
             <label class={label} for={`sp-file-${d.key}`}>{d.label} {#if d.required}<span class="text-[#5B3DF5]">(obbligatorio)</span>{:else}<span class="font-normal text-[#6B6B85]">(facoltativo)</span>{/if}</label>
             <input id={`sp-file-${d.key}`} type="file" accept={d.accept} class="block w-full text-sm text-[#3F3F5A] file:mr-3 file:rounded-full file:border-0 file:bg-[#14142B] file:px-4 file:py-2 file:font-bold file:text-white" onchange={(e) => onFile(d.key, e)} />
