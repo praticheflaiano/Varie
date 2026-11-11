@@ -1,13 +1,40 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
-  "regions": ["fra1"],
+  "regions": [
+    "fra1"
+  ],
   "buildCommand": "node scripts/sync-content.mjs && astro build && pagefind --site dist",
   "installCommand": "npm install",
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
+    {
+      "source": "/api/stima/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://praticheflaiano.it"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "content-type, x-stima-token"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "600"
+        },
+        {
+          "key": "Vary",
+          "value": "Origin"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [

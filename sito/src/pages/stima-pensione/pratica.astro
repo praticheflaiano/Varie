@@ -4,6 +4,9 @@
 // server) oppure dal browser che ha inviato il questionario; serve anche la data di nascita.
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Attesa from "~/components/pensione/Attesa.svelte";
+// Indirizzo delle funzioni server: sul sito pubblico (progetto statico) stanno su un altro dominio,
+// ricavato da PUBLIC_STIMA_PENSIONE_API; altrove sono sullo stesso sito.
+const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/stima\/invia$/, "");
 ---
 <BaseLayout title="La tua stima della pensione" description="Stato della tua Stima e Calcolo della pensione." noindex={true} share={false}>
   <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
@@ -38,7 +41,7 @@ import Attesa from "~/components/pensione/Attesa.svelte";
     <p id="pr-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
     <p class="mt-6 text-sm text-[#6B6B85]">Hai bisogno di aiuto? Scrivici su WhatsApp al 371 623 0690 o chiama lo 06 97845429.</p>
   </section>
-  <script is:inline>
+  <script is:inline define:vars={{ API }}>
     (() => {
       const $ = (id) => document.getElementById(id);
       const form = $("pr-form"), box = $("pr-box"), msg = $("pr-msg"), azioni = $("pr-azioni"), abbina = $("pr-abbina");
@@ -64,7 +67,7 @@ import Attesa from "~/components/pensione/Attesa.svelte";
         azioni.append(b);
       }
       async function chiedi(azione, altro) {
-        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n, azione, ...altro }) });
+        const res = await fetch(API + "/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n, azione, ...altro }) });
         const dati = await res.json().catch(() => ({}));
         if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status });
         return dati;
@@ -72,7 +75,7 @@ import Attesa from "~/components/pensione/Attesa.svelte";
       async function scarica(b) {
         b.disabled = true;
         try {
-          const res = await fetch("/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n }) });
+          const res = await fetch(API + "/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n }) });
           if (!res.ok) return avvisa("Non siamo riusciti a scaricare il prospetto. Riprova tra poco.");
           const url = URL.createObjectURL(await res.blob());
           const link = document.createElement("a");

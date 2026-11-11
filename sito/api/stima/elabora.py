@@ -628,6 +628,12 @@ class handler(BaseHTTPRequestHandler):
         self._rispondi(200, {"ok": True, "configurato": bool(os.environ.get("ANTHROPIC_API_KEY")), "archivio": archivio.configurato(), "modello": MODELLO,
                              "parametri": PARAMS["versione"]})
 
+    def do_OPTIONS(self):
+        # Il sito pubblico chiama queste funzioni da un altro indirizzo: il browser chiede prima il permesso.
+        self.send_response(204)
+        self.send_header("content-length", "0")
+        self.end_headers()
+
     def do_POST(self):
         if not self._autorizzato():
             return self._rispondi(403, {"errore": "non-autorizzato"})

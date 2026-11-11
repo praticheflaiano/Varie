@@ -157,6 +157,23 @@ Limiti noti: il verbale di invalidità caricato non viene inviato né salvato (n
 calcolo); se il cliente chiude la pagina prima di confermare, il calcolo parte quando la riapre;
 nessun avviso automatico all'ufficio per `da_rivedere`, `fallita`, `attesa_estratto` (serve GHL).
 
+## In produzione (dall'11/11/2026): due progetti Vercel
+
+- **praticheflaiano.it** è servito dal progetto `info-praticheflaiano` (`prj_9WOxx9htTscB8WRb1huS4yaqazWZ`):
+  statico, senza funzioni server, costruito da `build.sh` dal ramo `nuova-grafica-info`. Contiene i
+  reindirizzamenti dei vecchi indirizzi nel suo `vercel.json` (non in questo repository): non
+  sostituirlo, si aggiorna con **Redeploy** dell'ultimo deploy di produzione.
+- Le **funzioni della stima** girano nel progetto `praticheflaiano-sito` (produzione:
+  `https://praticheflaiano-sito.vercel.app`), che ha chiavi, archivio Blob e variabili. Il deploy
+  di produzione di questo progetto NON parte da solo dal ramo: va creato con `target: production`
+  dallo SHA del ramo `nuova-grafica-info`.
+- Le pagine pubbliche chiamano le funzioni all'altro indirizzo: nel progetto `info-praticheflaiano`
+  `PUBLIC_STIMA_PENSIONE_API=https://praticheflaiano-sito.vercel.app/api/stima/invia` (le altre
+  funzioni si ricavano da qui); `sito/vercel.json` dà alle funzioni le intestazioni CORS per
+  `https://praticheflaiano.it` e ogni funzione risponde a OPTIONS.
+- Il webhook GHL del pagamento punta a `https://praticheflaiano-sito.vercel.app/api/stima/pagamento`;
+  i link di pagamento riportano a `https://praticheflaiano.it/stima-pensione/pratica`.
+
 ## Da fare per attivarlo
 
 1. In GHL: link di pagamento dei due prodotti, ritorno su `/stima-pensione/pratica`, workflow con

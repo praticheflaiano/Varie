@@ -2,6 +2,9 @@
 // Recupero del prospetto di una stima tramite il codice del QR (nell'ancora dell'indirizzo,
 // così non finisce nei log del server) e la data di nascita.
 import BaseLayout from "~/layouts/BaseLayout.astro";
+// Indirizzo delle funzioni server: sul sito pubblico (progetto statico) stanno su un altro dominio,
+// ricavato da PUBLIC_STIMA_PENSIONE_API; altrove sono sullo stesso sito.
+const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/stima\/invia$/, "");
 ---
 <BaseLayout title="Ritrova la tua stima della pensione" description="Scarica di nuovo il prospetto della tua Stima e Calcolo della pensione." noindex={true} share={false}>
   <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
@@ -17,7 +20,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     </form>
     <p class="mt-6 text-sm text-[#6B6B85]">Non lo trovi? Scrivici su WhatsApp al 371 623 0690 o chiama lo 06 97845429.</p>
   </section>
-  <script is:inline>
+  <script is:inline define:vars={{ API }}>
     (() => {
       const form = document.getElementById("rec-form");
       const codice = document.getElementById("rec-codice");
@@ -33,7 +36,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
         const bottone = form.querySelector("button");
         bottone.disabled = true;
         try {
-          const res = await fetch("/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c: codice.value.trim(), n: nascita.value }) });
+          const res = await fetch(API + "/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c: codice.value.trim(), n: nascita.value }) });
           if (res.status === 429) return avvisa("Troppi tentativi: riprova tra un'ora.");
           if (res.status === 503) return avvisa("Il recupero dei prospetti non è ancora attivo.");
           if (!res.ok) return avvisa("Codice o data di nascita non corrispondono a nessuna stima.");

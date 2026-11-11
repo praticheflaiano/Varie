@@ -52,6 +52,12 @@ class handler(BaseHTTPRequestHandler):
             return pratiche.rispondi(self, 409, {"errore": "stato-non-compatibile"})
         pratiche.rispondi(self, 200, pratiche.vista_ufficio(codice, p))
 
+    def do_OPTIONS(self):
+        # Il sito pubblico chiama queste funzioni da un altro indirizzo: il browser chiede prima il permesso.
+        self.send_response(204)
+        self.send_header("content-length", "0")
+        self.end_headers()
+
     def do_POST(self):
         ufficio = pratiche.token_ok(self.headers)
         if not ufficio and self.headers.get("x-stima-token") and not pratiche.entro_limite(("ufficio", pratiche.ip(self.headers)), 10):

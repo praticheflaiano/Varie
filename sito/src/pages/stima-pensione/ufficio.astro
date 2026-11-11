@@ -3,6 +3,9 @@
 // prospetto, sblocco. Si apre dal link scritto nelle note del CRM. Serve il segreto dell'ufficio
 // (STIMA_PENSIONE_TOKEN), che resta solo nella scheda del browser finché è aperta.
 import BaseLayout from "~/layouts/BaseLayout.astro";
+// Indirizzo delle funzioni server: sul sito pubblico (progetto statico) stanno su un altro dominio,
+// ricavato da PUBLIC_STIMA_PENSIONE_API; altrove sono sullo stesso sito.
+const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/stima\/invia$/, "");
 ---
 <BaseLayout title="Stima pensione - ufficio" description="Pagina riservata all'ufficio." noindex={true} share={false}>
   <section class="mx-auto max-w-3xl px-4 py-12" data-pagefind-ignore="all">
@@ -26,7 +29,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
       <div id="uf-dettagli" class="mt-6 grid gap-4"></div>
     </div>
   </section>
-  <script is:inline>
+  <script is:inline define:vars={{ API }}>
     (() => {
       const $ = (id) => document.getElementById(id);
       const form = $("uf-form"), box = $("uf-box"), msg = $("uf-msg"), azioni = $("uf-azioni"), dettagli = $("uf-dettagli");
@@ -40,7 +43,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
       const avvisa = (t) => { msg.textContent = t; msg.classList.toggle("hidden", !t); };
       const dataIt = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ""); return m ? `${m[3]}/${m[2]}/${m[1]}` : s || ""; };
       async function chiedi(azione, altro) {
-        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json", "x-stima-token": segreto }, body: JSON.stringify({ c, azione, ...altro }) });
+        const res = await fetch(API + "/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json", "x-stima-token": segreto }, body: JSON.stringify({ c, azione, ...altro }) });
         const dati = await res.json().catch(() => ({}));
         if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status });
         return dati;

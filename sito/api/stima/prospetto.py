@@ -32,6 +32,12 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(dati)
 
+    def do_OPTIONS(self):
+        # Il sito pubblico chiama queste funzioni da un altro indirizzo: il browser chiede prima il permesso.
+        self.send_response(204)
+        self.send_header("content-length", "0")
+        self.end_headers()
+
     def do_POST(self):
         m = re.match(r"^https?://([^/:]+)", self.headers.get("origin") or self.headers.get("referer") or "")
         if not m or not HOST_OK.match(m.group(1)):
