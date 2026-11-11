@@ -71,7 +71,7 @@ export default defineConfig({
         if (p === "/grazie" || p === "/404" || p === "/cerca") return false;
         // Stima pensione: in sitemap solo quando il servizio è attivo (prima è noindex).
         if (p === "/stima-pensione" && !process.env.PUBLIC_STIMA_PENSIONE_API) return false;
-        if (p === "/stima-pensione/recupera") return false;
+        if (p === "/stima-pensione/recupera" || p === "/stima-pensione/pratica") return false;
         const t = p.match(/^\/blog\/tag\/([^/]+)$/);
         if (t && THIN.tags.has(t[1])) return false;
         const c = p.match(/^\/blog\/categoria\/([^/]+)$/);

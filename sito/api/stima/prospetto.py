@@ -50,6 +50,8 @@ class handler(BaseHTTPRequestHandler):
         try:
             pratica = json.loads(archivio.leggi(codice, "pratica.json") or b"{}") if archivio.CODICE.match(codice) else {}
             ok = bool(pratica) and hmac.compare_digest(str(pratica.get("nascita") or ""), nascita)
+            # Le pratiche del flusso a pagamento hanno uno stato: il PDF si scarica solo quando è "consegnata".
+            ok = ok and pratica.get("stato", "consegnata") == "consegnata"
             pdf = archivio.leggi(codice, "prospetto.pdf") if ok else None
         except Exception as e:
             print("prospetto: errore", type(e).__name__)

@@ -80,6 +80,15 @@
     },
     "api/stima/prospetto.py": {
       "maxDuration": 30
+    },
+    "api/stima/invia.py": {
+      "maxDuration": 60
+    },
+    "api/stima/pratica.py": {
+      "maxDuration": 300
+    },
+    "api/stima/pagamento.py": {
+      "maxDuration": 30
     }
   }
 }

@@ -10,7 +10,7 @@ created: 2026-11-11
 Servizio online a pagamento: 60 €, più 5 € se l'estratto contributivo lo richiediamo noi.
 Il cliente compila questionario e carica i documenti **prima** del pagamento.
 
-## Stato (2026-11-11): solo interfaccia, servizio NON attivo
+## Stato (2026-11-11): flusso completo sulle anteprime, servizio NON attivo in produzione
 
 Fatto:
 - `sito/src/pages/stima-pensione.astro`: pagina del servizio.
@@ -85,14 +85,57 @@ simulato, conferma dei contributi letti e poi **stima vera** tramite `api/stima/
 Se la stima vera non è disponibile (chiave mancante o errore) mostra il prospetto di esempio
 con la spiegazione. Non compare mai su praticheflaiano.it.
 
+## Flusso vero: pratica, pagamento GHL, calcolo (2026-11-11)
+
+Decisioni di Antonio: i **coupon li gestisce GHL** (100% per le prove, 50% associati), il sito non
+ne sa nulla; l'archivio Blob (privato, Europa) **non ha cancellazione automatica**: i dati restano
+finché c'è spazio.
+
+1. **Invio** (`sito/api/stima/invia.py`): il questionario manda risposte e documenti in JSON
+   (base64, totale entro ~3 MB). `_pensione/pratiche.py` crea la pratica (`stime/<codice>/pratica.json`,
+   `estratto.pdf`, `simulazione.bin`, `busta.bin`), stato `ricevuta`, e risponde con `next` =
+   link di pagamento GHL del prezzo pieno (60 o 65 €). Il browser ricorda codice e data di nascita
+   (`localStorage`, chiave `stima-pratica`).
+2. **Pagamento** sul checkout GHL (coupon compresi). Un workflow GHL chiama
+   `POST /api/stima/pagamento` con intestazione `x-stima-token` e l'email del contatto: la pratica
+   in attesa più recente di quella email passa a `pagata` (o `attesa_estratto`). Ripetibile.
+   L'email al checkout deve essere **la stessa** del questionario.
+3. **Pagina della pratica** (`/stima-pensione/pratica`, funzione `api/stima/pratica.py`): mostra lo
+   stato; da `pagata` il cliente conferma e parte il calcolo (`avvia`, fino a 300 s, una sola
+   esecuzione per volta grazie al file `blocco.json`). Il link di ritorno del checkout GHL deve
+   puntare a questa pagina.
+4. **Esito**: `consegnata` (PDF scaricabile) oppure `da_rivedere` se `revisione_consigliata` non è
+   vuota: il PDF resta trattenuto finché l'ufficio non lo rilascia. `fallita`: due tentativi.
+
+Stati: `ricevuta`, `attesa_estratto`, `pagata`, `in_elaborazione`, `consegnata`, `da_rivedere`, `fallita`.
+
+Azioni dell'ufficio (per ora solo via richiesta HTTP con `x-stima-token`, nessuna interfaccia):
+`{"c": codice, "azione": "rilascia"}` e `{"c": codice, "azione": "carica-estratto", "pdf": base64}`
+su `/api/stima/pratica`.
+
+Variabili: `STIMA_LINK_PAGAMENTO` (JSON `{"6000": "https://...", "6500": "https://..."}`),
+`STIMA_PENSIONE_TOKEN`, `STIMA_PENSIONE_ATTIVA=1` (solo così le funzioni accettano pratiche in
+produzione), `PUBLIC_STIMA_PENSIONE_API=/api/stima/invia` (accende il modulo e toglie il noindex).
+`GET /api/stima/invia` dice che cosa è configurato.
+
+Sulle anteprime il flusso vero è sempre attivo; se manca il link di pagamento la pagina della
+pratica offre "Simula il pagamento". Resta anche la "Prova rapida senza salvare".
+
+Prova senza servizi esterni: `python3 sito/api/_pensione/test_pratiche.py`.
+
+Non verificato: avviso di pagamento da un workflow GHL vero (forma del corpo, ordine a zero euro
+con coupon 100%), calcolo dalla pratica con Fable vero (provato solo con calcolo finto).
+
+Limiti noti: il verbale di invalidità caricato non viene inviato né salvato (non è usato dal
+calcolo); se il cliente chiude la pagina prima di confermare, il calcolo parte quando la riapre;
+nessun avviso automatico all'ufficio per `da_rivedere`, `fallita`, `attesa_estratto` (serve GHL).
+
 ## Da fare per attivarlo
 
-1. Backend che riceve questionario e documenti (POST multipart su `PUBLIC_STIMA_PENSIONE_API`,
-   risposta `{ "next": "<link di pagamento>" }`), li salva in archivio cifrato in UE.
-2. Prodotto e pagamento sullo store GHL (60 € e 65 €) con avviso di pagamento al backend.
-3. Lettura dell'estratto con l'API di Claude nello schema JSON della skill, conferma del
-   cliente sulla tabella letta, esecuzione del motore, controlli di coerenza, prospetto PDF.
-4. Informativa privacy dedicata (dati sulla salute), condizioni di vendita, verifica con
+1. In GHL: link di pagamento dei due prodotti, ritorno su `/stima-pensione/pratica`, workflow con
+   webhook verso `/api/stima/pagamento`. Poi le variabili qui sopra su Vercel.
+2. Avvisi all'ufficio e al cliente (email, WhatsApp) e pipeline "Stima pensione" in GHL.
+3. Informativa privacy dedicata (dati sulla salute), condizioni di vendita, verifica con
    ENASC/UNSIC su chi può vendere il servizio.
 
 ## Attenzioni

@@ -344,22 +344,39 @@
     document.getElementById("stima-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  // Invio vero: salva dati e documenti in una pratica e manda al pagamento (checkout GHL, dove si
+  // applicano anche i coupon). Sulle anteprime l'endpoint è sempre attivo, per provare il flusso.
+  const inviaUrl = $derived(apiUrl || (demo ? "/api/stima/invia" : ""));
   async function submit() {
     errors = validate(6);
     if (errors.length) return;
-    if (demo) return void vaiA("pagamento");
-    if (!apiUrl) return;
+    if (!inviaUrl) return;
+    const f = files.estratto;
+    if (!a.richiediEstratto && (!f || !/\.pdf$/i.test(f.name) || f.size > 3_000_000)) {
+      sendError = "L'estratto conto deve essere un PDF fino a 3 MB: torna al primo passo e carica il file scaricato dal sito INPS.";
+      return;
+    }
     sending = true;
     sendError = "";
     try {
-      const body = new FormData();
-      body.append("risposte", JSON.stringify(a));
-      if (letto) body.append("estratto_letto", JSON.stringify({ ...letto, lettura: modoLettura }));
-      for (const [k, f] of Object.entries(files)) if (f) body.append(k, f, f.name);
-      const res = await fetch(apiUrl, { method: "POST", body });
-      if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as { next?: string };
-      if (!data.next) throw new Error("risposta incompleta");
+      const corpo: Record<string, unknown> = { risposte: a };
+      let spazio = 3_000_000;
+      if (f && !a.richiediEstratto) {
+        corpo.pdf = inBase64(await f.arrayBuffer());
+        spazio -= f.size;
+        if (letto && modoLettura === "ai") corpo.prelettura_settimane = letto.totaleSettimane;
+      }
+      // Allegati facoltativi: entrano solo se il totale resta entro ~3 MB (limite della funzione).
+      for (const chiave of ["simulazione", "busta"] as const) {
+        const g = files[chiave];
+        if (g && g.size <= spazio) { corpo[chiave] = inBase64(await g.arrayBuffer()); spazio -= g.size; }
+      }
+      const res = await fetch(inviaUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+      const data = (await res.json().catch(() => ({}))) as { next?: string; codice?: string };
+      if (res.status === 429) { sendError = "Hai già inviato più richieste nell'ultima ora: riprova più tardi oppure scrivici su WhatsApp."; return; }
+      if (!res.ok || !data.next || !data.codice) throw new Error(String(res.status));
+      // Serve alla pagina della pratica per ritrovarla al ritorno dal pagamento.
+      try { localStorage.setItem("stima-pratica", JSON.stringify({ c: data.codice, n: a.nascita })); } catch { /* archivio del browser non disponibile */ }
       window.location.assign(data.next);
     } catch {
       sendError = "Non siamo riusciti a inviare i dati. Riprova tra poco oppure scrivici su WhatsApp.";
@@ -388,7 +405,7 @@
 
 <div id="stima-form" class="scroll-mt-24 rounded-[28px] bg-[#F7F7FB] p-5 sm:p-8">
   {#if demo}
-    <p class="mb-5 rounded-2xl border-2 border-dashed border-[#14142B] bg-[#D4FF4F] p-4 font-bold text-[#14142B]">MODALITÀ PROVA (solo anteprima): il pagamento è simulato, non viene inviato né addebitato nulla.</p>
+    <p class="mb-5 rounded-2xl border-2 border-dashed border-[#14142B] bg-[#D4FF4F] p-4 font-bold text-[#14142B]">ANTEPRIMA: «Invia e vai al pagamento» esegue il flusso vero (salva la pratica e porta al pagamento). «Prova rapida senza salvare», all'ultimo passo, simula tutto senza salvare né addebitare nulla.</p>
   {/if}
   {#if fase === "pagamento" || fase === "rifiutato"}
     <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento simulato</h2>
@@ -817,6 +834,9 @@
         <button type="submit" disabled={(!apiUrl && !demo) || sending} class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B] disabled:cursor-not-allowed disabled:opacity-50">
           {sending ? "Invio in corso…" : `Invia e vai al pagamento (${price})`}
         </button>
+        {#if demo}
+          <button type="button" class="rounded-full border-2 border-dashed border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => { errors = validate(6); if (!errors.length) vaiA("pagamento"); }}>Prova rapida senza salvare</button>
+        {/if}
       {/if}
     </div>
   </form>

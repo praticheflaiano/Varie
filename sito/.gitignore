@@ -30,3 +30,6 @@ pnpm-debug.log*
 # Pagefind output (rigenerato a ogni build)
 public/pagefind/
 .vercel
+
+# Python
+__pycache__/

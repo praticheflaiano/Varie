@@ -1,0 +1,141 @@
+---
+// Pagina della pratica di una stima: stato dopo il pagamento, conferma e avvio del calcolo,
+// scarico del prospetto. Il codice arriva nell'ancora dell'indirizzo (non finisce nei log del
+// server) oppure dal browser che ha inviato il questionario; serve anche la data di nascita.
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+<BaseLayout title="La tua stima della pensione" description="Stato della tua Stima e Calcolo della pensione." noindex={true} share={false}>
+  <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
+    <h1 class="text-3xl font-extrabold text-[#14142B] sm:text-4xl">La tua stima della pensione</h1>
+    <form id="pr-form" class="mt-6 hidden rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
+      <p class="mb-4 text-[#3F3F5A]">Inserisci il codice pratica e la tua data di nascita.</p>
+      <label class="mb-1.5 block text-sm font-bold text-[#14142B]" for="pr-codice">Codice pratica</label>
+      <input id="pr-codice" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" autocomplete="off" />
+      <label class="mb-1.5 mt-4 block text-sm font-bold text-[#14142B]" for="pr-nascita">Data di nascita</label>
+      <input id="pr-nascita" type="date" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" />
+      <button type="submit" class="mt-5 rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]">Apri la pratica</button>
+    </form>
+    <div id="pr-box" class="mt-6 hidden rounded-[28px] bg-[#F7F7FB] p-6" aria-live="polite">
+      <h2 id="pr-titolo" class="text-2xl font-extrabold text-[#14142B]"></h2>
+      <p id="pr-testo" class="mt-3 text-lg text-[#3F3F5A]"></p>
+      <div id="pr-azioni" class="mt-5 flex flex-wrap gap-3"></div>
+    </div>
+    <p id="pr-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
+    <p class="mt-6 text-sm text-[#6B6B85]">Hai bisogno di aiuto? Scrivici su WhatsApp al 371 623 0690 o chiama lo 06 97845429.</p>
+  </section>
+  <script is:inline>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const form = $("pr-form"), box = $("pr-box"), msg = $("pr-msg"), azioni = $("pr-azioni");
+      const PRIMARIO = "rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50";
+      const SECONDARIO = "rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B] disabled:opacity-50";
+      let c = "", n = "", timer = 0, calcolo = false;
+
+      const avvisa = (t) => { msg.textContent = t; msg.classList.toggle("hidden", !t); };
+      const euro = (cent) => (cent / 100).toLocaleString("it-IT", { minimumFractionDigits: cent % 100 ? 2 : 0 }) + " €";
+      function bottone(testo, classe, azione) {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = classe; b.textContent = testo;
+        b.addEventListener("click", () => azione(b));
+        azioni.append(b);
+      }
+      async function chiedi(azione) {
+        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n, azione }) });
+        const dati = await res.json().catch(() => ({}));
+        if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status });
+        return dati;
+      }
+      async function scarica(b) {
+        b.disabled = true;
+        try {
+          const res = await fetch("/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n }) });
+          if (!res.ok) return avvisa("Non siamo riusciti a scaricare il prospetto. Riprova tra poco.");
+          const url = URL.createObjectURL(await res.blob());
+          const link = document.createElement("a");
+          link.href = url; link.download = "stima-pensione.pdf"; link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+        } catch { avvisa("Non siamo riusciti a scaricare il prospetto. Riprova tra poco."); }
+        finally { b.disabled = false; }
+      }
+      // Il calcolo dura alcuni minuti: la richiesta resta aperta e intanto si rilegge lo stato.
+      async function calcola() {
+        if (calcolo) return;
+        calcolo = true;
+        avvisa("");
+        mostra({ stato: "in_elaborazione" });
+        try { mostra(await chiedi("avvia")); }
+        catch { /* se la richiesta cade, lo stato arriva dalle riletture periodiche */ }
+        finally { calcolo = false; }
+      }
+      async function simula(b) {
+        b.disabled = true;
+        try { mostra(await chiedi("simula-pagamento")); } catch { avvisa("Pagamento simulato non riuscito."); b.disabled = false; }
+      }
+      function mostra(p) {
+        clearTimeout(timer);
+        form.classList.add("hidden");
+        box.classList.remove("hidden");
+        azioni.replaceChildren();
+        let titolo = "", testo = "", rileggi = 0;
+        if (p.stato === "ricevuta") {
+          titolo = "In attesa del pagamento";
+          testo = `Abbiamo ricevuto i tuoi dati. Completa il pagamento (${euro(p.totale)}): se l'hai appena fatto, questa pagina si aggiorna da sola entro un minuto.`;
+          if (p.pagamento_url) { const a = document.createElement("a"); a.href = p.pagamento_url; a.className = PRIMARIO; a.textContent = "Vai al pagamento"; azioni.append(a); }
+          if (p.prova) bottone("Simula il pagamento (solo anteprima)", SECONDARIO, simula);
+          rileggi = 10000;
+        } else if (p.stato === "pagata") {
+          titolo = "Pagamento ricevuto";
+          testo = (p.prelettura_settimane ? `Dal tuo estratto abbiamo letto ${Math.round(p.prelettura_settimane)} settimane di contributi. ` : "") +
+            "Conferma per avviare il calcolo: richiede alcuni minuti, tieni aperta questa pagina.";
+          bottone("Conferma e calcola la stima", PRIMARIO, calcola);
+        } else if (p.stato === "in_elaborazione") {
+          titolo = "Stiamo calcolando la tua stima";
+          testo = "Rileggiamo i tuoi documenti e calcoliamo date e importi. Di solito servono da 2 a 5 minuti: questa pagina si aggiorna da sola.";
+          rileggi = 15000;
+        } else if (p.stato === "consegnata") {
+          titolo = "La tua stima è pronta";
+          testo = "Scarica il prospetto in PDF. Puoi tornare su questa pagina quando vuoi: sul prospetto trovi anche un codice QR per ritrovarlo.";
+          bottone("Scarica il prospetto", PRIMARIO, scarica);
+        } else if (p.stato === "da_rivedere") {
+          titolo = "La tua stima è in verifica";
+          testo = "I controlli automatici hanno segnalato un punto da verificare a mano. Il nostro ufficio la controlla e ti avvisa appena il prospetto è disponibile, senza costi aggiuntivi.";
+        } else if (p.stato === "attesa_estratto") {
+          titolo = "Stiamo richiedendo il tuo estratto contributivo";
+          testo = "Pagamento ricevuto. Appena l'INPS ci rende disponibile il tuo estratto calcoliamo la stima e ti avvisiamo.";
+        } else if (p.stato === "fallita") {
+          titolo = "Il calcolo non è riuscito";
+          testo = p.riprovabile ? "Qualcosa si è interrotto durante il calcolo. Puoi riprovare ora: non paghi di nuovo." : "Il calcolo non è riuscito. Il nostro ufficio se ne occupa e ti ricontatta: non devi pagare di nuovo.";
+          if (p.riprovabile) bottone("Riprova il calcolo", PRIMARIO, calcola);
+        }
+        $("pr-titolo").textContent = titolo;
+        $("pr-testo").textContent = testo;
+        if (rileggi) timer = setTimeout(aggiorna, rileggi);
+      }
+      async function aggiorna() {
+        try {
+          const p = await chiedi("stato");
+          if (!(calcolo && p.stato === "pagata")) mostra(p);
+        } catch (e) {
+          if (e.stato === 404) { box.classList.add("hidden"); form.classList.remove("hidden"); avvisa("Codice o data di nascita non corrispondono a nessuna pratica."); }
+          else if (e.stato === 429) avvisa("Troppi tentativi: riprova tra un'ora.");
+          else timer = setTimeout(aggiorna, 20000);
+        }
+      }
+
+      const ancora = location.hash.match(/c=([A-Za-z0-9_-]{16,40})/);
+      let salvata = null;
+      try { salvata = JSON.parse(localStorage.getItem("stima-pratica") || "null"); } catch { /* archivio del browser non disponibile */ }
+      c = ancora ? ancora[1] : (salvata && salvata.c) || "";
+      n = salvata && salvata.c === c ? salvata.n || "" : "";
+      $("pr-codice").value = c;
+      if (c && n) aggiorna(); else form.classList.remove("hidden");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        c = $("pr-codice").value.trim(); n = $("pr-nascita").value;
+        if (!c || !n) return avvisa("Inserisci il codice pratica e la data di nascita.");
+        avvisa("");
+        aggiorna();
+      });
+    })();
+  </script>
+</BaseLayout>

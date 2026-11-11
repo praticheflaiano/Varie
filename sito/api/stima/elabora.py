@@ -449,9 +449,12 @@ def blocco_documento(b64, nome):
     return {"type": "image", "source": {"type": "base64", "media_type": tipo, "data": b64}} if tipo else None
 
 
-def consegna(stima, r, sito):
-    """Genera il prospetto PDF e, se l'archivio è configurato, lo salva con un codice di recupero."""
-    codice = secrets.token_urlsafe(15)
+def consegna(stima, r, sito, codice=None):
+    """Genera il prospetto PDF e, se l'archivio è configurato, lo salva con un codice di recupero.
+    Con `codice` (pratica già registrata dal flusso vero) salva solo il PDF: i dati della pratica
+    li aggiorna chi chiama (vedi _pensione/pratiche.py)."""
+    esistente = bool(codice)
+    codice = codice or secrets.token_urlsafe(15)
     archiviato = False
     url = f"{sito}/stima-pensione/recupera#c={codice}"
     try:
@@ -461,10 +464,11 @@ def consegna(stima, r, sito):
         return {"pdf_base64": "", "codice": "", "recupero_url": "", "archiviato": False}
     if archivio.configurato():
         try:
-            pratica = {"nascita": r.get("nascita"), "creata": stima["data_calcolo"], "stima": stima,
-                       "risposte": {k: v for k, v in r.items() if k not in ("privacy", "salute", "condizioni")}}
             archivio.salva(codice, "prospetto.pdf", pdf, "application/pdf")
-            archivio.salva(codice, "pratica.json", json.dumps(pratica, ensure_ascii=False).encode(), "application/json")
+            if not esistente:
+                pratica = {"nascita": r.get("nascita"), "creata": stima["data_calcolo"], "stima": stima,
+                           "risposte": {k: v for k, v in r.items() if k not in ("privacy", "salute", "condizioni")}}
+                archivio.salva(codice, "pratica.json", json.dumps(pratica, ensure_ascii=False).encode(), "application/json")
             archiviato = True
         except Exception as e:
             print("elabora: archiviazione non riuscita", type(e).__name__)
@@ -472,7 +476,7 @@ def consegna(stima, r, sito):
             "recupero_url": url if archiviato else "", "archiviato": archiviato}
 
 
-def elabora(dati, chiave, sito="https://praticheflaiano.it"):
+def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
     r = dati.get("risposte") or {}
     pdf = dati.get("pdf") or ""
     if not ISO.match(str(r.get("nascita", ""))) or r.get("sesso") not in ("M", "F"):
@@ -583,7 +587,7 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it"):
                  "contributi": contributi, "dubbi": dubbi, "controlli": verifiche, "limiti": limiti, "parametri_non_definitivi": scadenze,
                  "confronto_inps": confronti, "revisione_consigliata": sorted(set(revisione)),
                  "scenari": risultati, "testo": testo, "uso": {**uso, "costo_stimato_usd": costo}}
-    return 200, {**stima, **consegna(stima, r, sito)}
+    return 200, {**stima, **consegna(stima, r, sito, codice)}
 
 
 def origine_sito(headers):
