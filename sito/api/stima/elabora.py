@@ -14,12 +14,14 @@ la funzione lì risponde solo a chi lo presenta, cioè al flusso post-pagamento)
 Sulle anteprime Vercel è richiamabile dalla modalità prova del questionario.
 Non salva e non scrive nei log il contenuto dei documenti.
 """
-import base64, json, os, re, sys, urllib.request, urllib.error
+import base64, json, os, re, secrets, sys, urllib.request, urllib.error
 from datetime import date
 from http.server import BaseHTTPRequestHandler
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_pensione"))
 from conteggi_pensione import calcola, PARAMS  # noqa: E402
+import archivio  # noqa: E402
+from prospetto_pdf import crea_prospetto  # noqa: E402
 
 MODELLO = os.environ.get("STIMA_PENSIONE_MODELLO", "claude-fable-5-2")
 ENDPOINT = os.environ.get("ANTHROPIC_BASE_URL", "https://api.anthropic.com").rstrip("/") + "/v1/messages"
@@ -447,7 +449,30 @@ def blocco_documento(b64, nome):
     return {"type": "image", "source": {"type": "base64", "media_type": tipo, "data": b64}} if tipo else None
 
 
-def elabora(dati, chiave):
+def consegna(stima, r, sito):
+    """Genera il prospetto PDF e, se l'archivio è configurato, lo salva con un codice di recupero."""
+    codice = secrets.token_urlsafe(15)
+    archiviato = False
+    url = f"{sito}/stima-pensione/recupera#c={codice}"
+    try:
+        pdf = crea_prospetto(stima, r, url if archivio.configurato() else "", codice)
+    except Exception as e:
+        print("elabora: prospetto PDF non generato", type(e).__name__)
+        return {"pdf_base64": "", "codice": "", "recupero_url": "", "archiviato": False}
+    if archivio.configurato():
+        try:
+            pratica = {"nascita": r.get("nascita"), "creata": stima["data_calcolo"], "stima": stima,
+                       "risposte": {k: v for k, v in r.items() if k not in ("privacy", "salute", "condizioni")}}
+            archivio.salva(codice, "prospetto.pdf", pdf, "application/pdf")
+            archivio.salva(codice, "pratica.json", json.dumps(pratica, ensure_ascii=False).encode(), "application/json")
+            archiviato = True
+        except Exception as e:
+            print("elabora: archiviazione non riuscita", type(e).__name__)
+    return {"pdf_base64": base64.b64encode(pdf).decode(), "codice": codice if archiviato else "",
+            "recupero_url": url if archiviato else "", "archiviato": archiviato}
+
+
+def elabora(dati, chiave, sito="https://praticheflaiano.it"):
     r = dati.get("risposte") or {}
     pdf = dati.get("pdf") or ""
     if not ISO.match(str(r.get("nascita", ""))) or r.get("sesso") not in ("M", "F"):
@@ -551,13 +576,23 @@ def elabora(dati, chiave):
     somma(u)
 
     costo = round(uso["input_tokens"] / 1e6 * PREZZO_IN + uso["output_tokens"] / 1e6 * PREZZO_OUT, 4)
-    return 200, {"modello": MODELLO, "versione_parametri": PARAMS["versione"], "data_calcolo": oggi,
+    stima = {"modello": MODELLO, "versione_parametri": PARAMS["versione"], "data_calcolo": oggi,
                  "estratto": {"intestatario": f"{letto.get('nome','')} {letto.get('cognome','')}".strip(), "data_estratto": letto.get("data_estratto", ""),
                               "righe": len(letto.get("periodi") or []), "totale_dichiarato": letto.get("totale_dichiarato", "")},
                  "documenti": {"simulazione_inps": bool(sim.get("presente")), "retribuzione": doc.get("tipo", "") if doc.get("presente") else ""},
                  "contributi": contributi, "dubbi": dubbi, "controlli": verifiche, "limiti": limiti, "parametri_non_definitivi": scadenze,
                  "confronto_inps": confronti, "revisione_consigliata": sorted(set(revisione)),
                  "scenari": risultati, "testo": testo, "uso": {**uso, "costo_stimato_usd": costo}}
+    return 200, {**stima, **consegna(stima, r, sito)}
+
+
+def origine_sito(headers):
+    """Indirizzo del sito da cui arriva la richiesta, se è uno dei nostri; altrimenti quello pubblico."""
+    m = re.match(r"^(https?://([^/:]+)(:\d+)?)", headers.get("origin") or headers.get("referer") or "")
+    if m and (m.group(2) in ("localhost", "127.0.0.1", "praticheflaiano.it", "www.praticheflaiano.it")
+              or re.fullmatch(r"praticheflaiano-sito[a-z0-9-]*\.vercel\.app", m.group(2))):
+        return m.group(1)
+    return "https://praticheflaiano.it"
 
 
 def origine_ok(headers):
@@ -586,7 +621,7 @@ class handler(BaseHTTPRequestHandler):
         return os.environ.get("VERCEL_ENV") != "production" and origine_ok(self.headers)
 
     def do_GET(self):
-        self._rispondi(200, {"ok": True, "configurato": bool(os.environ.get("ANTHROPIC_API_KEY")), "modello": MODELLO,
+        self._rispondi(200, {"ok": True, "configurato": bool(os.environ.get("ANTHROPIC_API_KEY")), "archivio": archivio.configurato(), "modello": MODELLO,
                              "parametri": PARAMS["versione"]})
 
     def do_POST(self):
@@ -599,7 +634,7 @@ class handler(BaseHTTPRequestHandler):
             n = int(self.headers.get("content-length") or 0)
             if n <= 0 or n > 4_500_000:
                 return self._rispondi(400, {"errore": "dimensione"})
-            codice, corpo = elabora(json.loads(self.rfile.read(n)), chiave)
+            codice, corpo = elabora(json.loads(self.rfile.read(n)), chiave, origine_sito(self.headers))
             self._rispondi(codice, corpo)
         except urllib.error.HTTPError as e:
             # Il messaggio d'errore del fornitore descrive la richiesta, non contiene il documento.

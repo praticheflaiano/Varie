@@ -90,6 +90,19 @@
     await vaiA("prospetto");
   }
 
+  function scaricaPdf() {
+    if (!stima?.pdf_base64) return;
+    const bin = atob(stima.pdf_base64);
+    const bytes = new Uint8Array(bin.length);
+    for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+    const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "stima-pensione.pdf";
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 10_000);
+  }
+
   const AFFIDABILITA: Record<string, string> = { media: "buona", "media-bassa": "discreta", bassa: "di massima", parziale: "incompleta" };
   const affid = (x: string) => AFFIDABILITA[x] ?? x;
   const MOTIVI_BUCO = [
@@ -429,6 +442,16 @@
       <p class="mt-4 rounded-2xl bg-[#D4FF4F] p-4 text-lg font-extrabold text-[#14142B]">Prima uscita possibile: {base.prima_uscita_pensione.canale} dal {dataIt(base.prima_uscita_pensione.decorrenza)}</p>
     {/if}
     {#if notaStima}<p class="mt-3 rounded-2xl bg-[#FFE3EC] p-3 text-sm font-semibold text-[#14142B]">{notaStima}</p>{/if}
+    {#if stima.pdf_base64}
+      <div class="mt-4 flex flex-wrap items-center gap-3 rounded-2xl bg-[#F1EEFF] p-4 text-[#14142B]">
+        <button type="button" id="sp-scarica-pdf" class="rounded-full bg-[#5B3DF5] px-6 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={scaricaPdf}>Scarica il prospetto in PDF</button>
+        {#if stima.archiviato}
+          <p class="text-sm">Lo ritrovi anche dopo: inquadra il QR stampato sul PDF oppure apri <a class="font-bold underline" href={stima.recupero_url}>questo link</a> e inserisci la tua data di nascita. Codice pratica: <strong>{stima.codice}</strong></p>
+        {:else}
+          <p class="text-sm">Salvalo ora: l'archivio per ritrovarlo in seguito non è ancora attivo.</p>
+        {/if}
+      </div>
+    {/if}
     {#if stima.revisione_consigliata?.length}
       <p class="mt-4 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Questa stima va fatta controllare da un nostro operatore prima di prendere decisioni: {stima.revisione_consigliata.join("; ")}.</p>
     {/if}

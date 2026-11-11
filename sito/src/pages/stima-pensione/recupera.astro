@@ -1,0 +1,54 @@
+---
+// Recupero del prospetto di una stima tramite il codice del QR (nell'ancora dell'indirizzo,
+// così non finisce nei log del server) e la data di nascita.
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+<BaseLayout title="Ritrova la tua stima della pensione" description="Scarica di nuovo il prospetto della tua Stima e Calcolo della pensione." noindex={true} share={false}>
+  <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
+    <h1 class="text-3xl font-extrabold text-[#14142B] sm:text-4xl">Ritrova la tua stima</h1>
+    <p class="mt-3 text-lg text-[#3F3F5A]">Inserisci la tua data di nascita per scaricare di nuovo il prospetto in PDF.</p>
+    <form id="rec-form" class="mt-6 rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
+      <label class="mb-1.5 block text-sm font-bold text-[#14142B]" for="rec-codice">Codice pratica</label>
+      <input id="rec-codice" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" autocomplete="off" />
+      <label class="mb-1.5 mt-4 block text-sm font-bold text-[#14142B]" for="rec-nascita">Data di nascita</label>
+      <input id="rec-nascita" type="date" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" />
+      <p id="rec-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
+      <button type="submit" class="mt-5 rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50">Scarica il prospetto</button>
+    </form>
+    <p class="mt-6 text-sm text-[#6B6B85]">Non lo trovi? Scrivici su WhatsApp al 371 623 0690 o chiama lo 06 97845429.</p>
+  </section>
+  <script is:inline>
+    (() => {
+      const form = document.getElementById("rec-form");
+      const codice = document.getElementById("rec-codice");
+      const nascita = document.getElementById("rec-nascita");
+      const msg = document.getElementById("rec-msg");
+      const m = location.hash.match(/c=([A-Za-z0-9_-]{16,40})/);
+      if (m) codice.value = m[1];
+      const avvisa = (t) => { msg.textContent = t; msg.classList.remove("hidden"); };
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.classList.add("hidden");
+        if (!codice.value.trim() || !nascita.value) return avvisa("Inserisci il codice pratica e la data di nascita.");
+        const bottone = form.querySelector("button");
+        bottone.disabled = true;
+        try {
+          const res = await fetch("/api/stima/prospetto", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c: codice.value.trim(), n: nascita.value }) });
+          if (res.status === 429) return avvisa("Troppi tentativi: riprova tra un'ora.");
+          if (res.status === 503) return avvisa("Il recupero dei prospetti non è ancora attivo.");
+          if (!res.ok) return avvisa("Codice o data di nascita non corrispondono a nessuna stima.");
+          const url = URL.createObjectURL(await res.blob());
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "stima-pensione.pdf";
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 10000);
+        } catch {
+          avvisa("Non siamo riusciti a scaricare il prospetto. Riprova tra poco.");
+        } finally {
+          bottone.disabled = false;
+        }
+      });
+    })();
+  </script>
+</BaseLayout>

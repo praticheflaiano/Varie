@@ -56,6 +56,27 @@ cumulo/opzione contributivo, residenza diversa da Roma per il netto, prospetto P
 fornitori finti (OpenRouter e Anthropic simulati in locale). Con le chiavi vere vanno
 verificati: nome del modello Mistral, qualità della lettura su estratti reali, tempi e costi.
 
+## Precisione della stima (2026-11-11)
+
+`elabora.py` ora: legge anche simulazione INPS e busta paga/CU (confronto con soglia 10%,
+retribuzione dalla CU, quota retributiva solo se scritta nel documento); fa scegliere a Fable
+fino a 3 varianti tra quelle ammesse (`applica_variante`) e le fa calcolare al motore;
+confronta la prelettura Mistral con la rilettura Fable; dichiara i limiti del calcolo
+(`casi_non_coperti`) e i parametri non definitivi (`SCADENZE_PARAMETRI`, da tenere allineata
+alla tabella di validità della skill); restituisce `revisione_consigliata`.
+Il questionario chiede residenza e motivo degli anni senza contributi.
+
+## Prospetto PDF, QR e archivio
+
+- `sito/api/_pensione/prospetto_pdf.py`: PDF di due pagine (reportlab), con QR di recupero.
+- `sito/api/_pensione/archivio.py`: Vercel Blob, store **privato** (creare in regione `fra1`
+  e collegarlo al progetto); nei test cartella locale `STIMA_ARCHIVIO_DIR`.
+- `sito/api/stima/prospetto.py` + pagina `/stima-pensione/recupera`: scarico con codice
+  (nell'ancora dell'URL) e data di nascita; risposta uniforme sugli errori, limite tentativi.
+- Salvati: `stime/<codice>/prospetto.pdf` e `pratica.json` (stima + risposte). L'estratto
+  caricato NON viene salvato. Manca ancora la cancellazione automatica a scadenza (Blob non
+  ha TTL: servirà un job periodico).
+
 ## Modalità prova (solo anteprime)
 
 Su `localhost` e sulle anteprime Vercel dei rami (host `*-git-*.vercel.app`), se
