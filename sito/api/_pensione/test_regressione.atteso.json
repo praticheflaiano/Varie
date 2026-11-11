@@ -22,8 +22,8 @@
   "fino_a": null,
   "imponibile_annuo_futuro": 34000.0,
   "crescita_imponibile": 0.0,
-  "tasso_capitalizzazione_futuro": 0.02,
-  "rivalutazione_assegno_sociale": 0.02
+  "tasso_capitalizzazione_futuro": 0.015,
+  "rivalutazione_assegno_sociale": 0.0
  },
  "avvisi": [],
  "canali": [
@@ -33,11 +33,11 @@
     "Maturazione dopo il 2028: requisiti 2029+ provvisori (prossimo adeguamento speranza di vita non ancora fissato).",
     "Data basata sulla proiezione dei contributi futuri: ogni periodo non coperto la sposta in avanti.",
     "Quota retributiva calcolata con le regole INPS (quote A e B) sulle retribuzioni dell'estratto, rivalutate con i coefficienti INPS 2026.",
-    "Quota A FPLD: 433 settimane fino al 1992 x retribuzione media rivalutata 34.662 euro/anno (ultime 260 settimane) = 5.773 euro/anno.",
-    "Quota B FPLD: 156 settimane dal 1993 al 1995 x retribuzione media rivalutata 35.841 euro/anno (retribuzioni dal 1993 alla decorrenza e 260 settimane precedenti) = 2.150 euro/anno.",
+    "Quota A FPLD: 433 settimane fino al 1992 x retribuzione media rivalutata 34.648 euro/anno (ultime 260 settimane) = 5.770 euro/anno.",
+    "Quota B FPLD: 156 settimane dal 1993 al 1995 x retribuzione media rivalutata 35.840 euro/anno (retribuzioni dal 1993 alla decorrenza e 260 settimane precedenti) = 2.150 euro/anno.",
     "Coefficienti 2029+ non ancora pubblicati: uso 2027-2028 (sovrastima probabile).",
-    "Montante con tassi di capitalizzazione futuri ipotetici (2.0%).",
-    "Importi in moneta di oggi: coefficienti di rivalutazione e tetto pensionabile sono quelli del 2026."
+    "Per gli anni futuri il montante e' rivalutato dell'1,5% l'anno in termini reali (ipotesi: e' la crescita del PIL che usa anche l'INPS nelle sue simulazioni).",
+    "Importi in moneta di oggi: le retribuzioni future sono considerate ferme al valore attuale e coefficienti, tetti e soglie sono quelli del 2026."
    ],
    "stato": "da maturare",
    "data_maturazione": "2029-06-10",
@@ -46,14 +46,14 @@
    "eta_alla_decorrenza": "67a 3m",
    "contributi_alla_decorrenza": "44a 10m",
    "importo": {
-    "montante": 389277.23,
+    "montante": 385690.26,
     "coeff_trasf_%": 5.5623,
     "tabella_coeff": "2027-2028",
-    "quota_contributiva_annua": 21652.57,
-    "quota_retributiva_annua": 7922.98,
-    "lordo_annuo": 29575.55,
-    "lordo_mensile_13": 2275.04,
-    "netto_mensile_13_stima": 1716.5,
+    "quota_contributiva_annua": 21453.06,
+    "quota_retributiva_annua": 7920.55,
+    "lordo_annuo": 29373.61,
+    "lordo_mensile_13": 2259.51,
+    "netto_mensile_13_stima": 1707.24,
     "affidabilita": "media-bassa"
    }
   },
@@ -64,7 +64,7 @@
     "Quota retributiva calcolata con le regole INPS (quote A e B) sulle retribuzioni dell'estratto, rivalutate con i coefficienti INPS 2026.",
     "Quota A FPLD: 433 settimane fino al 1992 x retribuzione media rivalutata 34.230 euro/anno (ultime 260 settimane) = 5.701 euro/anno.",
     "Quota B FPLD: 156 settimane dal 1993 al 1995 x retribuzione media rivalutata 35.912 euro/anno (retribuzioni dal 1993 alla decorrenza e 260 settimane precedenti) = 2.155 euro/anno.",
-    "Importi in moneta di oggi: coefficienti di rivalutazione e tetto pensionabile sono quelli del 2026."
+    "Importi in moneta di oggi: le retribuzioni future sono considerate ferme al valore attuale e coefficienti, tetti e soglie sono quelli del 2026."
    ],
    "stato": "da maturare",
    "data_maturazione": "2027-08-08",

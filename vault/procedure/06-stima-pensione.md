@@ -35,7 +35,7 @@ Com'è fatto l'estratto ("Estratto Conto Previdenziale"), verificato su due estr
 - **Intestazione**: titolo, sezione (es. `Regime generale`), `Emesso il gg/mm/aaaa`; a destra nome, `nato a`, `il`, `Codice fiscale`, `residente in` (due righe).
 - **Tabella**, con intestazione ripetuta a ogni pagina: `Dal | Al | Tipo di contribuzione | unità | utili al diritto | utili al calcolo | Retribuzione o reddito (Euro) | Azienda | Note`.
   - L'**unità cambia da riga a riga**: `sett.` per dipendenti e figurativi, `mesi` per i titolari d'impresa (12 mesi = 52 settimane).
-  - Il **tipo** dice la gestione: `Titolare di impresa COM.` = commercianti, `ART.` = artigiani (aliquota 24%, non 33%), `Lavoro dipendente`, `Lav.dipend. part-time`.
+  - Il **tipo** dice la gestione: `Titolare di impresa COM.` = commercianti, `ART.` = artigiani (aliquota 24% dal 2018 (20% fino al 2011), non 33%), `Lavoro dipendente`, `Lav.dipend. part-time`.
   - **Diritto e calcolo possono differire** (part-time: 51 al diritto, 46,000 al calcolo).
   - Righe **sovrapposte** nello stesso anno (lavoro + cassa integrazione, due gestioni) e righe a **0 contributi con importo** (`Cassa integrazione (Int)`, `Contr.solidar. ad integr`): si tengono tutte.
   - Non tutte le righe hanno importo, azienda o nota.
@@ -84,6 +84,30 @@ Per avere la stessa affidabilità, la parte di pensione maturata prima del 1996 
 **Ogni anno** (messaggio INPS di febbraio/marzo): aggiornare in `PARAMS` `rival_retribuzioni`, `tetto_pensionabile` e la capitalizzazione dei montanti; poi rigenerare `test_regressione.atteso.json`.
 
 Non verificato: confronto con una liquidazione o una simulazione INPS reale sullo stesso estratto. Da fare con il primo caso disponibile in ufficio.
+
+## Revisione completa del calcolo (2026-11-11): cosa è stato verificato e corretto
+
+Cinque revisioni indipendenti (requisiti di uscita, calcolo dell'importo, codice, fisco, otto casi calcolati a mano). Prove: `python3 sito/api/_pensione/test_regole.py`.
+
+**Confermato sulle fonti** (INPS circ. 28/2026, 19/2026, 153/2025, 6/2026, msg 707/2026; DL 201/2011 art. 24 vigente; decreti sui coefficienti): tutti i requisiti 2026-2028, i coefficienti di rivalutazione delle quote A e B, i tassi di capitalizzazione 1996-2025, i coefficienti di trasformazione 2025-2028, fasce e tetto, IRPEF e detrazioni 2026, addizionale Lazio, assegno sociale.
+
+**Corretto nel motore**:
+- aliquote di computo per anno: artigiani e commercianti 20% fino al 2011, poi a salire fino al 24% dal 2018; Gestione separata dal 10% del 1996 al 33% dal 2018 (`aliquota_computo_storica`);
+- quote A e B: anzianità in settimane utili al calcolo (part-time in proporzione); settimane accreditate senza retribuzione valorizzate alla media dell'anno; periodi senza retribuzioni proprie (militare di un autonomo) valorizzati con la gestione principale;
+- per chi aveva 18 anni di contributi al 1995: confronto di legge con il calcolo tutto retributivo (L. 190/2014 c. 707), vale il minore;
+- anticipata contributiva: soglia 3,2 dal 2030; tetto di 5 volte il minimo fino alla vecchiaia; madri nel contributivo: 4 mesi per figlio (max 12, 16 con 4 figli) su vecchiaia, 71 anni e anticipata;
+- anticipata ordinaria e Quota 41: 35 anni senza disoccupazione e malattia (`figurative_dm`, comprese le righe con nota "non utile");
+- ricerca delle date: non salta più chi matura a fine dicembre; anno in corso non contato due volte;
+- netto: addizionale comunale di Roma esente fino a 14.000 euro;
+- ipotesi in termini reali: montante futuro +1,5% l'anno (PIL delle simulazioni INPS), retribuzioni ferme, soglie ferme. Tutti gli importi futuri sono in moneta di oggi.
+
+**Corretto nella preparazione dei dati** (`elabora.py`): buco tra estratto e oggi colmato con settimane stimate per chi lavora (oltre 6 mesi → verifica dell'operatore); ritmo di lavoro e retribuzione futuri dagli ultimi tre anni (non sempre 52 settimane); mesi e giorni convertiti senza arrotondare riga per riga; periodi a cavallo d'anno ripartiti; numeri con punto decimale; data di nascita del questionario confrontata con l'estratto; letture discordanti → verifica.
+
+**Corretto nella lettura dell'estratto**: una riga che ha l'aspetto di una riga di contributi ma non si interpreta rende la lettura "non completa" (si passa al modello); importi senza punto delle migliaia; colonne riconosciute anche per distanza; sezioni successive alla prima; "Gestione dipendenti pubblici" = PUBBLICO (non FPLD); "ART."/"COM." solo per titolari e collaboratori d'impresa.
+
+**Limiti dichiarati al cliente** (in `casi_non_coperti`): Quota 103 e Opzione donna già maturate, totalizzazione, deroghe con 15 anni, isopensione, RITA; integrazione al minimo e quattordicesima; netto come media su 13 mensilità con addizionali di Roma; Gestione separata dei professionisti; dipendenti pubblici.
+
+**Non verificato / da fare**: confronto con una liquidazione INPS reale; esclusione delle retribuzioni più basse per chi aveva meno di 15 anni al 1992 (D.Lgs. 373/1993 art. 2); neutralizzazione dei periodi di NASpI; criterio di taglio oltre i 40 anni; usuranti con 64-77 notti (solo nota); decorrenza per i nati il 1° del mese; massimale contributivo sugli anni passati; APE sociale 2027 (disegno di legge).
 
 ## Consulenza con l'operatore inclusa (dal 2026-11-11)
 
