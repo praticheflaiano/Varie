@@ -24,6 +24,14 @@ Fatto:
 Finché `PUBLIC_STIMA_PENSIONE_API` è vuota la pagina è `noindex`, fuori da sitemap e
 ricerca interna, e l'ultimo passo non invia nulla.
 
+## Modalità prova (solo anteprime)
+
+Su `localhost` e sulle anteprime Vercel dei rami (host `*-git-*.vercel.app`), se
+`PUBLIC_STIMA_PENSIONE_API` è vuota, il questionario attiva una modalità prova: pagamento
+simulato (riuscito o rifiutato), conferma dei contributi e prospetto con i dati del caso
+di regressione. Non invia nulla e non compare mai su praticheflaiano.it. Va tolta quando
+il backend vero è collegato.
+
 ## Da fare per attivarlo
 
 1. Backend che riceve questionario e documenti (POST multipart su `PUBLIC_STIMA_PENSIONE_API`,

@@ -19,6 +19,31 @@
   const STEPS = ["Tu", "Lavoro", "Contributi", "Salute e famiglia", "Documenti", "Riepilogo"];
 
   let step = $state(0);
+
+  // MODALITÀ PROVA: solo su localhost e sulle anteprime Vercel dei rami (mai sul sito
+  // pubblico), e solo se il servizio vero non è configurato. Simula pagamento, conferma
+  // dei contributi e prospetto con i dati del caso di esempio: non invia nulla.
+  type Fase = "form" | "pagamento" | "rifiutato" | "conferma" | "prospetto";
+  let fase = $state<Fase>("form");
+  let demo = $state(false);
+  let esempio = $state<{ input: any; esito: any } | null>(null);
+  $effect(() => {
+    const h = window.location.hostname;
+    demo = !apiUrl && (h === "localhost" || h === "127.0.0.1" || (h.endsWith(".vercel.app") && h.includes("-git-")));
+  });
+  async function vaiA(f: Fase) {
+    if ((f === "conferma" || f === "prospetto") && !esempio) {
+      const [input, esito] = await Promise.all([
+        import("../../../api/_pensione/test_regressione.input.json"),
+        import("../../../api/_pensione/test_regressione.atteso.json"),
+      ]);
+      esempio = { input: input.default, esito: esito.default };
+    }
+    fase = f;
+    scrollTop();
+  }
+  const dataIt = (d: string) => (d ? new Date(d).toLocaleDateString("it-IT") : "—");
+  const euro = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
   let errors = $state<string[]>([]);
   let sending = $state(false);
   let sendError = $state("");
@@ -168,7 +193,9 @@
 
   async function submit() {
     errors = validate(5);
-    if (errors.length || !apiUrl) return;
+    if (errors.length) return;
+    if (demo) return void vaiA("pagamento");
+    if (!apiUrl) return;
     sending = true;
     sendError = "";
     try {
@@ -206,6 +233,70 @@
 {/snippet}
 
 <div id="stima-form" class="scroll-mt-24 rounded-[28px] bg-[#F7F7FB] p-5 sm:p-8">
+  {#if demo}
+    <p class="mb-5 rounded-2xl border-2 border-dashed border-[#14142B] bg-[#D4FF4F] p-4 font-bold text-[#14142B]">MODALITÀ PROVA (solo anteprima): il pagamento è simulato, non viene inviato né addebitato nulla.</p>
+  {/if}
+  {#if fase === "pagamento" || fase === "rifiutato"}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento simulato</h2>
+    <p class="text-[#3F3F5A]">Qui il cliente verrà mandato alla pagina di pagamento dello store GHL. In prova scegli tu l'esito.</p>
+    <dl class="mt-4 rounded-2xl bg-white p-4 text-[#14142B]">
+      <div class="flex justify-between py-1"><dt>Stima e Calcolo della pensione</dt><dd class="font-semibold">{prezzo} €</dd></div>
+      {#if a.richiediEstratto}<div class="flex justify-between py-1"><dt>Richiesta estratto contributivo</dt><dd class="font-semibold">{prezzoEstratto} €</dd></div>{/if}
+      <div class="mt-2 flex justify-between border-t-2 border-[#E4E4EE] pt-2 text-lg font-extrabold"><dt>Totale</dt><dd>{price}</dd></div>
+    </dl>
+    {#if fase === "rifiutato"}
+      <p class="mt-4 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]" role="alert">Pagamento non riuscito (simulato). I dati inseriti restano salvati: il cliente può riprovare.</p>
+    {/if}
+    <div class="mt-6 flex flex-wrap gap-3">
+      <button type="button" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={() => vaiA(a.richiediEstratto ? "prospetto" : "conferma")}>Simula pagamento riuscito</button>
+      <button type="button" class="rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("rifiutato")}>Simula pagamento rifiutato</button>
+      <button type="button" class="rounded-full px-4 py-3 font-bold text-[#14142B] underline" onclick={() => vaiA("form")}>Torna al questionario</button>
+    </div>
+  {:else if fase === "conferma" && esempio}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento ricevuto. Controlla i tuoi contributi</h2>
+    <p class="text-[#3F3F5A]">Dopo il pagamento il cliente vede quello che abbiamo letto dal suo estratto e lo conferma. <strong>In prova la tabella mostra un caso di esempio, non il file che hai caricato.</strong></p>
+    <div class="mt-4 max-h-80 overflow-auto rounded-2xl bg-white">
+      <table class="w-full text-left text-sm text-[#14142B]">
+        <thead class="sticky top-0 bg-[#14142B] text-white"><tr><th class="px-4 py-2">Anno</th><th class="px-4 py-2">Gestione</th><th class="px-4 py-2">Settimane</th><th class="px-4 py-2">Retribuzione</th></tr></thead>
+        <tbody>
+          {#each esempio.input.contributi as c}
+            <tr class="border-t border-[#E4E4EE]"><td class="px-4 py-1.5">{c.anno}</td><td class="px-4 py-1.5">{c.gestione ?? esempio.input.gestione_principale}</td><td class="px-4 py-1.5">{c.settimane}</td><td class="px-4 py-1.5">{euro(c.imponibile)}</td></tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-3 font-semibold text-[#14142B]">Totale letto: {esempio.esito.contributi_ad_oggi} ({esempio.esito.settimane_ad_oggi} settimane).</p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <button type="button" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={() => vaiA("prospetto")}>I dati sono corretti: calcola</button>
+      <button type="button" class="rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
+    </div>
+  {:else if fase === "prospetto" && a.richiediEstratto}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento ricevuto. Richiediamo il tuo estratto</h2>
+    <p class="text-[#3F3F5A]">Con l'opzione "richiedetelo voi" il cliente riceve questo messaggio: la stima parte quando l'ufficio carica l'estratto ottenuto dall'INPS, e il cliente viene avvisato via email per controllare i contributi.</p>
+    <button type="button" class="mt-6 rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
+  {:else if fase === "prospetto" && esempio}
+    {@const r = esempio.esito}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Il tuo prospetto (esempio)</h2>
+    <p class="text-[#3F3F5A]"><strong>Dati di esempio</strong> calcolati dal motore sul caso di prova (uomo nato il 10/03/1962, dipendente privato): servono a vedere la forma del risultato, non riguardano le risposte che hai dato.</p>
+    <p class="mt-4 rounded-2xl bg-[#D4FF4F] p-4 text-lg font-extrabold text-[#14142B]">Prima uscita possibile: {r.prima_uscita_pensione.canale} dal {dataIt(r.prima_uscita_pensione.decorrenza)}</p>
+    <p class="mt-3 text-[#14142B]">Contributi ad oggi: <strong>{r.contributi_ad_oggi}</strong> · Sistema di calcolo: <strong>{r.sistema_calcolo}</strong></p>
+    <div class="mt-4 grid gap-3">
+      {#each r.canali as c}
+        <div class="rounded-2xl bg-white p-4 text-[#14142B]">
+          <h3 class="text-lg font-extrabold">{c.canale}</h3>
+          <dl class="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+            <div><dt class="text-sm text-[#6B6B85]">Maturi il diritto</dt><dd class="font-semibold">{dataIt(c.data_maturazione)}</dd></div>
+            <div><dt class="text-sm text-[#6B6B85]">Primo pagamento</dt><dd class="font-semibold">{dataIt(c.decorrenza)} · {c.eta_alla_decorrenza}</dd></div>
+            <div><dt class="text-sm text-[#6B6B85]">Lordo mensile (13 mensilità)</dt><dd class="font-semibold">{euro(c.importo.lordo_mensile_13)}</dd></div>
+            <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{euro(c.importo.netto_mensile_13_stima)} · affidabilità {c.importo.affidabilita}</dd></div>
+          </dl>
+          <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">{#each c.note as n}<li>{n}</li>{/each}</ul>
+        </div>
+      {/each}
+    </div>
+    <p class="mt-4 text-sm text-[#6B6B85]">Il prospetto vero arriverà in PDF via email, con scenari, scadenze e documenti da preparare. Parametri del motore: versione {r.versione_parametri}.</p>
+    <button type="button" class="mt-6 rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
+  {:else}
   <ol class="mb-6 flex flex-wrap gap-2" aria-label="Passi del questionario">
     {#each STEPS as s, i}
       <li
@@ -387,7 +478,7 @@
         <label class="flex items-start gap-3"><input type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={a.salute} /><span>Acconsento al trattamento dei dati sulla salute che ho indicato (invalidità, assistenza a familiari), al solo scopo di elaborare la stima.</span></label>
         <label class="flex items-start gap-3"><input type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={a.condizioni} /><span>Accetto le condizioni del servizio: ricevo una stima indicativa, che non sostituisce la certificazione dell'INPS e non è una domanda di pensione.</span></label>
       </div>
-      {#if !apiUrl}
+      {#if !apiUrl && !demo}
         <p class="mt-5 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Il servizio è in fase di attivazione: l'invio dei documenti e il pagamento non sono ancora disponibili. Nessun dato è stato inviato.</p>
       {/if}
       {#if sendError}<p class="mt-5 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]" role="alert">{sendError}</p>{/if}
@@ -406,10 +497,11 @@
       {#if step < STEPS.length - 1}
         <button type="submit" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B]">Avanti</button>
       {:else}
-        <button type="submit" disabled={!apiUrl || sending} class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B] disabled:cursor-not-allowed disabled:opacity-50">
+        <button type="submit" disabled={(!apiUrl && !demo) || sending} class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:shadow-[0_3px_0_#14142B] disabled:cursor-not-allowed disabled:opacity-50">
           {sending ? "Invio in corso…" : `Invia e vai al pagamento (${price})`}
         </button>
       {/if}
     </div>
   </form>
+  {/if}
 </div>
