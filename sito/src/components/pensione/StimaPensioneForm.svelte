@@ -60,7 +60,19 @@
     fase = "elaborazione";
     scrollTop();
     try {
-      const res = await fetch(elaboraUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ risposte: a, pdf: inBase64(await f.arrayBuffer()) }) });
+      const corpo: Record<string, unknown> = { risposte: a, pdf: inBase64(await f.arrayBuffer()) };
+      if (letto && modoLettura === "ai") corpo.prelettura_settimane = letto.totaleSettimane;
+      // Allegati facoltativi: entrano solo se il totale resta entro ~3 MB (limite della funzione).
+      let spazio = 3_000_000 - f.size;
+      const esclusi: string[] = [];
+      for (const [chiave, etichetta] of [["simulazione", "simulazione INPS"], ["busta", "busta paga o CU"]] as const) {
+        const g = files[chiave];
+        if (!g) continue;
+        if (g.size <= spazio) { corpo[chiave] = inBase64(await g.arrayBuffer()); spazio -= g.size; }
+        else esclusi.push(etichetta);
+      }
+      if (esclusi.length) notaStima = `Non inclusi perché troppo grandi: ${esclusi.join(", ")}.`;
+      const res = await fetch(elaboraUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
       const dati = await res.json().catch(() => ({}));
       if (res.ok && Array.isArray(dati?.scenari)) {
         stima = dati;
@@ -78,6 +90,17 @@
     await vaiA("prospetto");
   }
 
+  const AFFIDABILITA: Record<string, string> = { media: "buona", "media-bassa": "discreta", bassa: "di massima", parziale: "incompleta" };
+  const affid = (x: string) => AFFIDABILITA[x] ?? x;
+  const MOTIVI_BUCO = [
+    { v: "non-lavoravo", l: "Non lavoravo" },
+    { v: "militare", l: "Servizio militare o civile" },
+    { v: "studio", l: "Studiavo all'università" },
+    { v: "estero", l: "Lavoravo all'estero" },
+    { v: "non-accreditato", l: "Lavoravo in Italia ma non risulta" },
+    { v: "altro", l: "Altro" },
+  ];
+
   const dataIt = (d: string) => (d ? new Date(d).toLocaleDateString("it-IT") : "—");
   const euro = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
   let errors = $state<string[]>([]);
@@ -92,6 +115,7 @@
     nascita: "",
     sesso: "",
     figli: "0",
+    residenza: "",
     // lavoro
     situazione: "",
     continua: "",
@@ -102,6 +126,8 @@
     // contributi
     mancanti: [] as string[],
     mancantiNote: "",
+    // anni senza contributi trovati nell'estratto: cosa faceva il cliente
+    buchi: [] as { da: number; a: number; motivo: string }[],
     precoce: "",
     // salute e famiglia
     invalidita: "",
@@ -211,6 +237,13 @@
       const r = ai ?? leggiEstrattoLocale(linee);
       modoLettura = ai ? "ai" : "locale";
       letto = r;
+      const buchi: { da: number; a: number; motivo: string }[] = [];
+      for (let k = 1; k < r.anni.length && buchi.length < 5; k++) {
+        const da = r.anni[k - 1].anno + 1;
+        const fino = r.anni[k].anno - 1;
+        if (fino >= da) buchi.push({ da, a: fino, motivo: "" });
+      }
+      a.buchi = buchi;
       // Precompila solo i campi ancora vuoti: quello che hai già scritto non si tocca.
       const fatto: string[] = [];
       const metti = (campo: "nome" | "cognome" | "nascita" | "sesso" | "situazione" | "retribuzione", v: string, etichetta: string) => {
@@ -395,6 +428,10 @@
     {#if base.prima_uscita_pensione}
       <p class="mt-4 rounded-2xl bg-[#D4FF4F] p-4 text-lg font-extrabold text-[#14142B]">Prima uscita possibile: {base.prima_uscita_pensione.canale} dal {dataIt(base.prima_uscita_pensione.decorrenza)}</p>
     {/if}
+    {#if notaStima}<p class="mt-3 rounded-2xl bg-[#FFE3EC] p-3 text-sm font-semibold text-[#14142B]">{notaStima}</p>{/if}
+    {#if stima.revisione_consigliata?.length}
+      <p class="mt-4 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Questa stima va fatta controllare da un nostro operatore prima di prendere decisioni: {stima.revisione_consigliata.join("; ")}.</p>
+    {/if}
     <div class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
       <h3 class="text-lg font-extrabold">In breve</h3>
       <p class="mt-1">{stima.testo.sintesi}</p>
@@ -403,6 +440,8 @@
     <p class="mt-4 text-[#14142B]">Contributi ad oggi: <strong>{base.contributi_ad_oggi}</strong> · Sistema di calcolo: <strong>{base.sistema_calcolo}</strong></p>
     {#each stima.scenari as sc}
       <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">{sc.nome}</h3>
+      {#if sc.motivo}<p class="mt-1 text-[#3F3F5A]">{sc.motivo}</p>{/if}
+      {#if sc.note?.length}<ul class="mt-1 list-disc pl-5 text-sm text-[#3F3F5A]">{#each sc.note as n}<li>{n}</li>{/each}</ul>{/if}
       <div class="mt-2 grid gap-3">
         {#each sc.esito.canali as c}
           <div class="rounded-2xl bg-white p-4 text-[#14142B]">
@@ -412,9 +451,9 @@
               <div><dt class="text-sm text-[#6B6B85]">Primo pagamento</dt><dd class="font-semibold">{dataIt(c.decorrenza)}{#if c.eta_alla_decorrenza} · {c.eta_alla_decorrenza}{/if}</dd></div>
               {#if c.importo?.lordo_mensile_13 != null}
                 <div><dt class="text-sm text-[#6B6B85]">Lordo mensile (13 mensilità)</dt><dd class="font-semibold">{euro(c.importo.lordo_mensile_13)}</dd></div>
-                <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{c.importo.netto_mensile_13_stima != null ? euro(c.importo.netto_mensile_13_stima) : "—"} · affidabilità {c.importo.affidabilita}</dd></div>
+                <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{c.importo.netto_mensile_13_stima != null ? euro(c.importo.netto_mensile_13_stima) : "—"} · stima {affid(c.importo.affidabilita)}</dd></div>
               {:else if c.importo?.indennita_mensile_lorda_12 != null}
-                <div><dt class="text-sm text-[#6B6B85]">Indennità mensile lorda (12 mensilità)</dt><dd class="font-semibold">{euro(c.importo.indennita_mensile_lorda_12)} · affidabilità {c.importo.affidabilita}</dd></div>
+                <div><dt class="text-sm text-[#6B6B85]">Indennità mensile lorda (12 mensilità)</dt><dd class="font-semibold">{euro(c.importo.indennita_mensile_lorda_12)} · stima {affid(c.importo.affidabilita)}</dd></div>
               {/if}
             </dl>
             {#each stima.testo.spiegazione_canali.filter((x: any) => x.canale === c.canale && x.scenario === sc.nome) as sp}<p class="mt-2">{sp.testo}</p>{/each}
@@ -431,7 +470,20 @@
       <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Per una stima più precisa</h3>
       <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each stima.testo.dati_mancanti as d}<li>{d}</li>{/each}</ul>
     {/if}
+    {#if stima.confronto_inps?.length}
+      <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Confronto con la simulazione INPS</h3>
+      <div class="mt-2 grid gap-2">
+        {#each stima.confronto_inps as cf}
+          <p class={`rounded-2xl p-3 text-[#14142B] ${cf.coerente ? "bg-[#E9FFA6]" : "bg-[#FFE3EC]"}`}><strong>{cf.canale}:</strong> INPS {euro(cf.importo_inps)} al mese, nostra stima {euro(cf.importo_stima)} ({cf.scarto_percento > 0 ? "+" : ""}{cf.scarto_percento}%). {cf.coerente ? "Le due stime sono coerenti." : "Lo scarto è alto: la stima va controllata."}</p>
+        {/each}
+      </div>
+    {/if}
+    {#if stima.limiti?.length || stima.parametri_non_definitivi?.length}
+      <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Cosa questa stima non considera</h3>
+      <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each [...(stima.limiti ?? []), ...(stima.parametri_non_definitivi ?? [])] as v}<li>{v}</li>{/each}</ul>
+    {/if}
     <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Controlli e avvertenze</h3>
+    <p class="mt-1 text-sm text-[#6B6B85]">Come leggere la precisione degli importi: "buona" = dati certi; "discreta" = dipende da contributi futuri o da coefficienti non ancora pubblicati; "di massima" = la parte di pensione maturata prima del 1996 è stimata; "incompleta" = manca una parte del calcolo.</p>
     <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">
       {#each [...stima.controlli, ...stima.dubbi, ...stima.testo.avvertenze, ...(base.avvisi ?? [])] as v}<li>{v}</li>{/each}
     </ul>
@@ -459,7 +511,7 @@
             <div><dt class="text-sm text-[#6B6B85]">Maturi il diritto</dt><dd class="font-semibold">{dataIt(c.data_maturazione)}</dd></div>
             <div><dt class="text-sm text-[#6B6B85]">Primo pagamento</dt><dd class="font-semibold">{dataIt(c.decorrenza)} · {c.eta_alla_decorrenza}</dd></div>
             <div><dt class="text-sm text-[#6B6B85]">Lordo mensile (13 mensilità)</dt><dd class="font-semibold">{euro(c.importo.lordo_mensile_13)}</dd></div>
-            <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{euro(c.importo.netto_mensile_13_stima)} · affidabilità {c.importo.affidabilita}</dd></div>
+            <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{euro(c.importo.netto_mensile_13_stima)} · stima {affid(c.importo.affidabilita)}</dd></div>
           </dl>
           <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">{#each c.note as n}<li>{n}</li>{/each}</ul>
         </div>
@@ -570,6 +622,10 @@
       <fieldset class="mt-4"><legend class={label}>Sesso</legend>
         {@render scelta("sesso", a.sesso, [{ v: "F", l: "Donna" }, { v: "M", l: "Uomo" }], (v) => (a.sesso = v))}
       </fieldset>
+      <fieldset class="mt-4"><legend class={label}>Dove abiti?</legend>
+        {@render scelta("residenza", a.residenza, [{ v: "roma", l: "Roma" }, { v: "lazio", l: "Altro comune del Lazio" }, { v: "altra-regione", l: "Altra regione" }], (v) => (a.residenza = v))}
+        <p class={help}>Serve per stimare il netto: le addizionali cambiano da comune a comune.</p>
+      </fieldset>
     {:else if step === 2}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">Il tuo lavoro oggi</h2>
       <fieldset><legend class={label}>Qual è la tua situazione?</legend>
@@ -612,6 +668,21 @@
       </fieldset>
     {:else if step === 3}
       <h2 class="mb-5 text-2xl font-extrabold text-[#14142B]">I tuoi contributi</h2>
+      {#if a.buchi.length}
+        <div class="mb-5 rounded-2xl border-2 border-[#14142B] bg-white p-4">
+          <h3 class="text-lg font-extrabold text-[#14142B]">Nel tuo estratto mancano dei periodi</h3>
+          <p class="mt-1 text-[#3F3F5A]">Dirci cosa facevi ci aiuta a capire se quei contributi si possono recuperare.</p>
+          {#each a.buchi as b, k}
+            <div class="mt-3">
+              <label class={label} for={`sp-buco-${k}`}>{b.da === b.a ? `Nel ${b.da}` : `Dal ${b.da} al ${b.a}`} non risultano contributi. Cosa facevi?</label>
+              <select id={`sp-buco-${k}`} class={input} bind:value={b.motivo}>
+                <option value="">Scegli…</option>
+                {#each MOTIVI_BUCO as m}<option value={m.v}>{m.l}</option>{/each}
+              </select>
+            </div>
+          {/each}
+        </div>
+      {/if}
       <fieldset><legend class={label}>Hai periodi che potrebbero non risultare nell'estratto INPS?</legend>
         <div class="grid gap-2 sm:grid-cols-2">
           {#each MANCANTI as m}
