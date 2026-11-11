@@ -19,7 +19,10 @@
     /** Funzione server post-pagamento: rilettura completa e stima con Fable 5.2 + motore. */
     elaboraUrl?: string;
   }
-  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "", leggiUrl = "/api/stima/leggi-estratto", elaboraUrl = "/api/stima/elabora" }: Props = $props();
+  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "", leggiUrl = "", elaboraUrl = "/api/stima/elabora" }: Props = $props();
+  // Sul sito pubblico le funzioni server stanno a un altro indirizzo (quello di `apiUrl`):
+  // la lettura dell'estratto si chiama lì, accanto all'invio.
+  const leggi = $derived(leggiUrl || apiUrl.replace(/\/invia$/, "/leggi-estratto").replace(/^$/, "/api/stima/leggi-estratto"));
 
   const MAX_MB = 10;
   const STEPS = ["Estratto", "Tu", "Lavoro", "Contributi", "Salute e famiglia", "Altri documenti", "Riepilogo"];
@@ -224,7 +227,7 @@
       // Inviamo il PDF (letto con Mistral OCR); se supera ~3 MB e contiene testo, solo il testo.
       const corpo = f.size <= 3_000_000 ? { pdf: inBase64(await f.arrayBuffer()) } : testo.length > 200 ? { testo } : null;
       if (!corpo) return null;
-      const res = await fetch(leggiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+      const res = await fetch(leggi, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
       if (!res.ok) return null;
       const dati = await res.json();
       return Array.isArray(dati?.anni) ? dati : null;
