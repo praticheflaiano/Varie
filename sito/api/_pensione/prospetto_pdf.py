@@ -165,6 +165,15 @@ def _contenuto(stima, risposte, url, codice):
         ], ROSA))
         f.append(Spacer(1, 10))
 
+    stimati = stima["estratto"].get("contributi_stimati")
+    if stimati:
+        f.append(_riquadro([
+            Paragraph("Il tuo estratto non è aggiornato a oggi", S["scheda"]), Spacer(1, 5),
+            _p(f"L'estratto che hai caricato si ferma prima del {_data(stimati['dal'])}. Per il periodo fino al {_data(stimati['al'])} abbiamo aggiunto {stimati['settimane']} settimane "
+               "stimate sul ritmo e sulla retribuzione dei tuoi ultimi periodi di lavoro. Date e importi di questo prospetto dipendono anche da questa proiezione: "
+               "con un estratto aggiornato diventano più precisi."),
+        ], NEBBIA, bordo=INCHIOSTRO))
+        f.append(Spacer(1, 10))
     prima = base.get("prima_uscita_pensione")
     canale_prima = next((c for c in base["canali"] if prima and c["canale"] == prima.get("canale")), None)
     if prima:

@@ -394,7 +394,9 @@ class Caso:
         if stime: canale_note.append(f"Per gli anni futuri il montante e' rivalutato dell'{self.tasso_fut*100:.1f}% l'anno in termini reali (ipotesi: e' la crescita del PIL che usa anche l'INPS nelle sue simulazioni).".replace(".", ",", 1))
         if conf == "media" and (stime or decorrenza.year >= 2029): conf = "media-bassa"
         if decorrenza.year > self.oggi.year:
-            canale_note.append("Importi in moneta di oggi: le retribuzioni future sono considerate ferme al valore attuale e coefficienti, tetti e soglie sono quelli del 2026.")
+            futuro = (f"le retribuzioni future crescono del {self.cresc*100:.0f}% l'anno oltre l'inflazione, come indicato nel questionario," if self.cresc > 0
+                      else "le retribuzioni future sono considerate ferme al valore attuale")
+            canale_note.append(f"Importi in moneta di oggi: {futuro} e coefficienti, tetti e soglie sono quelli del 2026.")
         lordo_annuo = quota_c + (quota_r or 0)
         return {"montante": round(M,2), "coeff_trasf_%": round(coeff,4), "tabella_coeff": tabk,
                 "quota_contributiva_annua": round(quota_c,2),

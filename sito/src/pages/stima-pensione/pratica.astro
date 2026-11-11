@@ -121,6 +121,12 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
             el("p", "mt-2 text-lg", "Punti da verificare a mano: " + s.revisione.join("; ") + ". Fino alla conferma considera date e importi come indicativi."));
           dove.append(r);
         }
+        if (s.stimati) {
+          const r = el("div", "mb-5 rounded-[22px] border-2 border-[#14142B] bg-white p-5");
+          r.append(el("p", "text-xl font-extrabold", "Il tuo estratto non è aggiornato a oggi"),
+            el("p", "mt-2 text-lg", `Per il periodo dal ${dataIt(s.stimati.dal)} al ${dataIt(s.stimati.al)} abbiamo aggiunto ${s.stimati.settimane} settimane stimate sul ritmo e sulla retribuzione dei tuoi ultimi periodi di lavoro. Date e importi dipendono anche da questa proiezione: con un estratto aggiornato diventano più precisi.`));
+          dove.append(r);
+        }
         const primo = s.prima_uscita && (s.canali || []).find((c) => c.canale === s.prima_uscita.canale);
         if (s.prima_uscita) {
           const h = el("div", "rounded-[22px] bg-[#D4FF4F] p-6");

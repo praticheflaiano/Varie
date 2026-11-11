@@ -109,6 +109,11 @@ Cinque revisioni indipendenti (requisiti di uscita, calcolo dell'importo, codice
 
 **Non verificato / da fare**: confronto con una liquidazione INPS reale; esclusione delle retribuzioni più basse per chi aveva meno di 15 anni al 1992 (D.Lgs. 373/1993 art. 2); neutralizzazione dei periodi di NASpI; criterio di taglio oltre i 40 anni; usuranti con 64-77 notti (solo nota); decorrenza per i nati il 1° del mese; massimale contributivo sugli anni passati; APE sociale 2027 (disegno di legge).
 
+## Decisioni di Antonio dell'11/11/2026 sera
+
+- **Retribuzione futura**: la indica il cliente nel questionario (campo `crescita`: ferma / poco = +1% / molto = +2% l'anno oltre l'inflazione / non so = ferma). Il prospetto dichiara l'ipotesi usata.
+- **Estratto non aggiornato**: non blocca e non manda in verifica. Per chi dichiara di lavorare si stimano le settimane dall'ultimo periodo dell'estratto a oggi, sul ritmo e sulla retribuzione recenti, e il prospetto lo dice in evidenza (riquadro in prima pagina e sulla pagina della pratica, `contributi_stimati`).
+
 ## Consulenza con l'operatore inclusa (dal 2026-11-11)
 
 Nei 60 € è compresa una consulenza facoltativa con un operatore, al telefono o in chat. Lo dicono la pagina del servizio, il banner in home, la pagina della pratica (pulsante "Prenota la consulenza inclusa") e l'email di consegna del prospetto (`CONSULENZA` in `crm.py`; link in `STIMA_LINK_CONSULENZA`, predefinito il calendario generale delle prenotazioni).

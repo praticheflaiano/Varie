@@ -138,6 +138,8 @@
     continua: "",
     finoA: "",
     retribuzione: "",
+    // come pensa che cambierà la retribuzione da qui alla pensione: ferma | poco | molto | nonso
+    crescita: "",
     naspi: "",
     esuberi: "",
     // contributi
@@ -314,6 +316,7 @@
       if (!a.situazione) e.push("Indica la tua situazione lavorativa.");
       if (!disoccupato && a.situazione && !a.continua) e.push("Indica se pensi di continuare a lavorare.");
       if (a.continua === "data" && !a.finoA) e.push("Indica fino a quando pensi di lavorare.");
+      if (!disoccupato && (a.continua === "pensione" || a.continua === "data") && !a.crescita) e.push("Indica come pensi che cambierà la tua retribuzione nei prossimi anni.");
       if (disoccupato && !a.naspi) e.push("Indica la situazione della NASpI.");
     }
     if (s === 3) {
@@ -730,6 +733,17 @@
           <input id="sp-ral" type="number" inputmode="numeric" min="0" step="500" class={input} placeholder="es. 28000" bind:value={a.retribuzione} />
           <p class={help}>Se non lo sai, lo ricaviamo dall'estratto o dalla busta paga.</p>
         </div>
+        {#if a.continua === "pensione" || a.continua === "data"}
+          <fieldset class="mt-5"><legend class={label}>Da qui alla pensione, come pensi che cambierà la tua retribuzione?</legend>
+            <p class="mb-3 text-[#3F3F5A]">Ci serve per stimare i contributi che verserai nei prossimi anni: più cresce la retribuzione, più alta sarà la pensione. Parliamo di aumenti veri, oltre l'aumento dei prezzi. Se hai dubbi scegli "più o meno come oggi": la stima sarà prudente.</p>
+            {@render scelta("crescita", a.crescita, [
+              { v: "ferma", l: "Resterà più o meno come oggi" },
+              { v: "poco", l: "Crescerà un po' (circa 1% l'anno)" },
+              { v: "molto", l: "Crescerà in modo deciso (circa 2% l'anno)" },
+              { v: "nonso", l: "Non lo so" },
+            ], (v) => (a.crescita = v))}
+          </fieldset>
+        {/if}
       {/if}
       {#if disoccupato}
         <fieldset class="mt-5"><legend class={label}>NASpI</legend>

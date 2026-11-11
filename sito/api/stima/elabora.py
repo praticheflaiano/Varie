@@ -187,6 +187,9 @@ def chiama_claude(chiave, sistema, contenuto, schema, max_tokens, impegno):
     return json.loads(testo), risposta.get("usage", {}), risposta.get("stop_reason")
 
 
+CRESCITA = {"ferma": 0.0, "nonso": 0.0, "poco": 0.01, "molto": 0.02}
+
+
 def numero(s):
     """Numero da un valore scritto all'italiana ("1.641,47"), all'inglese ("1641.47") o già numerico."""
     if isinstance(s, bool):
@@ -354,15 +357,21 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
 
     disoccupato = r.get("situazione") == "disoccupato"
     continua = (not disoccupato) and r.get("continua") in ("pensione", "data")
+    # Crescita della retribuzione oltre l'inflazione, come indicata dal cliente nel questionario ("non lo so" = ferma, prudente)
+    crescita = CRESCITA.get(r.get("crescita"), 0.0) if continua else 0.0
+    if continua and r.get("crescita") in ("poco", "molto"):
+        dubbi = dubbi + [f"Come hai indicato, la retribuzione futura cresce dell'{crescita*100:.0f}% l'anno oltre l'inflazione: se crescerà meno, l'importo sarà più basso."]
+    elif continua:
+        dubbi = dubbi + ["La retribuzione futura è considerata ferma al valore di oggi (ipotesi prudente): se crescerà, l'importo sarà più alto."]
     fino_a = f"{r['finoA']}-28" if r.get("continua") == "data" and re.match(r"^\d{4}-(0[1-9]|1[0-2])$", str(r.get("finoA") or "")) else None
 
     # Buco tra l'ultimo periodo dell'estratto e oggi: chi sta lavorando ha maturato contributi che l'estratto non mostra ancora.
-    buco_giorni = 0
+    buco_giorni, stimate = 0, None
     fine_periodi = [str(p.get("al")) for p in letto.get("periodi") or [] if data_valida(p.get("al"))]
     if continua and fine_periodi and imponibile_futuro:
         da, a = date.fromisoformat(max(fine_periodi)) + timedelta(days=1), date.fromisoformat(oggi)
         buco_giorni = max(0, (a - da).days + 1)
-        if 30 < buco_giorni <= 730:
+        if buco_giorni > 30:
             contributi = [dict(c) for c in contributi]
             aggiunte = 0.0
             for anno in range(da.year, a.year + 1):
@@ -378,10 +387,9 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
                     aggiunte += sett
             contributi.sort(key=lambda c: (c["anno"], c["gestione"]))
             if aggiunte:
-                dubbi = dubbi + [f"L'estratto si ferma al {date.fromisoformat(max(fine_periodi)).strftime('%d/%m/%Y')}: per il periodo fino a oggi sono state aggiunte {round(aggiunte)} settimane stimate, "
-                                 "perché hai dichiarato di lavorare. Con un estratto aggiornato il dato diventa certo."]
-        elif buco_giorni > 730:
-            dubbi = dubbi + [f"L'estratto si ferma al {date.fromisoformat(max(fine_periodi)).strftime('%d/%m/%Y')}, più di due anni fa: i contributi successivi non sono contati. Serve un estratto aggiornato."]
+                stimate = {"settimane": round(aggiunte), "dal": da.isoformat(), "al": a.isoformat()}
+                dubbi = dubbi + [f"L'estratto si ferma al {date.fromisoformat(max(fine_periodi)).strftime('%d/%m/%Y')}: per il periodo fino a oggi sono state aggiunte {round(aggiunte)} settimane stimate "
+                                 "sul ritmo e sulla retribuzione degli ultimi periodi, perché hai dichiarato di lavorare. Date e importi dipendono anche da questa proiezione: con un estratto aggiornato diventano certi."]
 
     pct = int(numero(r.get("invaliditaPct")) or 0) if r.get("invalidita") in ("civile", "pensionabile") else 0
     caregiver = r.get("caregiver") == "si-6"
@@ -399,9 +407,9 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
         "data_calcolo": oggi, "gestione_principale": principale, "primo_accredito": primo,
         "contributi": contributi,
         "proiezione": {"continua_lavoro": continua, "settimane_annue": sett_annue, "imponibile_annuo": imponibile_futuro,
-                        "crescita_imponibile": 0.0, "fino_a": fino_a, "settimane_volontari_annue": 0, "gestione": recente,
+                        "crescita_imponibile": crescita, "fino_a": fino_a, "settimane_volontari_annue": 0, "gestione": recente,
                         "rapporto_calcolo": round(rapporto_calcolo, 4)},
-        "buco_estratto_giorni": buco_giorni,
+        "buco_estratto_giorni": buco_giorni, "contributi_stimati": stimate,
         "quota_retributiva_annua": None,
         "retribuzione_pensionabile_annua": ultima or dichiarata or None,
         "opzione_contributivo": False,
@@ -731,8 +739,9 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
     if data_valida(nascita_estratto) and nascita_estratto != r["nascita"]:
         verifiche.append(f"ATTENZIONE: la data di nascita indicata nel questionario ({r['nascita']}) è diversa da quella dell'estratto ({nascita_estratto}). Il calcolo usa quella del questionario.")
         revisione.append("data di nascita diversa tra questionario ed estratto")
-    if base.get("buco_estratto_giorni", 0) > 180:
-        revisione.append("estratto non aggiornato: contributi recenti stimati o mancanti")
+    if base.get("contributi_stimati"):
+        st = base["contributi_stimati"]
+        verifiche.append(f"Estratto non aggiornato: {st['settimane']} settimane dal {st['dal']} al {st['al']} sono stimate, non lette dall'estratto.")
     if any(str(x).strip() for x in letto.get("segnalazioni") or []):
         revisione.append("segnalazioni INPS sull'estratto da valutare (altri enti o pratiche in corso)")
     pre = dati.get("prelettura_settimane")
@@ -772,7 +781,7 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
                  "estratto": {"intestatario": f"{letto.get('nome','')} {letto.get('cognome','')}".strip(), "data_estratto": letto.get("data_estratto", ""),
                               "righe": len(letto.get("periodi") or []), "totale_dichiarato": letto.get("totale_dichiarato", ""),
                               "lettura": letto.get("lettura", ""), "segnalazioni": [str(x)[:300] for x in letto.get("segnalazioni") or []],
-                              "gestioni": sorted({c["gestione"] for c in contributi})},
+                              "gestioni": sorted({c["gestione"] for c in contributi}), "contributi_stimati": base.get("contributi_stimati")},
                  "documenti": {"simulazione_inps": bool(sim.get("presente")), "retribuzione": doc.get("tipo", "") if doc.get("presente") else ""},
                  "contributi": contributi, "dubbi": dubbi, "controlli": verifiche, "limiti": limiti, "parametri_non_definitivi": scadenze,
                  "confronto_inps": confronti, "revisione_consigliata": sorted(set(revisione)),

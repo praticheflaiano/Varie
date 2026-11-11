@@ -197,3 +197,16 @@ uguale([p["gestione"] for p in letto["periodi"]], ["Regime generale", "Gestione 
 uguale(len(letto["legenda_note"]), 1, "la legenda non ingloba il titolo della sezione successiva")
 
 print("OK: regole verificate")
+
+# ---- retribuzione futura indicata dal cliente e nota sull'estratto non aggiornato
+contributi, dubbi, primo = e.righe_in_contributi(letto_base := {"periodi": [periodo(f"{y}-01-01", f"{y}-12-31", "Lavoro dipendente", "settimane", "52", "52,000", "30.000,00") for y in range(1990, 2024)]})
+fermo = e.costruisci_input({**risposte, "crescita": "nonso"}, letto_base, contributi, dubbi, primo, OGGI)
+cresce = e.costruisci_input({**risposte, "crescita": "molto"}, letto_base, contributi, dubbi, primo, OGGI)
+uguale((fermo["proiezione"]["crescita_imponibile"], cresce["proiezione"]["crescita_imponibile"]), (0.0, 0.02), "crescita della retribuzione dal questionario")
+imp_fermo = canale(m.calcola(fermo), "Pensione di vecchiaia")["importo"]["lordo_mensile_13"]
+imp_cresce = canale(m.calcola(cresce), "Pensione di vecchiaia")["importo"]["lordo_mensile_13"]
+assert imp_cresce > imp_fermo, "con la retribuzione che cresce l'importo deve salire"
+# estratto fermo a fine 2023 (quasi tre anni): si stima comunque, e lo si dichiara
+uguale(fermo["contributi_stimati"]["dal"], "2024-01-01", "inizio del periodo stimato")
+assert fermo["contributi_stimati"]["settimane"] >= 52 + 52 + 44 and any("dipendono anche da questa proiezione" in d for d in fermo["dubbi"])
+print("OK: retribuzione futura e proiezione dall'estratto")

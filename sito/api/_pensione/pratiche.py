@@ -145,10 +145,18 @@ def _pdf(b64):
     return bool(b64) and bool(B64.fullmatch(b64)) and base64.b64decode(b64[:16] + "=" * (-len(b64[:16]) % 4)).startswith(b"%PDF")
 
 
+def _data_vera(s):
+    """Data ISO che esiste davvero (il 31 febbraio farebbe fallire il calcolo dopo il pagamento)."""
+    try:
+        return bool(ISO.match(str(s))) and bool(datetime.strptime(str(s), "%Y-%m-%d"))
+    except ValueError:
+        return False
+
+
 def crea(dati, sito):
     """Registra una pratica prima del pagamento. Restituisce (stato HTTP, corpo)."""
     r = dati.get("risposte") if isinstance(dati.get("risposte"), dict) else {}
-    if (not ISO.match(str(r.get("nascita", ""))) or r.get("sesso") not in ("M", "F") or not EMAIL.match(str(r.get("email", "")))
+    if (not _data_vera(r.get("nascita")) or r.get("sesso") not in ("M", "F") or not EMAIL.match(str(r.get("email", "")))
             or not str(r.get("nome", "")).strip() or not str(r.get("cognome", "")).strip()):
         return 400, {"errore": "risposte"}
     if not (r.get("privacy") is True and r.get("condizioni") is True and r.get("salute") is True):
@@ -424,6 +432,6 @@ def riepilogo_stima(stima):
     prima = base.get("prima_uscita_pensione") or {}
     ape = next((c for c in canali if str(c["canale"]).startswith("APE")), None)
     ponte = {"decorrenza": ape["decorrenza"], "indennita": ape["indennita"]} if ape and (not prima or ape["decorrenza"] < prima.get("decorrenza", "9999")) else None
-    return {"ponte": ponte, "prima_uscita": base.get("prima_uscita_pensione"), "contributi": base.get("contributi_ad_oggi"), "sistema": base.get("sistema_calcolo"),
+    return {"ponte": ponte, "stimati": (stima.get("estratto") or {}).get("contributi_stimati"), "prima_uscita": base.get("prima_uscita_pensione"), "contributi": base.get("contributi_ad_oggi"), "sistema": base.get("sistema_calcolo"),
             "sintesi": testo.get("sintesi", ""), "consigliata": testo.get("uscita_consigliata") or {}, "canali": canali, "alternative": alternative,
             "decisioni": testo.get("decisioni") or [], "revisione": stima.get("revisione_consigliata") or [], "data_calcolo": stima.get("data_calcolo")}
