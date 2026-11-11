@@ -19,13 +19,32 @@ const closures = JSON.stringify(CLOSURES.map((c) => [c.from, c.to]));
       const h = hours[idx];
       const slots = h && h.open ? [[h.open, h.close], ...(h.afternoon ? [[h.afternoon.open, h.afternoon.close]] : [])] : [];
       const oggi = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Rome" }).format(new Date());
-      const festa = (JSON.parse(el.dataset.closures || "[]") as [string, string][]).some(([a, b]) => oggi >= a && oggi <= b);
-      const cur = festa ? undefined : slots.find(([a, b]) => now >= a && now < b);
+      const chiusure = JSON.parse(el.dataset.closures || "[]") as [string, string][];
+      const inFesta = (d: string) => chiusure.some(([a, b]) => d >= a && d <= b);
+      const slotsOf = (i: number) => {
+        const x = hours[i];
+        return x && x.open ? [[x.open, x.close], ...(x.afternoon ? [[x.afternoon.open, x.afternoon.close]] : [])] : [];
+      };
+      const ora = (t: string) => t.replace(/^0/, "");
+      const cur = inFesta(oggi) ? undefined : slots.find(([a, b]) => now >= a && now < b);
       if (cur) {
-        el.textContent = `Aperti ora · fino alle ${cur[1]}`;
+        el.textContent = `Aperti ora · fino alle ${ora(cur[1])}`;
       } else {
         el.classList.remove("pill-live");
-        el.textContent = "Ora chiusi · prenota online quando vuoi";
+        // Prossima apertura: più tardi oggi, oppure il primo giorno utile (saltando le chiusure per festa).
+        let quando = "";
+        const base = new Date(oggi + "T12:00:00Z");
+        for (let k = 0; k <= 40 && !quando; k++) {
+          const d = new Date(base.getTime() + k * 86400000);
+          const iso = d.toISOString().slice(0, 10);
+          if (inFesta(iso)) continue;
+          const s = slotsOf((idx + k) % 7).find(([a]) => k > 0 || a > now);
+          if (!s) continue;
+          const nome = new Intl.DateTimeFormat("it-IT", { timeZone: "UTC", weekday: "long" }).format(d);
+          const giorno = k === 0 ? "oggi" : k === 1 ? "domani" : k < 7 ? nome : `${nome} ${new Intl.DateTimeFormat("it-IT", { timeZone: "UTC", day: "numeric", month: "long" }).format(d)}`;
+          quando = `${giorno} alle ${ora(s[0])}`;
+        }
+        el.textContent = quando ? `Ora chiusi · riapriamo ${quando}` : "Ora chiusi · prenota online quando vuoi";
       }
     } catch { /* lascia il testo di default */ }
   }
