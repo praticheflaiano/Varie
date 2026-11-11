@@ -100,6 +100,40 @@ const homeFaq = [
     </div>
   </section>
 
+  <!-- PROMO: Stima e Calcolo della pensione (servizio online a pagamento) -->
+  <section class="wrap" style="padding-bottom:48px">
+    <a href="/stima-pensione" class="promo-pensione" aria-label="Stima e Calcolo della pensione online: promozione di lancio, 60 euro invece di 90">
+      <span class="sticker" style="position:absolute;top:-14px;right:20px;background:#FF5C8A;color:#fff;transform:rotate(3deg)">Promozione di lancio</span>
+      <span class="promo-testo">
+        <span class="promo-occhiello">Novità · tutto online, in pochi minuti</span>
+        <span class="promo-titolo">Quando vai in pensione? <span style="color:#D4FF4F">E con quanto?</span></span>
+        <span class="promo-desc">Carichi il tuo estratto conto INPS e ricevi un prospetto personale in PDF: le date di uscita possibili, gli importi stimati e le alternative a confronto.</span>
+      </span>
+      <span class="promo-lato">
+        <span class="promo-prezzo">
+          <s aria-hidden="true">90 €</s>
+          <b>60 €</b>
+        </span>
+        <span class="promo-nota">invece di 90 € · una tantum</span>
+        <span class="btn btn-lime btn-lg" style="color:#14142B;box-shadow:0 6px 0 #000">Calcola la tua pensione →</span>
+      </span>
+    </a>
+  </section>
+  <style>
+    .promo-pensione { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 28px 40px; padding: 36px 32px; border-radius: 32px; background: #5B3DF5; color: #fff; text-decoration: none; box-shadow: 0 8px 0 #14142B; transition: transform .15s, box-shadow .15s; }
+    .promo-pensione:hover { transform: translateY(3px); box-shadow: 0 5px 0 #14142B; color: #fff; }
+    .promo-testo { flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+    .promo-occhiello { align-self: flex-start; padding: 6px 14px; border-radius: 999px; background: rgba(255, 255, 255, .16); font-size: 14px; font-weight: 800; }
+    .promo-titolo { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5vw, 48px); line-height: 1.05; color: #fff; }
+    .promo-desc { max-width: 620px; font-size: 18px; line-height: 1.5; color: #E9E5FF; }
+    .promo-lato { flex: 1 1 260px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .promo-prezzo { display: flex; align-items: baseline; gap: 14px; font-family: var(--font-display); line-height: 1; }
+    .promo-prezzo s { font-size: 30px; font-weight: 700; color: #CFC6FF; text-decoration-thickness: 3px; text-decoration-color: #FF5C8A; }
+    .promo-prezzo b { font-size: clamp(56px, 9vw, 84px); font-weight: 800; color: #D4FF4F; }
+    .promo-nota { font-size: 15px; font-weight: 700; color: #E9E5FF; }
+    @media (prefers-reduced-motion: reduce) { .promo-pensione, .promo-pensione:hover { transition: none; transform: none; } }
+  </style>
+
   <!-- I PIU RICHIESTI -->
   <section class="wrap" style="padding-bottom:40px">
     <div class="flex items-baseline justify-between flex-wrap gap-2 mb-5">
