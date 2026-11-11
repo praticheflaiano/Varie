@@ -1,0 +1,109 @@
+---
+// Servizio a pagamento "Stima e Calcolo della pensione".
+// La pagina resta noindex finché il servizio non è attivo: per attivarlo
+// impostare PUBLIC_STIMA_PENSIONE_API (endpoint che riceve dati e documenti
+// e restituisce il link di pagamento). Vedi vault/procedure/06-stima-pensione.md.
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import StimaPensioneForm from "~/components/pensione/StimaPensioneForm.svelte";
+
+const apiUrl = import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "";
+const attivo = Boolean(apiUrl);
+const PREZZO = "60 €";
+const PREZZO_ESTRATTO = "5 €";
+// Stesso sondaggio GHL e stesso mandato della pagina /certificazioni.
+const SURVEY_ID = "P3FbJB9wj14iplGZxaFF";
+const MANDATO = "https://drive.google.com/file/d/1FyKOORXwWaYWS83hK5XOXYQuYi6Soo3I/view?usp=sharing";
+
+const ricevi = [
+  { t: "Tutte le strade possibili", d: "Vecchiaia, anticipata, anticipata contributiva, lavoratori precoci, APE sociale, lavori gravosi e usuranti, vecchiaia per invalidi." },
+  { t: "Date e importi", d: "Per ogni strada: quando maturi il diritto, quando parte il pagamento, a che età, importo mensile lordo e netto stimato." },
+  { t: "Le alternative a confronto", d: "Smettere prima, versare contributi volontari, riscattare la laurea, cumulare gestioni diverse: cosa cambia in mesi e in euro." },
+  { t: "Scadenze e documenti", d: "Le date da non perdere e cosa preparare per la domanda di pensione." },
+];
+const passi = [
+  `Carichi l'estratto conto contributivo INPS: lo leggiamo subito e compiliamo noi i dati che contiene. Se non ce l'hai, lo richiediamo noi con ${PREZZO_ESTRATTO} in più.`,
+  "Controlli i dati letti e rispondi alle domande che restano: lavoro, invalidità, assistenza a familiari.",
+  `Paghi ${PREZZO} in modo sicuro.`,
+  "Confermi e in pochi minuti calcoliamo la tua stima.",
+  "Scarichi il prospetto in PDF. Lo ritrovi quando vuoi dal link della tua pratica.",
+];
+const faqs = [
+  { q: "È un calcolo ufficiale?", a: "No. È una stima indicativa basata sui documenti che carichi e sulle norme in vigore oggi. L'importo definitivo lo determina l'INPS alla liquidazione della pensione." },
+  { q: "Come scarico l'estratto conto contributivo?", a: `Dal sito INPS con SPID o CIE: Fascicolo previdenziale del cittadino, poi Posizione assicurativa, poi Estratto conto. Puoi salvarlo in PDF. Se non riesci, possiamo richiederlo noi con ${PREZZO_ESTRATTO} in più.` },
+  { q: "Quanto è precisa la stima dell'importo?", a: "Dipende dalla tua storia contributiva. Se hai contributi prima del 1996, l'importo è più preciso se carichi anche la simulazione INPS \"La mia pensione futura\". Nel prospetto indichiamo sempre il grado di affidabilità di ogni importo." },
+  { q: "Vale anche per dipendenti pubblici o casse professionali?", a: "Le date di uscita sì. Per il pubblico impiego, le casse professionali e i periodi all'estero la stima dell'importo può risultare parziale: in quel caso lo indichiamo nel prospetto." },
+  { q: "Che fine fanno i miei documenti?", a: "Sono usati solo per elaborare la stima, come descritto nell'informativa privacy." },
+];
+---
+<BaseLayout
+  title="Stima e Calcolo della pensione online"
+  description="Stima e calcolo della pensione dal tuo estratto conto INPS: date di uscita, importi e alternative in un prospetto personale in PDF. Stima indicativa, 60 €."
+  noindex={!attivo}
+  share={false}
+>
+  <div data-pagefind-ignore={attivo ? undefined : "all"}>
+  <section class="mx-auto max-w-5xl px-4 pt-10 pb-8 sm:pt-16">
+    <p class="mb-3 inline-block rounded-full bg-[#F1EEFF] px-4 py-1.5 text-sm font-bold text-[#4B2FE0]">Pensioni · servizio online</p>
+    <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-[#14142B] sm:text-6xl">Stima e Calcolo <span class="text-[#5B3DF5]">della pensione</span></h1>
+    <p class="mt-5 max-w-3xl text-lg text-[#3F3F5A] sm:text-xl">Quando puoi andare in pensione e con quale importo? Carichi il tuo estratto conto INPS, rispondi ad alcune domande e ricevi un prospetto personale in PDF.</p>
+    <div class="mt-7 flex flex-wrap items-center gap-4">
+      <a href="#stima-form" class="rounded-full bg-[#5B3DF5] px-7 py-3.5 font-bold text-white no-underline shadow-[0_6px_0_#14142B] transition-all hover:translate-y-[3px] hover:text-white hover:shadow-[0_3px_0_#14142B]">Carica il tuo estratto</a>
+      <span class="rounded-full bg-[#D4FF4F] px-5 py-3 text-lg font-extrabold text-[#14142B]">{PREZZO} una tantum</span>
+    </div>
+    {!attivo && <p class="mt-6 max-w-3xl rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Servizio in fase di attivazione: puoi vedere il questionario, ma l'invio e il pagamento non sono ancora disponibili.</p>}
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-8">
+    <h2 class="mb-6 text-3xl font-extrabold text-[#14142B]">Cosa ricevi</h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {ricevi.map((r) => (
+        <div class="rounded-[22px] bg-[#F7F7FB] p-6">
+          <h3 class="mb-2 text-xl font-extrabold text-[#14142B]">{r.t}</h3>
+          <p class="text-[#3F3F5A]">{r.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-8">
+    <h2 class="mb-6 text-3xl font-extrabold text-[#14142B]">Come funziona</h2>
+    <ol class="grid gap-3">
+      {passi.map((p, i) => (
+        <li class="flex items-start gap-4 rounded-[22px] bg-[#F7F7FB] p-5">
+          <span class="flex size-9 flex-none items-center justify-center rounded-full bg-[#14142B] font-extrabold text-white">{i + 1}</span>
+          <span class="pt-1 text-lg text-[#14142B]">{p}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-8">
+    <StimaPensioneForm client:visible apiUrl={apiUrl} prezzo={60} prezzoEstratto={5} surveyId={SURVEY_ID} mandatoUrl={MANDATO} />
+  </section>
+
+  <section id="senza-estratto" class="mx-auto max-w-5xl px-4 py-8">
+    <div class="rounded-[28px] bg-[#F1EEFF] p-6 sm:p-8">
+      <span class="inline-block rounded-full bg-[#D4FF4F] px-4 py-1.5 text-sm font-extrabold text-[#14142B]">+{PREZZO_ESTRATTO}</span>
+      <h2 class="mt-3 text-3xl font-extrabold text-[#14142B]">Non hai l'estratto contributivo? Lo richiediamo noi</h2>
+      <p class="mt-3 max-w-3xl text-lg text-[#3F3F5A]">Se non hai SPID o non riesci a scaricarlo, nel primo passo del questionario scegli "No, richiedetelo voi": compili il modulo di richiesta e pensiamo noi a ottenerlo dall'INPS. La stima parte quando l'estratto è disponibile.</p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href="#stima-form" class="rounded-full bg-[#14142B] px-6 py-3 font-bold text-white no-underline hover:text-white">Vai al questionario</a>
+        <a href={MANDATO} target="_blank" rel="noopener" class="rounded-full border-2 border-[#14142B] px-6 py-3 font-bold text-[#14142B] no-underline">Scarica mandato</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-8">
+    <h2 class="mb-6 text-3xl font-extrabold text-[#14142B]">Domande frequenti</h2>
+    <div class="grid gap-3">
+      {faqs.map((f) => (
+        <details class="rounded-[22px] bg-[#F7F7FB] px-6 py-5">
+          <summary class="cursor-pointer text-lg font-bold text-[#14142B]">{f.q}</summary>
+          <p class="mt-3 text-[#3F3F5A]">{f.a}</p>
+        </details>
+      ))}
+    </div>
+    <p class="mt-8 text-sm text-[#6B6B85]">Stima indicativa: non sostituisce la certificazione dell'INPS e non costituisce domanda di pensione. Per presentare la domanda puoi <a class="font-bold underline" href="/prenota">prenotare un appuntamento</a>.</p>
+  </section>
+  </div>
+</BaseLayout>

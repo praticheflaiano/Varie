@@ -31,6 +31,7 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[procedure/03-redesign-frontend]] - Modificare design system del sito Astro (palette, font, componenti)
 - [[procedure/04-pubblicazione-articolo]] - Scrivere e pubblicare un nuovo articolo dalla A alla Z
 - [[procedure/05-knowledge-base-vault]] - Come mantenere e consultare questo vault
+- [[procedure/06-stima-pensione]] - Servizio a pagamento Stima e Calcolo della pensione: stato e cosa manca per attivarlo
 
 ## Lessons learned (errori incontrati e risoluzioni)
 
