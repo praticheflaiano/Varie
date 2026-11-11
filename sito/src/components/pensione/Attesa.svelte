@@ -78,7 +78,7 @@
     </div>
     <div class="testo">
       <p class="titolo">{t.titolo}</p>
-      <p class="durata">{t.durata}<span aria-hidden="true"> · trascorso {trascorso}</span></p>
+      <p class="durata">{t.durata}<span aria-hidden="true">&nbsp;· trascorso {trascorso}</span></p>
       <ol class="passi">
         {#each t.passi as p, i}
           <li class={i < corrente ? "fatto" : i === corrente ? "ora" : "dopo"}>
