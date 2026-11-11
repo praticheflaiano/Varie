@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { leggiEstrattoPdf, type EstrattoLetto } from "~/utils/estrattoInps";
+  import { testoDaPdf, leggiEstrattoLocale, type EstrattoLetto } from "~/utils/estrattoInps";
   // Questionario "Stima e Calcolo della pensione".
   // Raccoglie dati e documenti PRIMA del pagamento; l'invio va all'endpoint
   // `apiUrl`. Finché non è configurato, l'ultimo passo mostra un avviso e non
@@ -13,8 +13,10 @@
     /** Sondaggio GHL "RICHIESTE CERTIFICAZIONI" (lo stesso di /certificazioni) e mandato. */
     surveyId?: string;
     mandatoUrl?: string;
+    /** Funzione server che legge l'estratto con AI; se non risponde si usa la lettura locale. */
+    leggiUrl?: string;
   }
-  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "" }: Props = $props();
+  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "", leggiUrl = "/api/stima/leggi-estratto" }: Props = $props();
 
   const MAX_MB = 10;
   const STEPS = ["Estratto", "Tu", "Lavoro", "Contributi", "Salute e famiglia", "Altri documenti", "Riepilogo"];
@@ -128,13 +130,40 @@
   }
 
   // Estratto letto in automatico nel browser (vedi utils/estrattoInps.ts).
-  let letto = $state<EstrattoLetto | null>(null);
+  let letto = $state<(EstrattoLetto & { totaleDichiarato?: string }) | null>(null);
+  let modoLettura = $state<"ai" | "locale" | "">("");
   let leggendo = $state(false);
   let compilati = $state<string[]>([]);
+  let consensoLettura = $state(false);
+
+  const inBase64 = (buf: ArrayBuffer) => {
+    let bin = "";
+    const u = new Uint8Array(buf);
+    for (let k = 0; k < u.length; k += 0x8000) bin += String.fromCharCode(...u.subarray(k, k + 0x8000));
+    return btoa(bin);
+  };
+
+  /** Lettura con AI sul server; null se non disponibile (si ripiega sulla lettura locale). */
+  async function leggiConAi(linee: string[], f: File): Promise<EstrattoLetto | null> {
+    if (!leggiUrl) return null;
+    try {
+      const testo = linee.join("\n");
+      // PDF con testo: inviamo solo il testo. Scansione: inviamo il file (fino a ~3 MB).
+      const corpo = testo.length > 200 ? { testo } : f.size <= 3_000_000 ? { pdf: inBase64(await f.arrayBuffer()) } : null;
+      if (!corpo) return null;
+      const res = await fetch(leggiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
+      if (!res.ok) return null;
+      const dati = await res.json();
+      return Array.isArray(dati?.anni) ? dati : null;
+    } catch {
+      return null;
+    }
+  }
 
   async function onEstratto(e: Event) {
     onFile("estratto", e);
     letto = null;
+    modoLettura = "";
     compilati = [];
     const f = files.estratto;
     if (!f) return;
@@ -144,7 +173,10 @@
     }
     leggendo = true;
     try {
-      const r = await leggiEstrattoPdf(f);
+      const linee = await testoDaPdf(f);
+      const ai = await leggiConAi(linee, f);
+      const r = ai ?? leggiEstrattoLocale(linee);
+      modoLettura = ai ? "ai" : "locale";
       letto = r;
       // Precompila solo i campi ancora vuoti: quello che hai già scritto non si tocca.
       const fatto: string[] = [];
@@ -243,7 +275,7 @@
     try {
       const body = new FormData();
       body.append("risposte", JSON.stringify(a));
-      if (letto) body.append("estratto_letto", JSON.stringify(letto));
+      if (letto) body.append("estratto_letto", JSON.stringify({ ...letto, lettura: modoLettura }));
       for (const [k, f] of Object.entries(files)) if (f) body.append(k, f, f.name);
       const res = await fetch(apiUrl, { method: "POST", body });
       if (!res.ok) throw new Error(String(res.status));
@@ -360,7 +392,7 @@
   <form onsubmit={(e) => { e.preventDefault(); step === STEPS.length - 1 ? submit() : next(); }} novalidate>
     {#if step === 0}
       <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Carica il tuo estratto contributivo</h2>
-      <p class="mb-5 text-[#3F3F5A]">Lo leggiamo subito e compiliamo noi i dati che contiene: tu controlli e rispondi solo alle domande che restano. La lettura avviene sul tuo dispositivo: in questo passo il file non viene inviato.</p>
+      <p class="mb-5 text-[#3F3F5A]">Lo leggiamo subito e compiliamo noi i dati che contiene: tu controlli e rispondi solo alle domande che restano. Per leggerlo, il contenuto dell'estratto viene inviato al nostro servizio di lettura automatica; non viene conservato in questo passo.</p>
       <fieldset class="mb-5"><legend class={label}>Hai già l'estratto conto contributivo INPS?</legend>
         <div class="grid gap-2 sm:grid-cols-2" role="radiogroup">
           <label class={chip(!a.richiediEstratto)}>
@@ -386,13 +418,17 @@
       {#if !a.richiediEstratto}
         <div class="rounded-2xl bg-white p-4">
           <label class={label} for="sp-file-estratto">Estratto conto contributivo INPS (PDF)</label>
-          <input id="sp-file-estratto" type="file" accept=".pdf,.xml" class="block w-full text-sm text-[#3F3F5A] file:mr-3 file:rounded-full file:border-0 file:bg-[#14142B] file:px-4 file:py-2 file:font-bold file:text-white" onchange={onEstratto} />
+          <label class="mb-3 flex items-start gap-3 text-[#14142B]"><input id="sp-consenso-lettura" type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={consensoLettura} /><span>Ho letto l'<a class="font-bold underline" href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e acconsento alla lettura automatica del mio estratto.</span></label>
+          <input id="sp-file-estratto" type="file" accept=".pdf,.xml" disabled={!consensoLettura} class="block w-full disabled:opacity-50 text-sm text-[#3F3F5A] file:mr-3 file:rounded-full file:border-0 file:bg-[#14142B] file:px-4 file:py-2 file:font-bold file:text-white" onchange={onEstratto} />
           <p class={help}>Lo scarichi dal sito INPS con SPID o CIE: Fascicolo previdenziale → Estratto conto. Massimo {MAX_MB} MB.</p>
           {#if leggendo}<p class="mt-2 font-semibold text-[#4B2FE0]" role="status">Lettura dell'estratto in corso…</p>{/if}
         </div>
         {#if letto}
           <div id="estratto-letto" class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
             <h3 class="text-lg font-extrabold">Ecco cosa abbiamo letto</h3>
+            {#if modoLettura === "locale"}
+              <p class="mt-2 rounded-xl bg-[#FFE3EC] p-3 text-sm font-semibold">Lettura semplificata: il servizio di lettura completa non è disponibile in questo momento, quindi i totali qui sotto potrebbero essere incompleti. Puoi proseguire: l'estratto viene riletto per intero prima del calcolo.</p>
+            {/if}
             <dl class="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-2">
               <div><dt class="text-sm text-[#6B6B85]">Intestatario</dt><dd class="font-semibold">{[letto.nome, letto.cognome].filter(Boolean).join(" ") || "non trovato"}</dd></div>
               <div><dt class="text-sm text-[#6B6B85]">Codice fiscale</dt><dd class="font-semibold">{letto.codiceFiscale || "non trovato"}</dd></div>
@@ -400,6 +436,7 @@
               <div><dt class="text-sm text-[#6B6B85]">Estratto aggiornato al</dt><dd class="font-semibold">{letto.dataEstratto ? dataIt(letto.dataEstratto) : "non indicato"}</dd></div>
               <div><dt class="text-sm text-[#6B6B85]">Periodi trovati</dt><dd class="font-semibold">{letto.righe.length}{#if letto.anni.length} · dal {letto.anni[0].anno} al {letto.anni[letto.anni.length - 1].anno}{/if}</dd></div>
               <div><dt class="text-sm text-[#6B6B85]">Contributi letti</dt><dd class="font-semibold">{letto.totaleSettimane} settimane (circa {Math.floor(letto.totaleSettimane / 52)} anni e {Math.round((letto.totaleSettimane % 52) / 4.33)} mesi)</dd></div>
+              {#if letto.totaleDichiarato}<div><dt class="text-sm text-[#6B6B85]">Totale indicato sull'estratto</dt><dd class="font-semibold">{letto.totaleDichiarato}</dd></div>{/if}
             </dl>
             {#if letto.anni.length}
               <details class="mt-3">

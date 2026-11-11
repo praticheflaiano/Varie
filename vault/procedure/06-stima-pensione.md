@@ -27,16 +27,26 @@ ricerca interna, e l'ultimo passo non invia nulla.
 ## Lettura automatica dell'estratto (primo passo)
 
 Il primo passo del questionario è il caricamento dell'estratto contributivo (o la scelta
-"richiedetelo voi"). `sito/src/utils/estrattoInps.ts` legge il PDF **nel browser** con
-`pdfjs-dist` (il file non viene inviato) e ricava: intestatario, codice fiscale, data di
-nascita e sesso (dal codice fiscale), data dell'estratto, periodi, settimane e retribuzioni
-per anno, situazione lavorativa e ultima retribuzione. I campi vuoti del questionario
-vengono precompilati; il cliente vede tutto e può correggere.
+"richiedetelo voi"), dopo una spunta di consenso alla lettura automatica.
 
-**Limite noto**: le regole di lettura sono euristiche sul formato tipico dell'estratto e
-sono state provate solo su un PDF di esempio costruito a mano, non su estratti INPS reali.
-Vanno verificate su file veri (gestione pubblica, più gestioni, contributi in mesi/giorni)
-prima di attivare il servizio. XML e scansioni non vengono letti in automatico.
+1. Il browser estrae il testo dal PDF con `pdfjs-dist` (`sito/src/utils/estrattoInps.ts`).
+2. Il testo (o il PDF, se è una scansione fino a ~3 MB) va alla funzione
+   `sito/api/stima/leggi-estratto.ts`, che chiede a un modello AI via OpenRouter di
+   **trascrivere** tutte le righe in JSON (schema rigido, nessun calcolo).
+3. Conversioni e somme sono fatte da codice (`sito/api/_lib/estrattoModel.ts`): 12 mesi o
+   360 giorni = 52 settimane, aggregazione per anno, avvisi su buchi e anni oltre 52.
+4. Se la funzione non risponde (chiave mancante, errore, limite), il browser ripiega sulla
+   lettura locale a regole fisse e mostra l'avviso "Lettura semplificata".
+
+Configurazione su Vercel (progetto `praticheflaiano-sito`, ambienti Preview e Production):
+`OPENROUTER_API_KEY` obbligatoria, `STIMA_PENSIONE_MODEL` facoltativa.
+Protezioni: controllo dell'origine, limite di 8 letture/ora per IP (in memoria), nessun
+salvataggio né log del contenuto.
+
+**Limiti noti (2026-11-11)**: la lettura con AI è stata provata solo contro un provider
+finto; va verificata con la chiave vera su estratti reali (anche il nome del modello).
+La lettura locale su un estratto reale ha letto solo 32 settimane: è inaffidabile e resta
+solo come riserva. Il limite per IP non è globale: prima del lancio valutare Turnstile.
 
 ## Modalità prova (solo anteprime)
 
