@@ -53,7 +53,7 @@ def _punti(voci, stile, massimo):
     voci = [v for v in voci if v]
     out = [Paragraph(escape(str(v)), stile, bulletText="•") for v in voci[:massimo]]
     if len(voci) > massimo:
-        out.append(Paragraph(f"… e altre {len(voci) - massimo} voci nel prospetto online.", stile))
+        out.append(Paragraph(f"… e altre {len(voci) - massimo} voci: chiedici il dettaglio completo.", stile))
     return out
 
 
