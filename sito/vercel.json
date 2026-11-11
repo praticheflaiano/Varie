@@ -1,6 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
+  "regions": ["fra1"],
   "buildCommand": "node scripts/sync-content.mjs && astro build && pagefind --site dist",
   "installCommand": "npm install",
   "outputDirectory": "dist",

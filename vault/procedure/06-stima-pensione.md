@@ -121,6 +121,9 @@ produzione), `PUBLIC_STIMA_PENSIONE_API=/api/stima/invia` (accende il modulo e t
 Sulle anteprime il flusso vero è sempre attivo; se manca il link di pagamento la pagina della
 pratica offre "Simula il pagamento". Resta anche la "Prova rapida senza salvare".
 
+Le funzioni girano a Francoforte (`"regions": ["fra1"]` in `vercel.json`): prima erano negli
+Stati Uniti (`iad1`), con l'archivio in Europa.
+
 Prova senza servizi esterni: `python3 sito/api/_pensione/test_pratiche.py`.
 
 Non verificato: avviso di pagamento da un workflow GHL vero (forma del corpo, ordine a zero euro
