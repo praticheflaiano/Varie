@@ -110,8 +110,13 @@ assert stato(recente)[1]["stato"] == "pagata" and stato(vecchia)[1]["stato"] == 
 esiti["revisione"] = ["letture dell'estratto discordanti"]
 assert stato(recente, "avvia")[1]["stato"] == "da_rivedere"
 assert chiama("prospetto", {"c": recente, "n": "1962-03-10"})[0] == 404
-assert chiama("pratica", {"c": recente, "azione": "rilascia"})[0] == 404, "senza token è una richiesta cliente senza data"
-assert chiama("pratica", {"c": recente, "azione": "rilascia"}, **TOKEN) == (200, {"stato": "consegnata"})
+assert chiama("pratica", {"c": recente, "azione": "rilascia"})[0] == 403, "le azioni dell'ufficio vogliono il segreto"
+assert chiama("pratica", {"c": recente, "azione": "dettaglio"}, **{"x-stima-token": "sbagliato"})[0] == 403
+d = chiama("pratica", {"c": recente, "azione": "dettaglio"}, **TOKEN)[1]
+assert d["stato"] == "da_rivedere" and d["stima"]["revisione"] == ["letture dell'estratto discordanti"] and d["risposte"]["email"]
+assert chiama("pratica", {"c": recente, "azione": "pdf"}, **TOKEN)[1]["pdf_base64"] == base64.b64encode(b"%PDF-finto").decode()
+assert chiama("pratica", {"c": recente, "azione": "rilascia"}, **TOKEN)[1]["stato"] == "consegnata"
+assert chiama("pratica", {"c": recente, "azione": "rilascia"}, **TOKEN)[0] == 409
 assert chiama("prospetto", {"c": recente, "n": "1962-03-10"})[0] == 200
 esiti["revisione"] = []
 
@@ -125,6 +130,9 @@ assert s["stato"] == "fallita" and s["riprovabile"] is False
 n = esiti["chiamate"]
 assert stato(vecchia, "avvia")[1]["stato"] == "fallita" and esiti["chiamate"] == n
 esiti["fallisci"] = False
+#    l'ufficio lo rimette in coda e lo fa ripartire
+assert chiama("pratica", {"c": vecchia, "azione": "riprova"}, **TOKEN)[1]["stato"] == "pagata"
+assert chiama("pratica", {"c": vecchia, "azione": "calcola"}, **TOKEN)[1]["stato"] == "consegnata"
 
 # Calcolo già in corso altrove (blocco presente) e blocco scaduto
 c = nuova(); stato(c, "simula-pagamento")
@@ -139,7 +147,7 @@ c = nuova(richiediEstratto=True)
 assert stato(c)[1]["totale"] == 6500
 assert stato(c, "simula-pagamento")[1]["stato"] == "attesa_estratto"
 assert stato(c, "avvia")[1]["stato"] == "attesa_estratto"
-assert chiama("pratica", {"c": c, "azione": "carica-estratto", "pdf": PDF}, **TOKEN) == (200, {"stato": "pagata"})
+assert chiama("pratica", {"c": c, "azione": "carica-estratto", "pdf": PDF}, **TOKEN)[1]["stato"] == "pagata"
 assert stato(c, "avvia")[1]["stato"] == "consegnata"
 
 # Chi paga ha email e telefono diversi da chi ha compilato il questionario.
@@ -187,6 +195,59 @@ chiudi_attese()
 pratiche._tentativi.clear()
 assert [chiama("invia", {"risposte": RISPOSTE, "pdf": PDF})[0] for _ in range(7)] == [200] * 6 + [429]
 pratiche._tentativi.clear()
+
+# Collegamento con il CRM: un GHL finto registra le chiamate
+from http.server import BaseHTTPRequestHandler
+chiamate = []
+
+
+class GhlFinto(BaseHTTPRequestHandler):
+    def _fai(self):
+        n = int(self.headers.get("content-length") or 0)
+        corpo = json.loads(self.rfile.read(n)) if n else None
+        assert self.headers["authorization"] == "Bearer token-finto" and self.headers["version"] == "2021-07-28"
+        chiamate.append((self.command, self.path.split("?")[0], corpo))
+        risposta = {"contact": {"id": "cont_1"}, "opportunity": {"id": "opp_1"},
+                    "pipelines": [{"id": "pip_1", "name": "Calcolo Pensione", "stages": [
+                        {"id": "f_ric", "name": "Ricevuta Richiesta"}, {"id": "f_ini", "name": "Inizio Elaborazione"}, {"id": "f_blo", "name": "Bloccata mancanza dati"},
+                        {"id": "f_att", "name": "In attesa certificazioni da istituto"}, {"id": "f_eff", "name": "calcolo effettuato"}, {"id": "f_chi", "name": "Chiusa"},
+                        {"id": "f_ver", "name": "Da verificare in ufficio"}]}]}
+        dati = json.dumps(risposta).encode()
+        self.send_response(200); self.send_header("content-type", "application/json"); self.send_header("content-length", str(len(dati))); self.end_headers(); self.wfile.write(dati)
+    do_GET = do_POST = do_PUT = _fai
+
+    def log_message(self, *a):
+        pass
+
+
+ghl = HTTPServer(("127.0.0.1", 0), GhlFinto)
+threading.Thread(target=ghl.serve_forever, daemon=True).start()
+os.environ["GHL_API_TOKEN"], os.environ["GHL_API_BASE"] = "token-finto", f"http://127.0.0.1:{ghl.server_port}"
+chiudi_attese()
+c = nuova(email="crm@example.com", telefono="333 777 8888", invalidita="civile", invaliditaPct="75", situazione="privato")
+assert [x[:2] for x in chiamate] == [("POST", "/contacts/upsert"), ("GET", "/opportunities/pipelines"), ("POST", "/opportunities/"), ("POST", "/contacts/cont_1/notes"), ("POST", "/conversations/messages")], chiamate
+assert chiamate[2][2]["pipelineStageId"] == "f_ric" and chiamate[2][2]["contactId"] == "cont_1" and chiamate[2][2]["monetaryValue"] == 60
+nota_q = chiamate[3][2]["body"]
+assert "Situazione lavorativa: privato" in nota_q and "/stima-pensione/ufficio#c=" + c in nota_q and "invalid" not in nota_q.lower().replace("salute", "") and "75" not in nota_q, nota_q
+assert pratiche.carica(c)["crm"]["opportunita"] == "opp_1"
+chiamate.clear()
+stato(c, "simula-pagamento")
+assert [x[:2] for x in chiamate] == [("PUT", "/opportunities/opp_1"), ("POST", "/contacts/cont_1/notes")] and chiamate[0][2]["pipelineStageId"] == "f_ini"
+chiamate.clear()
+esiti["revisione"] = ["scarto dalla simulazione INPS oltre il 10%"]
+assert stato(c, "avvia")[1]["stato"] == "da_rivedere"
+assert [x[:2] for x in chiamate] == [("PUT", "/opportunities/opp_1"), ("POST", "/contacts/cont_1/notes"), ("POST", "/contacts/cont_1/tasks")], chiamate
+assert chiamate[0][2]["pipelineStageId"] == "f_ver" and "scarto dalla simulazione" in chiamate[2][2]["body"]
+chiamate.clear()
+chiama("pratica", {"c": c, "azione": "rilascia"}, **TOKEN)
+assert chiamate[0][2]["pipelineStageId"] == "f_eff" and chiamate[0][2]["status"] == "won" and chiamate[-1][1] == "/conversations/messages"
+esiti["revisione"] = []
+#    CRM irraggiungibile: la pratica va avanti lo stesso
+os.environ["GHL_API_BASE"] = "http://127.0.0.1:9"
+c = nuova(email="senza-crm@example.com")
+assert stato(c)[1]["stato"] == "ricevuta"
+del os.environ["GHL_API_TOKEN"]
+chiudi_attese()
 
 # Produzione: spento senza STIMA_PENSIONE_ATTIVA, niente pagamento simulato, serve il link
 os.environ["VERCEL_ENV"] = "production"

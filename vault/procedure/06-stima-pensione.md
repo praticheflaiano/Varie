@@ -122,11 +122,20 @@ lo stato ogni 5 secondi: la conferma di GHL arriva dopo circa 30 secondi. Durant
 browser chiede conferma prima di chiudere la pagina. La pagina mostra sempre il link della pratica
 da salvare: riaprendolo con la data di nascita si riparte dallo stato salvato sul server.
 
-Stati: `ricevuta`, `attesa_estratto`, `pagata`, `in_elaborazione`, `consegnata`, `da_rivedere`, `fallita`.
+**CRM GoHighLevel** (`_pensione/crm.py`, attivo solo con `GHL_API_TOKEN`): a ogni passaggio la
+pratica aggiorna contatto, opportunità nella pipeline "Calcolo Pensione" (id `KbPBLg1iBHuKF1XNlnLp`),
+note e compiti, e manda al cliente l'email con il link della pratica. Fasi: ricevuta -> "Ricevuta
+Richiesta"; pagata e in calcolo -> "Inizio Elaborazione"; estratto da richiedere -> "In attesa
+certificazioni da istituto"; da rivedere e fallita -> "Da verificare in ufficio" (con compito);
+consegnata -> "calcolo effettuato" (vinta). Nel CRM non vanno documenti né risposte su salute e
+familiari. Se il CRM non risponde la pratica prosegue.
 
-Azioni dell'ufficio (per ora solo via richiesta HTTP con `x-stima-token`, nessuna interfaccia):
-`{"c": codice, "azione": "rilascia"}` e `{"c": codice, "azione": "carica-estratto", "pdf": base64}`
-su `/api/stima/pratica`.
+**Pagina dell'ufficio** `/stima-pensione/ufficio#c=<codice>` (link nelle note del CRM): con il
+segreto dell'ufficio (`STIMA_PENSIONE_TOKEN`) mostra stato, motivi della verifica, controlli,
+risposte complete; permette di scaricare il prospetto, consegnarlo al cliente, caricare l'estratto,
+rimettere in coda o avviare il calcolo, segnare pagata.
+
+Stati: `ricevuta`, `attesa_estratto`, `pagata`, `in_elaborazione`, `consegnata`, `da_rivedere`, `fallita`.
 
 Variabili: `STIMA_LINK_PAGAMENTO` (JSON `{"6000": "https://...", "6500": "https://..."}`),
 `STIMA_PENSIONE_TOKEN`, `STIMA_PENSIONE_ATTIVA=1` (solo così le funzioni accettano pratiche in

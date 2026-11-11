@@ -22,6 +22,7 @@ import base64, hashlib, json, os, re, secrets, time
 from datetime import date, datetime, timezone
 
 import archivio
+import crm
 
 PREZZO_BASE, PREZZO_ESTRATTO = 6000, 500  # centesimi
 MAX_TENTATIVI = 2
@@ -109,6 +110,15 @@ def link_pagamento(centesimi):
 
 # ---------- archivio delle pratiche ----------
 
+def _crm(codice, pratica, evento):
+    """Porta la pratica nel CRM (contatto, opportunità, note, compiti). Non blocca mai la pratica."""
+    try:
+        if crm.sincronizza(codice, pratica, evento):
+            salva(codice, pratica)
+    except Exception as e:
+        print("pratiche: CRM non aggiornato", type(e).__name__)
+
+
 def impronta_email(email):
     return hashlib.sha256(str(email or "").strip().lower().encode()).hexdigest()[:40]
 
@@ -166,11 +176,12 @@ def crea(dati, sito):
         "consensi": {"privacy": True, "condizioni": True, "salute": True, "quando": adesso()},
         "documenti": [k for k, v in documenti.items() if v],
         "prelettura_settimane": pre if isinstance(pre, (int, float)) and not isinstance(pre, bool) and 0 < pre < 4000 else None,
-        "prezzo": p, "pagamento": None,
+        "prezzo": p, "pagamento": None, "sito": sito,
     }
     salva(codice, pratica)
     archivio.segna("email/" + impronta_email(r["email"]), codice)
     archivio.segna("attesa/pratiche", codice)
+    _crm(codice, pratica, "ricevuta")
     if impronta_telefono(r.get("telefono")):
         archivio.segna("tel/" + impronta_telefono(r.get("telefono")), codice)
     pagina = f"{sito}/stima-pensione/pratica#c={codice}"
@@ -190,6 +201,7 @@ def paga(codice, come, riferimento="", importo="", pagante=()):
         archivio.togli("attesa/pratiche", codice)
         for gruppo in pagante:  # serve a riconoscere un avviso ripetuto anche se il pagante non è il richiedente
             archivio.segna(gruppo, codice)
+        _crm(codice, pratica, "pagata")
     return pratica
 
 
@@ -279,6 +291,7 @@ def carica_estratto(codice, b64):
     pratica["documenti"].append("pdf")
     pratica["stato"] = "pagata"
     salva(codice, pratica)
+    _crm(codice, pratica, "estratto")
     return pratica
 
 
@@ -290,7 +303,37 @@ def rilascia(codice):
     pratica["stato"] = "consegnata"
     pratica["rilasciata"] = adesso()
     salva(codice, pratica)
+    _crm(codice, pratica, "rilasciata")
     return pratica
+
+
+def riprova(codice):
+    """L'ufficio rimette in coda un calcolo fallito (azzera i tentativi)."""
+    pratica = carica(codice)
+    if not pratica or pratica["stato"] != "fallita":
+        return None
+    pratica.update(stato="pagata", tentativi=0, errore="")
+    salva(codice, pratica)
+    return pratica
+
+
+def vista_ufficio(codice, pratica):
+    """Tutto quello che serve all'operatore per controllare una pratica (richiede il segreto dell'ufficio)."""
+    stima = pratica.get("stima") or {}
+    base = ((stima.get("scenari") or [{}])[0].get("esito") or {})
+    return {
+        "codice": codice, "stato": pratica["stato"], "creata": pratica["creata"], "aggiornata": pratica.get("aggiornata"),
+        "risposte": pratica["risposte"], "documenti": pratica["documenti"], "prezzo": pratica["prezzo"],
+        "pagamento": pratica.get("pagamento"), "tentativi": pratica.get("tentativi", 0), "errore": pratica.get("errore", ""),
+        "prelettura_settimane": pratica.get("prelettura_settimane"), "prospetto": bool(stima),
+        "crm": bool((pratica.get("crm") or {}).get("opportunita")),
+        "stima": {
+            "revisione": stima.get("revisione_consigliata") or [], "controlli": stima.get("controlli") or [], "dubbi": stima.get("dubbi") or [],
+            "limiti": stima.get("limiti") or [], "confronto_inps": stima.get("confronto_inps") or [],
+            "sintesi": (stima.get("testo") or {}).get("sintesi", ""), "estratto": stima.get("estratto") or {},
+            "prima_uscita": base.get("prima_uscita_pensione"), "contributi_ad_oggi": base.get("contributi_ad_oggi", ""),
+        } if stima else None,
+    }
 
 
 def _secondi_da(quando):
@@ -335,6 +378,7 @@ def avvia(codice, chiave, sito, elabora):
         else:
             pratica.update(stato="fallita", errore=str(corpo.get("errore") or f"http-{esito}")[:60])
         salva(codice, pratica)
+        _crm(codice, pratica, "esito")
     finally:
         archivio.elimina(codice, "blocco.json")
     return pratica

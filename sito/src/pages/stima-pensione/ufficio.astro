@@ -1,0 +1,149 @@
+---
+// Pagina riservata all'ufficio per una pratica della stima pensione: stato, motivi della verifica,
+// prospetto, sblocco. Si apre dal link scritto nelle note del CRM. Serve il segreto dell'ufficio
+// (STIMA_PENSIONE_TOKEN), che resta solo nella scheda del browser finché è aperta.
+import BaseLayout from "~/layouts/BaseLayout.astro";
+---
+<BaseLayout title="Stima pensione - ufficio" description="Pagina riservata all'ufficio." noindex={true} share={false}>
+  <section class="mx-auto max-w-3xl px-4 py-12" data-pagefind-ignore="all">
+    <h1 class="text-3xl font-extrabold text-[#14142B] sm:text-4xl">Stima pensione · ufficio</h1>
+    <form id="uf-form" class="mt-6 rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
+      <label class="mb-1.5 block text-sm font-bold text-[#14142B]" for="uf-codice">Codice pratica</label>
+      <input id="uf-codice" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" autocomplete="off" />
+      <label class="mb-1.5 mt-4 block text-sm font-bold text-[#14142B]" for="uf-segreto">Segreto dell'ufficio</label>
+      <input id="uf-segreto" type="password" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" autocomplete="off" />
+      <button type="submit" class="mt-5 rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]">Apri la pratica</button>
+    </form>
+    <p id="uf-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
+    <div id="uf-box" class="mt-6 hidden rounded-[28px] bg-[#F7F7FB] p-6 text-[#14142B]">
+      <h2 id="uf-titolo" class="text-2xl font-extrabold"></h2>
+      <p id="uf-stato" class="mt-2 inline-block rounded-full bg-[#D4FF4F] px-4 py-1.5 font-bold"></p>
+      <div id="uf-azioni" class="mt-5 flex flex-wrap gap-3"></div>
+      <div id="uf-carica" class="mt-4 hidden rounded-2xl bg-white p-4">
+        <label class="mb-1.5 block text-sm font-bold" for="uf-file">Estratto contributivo ottenuto dall'INPS (PDF, massimo 3 MB)</label>
+        <input id="uf-file" type="file" accept=".pdf" class="block w-full text-sm" />
+      </div>
+      <div id="uf-dettagli" class="mt-6 grid gap-4"></div>
+    </div>
+  </section>
+  <script is:inline>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const form = $("uf-form"), box = $("uf-box"), msg = $("uf-msg"), azioni = $("uf-azioni"), dettagli = $("uf-dettagli");
+      const PRIMARIO = "rounded-full bg-[#5B3DF5] px-6 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50";
+      const SECONDARIO = "rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B] disabled:opacity-50";
+      const STATI = { ricevuta: "In attesa del pagamento", attesa_estratto: "Pagata · estratto da richiedere", pagata: "Pagata · calcolo da avviare", in_elaborazione: "Calcolo in corso",
+        consegnata: "Consegnata al cliente", da_rivedere: "Da verificare: prospetto trattenuto", fallita: "Calcolo non riuscito" };
+      let c = "", segreto = "";
+      try { segreto = sessionStorage.getItem("stima-ufficio") || ""; } catch { /* archivio del browser non disponibile */ }
+
+      const avvisa = (t) => { msg.textContent = t; msg.classList.toggle("hidden", !t); };
+      const dataIt = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ""); return m ? `${m[3]}/${m[2]}/${m[1]}` : s || ""; };
+      async function chiedi(azione, altro) {
+        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json", "x-stima-token": segreto }, body: JSON.stringify({ c, azione, ...altro }) });
+        const dati = await res.json().catch(() => ({}));
+        if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status });
+        return dati;
+      }
+      function errore(e) {
+        avvisa(e.stato === 403 ? "Segreto dell'ufficio non valido." : e.stato === 404 ? "Nessuna pratica con questo codice." : e.stato === 429 ? "Troppi tentativi: riprova tra un'ora."
+          : e.stato === 409 ? "La pratica non è nello stato giusto per questa operazione: ricarica la pagina." : "Operazione non riuscita. Riprova tra poco.");
+        if (e.stato === 403) { box.classList.add("hidden"); form.classList.remove("hidden"); }
+      }
+      function bottone(testo, classe, azione) {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = classe; b.textContent = testo;
+        b.addEventListener("click", async () => {
+          b.disabled = true; avvisa("");
+          try { await azione(); } catch (e) { errore(e); } finally { b.disabled = false; }
+        });
+        azioni.append(b);
+      }
+      function blocco(titolo, righe) {
+        if (!righe.length) return;
+        const d = document.createElement("div");
+        d.className = "rounded-2xl bg-white p-4";
+        const h = document.createElement("h3");
+        h.className = "text-lg font-extrabold"; h.textContent = titolo;
+        const ul = document.createElement("ul");
+        ul.className = "mt-2 list-disc pl-5";
+        for (const r of righe) { const li = document.createElement("li"); li.textContent = r; ul.append(li); }
+        d.append(h, ul);
+        dettagli.append(d);
+      }
+      async function scarica() {
+        const { pdf_base64 } = await chiedi("pdf");
+        const bin = atob(pdf_base64), bytes = new Uint8Array(bin.length);
+        for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+        const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+        const link = document.createElement("a");
+        link.href = url; link.download = `stima-pensione-${c.slice(0, 6)}.pdf`; link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      }
+      async function caricaEstratto() {
+        const f = $("uf-file").files[0];
+        if (!f || !/\.pdf$/i.test(f.name) || f.size > 3_000_000) return avvisa("Scegli l'estratto in PDF, massimo 3 MB.");
+        const bytes = new Uint8Array(await f.arrayBuffer());
+        let bin = "";
+        for (let k = 0; k < bytes.length; k += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(k, k + 0x8000));
+        mostra(await chiedi("carica-estratto", { pdf: btoa(bin) }));
+      }
+      function mostra(p) {
+        form.classList.add("hidden");
+        box.classList.remove("hidden");
+        azioni.replaceChildren();
+        dettagli.replaceChildren();
+        const r = p.risposte || {};
+        $("uf-titolo").textContent = `${r.nome || ""} ${r.cognome || ""}`.trim() || "Pratica";
+        $("uf-stato").textContent = STATI[p.stato] || p.stato;
+        $("uf-carica").classList.toggle("hidden", p.stato !== "attesa_estratto");
+        if (p.prospetto) bottone("Scarica il prospetto", SECONDARIO, scarica);
+        if (p.stato === "da_rivedere") bottone("Verificato: consegna al cliente", PRIMARIO, async () => { if (confirm("Il cliente potrà scaricare il prospetto e riceverà l'avviso. Confermi?")) mostra(await chiedi("rilascia")); });
+        if (p.stato === "attesa_estratto") bottone("Carica l'estratto", PRIMARIO, caricaEstratto);
+        if (p.stato === "fallita") bottone("Rimetti in coda il calcolo", PRIMARIO, async () => mostra(await chiedi("riprova")));
+        if (p.stato === "pagata") bottone("Avvia il calcolo ora (alcuni minuti)", PRIMARIO, async () => mostra(await chiedi("calcola")));
+        if (p.stato === "ricevuta") bottone("Segna come pagata", SECONDARIO, async () => { if (confirm("Segnare la pratica come pagata senza un pagamento registrato?")) mostra(await chiedi("segna-pagata")); });
+        bottone("Aggiorna", SECONDARIO, async () => mostra(await chiedi("dettaglio")));
+
+        const s = p.stima;
+        if (s) {
+          blocco("Motivi della verifica", s.revisione);
+          const riepilogo = [];
+          if (s.prima_uscita) riepilogo.push(`Prima uscita possibile: ${s.prima_uscita.canale} dal ${dataIt(s.prima_uscita.decorrenza)}`);
+          if (s.contributi_ad_oggi) riepilogo.push(`Contributi ad oggi: ${s.contributi_ad_oggi}`);
+          if (s.estratto && s.estratto.intestatario) riepilogo.push(`Estratto di ${s.estratto.intestatario}, ${s.estratto.righe} righe lette`);
+          if (s.sintesi) riepilogo.push(s.sintesi);
+          blocco("La stima in breve", riepilogo);
+          blocco("Confronto con la simulazione INPS", s.confronto_inps.map((x) => `${x.canale}: INPS ${x.importo_inps} €, stima ${x.importo_stima} € (${x.scarto_percento > 0 ? "+" : ""}${x.scarto_percento}%)`));
+          blocco("Controlli", s.controlli);
+          blocco("Dubbi nella lettura", s.dubbi);
+          blocco("Limiti del calcolo", s.limiti);
+        }
+        const pag = p.pagamento;
+        blocco("Pratica", [
+          `Codice: ${p.codice}`, `Creata: ${dataIt(p.creata)}`, `Prezzo: ${(p.prezzo.totale / 100).toLocaleString("it-IT")} €${p.prezzo.estratto ? " (con richiesta estratto)" : ""}`,
+          pag ? `Pagamento: ${pag.come}${pag.riferimento ? ", riferimento " + pag.riferimento : ""}${pag.importo ? ", incassato " + pag.importo : ""}` : "Pagamento: non ancora registrato",
+          `Documenti caricati: ${p.documenti.join(", ") || "nessuno"}`, p.prelettura_settimane ? `Prima lettura dell'estratto: ${Math.round(p.prelettura_settimane)} settimane` : "",
+          p.tentativi ? `Tentativi di calcolo: ${p.tentativi}${p.errore ? " · ultimo errore: " + p.errore : ""}` : "", `Nel CRM: ${p.crm ? "sì" : "non ancora collegata"}`,
+        ].filter(Boolean));
+        blocco("Risposte del questionario", Object.entries(r).filter(([, v]) => v !== "" && v !== null && !(Array.isArray(v) && !v.length) && v !== false)
+          .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.map((x) => (typeof x === "object" ? JSON.stringify(x) : x)).join(", ") : v}`));
+      }
+      async function apri() {
+        avvisa("");
+        try { mostra(await chiedi("dettaglio")); try { sessionStorage.setItem("stima-ufficio", segreto); } catch { /* facoltativo */ } }
+        catch (e) { errore(e); }
+      }
+      const ancora = location.hash.match(/c=([A-Za-z0-9_-]{16,40})/);
+      c = ancora ? ancora[1] : "";
+      $("uf-codice").value = c;
+      if (c && segreto) apri();
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        c = $("uf-codice").value.trim(); segreto = $("uf-segreto").value;
+        if (!c || !segreto) return avvisa("Inserisci il codice pratica e il segreto dell'ufficio.");
+        apri();
+      });
+    })();
+  </script>
+</BaseLayout>
