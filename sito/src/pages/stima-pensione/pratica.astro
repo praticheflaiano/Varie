@@ -118,14 +118,17 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
           rileggi = 15000;
         } else if (p.stato === "consegnata") {
           titolo = "La tua stima è pronta";
-          testo = "Scarica il prospetto in PDF. Puoi tornare su questa pagina quando vuoi: sul prospetto trovi anche un codice QR per ritrovarlo.";
+          testo = "Scarica il prospetto in PDF. Puoi tornare su questa pagina quando vuoi: sul prospetto trovi anche un codice QR per ritrovarlo. " +
+            "Nel prezzo è compresa una consulenza con un nostro operatore, al telefono o in chat, per farti spiegare il risultato: è facoltativa, la prenoti quando vuoi.";
           bottone("Scarica il prospetto", PRIMARIO, scarica);
+          { const a = document.createElement("a"); a.href = "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1"; a.target = "_blank"; a.rel = "noopener"; a.className = SECONDARIO + " no-underline"; a.textContent = "Prenota la consulenza inclusa"; azioni.append(a); }
         } else if (p.stato === "da_rivedere") {
           titolo = "La tua stima è in verifica";
           testo = "I controlli automatici hanno segnalato un punto da verificare a mano. Il nostro ufficio la controlla e ti avvisa appena il prospetto è disponibile, senza costi aggiuntivi.";
         } else if (p.stato === "attesa_estratto") {
           titolo = "Stiamo richiedendo il tuo estratto contributivo";
-          testo = "Pagamento ricevuto. Appena l'INPS ci rende disponibile il tuo estratto calcoliamo la stima e ti avvisiamo.";
+          testo = "Pagamento ricevuto. Gli estratti li richiediamo la mattina, dalle 9:30 alle 13:00, nei giorni di apertura dell'ufficio: se hai fatto la richiesta nel pomeriggio o la sera, la stima arriva dal giorno lavorativo successivo. " +
+            "Appena l'INPS ci rende disponibile il tuo estratto ti avvisiamo via email. La consulenza con un operatore resta inclusa.";
         } else if (p.stato === "fallita") {
           titolo = "Il calcolo non è riuscito";
           testo = p.riprovabile ? "Qualcosa si è interrotto durante il calcolo. Puoi riprovare ora: non paghi di nuovo." : "Il calcolo non è riuscito. Il nostro ufficio se ne occupa e ti ricontatta: non devi pagare di nuovo.";

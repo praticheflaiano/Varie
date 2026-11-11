@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { testoDaPdf, leggiEstrattoLocale, type EstrattoLetto } from "~/utils/estrattoInps";
+  import { leggiPdf, leggiEstrattoDiretto, leggiEstrattoLocale, NOMI_GESTIONE, type EstrattoLetto } from "~/utils/estrattoInps";
   import Attesa from "./Attesa.svelte";
   // Questionario "Stima e Calcolo della pensione".
   // Raccoglie dati e documenti PRIMA del pagamento; l'invio va all'endpoint
@@ -65,7 +65,7 @@
     scrollTop();
     try {
       const corpo: Record<string, unknown> = { risposte: a, pdf: inBase64(await f.arrayBuffer()) };
-      if (letto && modoLettura === "ai") corpo.prelettura_settimane = letto.totaleSettimane;
+      if (letto && modoLettura !== "locale") corpo.prelettura_settimane = letto.totaleSettimane;
       // Allegati facoltativi: entrano solo se il totale resta entro ~3 MB (limite della funzione).
       let spazio = 3_000_000 - f.size;
       const esclusi: string[] = [];
@@ -207,7 +207,7 @@
 
   // Estratto letto in automatico nel browser (vedi utils/estrattoInps.ts).
   let letto = $state<(EstrattoLetto & { totaleDichiarato?: string }) | null>(null);
-  let modoLettura = $state<"ai" | "locale" | "">("");
+  let modoLettura = $state<"diretta" | "ai" | "locale" | "">("");
   let leggendo = $state(false);
   let compilati = $state<string[]>([]);
   let consensoLettura = $state(false);
@@ -249,10 +249,13 @@
     }
     leggendo = true;
     try {
-      const linee = await testoDaPdf(f);
-      const ai = await leggiConAi(linee, f);
-      const r = ai ?? leggiEstrattoLocale(linee);
-      modoLettura = ai ? "ai" : "locale";
+      // 1) lettura diretta del testo del PDF, qui nel browser (l'estratto scaricato dal sito INPS): nessuna riga persa;
+      // 2) se il PDF è una scansione o ha un'impaginazione diversa, lettura con AI sul server; 3) riserva: righe di testo.
+      const pdf = await leggiPdf(f);
+      const diretta = leggiEstrattoDiretto(pdf);
+      const ai = diretta ? null : await leggiConAi(pdf.linee, f);
+      const r = diretta ?? ai ?? leggiEstrattoLocale(pdf.linee);
+      modoLettura = diretta ? "diretta" : ai ? "ai" : "locale";
       letto = r;
       const buchi: { da: number; a: number; motivo: string }[] = [];
       for (let k = 1; k < r.anni.length && buchi.length < 5; k++) {
@@ -368,7 +371,7 @@
       if (f && !a.richiediEstratto) {
         corpo.pdf = inBase64(await f.arrayBuffer());
         spazio -= f.size;
-        if (letto && modoLettura === "ai") corpo.prelettura_settimane = letto.totaleSettimane;
+        if (letto && modoLettura !== "locale") corpo.prelettura_settimane = letto.totaleSettimane;
       }
       // Allegati facoltativi: entrano solo se il totale resta entro ~3 MB (limite della funzione).
       for (const chiave of ["simulazione", "busta"] as const) {
@@ -593,6 +596,7 @@
         <div id="richiesta-estratto" class="mb-5 rounded-2xl border-2 border-[#14142B] bg-white p-4">
           <h3 class="text-lg font-extrabold text-[#14142B]">Richiediamo noi il tuo estratto contributivo</h3>
           <p class="mt-1 text-[#3F3F5A]">Costo aggiuntivo {prezzoEstratto} €, totale {totale} €. Compila il modulo qui sotto scegliendo "estratto contributivo": la stima parte quando l'INPS ce lo rende disponibile.</p>
+          <p class="mt-2 text-[#3F3F5A]"><strong>Serve un po' più di tempo:</strong> gli estratti li richiediamo la mattina, dalle 9:30 alle 13:00, nei giorni di apertura dell'ufficio. Se fai la richiesta nel pomeriggio o la sera, la stima arriva dal giorno lavorativo successivo. La consulenza con un operatore, al telefono o in chat, resta inclusa nel prezzo.</p>
           {#if mandatoUrl}<p class="mt-2"><a class="font-bold text-[#4B2FE0] underline" href={mandatoUrl} target="_blank" rel="noopener">Scarica il mandato</a></p>{/if}
           {#if surveyId}
             <iframe src={`https://link.arcanis.it/widget/survey/${surveyId}`} id={surveyId} title="Richiesta estratto contributivo INPS" scrolling="no" class="mt-3 w-full border-0" style="min-height:616px"></iframe>
@@ -621,7 +625,11 @@
               <div><dt class="text-sm text-[#6B6B85]">Periodi trovati</dt><dd class="font-semibold">{letto.righe.length}{#if letto.anni.length} · dal {letto.anni[0].anno} al {letto.anni[letto.anni.length - 1].anno}{/if}</dd></div>
               <div><dt class="text-sm text-[#6B6B85]">Contributi letti</dt><dd class="font-semibold">{letto.totaleSettimane} settimane (circa {Math.floor(letto.totaleSettimane / 52)} anni e {Math.round((letto.totaleSettimane % 52) / 4.33)} mesi)</dd></div>
               {#if letto.totaleDichiarato}<div><dt class="text-sm text-[#6B6B85]">Totale indicato sull'estratto</dt><dd class="font-semibold">{letto.totaleDichiarato}</dd></div>{/if}
+              {#if letto.gestioni?.length}<div class="sm:col-span-2"><dt class="text-sm text-[#6B6B85]">Dove hai versato</dt><dd class="font-semibold">{letto.gestioni.map((g) => `${NOMI_GESTIONE[g.codice] ?? "Altra contribuzione"}: ${g.settimane} settimane`).join(" · ")}</dd></div>{/if}
             </dl>
+            {#if modoLettura === "diretta"}
+              <p class="mt-2 text-sm text-[#6B6B85]">Abbiamo letto tutte le {letto.righe.length} righe del documento direttamente dal file, qui sul tuo dispositivo.</p>
+            {/if}
             {#if letto.anni.length}
               <details class="mt-3">
                 <summary class="cursor-pointer font-bold text-[#4B2FE0]">Vedi il dettaglio anno per anno</summary>
@@ -636,6 +644,34 @@
                   </table>
                 </div>
               </details>
+            {/if}
+            {#if letto.righe.some((r) => r.unita)}
+              <details class="mt-3">
+                <summary class="cursor-pointer font-bold text-[#4B2FE0]">Vedi tutte le righe lette</summary>
+                <div class="mt-2 max-h-80 overflow-auto rounded-xl border border-[#E4E4EE]">
+                  <table class="w-full text-left text-xs sm:text-sm">
+                    <thead class="sticky top-0 bg-[#14142B] text-white"><tr><th class="px-2 py-2">Dal</th><th class="px-2 py-2">Al</th><th class="px-2 py-2">Tipo</th><th class="px-2 py-2">Contributi</th><th class="px-2 py-2">Retribuzione</th><th class="px-2 py-2">Azienda</th><th class="px-2 py-2">Nota</th></tr></thead>
+                    <tbody>
+                      {#each letto.righe as r}
+                        <tr class="border-t border-[#E4E4EE] align-top"><td class="whitespace-nowrap px-2 py-1.5">{dataIt(r.dal)}</td><td class="whitespace-nowrap px-2 py-1.5">{dataIt(r.al)}</td><td class="px-2 py-1.5">{r.tipo}</td><td class="whitespace-nowrap px-2 py-1.5">{r.contributi ?? "—"} {r.contributi != null ? r.unita : ""}{#if r.contributiCalcolo != null && r.contributiCalcolo !== r.contributi}<span class="text-[#6B6B85]"> ({r.contributiCalcolo} per il calcolo)</span>{/if}</td><td class="whitespace-nowrap px-2 py-1.5">{r.importo != null ? euro(r.importo) : "—"}</td><td class="px-2 py-1.5">{r.azienda || "—"}</td><td class="px-2 py-1.5">{r.nota || ""}</td></tr>
+                      {/each}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            {/if}
+            {#if letto.legenda?.length || letto.segnalazioni?.length}
+              <div class="mt-3 rounded-xl border border-[#E4E4EE] p-3 text-sm">
+                {#if letto.legenda?.length}
+                  <p class="font-bold">Note riportate sull'estratto</p>
+                  <ul class="mt-1 space-y-1">{#each letto.legenda as v}<li><strong>{v.codice})</strong> {v.testo}</li>{/each}</ul>
+                {/if}
+                {#if letto.segnalazioni?.length}
+                  <p class="font-bold" class:mt-3={letto.legenda?.length}>Segnalazioni dell'INPS</p>
+                  <ul class="mt-1 list-disc pl-5">{#each letto.segnalazioni as v}<li>{v}</li>{/each}</ul>
+                  <p class="mt-1 text-[#6B6B85]">Ne teniamo conto: un nostro operatore le valuta insieme alla stima.</p>
+                {/if}
+              </div>
             {/if}
             {#if letto.avvisi.length}
               <ul class="mt-3 list-disc rounded-xl bg-[#FFE3EC] py-3 pl-8 pr-4 text-sm font-semibold">{#each letto.avvisi as v}<li>{v}</li>{/each}</ul>

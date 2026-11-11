@@ -1,3 +1,4 @@
 python-dateutil==2.9.0.post0
 reportlab==5.0.1
 vercel-blob==0.5.1
+pypdf==6.17.0
