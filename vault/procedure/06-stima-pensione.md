@@ -24,7 +24,57 @@ Fatto:
 Finché `PUBLIC_STIMA_PENSIONE_API` è vuota la pagina è `noindex`, fuori da sitemap e
 ricerca interna, e l'ultimo passo non invia nulla.
 
-## Prelettura dell'estratto (primo passo, prima del pagamento)
+## Lettura diretta dell'estratto (dal 2026-11-11): la fonte principale
+
+L'estratto scaricato dal sito INPS è un PDF **con testo vero** (generato con iText, pagina ruotata di 90°):
+ogni cella della tabella è un frammento di testo con la sua posizione. Non serve OCR né un modello: le righe
+e le colonne si ricompongono con codice deterministico, e nessuna riga va persa.
+
+Com'è fatto l'estratto ("Estratto Conto Previdenziale"), verificato su due estratti reali:
+
+- **Intestazione**: titolo, sezione (es. `Regime generale`), `Emesso il gg/mm/aaaa`; a destra nome, `nato a`, `il`, `Codice fiscale`, `residente in` (due righe).
+- **Tabella**, con intestazione ripetuta a ogni pagina: `Dal | Al | Tipo di contribuzione | unità | utili al diritto | utili al calcolo | Retribuzione o reddito (Euro) | Azienda | Note`.
+  - L'**unità cambia da riga a riga**: `sett.` per dipendenti e figurativi, `mesi` per i titolari d'impresa (12 mesi = 52 settimane).
+  - Il **tipo** dice la gestione: `Titolare di impresa COM.` = commercianti, `ART.` = artigiani (aliquota 24%, non 33%), `Lavoro dipendente`, `Lav.dipend. part-time`.
+  - **Diritto e calcolo possono differire** (part-time: 51 al diritto, 46,000 al calcolo).
+  - Righe **sovrapposte** nello stesso anno (lavoro + cassa integrazione, due gestioni) e righe a **0 contributi con importo** (`Cassa integrazione (Int)`, `Contr.solidar. ad integr`): si tengono tutte.
+  - Non tutte le righe hanno importo, azienda o nota.
+- **Note**: codice breve a fine riga (`O`, `0`, `5`, `c`…) spiegato nella legenda `Note:` sotto la tabella. Attenzione: `O` lettera e `0` zero sono codici diversi.
+- **Segnalazioni personalizzate e/o pratiche in corso**: es. posizione attiva presso un altro ente (Enasarco).
+- **Piè di pagina**: `Estratto conto di …`, `Pagina n di m`.
+
+Dove sta il codice (le due versioni hanno le stesse regole: se ne cambi una, cambia l'altra):
+
+| Dove | File | Quando |
+|---|---|---|
+| Browser | `sito/api/_lib/estrattoModel.ts` (`leggiEstrattoDaCelle`), `sito/src/utils/estrattoInps.ts` (`leggiPdf`, pdf.js) | Primo passo del questionario: il file **non lascia il dispositivo** |
+| Server | `sito/api/_pensione/estratto_inps.py` (`leggi_pdf`, pypdf) | Dopo il pagamento, in `elabora.py` |
+
+Ordine di lettura nel questionario: **diretta** → se il PDF non ha testo o una riga non torna (`completa` falso), **Mistral OCR** sul server → riserva per righe di testo.
+Dopo il pagamento: le righe sono quelle della lettura diretta; **Fable rilegge comunque il documento come controllo indipendente** (e trascrive simulazione e busta paga). Se le due letture differiscono lo si scrive nei controlli e il calcolo usa la lettura diretta; se Fable non risponde si prosegue con la sola lettura diretta. Per le scansioni vale la sola trascrizione di Fable.
+
+Cosa arriva al calcolo in più rispetto a prima: gestione per riga (e aliquota giusta), settimane utili al calcolo, note con il testo della legenda, segnalazioni INPS (mandano la stima in verifica all'operatore), aliquota dei contributi futuri presa dalla gestione più recente quando è diversa dalla prevalente.
+
+Prove: `python3 sito/api/_pensione/test_estratto.py` (estratto finto con la stessa impaginazione, nessun dato reale).
+Gli estratti veri dei clienti **non vanno messi nel repository**.
+
+Limiti noti: sezioni diverse dal Regime generale (Gestione separata, dipendenti pubblici) non sono state viste su estratti reali: se una riga non si legge per intero si passa alla lettura con AI. Coltivatori diretti e altre gestioni non mappate restano segnalate come "gestione non riconosciuta".
+
+## Stima "in verifica" = prospetto provvisorio già consegnato (dal 2026-11-11)
+
+Quando i controlli chiedono una verifica (`revisione_consigliata` non vuota → stato `da_rivedere`) il cliente **scarica comunque il prospetto**, indicato come provvisorio (riquadro rosa in prima pagina e sulla pagina della pratica), e viene invitato a prenotare l'appuntamento telefonico o a scrivere in chat. L'operatore riceve nota e compito sul CRM, completa la stima con il cliente e la conferma dalla pagina dell'ufficio ("Verificato: conferma la stima" → `consegnata`, email di conferma).
+
+## Impaginazione del prospetto e della pagina della pratica (dal 2026-11-11)
+
+- `prospetto_pdf.py`: testo a 11 punti, numero di pagine libero (di solito 3). Prima era forzato in due pagine rimpicciolendo il carattere fino all'82%: non rifarlo. Struttura: apertura con prima uscita e tre cifre chiave, "In breve", strada consigliata, una scheda per strada, alternative, cosa decidere, consulenza inclusa, QR, note in fondo (limiti, avvertenze, note tecniche, senza tagli).
+- `pratica.astro`: quando la stima è consegnata o provvisoria la pagina la mostra anche a schermo (`riepilogo_stima` in `pratiche.py`), con le stesse sezioni.
+
+## Consulenza con l'operatore inclusa (dal 2026-11-11)
+
+Nei 60 € è compresa una consulenza facoltativa con un operatore, al telefono o in chat. Lo dicono la pagina del servizio, il banner in home, la pagina della pratica (pulsante "Prenota la consulenza inclusa") e l'email di consegna del prospetto (`CONSULENZA` in `crm.py`; link in `STIMA_LINK_CONSULENZA`, predefinito il calendario generale delle prenotazioni).
+Se l'estratto lo richiediamo noi: le richieste si lavorano la mattina, 9:30-13:00, nei giorni di apertura; chi chiede di pomeriggio o di sera riceve la stima dal giorno lavorativo successivo (scritto in pagina, nel questionario, nella pagina della pratica e nell'email dopo il pagamento).
+
+## Prelettura con Mistral (solo scansioni e PDF con impaginazione diversa)
 
 Dopo la spunta di consenso il cliente carica il PDF. Il browser lo invia a
 `sito/api/stima/leggi-estratto.ts`, che via **OpenRouter** lo fa leggere a **Mistral OCR**

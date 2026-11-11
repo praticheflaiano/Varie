@@ -109,7 +109,7 @@ assert stato(recente)[1]["stato"] == "pagata" and stato(vecchia)[1]["stato"] == 
 # Pratica trattenuta per revisione, poi rilasciata dall'ufficio
 esiti["revisione"] = ["letture dell'estratto discordanti"]
 assert stato(recente, "avvia")[1]["stato"] == "da_rivedere"
-assert chiama("prospetto", {"c": recente, "n": "1962-03-10"})[0] == 404
+assert chiama("prospetto", {"c": recente, "n": "1962-03-10"})[0] == 200  # stima provvisoria: il prospetto si scarica subito
 assert chiama("pratica", {"c": recente, "azione": "rilascia"})[0] == 403, "le azioni dell'ufficio vogliono il segreto"
 assert chiama("pratica", {"c": recente, "azione": "dettaglio"}, **{"x-stima-token": "sbagliato"})[0] == 403
 d = chiama("pratica", {"c": recente, "azione": "dettaglio"}, **TOKEN)[1]
@@ -236,7 +236,7 @@ assert [x[:2] for x in chiamate] == [("PUT", "/opportunities/opp_1"), ("POST", "
 chiamate.clear()
 esiti["revisione"] = ["scarto dalla simulazione INPS oltre il 10%"]
 assert stato(c, "avvia")[1]["stato"] == "da_rivedere"
-assert [x[:2] for x in chiamate] == [("PUT", "/opportunities/opp_1"), ("POST", "/contacts/cont_1/notes"), ("POST", "/contacts/cont_1/tasks")], chiamate
+assert [x[:2] for x in chiamate] == [("PUT", "/opportunities/opp_1"), ("POST", "/contacts/cont_1/notes"), ("POST", "/contacts/cont_1/tasks"), ("POST", "/conversations/messages")], chiamate
 assert chiamate[0][2]["pipelineStageId"] == "f_ver" and "scarto dalla simulazione" in chiamate[2][2]["body"]
 chiamate.clear()
 chiama("pratica", {"c": c, "azione": "rilascia"}, **TOKEN)

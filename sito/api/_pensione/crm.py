@@ -34,7 +34,7 @@ FASI = {
 ETICHETTE = {
     "ricevuta": "questionario ricevuto, in attesa del pagamento", "pagata": "pagata, in attesa del calcolo",
     "in_elaborazione": "calcolo in corso", "attesa_estratto": "pagata: l'estratto contributivo va richiesto da noi",
-    "da_rivedere": "stima pronta ma TRATTENUTA: va verificata in ufficio", "fallita": "calcolo NON riuscito",
+    "da_rivedere": "stima PROVVISORIA consegnata: va completata dall'operatore", "fallita": "calcolo NON riuscito",
     "consegnata": "prospetto consegnato al cliente",
 }
 SENSIBILI = {"invalidita", "invaliditaPct", "invaliditaData", "caregiver"}
@@ -144,6 +144,12 @@ def _nota_stima(codice, pratica):
     return "\n".join(righe)
 
 
+# La consulenza con l'operatore (telefono o chat) è compresa nel prezzo: l'invito parte insieme al prospetto.
+LINK_CONSULENZA = os.environ.get("STIMA_LINK_CONSULENZA", "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1")
+CONSULENZA = ["Nel prezzo è compresa una consulenza con un nostro operatore, al telefono o in chat, per farti spiegare il risultato: è facoltativa.",
+              f"Prenota l'appuntamento telefonico quando preferisci: <a href=\"{LINK_CONSULENZA}\">{LINK_CONSULENZA}</a>. In alternativa scrivici su WhatsApp al 371 623 0690."]
+
+
 def _email(contatto, oggetto, righe):
     html = "".join(f"<p>{r}</p>" for r in righe)
     _prova("email al cliente", lambda: _api("POST", "/conversations/messages", {"type": "Email", "contactId": contatto, "subject": oggetto, "html": html}))
@@ -204,6 +210,11 @@ def sincronizza(codice, pratica, evento):
         nota(f"STIMA PENSIONE - pagamento registrato ({p.get('come', '')})\nCodice pratica: {codice}\nRiferimento: {p.get('riferimento') or 'n.d.'}"
              f"\nImporto incassato: {p.get('importo') or 'n.d.'}\nStato: {ETICHETTE[pratica['stato']]}\nPagina dell'ufficio: {ufficio}")
         if pratica["stato"] == "attesa_estratto":
+            _email(contatto, "Stiamo richiedendo il tuo estratto contributivo", [
+                f"Ciao {r.get('nome', '')},", "abbiamo ricevuto il pagamento e la tua richiesta dell'estratto contributivo.",
+                "Gli estratti li richiediamo la mattina, dalle 9:30 alle 13:00, nei giorni di apertura dell'ufficio: se hai fatto la richiesta nel pomeriggio o la sera, la lavoriamo dal giorno lavorativo successivo.",
+                f"Ti avvisiamo appena è disponibile. Segui la pratica da qui: <a href=\"{cliente}\">{cliente}</a>",
+                "La consulenza con un nostro operatore, al telefono o in chat, resta compresa nel prezzo.", "Centro Pratiche Flaiano"])
             compito(f"Stima pensione: richiedere l'estratto contributivo di {nome}", f"Pagata. Richiedere l'estratto all'INPS e caricarlo dalla pagina dell'ufficio: {ufficio}")
     elif evento == "estratto":
         nota(f"STIMA PENSIONE - estratto caricato dall'ufficio, pratica pronta per il calcolo\nCodice pratica: {codice}\nPagina del cliente: {cliente}")
@@ -219,16 +230,22 @@ def sincronizza(codice, pratica, evento):
             nota(_nota_stima(codice, pratica))
             if pratica["stato"] == "da_rivedere":
                 motivi = "; ".join((pratica.get("stima") or {}).get("revisione_consigliata") or [])
-                compito(f"Stima pensione: verificare la stima di {nome}", f"Il cliente ha pagato e aspetta. Motivi: {motivi}. Controllare il prospetto e sbloccarlo dalla pagina dell'ufficio: {ufficio}")
+                compito(f"Stima pensione: completare la stima di {nome}", f"Il cliente ha già il prospetto PROVVISORIO e l'invito a prenotare la consulenza. Motivi della verifica: {motivi}. Controllare, completare la stima con il cliente e confermarla dalla pagina dell'ufficio: {ufficio}")
+                _email(contatto, "La tua stima della pensione è pronta (versione provvisoria)", [
+                    f"Ciao {r.get('nome', '')},", "la tua Stima e Calcolo della pensione è pronta in versione provvisoria.",
+                    f"Scarica il prospetto dalla tua pratica: <a href=\"{cliente}\">{cliente}</a> (ti verrà chiesta la data di nascita).",
+                    "I controlli automatici hanno segnalato alcuni punti da verificare a mano: li trovi indicati nel prospetto. Il nostro operatore ha già ricevuto la segnalazione e provvede a completare la stima, senza costi aggiuntivi.",
+                    f"Per definirla insieme prenota l'appuntamento telefonico, compreso nel prezzo: <a href=\"{LINK_CONSULENZA}\">{LINK_CONSULENZA}</a>. In alternativa scrivici in chat su WhatsApp al 371 623 0690.",
+                    "Centro Pratiche Flaiano"])
             else:
                 _email(contatto, "La tua stima della pensione è pronta", [
                     f"Ciao {r.get('nome', '')},", "la tua Stima e Calcolo della pensione è pronta.",
-                    f"Scarica il prospetto dalla tua pratica: <a href=\"{cliente}\">{cliente}</a> (ti verrà chiesta la data di nascita).", "Centro Pratiche Flaiano"])
+                    f"Scarica il prospetto dalla tua pratica: <a href=\"{cliente}\">{cliente}</a> (ti verrà chiesta la data di nascita).", *CONSULENZA, "Centro Pratiche Flaiano"])
     elif evento == "rilasciata":
         nota(f"STIMA PENSIONE - prospetto verificato dall'ufficio e consegnato al cliente\nCodice pratica: {codice}")
         _email(contatto, "La tua stima della pensione è pronta", [
-            f"Ciao {r.get('nome', '')},", "abbiamo verificato la tua Stima e Calcolo della pensione: il prospetto è pronto.",
-            f"Scaricalo dalla tua pratica: <a href=\"{cliente}\">{cliente}</a> (ti verrà chiesta la data di nascita).", "Centro Pratiche Flaiano"])
+            f"Ciao {r.get('nome', '')},", "il nostro operatore ha verificato la tua Stima e Calcolo della pensione: la stima è confermata.",
+            f"Scaricalo dalla tua pratica: <a href=\"{cliente}\">{cliente}</a> (ti verrà chiesta la data di nascita).", *CONSULENZA, "Centro Pratiche Flaiano"])
 
     pratica["crm"] = crm
     return crm != prima
