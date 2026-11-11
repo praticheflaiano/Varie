@@ -36,7 +36,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
       const PRIMARIO = "rounded-full bg-[#5B3DF5] px-6 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50";
       const SECONDARIO = "rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B] disabled:opacity-50";
       const STATI = { ricevuta: "In attesa del pagamento", attesa_estratto: "Pagata · estratto da richiedere", pagata: "Pagata · calcolo da avviare", in_elaborazione: "Calcolo in corso",
-        consegnata: "Consegnata al cliente", da_rivedere: "Da verificare: prospetto trattenuto", fallita: "Calcolo non riuscito" };
+        consegnata: "Consegnata al cliente", da_rivedere: "Da completare: il cliente ha il prospetto provvisorio", fallita: "Calcolo non riuscito" };
       let c = "", segreto = "";
       try { segreto = sessionStorage.getItem("stima-ufficio") || ""; } catch { /* archivio del browser non disponibile */ }
 
@@ -101,7 +101,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
         $("uf-stato").textContent = STATI[p.stato] || p.stato;
         $("uf-carica").classList.toggle("hidden", p.stato !== "attesa_estratto");
         if (p.prospetto) bottone("Scarica il prospetto", SECONDARIO, scarica);
-        if (p.stato === "da_rivedere") bottone("Verificato: consegna al cliente", PRIMARIO, async () => { if (confirm("Il cliente potrà scaricare il prospetto e riceverà l'avviso. Confermi?")) mostra(await chiedi("rilascia")); });
+        if (p.stato === "da_rivedere") bottone("Verificato: conferma la stima", PRIMARIO, async () => { if (confirm("Il cliente riceverà l'avviso che la stima è stata verificata e confermata. Confermi?")) mostra(await chiedi("rilascia")); });
         if (p.stato === "attesa_estratto") bottone("Carica l'estratto", PRIMARIO, caricaEstratto);
         if (p.stato === "fallita") bottone("Rimetti in coda il calcolo", PRIMARIO, async () => mostra(await chiedi("riprova")));
         if (p.stato === "pagata") bottone("Avvia il calcolo ora (alcuni minuti)", PRIMARIO, async () => mostra(await chiedi("calcola")));

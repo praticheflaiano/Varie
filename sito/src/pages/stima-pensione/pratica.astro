@@ -123,8 +123,12 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
           bottone("Scarica il prospetto", PRIMARIO, scarica);
           { const a = document.createElement("a"); a.href = "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1"; a.target = "_blank"; a.rel = "noopener"; a.className = SECONDARIO + " no-underline"; a.textContent = "Prenota la consulenza inclusa"; azioni.append(a); }
         } else if (p.stato === "da_rivedere") {
-          titolo = "La tua stima è in verifica";
-          testo = "I controlli automatici hanno segnalato un punto da verificare a mano. Il nostro ufficio la controlla e ti avvisa appena il prospetto è disponibile, senza costi aggiuntivi.";
+          titolo = "La tua stima è pronta, in versione provvisoria";
+          testo = "Puoi già scaricare il prospetto. I controlli automatici hanno segnalato uno o più punti da verificare a mano: li trovi indicati nel prospetto. " +
+            "Il nostro operatore ha già ricevuto la segnalazione e completa la stima, senza costi aggiuntivi. " +
+            "Per definirla insieme prenota l'appuntamento telefonico compreso nel prezzo, oppure scrivici in chat su WhatsApp al 371 623 0690.";
+          bottone("Scarica il prospetto provvisorio", PRIMARIO, scarica);
+          { const a = document.createElement("a"); a.href = "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1"; a.target = "_blank"; a.rel = "noopener"; a.className = SECONDARIO + " no-underline"; a.textContent = "Prenota l'appuntamento con l'operatore"; azioni.append(a); }
         } else if (p.stato === "attesa_estratto") {
           titolo = "Stiamo richiedendo il tuo estratto contributivo";
           testo = "Pagamento ricevuto. Gli estratti li richiediamo la mattina, dalle 9:30 alle 13:00, nei giorni di apertura dell'ufficio: se hai fatto la richiesta nel pomeriggio o la sera, la stima arriva dal giorno lavorativo successivo. " +

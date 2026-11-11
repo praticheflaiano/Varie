@@ -9,7 +9,7 @@ Stati di una pratica:
   pagata           pagata (anche a zero euro con coupon GHL), pronta per il calcolo
   in_elaborazione  calcolo in corso (una sola esecuzione alla volta: file di blocco)
   consegnata       prospetto pronto e scaricabile dal cliente
-  da_rivedere      prospetto pronto ma trattenuto: i controlli chiedono una verifica dell'ufficio
+  da_rivedere      prospetto PROVVISORIO già scaricabile: i controlli chiedono che l'operatore completi la stima
   fallita          calcolo non riuscito (si può riprovare fino a MAX_TENTATIVI)
 
 Variabili d'ambiente:
@@ -296,7 +296,7 @@ def carica_estratto(codice, b64):
 
 
 def rilascia(codice):
-    """L'ufficio ha verificato una pratica trattenuta: il prospetto diventa scaricabile."""
+    """L'ufficio ha verificato una stima provvisoria: la pratica passa a consegnata e il cliente viene avvisato."""
     pratica = carica(codice)
     if not pratica or pratica["stato"] != "da_rivedere":
         return None
