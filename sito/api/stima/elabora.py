@@ -148,13 +148,20 @@ def codice_gestione(testo):
 
 def righe_in_contributi(letto):
     """Aggrega le righe trascritte per anno e gestione. Restituisce (contributi, dubbi, primo_accredito)."""
-    agg, dubbi, primo = {}, [], None
+    agg, dubbi, primo, senza_unita = {}, [], None, 0
     for p in letto.get("periodi") or []:
         dal, al = p.get("dal", ""), p.get("al", "")
         if not (ISO.match(dal) and ISO.match(al)) or al < dal:
             dubbi.append(f"Riga con date non leggibili ({dal or '?'} - {al or '?'}): non conteggiata.")
             continue
         sett = in_settimane(p.get("unita"), p.get("contributi_diritto"))
+        if sett is None and p.get("unita") == "sconosciuta":
+            # Unità non indicata sul documento: se il numero è compatibile con le settimane del periodo, lo si tratta come settimane.
+            n = numero(p.get("contributi_diritto") or "")
+            giorni = (date.fromisoformat(al) - date.fromisoformat(dal)).days + 1
+            if n is not None and 0 <= n <= -(-giorni // 7) + 1:
+                sett = round(n)
+                senza_unita += 1
         if sett is None:
             dubbi.append(f"{dal} - {al} ({p.get('tipo','')}): contributi non leggibili, riga non conteggiata.")
             continue
@@ -171,6 +178,8 @@ def righe_in_contributi(letto):
         if imp:
             e["imponibile"] += imp
         primo = dal if primo is None or dal < primo else primo
+    if senza_unita:
+        dubbi.append(f"In {senza_unita} righe l'estratto non indica l'unità dei contributi: sono state lette come settimane perché compatibili con la durata del periodo.")
     contributi = [{"anno": a, "gestione": g, "settimane": v["settimane"], "figurative": v["figurative"], "imponibile": round(v["imponibile"], 2)}
                   for (a, g), v in sorted(agg.items())]
     return contributi, sorted(set(dubbi)), primo

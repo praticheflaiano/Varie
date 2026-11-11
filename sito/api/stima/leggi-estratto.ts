@@ -114,12 +114,21 @@ export function daRisposta(r: any) {
   if (r.note) avvisi.push(`Nota di lettura: ${String(r.note).slice(0, 300)}`);
   const righe: RigaEstratto[] = [];
   let scartate = 0;
+  let senzaUnita = 0;
   for (const p of Array.isArray(r.periodi) ? r.periodi : []) {
     if (!ISO.test(p.dal) || !ISO.test(p.al) || p.al < p.dal) { scartate++; continue; }
     const tipo = [p.tipo, p.gestione].filter(Boolean).join(" · ");
-    righe.push({ dal: p.dal, al: p.al, tipo, settimane: inSettimane(p.unita, p.contributi_diritto ?? ""), importo: p.importo ? num(p.importo) : null, figurativa: RE_FIGURATIVA.test(p.tipo || "") });
+    let settimane = inSettimane(p.unita, p.contributi_diritto ?? "");
+    if (settimane === null && p.unita === "sconosciuta") {
+      // Unità non indicata: se il numero è compatibile con le settimane del periodo, lo si tratta come settimane.
+      const n = num(String(p.contributi_diritto ?? ""));
+      const giorni = (Date.parse(p.al) - Date.parse(p.dal)) / 86400000 + 1;
+      if (n !== null && n >= 0 && n <= Math.ceil(giorni / 7) + 1) { settimane = Math.round(n); senzaUnita++; }
+    }
+    righe.push({ dal: p.dal, al: p.al, tipo, settimane, importo: p.importo ? num(p.importo) : null, figurativa: RE_FIGURATIVA.test(p.tipo || "") });
   }
   if (scartate) avvisi.push(`${scartate} ${scartate === 1 ? "riga ha" : "righe hanno"} date non leggibili e non ${scartate === 1 ? "è stata contata" : "sono state contate"}.`);
+  if (senzaUnita) avvisi.push(`In ${senzaUnita} righe l'estratto non indica l'unità dei contributi: le abbiamo lette come settimane.`);
   const cf = /^[A-Z0-9]{16}$/i.test(r.codice_fiscale || "") ? String(r.codice_fiscale).toUpperCase() : "";
   const dalCf = cf ? daCodiceFiscale(cf) : null;
   const letto = componi(
