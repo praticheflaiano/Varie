@@ -5,7 +5,7 @@
   // acceso finché l'attesa non finisce. Niente percentuali inventate.
   import { onMount } from "svelte";
 
-  type Variante = "lettura" | "invio" | "calcolo";
+  type Variante = "lettura" | "invio" | "pagamento" | "calcolo";
   interface Props {
     variante: Variante;
     /** Se indicato, il riquadro parte nascosto e si accende/spegne con un evento della finestra
@@ -27,10 +27,16 @@
       nota: "Non chiudere la pagina: tra un attimo passi al pagamento.",
       passi: [["Prepariamo i documenti", 2], ["Li salviamo nell'archivio riservato", 6], ["Ti portiamo al pagamento", 0]],
     },
+    pagamento: {
+      titolo: "Stiamo verificando il pagamento",
+      durata: "Di solito meno di un minuto",
+      nota: "Non chiudere e non ricaricare la pagina: appena arriva la conferma si aggiorna da sola e puoi avviare il calcolo.",
+      passi: [["Pagamento inviato", 2], ["Aspettiamo la conferma del pagamento", 40], ["Sblocchiamo la tua pratica", 0]],
+    },
     calcolo: {
       titolo: "Stiamo calcolando la tua stima",
       durata: "Di solito servono da 2 a 5 minuti",
-      nota: "Tieni aperta questa pagina. Se la chiudi non perdi nulla: la stima la ritrovi riaprendo questo indirizzo.",
+      nota: "Non chiudere questa pagina finché il calcolo non è finito. Se si interrompe qualcosa non perdi né il pagamento né i dati: riapri il link della tua pratica e riparti da dove eri.",
       passi: [["Rileggiamo l'estratto riga per riga", 50], ["Calcoliamo date e importi di ogni strada", 25], ["Confrontiamo le alternative", 30], ["Scriviamo il prospetto", 0]],
     },
   };
@@ -65,7 +71,7 @@
     }
     const ascolta = (e: Event) => accendi(Boolean((e as CustomEvent).detail));
     window.addEventListener(evento, ascolta);
-    if ((window as unknown as { stimaAttesa?: boolean }).stimaAttesa) accendi(true);
+    if ((window as unknown as { stimaAttese?: Record<string, boolean> }).stimaAttese?.[evento]) accendi(true);
     return () => { window.removeEventListener(evento, ascolta); clearInterval(timer); };
   });
 </script>

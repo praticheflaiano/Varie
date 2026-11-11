@@ -116,7 +116,11 @@ una sola pratica in attesa, è la sua; 3) altrimenti il pagamento resta "aperto"
 
 Attesa: `sito/src/components/pensione/Attesa.svelte` (foglio animato, passi a tempo, tempo
 trascorso) per lettura dell'estratto, invio e calcolo; sulla pagina della pratica si accende con
-l'evento `stima-attesa`.
+l'evento `stima-attesa`. Al ritorno dal pagamento (segnato dal questionario in `localStorage`) la
+pagina mostra per al massimo 3 minuti la verifica animata (`stima-attesa-pagamento`) rileggendo
+lo stato ogni 5 secondi: la conferma di GHL arriva dopo circa 30 secondi. Durante il calcolo il
+browser chiede conferma prima di chiudere la pagina. La pagina mostra sempre il link della pratica
+da salvare: riaprendolo con la data di nascita si riparte dallo stato salvato sul server.
 
 Stati: `ricevuta`, `attesa_estratto`, `pagata`, `in_elaborazione`, `consegnata`, `da_rivedere`, `fallita`.
 

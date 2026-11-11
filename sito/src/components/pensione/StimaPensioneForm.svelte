@@ -377,7 +377,7 @@
       if (res.status === 429) { sendError = "Hai già inviato più richieste nell'ultima ora: riprova più tardi oppure scrivici su WhatsApp."; return; }
       if (!res.ok || !data.next || !data.codice) throw new Error(String(res.status));
       // Serve alla pagina della pratica per ritrovarla al ritorno dal pagamento.
-      try { localStorage.setItem("stima-pratica", JSON.stringify({ c: data.codice, n: a.nascita })); } catch { /* archivio del browser non disponibile */ }
+      try { localStorage.setItem("stima-pratica", JSON.stringify({ c: data.codice, n: a.nascita, checkout: Date.now() })); } catch { /* archivio del browser non disponibile */ }
       window.location.assign(data.next);
     } catch {
       sendError = "Non siamo riusciti a inviare i dati. Riprova tra poco oppure scrivici su WhatsApp.";
