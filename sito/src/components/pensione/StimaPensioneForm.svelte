@@ -398,7 +398,7 @@
     <div class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
       <h3 class="text-lg font-extrabold">In breve</h3>
       <p class="mt-1">{stima.testo.sintesi}</p>
-      <p class="mt-3"><strong>Uscita consigliata:</strong> {stima.testo.uscita_consigliata.canale} ({stima.testo.uscita_consigliata.scenario}). {stima.testo.uscita_consigliata.motivo}</p>
+      <p class="mt-3"><strong>Uscita consigliata:</strong> {stima.testo.uscita_consigliata.canale} ({stima.testo.uscita_consigliata.scenario.toLowerCase()}). {stima.testo.uscita_consigliata.motivo}</p>
     </div>
     <p class="mt-4 text-[#14142B]">Contributi ad oggi: <strong>{base.contributi_ad_oggi}</strong> · Sistema di calcolo: <strong>{base.sistema_calcolo}</strong></p>
     {#each stima.scenari as sc}
@@ -417,7 +417,7 @@
                 <div><dt class="text-sm text-[#6B6B85]">Indennità mensile lorda (12 mensilità)</dt><dd class="font-semibold">{euro(c.importo.indennita_mensile_lorda_12)} · affidabilità {c.importo.affidabilita}</dd></div>
               {/if}
             </dl>
-            {#each stima.testo.spiegazione_canali.filter((x: any) => x.canale === c.canale && sc === stima.scenari[0]) as sp}<p class="mt-2">{sp.testo}</p>{/each}
+            {#each stima.testo.spiegazione_canali.filter((x: any) => x.canale === c.canale && x.scenario === sc.nome) as sp}<p class="mt-2">{sp.testo}</p>{/each}
             {#if c.note?.length}<ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">{#each c.note as n}<li>{n}</li>{/each}</ul>{/if}
           </div>
         {/each}

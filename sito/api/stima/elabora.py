@@ -67,8 +67,9 @@ SCHEMA_TESTO = {
         "sintesi": {"type": "string", "description": "Massimo 4 frasi semplici: prima uscita possibile, uscita consigliata, cosa decidere."},
         "uscita_consigliata": {"type": "object", "required": ["scenario", "canale", "motivo"], "properties": {
             "scenario": {"type": "string"}, "canale": {"type": "string"}, "motivo": {"type": "string"}}},
-        "spiegazione_canali": {"type": "array", "items": {"type": "object", "required": ["canale", "testo"], "properties": {
-            "canale": {"type": "string"}, "testo": {"type": "string", "description": "2-3 frasi: cosa significa per questa persona, pro e contro."}}}},
+        "spiegazione_canali": {"type": "array", "items": {"type": "object", "required": ["scenario", "canale", "testo"], "properties": {
+            "scenario": {"type": "string", "description": "Nome dello scenario, identico al campo 'nome' del JSON"},
+            "canale": {"type": "string", "description": "Nome del canale, identico al campo 'canale' del JSON, senza aggiunte"}, "testo": {"type": "string", "description": "2-3 frasi: cosa significa per questa persona, pro e contro."}}}},
         "decisioni": {"type": "array", "items": {"type": "object", "required": ["cosa", "entro"], "properties": {
             "cosa": {"type": "string"}, "entro": {"type": "string", "description": "Scadenza se nota dai dati, altrimenti stringa vuota"}}}},
         "dati_mancanti": {"type": "array", "items": {"type": "string"}},
@@ -79,7 +80,8 @@ SCHEMA_TESTO = {
 ISTRUZIONI_TESTO = (
     "Sei un consulente previdenziale di patronato. Ricevi in JSON le risposte del cliente, i controlli e i risultati del motore "
     "di calcolo per più scenari. Spiega il risultato in italiano semplice, dando del tu, nel formato JSON richiesto. "
-    "REGOLE: usa ESCLUSIVAMENTE date e importi presenti nel JSON, copiati identici; non calcolare e non stimare nuovi numeri; "
+    "REGOLE: usa ESCLUSIVAMENTE date e importi presenti nel JSON, senza cambiarne il valore; scrivi le date come gg/mm/aaaa e gli "
+    "importi all'italiana (es. 1.641,47 euro); non calcolare e non stimare nuovi numeri; "
     "non citare norme, requisiti o scadenze che non compaiono nel JSON; se l'affidabilità di un importo è 'bassa' o 'parziale' "
     "dillo chiaramente; segnala come dati mancanti ciò che renderebbe la stima più precisa (es. simulazione INPS 'La mia pensione "
     "futura' per chi ha contributi prima del 1996, periodi non accreditati indicati dal cliente). Non promettere nulla: è una stima indicativa."
