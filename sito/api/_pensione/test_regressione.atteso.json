@@ -1,0 +1,86 @@
+{
+  "motore": "conteggi_pensione.py",
+  "versione_parametri": "2026-11-09",
+  "impronta_input": "f76cc7772edf",
+  "data_calcolo": "2026-11-09",
+  "assistito": {
+    "nome": "Test regressione",
+    "nascita": "1962-03-10",
+    "sesso": "M",
+    "figli": 0
+  },
+  "gestione": "FPLD",
+  "sistema_calcolo": "misto (retributivo fino al 1995)",
+  "opzione_contributivo": false,
+  "contributi_ad_oggi": "42a 2m",
+  "settimane_ad_oggi": 2193.0,
+  "contributi_effettivi_ad_oggi": "42a 2m",
+  "settimane_al_1995": 589.0,
+  "ipotesi": {
+    "continua_lavoro": true,
+    "settimane_annue": 52.0,
+    "fino_a": null,
+    "imponibile_annuo_futuro": 34000.0,
+    "crescita_imponibile": 0.0,
+    "tasso_capitalizzazione_futuro": 0.02,
+    "rivalutazione_assegno_sociale": 0.02
+  },
+  "avvisi": [],
+  "canali": [
+    {
+      "canale": "Pensione di vecchiaia",
+      "note": [
+        "Maturazione dopo il 2028: requisiti 2029+ provvisori (prossimo adeguamento speranza di vita non ancora fissato).",
+        "Data basata sulla proiezione dei contributi futuri: ogni periodo non coperto la sposta in avanti.",
+        "Quota retributiva STIMATA: 2% x 11.3 anni x retribuzione pensionabile indicata.",
+        "Coefficienti 2029+ non ancora pubblicati: uso 2027-2028 (sovrastima probabile).",
+        "Montante con tassi di capitalizzazione futuri ipotetici (2.0%)."
+      ],
+      "stato": "da maturare",
+      "data_maturazione": "2029-06-10",
+      "finestra_mesi": 0,
+      "decorrenza": "2029-07-01",
+      "eta_alla_decorrenza": "67a 3m",
+      "contributi_alla_decorrenza": "44a 10m",
+      "importo": {
+        "montante": 389277.23,
+        "coeff_trasf_%": 5.5623,
+        "tabella_coeff": "2027-2028",
+        "quota_contributiva_annua": 21652.57,
+        "quota_retributiva_annua": 7249.23,
+        "lordo_annuo": 28901.8,
+        "lordo_mensile_13": 2223.22,
+        "netto_mensile_13_stima": 1689.46,
+        "affidabilita": "bassa"
+      }
+    },
+    {
+      "canale": "Pensione anticipata ordinaria",
+      "note": [
+        "Data basata sulla proiezione dei contributi futuri: ogni periodo non coperto la sposta in avanti.",
+        "Quota retributiva STIMATA: 2% x 11.3 anni x retribuzione pensionabile indicata."
+      ],
+      "stato": "da maturare",
+      "data_maturazione": "2027-08-08",
+      "finestra_mesi": 3,
+      "decorrenza": "2027-12-01",
+      "eta_alla_decorrenza": "65a 8m",
+      "contributi_alla_decorrenza": "43a 3m",
+      "importo": {
+        "montante": 357278.06,
+        "coeff_trasf_%": 5.278,
+        "tabella_coeff": "2027-2028",
+        "quota_contributiva_annua": 18857.14,
+        "quota_retributiva_annua": 7249.23,
+        "lordo_annuo": 26106.37,
+        "lordo_mensile_13": 2008.18,
+        "netto_mensile_13_stima": 1560.55,
+        "affidabilita": "bassa"
+      }
+    }
+  ],
+  "prima_uscita_pensione": {
+    "canale": "Pensione anticipata ordinaria",
+    "decorrenza": "2027-12-01"
+  }
+}
