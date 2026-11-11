@@ -5,7 +5,7 @@
 //
 // Variabili d'ambiente: OPENROUTER_API_KEY (obbligatoria), STIMA_PENSIONE_MODEL (facoltativa).
 // Non salva e non registra nei log il contenuto dei documenti.
-import { componi, daCodiceFiscale, RE_FIGURATIVA, type RigaEstratto } from "../_lib/estrattoModel";
+import { componi, daCodiceFiscale, RE_FIGURATIVA, type RigaEstratto } from "../_lib/estrattoModel.js";
 
 export const config = { maxDuration: 60, api: { bodyParser: { sizeLimit: "4.5mb" } } };
 
