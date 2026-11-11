@@ -4,7 +4,7 @@ import { HOURS, CLOSURES } from "~/consts";
 const data = JSON.stringify(HOURS);
 const closures = JSON.stringify(CLOSURES.map((c) => [c.from, c.to]));
 ---
-<span class="pill pill-live" data-open-now={data} data-closures={closures} style="align-self:flex-start;font-weight:700">Roma · Vigne Nuove</span>
+<a href="/contatti" class="pill pill-live" data-open-now={data} data-closures={closures} style="align-self:flex-start;font-weight:700;text-decoration:none" aria-label="Orari e contatti">Roma · Vigne Nuove</a>
 <script>
   const el = document.querySelector<HTMLElement>("[data-open-now]");
   if (el) {
@@ -26,25 +26,29 @@ const closures = JSON.stringify(CLOSURES.map((c) => [c.from, c.to]));
         return x && x.open ? [[x.open, x.close], ...(x.afternoon ? [[x.afternoon.open, x.afternoon.close]] : [])] : [];
       };
       const ora = (t: string) => t.replace(/^0/, "");
-      const cur = inFesta(oggi) ? undefined : slots.find(([a, b]) => now >= a && now < b);
-      if (cur) {
-        el.textContent = `Aperti ora · fino alle ${ora(cur[1])}`;
-      } else {
-        el.classList.remove("pill-live");
-        // Prossima apertura: più tardi oggi, oppure il primo giorno utile (saltando le chiusure per festa).
-        let quando = "";
+      // Prossima apertura dopo l'orario "da": più tardi oggi, oppure il primo giorno utile (saltando le feste).
+      const prossima = (da: string) => {
         const base = new Date(oggi + "T12:00:00Z");
-        for (let k = 0; k <= 40 && !quando; k++) {
+        for (let k = 0; k <= 40; k++) {
           const d = new Date(base.getTime() + k * 86400000);
-          const iso = d.toISOString().slice(0, 10);
-          if (inFesta(iso)) continue;
-          const s = slotsOf((idx + k) % 7).find(([a]) => k > 0 || a > now);
+          if (inFesta(d.toISOString().slice(0, 10))) continue;
+          const s = slotsOf((idx + k) % 7).find(([a]) => k > 0 || a > da);
           if (!s) continue;
           const nome = new Intl.DateTimeFormat("it-IT", { timeZone: "UTC", weekday: "long" }).format(d);
           const giorno = k === 0 ? "oggi" : k === 1 ? "domani" : k < 7 ? nome : `${nome} ${new Intl.DateTimeFormat("it-IT", { timeZone: "UTC", day: "numeric", month: "long" }).format(d)}`;
-          quando = `${giorno} alle ${ora(s[0])}`;
+          return { k, giorno, alle: ora(s[0]) };
         }
-        el.textContent = quando ? `Ora chiusi · riapriamo ${quando}` : "Ora chiusi · prenota online quando vuoi";
+        return null;
+      };
+      const cur = inFesta(oggi) ? undefined : slots.find(([a, b]) => now >= a && now < b);
+      if (cur) {
+        const n = prossima(cur[1]);
+        const poi = !n ? "" : n.k === 0 ? `, poi dalle ${n.alle}` : `, poi ${n.giorno} dalle ${n.alle}`;
+        el.textContent = `Aperti ora · fino alle ${ora(cur[1])}${poi}`;
+      } else {
+        el.classList.remove("pill-live");
+        const n = prossima(now);
+        el.textContent = n ? `Ora chiusi · riapriamo ${n.giorno} alle ${n.alle}` : "Ora chiusi · prenota online quando vuoi";
       }
     } catch { /* lascia il testo di default */ }
   }
