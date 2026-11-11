@@ -8,7 +8,7 @@
 // Variabili d'ambiente: OPENROUTER_API_KEY (obbligatoria); facoltative STIMA_PENSIONE_MODEL
 // (modello che struttura le righe) e STIMA_PENSIONE_PDF_ENGINE (motore di lettura del PDF).
 // Non salva e non registra nei log il contenuto dei documenti.
-import { codiceGestione, componi, daCodiceFiscale, inSettimane, RE_FIGURATIVA, type RigaEstratto } from "../_lib/estrattoModel.js";
+import { gestioneRiga, componi, daCodiceFiscale, inSettimane, RE_FIGURATIVA, type RigaEstratto } from "../_lib/estrattoModel.js";
 export { inSettimane };
 
 export const config = { maxDuration: 60, api: { bodyParser: { sizeLimit: "4.5mb" } } };
@@ -131,7 +131,7 @@ export function daRisposta(r: any) {
       dal: p.dal, al: p.al, tipo, settimane, importo: p.importo ? num(p.importo) : null, figurativa: RE_FIGURATIVA.test(p.tipo || ""),
       unita, contributi: p.contributi_diritto ? num(String(p.contributi_diritto)) : null, contributiCalcolo: p.contributi_calcolo ? num(String(p.contributi_calcolo)) : null,
       azienda: String(p.azienda || "").slice(0, 120), nota: String(p.nota || "").slice(0, 8),
-      gestione: codiceGestione(p.tipo || "") || codiceGestione(p.gestione || ""),
+      gestione: gestioneRiga(p.tipo || "", p.gestione || ""),
     });
   }
   if (scartate) avvisi.push(`${scartate} ${scartate === 1 ? "riga ha" : "righe hanno"} date non leggibili e non ${scartate === 1 ? "è stata contata" : "sono state contate"}.`);

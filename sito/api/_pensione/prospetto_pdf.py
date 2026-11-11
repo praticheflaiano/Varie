@@ -165,12 +165,29 @@ def _contenuto(stima, risposte, url, codice):
         ], ROSA))
         f.append(Spacer(1, 10))
 
+    stimati = stima["estratto"].get("contributi_stimati")
+    if stimati:
+        f.append(_riquadro([
+            Paragraph("Il tuo estratto non è aggiornato a oggi", S["scheda"]), Spacer(1, 5),
+            _p(f"L'estratto che hai caricato si ferma prima del {_data(stimati['dal'])}. Per il periodo fino al {_data(stimati['al'])} abbiamo aggiunto {stimati['settimane']} settimane "
+               "stimate sul ritmo e sulla retribuzione dei tuoi ultimi periodi di lavoro. Date e importi di questo prospetto dipendono anche da questa proiezione: "
+               "con un estratto aggiornato diventano più precisi."),
+        ], NEBBIA, bordo=INCHIOSTRO))
+        f.append(Spacer(1, 10))
     prima = base.get("prima_uscita_pensione")
     canale_prima = next((c for c in base["canali"] if prima and c["canale"] == prima.get("canale")), None)
     if prima:
         corpo = [Paragraph("PRIMA USCITA POSSIBILE", S["etichetta"]), Spacer(1, 3), Paragraph(escape(prima["canale"]), S["grande"]), Spacer(1, 2),
                  Paragraph(f"dal <b>{_data(prima['decorrenza'])}</b>" + (f" · a {escape(_eta(canale_prima.get('eta_alla_decorrenza')))}" if canale_prima else ""), S["valore"])]
         f.append(_riquadro(corpo, LIME, margine=16))
+        f.append(Spacer(1, 10))
+    # APE sociale: non è una pensione ma un'indennità ponte; se arriva prima della pensione va detto subito
+    ape = next((c for c in base["canali"] if c["canale"].startswith("APE") and c.get("decorrenza")), None)
+    if ape and (not prima or ape["decorrenza"] < prima["decorrenza"]):
+        ind = (ape.get("importo") or {}).get("indennita_mensile_lorda_12")
+        f.append(_riquadro([Paragraph("PRIMA DELLA PENSIONE", S["etichetta"]), Spacer(1, 3),
+                            Paragraph(f"APE sociale dal <b>{_data(ape['decorrenza'])}</b>" + (f" · {_euro(ind)} lordi al mese per 12 mensilità" if ind is not None else ""), S["valore"]), Spacer(1, 3),
+                            _p("È un'indennità che accompagna fino alla pensione di vecchiaia: va chiesta con una domanda di riconoscimento entro le scadenze dell'anno (31 marzo, 15 luglio, 30 novembre).")], LILLA, margine=14))
         f.append(Spacer(1, 10))
     netto = _importi(canale_prima)[1] if canale_prima else "—"
     f.append(_riquadro([_cifre([("Contributi ad oggi", str(base.get("contributi_ad_oggi") or "—").replace("a ", " anni ").replace("m", " mesi")),
@@ -192,10 +209,18 @@ def _contenuto(stima, risposte, url, codice):
     f.append(Spacer(1, 8))
     nome_base = stima["scenari"][0]["nome"]
     spiegazioni = {x["canale"]: x["testo"] for x in testo.get("spiegazione_canali") or [] if x.get("scenario") == nome_base}
+    # Si mostrano le strade percorribili; quelle che arriverebbero dopo la pensione di vecchiaia non servono al cliente,
+    # quelle non raggiungibili sono elencate in una riga.
     for c in base["canali"]:
-        f.append(_scheda_canale(c, spiegazioni.get(c["canale"], ""), bool(prima) and c["canale"] == prima.get("canale")))
+        if c.get("decorrenza") and "irrilevante" not in str(c.get("stato")):
+            f.append(_scheda_canale(c, spiegazioni.get(c["canale"], ""), bool(prima) and c["canale"] == prima.get("canale")))
+    chiuse = [c for c in base["canali"] if not c.get("decorrenza")]
+    if chiuse:
+        f.append(_p("Strade oggi non percorribili con i tuoi dati: " + "; ".join(f"{c['canale']} ({c.get('stato')})" for c in chiuse) + ".", "nota"))
+        f.append(Spacer(1, 4))
+    f.append(_p("Il netto è una media su 13 mensilità, con le regole fiscali del 2026 e la pensione come unico reddito.", "nota"))
     f.append(_p("Come leggere la precisione: buona = dati certi; discreta = dipende dai contributi futuri o da coefficienti non ancora pubblicati; "
-                "di massima = la parte maturata prima del 1996 è stimata; incompleta = manca una parte del calcolo.", "nota"))
+                "di massima = una parte dell'importo è stimata; incompleta = manca una parte del calcolo.", "nota"))
 
     # ---------- Alternative ----------
     if len(stima["scenari"]) > 1:
@@ -251,6 +276,8 @@ def _contenuto(stima, risposte, url, codice):
     limiti = list(stima.get("limiti") or []) + list(stima.get("parametri_non_definitivi") or [])
     note_canali = []
     for c in base["canali"]:
+        if not c.get("decorrenza") or "irrilevante" in str(c.get("stato")):
+            continue
         for n in c.get("note") or []:
             if n not in note_canali:
                 note_canali.append(n)

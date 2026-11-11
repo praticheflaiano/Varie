@@ -78,22 +78,30 @@ const RE_CF = /\b([A-Z]{6}\d{2}[ABCDEHLMPRST]\d{2}[A-Z]\d{3}[A-Z])\b/;
 const RE_DATA = /(\d{2})[/.-](\d{2})[/.-](\d{4})/;
 const RE_RIGA = /^\s*(\d{2}[/.-]\d{2}[/.-]\d{4})\s*[-–]?\s*(\d{2}[/.-]\d{2}[/.-]\d{4})\s+(.*)$/;
 const RE_IMPORTO = /(?<![\d.,])(\d{1,3}(?:\.\d{3})*,\d{2})(?![\d.,])/;
-export const RE_FIGURATIVA = /disoccupaz|naspi|aspi\b|mobilit|malattia|maternit|congedo|militare|cassa integr|cig\b|figurativ|infortun|solidar/i;
+export const RE_FIGURATIVA = /disocc|naspi|aspi\b|mobilit|malattia|maternit|congedo|astension|permess|militare|cassa integr|integrazione sal|cig[os]?\b|figurativ|infortun|solidar/i;
 
 // Gestione dedotta dal tipo di contribuzione o dal titolo della sezione (codici del motore di calcolo).
 const GESTIONI: [RegExp, string][] = [
-  [/cpdel/, "CPDEL"], [/\bcps\b/, "CPS"], [/\bcpi\b/, "CPI"], [/cpug/, "CPUG"], [/ctps|\bstato\b/, "CTPS"],
-  [/artigian|\bart\./, "ARTIGIANI"], [/commerc|\bcomm?\./, "COMMERCIANTI"],
+  [/pubblic|inpdap/, "PUBBLICO"],
+  [/cpdel/, "CPDEL"], [/\bcps\b/, "CPS"], [/\bcpi\b/, "CPI"], [/cpug/, "CPUG"], [/ctps|dipendenti dello stato/, "CTPS"],
   [/separata|parasubordinat|collaborazion|co\.\s?co\./, "GS"],
+  // "ART." e "COM." valgono solo per titolari e collaboratori d'impresa (non "art. 13", non "settore commercio")
+  [/(titolare|coadiuv|collaborator|impresa).*(artigian|\bart\.)|^artigian|gestione (degli )?artigian/, "ARTIGIANI"],
+  [/(titolare|coadiuv|collaborator|impresa).*(commerc|\bcomm?\.)|^commerc|gestione (dei )?commerc/, "COMMERCIANTI"],
   [/dipend|fpld|domestic/, "FPLD"],
 ];
 export function codiceGestione(testo: string): string {
-  const t = (testo || "").toLowerCase();
+  const t = (testo || "").toLowerCase().trim();
   for (const [re, codice] of GESTIONI) if (re.test(t)) return codice;
   return "";
 }
+/** Gestione di una riga: la sezione dei dipendenti pubblici prevale sul tipo ("Lavoro dipendente"). */
+export function gestioneRiga(tipo: string, sezione: string): string {
+  const sez = codiceGestione(sezione);
+  return sez === "PUBBLICO" ? sez : codiceGestione(tipo) || sez;
+}
 export const NOMI_GESTIONE: Record<string, string> = {
-  FPLD: "Lavoro dipendente", COMMERCIANTI: "Commercianti", ARTIGIANI: "Artigiani", GS: "Gestione separata",
+  FPLD: "Lavoro dipendente", PUBBLICO: "Dipendenti pubblici", COMMERCIANTI: "Commercianti", ARTIGIANI: "Artigiani", GS: "Gestione separata",
   CPDEL: "Dipendenti pubblici (CPDEL)", CPS: "Dipendenti pubblici (CPS)", CPI: "Dipendenti pubblici (CPI)", CPUG: "Dipendenti pubblici (CPUG)", CTPS: "Dipendenti dello Stato",
 };
 
@@ -263,8 +271,12 @@ const RE_DATA_CELLA = /^(\d{2})[/.-](\d{2})[/.-](\d{4})$/;
 const RE_DATA_UNITA = /^(\d{2}[/.-]\d{2}[/.-]\d{4})\s+(\S.*)$/;
 const RE_UNITA = /^(sett\.?|settimane|mesi|mese|giorni|gg\.?)$/i;
 const RE_INTERO = /^\d{1,4}$/;
-const RE_DECIMALE = /^\d{1,4},\d{1,3}$/;
-const RE_IMPORTO_CELLA = /^-?\d{1,3}(?:\.\d{3})*,\d{2}$/;
+const RE_DECIMALE = /^\d{1,4},\d{3}$/; // contributi utili al calcolo: sempre tre decimali ("46,000")
+const RE_IMPORTO_CELLA = /^-?\d{1,3}(?:\.?\d{3})*,\d{2}-?$/; // euro con due decimali, anche senza punto delle migliaia
+// distanze massime (in punti) tra le colonne: il calcolo sta subito a destra del diritto, l'importo poco oltre
+const DIST_CALCOLO = 70;
+const DIST_IMPORTO = 140;
+const DIST_IMPORTO_DA_UNITA = 190;
 const RE_SEZIONE = /^(regime|gestion[ei]|fondo|fondi|cassa|lavoratori)\b/i;
 const RE_VOCE_NOTA = /^(\S{1,3})\)\s+(.+)$/;
 const RE_PIEDE = /^(estratto conto di\b|pagina\s+\d+)/i;
@@ -320,7 +332,10 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
   const dalCf = cf ? daCodiceFiscale(cf) : null;
   const isoCella = (t: string) => {
     const m = t.match(RE_DATA_CELLA);
-    return m ? `${m[3]}-${m[2]}-${m[1]}` : "";
+    if (!m) return "";
+    const d = new Date(Date.UTC(+m[3], +m[2] - 1, +m[1]));
+    // la data deve esistere davvero (non 31/02)
+    return d.getUTCFullYear() === +m[3] && d.getUTCMonth() === +m[2] - 1 && d.getUTCDate() === +m[1] ? `${m[3]}-${m[2]}-${m[1]}` : "";
   };
 
   // Anagrafica: riquadro in alto a destra della prima pagina, una cella per riga
@@ -383,14 +398,18 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
       let nota = "";
       const tipo: string[] = [];
       const azienda: string[] = [];
+      let xDir: number | null = null;
       for (const { x, t } of c.slice(2)) {
         if (!unita && RE_UNITA.test(t)) {
           unita = /^sett/i.test(t) ? "settimane" : /^mes/i.test(t) ? "mesi" : "giorni";
           xUnita = x;
-        } else if (xNote !== null && x >= xNote - 30 && t.length <= 4) nota = `${nota} ${t}`.trim();
-        else if (unita && RE_INTERO.test(t) && !diritto && !importo) diritto = t;
-        else if (unita && (RE_DECIMALE.test(t) || RE_INTERO.test(t)) && diritto && !calcolo && !importo) calcolo = t;
-        else if (RE_IMPORTO_CELLA.test(t) && !importo && !azienda.length) importo = t;
+        } else if ((xNote !== null && x >= xNote - 30 && t.length <= 4) || (xNote === null && x >= 740 && t.length <= 2)) nota = `${nota} ${t}`.trim();
+        else if (unita && RE_INTERO.test(t) && !diritto && !importo && !azienda.length) {
+          diritto = t;
+          xDir = x;
+        } else if (unita && (RE_DECIMALE.test(t) || RE_INTERO.test(t)) && diritto && !calcolo && !importo && !azienda.length && x - xDir! <= DIST_CALCOLO) calcolo = t;
+        else if (RE_IMPORTO_CELLA.test(t) && !importo && !azienda.length && (xDir !== null ? x - xDir <= DIST_IMPORTO : !!unita && x - xUnita! <= DIST_IMPORTO_DA_UNITA))
+          importo = t.endsWith("-") ? `-${t.slice(0, -1)}` : t;
         else if (!unita && !importo) tipo.push(t);
         else azienda.push(t);
       }
@@ -407,7 +426,7 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
         figurativa: RE_FIGURATIVA.test(tipoTesto),
         unita, contributi: diritto ? numIt(diritto) : null, contributiCalcolo: calcolo ? numIt(calcolo) : null,
         azienda: azienda.join(" "), nota,
-        gestione: codiceGestione(tipoTesto) || codiceGestione(sezione),
+        gestione: gestioneRiga(tipoTesto, sezione),
       });
       ultimaPagina = r.p;
       ultimaY = r.y;
@@ -416,6 +435,18 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
     if (/^note\s*:?$/i.test(primo)) { zona = "note"; continue; }
     if (/^segnalazioni\b/i.test(primo)) { zona = "segnalazioni"; continue; }
     const rigaTesto = testi.join(" ").replace(/\s+/g, " ").trim();
+    const diSeguito = zona === "tabella" && periodi.length > 0 && xUnita !== null && r.p === ultimaPagina && r.y - ultimaY <= 16 && !/^(dal|al|periodo|reddito|euro)\b/i.test(primo);
+    if (zona === "tabella" && testi.some((t) => RE_DATA_CELLA.test(t) || RE_UNITA.test(t) || RE_DATA_UNITA.test(t))) {
+      // ha l'aspetto di una riga di contributi ma non comincia con due date: non la si perde in silenzio
+      problemi.push(`riga non interpretata: ${rigaTesto.slice(0, 60)}`);
+      continue;
+    }
+    if (!diSeguito && c.length === 1 && c[0].x > 120 && RE_SEZIONE.test(primo) && primo.length <= 70) {
+      // titolo di una sezione (es. "Gestione separata"), anche dopo le note della sezione precedente
+      sezione = rigaTesto;
+      zona = "tabella";
+      continue;
+    }
     if (zona === "note") {
       const v = rigaTesto.match(RE_VOCE_NOTA);
       if (v) legenda.push({ codice: v[1], testo: v[2] });
@@ -423,12 +454,11 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
     } else if (zona === "segnalazioni") {
       if (/^[-–•]/.test(rigaTesto) || !segnalazioni.length) segnalazioni.push(rigaTesto.replace(/^[-–•]\s*/, ""));
       else segnalazioni[segnalazioni.length - 1] += ` ${rigaTesto}`;
-    } else if (c.length === 1 && RE_SEZIONE.test(primo) && primo.length <= 70) sezione = primo.replace(/\s+/g, " ");
-    else if (periodi.length && xUnita !== null && r.p === ultimaPagina && r.y - ultimaY <= 16 && !/^(dal|al|periodo|reddito|euro)\b/i.test(primo)) {
+    } else if (diSeguito) {
       // testo andato a capo nella cella: si attacca al tipo o all'azienda della riga sopra
       const riga = periodi[periodi.length - 1];
       for (const { x, t } of c) {
-        if (x < xUnita) riga.tipo = `${riga.tipo} ${t}`.trim();
+        if (x < xUnita!) riga.tipo = `${riga.tipo} ${t}`.trim();
         else riga.azienda = `${riga.azienda ?? ""} ${t}`.trim();
       }
       ultimaY = r.y;

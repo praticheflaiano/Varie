@@ -12,12 +12,13 @@ from dateutil.relativedelta import relativedelta
 # PARAMETRI NORMATIVI  (aggiornare SOLO qui, con fonte e data)
 # =====================================================================
 PARAMS = {
-  "versione": "2026-11-09",
+  "versione": "2026-11-11",
   "fonti": [
     "L. 199/2025 (Bilancio 2026); INPS circ. 28/2026 e msg 558/2026 (speranza di vita 2027-2028)",
     "INPS circ. 41/2026; L. 213/2023 c.162 (finestre CPDEL/CPS/CPI/CPUG)",
     "DD Min. Lavoro-MEF 16/10/2026 (coefficienti trasformazione 2027-2028); DD 20/11/2024 (2025-2026)",
     "INPS msg 707/2026 (rivalutazione montanti, decorrenze 2026); nota ISTAT/Min. Lavoro 21/10/2026 (tasso 2026 = 6,3359%)",
+    "Quota retributiva: D.Lgs. 503/1992 (quote A e B); INPS msg 707/2026 all. 1-2 (coefficienti di rivalutazione delle retribuzioni); INPS circ. 6/2026 (tetto pensionabile 56.224 euro)",
     "DDL Bilancio 2027 A.C. 3174 art. 51 (APE sociale 2027: 63a6m) - NON ancora legge",
   ],
   # requisiti per ANNO DI MATURAZIONE: (anni, mesi). Anni >2028 = 2028 'salvo adeguamenti' (provvisorio)
@@ -28,16 +29,21 @@ PARAMS = {
   "anticip_contrib_eta":    {2026:(64,0), 2027:(64,1), 2028:(64,3)},
   "anticip_contrib_contr":  {2026:(20,0), 2027:(20,1), 2028:(20,3)},
   "precoci":                {2026:(41,0), 2027:(41,1), 2028:(41,3)},
-  "invalidi80_uomini":      {2026:(61,0), 2027:(61,1), 2028:(61,3)},   # 2027+ DA VERIFICARE
-  "invalidi80_donne":       {2026:(56,0), 2027:(56,1), 2028:(56,3)},   # 2027+ DA VERIFICARE
+  "invalidi80_uomini":      {2026:(61,0), 2027:(61,1), 2028:(61,3)},   # 2027-28: Camera, Servizio Studi 20/03/2026
+  "invalidi80_donne":       {2026:(56,0), 2027:(56,1), 2028:(56,3)},
   "ape_sociale_eta":        {2026:(63,5), 2027:(63,6)},                # 2027 da DDL; dopo 2027 non prevista
   # deroghe (esclusi dall'adeguamento 2027-2028)
   "gravosi_vecchiaia_eta": (66,7), "gravosi_anticipata_u": (42,10), "gravosi_anticipata_d": (41,10),
   "gravosi_precoci": (41,0),
   # finestre (mesi) per anticipata/precoci gestioni esclusive PA per anno di maturazione
-  "finestra_pa": {2025:4, 2026:5, 2027:7, 2028:9},
+  "finestra_pa": {2024:3, 2025:4, 2026:5, 2027:7, 2028:9},   # requisiti maturati entro il 2024: 3 mesi (INPS circ. 78/2024)
   "assegno_sociale": {2026: 546.24},     # mensile; anni successivi = rivalutato con ipotesi (default 2%/anno)
-  "soglia_ac": {"base":3.0, "donna_1_figlio":2.8, "donna_2_figli":2.6},
+  # soglia dell'anticipata contributiva: 3,0 volte l'assegno sociale, 3,2 dal 1/1/2030 (DL 201/2011 art. 24 c. 11 vigente)
+  "soglia_ac": {"base":3.0, "base_dal_2030":3.2, "donna_1_figlio":2.8, "donna_2_figli":2.6},
+  # trattamento minimo mensile (INPS circ. 153/2025): l'anticipata contributiva non supera 5 volte il minimo fino all'eta' di vecchiaia
+  "trattamento_minimo": {2026: 611.85},
+  # massimale contributivo per chi non ha anzianita' al 31/12/1995 (INPS circ. 6/2026)
+  "massimale_contributivo": {2026: 122295.00},
   # coefficienti di trasformazione (%) per eta' intera
   "coeff": {
     "2025-2026": {57:4.204,58:4.308,59:4.419,60:4.536,61:4.661,62:4.795,63:4.936,64:5.088,65:5.250,
@@ -51,19 +57,47 @@ PARAMS = {
     2009:1.017935,2010:1.016165,2011:1.011344,2012:1.001643,2013:1.000000,2014:1.005058,2015:1.004684,
     2016:1.005205,2017:1.013478,2018:1.018254,2019:1.019199,2020:1.000000,2021:1.009756,2022:1.023082,
     2023:1.036622,2024:1.040445,2025:1.063359},
+  # Quota retributiva (anzianita' fino al 1995, o al 2011 con 18 anni al 1995): coefficienti di rivalutazione delle
+  # retribuzioni e dei redditi per le pensioni con decorrenza 2026 (INPS msg 707/2026, all. 1 = quota A, all. 2 = quota B).
+  # Per decorrenze successive si calcola in moneta di oggi con questi stessi coefficienti (come le simulazioni INPS).
+  "rival_retribuzioni": {"A": {1970:21.4903,1971:20.4448,1972:19.1884,1973:17.1305,1974:14.6132,1975:12.5205,1976:10.7300,1977:9.1146,1978:8.0943,1979:7.0233,1980:5.9433,1981:5.0208,1982:4.3300,1983:3.7988,1984:3.4205,1985:3.1545,1986:2.9789,1987:2.8249,1988:2.6818,1989:2.5185,1990:2.3499,1991:2.1814,1992:2.0835,1993:1.9984,1994:1.9167,1995:1.8010,1996:1.7223,1997:1.6969,1998:1.6676,1999:1.6421,2000:1.6004,2001:1.5590,2002:1.5214,2003:1.4847,2004:1.4566,2005:1.4323,2006:1.4044,2007:1.3801,2008:1.3373,2009:1.3275,2010:1.3067,2011:1.2727,2012:1.2350,2013:1.2215,2014:1.2189,2015:1.2189,2016:1.2189,2017:1.2057,2018:1.1927,2019:1.1867,2020:1.1867,2021:1.1646,2022:1.0773,2023:1.0221,2024:1.0140,2025:1.0,2026:1.0},
+                         "B": {1970:33.2483,1971:31.4608,1972:29.5936,1973:26.6379,1974:22.1548,1975:18.7833,1976:16.0127,1977:13.4676,1978:11.8959,1979:10.2084,1980:8.3689,1981:7.0018,1982:5.9764,1983:5.1610,1984:4.6344,1985:4.2372,1986:3.9650,1987:3.7627,1988:3.5591,1989:3.3141,1990:3.1006,1991:2.8923,1992:2.7234,1993:2.5939,1994:2.4768,1995:2.3330,1996:2.2281,1997:2.1732,1998:2.1182,1999:2.0688,2000:2.0011,2001:1.9334,2002:1.8722,2003:1.8124,2004:1.7626,2005:1.7187,2006:1.6710,2007:1.6289,2008:1.5646,2009:1.5397,2010:1.5031,2011:1.4509,2012:1.3960,2013:1.3681,2014:1.3534,2015:1.3412,2016:1.3290,2017:1.3025,2018:1.2765,2019:1.2584,2020:1.2466,2021:1.2117,2022:1.1105,2023:1.0432,2024:1.0243,2025:1.0,2026:1.0}},
+  # Prima fascia di retribuzione pensionabile ("tetto"), INPS circ. 6/2026; oltre il tetto il rendimento scende per fasce
+  "tetto_pensionabile": {2026: 56224.00},
+  "fasce_rendimento": {"A": [(1.00, 0.02), (1.33, 0.015), (1.66, 0.0125), (None, 0.01)],
+                       "B": [(1.00, 0.02), (1.33, 0.016), (1.66, 0.0135), (1.90, 0.011), (None, 0.009)]},
+  "gestioni_autonomi": ["ARTIGIANI", "COMMERCIANTI"],
   "aliquota_computo": {"FPLD":0.33,"GS":0.33,"ARTIGIANI":0.24,"COMMERCIANTI":0.24,"CPDEL":0.33,"CPS":0.33,
                        "CPI":0.33,"CPUG":0.33,"CTPS":0.33,"ALTRO":0.33},
+  # Aliquote di computo che sono cambiate nel tempo (anno di inizio -> aliquota).
+  # Artigiani e commercianti: 20% dal 1996 (L. 335/1995 art. 1 c. 10), poi +1,3 punti nel 2012 e +0,45 l'anno fino al 24% dal 2018
+  # (DL 201/2011 art. 24 c. 22; INPS circ. 24/2013 e 27/2018). Gestione separata, iscritti senza altra copertura: INPS circ. 7/2007
+  # all. 2, 27/2015, 18/2018 (professionisti con partita IVA e iscritti ad altra forma hanno aliquote piu' basse: non distinti).
+  "aliquota_computo_storica": {
+    "ARTIGIANI":    {1996:0.20, 2012:0.213, 2013:0.2175, 2014:0.222, 2015:0.2265, 2016:0.231, 2017:0.2355, 2018:0.24},
+    "COMMERCIANTI": {1996:0.20, 2012:0.213, 2013:0.2175, 2014:0.222, 2015:0.2265, 2016:0.231, 2017:0.2355, 2018:0.24},
+    "GS": {1996:0.10, 1998:0.125, 2000:0.145, 2002:0.155, 2004:0.193, 2005:0.195, 2006:0.197, 2007:0.23, 2008:0.24, 2009:0.25,
+           2010:0.26, 2012:0.27, 2014:0.28, 2015:0.30, 2016:0.31, 2017:0.32, 2018:0.33},
+  },
   "gestioni_esclusive_pa": ["CPDEL","CPS","CPI","CPUG","CTPS"],
   "finestre_lunghe_pa": ["CPDEL","CPS","CPI","CPUG"],
   # fisco 2026
   "irpef": [(28000,0.23),(50000,0.33),(None,0.43)],
   "add_reg_lazio": "1,73% se reddito <= 28.000; oltre: 1,73% fino a 15.000 + 3,33% sull'eccedenza; -60 euro tra 28.000 e 30.000",
   "add_com_roma": 0.009,
+  "add_com_roma_esenzione": 14000,   # esente fino a 14.000 euro di imponibile (delib. A.C. 186/2024; 2026 da riconfermare sull'elenco MEF)
 }
 SETT_ANNO = 52.0
 
 def req(tab, anno):
     ks = sorted(tab); a = min(max(anno, ks[0]), ks[-1]); return tab[a]
+
+def aliquota_computo(gestione, anno):
+    """Aliquota di computo della gestione nell'anno (per autonomi e gestione separata e' cambiata nel tempo)."""
+    serie = PARAMS["aliquota_computo_storica"].get(gestione)
+    if serie:
+        return serie[max((a for a in serie if a <= anno), default=min(serie))]
+    return PARAMS["aliquota_computo"].get(gestione, 0.33)
 
 def to_weeks(am): return am[0]*SETT_ANNO + am[1]*SETT_ANNO/12
 
@@ -89,29 +123,39 @@ class Caso:
         self.pa_esclusiva = self.gestione in PARAMS["gestioni_esclusive_pa"]
         self.cond = inp.get("condizioni", {})
         self.ipo = inp.get("ipotesi", {})
-        self.tasso_fut = float(self.ipo.get("tasso_capitalizzazione_futuro", 0.02))
-        self.perequazione = float(self.ipo.get("rivalutazione_assegno_sociale", 0.02))
+        # Ipotesi in termini reali (moneta di oggi): montante futuro +1,5% l'anno come il PIL ipotizzato dall'INPS, soglie ferme
+        self.tasso_fut = float(self.ipo.get("tasso_capitalizzazione_futuro", 0.015))
+        self.perequazione = float(self.ipo.get("rivalutazione_assegno_sociale", 0.0))
         self.avvisi = []; self.log = []
         # --- contributi per anno (cap 52 settimane/anno per il diritto) ---
         per_anno = {}
+        self.righe = {}   # (anno, gestione) -> settimane al diritto, settimane al calcolo, retribuzione: per la quota retributiva
         for c in inp.get("contributi", []):
             y = int(c["anno"]); g = c.get("gestione", self.gestione).upper()
             s = float(c.get("settimane", 0)); fig = float(c.get("figurative", 0))
             if "contributi_versati" in c: contr = float(c["contributi_versati"])
-            else: contr = float(c.get("imponibile",0)) * float(c.get("aliquota_computo", PARAMS["aliquota_computo"].get(g,0.33)))
-            e = per_anno.setdefault(y, {"sett":0.0,"fig":0.0,"contr":0.0})
+            else: contr = float(c.get("imponibile",0)) * float(c.get("aliquota_computo", aliquota_computo(g, y)))
+            e = per_anno.setdefault(y, {"sett":0.0,"fig":0.0,"dm":0.0,"contr":0.0})
             e["sett"] += s; e["fig"] += fig; e["contr"] += contr
+            e["dm"] += float(c.get("figurative_dm", 0))   # disoccupazione e malattia: non valgono per i 35 anni dell'anticipata
+            r = self.righe.setdefault((y, g), {"sett":0.0,"calc":0.0,"retr":0.0,"imp":0.0})
+            calc = float(c.get("settimane_calcolo", s)); imp = float(c.get("imponibile",0))
+            r["sett"] += s; r["calc"] += calc; r["imp"] += imp
+            r["retr"] += float(c.get("settimane_retribuite", calc if imp > 0 else 0))   # settimane che hanno una retribuzione
         for y, e in per_anno.items():
             if e["sett"] > SETT_ANNO + 0.01:
                 self.avvisi.append(f"Anno {y}: {e['sett']:.0f} settimane > 52 (sovrapposizione): per il diritto conto 52.")
-                ratio = SETT_ANNO / e["sett"]; e["fig"] *= ratio; e["sett"] = SETT_ANNO
+                # nelle sovrapposizioni si tolgono prima le settimane figurative, poi quelle effettive
+                e["fig"] = max(0.0, e["fig"] - (e["sett"] - SETT_ANNO)); e["dm"] = min(e["dm"], e["fig"]); e["sett"] = SETT_ANNO
         self.anni = per_anno
         self.primo_accredito = d(inp["primo_accredito"]) if inp.get("primo_accredito") else (date(min(per_anno),1,1) if per_anno else self.oggi)
         p = inp.get("proiezione", {})
         self.continua = bool(p.get("continua_lavoro", False))
         self.sett_annue = float(p.get("settimane_annue", 52))
         self.imp_fut = float(p.get("imponibile_annuo", 0))
-        self.aliq_fut = float(p.get("aliquota_computo", PARAMS["aliquota_computo"].get(self.gestione,0.33)))
+        self.gest_fut = str(p.get("gestione", self.gestione)).upper()   # gestione in cui si verseranno i contributi futuri
+        self.aliq_fut = float(p.get("aliquota_computo", aliquota_computo(self.gest_fut, self.oggi.year)))
+        self.rapporto_calcolo = float(p.get("rapporto_calcolo", 1.0))   # part-time: settimane utili al calcolo / al diritto
         self.cresc = float(p.get("crescita_imponibile", 0.0))
         self.fine_lavoro = d(p["fino_a"]) if p.get("fino_a") else None
         self.volontari = float(p.get("settimane_volontari_annue", 0))  # es. prosecuzione volontaria
@@ -122,16 +166,21 @@ class Caso:
         else: self.sistema = "misto (retributivo fino al 1995)"
         self.opzione_contributivo = bool(inp.get("opzione_contributivo", False))
         self.puro = self.sistema == "contributivo puro" or self.opzione_contributivo
+        self.massimale = PARAMS["massimale_contributivo"][max(PARAMS["massimale_contributivo"])] if self.sistema == "contributivo puro" else None
+        if self.massimale:
+            self.imp_fut = min(self.imp_fut, self.massimale)
+            alti = [y for (y, g), e in self.righe.items() if e["imp"] > 100000]
+            if alti: self.avvisi.append(f"Retribuzioni oltre 100.000 euro negli anni {min(alti)}-{max(alti)}: per chi ha iniziato dal 1996 la parte oltre il massimale contributivo non conta; verifica da fare a mano.")
         if self.opzione_contributivo:
             ok = self.w1995 < 18*SETT_ANNO and self.tot_weeks(self.oggi) >= 15*SETT_ANNO and \
                  sum(e["sett"] for y,e in per_anno.items() if y >= 1996) >= 5*SETT_ANNO
             if not ok: self.avvisi.append("Opzione contributivo richiesta ma requisiti (art.1 c.23 L.335/95) non verificati: <18 anni al 1995, >=15 anni totali, >=5 dopo il 1995.")
 
     # settimane accreditate alla data dt (distribuite uniformemente nell'anno)
-    def _acc(self, dt, effettive=False):
+    def _acc(self, dt, effettive=False, campo=None):
         tot = 0.0
         for y, e in self.anni.items():
-            w = e["sett"] - (e["fig"] if effettive else 0)
+            w = e[campo] if campo else e["sett"] - (e["fig"] if effettive else 0)
             start = date(y,1,1); end = min(date(y,12,31), self.oggi) if y == self.oggi.year else date(y,12,31)
             if y > self.oggi.year: continue
             if dt >= end: tot += w
@@ -139,12 +188,19 @@ class Caso:
                 span = (end - start).days or 1; tot += w * (dt - start).days / span
         return tot
 
+    def _libere_anno_corrente(self):
+        """Settimane ancora accreditabili nell'anno in corso (l'anno non supera 52 settimane)."""
+        return max(0.0, SETT_ANNO - self.anni.get(self.oggi.year, {"sett": 0.0})["sett"])
+
     def _proj(self, dt):
         if dt <= self.oggi: return 0.0
         w = 0.0
         if self.continua:
             fine = min(dt, self.fine_lavoro) if self.fine_lavoro else dt
-            if fine > self.oggi: w += (fine - self.oggi).days * self.sett_annue / 365.25
+            if fine > self.oggi:
+                fine_anno = min(fine, date(self.oggi.year, 12, 31))
+                w += min((fine_anno - self.oggi).days * self.sett_annue / 365.25, self._libere_anno_corrente())
+                if fine > fine_anno: w += (fine - fine_anno).days * self.sett_annue / 365.25
         if self.volontari:
             w += (dt - self.oggi).days * self.volontari / 365.25
         # cap 52/anno
@@ -152,6 +208,7 @@ class Caso:
 
     def tot_weeks(self, dt): return self._acc(dt) + self._proj(dt)
     def eff_weeks(self, dt): return self._acc(dt, True) + self._proj(dt)
+    def senza_dis_mal(self, dt): return self.tot_weeks(dt) - self._acc(dt, campo="dm")   # per i 35 anni dell'anticipata
 
     # ------------------- importo -------------------
     def contributi_anno(self, y, decorrenza):
@@ -164,6 +221,8 @@ class Caso:
             if self.fine_lavoro: fin = min(fin, self.fine_lavoro)
             if fin >= ini:
                 frac = ((fin - ini).days + 1) / 365.25
+                if y == self.oggi.year and self.sett_annue > 0:   # anno in corso gia' (quasi) pieno: niente doppio conteggio
+                    frac = min(frac, self._libere_anno_corrente() / self.sett_annue)
                 imp = self.imp_fut * ((1+self.cresc) ** max(0, y - self.oggi.year))
                 c += imp * self.aliq_fut * frac
         return c
@@ -191,6 +250,116 @@ class Caso:
         c = tab[a] + (tab[a+1] - tab[a]) * m / 12
         return c, tab_key
 
+    # ------------------- quota retributiva dalle retribuzioni dell'estratto -------------------
+    def _serie_retribuzioni(self, decorrenza):
+        """Per gestione: anno -> [settimane utili al calcolo, retribuzione], storiche e proiettate fino alla decorrenza."""
+        serie = {}
+        for (y, g), e in self.righe.items():
+            if y > self.oggi.year: continue
+            # Le settimane accreditate senza retribuzione (es. figurativi senza importo) valgono quanto la media
+            # delle altre settimane dello stesso anno (L. 155/1981 art. 8); un anno tutto senza retribuzione resta fuori dalla media.
+            imp = e["imp"] * e["calc"] / e["retr"] if 0 < e["retr"] < e["calc"] else (e["imp"] if e["retr"] > 0 else 0.0)
+            serie.setdefault(g, {})[y] = [e["calc"], imp]
+        if self.continua and self.imp_fut > 0:
+            for y in range(self.oggi.year, decorrenza.year + 1):
+                ini = max(date(y,1,1), self.oggi + timedelta(days=1))
+                fin = min(date(y,12,31), decorrenza - timedelta(days=1))
+                if self.fine_lavoro: fin = min(fin, self.fine_lavoro)
+                if fin < ini: continue
+                frac = ((fin - ini).days + 1) / 365.25
+                v = serie.setdefault(self.gest_fut, {}).setdefault(y, [0.0, 0.0])
+                nuove = self.sett_annue * self.rapporto_calcolo * frac
+                parte = min(1.0, max(0.0, SETT_ANNO - v[0]) / nuove) if nuove > 0 else 0.0   # l'anno non supera 52 settimane
+                v[0] += nuove * parte
+                v[1] += self.imp_fut * ((1+self.cresc) ** max(0, y - self.oggi.year)) * frac * parte
+        return serie
+
+    @staticmethod
+    def _media_settimanale(anni, quante, tipo, dal=None, fino=None):
+        """Retribuzione media settimanale rivalutata sulle ultime `quante` settimane (None = tutte) degli anni tra `dal` e `fino`.
+        Le settimane senza retribuzione (es. servizio militare) non entrano nella media. Restituisce (media, settimane usate)."""
+        coeff = PARAMS["rival_retribuzioni"][tipo]
+        presi, somma = 0.0, 0.0
+        for y in sorted(anni, reverse=True):
+            if (fino is not None and y > fino) or (dal is not None and y < dal): continue
+            w, imp = anni[y]
+            if w <= 0 or imp <= 0: continue
+            k = coeff.get(y, 1.0 if y > max(coeff) else coeff[min(coeff)])
+            if quante is not None and presi + w > quante:
+                parte = (quante - presi) / w
+                somma += imp * k * parte; presi = quante; break
+            somma += imp * k; presi += w
+        return (somma / presi if presi else None), presi
+
+    @staticmethod
+    def _rendimento(retribuzione_annua, tipo):
+        """Pensione annua per ogni anno di anzianita': 2% fino al tetto, poi aliquote ridotte per fasce."""
+        tetto = PARAMS["tetto_pensionabile"][max(PARAMS["tetto_pensionabile"])]
+        resa, sotto = 0.0, 0.0
+        for limite, aliquota in PARAMS["fasce_rendimento"][tipo]:
+            sopra = retribuzione_annua if limite is None else min(retribuzione_annua, tetto * limite)
+            if sopra > sotto: resa += (sopra - sotto) * aliquota
+            sotto = max(sotto, sopra)
+        return resa
+
+    @staticmethod
+    def _eur(x):
+        return f"{x:,.0f}".replace(",", ".")
+
+    def quota_retributiva_calcolata(self, decorrenza, tutto_retributivo=False):
+        """Quote A e B calcolate con le regole INPS dalle retribuzioni dell'estratto, gestione per gestione.
+        L'anzianita' si misura in settimane utili al calcolo (il part-time conta in proporzione all'orario).
+        Con `tutto_retributivo` la quota B arriva fino alla decorrenza e non c'e' il limite dei 40 anni: serve al
+        confronto di legge per chi aveva 18 anni di contributi al 1995 (L. 190/2014 c. 707).
+        Restituisce (quota annua, note, settimane non coperte) oppure None se mancano le retribuzioni."""
+        taglio = decorrenza.year if tutto_retributivo else (1995 if self.sistema.startswith("misto") else 2011)
+        serie = self._serie_retribuzioni(decorrenza)
+        anz92 = sum(e["sett"] for y, e in self.anni.items() if y <= 1992)
+        tot = sum(e["sett"] for y, e in self.anni.items() if y <= taglio)   # gia' limitato a 52 settimane l'anno
+        if tot <= 0: return None
+        riduzione = 1.0 if tutto_retributivo else min(1.0, 40 * SETT_ANNO / tot)   # l'anzianita' utile non supera 40 anni
+        quota, note, scoperte = 0.0, [], 0.0
+        senza_media, rif, peso_rif = [], None, 0.0
+        for g in sorted(serie):
+            anni = serie[g]
+            cA = sum(v[0] for y, v in anni.items() if y <= 1992)
+            cB = sum(v[0] for y, v in anni.items() if 1993 <= y <= taglio)
+            if cA + cB <= 0: continue
+            autonomi = g in PARAMS["gestioni_autonomi"]
+            if g != "FPLD" and not autonomi:
+                scoperte += cA + cB; continue
+            nA, nB = (520, 780) if autonomi else (260, 520)
+            mA, usateA = self._media_settimanale(anni, nA, "A")
+            if anz92 >= 15 * SETT_ANNO:
+                mB, usateB = self._media_settimanale(anni, nB, "B")
+                periodoB = f"ultime {usateB:.0f} settimane"
+            else:
+                # meno di 15 anni al 1992: tutte le retribuzioni dal 1993 alla decorrenza piu' le ultime nA settimane precedenti
+                dopo, w1 = self._media_settimanale(anni, None, "B", dal=1993)
+                prima, w0 = self._media_settimanale(anni, nA, "B", fino=1992)
+                usateB = w1 + w0
+                mB = ((dopo or 0) * w1 + (prima or 0) * w0) / usateB if usateB else None
+                periodoB = f"retribuzioni dal 1993 alla decorrenza e {w0:.0f} settimane precedenti"
+            if (cA and mA is None) or (cB and mB is None):
+                senza_media.append((g, cA, cB)); continue
+            if cA + cB > peso_rif: rif, peso_rif = (g, mA, mB, usateA, periodoB), cA + cB
+            qA = self._rendimento(mA * SETT_ANNO, "A") * cA / SETT_ANNO * riduzione if cA else 0.0
+            qB = self._rendimento(mB * SETT_ANNO, "B") * cB / SETT_ANNO * riduzione if cB else 0.0
+            quota += qA + qB
+            if cA: note.append(f"Quota A {g}: {cA:.0f} settimane fino al 1992 x retribuzione media rivalutata {self._eur(mA*SETT_ANNO)} euro/anno (ultime {usateA:.0f} settimane) = {self._eur(qA)} euro/anno.")
+            if cB: note.append(f"Quota B {g}: {cB:.0f} settimane dal 1993 al {taglio} x retribuzione media rivalutata {self._eur(mB*SETT_ANNO)} euro/anno ({periodoB}) = {self._eur(qB)} euro/anno.")
+        # Periodi accreditati in una gestione senza retribuzioni proprie (es. servizio militare di chi poi ha lavorato solo
+        # da autonomo): si valorizzano con le retribuzioni medie della gestione in cui si e' lavorato di piu'.
+        for g, cA, cB in senza_media:
+            if rif is None or (cA and rif[1] is None) or (cB and rif[2] is None):
+                scoperte += cA + cB; continue
+            qA = self._rendimento(rif[1] * SETT_ANNO, "A") * cA / SETT_ANNO * riduzione if cA else 0.0
+            qB = self._rendimento(rif[2] * SETT_ANNO, "B") * cB / SETT_ANNO * riduzione if cB else 0.0
+            quota += qA + qB
+            note.append(f"{cA + cB:.0f} settimane senza una retribuzione propria (es. servizio militare) valorizzate con le retribuzioni medie della gestione {rif[0]} = {self._eur(qA + qB)} euro/anno.")
+        if not note: return None
+        return quota, note, scoperte
+
     def importo(self, decorrenza, canale_note):
         M, stime = self.montante(decorrenza)
         coeff, tabk = self.coeff_trasf(decorrenza)
@@ -200,6 +369,20 @@ class Caso:
             if self.inp.get("quota_retributiva_annua"):
                 quota_r = float(self.inp["quota_retributiva_annua"]); conf = "media"
                 canale_note.append("Quota retributiva presa dal dato fornito (es. simulazione INPS).")
+            elif (calc := self.quota_retributiva_calcolata(decorrenza)) is not None:
+                quota_r, note_r, scoperte = calc
+                conf = "media"
+                if self.sistema.startswith("retributivo") and not scoperte:
+                    # Chi aveva 18 anni di contributi al 1995 riceve il minore tra questo calcolo e quello tutto retributivo
+                    alt = self.quota_retributiva_calcolata(decorrenza, tutto_retributivo=True)
+                    if alt is not None and not alt[2] and alt[0] < quota_c + quota_r:
+                        canale_note.append(f"Applicato il limite di legge (L. 190/2014 c. 707): il calcolo interamente retributivo ({self._eur(alt[0])} euro/anno) e' piu' basso della somma di quota retributiva e contributiva ({self._eur(quota_c + quota_r)}), quindi vale il primo.")
+                        quota_r, note_r, quota_c = alt[0], alt[1], 0.0
+                canale_note.append("Quota retributiva calcolata con le regole INPS (quote A e B) sulle retribuzioni dell'estratto, rivalutate con i coefficienti INPS 2026.")
+                canale_note.extend(note_r)
+                if scoperte > 0:
+                    conf = "bassa"
+                    canale_note.append(f"{scoperte:.0f} settimane anteriori al {'1996' if self.sistema.startswith('misto') else '2012'} sono in gestioni o periodi senza retribuzioni leggibili: la loro quota non e' compresa.")
             elif self.inp.get("retribuzione_pensionabile_annua"):
                 anni_r = (self.w1995 if self.sistema.startswith("misto") else min(self._acc(date(2011,12,31)), 40*SETT_ANNO)) / SETT_ANNO
                 quota_r = 0.02 * min(anni_r, 40) * float(self.inp["retribuzione_pensionabile_annua"])
@@ -208,8 +391,12 @@ class Caso:
                 conf = "parziale"; canale_note.append("Manca la quota retributiva: importo = SOLO quota contributiva.")
         if y_after := (decorrenza.year >= 2029):
             canale_note.append("Coefficienti 2029+ non ancora pubblicati: uso 2027-2028 (sovrastima probabile).")
-        if stime: canale_note.append(f"Montante con tassi di capitalizzazione futuri ipotetici ({self.tasso_fut*100:.1f}%).")
+        if stime: canale_note.append(f"Per gli anni futuri il montante e' rivalutato dell'{self.tasso_fut*100:.1f}% l'anno in termini reali (ipotesi: e' la crescita del PIL che usa anche l'INPS nelle sue simulazioni).".replace(".", ",", 1))
         if conf == "media" and (stime or decorrenza.year >= 2029): conf = "media-bassa"
+        if decorrenza.year > self.oggi.year:
+            futuro = (f"le retribuzioni future crescono del {self.cresc*100:.0f}% l'anno oltre l'inflazione, come indicato nel questionario," if self.cresc > 0
+                      else "le retribuzioni future sono considerate ferme al valore attuale")
+            canale_note.append(f"Importi in moneta di oggi: {futuro} e coefficienti, tetti e soglie sono quelli del 2026.")
         lordo_annuo = quota_c + (quota_r or 0)
         return {"montante": round(M,2), "coeff_trasf_%": round(coeff,4), "tabella_coeff": tabk,
                 "quota_contributiva_annua": round(quota_c,2),
@@ -219,20 +406,21 @@ class Caso:
 
     # ------------------- ricerca data di maturazione -------------------
     def scan(self, ok, start=None, anni_max=45):
+        """Prima data in cui `ok` e' vero: passo mensile, poi si raffina al giorno. I requisiti crescono al 1° gennaio,
+        quindi a ogni cambio d'anno si prova anche il 31 dicembre, per non saltare chi matura negli ultimi giorni dell'anno."""
         start = start or max(self.primo_accredito, self.nascita + relativedelta(years=40))
         end = self.oggi + relativedelta(years=anni_max)
-        dt = start; step = 30
-        # passo mensile poi raffino al giorno
-        prev = None
+        prev, dt = None, start
         while dt <= end:
+            if prev is not None and prev.year < dt.year and ok(date(prev.year, 12, 31)):
+                dt = date(prev.year, 12, 31)
             if ok(dt):
-                lo = prev or start
-                x = lo
-                while x <= dt:
+                x = start if prev is None else prev + timedelta(days=1)
+                while x < dt:
                     if ok(x): return x
                     x += timedelta(days=1)
                 return dt
-            prev = dt; dt += timedelta(days=step)
+            prev = dt; dt += timedelta(days=30)
         return None
 
     def decorrenza(self, mat, finestra_mesi):
@@ -268,7 +456,8 @@ def add_lazio(R):
 
 def netto_annuo(R):
     if R <= 8500: return R
-    return R - irpef(R) - add_lazio(R) - R*PARAMS["add_com_roma"]
+    add_com = 0.0 if R <= PARAMS["add_com_roma_esenzione"] else R*PARAMS["add_com_roma"]
+    return R - irpef(R) - add_lazio(R) - add_com
 
 # =====================================================================
 def calcola(inp):
@@ -281,6 +470,15 @@ def calcola(inp):
     def fin_anticipata(mat):
         if finestra_lunga: return req(PARAMS["finestra_pa"], mat.year)
         return 3
+
+    # Madri nel sistema contributivo: eta' ridotta di 4 mesi per figlio, fino a 12 mesi (16 con 4 o piu' figli) - INPS circ. 53/2025
+    mesi_madre = (16 if c.figli >= 4 else min(4*c.figli, 12)) if (sesso_f and c.puro) else 0
+    nota_madre = (f"Eta' ridotta di {mesi_madre} mesi per i figli (lavoratrici madri nel sistema contributivo): si chiede con la domanda di pensione "
+                  "ed e' alternativa al coefficiente di calcolo piu' favorevole.")
+    def eta_req(am): return eta_raggiunta(c.nascita, am) - relativedelta(months=mesi_madre)
+    def trentacinque(dt): return c.puro or c.senza_dis_mal(dt) >= 35*SETT_ANNO - 1e-6
+    nota_35 = "Servono anche 35 anni di contributi senza contare disoccupazione e malattia: nel conteggio questi periodi sono stati esclusi da tale verifica."
+    ha_dm = any(e["dm"] > 0 for e in c.anni.values())
 
     def add(canale, mat, fin, note, extra=None, importo=True, stato=None):
         r = {"canale": canale, "note": note}
@@ -307,8 +505,9 @@ def calcola(inp):
     def ok_vec(dt):
         if gravoso: am = PARAMS["gravosi_vecchiaia_eta"]; minc = 30
         else: am = req(PARAMS["vecchiaia_eta"], dt.year); minc = 20
-        return dt >= eta_raggiunta(c.nascita, am) and c.tot_weeks(dt) >= minc*SETT_ANNO - 1e-6
+        return dt >= (eta_raggiunta(c.nascita, am) if gravoso else eta_req(am)) and c.tot_weeks(dt) >= minc*SETT_ANNO - 1e-6
     mat = c.scan(ok_vec)
+    if mesi_madre and not gravoso: note.append(nota_madre)
     if gravoso: note.append("Requisito agevolato gravosi (66a7m + 30 anni, 7 anni su 10 di attivita' gravosa): VERIFICARE documentazione.")
     r = add("Pensione di vecchiaia", mat, 0, note)
     if mat and c.puro and "importo" in r:
@@ -321,7 +520,8 @@ def calcola(inp):
     if c.puro:
         note = []
         def ok71(dt):
-            return dt >= eta_raggiunta(c.nascita, req(PARAMS["vecchiaia_contrib_eta"], dt.year)) and c.eff_weeks(dt) >= 5*SETT_ANNO - 1e-6
+            return dt >= eta_req(req(PARAMS["vecchiaia_contrib_eta"], dt.year)) and c.eff_weeks(dt) >= 5*SETT_ANNO - 1e-6
+        if mesi_madre: note.append(nota_madre)
         add("Vecchiaia contributiva (71 anni, 5 anni effettivi)", c.scan(ok71), 0, note)
 
     # 3. ANTICIPATA ORDINARIA ---------------------------------------
@@ -329,8 +529,9 @@ def calcola(inp):
     def ok_ant(dt):
         if gravoso: am = PARAMS["gravosi_anticipata_d" if sesso_f else "gravosi_anticipata_u"]
         else: am = req(PARAMS["anticipata_donne" if sesso_f else "anticipata_uomini"], dt.year)
-        return c.tot_weeks(dt) >= to_weeks(am) - 1e-6
+        return c.tot_weeks(dt) >= to_weeks(am) - 1e-6 and trentacinque(dt)
     mat = c.scan(ok_ant, start=c.primo_accredito)
+    if ha_dm and not c.puro: note.append(nota_35)
     if finestra_lunga: note.append("Gestione CPDEL/CPS/CPI/CPUG: finestra lunga (L.213/2023). Valutare il CUMULO: con piu' gestioni la finestra torna a 3 mesi.")
     if finestra_lunga: note.append("Iscritti CPDEL/CPS/CPI/CPUG con <15 anni al 1995: aliquote di rendimento ridotte sulla quota retributiva (L.213/2023).")
     if mat: add("Pensione anticipata ordinaria", mat, fin_anticipata(mat), note)
@@ -339,11 +540,12 @@ def calcola(inp):
     # 4. ANTICIPATA CONTRIBUTIVA ------------------------------------
     if c.puro:
         note = []
-        mult = PARAMS["soglia_ac"]["base"]
-        if sesso_f and c.figli == 1: mult = PARAMS["soglia_ac"]["donna_1_figlio"]
-        if sesso_f and c.figli >= 2: mult = PARAMS["soglia_ac"]["donna_2_figli"]
+        def mult_ac(anno):
+            if sesso_f and c.figli >= 2: return PARAMS["soglia_ac"]["donna_2_figli"]
+            if sesso_f and c.figli == 1: return PARAMS["soglia_ac"]["donna_1_figlio"]
+            return PARAMS["soglia_ac"]["base_dal_2030" if anno >= 2030 else "base"]
         def ok_ac_req(dt):
-            return dt >= eta_raggiunta(c.nascita, req(PARAMS["anticip_contrib_eta"], dt.year)) and \
+            return dt >= eta_req(req(PARAMS["anticip_contrib_eta"], dt.year)) and \
                    c.eff_weeks(dt) >= to_weeks(req(PARAMS["anticip_contrib_contr"], dt.year)) - 1e-6
         mat = c.scan(ok_ac_req)
         found = None
@@ -353,13 +555,23 @@ def calcola(inp):
                 if ok_ac_req(x):
                     dec = c.decorrenza(x, 3)
                     imp = c.importo(dec, [])
-                    soglia = mult * c.assegno_sociale(dec.year)
-                    if imp["lordo_mensile_13"] >= soglia: found = (x, soglia); break
+                    soglia = mult_ac(dec.year) * c.assegno_sociale(dec.year)
+                    if imp["lordo_mensile_13"] >= soglia: found = (x, soglia, mult_ac(dec.year)); break
                 x = (x.replace(day=1) + relativedelta(months=1))
-        note.append(f"Soglia importo = {mult} x assegno sociale; la rendita del fondo pensione NON conta dal 2026 (L.199/2025).")
+        mult = found[2] if found else mult_ac(mat.year if mat else c.oggi.year)
+        note.append(f"Soglia importo = {mult} x assegno sociale" + (" (3,2 per le decorrenze dal 2030)" if mult == 3.0 else "") + "; la rendita del fondo pensione NON conta dal 2026 (L.199/2025).")
+        if mesi_madre: note.append(nota_madre)
         if found:
             if found[0] != mat: note.append(f"Requisiti eta'/contributi raggiunti il {mat.isoformat()} ma soglia importo superata solo dopo.")
-            add("Pensione anticipata contributiva", found[0], 3, note, {"soglia_mensile": round(found[1],2)})
+            r = add("Pensione anticipata contributiva", found[0], 3, note, {"soglia_mensile": round(found[1],2)})
+            tetto = 5 * PARAMS["trattamento_minimo"][max(PARAMS["trattamento_minimo"])]
+            im = r.get("importo") or {}
+            if im.get("lordo_mensile_13", 0) > tetto:
+                # fino all'eta' di vecchiaia l'anticipata contributiva non supera 5 volte il trattamento minimo (DL 201/2011 art. 24 c. 11)
+                im["lordo_mensile_pieno_dalla_vecchiaia"] = im["lordo_mensile_13"]
+                im["lordo_mensile_13"] = round(tetto, 2); im["lordo_annuo"] = round(tetto * 13, 2)
+                im["netto_mensile_13_stima"] = round(netto_annuo(tetto * 13) / 13, 2)
+                r["note"].append(f"Fino all'eta' della pensione di vecchiaia l'importo non puo' superare 5 volte il trattamento minimo ({eur(tetto)} al mese): poi si riceve l'importo pieno ({eur(im['lordo_mensile_pieno_dalla_vecchiaia'])}).")
         else:
             add("Pensione anticipata contributiva", None, 0, note, stato="soglia importo non raggiunta prima dei 71 anni" if mat else None)
 
@@ -367,16 +579,19 @@ def calcola(inp):
     if cond.get("precoce"):
         note = []
         cat = cond.get("categoria_precoci")
-        if not cat:
+        if c.sistema == "contributivo puro":
+            add("Quota 41 precoci", None, 0, note, stato="non spetta: serve almeno un contributo prima del 1996")
+        elif not cat:
             note.append("Serve una categoria (disoccupato con NASpI finita, caregiver, invalido >=74%, gravoso/usurante): non indicata.")
             add("Quota 41 precoci", None, 0, note, stato="categoria non indicata")
         else:
             esente = cat in ("gravoso","usurante")
             def ok_q41(dt):
                 am = PARAMS["gravosi_precoci"] if esente else req(PARAMS["precoci"], dt.year)
-                return c.tot_weeks(dt) >= to_weeks(am) - 1e-6
+                return c.tot_weeks(dt) >= to_weeks(am) - 1e-6 and trentacinque(dt)
             mat = c.scan(ok_q41, start=c.primo_accredito)
-            note.append("Verificare 12 mesi di contributi effettivi prima dei 19 anni e la categoria con domanda di riconoscimento (scadenze 1/3, 15/7, 30/11).")
+            if ha_dm: note.append(nota_35)
+            note.append("Verificare 12 mesi di contributi effettivi prima dei 19 anni e la categoria con domanda di riconoscimento (scadenze 31 marzo, 15 luglio, 30 novembre).")
             add(f"Quota 41 precoci ({cat})", mat, fin_anticipata(mat) if mat else 3, note)
 
     # 6. VECCHIAIA INVALIDI >=80% (solo AGO privati, dipendenti) ------
@@ -390,7 +605,7 @@ def calcola(inp):
             data_inv = d(cond["data_invalidita"]) if cond.get("data_invalidita") else c.oggi
             def ok_inv(dt):
                 return dt >= data_inv and dt >= eta_raggiunta(c.nascita, req(tab, dt.year)) and c.tot_weeks(dt) >= 20*SETT_ANNO - 1e-6
-            note.append("Invalidita' pensionabile accertata da commissione INPS (non basta il verbale di invalidita' civile). Requisiti 2027+ da verificare.")
+            note.append("Invalidita' pensionabile accertata da commissione INPS (non basta il verbale di invalidita' civile).")
             add("Vecchiaia anticipata invalidi >=80%", c.scan(ok_inv), 12, note)
 
     # 7. APE SOCIALE (indennita' ponte) ------------------------------
@@ -413,7 +628,8 @@ def calcola(inp):
 
     # 8. USURANTI / NOTTURNI ---------------------------------------
     if usurante:
-        note = ["Quote (97,6 dipendenti / 98,6 autonomi) escluse dall'adeguamento fino al 31/12/2028. Domanda di riconoscimento entro 1° maggio dell'anno precedente."]
+        note = ["Quote (97,6 dipendenti / 98,6 autonomi) escluse dall'adeguamento fino al 31/12/2028. Domanda di riconoscimento entro 1° maggio dell'anno precedente.",
+                "Calcolo valido per lavori usuranti e per i notturni con almeno 78 notti l'anno: con 72-77 notti servono 1 anno e 1 punto di quota in piu', con 64-71 notti 2 anni e 2 punti in piu' (INPS circ. 28/2026)."]
         aut = c.gestione in ("ARTIGIANI","COMMERCIANTI")
         min_eta = (62,7) if aut else (61,7); quota = 98.6 if aut else 97.6
         def ok_us(dt):
@@ -469,7 +685,7 @@ def to_md(r):
             L.append(f"**{x['canale']}**"); L += [f"- {n}" for n in dict.fromkeys(x["note"])]
     if r["avvisi"]:
         L.append("\n## Avvisi sui dati"); L += [f"- {n}" for n in r["avvisi"]]
-    L.append("\n_Stima indicativa: l'importo definitivo è determinato dall'INPS alla liquidazione. Netto stimato con IRPEF 2026, addizionali Lazio e Roma, senza altre detrazioni._")
+    L.append("\n_Stima indicativa: l'importo definitivo è determinato dall'INPS alla liquidazione. Netto stimato come media su 13 mensilita', con IRPEF 2026 e addizionali Lazio e Roma, pensione come unico reddito, senza altre detrazioni._")
     return "\n".join(L)
 
 if __name__ == "__main__":

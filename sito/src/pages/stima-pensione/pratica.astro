@@ -121,12 +121,25 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
             el("p", "mt-2 text-lg", "Punti da verificare a mano: " + s.revisione.join("; ") + ". Fino alla conferma considera date e importi come indicativi."));
           dove.append(r);
         }
+        if (s.stimati) {
+          const r = el("div", "mb-5 rounded-[22px] border-2 border-[#14142B] bg-white p-5");
+          r.append(el("p", "text-xl font-extrabold", "Il tuo estratto non è aggiornato a oggi"),
+            el("p", "mt-2 text-lg", `Per il periodo dal ${dataIt(s.stimati.dal)} al ${dataIt(s.stimati.al)} abbiamo aggiunto ${s.stimati.settimane} settimane stimate sul ritmo e sulla retribuzione dei tuoi ultimi periodi di lavoro. Date e importi dipendono anche da questa proiezione: con un estratto aggiornato diventano più precisi.`));
+          dove.append(r);
+        }
         const primo = s.prima_uscita && (s.canali || []).find((c) => c.canale === s.prima_uscita.canale);
         if (s.prima_uscita) {
           const h = el("div", "rounded-[22px] bg-[#D4FF4F] p-6");
           h.append(el("p", "text-sm font-extrabold uppercase tracking-wide", "Prima uscita possibile"), el("p", "mt-1 text-3xl font-extrabold leading-tight", s.prima_uscita.canale),
             el("p", "mt-1 text-xl font-bold", `dal ${dataIt(s.prima_uscita.decorrenza)}` + (primo && primo.eta ? ` · a ${eta(primo.eta)}` : "")));
           dove.append(h);
+        }
+        if (s.ponte) {
+          const a = el("div", "mt-4 rounded-[22px] bg-[#F1EEFF] p-5");
+          a.append(el("p", "text-sm font-extrabold uppercase tracking-wide text-[#5C5C78]", "Prima della pensione"),
+            el("p", "mt-1 text-xl font-extrabold", `APE sociale dal ${dataIt(s.ponte.decorrenza)}` + (typeof s.ponte.indennita === "number" ? ` · ${soldi(s.ponte.indennita)} lordi al mese per 12 mensilità` : "")),
+            el("p", "mt-2 text-lg leading-relaxed", "È un'indennità che accompagna fino alla pensione di vecchiaia: va chiesta con una domanda di riconoscimento entro le scadenze dell'anno."));
+          dove.append(a);
         }
         const tre = el("dl", "mt-4 grid gap-4 rounded-[22px] bg-[#F7F7FB] p-5 sm:grid-cols-3");
         tre.append(cifra("Contributi ad oggi", String(s.contributi || "—").replace("a ", " anni ").replace("m", " mesi")), cifra("Netto mensile stimato", soldi(primo && primo.netto)), cifra("Sistema di calcolo", String(s.sistema || "—").split(" (")[0]));
@@ -168,7 +181,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
           for (const d of s.decisioni) ol.append(el("li", "", d.cosa + (d.entro ? ` (entro ${d.entro})` : "")));
           dove.append(ol);
         }
-        dove.append(el("p", "mt-6 text-[#5C5C78]", "Nel prospetto in PDF trovi anche le note, le avvertenze e il dettaglio del calcolo. Stima indicativa: non sostituisce la certificazione dell'INPS."));
+        dove.append(el("p", "mt-6 text-[#5C5C78]", "Importi in moneta di oggi; il netto è una media su 13 mensilità. Nel prospetto in PDF trovi anche le note, le avvertenze e il dettaglio del calcolo. Stima indicativa: non sostituisce la certificazione dell'INPS."));
       }
       function mostra(p) {
         clearTimeout(timer);

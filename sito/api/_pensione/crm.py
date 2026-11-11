@@ -41,7 +41,7 @@ SENSIBILI = {"invalidita", "invaliditaPct", "invaliditaData", "caregiver"}
 DOMANDE = [
     ("nascita", "Data di nascita"), ("sesso", "Sesso"), ("figli", "Figli"), ("residenza", "Residenza"),
     ("situazione", "Situazione lavorativa"), ("continua", "Continua a lavorare"), ("finoA", "Fino a"),
-    ("retribuzione", "Retribuzione lorda annua"), ("naspi", "NASpI"), ("esuberi", "Uscite anticipate proposte dall'azienda"),
+    ("crescita", "Retribuzione nei prossimi anni (ferma / poco / molto / nonso)"), ("retribuzione", "Retribuzione lorda annua"), ("naspi", "NASpI"), ("esuberi", "Uscite anticipate proposte dall'azienda"),
     ("mancanti", "Periodi che potrebbero mancare nell'estratto"), ("mancantiNote", "Dettaglio dei periodi"),
     ("precoce", "12 mesi di contributi prima dei 19 anni"), ("mansione", "Lavori gravosi o usuranti"),
     ("mansioneAnni", "Anni di mansione negli ultimi 10"), ("obiettivo", "Obiettivo"),

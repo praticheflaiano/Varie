@@ -15,7 +15,7 @@ Sulle anteprime Vercel è richiamabile dalla modalità prova del questionario.
 Non salva e non scrive nei log il contenuto dei documenti.
 """
 import base64, json, os, re, secrets, sys, urllib.request, urllib.error
-from datetime import date
+from datetime import date, timedelta
 from http.server import BaseHTTPRequestHandler
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_pensione"))
@@ -30,7 +30,9 @@ ENDPOINT = os.environ.get("ANTHROPIC_BASE_URL", "https://api.anthropic.com").rst
 PREZZO_IN, PREZZO_OUT = 8.0, 40.0  # USD per milione di token (listino Fable 5.2, nov 2026)
 MAX_PDF_B64 = 4_200_000
 ISO = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-FIGURATIVA = re.compile(r"disoccupaz|naspi|aspi\b|mobilit|malattia|maternit|congedo|militare|cassa integr|cig\b|figurativ|infortun|solidar", re.I)
+FIGURATIVA = re.compile(r"disocc|naspi|aspi\b|mobilit|malattia|maternit|congedo|astension|permess|militare|cassa integr|integrazione sal|cig[os]?\b|figurativ|infortun|solidar", re.I)
+# Periodi che non valgono per i 35 anni di contributi richiesti dalla pensione anticipata (disoccupazione e malattia)
+DIS_MAL = re.compile(r"disocc|naspi|aspi\b|mobilit|malattia|infortun", re.I)
 
 SCHEMA_ESTRATTO = {
     "type": "object",
@@ -141,15 +143,18 @@ SCHEMA_TESTO = {
 ISTRUZIONI_TESTO = (
     "Sei un consulente previdenziale di patronato. Ricevi in JSON le risposte del cliente, i controlli e i risultati del motore "
     "di calcolo per più scenari. Spiega il risultato in italiano semplice, dando del tu, nel formato JSON richiesto. "
-    "Ogni scenario ha note e ipotesi: tienine conto. Se c'è un confronto con la simulazione INPS, dillo: quando è coerente rafforza la "
-    "stima, quando non lo è va detto chiaramente. Riporta tra le avvertenze i limiti del calcolo e i parametri non definitivi. "
+    "Ogni scenario ha note e ipotesi: tienine conto. Riporta tra le avvertenze i limiti del calcolo e i parametri non definitivi. "
     "Per l'affidabilità degli importi usa queste parole al posto delle etichette tecniche: media = 'buona', media-bassa = 'discreta', "
     "bassa = 'di massima', parziale = 'incompleta'. "
     "REGOLE: usa ESCLUSIVAMENTE date e importi presenti nel JSON, senza cambiarne il valore; scrivi le date come gg/mm/aaaa e gli "
     "importi all'italiana (es. 1.641,47 euro); non calcolare e non stimare nuovi numeri; "
     "non citare norme, requisiti o scadenze che non compaiono nel JSON; se l'affidabilità di un importo è 'bassa' o 'parziale' "
-    "dillo chiaramente; segnala come dati mancanti ciò che renderebbe la stima più precisa (es. simulazione INPS 'La mia pensione "
-    "futura' per chi ha contributi prima del 1996, periodi non accreditati indicati dal cliente). Non promettere nulla: è una stima indicativa."
+    "dillo chiaramente; segnala come dati mancanti solo ciò che il cliente può darci e che renderebbe la stima più precisa (periodi non "
+    "accreditati che ha indicato, ultima busta paga o Certificazione Unica, documenti di altri enti o casse). "
+    "NON consigliare mai di usare simulatori, calcolatori o servizi online dell'INPS o di altri (es. 'La mia pensione futura', 'Pensami') "
+    "e non citarli: il calcolo lo facciamo noi con le regole INPS e, per i dubbi, c'è la consulenza con il nostro operatore compresa nel prezzo. "
+    "Le note 'Quota A' e 'Quota B' spiegano come è calcolata la parte di pensione maturata prima del 1996: riassumile in parole semplici, senza formule. "
+    "Non promettere nulla: è una stima indicativa."
 )
 
 
@@ -182,25 +187,54 @@ def chiama_claude(chiave, sistema, contenuto, schema, max_tokens, impegno):
     return json.loads(testo), risposta.get("usage", {}), risposta.get("stop_reason")
 
 
+CRESCITA = {"ferma": 0.0, "nonso": 0.0, "poco": 0.01, "molto": 0.02}
+
+
 def numero(s):
+    """Numero da un valore scritto all'italiana ("1.641,47"), all'inglese ("1641.47") o già numerico."""
+    if isinstance(s, bool):
+        return None
+    if isinstance(s, (int, float)):
+        return float(s)
+    t = str(s or "").replace("€", "").replace(" ", "").replace("\u00a0", "")
+    if "," in t:
+        t = t.replace(".", "").replace(",", ".")
+    elif re.fullmatch(r"-?\d{1,3}(\.\d{3})+", t):
+        t = t.replace(".", "")
     try:
-        return float(str(s).replace(" ", "").replace(".", "").replace(",", "."))
+        return float(t)
     except ValueError:
         return None
 
 
+def data_valida(s):
+    """True se la stringa è una data ISO che esiste davvero (non 31 febbraio)."""
+    try:
+        date.fromisoformat(str(s))
+        return bool(ISO.match(str(s)))
+    except ValueError:
+        return False
+
+
 def in_settimane(unita, valore):
-    """12 mesi = 360 giorni = 52 settimane (regola della skill)."""
+    """12 mesi = 360 giorni = 52 settimane (regola della skill). Valore esatto: si arrotonda una volta sola, per anno e gestione."""
     v = str(valore or "").strip()
     if not v:
         return None
     if unita == "anni-mesi-giorni":
         p = [int(x) for x in re.split(r"\D+", v) if x]
-        return round(p[0] * 52 + p[1] * 52 / 12 + p[2] * 52 / 360) if len(p) == 3 else None
+        return p[0] * 52 + p[1] * 52 / 12 + p[2] * 52 / 360 if len(p) == 3 else None
     n = numero(v)
     if n is None or n < 0:
         return None
-    return {"settimane": round(n), "mesi": round(n * 52 / 12), "giorni": round(n * 52 / 360)}.get(unita)
+    return {"settimane": n, "mesi": n * 52 / 12, "giorni": n * 52 / 360}.get(unita)
+
+
+def quote_per_anno(dal, al):
+    """Ripartisce un periodo tra gli anni solari in proporzione ai giorni: {anno: quota}, somma 1."""
+    d0, d1 = date.fromisoformat(dal), date.fromisoformat(al)
+    totale = (d1 - d0).days + 1
+    return {a: ((min(d1, date(a, 12, 31)) - max(d0, date(a, 1, 1))).days + 1) / totale for a in range(d0.year, d1.year + 1)}
 
 
 def _anni(anni):
@@ -212,9 +246,10 @@ def righe_in_contributi(letto):
     """Aggrega le righe trascritte per anno e gestione. Restituisce (contributi, dubbi, primo_accredito)."""
     agg, dubbi, primo, senza_unita = {}, [], None, 0
     per_nota = {}
+    legenda = {str(v.get("codice", "")).strip(): str(v.get("testo", "")).strip() for v in letto.get("legenda_note") or []}
     for p in letto.get("periodi") or []:
-        dal, al = p.get("dal", ""), p.get("al", "")
-        if not (ISO.match(dal) and ISO.match(al)) or al < dal:
+        dal, al, tipo = str(p.get("dal") or ""), str(p.get("al") or ""), str(p.get("tipo") or "")
+        if not (data_valida(dal) and data_valida(al)) or al < dal:
             dubbi.append(f"Riga con date non leggibili ({dal or '?'} - {al or '?'}): non conteggiata.")
             continue
         sett = in_settimane(p.get("unita"), p.get("contributi_diritto"))
@@ -223,52 +258,65 @@ def righe_in_contributi(letto):
             n = numero(p.get("contributi_diritto") or "")
             giorni = (date.fromisoformat(al) - date.fromisoformat(dal)).days + 1
             if n is not None and 0 <= n <= -(-giorni // 7) + 1:
-                sett = round(n)
+                sett = n
                 senza_unita += 1
         if sett is None:
-            dubbi.append(f"{dal} - {al} ({p.get('tipo','')}): contributi non leggibili, riga non conteggiata.")
+            dubbi.append(f"{dal} - {al} ({tipo}): contributi non leggibili, riga non conteggiata.")
             continue
-        if dal[:4] != al[:4]:
-            dubbi.append(f"{dal} - {al}: periodo a cavallo di più anni, attribuito al {dal[:4]}.")
         # La gestione si legge prima dal tipo di contribuzione ("Titolare di impresa COM." = commercianti), poi dalla sezione.
-        figurativa = bool(FIGURATIVA.search(p.get("tipo", "")))
-        riconosciuta = codice_gestione(p.get("tipo")) or codice_gestione(p.get("gestione"))
+        figurativa = bool(FIGURATIVA.search(tipo))
+        sezione = codice_gestione(p.get("gestione"))
+        riconosciuta = "PUBBLICO" if sezione == "PUBBLICO" else (codice_gestione(tipo) or sezione)
         gest = riconosciuta or "FPLD"
         if not riconosciuta and not figurativa:
-            dubbi.append(f"{dal[:4]}: gestione non riconosciuta ('{p.get('tipo') or p.get('gestione')}'), trattata come lavoro dipendente.")
-        e = agg.setdefault((int(dal[:4]), gest), {"settimane": 0, "figurative": 0, "imponibile": 0.0, "calcolo": 0, "calcolo_noto": True})
-        e["settimane"] += sett
-        if figurativa:
-            e["figurative"] += sett
+            dubbi.append(f"{dal[:4]}: gestione non riconosciuta ('{tipo or p.get('gestione')}'), trattata come lavoro dipendente.")
         calc = in_settimane(p.get("unita"), p.get("contributi_calcolo")) if p.get("contributi_calcolo") else None
-        if calc is None:
-            e["calcolo_noto"] = False
-        else:
-            e["calcolo"] += calc
         imp = numero(p.get("importo")) if p.get("importo") else None
-        if imp:
-            e["imponibile"] += imp
+        codici = str(p.get("nota") or "").split()
+        # non valgono per i 35 anni dell'anticipata: disoccupazione e malattia, e le righe che l'estratto marca "non utile"
+        dis_mal = bool(DIS_MAL.search(tipo)) or any(re.search(r"non utile", legenda.get(k, ""), re.I) for k in codici)
+        # un periodo a cavallo di più anni si ripartisce tra gli anni in proporzione ai giorni
+        for anno, quota in quote_per_anno(dal, al).items():
+            e = agg.setdefault((anno, gest), {"settimane": 0.0, "figurative": 0.0, "dm": 0.0, "imponibile": 0.0, "calcolo": 0.0, "retribuite": 0.0, "calcolo_noto": True})
+            e["settimane"] += sett * quota
+            if figurativa:
+                e["figurative"] += sett * quota
+            if dis_mal:
+                e["dm"] += sett * quota
+            if calc is None:
+                e["calcolo_noto"] = False
+            else:
+                e["calcolo"] += calc * quota
+            if imp:
+                e["imponibile"] += imp * quota
+                e["retribuite"] += (sett if calc is None else calc) * quota
         primo = dal if primo is None or dal < primo else primo
-        for codice in str(p.get("nota") or "").split():
-            n = per_nota.setdefault(codice, {"settimane": 0, "anni": []})
+        for codice in codici:
+            n = per_nota.setdefault(codice, {"settimane": 0.0, "anni": []})
             n["settimane"] += sett
             n["anni"].append(int(dal[:4]))
     if senza_unita:
         dubbi.append(f"In {senza_unita} righe l'estratto non indica l'unità dei contributi: sono state lette come settimane perché compatibili con la durata del periodo.")
     # Note dell'estratto: il testo è quello della legenda del documento, copiato com'è.
-    legenda = {str(v.get("codice", "")).strip(): str(v.get("testo", "")).strip() for v in letto.get("legenda_note") or []}
     for codice, n in sorted(per_nota.items()):
         testo = legenda.get(codice)
-        dubbi.append(f"Nota «{codice}» dell'estratto su {n['settimane']} settimane ({_anni(n['anni'])}): " + (testo if testo else "codice non spiegato nella legenda del documento."))
+        dubbi.append(f"Nota «{codice}» dell'estratto su {round(n['settimane'])} settimane ({_anni(n['anni'])}): " + (testo if testo else "codice non spiegato nella legenda del documento."))
     for sgn in letto.get("segnalazioni") or []:
         if str(sgn).strip():
             dubbi.append(f"Segnalazione INPS riportata sull'estratto: {str(sgn).strip()[:300]}")
     contributi = []
     for (a, g), v in sorted(agg.items()):
-        c = {"anno": a, "gestione": g, "settimane": v["settimane"], "figurative": v["figurative"], "imponibile": round(v["imponibile"], 2)}
-        if v["calcolo_noto"] and v["calcolo"] != v["settimane"]:
-            c["settimane_calcolo"] = v["calcolo"]
-            dubbi.append(f"{a}: le settimane utili al calcolo ({v['calcolo']}) sono diverse da quelle utili al diritto ({v['settimane']}), come nei periodi di part-time: per le date conta il diritto.")
+        sett = round(v["settimane"])
+        c = {"anno": a, "gestione": g, "settimane": sett, "figurative": min(sett, round(v["figurative"])), "imponibile": round(v["imponibile"], 2)}
+        if v["dm"] > 0:
+            c["figurative_dm"] = min(sett, round(v["dm"]))
+        calc = round(v["calcolo"]) if v["calcolo_noto"] else sett
+        if calc != sett:
+            c["settimane_calcolo"] = calc
+            dubbi.append(f"{a}: le settimane utili al calcolo ({calc}) sono diverse da quelle utili al diritto ({sett}), come nei periodi di part-time: per le date conta il diritto, per l'importo il calcolo.")
+        retribuite = min(calc, round(v["retribuite"]))
+        if retribuite != calc:
+            c["settimane_retribuite"] = retribuite   # le altre settimane non hanno una retribuzione sull'estratto
         contributi.append(c)
     return contributi, sorted(set(dubbi)), primo
 
@@ -284,15 +332,64 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
     recente = max((c for c in lavorati if c["anno"] == lavorati[-1]["anno"]), key=lambda c: c["settimane"])["gestione"] if lavorati else principale
     if len(per_gest) > 1:
         dubbi = dubbi + [f"Contributi in più gestioni ({', '.join(f'{g} {round(n)} settimane' for g, n in sorted(per_gest.items()))}): "
-                         f"la gestione prevalente è {principale}" + (f", quella più recente è {recente}: per i contributi futuri si usa l'aliquota di {recente}." if recente != principale else ".")]
+                         f"la gestione prevalente è {principale}" + (f", quella più recente è {recente}: i contributi futuri sono calcolati in {recente}." if recente != principale else ".")]
+    anno_oggi = int(oggi[:4])
     pieni = [c for c in contributi if c["settimane"] - c["figurative"] >= 48 and c["imponibile"] > 0]
     ultima = pieni[-1]["imponibile"] if pieni else 0
     dichiarata = numero(r.get("retribuzione")) if r.get("retribuzione") else None
-    imponibile_futuro = dichiarata or ultima
+    # Ritmo di lavoro recente: media degli ultimi tre anni interi in cui si è lavorato (non sempre 52 settimane l'anno)
+    recenti = {}
+    for c in contributi:
+        if anno_oggi - 3 <= c["anno"] <= anno_oggi - 1 and c["settimane"] - c["figurative"] > 0:
+            u = recenti.setdefault(c["anno"], [0.0, 0.0])
+            u[0] += c["settimane"] - c["figurative"]
+            u[1] += c["imponibile"]
+    sett_annue = min(52, round(sum(u[0] for u in recenti.values()) / len(recenti))) if recenti else 52
+    media_recente = sum(u[1] for u in recenti.values()) / len(recenti) if recenti else 0
+    imponibile_futuro = dichiarata or (ultima if pieni and pieni[-1]["anno"] >= anno_oggi - 2 else media_recente or ultima)
+    if sett_annue < 52:
+        dubbi = dubbi + [f"Negli ultimi anni hai lavorato in media {sett_annue} settimane l'anno: per il futuro la stima usa questo ritmo, non l'anno intero."]
+    if not dichiarata and imponibile_futuro and not (pieni and pieni[-1]["anno"] >= anno_oggi - 2):
+        dubbi = dubbi + ["Non c'è un anno recente di lavoro completo sull'estratto: la retribuzione futura è la media degli ultimi anni lavorati. Con una busta paga recente la stima è più precisa."]
+    # Part-time: rapporto tra settimane utili al calcolo e al diritto nell'ultimo anno lavorato
+    ultimo_lav = max((c for c in lavorati if c["anno"] == lavorati[-1]["anno"]), key=lambda c: c["settimane"]) if lavorati else None
+    rapporto_calcolo = min(1.0, ultimo_lav.get("settimane_calcolo", ultimo_lav["settimane"]) / ultimo_lav["settimane"]) if ultimo_lav and ultimo_lav["settimane"] else 1.0
 
     disoccupato = r.get("situazione") == "disoccupato"
     continua = (not disoccupato) and r.get("continua") in ("pensione", "data")
-    fino_a = f"{r['finoA']}-28" if r.get("continua") == "data" and re.match(r"^\d{4}-\d{2}$", r.get("finoA", "")) else None
+    # Crescita della retribuzione oltre l'inflazione, come indicata dal cliente nel questionario ("non lo so" = ferma, prudente)
+    crescita = CRESCITA.get(r.get("crescita"), 0.0) if continua else 0.0
+    if continua and r.get("crescita") in ("poco", "molto"):
+        dubbi = dubbi + [f"Come hai indicato, la retribuzione futura cresce dell'{crescita*100:.0f}% l'anno oltre l'inflazione: se crescerà meno, l'importo sarà più basso."]
+    elif continua:
+        dubbi = dubbi + ["La retribuzione futura è considerata ferma al valore di oggi (ipotesi prudente): se crescerà, l'importo sarà più alto."]
+    fino_a = f"{r['finoA']}-28" if r.get("continua") == "data" and re.match(r"^\d{4}-(0[1-9]|1[0-2])$", str(r.get("finoA") or "")) else None
+
+    # Buco tra l'ultimo periodo dell'estratto e oggi: chi sta lavorando ha maturato contributi che l'estratto non mostra ancora.
+    buco_giorni, stimate = 0, None
+    fine_periodi = [str(p.get("al")) for p in letto.get("periodi") or [] if data_valida(p.get("al"))]
+    if continua and fine_periodi and imponibile_futuro:
+        da, a = date.fromisoformat(max(fine_periodi)) + timedelta(days=1), date.fromisoformat(oggi)
+        buco_giorni = max(0, (a - da).days + 1)
+        if buco_giorni > 30:
+            contributi = [dict(c) for c in contributi]
+            aggiunte = 0.0
+            for anno in range(da.year, a.year + 1):
+                ini, fin = max(da, date(anno, 1, 1)), min(a, date(anno, 12, 31))
+                if fin < ini:
+                    continue
+                gia = sum(c["settimane"] for c in contributi if c["anno"] == anno)
+                sett = round(min(((fin - ini).days + 1) / 7 * sett_annue / 52, max(0.0, 52 - gia)))
+                if sett > 0:
+                    contributi.append({"anno": anno, "gestione": recente, "settimane": sett, "figurative": 0,
+                                       "imponibile": round(imponibile_futuro * sett / max(sett_annue, 1), 2),
+                                       "settimane_calcolo": round(sett * rapporto_calcolo), "stimata": True})
+                    aggiunte += sett
+            contributi.sort(key=lambda c: (c["anno"], c["gestione"]))
+            if aggiunte:
+                stimate = {"settimane": round(aggiunte), "dal": da.isoformat(), "al": a.isoformat()}
+                dubbi = dubbi + [f"L'estratto si ferma al {date.fromisoformat(max(fine_periodi)).strftime('%d/%m/%Y')}: per il periodo fino a oggi sono state aggiunte {round(aggiunte)} settimane stimate "
+                                 "sul ritmo e sulla retribuzione degli ultimi periodi, perché hai dichiarato di lavorare. Date e importi dipendono anche da questa proiezione: con un estratto aggiornato diventano certi."]
 
     pct = int(numero(r.get("invaliditaPct")) or 0) if r.get("invalidita") in ("civile", "pensionabile") else 0
     caregiver = r.get("caregiver") == "si-6"
@@ -309,9 +406,10 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
                       "figli": int(figli) if str(figli).isdigit() else 0},
         "data_calcolo": oggi, "gestione_principale": principale, "primo_accredito": primo,
         "contributi": contributi,
-        "proiezione": {"continua_lavoro": continua, "settimane_annue": 52, "imponibile_annuo": imponibile_futuro,
-                        "crescita_imponibile": 0.0, "fino_a": fino_a, "settimane_volontari_annue": 0,
-                        **({"aliquota_computo": PARAMS["aliquota_computo"].get(recente, 0.33)} if recente != principale else {})},
+        "proiezione": {"continua_lavoro": continua, "settimane_annue": sett_annue, "imponibile_annuo": imponibile_futuro,
+                        "crescita_imponibile": crescita, "fino_a": fino_a, "settimane_volontari_annue": 0, "gestione": recente,
+                        "rapporto_calcolo": round(rapporto_calcolo, 4)},
+        "buco_estratto_giorni": buco_giorni, "contributi_stimati": stimate,
         "quota_retributiva_annua": None,
         "retribuzione_pensionabile_annua": ultima or dichiarata or None,
         "opzione_contributivo": False,
@@ -319,9 +417,10 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
                         "categoria_precoci": (categoria or ("usurante" if usurante else None)) if precoce else None,
                         # il verbale di invalidità civile non basta per la vecchiaia invalidi: serve quella pensionabile
                         "invalidita_pct": pct if r.get("invalidita") == "pensionabile" else 0,
-                        "data_invalidita": r.get("invaliditaData") or None,
+                        "data_invalidita": r.get("invaliditaData") if data_valida(r.get("invaliditaData")) else None,
                         "categoria_ape": categoria, "edile_ceramista": False},
-        "ipotesi": {"tasso_capitalizzazione_futuro": 0.02, "rivalutazione_assegno_sociale": 0.02},
+        # Ipotesi in termini reali (moneta di oggi): montante futuro +1,5% l'anno, come il PIL nelle simulazioni INPS; soglie ferme
+        "ipotesi": {"tasso_capitalizzazione_futuro": 0.015, "rivalutazione_assegno_sociale": 0.0},
         "dubbi": dubbi,
     }
 
@@ -348,7 +447,7 @@ def applica_variante(base, v):
         inp["proiezione"].update({"continua_lavoro": True, "fino_a": None})
     elif tipo == "lavora_fino_a":
         d = str(v.get("data") or "")
-        if not ISO.match(d) or d <= base["data_calcolo"] or not pr["imponibile_annuo"]:
+        if not data_valida(d) or d <= base["data_calcolo"] or not pr["imponibile_annuo"]:
             return None
         inp["proiezione"].update({"continua_lavoro": True, "fino_a": d})
     elif tipo == "contributi_volontari":
@@ -369,7 +468,8 @@ def applica_variante(base, v):
                 if libere > 0:
                     inp["contributi"].append({"anno": a, "gestione": base["gestione_principale"], "settimane": libere, "figurative": 0, "imponibile": 0})
                     aggiunte += libere
-            note.append("Il costo del riscatto (ordinario o agevolato) non è calcolato qui e va chiesto all'INPS; le settimane riscattate sono contate per il diritto, non per l'importo.")
+            note.append("Il costo del riscatto (ordinario o agevolato) non è calcolato qui e va chiesto all'INPS. Le settimane riscattate contano per il diritto; "
+                        "per gli anni fino al 1995 aumentano anche la parte retributiva dell'importo, per gli anni dal 1996 l'effetto sull'importo dipende da quanto si versa e non è calcolato.")
         else:
             richieste = max(1, min(104, int(v.get("settimane") or 0)))
             a = inizio
@@ -452,12 +552,21 @@ def casi_non_coperti(r, base):
         out.append("Hai lavorato all'estero: i periodi esteri e la relativa quota di pensione non sono inclusi in questa stima.")
     if "cassa" in mancanti:
         out.append("Hai contributi in una cassa professionale: non sono inclusi; contano solo con cumulo o totalizzazione.")
-    if r.get("sesso") == "F" and str(r.get("figli", "0")) not in ("0", "") and base["primo_accredito"] and base["primo_accredito"] >= "1996-01-01":
-        out.append("Per le lavoratrici madri nel sistema contributivo è previsto un anticipo dell'età per ogni figlio: non è calcolato in questa stima.")
+    if "PUBBLICO" in gestioni:
+        out.append("Hai contributi nella gestione dei dipendenti pubblici: per questi periodi valgono regole proprie (finestre e calcolo dell'importo) che questa stima non applica.")
+    if "GS" in gestioni:
+        out.append("Hai contributi nella Gestione separata: l'importo è calcolato con l'aliquota di chi non ha altra copertura; per i professionisti con partita IVA e per chi era già iscritto altrove può essere più basso.")
+    if r.get("situazione") == "disoccupato" and r.get("naspi") not in ("finita", None, ""):
+        out.append("Le settimane di NASpI che devi ancora ricevere non sono contate: verranno accreditate mese per mese.")
     if r.get("invalidita") == "civile":
         out.append("Il verbale di invalidità civile non basta per la pensione di vecchiaia anticipata per invalidi: serve il riconoscimento dell'invalidità pensionabile da parte dell'INPS.")
     if r.get("residenza") and r.get("residenza") != "roma":
-        out.append("Il netto è calcolato con le addizionali di Lazio e Roma: per la tua residenza può differire di qualche euro al mese; il lordo non cambia.")
+        out.append("Il netto è calcolato con le addizionali di Lazio e Roma: per la tua residenza può differire anche di alcune decine di euro al mese; il lordo non cambia.")
+    out.append("Il netto è una media su 13 mensilità con le regole fiscali del 2026, considerando la pensione come unico reddito e senza detrazioni per familiari a carico: "
+               "la tredicesima netta è più bassa delle altre mensilità e nel primo anno le trattenute si applicano in modo diverso.")
+    out.append("Non sono calcolati integrazione al minimo, maggiorazioni sociali e quattordicesima.")
+    out.append("Non sono valutate in questa stima: Quota 103 e Opzione donna per chi ne ha già maturato i requisiti negli anni scorsi, totalizzazione, pensione con 15 anni di contributi "
+               "(deroghe Amato), isopensione e RITA. Se pensi di rientrare in uno di questi casi, parlane con il nostro operatore.")
     return out
 
 
@@ -519,7 +628,7 @@ def consegna(stima, r, sito, codice=None):
 def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
     r = dati.get("risposte") or {}
     pdf = dati.get("pdf") or ""
-    if not ISO.match(str(r.get("nascita", ""))) or r.get("sesso") not in ("M", "F"):
+    if not data_valida(r.get("nascita")) or r.get("sesso") not in ("M", "F"):
         return 400, {"errore": "risposte"}
     allegati = {k: dati.get(k) or "" for k in ("simulazione", "busta")}
     tutti = [pdf] + [v for v in allegati.values() if v]
@@ -547,7 +656,7 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
         if blocco:
             contenuto.append(blocco)
     contenuto.append({"type": "text", "text": "Trascrivi l'estratto e, se presenti, i dati degli altri allegati."})
-    stop, confronto_letture = "", []
+    stop, confronto_letture, letture_discordi = "", [], False
     try:
         letto, u, stop = chiama_claude(chiave, ISTRUZIONI_LETTURA, contenuto, SCHEMA_ESTRATTO, 48000, "low")
         somma(u)
@@ -564,10 +673,12 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
             if abs(sett_modello - sett_dirette) <= 2 and len(letto.get("periodi") or []) == len(diretto["periodi"]):
                 confronto_letture.append(f"Lettura diretta del PDF e rilettura del modello coincidono ({len(diretto['periodi'])} righe, {sett_dirette} settimane).")
             else:
-                confronto_letture.append(f"La rilettura del modello differisce dalla lettura diretta del PDF (modello: {len(letto.get('periodi') or [])} righe, {sett_modello} settimane; "
+                confronto_letture.append(f"ATTENZIONE: la rilettura del modello differisce dalla lettura diretta del PDF (modello: {len(letto.get('periodi') or [])} righe, {sett_modello} settimane; "
                                          f"lettura diretta: {len(diretto['periodi'])} righe, {sett_dirette} settimane). Il calcolo usa la lettura diretta.")
+                letture_discordi = True
         # le righe e l'anagrafica sono quelle lette direttamente; dal modello restano simulazione e busta paga
-        letto = {**(letto or {"simulazione": {}, "retribuzione_documento": {}}), **{k: v for k, v in diretto.items() if k != "completo"}}
+        # (i campi che la lettura diretta lascia vuoti, come il totale dichiarato, restano quelli letti dal modello)
+        letto = {**(letto or {"simulazione": {}, "retribuzione_documento": {}}), **{k: v for k, v in diretto.items() if k != "completo" and v not in ("", None)}}
     else:
         letto["lettura"] = "modello"
     contributi, dubbi, primo = righe_in_contributi(letto)
@@ -611,14 +722,26 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
         if firma in visti:
             continue
         visti.add(firma)
+        esito_v = calcola(inp)
+        if esito_v["sistema_calcolo"] != esito_base["sistema_calcolo"]:
+            note = note + [f"Con questa ipotesi cambia il sistema di calcolo della pensione: da «{esito_base['sistema_calcolo']}» a «{esito_v['sistema_calcolo']}»."]
         risultati.append({"nome": str(v.get("nome") or v["tipo"])[:90], "motivo": str(v.get("motivo") or "")[:300], "note": note,
-                          "ipotesi": inp["proiezione"], "esito": calcola(inp)})
+                          "ipotesi": inp["proiezione"], "esito": esito_v})
 
     # 4. Controlli di coerenza
     verifiche = controlli(letto, contributi, esito_base) + confronto_letture
     revisione = []
     if letto.get("lettura") == "modello":
         verifiche.append("L'estratto non contiene testo leggibile direttamente (scansione o foto): le righe sono state trascritte dal modello e vanno confrontate con il documento.")
+    if letture_discordi:
+        revisione.append("letture dell'estratto discordanti")
+    nascita_estratto = letto.get("data_nascita") or ""
+    if data_valida(nascita_estratto) and nascita_estratto != r["nascita"]:
+        verifiche.append(f"ATTENZIONE: la data di nascita indicata nel questionario ({r['nascita']}) è diversa da quella dell'estratto ({nascita_estratto}). Il calcolo usa quella del questionario.")
+        revisione.append("data di nascita diversa tra questionario ed estratto")
+    if base.get("contributi_stimati"):
+        st = base["contributi_stimati"]
+        verifiche.append(f"Estratto non aggiornato: {st['settimane']} settimane dal {st['dal']} al {st['al']} sono stimate, non lette dall'estratto.")
     if any(str(x).strip() for x in letto.get("segnalazioni") or []):
         revisione.append("segnalazioni INPS sull'estratto da valutare (altri enti o pratiche in corso)")
     pre = dati.get("prelettura_settimane")
@@ -658,7 +781,7 @@ def elabora(dati, chiave, sito="https://praticheflaiano.it", codice=None):
                  "estratto": {"intestatario": f"{letto.get('nome','')} {letto.get('cognome','')}".strip(), "data_estratto": letto.get("data_estratto", ""),
                               "righe": len(letto.get("periodi") or []), "totale_dichiarato": letto.get("totale_dichiarato", ""),
                               "lettura": letto.get("lettura", ""), "segnalazioni": [str(x)[:300] for x in letto.get("segnalazioni") or []],
-                              "gestioni": sorted({c["gestione"] for c in contributi})},
+                              "gestioni": sorted({c["gestione"] for c in contributi}), "contributi_stimati": base.get("contributi_stimati")},
                  "documenti": {"simulazione_inps": bool(sim.get("presente")), "retribuzione": doc.get("tipo", "") if doc.get("presente") else ""},
                  "contributi": contributi, "dubbi": dubbi, "controlli": verifiche, "limiti": limiti, "parametri_non_definitivi": scadenze,
                  "confronto_inps": confronti, "revisione_consigliata": sorted(set(revisione)),

@@ -14,13 +14,16 @@ Le scansioni (PDF senza testo) non si leggono così: `completo` resta False e si
 """
 import io
 import re
+from datetime import date
 
 DATA = re.compile(r"^(\d{2})[/.\-](\d{2})[/.\-](\d{4})$")
 DATA_UNITA = re.compile(r"^(\d{2}[/.\-]\d{2}[/.\-]\d{4})\s+(\S.*)$")
 UNITA = re.compile(r"^(sett\.?|settimane|mesi|mese|giorni|gg\.?)$", re.I)
 INTERO = re.compile(r"^\d{1,4}$")
-DECIMALE = re.compile(r"^\d{1,4},\d{1,3}$")
-IMPORTO = re.compile(r"^-?\d{1,3}(?:\.\d{3})*,\d{2}$")
+DECIMALE = re.compile(r"^\d{1,4},\d{3}$")   # contributi utili al calcolo: sempre tre decimali ("46,000")
+IMPORTO = re.compile(r"^-?\d{1,3}(?:\.?\d{3})*,\d{2}-?$")   # euro con due decimali, anche senza punto delle migliaia
+# distanze massime (in punti) tra le colonne: il calcolo sta subito a destra del diritto, l'importo poco oltre
+DIST_CALCOLO, DIST_IMPORTO, DIST_IMPORTO_DA_UNITA = 70, 140, 190
 CF = re.compile(r"\b([A-Z]{6}\d{2}[ABCDEHLMPRST]\d{2}[A-Z]\d{3}[A-Z])\b")
 SEZIONE = re.compile(r"^(regime|gestion[ei]|fondo|fondi|cassa|lavoratori)\b", re.I)
 VOCE_NOTA = re.compile(r"^(\S{1,3})\)\s+(.+)$")
@@ -29,15 +32,18 @@ TOLLERANZA_RIGA = 2.5
 
 # Gestione dedotta dal tipo di contribuzione o dal titolo della sezione (codici del motore di calcolo).
 GESTIONI = (
-    (r"cpdel", "CPDEL"), (r"\bcps\b", "CPS"), (r"\bcpi\b", "CPI"), (r"cpug", "CPUG"), (r"ctps|\bstato\b", "CTPS"),
-    (r"artigian|\bart\.", "ARTIGIANI"), (r"commerc|\bcomm?\.", "COMMERCIANTI"),
+    (r"pubblic|inpdap", "PUBBLICO"),
+    (r"cpdel", "CPDEL"), (r"\bcps\b", "CPS"), (r"\bcpi\b", "CPI"), (r"cpug", "CPUG"), (r"ctps|dipendenti dello stato", "CTPS"),
     (r"separata|parasubordinat|collaborazion|co\.\s?co\.", "GS"),
+    # "ART." e "COM." valgono solo per titolari e collaboratori d'impresa (non "art. 13", non "settore commercio")
+    (r"(titolare|coadiuv|collaborator|impresa).*(artigian|\bart\.)|^artigian|gestione (degli )?artigian", "ARTIGIANI"),
+    (r"(titolare|coadiuv|collaborator|impresa).*(commerc|\bcomm?\.)|^commerc|gestione (dei )?commerc", "COMMERCIANTI"),
     (r"dipend|fpld|domestic", "FPLD"),
 )
 
 
 def codice_gestione(testo):
-    t = (testo or "").lower()
+    t = (testo or "").lower().strip()
     for modello, codice in GESTIONI:
         if re.search(modello, t):
             return codice
@@ -98,7 +104,12 @@ def _righe(celle):
 
 def _iso(t):
     m = DATA.match(t)
-    return f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else ""
+    if not m:
+        return ""
+    try:   # la data deve esistere davvero (non 31/02)
+        return date(int(m.group(3)), int(m.group(2)), int(m.group(1))).isoformat()
+    except ValueError:
+        return ""
 
 
 def _lettere_cf(parola, nome=False):
@@ -190,18 +201,20 @@ def leggi_celle(celle, pagine=1):
             dal, al = _iso(c[0][1]), _iso(c[1][1])
             p = {"dal": dal, "al": al, "gestione": sezione, "tipo": "", "unita": "sconosciuta", "contributi_diritto": "",
                  "contributi_calcolo": "", "importo": "", "azienda": "", "nota": ""}
-            tipo, azienda, visto_unita = [], [], False
+            tipo, azienda, visto_unita, x_dir = [], [], False, None
             for x, t in c[2:]:
                 if not visto_unita and UNITA.match(t):
                     p["unita"], visto_unita, x_unita = _unita(t), True, x
-                elif x_note is not None and x >= x_note - 30 and len(t) <= 4:
+                elif (x_note is not None and x >= x_note - 30 and len(t) <= 4) or (x_note is None and x >= 740 and len(t) <= 2):
                     p["nota"] = (p["nota"] + " " + t).strip()
-                elif visto_unita and INTERO.match(t) and not p["contributi_diritto"] and not p["importo"]:
-                    p["contributi_diritto"] = t
-                elif visto_unita and (DECIMALE.match(t) or INTERO.match(t)) and p["contributi_diritto"] and not p["contributi_calcolo"] and not p["importo"]:
+                elif visto_unita and INTERO.match(t) and not p["contributi_diritto"] and not p["importo"] and not azienda:
+                    p["contributi_diritto"], x_dir = t, x
+                elif (visto_unita and (DECIMALE.match(t) or INTERO.match(t)) and p["contributi_diritto"] and not p["contributi_calcolo"]
+                      and not p["importo"] and not azienda and x - x_dir <= DIST_CALCOLO):
                     p["contributi_calcolo"] = t
-                elif IMPORTO.match(t) and not p["importo"] and not azienda:
-                    p["importo"] = t
+                elif (IMPORTO.match(t) and not p["importo"] and not azienda
+                      and (x - x_dir <= DIST_IMPORTO if x_dir is not None else visto_unita and x - x_unita <= DIST_IMPORTO_DA_UNITA)):
+                    p["importo"] = t.rstrip("-") if not t.endswith("-") else "-" + t.rstrip("-")
                 elif not visto_unita and not p["importo"]:
                     tipo.append(t)
                 else:
@@ -222,6 +235,16 @@ def leggi_celle(celle, pagine=1):
             zona = "segnalazioni"
             continue
         riga_testo = re.sub(r"\s+", " ", " ".join(testi)).strip()
+        di_seguito = (zona == "tabella" and periodi and x_unita is not None and r["p"] == pagina_ultima and r["y"] - y_ultima <= 16
+                      and not re.match(r"^(dal|al|periodo|reddito|euro)\b", primo, re.I))
+        if zona == "tabella" and any(DATA.match(t) or UNITA.match(t) or DATA_UNITA.match(t) for t in testi):
+            # ha l'aspetto di una riga di contributi ma non comincia con due date: non la si perde in silenzio
+            problemi.append(f"riga non interpretata: {riga_testo[:60]}")
+            continue
+        if not di_seguito and len(c) == 1 and c[0][0] > 120 and SEZIONE.match(primo) and len(primo) <= 70:
+            # titolo di una sezione (es. "Gestione separata"), anche dopo le note della sezione precedente
+            sezione, zona = riga_testo, "tabella"
+            continue
         if zona == "note":
             v = VOCE_NOTA.match(riga_testo)
             if v:
@@ -233,9 +256,7 @@ def leggi_celle(celle, pagine=1):
                 segnalazioni.append(re.sub(r"^[-–•]\s*", "", riga_testo))
             else:
                 segnalazioni[-1] += " " + riga_testo
-        elif len(c) == 1 and SEZIONE.match(primo) and len(primo) <= 70:
-            sezione = re.sub(r"\s+", " ", primo)
-        elif periodi and x_unita is not None and r["p"] == pagina_ultima and r["y"] - y_ultima <= 16 and not re.match(r"^(dal|al|periodo|reddito|euro)\b", primo, re.I):
+        elif di_seguito:
             # riga di seguito (testo andato a capo nella cella): si attacca al tipo o all'azienda della riga sopra
             for x, t in c:
                 campo = "tipo" if x < x_unita else "azienda"

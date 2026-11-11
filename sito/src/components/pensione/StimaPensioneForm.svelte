@@ -138,6 +138,8 @@
     continua: "",
     finoA: "",
     retribuzione: "",
+    // come pensa che cambierà la retribuzione da qui alla pensione: ferma | poco | molto | nonso
+    crescita: "",
     naspi: "",
     esuberi: "",
     // contributi
@@ -171,7 +173,6 @@
 
   const DOCS = [
     { key: "estratto", label: "Estratto conto contributivo INPS", required: true, accept: ".pdf,.xml", hint: "Lo scarichi dal sito INPS con SPID o CIE: Fascicolo previdenziale → Estratto conto. PDF o XML." },
-    { key: "simulazione", label: "Simulazione INPS \"La mia pensione futura\"", required: false, accept: ".pdf", hint: "Molto consigliata se hai contributi prima del 1996: rende l'importo più preciso." },
     { key: "busta", label: "Ultima busta paga o Certificazione Unica", required: false, accept: ".pdf,.jpg,.jpeg,.png", hint: "Serve a stimare i contributi dei prossimi anni." },
     { key: "verbale", label: "Verbale di invalidità", required: false, accept: ".pdf,.jpg,.jpeg,.png", hint: "Solo se hai un'invalidità riconosciuta." },
   ];
@@ -315,6 +316,7 @@
       if (!a.situazione) e.push("Indica la tua situazione lavorativa.");
       if (!disoccupato && a.situazione && !a.continua) e.push("Indica se pensi di continuare a lavorare.");
       if (a.continua === "data" && !a.finoA) e.push("Indica fino a quando pensi di lavorare.");
+      if (!disoccupato && (a.continua === "pensione" || a.continua === "data") && !a.crescita) e.push("Indica come pensi che cambierà la tua retribuzione nei prossimi anni.");
       if (disoccupato && !a.naspi) e.push("Indica la situazione della NASpI.");
     }
     if (s === 3) {
@@ -528,7 +530,7 @@
       <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each [...(stima.limiti ?? []), ...(stima.parametri_non_definitivi ?? [])] as v}<li>{v}</li>{/each}</ul>
     {/if}
     <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Controlli e avvertenze</h3>
-    <p class="mt-1 text-sm text-[#6B6B85]">Come leggere la precisione degli importi: "buona" = dati certi; "discreta" = dipende da contributi futuri o da coefficienti non ancora pubblicati; "di massima" = la parte di pensione maturata prima del 1996 è stimata; "incompleta" = manca una parte del calcolo.</p>
+    <p class="mt-1 text-sm text-[#6B6B85]">Come leggere la precisione degli importi: "buona" = dati certi; "discreta" = dipende da contributi futuri o da coefficienti non ancora pubblicati; "di massima" = una parte dell'importo è stimata; "incompleta" = manca una parte del calcolo.</p>
     <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">
       {#each [...stima.controlli, ...stima.dubbi, ...stima.testo.avvertenze, ...(base.avvisi ?? [])] as v}<li>{v}</li>{/each}
     </ul>
@@ -731,6 +733,17 @@
           <input id="sp-ral" type="number" inputmode="numeric" min="0" step="500" class={input} placeholder="es. 28000" bind:value={a.retribuzione} />
           <p class={help}>Se non lo sai, lo ricaviamo dall'estratto o dalla busta paga.</p>
         </div>
+        {#if a.continua === "pensione" || a.continua === "data"}
+          <fieldset class="mt-5"><legend class={label}>Da qui alla pensione, come pensi che cambierà la tua retribuzione?</legend>
+            <p class="mb-3 text-[#3F3F5A]">Ci serve per stimare i contributi che verserai nei prossimi anni: più cresce la retribuzione, più alta sarà la pensione. Parliamo di aumenti veri, oltre l'aumento dei prezzi. Se hai dubbi scegli "più o meno come oggi": la stima sarà prudente.</p>
+            {@render scelta("crescita", a.crescita, [
+              { v: "ferma", l: "Resterà più o meno come oggi" },
+              { v: "poco", l: "Crescerà un po' (circa 1% l'anno)" },
+              { v: "molto", l: "Crescerà in modo deciso (circa 2% l'anno)" },
+              { v: "nonso", l: "Non lo so" },
+            ], (v) => (a.crescita = v))}
+          </fieldset>
+        {/if}
       {/if}
       {#if disoccupato}
         <fieldset class="mt-5"><legend class={label}>NASpI</legend>
