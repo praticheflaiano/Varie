@@ -1,5 +1,6 @@
 <script lang="ts">
   import { testoDaPdf, leggiEstrattoLocale, type EstrattoLetto } from "~/utils/estrattoInps";
+  import Attesa from "./Attesa.svelte";
   // Questionario "Stima e Calcolo della pensione".
   // Raccoglie dati e documenti PRIMA del pagamento; l'invio va all'endpoint
   // `apiUrl`. Finché non è configurato, l'ultimo passo mostra un avviso e non
@@ -448,9 +449,7 @@
       <button type="button" class="rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
     </div>
   {:else if fase === "elaborazione"}
-    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Stiamo preparando la tua stima</h2>
-    <p class="text-[#3F3F5A]" role="status">Rileggiamo per intero il tuo estratto, calcoliamo date e importi per ogni strada e scriviamo il prospetto. Può richiedere da uno a tre minuti: non chiudere la pagina.</p>
-    <div class="mt-5 h-2 overflow-hidden rounded-full bg-white"><div class="h-full w-1/3 animate-pulse rounded-full bg-[#5B3DF5]"></div></div>
+    <Attesa variante="calcolo" />
   {:else if fase === "risultato" && stima}
     {@const base = stima.scenari[0].esito}
     <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">La tua stima</h2>
@@ -603,7 +602,7 @@
           <label class="mb-3 flex items-start gap-3 text-[#14142B]"><input id="sp-consenso-lettura" type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={consensoLettura} /><span>Ho letto l'<a class="font-bold underline" href="/privacy" target="_blank" rel="noopener">informativa privacy</a> e acconsento alla lettura automatica del mio estratto.</span></label>
           <input id="sp-file-estratto" type="file" accept=".pdf,.xml" disabled={!consensoLettura} class="block w-full disabled:opacity-50 text-sm text-[#3F3F5A] file:mr-3 file:rounded-full file:border-0 file:bg-[#14142B] file:px-4 file:py-2 file:font-bold file:text-white" onchange={onEstratto} />
           <p class={help}>Lo scarichi dal sito INPS con SPID o CIE: Fascicolo previdenziale → Estratto conto. Massimo {MAX_MB} MB.</p>
-          {#if leggendo}<p class="mt-2 font-semibold text-[#4B2FE0]" role="status">Lettura dell'estratto in corso…</p>{/if}
+          {#if leggendo}<Attesa variante="lettura" />{/if}
         </div>
         {#if letto}
           <div id="estratto-letto" class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
@@ -807,6 +806,7 @@
         <div><dt class="text-sm text-[#6B6B85]">Estratto contributivo</dt><dd class="font-semibold">{a.richiediEstratto ? `Lo richiediamo noi (+${prezzoEstratto} €)` : "Caricato da te"}</dd></div>
         <div><dt class="text-sm text-[#6B6B85]">Totale</dt><dd class="font-semibold">{price}</dd></div>
       </dl>
+      <p class="mt-4 rounded-2xl bg-[#F1EEFF] p-4 text-[#14142B]">Al pagamento può pagare anche un'altra persona (un figlio, il coniuge) con la propria email e la propria carta: dopo il pagamento torni qui e la stima resta collegata a te.</p>
       <div class="mt-5 flex flex-col gap-3 text-[#14142B]">
         <label class="flex items-start gap-3"><input type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={a.privacy} /><span>Ho letto l'<a class="font-bold underline" href="/privacy" target="_blank" rel="noopener">informativa privacy</a>.</span></label>
         <label class="flex items-start gap-3"><input type="checkbox" class="mt-1 size-5 accent-[#5B3DF5]" bind:checked={a.salute} /><span>Acconsento al trattamento dei dati sulla salute che ho indicato (invalidità, assistenza a familiari), al solo scopo di elaborare la stima.</span></label>
@@ -815,6 +815,7 @@
       {#if !apiUrl && !demo}
         <p class="mt-5 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">Il servizio è in fase di attivazione: l'invio dei documenti e il pagamento non sono ancora disponibili. Nessun dato è stato inviato.</p>
       {/if}
+      {#if sending}<Attesa variante="invio" />{/if}
       {#if sendError}<p class="mt-5 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]" role="alert">{sendError}</p>{/if}
     {/if}
 

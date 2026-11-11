@@ -4,6 +4,8 @@ Stima e Calcolo della pensione - stato della pratica e avvio del calcolo.
 Cliente (codice pratica + data di nascita, risposta uniforme se non corrispondono):
   {"azione": "stato"}   stato della pratica
   {"azione": "avvia"}   se è pagata esegue il calcolo (dura minuti) e restituisce lo stato finale
+  {"azione": "reclama", "contatto": "<email o telefono usati per pagare>"}   abbina un pagamento
+                        arrivato con dati diversi da quelli del questionario
   {"azione": "simula-pagamento"}   solo fuori produzione: segna pagata senza passare da GHL
 Ufficio (intestazione x-stima-token = STIMA_PENSIONE_TOKEN, basta il codice):
   {"azione": "rilascia"}          rende scaricabile un prospetto trattenuto ("da_rivedere")
@@ -41,6 +43,10 @@ class handler(BaseHTTPRequestHandler):
                 return pratiche.rispondi(self, 404, {"errore": "non-trovato"})
             if azione == "simula-pagamento" and not pratiche.in_produzione():
                 p = pratiche.paga(codice, "simulato")
+            elif azione == "reclama":
+                if not pratiche.entro_limite(("reclama", codice), 10):
+                    return pratiche.rispondi(self, 429, {"errore": "troppi-tentativi"})
+                p = pratiche.reclama(codice, dati.get("contatto"))
             elif azione == "avvia":
                 chiave = os.environ.get("ANTHROPIC_API_KEY")
                 if not chiave:

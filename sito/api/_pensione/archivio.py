@@ -11,7 +11,7 @@ import re
 
 CODICE = re.compile(r"^[A-Za-z0-9_-]{16,40}$")
 NOME = re.compile(r"[a-z]+\.(pdf|json|bin)")
-GRUPPO = re.compile(r"(email|tel)/[a-f0-9]{16,64}")
+GRUPPO = re.compile(r"(email|tel)/[a-f0-9]{16,64}|attesa/pratiche|pagamenti/aperti")
 
 
 def configurato():
@@ -95,15 +95,40 @@ def elimina(codice, nome):
         pass
 
 
-def segna(gruppo, codice):
-    """Registra una pratica dentro un gruppo (impronta dell'email del cliente)."""
+def _voce(gruppo, codice):
     if not GRUPPO.fullmatch(gruppo) or not CODICE.match(codice or ""):
         raise ValueError("percorso non valido")
-    _scrivi(f"{gruppo}/{codice}.json", b"{}", "application/json", True)
+    return f"{gruppo}/{codice}.json"
+
+
+def segna(gruppo, codice, dati=b"{}"):
+    """Registra una voce in un gruppo: una pratica sotto l'impronta di email o telefono, una pratica
+    in attesa di pagamento (`attesa/pratiche`), un pagamento non ancora abbinato (`pagamenti/aperti`)."""
+    _scrivi(_voce(gruppo, codice), dati, "application/json", True)
+
+
+def voce(gruppo, codice):
+    return _leggi(_voce(gruppo, codice))
+
+
+def togli(gruppo, codice):
+    percorso = _voce(gruppo, codice)
+    cartella = os.environ.get("STIMA_ARCHIVIO_DIR")
+    if cartella:
+        try:
+            os.remove(os.path.join(cartella, percorso))
+        except FileNotFoundError:
+            pass
+        return
+    from vercel.blob.sync import BlobNotFoundError, delete_blob
+    try:
+        delete_blob(percorso)
+    except BlobNotFoundError:
+        pass
 
 
 def elenco(gruppo):
-    """Codici delle pratiche registrate in un gruppo."""
+    """Codici delle voci registrate in un gruppo."""
     if not GRUPPO.fullmatch(gruppo):
         raise ValueError("percorso non valido")
     cartella = os.environ.get("STIMA_ARCHIVIO_DIR")

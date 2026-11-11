@@ -92,7 +92,7 @@ assert s["stato"] == "ricevuta" and s["totale"] == 6000 and s["prova"] is True, 
 assert stato(c, "avvia")[1]["stato"] == "ricevuta" and esiti["chiamate"] == 0, "non si calcola prima del pagamento"
 assert chiama("prospetto", {"c": c, "n": "1962-03-10"})[0] == 404
 for _ in range(2):
-    assert chiama("pagamento", {"contact": {"email": "mario.rossi@example.com"}, "order_id": "ord_1", "amount": 0}, **TOKEN) == (200, {"ok": True, "pratica": _ == 0})
+    assert chiama("pagamento", {"contact": {"email": "mario.rossi@example.com"}, "order_id": "ord_1", "amount": 0}, **TOKEN) == (200, {"ok": True, "pratica": True}), "il secondo avviso riconosce la stessa pratica"
 assert stato(c)[1]["stato"] == "pagata"
 assert stato(c, "avvia")[1]["stato"] == "consegnata" and esiti["chiamate"] == 1
 assert stato(c, "avvia")[1]["stato"] == "consegnata" and esiti["chiamate"] == 1, "non si ricalcola"
@@ -142,12 +142,46 @@ assert stato(c, "avvia")[1]["stato"] == "attesa_estratto"
 assert chiama("pratica", {"c": c, "azione": "carica-estratto", "pdf": PDF}, **TOKEN) == (200, {"stato": "pagata"})
 assert stato(c, "avvia")[1]["stato"] == "consegnata"
 
-# Email del checkout diversa da quella del questionario: la pratica si ritrova dal telefono
+# Chi paga ha email e telefono diversi da chi ha compilato il questionario.
+def chiudi_attese():
+    for gruppo in ("attesa/pratiche", "pagamenti/aperti"):
+        for cod in archivio.elenco(gruppo):
+            archivio.togli(gruppo, cod)
+
+
+# a) stesso telefono: si abbina da sola
+chiudi_attese()
 c = nuova(email="altra@example.com", telefono="371 623 0000")
 assert chiama("pagamento", {"email": "contatto-ghl@example.com", "phone": "+393716230000"}, **TOKEN) == (200, {"ok": True, "pratica": True})
-assert stato(c)[1]["stato"] == "pagata"
-assert chiama("pagamento", {"email": "nessuno@example.com", "phone": "+39 06 1"}, **TOKEN) == (200, {"ok": True, "pratica": False})
+assert stato(c)[1]["stato"] == "pagata" and archivio.elenco("attesa/pratiche") == []
+# b) nessun dato in comune ma una sola pratica in attesa: è la sua
+c = nuova(email="figlia@example.com", telefono="333 111 2222")
+assert stato(c)[1]["da_abbinare"] is False
+assert chiama("pagamento", {"email": "padre@example.com", "phone": "+393409998888", "order_id": "ord_9"}, **TOKEN) == (200, {"ok": True, "pratica": True})
+assert stato(c)[1]["stato"] == "pagata" and pratiche.carica(c)["pagamento"]["come"] == "ghl-unica-in-attesa"
+#    l'avviso ripetuto dello stesso ordine non paga la pratica di un altro
+altro = nuova(email="altro-cliente@example.com", telefono="333 444 5555")
+assert chiama("pagamento", {"email": "padre@example.com", "phone": "+393409998888", "order_id": "ord_9"}, **TOKEN) == (200, {"ok": True, "pratica": True})
+assert stato(altro)[1]["stato"] == "ricevuta" and stato(altro)[1]["da_abbinare"] is False
+chiudi_attese()
+# c) due pratiche in attesa: il pagamento resta aperto e lo abbina chi indica con che cosa ha pagato
+uno, due = nuova(email="uno@example.com", telefono="333 000 0001"), nuova(email="due@example.com", telefono="333 000 0002")
+for _ in range(2):  # anche qui l'avviso può arrivare due volte: resta un solo pagamento aperto
+    assert chiama("pagamento", {"email": "pagante@example.com", "phone": "+393477776666"}, **TOKEN) == (200, {"ok": True, "pratica": False})
+assert len(archivio.elenco("pagamenti/aperti")) == 1
+assert stato(uno)[1]["da_abbinare"] is True and stato(due)[1]["da_abbinare"] is True
+assert chiama("pratica", {"c": uno, "n": "1962-03-10", "azione": "reclama", "contatto": "sbagliata@example.com"})[1]["stato"] == "ricevuta"
+assert chiama("pratica", {"c": due, "n": "1962-03-10", "azione": "reclama", "contatto": " Pagante@Example.com "})[1]["stato"] == "pagata"
+assert chiama("pratica", {"c": uno, "n": "1962-03-10", "azione": "reclama", "contatto": "pagante@example.com"})[1]["stato"] == "ricevuta", "un pagamento vale per una pratica sola"
+assert stato(uno)[1]["da_abbinare"] is False
+#    ...anche dal telefono, e un pagamento arrivato PRIMA della pratica non si può reclamare
+chiama("pagamento", {"email": "x@example.com", "phone": "+39 347 555 4444"}, **TOKEN)
+tardi = nuova(email="tardi@example.com", telefono="333 000 0003")
+assert stato(tardi)[1]["da_abbinare"] is False
+assert chiama("pratica", {"c": tardi, "n": "1962-03-10", "azione": "reclama", "contatto": "3475554444"})[1]["stato"] == "ricevuta"
+assert chiama("pratica", {"c": uno, "n": "1962-03-10", "azione": "reclama", "contatto": "347 555 4444"})[1]["stato"] == "pagata"
 assert chiama("pagamento", {"nome": "x"}, **TOKEN)[0] == 400
+chiudi_attese()
 
 # Limite di invii per indirizzo
 pratiche._tentativi.clear()

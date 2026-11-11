@@ -3,6 +3,7 @@
 // scarico del prospetto. Il codice arriva nell'ancora dell'indirizzo (non finisce nei log del
 // server) oppure dal browser che ha inviato il questionario; serve anche la data di nascita.
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import Attesa from "~/components/pensione/Attesa.svelte";
 ---
 <BaseLayout title="La tua stima della pensione" description="Stato della tua Stima e Calcolo della pensione." noindex={true} share={false}>
   <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
@@ -18,15 +19,22 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
     <div id="pr-box" class="mt-6 hidden rounded-[28px] bg-[#F7F7FB] p-6" aria-live="polite">
       <h2 id="pr-titolo" class="text-2xl font-extrabold text-[#14142B]"></h2>
       <p id="pr-testo" class="mt-3 text-lg text-[#3F3F5A]"></p>
+      <form id="pr-abbina" class="mt-5 hidden rounded-2xl border-2 border-[#14142B] bg-white p-4" novalidate>
+        <p class="font-bold text-[#14142B]">Abbiamo ricevuto un pagamento, ma con dati diversi da quelli del questionario.</p>
+        <label class="mb-1.5 mt-3 block text-sm font-bold text-[#14142B]" for="pr-contatto">Scrivi l'email o il cellulare usati per pagare</label>
+        <input id="pr-contatto" class="w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none" autocomplete="off" />
+        <button type="submit" class="mt-3 rounded-full bg-[#5B3DF5] px-6 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50">Collega il pagamento</button>
+      </form>
       <div id="pr-azioni" class="mt-5 flex flex-wrap gap-3"></div>
     </div>
+    <Attesa client:load variante="calcolo" evento="stima-attesa" />
     <p id="pr-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
     <p class="mt-6 text-sm text-[#6B6B85]">Hai bisogno di aiuto? Scrivici su WhatsApp al 371 623 0690 o chiama lo 06 97845429.</p>
   </section>
   <script is:inline>
     (() => {
       const $ = (id) => document.getElementById(id);
-      const form = $("pr-form"), box = $("pr-box"), msg = $("pr-msg"), azioni = $("pr-azioni");
+      const form = $("pr-form"), box = $("pr-box"), msg = $("pr-msg"), azioni = $("pr-azioni"), abbina = $("pr-abbina");
       const PRIMARIO = "rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50";
       const SECONDARIO = "rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B] disabled:opacity-50";
       let c = "", n = "", timer = 0, calcolo = false;
@@ -39,8 +47,8 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
         b.addEventListener("click", () => azione(b));
         azioni.append(b);
       }
-      async function chiedi(azione) {
-        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n, azione }) });
+      async function chiedi(azione, altro) {
+        const res = await fetch("/api/stima/pratica", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ c, n, azione, ...altro }) });
         const dati = await res.json().catch(() => ({}));
         if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status });
         return dati;
@@ -74,7 +82,6 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
       function mostra(p) {
         clearTimeout(timer);
         form.classList.add("hidden");
-        box.classList.remove("hidden");
         azioni.replaceChildren();
         let titolo = "", testo = "", rileggi = 0;
         if (p.stato === "ricevuta") {
@@ -89,8 +96,6 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
             "Conferma per avviare il calcolo: richiede alcuni minuti, tieni aperta questa pagina.";
           bottone("Conferma e calcola la stima", PRIMARIO, calcola);
         } else if (p.stato === "in_elaborazione") {
-          titolo = "Stiamo calcolando la tua stima";
-          testo = "Rileggiamo i tuoi documenti e calcoliamo date e importi. Di solito servono da 2 a 5 minuti: questa pagina si aggiorna da sola.";
           rileggi = 15000;
         } else if (p.stato === "consegnata") {
           titolo = "La tua stima è pronta";
@@ -109,6 +114,11 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
         }
         $("pr-titolo").textContent = titolo;
         $("pr-testo").textContent = testo;
+        // Durante il calcolo il riquadro di testo lascia il posto a quello animato (componente Attesa).
+        box.classList.toggle("hidden", p.stato === "in_elaborazione");
+        window.stimaAttesa = p.stato === "in_elaborazione"; // letto dal componente se si avvia dopo questo momento
+        window.dispatchEvent(new CustomEvent("stima-attesa", { detail: window.stimaAttesa }));
+        abbina.classList.toggle("hidden", !(p.stato === "ricevuta" && p.da_abbinare));
         if (rileggi) timer = setTimeout(aggiorna, rileggi);
       }
       async function aggiorna() {
@@ -116,11 +126,27 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
           const p = await chiedi("stato");
           if (!(calcolo && p.stato === "pagata")) mostra(p);
         } catch (e) {
-          if (e.stato === 404) { box.classList.add("hidden"); form.classList.remove("hidden"); avvisa("Codice o data di nascita non corrispondono a nessuna pratica."); }
+          if (e.stato === 404) { box.classList.add("hidden"); window.stimaAttesa = false; window.dispatchEvent(new CustomEvent("stima-attesa", { detail: false })); form.classList.remove("hidden"); avvisa("Codice o data di nascita non corrispondono a nessuna pratica."); }
           else if (e.stato === 429) avvisa("Troppi tentativi: riprova tra un'ora.");
           else timer = setTimeout(aggiorna, 20000);
         }
       }
+
+      abbina.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const contatto = $("pr-contatto").value.trim();
+        if (!contatto) return avvisa("Scrivi l'email o il cellulare usati per pagare.");
+        const b = abbina.querySelector("button");
+        b.disabled = true;
+        avvisa("");
+        try {
+          const p = await chiedi("reclama", { contatto });
+          mostra(p);
+          if (p.stato === "ricevuta") avvisa("Non troviamo un pagamento con questa email o questo numero. Controlla e riprova, oppure scrivici su WhatsApp.");
+        } catch (err) {
+          avvisa(err.stato === 429 ? "Troppi tentativi: riprova tra un'ora o scrivici su WhatsApp." : "Non siamo riusciti a controllare. Riprova tra poco.");
+        } finally { b.disabled = false; }
+      });
 
       const ancora = location.hash.match(/c=([A-Za-z0-9_-]{16,40})/);
       let salvata = null;

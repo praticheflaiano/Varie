@@ -107,6 +107,17 @@ finché c'è spazio.
 4. **Esito**: `consegnata` (PDF scaricabile) oppure `da_rivedere` se `revisione_consigliata` non è
    vuota: il PDF resta trattenuto finché l'ufficio non lo rilascia. `fallita`: due tentativi.
 
+**Chi paga può non essere chi compila** (e GHL può unire l'ordine a un contatto esistente con
+altri dati). L'avviso di pagamento si abbina così (`pratiche.paga_da_contatto`): 1) pratica in
+attesa con la stessa email, poi con lo stesso telefono; 2) altrimenti, se nelle ultime 3 ore c'è
+una sola pratica in attesa, è la sua; 3) altrimenti il pagamento resta "aperto"
+(`pagamenti/aperti/`) e la pagina della pratica chiede l'email o il cellulare usati per pagare
+(azione `reclama`). Un avviso ripetuto non paga una seconda pratica.
+
+Attesa: `sito/src/components/pensione/Attesa.svelte` (foglio animato, passi a tempo, tempo
+trascorso) per lettura dell'estratto, invio e calcolo; sulla pagina della pratica si accende con
+l'evento `stima-attesa`.
+
 Stati: `ricevuta`, `attesa_estratto`, `pagata`, `in_elaborazione`, `consegnata`, `da_rivedere`, `fallita`.
 
 Azioni dell'ufficio (per ora solo via richiesta HTTP con `x-stima-token`, nessuna interfaccia):

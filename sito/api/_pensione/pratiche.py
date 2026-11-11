@@ -170,13 +170,14 @@ def crea(dati, sito):
     }
     salva(codice, pratica)
     archivio.segna("email/" + impronta_email(r["email"]), codice)
+    archivio.segna("attesa/pratiche", codice)
     if impronta_telefono(r.get("telefono")):
         archivio.segna("tel/" + impronta_telefono(r.get("telefono")), codice)
     pagina = f"{sito}/stima-pensione/pratica#c={codice}"
     return 200, {"codice": codice, "stato": pratica["stato"], "totale": p["totale"], "pratica_url": pagina, "next": link or pagina}
 
 
-def paga(codice, come, riferimento="", importo=""):
+def paga(codice, come, riferimento="", importo="", pagante=()):
     """Segna pagata una pratica in attesa. Ripetibile: una pratica già pagata resta com'è
     (l'avviso di pagamento di GHL può arrivare due volte)."""
     pratica = carica(codice)
@@ -186,29 +187,87 @@ def paga(codice, come, riferimento="", importo=""):
         pratica["pagamento"] = {"quando": adesso(), "come": come, "riferimento": str(riferimento or "")[:120], "importo": str(importo or "")[:20]}
         pratica["stato"] = "attesa_estratto" if pratica["prezzo"]["estratto"] and "pdf" not in pratica["documenti"] else "pagata"
         salva(codice, pratica)
+        archivio.togli("attesa/pratiche", codice)
+        for gruppo in pagante:  # serve a riconoscere un avviso ripetuto anche se il pagante non è il richiedente
+            archivio.segna(gruppo, codice)
     return pratica
 
 
+FINESTRA_ABBINAMENTO = 3 * 3600  # una pratica aspetta il suo pagamento al massimo per questo tempo
+PAGAMENTO_APERTO_MAX = 7 * 86400
+
+
+def _attese_da(gruppo):
+    """Pratiche ancora in attesa di pagamento tra quelle di un gruppo: [(creata, codice)]."""
+    attese = []
+    for codice in archivio.elenco(gruppo):
+        pratica = carica(codice)
+        if pratica and pratica.get("stato") == "ricevuta":
+            attese.append((pratica["creata"], codice))
+    return attese
+
+
 def paga_da_contatto(email="", telefono="", riferimento="", importo=""):
-    """Avviso di pagamento arrivato da GHL: segna pagata la pratica in attesa più recente che ha
-    quella email oppure, se non ce n'è, quel telefono (GHL può unire l'ordine a un contatto già
-    esistente con un'altra email). L'importo incassato (ridotto o azzerato da un coupon) viene solo
-    annotato."""
-    gruppi = []
-    if EMAIL.match(str(email or "")):
-        gruppi.append("email/" + impronta_email(email))
-    if impronta_telefono(telefono):
-        gruppi.append("tel/" + impronta_telefono(telefono))
+    """Avviso di pagamento arrivato da GHL. Chi paga può non essere chi ha compilato il questionario
+    (e GHL può unire l'ordine a un contatto già esistente), quindi l'abbinamento va per gradi:
+      1. pratica in attesa con la stessa email, poi con lo stesso telefono (la più recente);
+      2. altrimenti, se nelle ultime ore c'è UNA SOLA pratica in attesa, è la sua;
+      3. altrimenti il pagamento resta "aperto": lo abbina il cliente dalla pagina della pratica
+         indicando l'email o il telefono usati per pagare (vedi `reclama`).
+    L'importo incassato (ridotto o azzerato da un coupon) viene solo annotato.
+    Restituisce il codice della pratica pagata, oppure None se il pagamento è rimasto aperto."""
+    i_email = impronta_email(email) if EMAIL.match(str(email or "")) else ""
+    i_tel = impronta_telefono(telefono)
+    gruppi = (["email/" + i_email] if i_email else []) + (["tel/" + i_tel] if i_tel else [])
     for gruppo in gruppi:
-        attese = []
-        for codice in archivio.elenco(gruppo):
-            pratica = carica(codice)
-            if pratica and pratica.get("stato") == "ricevuta":
-                attese.append((pratica["creata"], codice))
+        attese = _attese_da(gruppo)
         if attese:
             codice = max(attese)[1]
-            return codice if paga(codice, "ghl", riferimento, importo) else None
+            return codice if paga(codice, "ghl", riferimento, importo, gruppi) else None
+    # Avviso ripetuto: questo stesso pagante ha appena pagato una pratica con lo stesso riferimento.
+    for gruppo in gruppi:
+        for codice in archivio.elenco(gruppo):
+            fatto = (carica(codice) or {}).get("pagamento") or {}
+            if fatto.get("riferimento", "") == str(riferimento or "")[:120] and _secondi_da(fatto.get("quando")) <= 900:
+                return codice
+    recenti = [(creata, codice) for creata, codice in _attese_da("attesa/pratiche") if _secondi_da(creata) <= FINESTRA_ABBINAMENTO]
+    if len(recenti) == 1:
+        codice = recenti[0][1]
+        return codice if paga(codice, "ghl-unica-in-attesa", riferimento, importo, gruppi) else None
+    for ident, dati in ((i, json.loads(archivio.voce("pagamenti/aperti", i) or b"{}")) for i in archivio.elenco("pagamenti/aperti")):
+        if dati.get("email") == i_email and dati.get("tel") == i_tel and dati.get("riferimento", "") == str(riferimento or "")[:120] and _secondi_da(dati.get("quando")) <= 900:
+            return None  # avviso ripetuto di un pagamento già registrato come aperto
+    aperto = {"quando": adesso(), "email": i_email, "tel": i_tel, "riferimento": str(riferimento or "")[:120], "importo": str(importo or "")[:20]}
+    archivio.segna("pagamenti/aperti", secrets.token_urlsafe(15), json.dumps(aperto).encode())
     return None
+
+
+def _pagamenti_aperti(pratica):
+    """Pagamenti non abbinati arrivati dopo la creazione della pratica: [(id, dati)]."""
+    aperti = []
+    for ident in archivio.elenco("pagamenti/aperti"):
+        grezzo = archivio.voce("pagamenti/aperti", ident)
+        dati = json.loads(grezzo) if grezzo else None
+        if dati and pratica["creata"] <= dati.get("quando", "") and _secondi_da(dati.get("quando")) <= PAGAMENTO_APERTO_MAX:
+            aperti.append((ident, dati))
+    return aperti
+
+
+def reclama(codice, contatto):
+    """Il cliente indica l'email o il telefono usati per pagare: se corrisponde a un pagamento
+    aperto arrivato dopo la sua pratica, la pratica risulta pagata. Restituisce la pratica."""
+    pratica = carica(codice)
+    if not pratica or pratica["stato"] != "ricevuta":
+        return pratica
+    testo = str(contatto or "").strip()
+    i_email = impronta_email(testo) if EMAIL.match(testo) else ""
+    i_tel = "" if i_email else impronta_telefono(testo)
+    for ident, dati in sorted(_pagamenti_aperti(pratica), key=lambda x: x[1]["quando"]):
+        if (i_email and dati.get("email") == i_email) or (i_tel and dati.get("tel") == i_tel):
+            pratica = paga(codice, "ghl-reclamato", dati.get("riferimento"), dati.get("importo"))
+            archivio.togli("pagamenti/aperti", ident)
+            break
+    return pratica
 
 
 def carica_estratto(codice, b64):
@@ -288,6 +347,7 @@ def vista_cliente(pratica):
     if pratica["stato"] == "ricevuta":
         v["pagamento_url"] = link_pagamento(pratica["prezzo"]["totale"])
         v["prova"] = not in_produzione()
+        v["da_abbinare"] = bool(_pagamenti_aperti(pratica))
     if pratica["stato"] == "fallita":
         v["riprovabile"] = pratica.get("tentativi", 0) < MAX_TENTATIVI
     return v
