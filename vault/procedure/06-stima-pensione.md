@@ -24,37 +24,45 @@ Fatto:
 Finché `PUBLIC_STIMA_PENSIONE_API` è vuota la pagina è `noindex`, fuori da sitemap e
 ricerca interna, e l'ultimo passo non invia nulla.
 
-## Lettura automatica dell'estratto (primo passo)
+## Prelettura dell'estratto (primo passo, prima del pagamento)
 
-Il primo passo del questionario è il caricamento dell'estratto contributivo (o la scelta
-"richiedetelo voi"), dopo una spunta di consenso alla lettura automatica.
+Dopo la spunta di consenso il cliente carica il PDF. Il browser lo invia a
+`sito/api/stima/leggi-estratto.ts`, che via **OpenRouter** lo fa leggere a **Mistral OCR**
+(plugin `file-parser`, motore `mistral-ocr`) e fa strutturare le righe a un modello Mistral
+di chat (`mistralai/mistral-small-2603`, schema JSON rigido, sola trascrizione).
+Conversioni e somme sono fatte da codice (`sito/api/_lib/estrattoModel.ts`). Se la funzione
+non risponde, il browser ripiega sulla lettura locale (`sito/src/utils/estrattoInps.ts`) con
+l'avviso "Lettura semplificata": su un estratto reale ha letto solo 32 settimane, quindi è
+solo una riserva. Protezioni: origine, 8 letture/ora per IP (in memoria), niente log.
 
-1. Il browser estrae il testo dal PDF con `pdfjs-dist` (`sito/src/utils/estrattoInps.ts`).
-2. Il testo (o il PDF, se è una scansione fino a ~3 MB) va alla funzione
-   `sito/api/stima/leggi-estratto.ts`, che chiede a un modello AI via OpenRouter di
-   **trascrivere** tutte le righe in JSON (schema rigido, nessun calcolo).
-3. Conversioni e somme sono fatte da codice (`sito/api/_lib/estrattoModel.ts`): 12 mesi o
-   360 giorni = 52 settimane, aggregazione per anno, avvisi su buchi e anni oltre 52.
-4. Se la funzione non risponde (chiave mancante, errore, limite), il browser ripiega sulla
-   lettura locale a regole fisse e mostra l'avviso "Lettura semplificata".
+## Stima dopo il pagamento (Fable 5.2 + motore)
 
-Configurazione su Vercel (progetto `praticheflaiano-sito`, ambienti Preview e Production):
-`OPENROUTER_API_KEY` obbligatoria, `STIMA_PENSIONE_MODEL` facoltativa.
-Protezioni: controllo dell'origine, limite di 8 letture/ora per IP (in memoria), nessun
-salvataggio né log del contenuto.
+`sito/api/stima/elabora.py` (Python, stessa cartella del motore):
+1. **Claude Fable 5.2** (API Anthropic, `claude-fable-5-2`) rilegge per intero il PDF e ne
+   trascrive le righe con uno strumento a schema fisso.
+2. Codice deterministico converte le righe (12 mesi = 360 giorni = 52 settimane), riconosce
+   la gestione e costruisce l'input del motore dalle risposte del questionario.
+3. Il motore calcola lo scenario base e una variante (smettere ora / continuare a lavorare).
+4. Fable 5.2 scrive sintesi, uscita consigliata, decisioni e dati mancanti usando solo i
+   numeri del motore.
+Restituisce anche i token usati e il costo stimato (listino 8 $/40 $ per milione).
+In produzione risponde solo con l'intestazione `x-stima-token` = `STIMA_PENSIONE_TOKEN`;
+sulle anteprime è richiamabile dalla modalità prova. `vercel.json` le dà 300 s.
 
-**Limiti noti (2026-11-11)**: la lettura con AI è stata provata solo contro un provider
-finto; va verificata con la chiave vera su estratti reali (anche il nome del modello).
-La lettura locale su un estratto reale ha letto solo 32 settimane: è inaffidabile e resta
-solo come riserva. Il limite per IP non è globale: prima del lancio valutare Turnstile.
+Non ancora coperti: quota retributiva dalla simulazione INPS, scenari riscatto/volontari/
+cumulo/opzione contributivo, residenza diversa da Roma per il netto, prospetto PDF via email.
+
+**Stato verifiche (2026-11-11)**: entrambe le funzioni sono state provate solo contro
+fornitori finti (OpenRouter e Anthropic simulati in locale). Con le chiavi vere vanno
+verificati: nome del modello Mistral, qualità della lettura su estratti reali, tempi e costi.
 
 ## Modalità prova (solo anteprime)
 
 Su `localhost` e sulle anteprime Vercel dei rami (host `*-git-*.vercel.app`), se
 `PUBLIC_STIMA_PENSIONE_API` è vuota, il questionario attiva una modalità prova: pagamento
-simulato (riuscito o rifiutato), conferma dei contributi e prospetto con i dati del caso
-di regressione. Non invia nulla e non compare mai su praticheflaiano.it. Va tolta quando
-il backend vero è collegato.
+simulato, conferma dei contributi letti e poi **stima vera** tramite `api/stima/elabora`.
+Se la stima vera non è disponibile (chiave mancante o errore) mostra il prospetto di esempio
+con la spiegazione. Non compare mai su praticheflaiano.it.
 
 ## Da fare per attivarlo
 

@@ -1,15 +1,17 @@
-// Lettura dell'estratto conto contributivo INPS con un modello AI (via OpenRouter).
-// Riceve il TESTO estratto dal PDF nel browser (o il PDF stesso se è una scansione),
-// chiede al modello solo di TRASCRIVERE i periodi in JSON, poi converte e somma con
+// PRELETTURA dell'estratto conto contributivo INPS (prima del pagamento), via OpenRouter.
+// Il PDF viene letto da Mistral OCR (motore "mistral-ocr" del plugin file-parser); un modello
+// Mistral di chat mette poi le righe in JSON (solo trascrizione), e si converte e somma con
 // codice deterministico (api/_lib/estrattoModel.ts). Il modello non calcola nulla.
 //
-// Variabili d'ambiente: OPENROUTER_API_KEY (obbligatoria), STIMA_PENSIONE_MODEL (facoltativa).
+// Variabili d'ambiente: OPENROUTER_API_KEY (obbligatoria); facoltative STIMA_PENSIONE_MODEL
+// (modello che struttura le righe) e STIMA_PENSIONE_PDF_ENGINE (motore di lettura del PDF).
 // Non salva e non registra nei log il contenuto dei documenti.
 import { componi, daCodiceFiscale, RE_FIGURATIVA, type RigaEstratto } from "../_lib/estrattoModel.js";
 
 export const config = { maxDuration: 60, api: { bodyParser: { sizeLimit: "4.5mb" } } };
 
-const MODEL = process.env.STIMA_PENSIONE_MODEL || "anthropic/claude-sonnet-4.5";
+const MODEL = process.env.STIMA_PENSIONE_MODEL || "mistralai/mistral-small-2603";
+const MOTORE_PDF = process.env.STIMA_PENSIONE_PDF_ENGINE || "mistral-ocr";
 const ENDPOINT = process.env.OPENROUTER_BASE_URL || "https://openrouter.ai/api/v1/chat/completions";
 const MAX_TESTO = 400_000; // caratteri
 const MAX_PDF_B64 = 4_000_000;
@@ -142,9 +144,10 @@ export default async function handler(req: any, res: any) {
   const pdf = typeof b.pdf === "string" ? b.pdf : "";
   if ((!testo && !pdf) || testo.length > MAX_TESTO || pdf.length > MAX_PDF_B64 || (pdf && !/^[A-Za-z0-9+/=]+$/.test(pdf))) return res.status(400).json({ errore: "richiesta" });
 
-  const contenuto = testo
-    ? [{ type: "text", text: `<documento>\n${testo}\n</documento>` }]
-    : [{ type: "text", text: "Il documento è il PDF allegato." }, { type: "file", file: { filename: "estratto.pdf", file_data: `data:application/pdf;base64,${pdf}` } }];
+  // Di norma arriva il PDF (letto con Mistral OCR). Il solo testo è accettato come ripiego per file troppo grandi.
+  const contenuto = pdf
+    ? [{ type: "text", text: "Il documento è il PDF allegato." }, { type: "file", file: { filename: "estratto.pdf", file_data: `data:application/pdf;base64,${pdf}` } }]
+    : [{ type: "text", text: `<documento>\n${testo}\n</documento>` }];
 
   try {
     const r = await fetch(ENDPOINT, {
@@ -156,6 +159,7 @@ export default async function handler(req: any, res: any) {
         max_tokens: 32000,
         messages: [{ role: "system", content: ISTRUZIONI }, { role: "user", content: contenuto }],
         response_format: { type: "json_schema", json_schema: { name: "estratto_inps", strict: true, schema: SCHEMA } },
+        ...(pdf ? { plugins: [{ id: "file-parser", pdf: { engine: MOTORE_PDF } }] } : {}),
       }),
     });
     if (!r.ok) { console.error("leggi-estratto: provider HTTP", r.status); return res.status(502).json({ errore: "provider" }); }

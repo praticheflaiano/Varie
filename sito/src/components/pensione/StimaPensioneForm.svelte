@@ -15,8 +15,10 @@
     mandatoUrl?: string;
     /** Funzione server che legge l'estratto con AI; se non risponde si usa la lettura locale. */
     leggiUrl?: string;
+    /** Funzione server post-pagamento: rilettura completa e stima con Fable 5.2 + motore. */
+    elaboraUrl?: string;
   }
-  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "", leggiUrl = "/api/stima/leggi-estratto" }: Props = $props();
+  let { apiUrl = "", prezzo = 60, prezzoEstratto = 5, surveyId = "", mandatoUrl = "", leggiUrl = "/api/stima/leggi-estratto", elaboraUrl = "/api/stima/elabora" }: Props = $props();
 
   const MAX_MB = 10;
   const STEPS = ["Estratto", "Tu", "Lavoro", "Contributi", "Salute e famiglia", "Altri documenti", "Riepilogo"];
@@ -26,7 +28,7 @@
   // MODALITÀ PROVA: solo su localhost e sulle anteprime Vercel dei rami (mai sul sito
   // pubblico), e solo se il servizio vero non è configurato. Simula pagamento, conferma
   // dei contributi e prospetto con i dati del caso di esempio: non invia nulla.
-  type Fase = "form" | "pagamento" | "rifiutato" | "conferma" | "prospetto";
+  type Fase = "form" | "pagamento" | "rifiutato" | "conferma" | "elaborazione" | "risultato" | "prospetto";
   let fase = $state<Fase>("form");
   let demo = $state(false);
   let esempio = $state<{ input: any; esito: any } | null>(null);
@@ -45,6 +47,37 @@
     fase = f;
     scrollTop();
   }
+  // Stima vera (rilettura con Fable 5.2 + motore di calcolo), usata dalla modalità prova dopo il pagamento simulato.
+  let stima = $state<any>(null);
+  let notaStima = $state("");
+  async function calcolaStima() {
+    const f = files.estratto;
+    notaStima = "";
+    if (!elaboraUrl || !f || !/\.pdf$/i.test(f.name) || f.size > 3_000_000) {
+      notaStima = "La stima vera richiede un estratto in PDF fino a 3 MB: qui sotto vedi il prospetto di esempio.";
+      return vaiA("prospetto");
+    }
+    fase = "elaborazione";
+    scrollTop();
+    try {
+      const res = await fetch(elaboraUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ risposte: a, pdf: inBase64(await f.arrayBuffer()) }) });
+      const dati = await res.json().catch(() => ({}));
+      if (res.ok && Array.isArray(dati?.scenari)) {
+        stima = dati;
+        fase = "risultato";
+        return scrollTop();
+      }
+      notaStima = res.status === 503
+        ? "La stima vera non è ancora attiva (manca la chiave API di Anthropic su Vercel): qui sotto vedi il prospetto di esempio."
+        : res.status === 422
+          ? "Nel file non sono stati trovati periodi contributivi: qui sotto vedi il prospetto di esempio."
+          : `La stima vera non è riuscita (errore ${res.status}): qui sotto vedi il prospetto di esempio.`;
+    } catch {
+      notaStima = "La stima vera non è riuscita (errore di rete o tempo scaduto): qui sotto vedi il prospetto di esempio.";
+    }
+    await vaiA("prospetto");
+  }
+
   const dataIt = (d: string) => (d ? new Date(d).toLocaleDateString("it-IT") : "—");
   const euro = (n: number) => n.toLocaleString("it-IT", { style: "currency", currency: "EUR" });
   let errors = $state<string[]>([]);
@@ -148,8 +181,8 @@
     if (!leggiUrl) return null;
     try {
       const testo = linee.join("\n");
-      // PDF con testo: inviamo solo il testo. Scansione: inviamo il file (fino a ~3 MB).
-      const corpo = testo.length > 200 ? { testo } : f.size <= 3_000_000 ? { pdf: inBase64(await f.arrayBuffer()) } : null;
+      // Inviamo il PDF (letto con Mistral OCR); se supera ~3 MB e contiene testo, solo il testo.
+      const corpo = f.size <= 3_000_000 ? { pdf: inBase64(await f.arrayBuffer()) } : testo.length > 200 ? { testo } : null;
       if (!corpo) return null;
       const res = await fetch(leggiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) });
       if (!res.ok) return null;
@@ -348,9 +381,65 @@
     </div>
     <p class="mt-3 font-semibold text-[#14142B]">Totale letto: {#if letto?.anni.length}{letto.totaleSettimane} settimane.{:else}{esempio.esito.contributi_ad_oggi} ({esempio.esito.settimane_ad_oggi} settimane).{/if}</p>
     <div class="mt-6 flex flex-wrap gap-3">
-      <button type="button" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={() => vaiA("prospetto")}>I dati sono corretti: calcola</button>
+      <button type="button" class="rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B]" onclick={calcolaStima}>I dati sono corretti: calcola</button>
       <button type="button" class="rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
     </div>
+  {:else if fase === "elaborazione"}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Stiamo preparando la tua stima</h2>
+    <p class="text-[#3F3F5A]" role="status">Rileggiamo per intero il tuo estratto, calcoliamo date e importi per ogni strada e scriviamo il prospetto. Può richiedere da uno a tre minuti: non chiudere la pagina.</p>
+    <div class="mt-5 h-2 overflow-hidden rounded-full bg-white"><div class="h-full w-1/3 animate-pulse rounded-full bg-[#5B3DF5]"></div></div>
+  {:else if fase === "risultato" && stima}
+    {@const base = stima.scenari[0].esito}
+    <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">La tua stima</h2>
+    <p class="text-sm text-[#6B6B85]">Estratto di {stima.estratto.intestatario || "—"}{#if stima.estratto.data_estratto}, aggiornato al {dataIt(stima.estratto.data_estratto)}{/if} · {stima.estratto.righe} righe lette · calcolo del {dataIt(stima.data_calcolo)}</p>
+    {#if base.prima_uscita_pensione}
+      <p class="mt-4 rounded-2xl bg-[#D4FF4F] p-4 text-lg font-extrabold text-[#14142B]">Prima uscita possibile: {base.prima_uscita_pensione.canale} dal {dataIt(base.prima_uscita_pensione.decorrenza)}</p>
+    {/if}
+    <div class="mt-4 rounded-2xl border-2 border-[#14142B] bg-white p-4 text-[#14142B]">
+      <h3 class="text-lg font-extrabold">In breve</h3>
+      <p class="mt-1">{stima.testo.sintesi}</p>
+      <p class="mt-3"><strong>Uscita consigliata:</strong> {stima.testo.uscita_consigliata.canale} ({stima.testo.uscita_consigliata.scenario}). {stima.testo.uscita_consigliata.motivo}</p>
+    </div>
+    <p class="mt-4 text-[#14142B]">Contributi ad oggi: <strong>{base.contributi_ad_oggi}</strong> · Sistema di calcolo: <strong>{base.sistema_calcolo}</strong></p>
+    {#each stima.scenari as sc}
+      <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">{sc.nome}</h3>
+      <div class="mt-2 grid gap-3">
+        {#each sc.esito.canali as c}
+          <div class="rounded-2xl bg-white p-4 text-[#14142B]">
+            <h4 class="text-lg font-extrabold">{c.canale} <span class="text-sm font-semibold text-[#6B6B85]">· {c.stato}</span></h4>
+            <dl class="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+              <div><dt class="text-sm text-[#6B6B85]">Maturi il diritto</dt><dd class="font-semibold">{dataIt(c.data_maturazione)}</dd></div>
+              <div><dt class="text-sm text-[#6B6B85]">Primo pagamento</dt><dd class="font-semibold">{dataIt(c.decorrenza)}{#if c.eta_alla_decorrenza} · {c.eta_alla_decorrenza}{/if}</dd></div>
+              {#if c.importo?.lordo_mensile_13 != null}
+                <div><dt class="text-sm text-[#6B6B85]">Lordo mensile (13 mensilità)</dt><dd class="font-semibold">{euro(c.importo.lordo_mensile_13)}</dd></div>
+                <div><dt class="text-sm text-[#6B6B85]">Netto stimato</dt><dd class="font-semibold">{c.importo.netto_mensile_13_stima != null ? euro(c.importo.netto_mensile_13_stima) : "—"} · affidabilità {c.importo.affidabilita}</dd></div>
+              {:else if c.importo?.indennita_mensile_lorda_12 != null}
+                <div><dt class="text-sm text-[#6B6B85]">Indennità mensile lorda (12 mensilità)</dt><dd class="font-semibold">{euro(c.importo.indennita_mensile_lorda_12)} · affidabilità {c.importo.affidabilita}</dd></div>
+              {/if}
+            </dl>
+            {#each stima.testo.spiegazione_canali.filter((x: any) => x.canale === c.canale && sc === stima.scenari[0]) as sp}<p class="mt-2">{sp.testo}</p>{/each}
+            {#if c.note?.length}<ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">{#each c.note as n}<li>{n}</li>{/each}</ul>{/if}
+          </div>
+        {/each}
+      </div>
+    {/each}
+    {#if stima.testo.decisioni.length}
+      <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Cosa decidere</h3>
+      <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each stima.testo.decisioni as d}<li>{d.cosa}{#if d.entro} <strong>(entro {d.entro})</strong>{/if}</li>{/each}</ul>
+    {/if}
+    {#if stima.testo.dati_mancanti.length}
+      <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Per una stima più precisa</h3>
+      <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each stima.testo.dati_mancanti as d}<li>{d}</li>{/each}</ul>
+    {/if}
+    <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Controlli e avvertenze</h3>
+    <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">
+      {#each [...stima.controlli, ...stima.dubbi, ...stima.testo.avvertenze, ...(base.avvisi ?? [])] as v}<li>{v}</li>{/each}
+    </ul>
+    <p class="mt-4 text-sm text-[#6B6B85]">Stima indicativa: non sostituisce la certificazione dell'INPS. Parametri {stima.versione_parametri}.</p>
+    {#if demo}
+      <p class="mt-3 rounded-xl bg-white p-3 text-sm text-[#14142B]">Solo in prova: modello {stima.modello}, {stima.uso.input_tokens} token in ingresso e {stima.uso.output_tokens} in uscita, costo stimato {stima.uso.costo_stimato_usd} $.</p>
+    {/if}
+    <button type="button" class="mt-6 rounded-full border-2 border-[#14142B] bg-white px-6 py-3 font-bold text-[#14142B]" onclick={() => vaiA("form")}>Ricomincia la prova</button>
   {:else if fase === "prospetto" && a.richiediEstratto}
     <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Pagamento ricevuto. Richiediamo il tuo estratto</h2>
     <p class="text-[#3F3F5A]">Con l'opzione "richiedetelo voi" il cliente riceve questo messaggio: la stima parte quando l'ufficio carica l'estratto ottenuto dall'INPS, e il cliente viene avvisato via email per controllare i contributi.</p>
@@ -358,6 +447,7 @@
   {:else if fase === "prospetto" && esempio}
     {@const r = esempio.esito}
     <h2 class="mb-2 text-2xl font-extrabold text-[#14142B]">Il tuo prospetto (esempio)</h2>
+    {#if notaStima}<p class="mb-3 rounded-2xl bg-[#FFE3EC] p-4 font-semibold text-[#14142B]">{notaStima}</p>{/if}
     <p class="text-[#3F3F5A]"><strong>Dati di esempio</strong> calcolati dal motore sul caso di prova (uomo nato il 10/03/1962, dipendente privato): servono a vedere la forma del risultato, non riguardano le risposte che hai dato.</p>
     <p class="mt-4 rounded-2xl bg-[#D4FF4F] p-4 text-lg font-extrabold text-[#14142B]">Prima uscita possibile: {r.prima_uscita_pensione.canale} dal {dataIt(r.prima_uscita_pensione.decorrenza)}</p>
     <p class="mt-3 text-[#14142B]">Contributi ad oggi: <strong>{r.contributi_ad_oggi}</strong> · Sistema di calcolo: <strong>{r.sistema_calcolo}</strong></p>
