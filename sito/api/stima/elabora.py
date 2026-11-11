@@ -53,7 +53,7 @@ SCHEMA_ESTRATTO = {
 }
 
 ISTRUZIONI_LETTURA = (
-    "Sei un trascrittore di estratti conto contributivi INPS. Con lo strumento registra_estratto trascrivi TUTTE le righe "
+    "Sei un trascrittore di estratti conto contributivi INPS. Trascrivi in JSON TUTTE le righe "
     "di contribuzione del documento, una per riga, senza saltarne, unirne o riassumerne nessuna, anche se sono centinaia. "
     "Copia numeri e date esattamente come scritti: NON calcolare, NON convertire unità, NON stimare, NON inventare. "
     "Cella vuota o illeggibile = stringa vuota. Ignora intestazioni, piè di pagina e righe di totale. "
@@ -78,7 +78,7 @@ SCHEMA_TESTO = {
 
 ISTRUZIONI_TESTO = (
     "Sei un consulente previdenziale di patronato. Ricevi in JSON le risposte del cliente, i controlli e i risultati del motore "
-    "di calcolo per più scenari. Con lo strumento scrivi_prospetto spiega il risultato in italiano semplice, dando del tu. "
+    "di calcolo per più scenari. Spiega il risultato in italiano semplice, dando del tu, nel formato JSON richiesto. "
     "REGOLE: usa ESCLUSIVAMENTE date e importi presenti nel JSON, copiati identici; non calcolare e non stimare nuovi numeri; "
     "non citare norme, requisiti o scadenze che non compaiono nel JSON; se l'affidabilità di un importo è 'bassa' o 'parziale' "
     "dillo chiaramente; segnala come dati mancanti ciò che renderebbe la stima più precisa (es. simulazione INPS 'La mia pensione "
@@ -86,21 +86,33 @@ ISTRUZIONI_TESTO = (
 )
 
 
-def chiama_claude(chiave, sistema, contenuto, strumento, schema, max_tokens):
+def chiudi_schema(schema):
+    """Gli output strutturati richiedono additionalProperties: false su ogni oggetto."""
+    if isinstance(schema, dict):
+        if schema.get("type") == "object":
+            schema = {**schema, "additionalProperties": False}
+        return {k: chiudi_schema(v) for k, v in schema.items()}
+    if isinstance(schema, list):
+        return [chiudi_schema(v) for v in schema]
+    return schema
+
+
+def chiama_claude(chiave, sistema, contenuto, schema, max_tokens, impegno):
+    # Fable 5.2: pensiero adattivo sempre attivo, niente tool_choice forzato né temperature.
+    # Il JSON garantito si ottiene con gli output strutturati (output_config.format).
     corpo = {
         "model": MODELLO, "max_tokens": max_tokens, "system": sistema,
         "messages": [{"role": "user", "content": contenuto}],
-        "tools": [{"name": strumento, "description": "Registra il risultato.", "input_schema": schema}],
-        "tool_choice": {"type": "tool", "name": strumento},
+        "output_config": {"effort": impegno, "format": {"type": "json_schema", "schema": chiudi_schema(schema)}},
     }
     req = urllib.request.Request(ENDPOINT, data=json.dumps(corpo).encode(), method="POST", headers={
         "content-type": "application/json", "x-api-key": chiave, "anthropic-version": "2023-06-01"})
     with urllib.request.urlopen(req, timeout=280) as r:
         risposta = json.loads(r.read())
-    blocco = next((b for b in risposta.get("content", []) if b.get("type") == "tool_use"), None)
-    if not blocco:
+    testo = "".join(b.get("text", "") for b in risposta.get("content", []) if b.get("type") == "text")
+    if risposta.get("stop_reason") == "refusal" or not testo.strip():
         raise RuntimeError("risposta senza dati strutturati")
-    return blocco["input"], risposta.get("usage", {}), risposta.get("stop_reason")
+    return json.loads(testo), risposta.get("usage", {}), risposta.get("stop_reason")
 
 
 def numero(s):
@@ -255,7 +267,7 @@ def elabora(dati, chiave):
 
     letto, u, stop = chiama_claude(chiave, ISTRUZIONI_LETTURA, [
         {"type": "document", "source": {"type": "base64", "media_type": "application/pdf", "data": pdf}},
-        {"type": "text", "text": "Trascrivi l'estratto allegato."}], "registra_estratto", SCHEMA_ESTRATTO, 32000)
+        {"type": "text", "text": "Trascrivi l'estratto allegato."}], SCHEMA_ESTRATTO, 48000, "low")
     for k in uso: uso[k] += int(u.get(k, 0))
     contributi, dubbi, primo = righe_in_contributi(letto)
     if stop == "max_tokens":
@@ -271,7 +283,7 @@ def elabora(dati, chiave):
     per_testo = {"risposte_cliente": {k: v for k, v in r.items() if k not in ("email", "telefono", "privacy", "salute", "condizioni")},
                  "controlli": verifiche, "dubbi": dubbi, "scenari": risultati}
     testo, u, _ = chiama_claude(chiave, ISTRUZIONI_TESTO, [{"type": "text", "text": json.dumps(per_testo, ensure_ascii=False)}],
-                                "scrivi_prospetto", SCHEMA_TESTO, 6000)
+                                SCHEMA_TESTO, 16000, "medium")
     for k in uso: uso[k] += int(u.get(k, 0))
 
     costo = round(uso["input_tokens"] / 1e6 * PREZZO_IN + uso["output_tokens"] / 1e6 * PREZZO_OUT, 4)
@@ -324,8 +336,16 @@ class handler(BaseHTTPRequestHandler):
             codice, corpo = elabora(json.loads(self.rfile.read(n)), chiave)
             self._rispondi(codice, corpo)
         except urllib.error.HTTPError as e:
-            print("elabora: provider HTTP", e.code)
-            self._rispondi(502, {"errore": "provider", "stato": e.code})
+            # Il messaggio d'errore del fornitore descrive la richiesta, non contiene il documento.
+            try:
+                dettaglio = (json.loads(e.read()).get("error") or {}).get("message", "")[:300]
+            except Exception:
+                dettaglio = ""
+            print("elabora: provider HTTP", e.code, dettaglio)
+            self._rispondi(502, {"errore": "provider", "stato": e.code, "dettaglio": dettaglio})
+        except json.JSONDecodeError:
+            print("elabora: JSON non valido dal modello (probabile interruzione per lunghezza)")
+            self._rispondi(502, {"errore": "risposta-incompleta"})
         except Exception as e:  # non si scrive nei log il contenuto dei documenti
             print("elabora: errore", type(e).__name__)
             self._rispondi(500, {"errore": "elaborazione"})
