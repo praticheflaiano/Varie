@@ -4,14 +4,14 @@ In produzione usa Vercel Blob con store PRIVATO (regione europea); nei test una 
 (STIMA_ARCHIVIO_DIR). I file non hanno URL pubblico: si leggono solo tramite le nostre funzioni.
 
 Cartelle: `stime/<codice>/...` per le pratiche, `email/<impronta>/...` per ritrovare una pratica
-dall'email di chi ha pagato (l'email non compare: solo la sua impronta).
+dall'email o dal telefono di chi ha pagato (non compaiono in chiaro: solo la loro impronta); `tel/<impronta>/...` allo stesso modo.
 """
 import os
 import re
 
 CODICE = re.compile(r"^[A-Za-z0-9_-]{16,40}$")
 NOME = re.compile(r"[a-z]+\.(pdf|json|bin)")
-GRUPPO = re.compile(r"email/[a-f0-9]{16,64}")
+GRUPPO = re.compile(r"(email|tel)/[a-f0-9]{16,64}")
 
 
 def configurato():

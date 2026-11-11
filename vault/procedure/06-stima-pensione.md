@@ -97,8 +97,8 @@ finché c'è spazio.
    link di pagamento GHL del prezzo pieno (60 o 65 €). Il browser ricorda codice e data di nascita
    (`localStorage`, chiave `stima-pratica`).
 2. **Pagamento** sul checkout GHL (coupon compresi). Un workflow GHL chiama
-   `POST /api/stima/pagamento` con intestazione `x-stima-token` e l'email del contatto: la pratica
-   in attesa più recente di quella email passa a `pagata` (o `attesa_estratto`). Ripetibile.
+   `POST /api/stima/pagamento` con intestazione `x-stima-token`, email e telefono del contatto: la pratica
+   in attesa più recente con quella email (o, in mancanza, quel telefono) passa a `pagata` (o `attesa_estratto`). Ripetibile.
    L'email al checkout deve essere **la stessa** del questionario.
 3. **Pagina della pratica** (`/stima-pensione/pratica`, funzione `api/stima/pratica.py`): mostra lo
    stato; da `pagata` il cliente conferma e parte il calcolo (`avvia`, fino a 300 s, una sola

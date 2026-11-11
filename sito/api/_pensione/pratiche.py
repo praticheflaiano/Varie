@@ -113,6 +113,12 @@ def impronta_email(email):
     return hashlib.sha256(str(email or "").strip().lower().encode()).hexdigest()[:40]
 
 
+def impronta_telefono(telefono):
+    """Impronta delle ultime 9 cifre (senza prefisso internazionale), o "" se il numero è troppo corto."""
+    cifre = re.sub(r"\D", "", str(telefono or ""))
+    return hashlib.sha256(("tel:" + cifre[-9:]).encode()).hexdigest()[:40] if len(cifre) >= 9 else ""
+
+
 def carica(codice):
     if not archivio.CODICE.match(str(codice or "")):
         return None
@@ -164,6 +170,8 @@ def crea(dati, sito):
     }
     salva(codice, pratica)
     archivio.segna("email/" + impronta_email(r["email"]), codice)
+    if impronta_telefono(r.get("telefono")):
+        archivio.segna("tel/" + impronta_telefono(r.get("telefono")), codice)
     pagina = f"{sito}/stima-pensione/pratica#c={codice}"
     return 200, {"codice": codice, "stato": pratica["stato"], "totale": p["totale"], "pratica_url": pagina, "next": link or pagina}
 
@@ -181,18 +189,26 @@ def paga(codice, come, riferimento="", importo=""):
     return pratica
 
 
-def paga_da_email(email, riferimento="", importo=""):
-    """Avviso di pagamento arrivato da GHL: segna pagata la pratica in attesa più recente di
-    quella email. L'importo incassato (ridotto o azzerato da un coupon) viene solo annotato."""
-    attese = []
-    for codice in archivio.elenco("email/" + impronta_email(email)):
-        pratica = carica(codice)
-        if pratica and pratica.get("stato") == "ricevuta":
-            attese.append((pratica["creata"], codice))
-    if not attese:
-        return None
-    codice = max(attese)[1]
-    return codice if paga(codice, "ghl", riferimento, importo) else None
+def paga_da_contatto(email="", telefono="", riferimento="", importo=""):
+    """Avviso di pagamento arrivato da GHL: segna pagata la pratica in attesa più recente che ha
+    quella email oppure, se non ce n'è, quel telefono (GHL può unire l'ordine a un contatto già
+    esistente con un'altra email). L'importo incassato (ridotto o azzerato da un coupon) viene solo
+    annotato."""
+    gruppi = []
+    if EMAIL.match(str(email or "")):
+        gruppi.append("email/" + impronta_email(email))
+    if impronta_telefono(telefono):
+        gruppi.append("tel/" + impronta_telefono(telefono))
+    for gruppo in gruppi:
+        attese = []
+        for codice in archivio.elenco(gruppo):
+            pratica = carica(codice)
+            if pratica and pratica.get("stato") == "ricevuta":
+                attese.append((pratica["creata"], codice))
+        if attese:
+            codice = max(attese)[1]
+            return codice if paga(codice, "ghl", riferimento, importo) else None
+    return None
 
 
 def carica_estratto(codice, b64):

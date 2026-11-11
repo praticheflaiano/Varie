@@ -1,9 +1,10 @@
 """
 Stima e Calcolo della pensione - avviso di pagamento da GHL (azione "Webhook" di un workflow
 che parte dall'ordine del prodotto). Richiede l'intestazione x-stima-token = STIMA_PENSIONE_TOKEN.
-Corpo JSON: almeno l'email del contatto (`email`, oppure `contact.email`); facoltativi
+Corpo JSON: email del contatto (`email`, oppure `contact.email`) e/o telefono (`phone`); facoltativi
 `riferimento` (numero d'ordine) e `importo` (solo annotati: con un coupon l'incasso può essere 0).
-Segna pagata la pratica in attesa più recente di quella email. Ripetibile senza effetti.
+Segna pagata la pratica in attesa più recente con quella email o, in mancanza, quel telefono.
+Ripetibile senza effetti.
 """
 import os, sys
 from http.server import BaseHTTPRequestHandler
@@ -26,18 +27,18 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if not pratiche.token_ok(self.headers):
             return pratiche.rispondi(self, 403, {"errore": "non-autorizzato"})
-        dati = pratiche.corpo_json(self, 200_000)
-        email = campo(dati or {}, "email")
-        if not pratiche.EMAIL.match(email):
-            return pratiche.rispondi(self, 400, {"errore": "email"})
+        dati = pratiche.corpo_json(self, 200_000) or {}
+        email, telefono = campo(dati, "email"), campo(dati, "phone", "telefono")
+        if not pratiche.EMAIL.match(email) and not pratiche.impronta_telefono(telefono):
+            return pratiche.rispondi(self, 400, {"errore": "contatto"})
         try:
-            codice = pratiche.paga_da_email(email, campo(dati, "riferimento", "order_id", "orderId", "id"), campo(dati, "importo", "amount", "total"))
+            codice = pratiche.paga_da_contatto(email, telefono, campo(dati, "riferimento", "order_id", "orderId", "id"), campo(dati, "importo", "amount", "total"))
         except Exception as e:
             print("pagamento: errore", type(e).__name__)
             return pratiche.rispondi(self, 500, {"errore": "archivio"})
         if not codice:
             # Nessuna pratica in attesa: avviso ripetuto (già registrato) oppure email diversa da quella del questionario.
-            print("pagamento: nessuna pratica in attesa per l'email ricevuta")
+            print("pagamento: nessuna pratica in attesa per il contatto ricevuto; campi:", sorted(dati)[:40])
             return pratiche.rispondi(self, 200, {"ok": True, "pratica": False})
         pratiche.rispondi(self, 200, {"ok": True, "pratica": True})
 

@@ -142,6 +142,13 @@ assert stato(c, "avvia")[1]["stato"] == "attesa_estratto"
 assert chiama("pratica", {"c": c, "azione": "carica-estratto", "pdf": PDF}, **TOKEN) == (200, {"stato": "pagata"})
 assert stato(c, "avvia")[1]["stato"] == "consegnata"
 
+# Email del checkout diversa da quella del questionario: la pratica si ritrova dal telefono
+c = nuova(email="altra@example.com", telefono="371 623 0000")
+assert chiama("pagamento", {"email": "contatto-ghl@example.com", "phone": "+393716230000"}, **TOKEN) == (200, {"ok": True, "pratica": True})
+assert stato(c)[1]["stato"] == "pagata"
+assert chiama("pagamento", {"email": "nessuno@example.com", "phone": "+39 06 1"}, **TOKEN) == (200, {"ok": True, "pratica": False})
+assert chiama("pagamento", {"nome": "x"}, **TOKEN)[0] == 400
+
 # Limite di invii per indirizzo
 pratiche._tentativi.clear()
 assert [chiama("invia", {"risposte": RISPOSTE, "pdf": PDF})[0] for _ in range(7)] == [200] * 6 + [429]
