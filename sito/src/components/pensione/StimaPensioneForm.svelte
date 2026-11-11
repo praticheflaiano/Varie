@@ -171,7 +171,6 @@
 
   const DOCS = [
     { key: "estratto", label: "Estratto conto contributivo INPS", required: true, accept: ".pdf,.xml", hint: "Lo scarichi dal sito INPS con SPID o CIE: Fascicolo previdenziale → Estratto conto. PDF o XML." },
-    { key: "simulazione", label: "Simulazione INPS \"La mia pensione futura\"", required: false, accept: ".pdf", hint: "Molto consigliata se hai contributi prima del 1996: rende l'importo più preciso." },
     { key: "busta", label: "Ultima busta paga o Certificazione Unica", required: false, accept: ".pdf,.jpg,.jpeg,.png", hint: "Serve a stimare i contributi dei prossimi anni." },
     { key: "verbale", label: "Verbale di invalidità", required: false, accept: ".pdf,.jpg,.jpeg,.png", hint: "Solo se hai un'invalidità riconosciuta." },
   ];
@@ -528,7 +527,7 @@
       <ul class="mt-2 list-disc pl-5 text-[#14142B]">{#each [...(stima.limiti ?? []), ...(stima.parametri_non_definitivi ?? [])] as v}<li>{v}</li>{/each}</ul>
     {/if}
     <h3 class="mt-6 text-xl font-extrabold text-[#14142B]">Controlli e avvertenze</h3>
-    <p class="mt-1 text-sm text-[#6B6B85]">Come leggere la precisione degli importi: "buona" = dati certi; "discreta" = dipende da contributi futuri o da coefficienti non ancora pubblicati; "di massima" = la parte di pensione maturata prima del 1996 è stimata; "incompleta" = manca una parte del calcolo.</p>
+    <p class="mt-1 text-sm text-[#6B6B85]">Come leggere la precisione degli importi: "buona" = dati certi; "discreta" = dipende da contributi futuri o da coefficienti non ancora pubblicati; "di massima" = una parte dell'importo è stimata; "incompleta" = manca una parte del calcolo.</p>
     <ul class="mt-2 list-disc pl-5 text-sm text-[#3F3F5A]">
       {#each [...stima.controlli, ...stima.dubbi, ...stima.testo.avvertenze, ...(base.avvisi ?? [])] as v}<li>{v}</li>{/each}
     </ul>

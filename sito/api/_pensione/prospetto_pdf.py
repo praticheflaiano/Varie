@@ -195,7 +195,7 @@ def _contenuto(stima, risposte, url, codice):
     for c in base["canali"]:
         f.append(_scheda_canale(c, spiegazioni.get(c["canale"], ""), bool(prima) and c["canale"] == prima.get("canale")))
     f.append(_p("Come leggere la precisione: buona = dati certi; discreta = dipende dai contributi futuri o da coefficienti non ancora pubblicati; "
-                "di massima = la parte maturata prima del 1996 è stimata; incompleta = manca una parte del calcolo.", "nota"))
+                "di massima = una parte dell'importo è stimata; incompleta = manca una parte del calcolo.", "nota"))
 
     # ---------- Alternative ----------
     if len(stima["scenari"]) > 1:

@@ -12,12 +12,13 @@ from dateutil.relativedelta import relativedelta
 # PARAMETRI NORMATIVI  (aggiornare SOLO qui, con fonte e data)
 # =====================================================================
 PARAMS = {
-  "versione": "2026-11-09",
+  "versione": "2026-11-11",
   "fonti": [
     "L. 199/2025 (Bilancio 2026); INPS circ. 28/2026 e msg 558/2026 (speranza di vita 2027-2028)",
     "INPS circ. 41/2026; L. 213/2023 c.162 (finestre CPDEL/CPS/CPI/CPUG)",
     "DD Min. Lavoro-MEF 16/10/2026 (coefficienti trasformazione 2027-2028); DD 20/11/2024 (2025-2026)",
     "INPS msg 707/2026 (rivalutazione montanti, decorrenze 2026); nota ISTAT/Min. Lavoro 21/10/2026 (tasso 2026 = 6,3359%)",
+    "Quota retributiva: D.Lgs. 503/1992 (quote A e B); INPS msg 707/2026 all. 1-2 (coefficienti di rivalutazione delle retribuzioni); INPS circ. 6/2026 (tetto pensionabile 56.224 euro)",
     "DDL Bilancio 2027 A.C. 3174 art. 51 (APE sociale 2027: 63a6m) - NON ancora legge",
   ],
   # requisiti per ANNO DI MATURAZIONE: (anni, mesi). Anni >2028 = 2028 'salvo adeguamenti' (provvisorio)
@@ -51,6 +52,16 @@ PARAMS = {
     2009:1.017935,2010:1.016165,2011:1.011344,2012:1.001643,2013:1.000000,2014:1.005058,2015:1.004684,
     2016:1.005205,2017:1.013478,2018:1.018254,2019:1.019199,2020:1.000000,2021:1.009756,2022:1.023082,
     2023:1.036622,2024:1.040445,2025:1.063359},
+  # Quota retributiva (anzianita' fino al 1995, o al 2011 con 18 anni al 1995): coefficienti di rivalutazione delle
+  # retribuzioni e dei redditi per le pensioni con decorrenza 2026 (INPS msg 707/2026, all. 1 = quota A, all. 2 = quota B).
+  # Per decorrenze successive si calcola in moneta di oggi con questi stessi coefficienti (come le simulazioni INPS).
+  "rival_retribuzioni": {"A": {1970:21.4903,1971:20.4448,1972:19.1884,1973:17.1305,1974:14.6132,1975:12.5205,1976:10.7300,1977:9.1146,1978:8.0943,1979:7.0233,1980:5.9433,1981:5.0208,1982:4.3300,1983:3.7988,1984:3.4205,1985:3.1545,1986:2.9789,1987:2.8249,1988:2.6818,1989:2.5185,1990:2.3499,1991:2.1814,1992:2.0835,1993:1.9984,1994:1.9167,1995:1.8010,1996:1.7223,1997:1.6969,1998:1.6676,1999:1.6421,2000:1.6004,2001:1.5590,2002:1.5214,2003:1.4847,2004:1.4566,2005:1.4323,2006:1.4044,2007:1.3801,2008:1.3373,2009:1.3275,2010:1.3067,2011:1.2727,2012:1.2350,2013:1.2215,2014:1.2189,2015:1.2189,2016:1.2189,2017:1.2057,2018:1.1927,2019:1.1867,2020:1.1867,2021:1.1646,2022:1.0773,2023:1.0221,2024:1.0140,2025:1.0,2026:1.0},
+                         "B": {1970:33.2483,1971:31.4608,1972:29.5936,1973:26.6379,1974:22.1548,1975:18.7833,1976:16.0127,1977:13.4676,1978:11.8959,1979:10.2084,1980:8.3689,1981:7.0018,1982:5.9764,1983:5.1610,1984:4.6344,1985:4.2372,1986:3.9650,1987:3.7627,1988:3.5591,1989:3.3141,1990:3.1006,1991:2.8923,1992:2.7234,1993:2.5939,1994:2.4768,1995:2.3330,1996:2.2281,1997:2.1732,1998:2.1182,1999:2.0688,2000:2.0011,2001:1.9334,2002:1.8722,2003:1.8124,2004:1.7626,2005:1.7187,2006:1.6710,2007:1.6289,2008:1.5646,2009:1.5397,2010:1.5031,2011:1.4509,2012:1.3960,2013:1.3681,2014:1.3534,2015:1.3412,2016:1.3290,2017:1.3025,2018:1.2765,2019:1.2584,2020:1.2466,2021:1.2117,2022:1.1105,2023:1.0432,2024:1.0243,2025:1.0,2026:1.0}},
+  # Prima fascia di retribuzione pensionabile ("tetto"), INPS circ. 6/2026; oltre il tetto il rendimento scende per fasce
+  "tetto_pensionabile": {2026: 56224.00},
+  "fasce_rendimento": {"A": [(1.00, 0.02), (1.33, 0.015), (1.66, 0.0125), (None, 0.01)],
+                       "B": [(1.00, 0.02), (1.33, 0.016), (1.66, 0.0135), (1.90, 0.011), (None, 0.009)]},
+  "gestioni_autonomi": ["ARTIGIANI", "COMMERCIANTI"],
   "aliquota_computo": {"FPLD":0.33,"GS":0.33,"ARTIGIANI":0.24,"COMMERCIANTI":0.24,"CPDEL":0.33,"CPS":0.33,
                        "CPI":0.33,"CPUG":0.33,"CTPS":0.33,"ALTRO":0.33},
   "gestioni_esclusive_pa": ["CPDEL","CPS","CPI","CPUG","CTPS"],
@@ -94,6 +105,7 @@ class Caso:
         self.avvisi = []; self.log = []
         # --- contributi per anno (cap 52 settimane/anno per il diritto) ---
         per_anno = {}
+        self.righe = {}   # (anno, gestione) -> settimane al diritto, settimane al calcolo, retribuzione: per la quota retributiva
         for c in inp.get("contributi", []):
             y = int(c["anno"]); g = c.get("gestione", self.gestione).upper()
             s = float(c.get("settimane", 0)); fig = float(c.get("figurative", 0))
@@ -101,6 +113,8 @@ class Caso:
             else: contr = float(c.get("imponibile",0)) * float(c.get("aliquota_computo", PARAMS["aliquota_computo"].get(g,0.33)))
             e = per_anno.setdefault(y, {"sett":0.0,"fig":0.0,"contr":0.0})
             e["sett"] += s; e["fig"] += fig; e["contr"] += contr
+            r = self.righe.setdefault((y, g), {"sett":0.0,"calc":0.0,"imp":0.0})
+            r["sett"] += s; r["calc"] += float(c.get("settimane_calcolo", s)); r["imp"] += float(c.get("imponibile",0))
         for y, e in per_anno.items():
             if e["sett"] > SETT_ANNO + 0.01:
                 self.avvisi.append(f"Anno {y}: {e['sett']:.0f} settimane > 52 (sovrapposizione): per il diritto conto 52.")
@@ -111,6 +125,7 @@ class Caso:
         self.continua = bool(p.get("continua_lavoro", False))
         self.sett_annue = float(p.get("settimane_annue", 52))
         self.imp_fut = float(p.get("imponibile_annuo", 0))
+        self.gest_fut = str(p.get("gestione", self.gestione)).upper()   # gestione in cui si verseranno i contributi futuri
         self.aliq_fut = float(p.get("aliquota_computo", PARAMS["aliquota_computo"].get(self.gestione,0.33)))
         self.cresc = float(p.get("crescita_imponibile", 0.0))
         self.fine_lavoro = d(p["fino_a"]) if p.get("fino_a") else None
@@ -191,6 +206,95 @@ class Caso:
         c = tab[a] + (tab[a+1] - tab[a]) * m / 12
         return c, tab_key
 
+    # ------------------- quota retributiva dalle retribuzioni dell'estratto -------------------
+    def _serie_retribuzioni(self, decorrenza):
+        """Per gestione: anno -> [settimane utili al calcolo, retribuzione], storiche e proiettate fino alla decorrenza."""
+        serie = {}
+        for (y, g), e in self.righe.items():
+            if y <= self.oggi.year: serie.setdefault(g, {})[y] = [e["calc"], e["imp"]]
+        if self.continua and self.imp_fut > 0:
+            for y in range(self.oggi.year, decorrenza.year + 1):
+                ini = max(date(y,1,1), self.oggi + timedelta(days=1))
+                fin = min(date(y,12,31), decorrenza - timedelta(days=1))
+                if self.fine_lavoro: fin = min(fin, self.fine_lavoro)
+                if fin < ini: continue
+                frac = ((fin - ini).days + 1) / 365.25
+                v = serie.setdefault(self.gest_fut, {}).setdefault(y, [0.0, 0.0])
+                v[0] = min(SETT_ANNO, v[0] + self.sett_annue * frac)
+                v[1] += self.imp_fut * ((1+self.cresc) ** max(0, y - self.oggi.year)) * frac
+        return serie
+
+    @staticmethod
+    def _media_settimanale(anni, quante, tipo, dal=None, fino=None):
+        """Retribuzione media settimanale rivalutata sulle ultime `quante` settimane (None = tutte) degli anni tra `dal` e `fino`.
+        Le settimane senza retribuzione (es. servizio militare) non entrano nella media. Restituisce (media, settimane usate)."""
+        coeff = PARAMS["rival_retribuzioni"][tipo]
+        presi, somma = 0.0, 0.0
+        for y in sorted(anni, reverse=True):
+            if (fino is not None and y > fino) or (dal is not None and y < dal): continue
+            w, imp = anni[y]
+            if w <= 0 or imp <= 0: continue
+            k = coeff.get(y, 1.0 if y > max(coeff) else coeff[min(coeff)])
+            if quante is not None and presi + w > quante:
+                parte = (quante - presi) / w
+                somma += imp * k * parte; presi = quante; break
+            somma += imp * k; presi += w
+        return (somma / presi if presi else None), presi
+
+    @staticmethod
+    def _rendimento(retribuzione_annua, tipo):
+        """Pensione annua per ogni anno di anzianita': 2% fino al tetto, poi aliquote ridotte per fasce."""
+        tetto = PARAMS["tetto_pensionabile"][max(PARAMS["tetto_pensionabile"])]
+        resa, sotto = 0.0, 0.0
+        for limite, aliquota in PARAMS["fasce_rendimento"][tipo]:
+            sopra = retribuzione_annua if limite is None else min(retribuzione_annua, tetto * limite)
+            if sopra > sotto: resa += (sopra - sotto) * aliquota
+            sotto = max(sotto, sopra)
+        return resa
+
+    @staticmethod
+    def _eur(x):
+        return f"{x:,.0f}".replace(",", ".")
+
+    def quota_retributiva_calcolata(self, decorrenza):
+        """Quote A e B calcolate con le regole INPS dalle retribuzioni dell'estratto, gestione per gestione.
+        Restituisce (quota annua, note, settimane non coperte) oppure None se mancano le retribuzioni."""
+        taglio = 1995 if self.sistema.startswith("misto") else 2011
+        serie = self._serie_retribuzioni(decorrenza)
+        anz92 = sum(e["sett"] for (y, g), e in self.righe.items() if y <= 1992)
+        tot = sum(e["sett"] for (y, g), e in self.righe.items() if y <= taglio)
+        if tot <= 0: return None
+        riduzione = min(1.0, 40 * SETT_ANNO / tot)   # l'anzianita' utile non supera 40 anni
+        quota, note, scoperte = 0.0, [], 0.0
+        for g in sorted({g for (y, g) in self.righe if y <= taglio}):
+            wA = sum(e["sett"] for (y, gg), e in self.righe.items() if gg == g and y <= 1992)
+            wB = sum(e["sett"] for (y, gg), e in self.righe.items() if gg == g and 1993 <= y <= taglio)
+            autonomi = g in PARAMS["gestioni_autonomi"]
+            if g != "FPLD" and not autonomi:
+                scoperte += wA + wB; continue
+            nA, nB = (520, 780) if autonomi else (260, 520)
+            anni = serie.get(g, {})
+            mA, usateA = self._media_settimanale(anni, nA, "A")
+            if anz92 >= 15 * SETT_ANNO:
+                mB, usateB = self._media_settimanale(anni, nB, "B")
+                periodoB = f"ultime {usateB:.0f} settimane"
+            else:
+                # meno di 15 anni al 1992: tutte le retribuzioni dal 1993 alla decorrenza piu' le ultime nA settimane precedenti
+                dopo, w1 = self._media_settimanale(anni, None, "B", dal=1993)
+                prima, w0 = self._media_settimanale(anni, nA, "B", fino=1992)
+                usateB = w1 + w0
+                mB = ((dopo or 0) * w1 + (prima or 0) * w0) / usateB if usateB else None
+                periodoB = f"retribuzioni dal 1993 alla decorrenza e {w0:.0f} settimane precedenti"
+            if (wA and mA is None) or (wB and mB is None):
+                scoperte += wA + wB; continue
+            qA = self._rendimento(mA * SETT_ANNO, "A") * wA / SETT_ANNO * riduzione if wA else 0.0
+            qB = self._rendimento(mB * SETT_ANNO, "B") * wB / SETT_ANNO * riduzione if wB else 0.0
+            quota += qA + qB
+            if wA: note.append(f"Quota A {g}: {wA:.0f} settimane fino al 1992 x retribuzione media rivalutata {self._eur(mA*SETT_ANNO)} euro/anno (ultime {usateA:.0f} settimane) = {self._eur(qA)} euro/anno.")
+            if wB: note.append(f"Quota B {g}: {wB:.0f} settimane dal 1993 al {taglio} x retribuzione media rivalutata {self._eur(mB*SETT_ANNO)} euro/anno ({periodoB}) = {self._eur(qB)} euro/anno.")
+        if not note: return None
+        return quota, note, scoperte
+
     def importo(self, decorrenza, canale_note):
         M, stime = self.montante(decorrenza)
         coeff, tabk = self.coeff_trasf(decorrenza)
@@ -200,6 +304,14 @@ class Caso:
             if self.inp.get("quota_retributiva_annua"):
                 quota_r = float(self.inp["quota_retributiva_annua"]); conf = "media"
                 canale_note.append("Quota retributiva presa dal dato fornito (es. simulazione INPS).")
+            elif (calc := self.quota_retributiva_calcolata(decorrenza)) is not None:
+                quota_r, note_r, scoperte = calc
+                conf = "media"
+                canale_note.append("Quota retributiva calcolata con le regole INPS (quote A e B) sulle retribuzioni dell'estratto, rivalutate con i coefficienti INPS 2026.")
+                canale_note.extend(note_r)
+                if scoperte > 0:
+                    conf = "bassa"
+                    canale_note.append(f"{scoperte:.0f} settimane anteriori al {'1996' if self.sistema.startswith('misto') else '2012'} sono in gestioni o periodi senza retribuzioni leggibili: la loro quota non e' compresa.")
             elif self.inp.get("retribuzione_pensionabile_annua"):
                 anni_r = (self.w1995 if self.sistema.startswith("misto") else min(self._acc(date(2011,12,31)), 40*SETT_ANNO)) / SETT_ANNO
                 quota_r = 0.02 * min(anni_r, 40) * float(self.inp["retribuzione_pensionabile_annua"])
@@ -210,6 +322,8 @@ class Caso:
             canale_note.append("Coefficienti 2029+ non ancora pubblicati: uso 2027-2028 (sovrastima probabile).")
         if stime: canale_note.append(f"Montante con tassi di capitalizzazione futuri ipotetici ({self.tasso_fut*100:.1f}%).")
         if conf == "media" and (stime or decorrenza.year >= 2029): conf = "media-bassa"
+        if conf in ("media", "media-bassa") and decorrenza.year > max(PARAMS["tetto_pensionabile"]) and quota_r:
+            canale_note.append("Importi in moneta di oggi: coefficienti di rivalutazione e tetto pensionabile sono quelli del 2026.")
         lordo_annuo = quota_c + (quota_r or 0)
         return {"montante": round(M,2), "coeff_trasf_%": round(coeff,4), "tabella_coeff": tabk,
                 "quota_contributiva_annua": round(quota_c,2),

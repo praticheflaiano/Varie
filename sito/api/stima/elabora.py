@@ -141,15 +141,18 @@ SCHEMA_TESTO = {
 ISTRUZIONI_TESTO = (
     "Sei un consulente previdenziale di patronato. Ricevi in JSON le risposte del cliente, i controlli e i risultati del motore "
     "di calcolo per più scenari. Spiega il risultato in italiano semplice, dando del tu, nel formato JSON richiesto. "
-    "Ogni scenario ha note e ipotesi: tienine conto. Se c'è un confronto con la simulazione INPS, dillo: quando è coerente rafforza la "
-    "stima, quando non lo è va detto chiaramente. Riporta tra le avvertenze i limiti del calcolo e i parametri non definitivi. "
+    "Ogni scenario ha note e ipotesi: tienine conto. Riporta tra le avvertenze i limiti del calcolo e i parametri non definitivi. "
     "Per l'affidabilità degli importi usa queste parole al posto delle etichette tecniche: media = 'buona', media-bassa = 'discreta', "
     "bassa = 'di massima', parziale = 'incompleta'. "
     "REGOLE: usa ESCLUSIVAMENTE date e importi presenti nel JSON, senza cambiarne il valore; scrivi le date come gg/mm/aaaa e gli "
     "importi all'italiana (es. 1.641,47 euro); non calcolare e non stimare nuovi numeri; "
     "non citare norme, requisiti o scadenze che non compaiono nel JSON; se l'affidabilità di un importo è 'bassa' o 'parziale' "
-    "dillo chiaramente; segnala come dati mancanti ciò che renderebbe la stima più precisa (es. simulazione INPS 'La mia pensione "
-    "futura' per chi ha contributi prima del 1996, periodi non accreditati indicati dal cliente). Non promettere nulla: è una stima indicativa."
+    "dillo chiaramente; segnala come dati mancanti solo ciò che il cliente può darci e che renderebbe la stima più precisa (periodi non "
+    "accreditati che ha indicato, ultima busta paga o Certificazione Unica, documenti di altri enti o casse). "
+    "NON consigliare mai di usare simulatori, calcolatori o servizi online dell'INPS o di altri (es. 'La mia pensione futura', 'Pensami') "
+    "e non citarli: il calcolo lo facciamo noi con le regole INPS e, per i dubbi, c'è la consulenza con il nostro operatore compresa nel prezzo. "
+    "Le note 'Quota A' e 'Quota B' spiegano come è calcolata la parte di pensione maturata prima del 1996: riassumile in parole semplici, senza formule. "
+    "Non promettere nulla: è una stima indicativa."
 )
 
 
@@ -310,7 +313,7 @@ def costruisci_input(r, letto, contributi, dubbi, primo, oggi):
         "data_calcolo": oggi, "gestione_principale": principale, "primo_accredito": primo,
         "contributi": contributi,
         "proiezione": {"continua_lavoro": continua, "settimane_annue": 52, "imponibile_annuo": imponibile_futuro,
-                        "crescita_imponibile": 0.0, "fino_a": fino_a, "settimane_volontari_annue": 0,
+                        "crescita_imponibile": 0.0, "fino_a": fino_a, "settimane_volontari_annue": 0, "gestione": recente,
                         **({"aliquota_computo": PARAMS["aliquota_computo"].get(recente, 0.33)} if recente != principale else {})},
         "quota_retributiva_annua": None,
         "retribuzione_pensionabile_annua": ultima or dichiarata or None,

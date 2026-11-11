@@ -69,6 +69,22 @@ Quando i controlli chiedono una verifica (`revisione_consigliata` non vuota → 
 - `prospetto_pdf.py`: testo a 11 punti, numero di pagine libero (di solito 3). Prima era forzato in due pagine rimpicciolendo il carattere fino all'82%: non rifarlo. Struttura: apertura con prima uscita e tre cifre chiave, "In breve", strada consigliata, una scheda per strada, alternative, cosa decidere, consulenza inclusa, QR, note in fondo (limiti, avvertenze, note tecniche, senza tagli).
 - `pratica.astro`: quando la stima è consegnata o provvisoria la pagina la mostra anche a schermo (`riepilogo_stima` in `pratiche.py`), con le stesse sezioni.
 
+## Quota retributiva calcolata come l'INPS, niente rimandi ai simulatori INPS (dal 2026-11-11)
+
+Decisione di Antonio: il servizio è a pagamento, quindi **non si cita e non si consiglia** "La mia pensione futura" né altri simulatori gratuiti (sito, questionario, prospetto, testi scritti dal modello). Il caricamento della simulazione INPS è stato tolto dal questionario; il confronto resta nel codice solo se un operatore la allega.
+
+Per avere la stessa affidabilità, la parte di pensione maturata prima del 1996 (o del 2012 per chi aveva 18 anni di contributi al 1995) non è più stimata "2% x anni x ultima retribuzione": il motore (`conteggi_pensione.py`, `quota_retributiva_calcolata`) la calcola con le regole INPS sulle retribuzioni anno per anno dell'estratto:
+
+- **Quota A** (anzianità fino al 1992): media delle ultime 260 settimane di retribuzione (520 per artigiani e commercianti) prima della decorrenza, rivalutate.
+- **Quota B** (1993-1995, o 1993-2011): ultime 520 settimane (780 per gli autonomi) se al 1992 c'erano almeno 15 anni di contributi; altrimenti tutte le retribuzioni dal 1993 alla decorrenza più le ultime 260 (520) settimane precedenti.
+- Coefficienti di rivalutazione: INPS msg 707/2026, allegati 1 (quota A) e 2 (quota B). Rendimento 2% l'anno fino al tetto pensionabile (56.224 € nel 2026, INPS circ. 6/2026), poi per fasce: quota A 1,5 / 1,25 / 1%; quota B 1,6 / 1,35 / 1,1 / 0,9%. Massimo 40 anni.
+- Si calcola **gestione per gestione** (FPLD, artigiani, commercianti). Le settimane senza retribuzione (es. militare) non entrano nella media. Dipendenti pubblici: regole diverse, non coperte (resta la stima di massima).
+- Decorrenze future: retribuzioni proiettate a valore costante e coefficienti 2026, cioè **importi in moneta di oggi**, come fanno le simulazioni INPS. Differenza voluta: l'INPS di base ipotizza retribuzioni in crescita dell'1,5% reale l'anno, noi 0% (prudente).
+
+**Ogni anno** (messaggio INPS di febbraio/marzo): aggiornare in `PARAMS` `rival_retribuzioni`, `tetto_pensionabile` e la capitalizzazione dei montanti; poi rigenerare `test_regressione.atteso.json`.
+
+Non verificato: confronto con una liquidazione o una simulazione INPS reale sullo stesso estratto. Da fare con il primo caso disponibile in ufficio.
+
 ## Consulenza con l'operatore inclusa (dal 2026-11-11)
 
 Nei 60 € è compresa una consulenza facoltativa con un operatore, al telefono o in chat. Lo dicono la pagina del servizio, il banner in home, la pagina della pratica (pulsante "Prenota la consulenza inclusa") e l'email di consegna del prospetto (`CONSULENZA` in `crm.py`; link in `STIMA_LINK_CONSULENZA`, predefinito il calendario generale delle prenotazioni).
