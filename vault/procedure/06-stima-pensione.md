@@ -60,6 +60,15 @@ Gli estratti veri dei clienti **non vanno messi nel repository**.
 
 Limiti noti: sezioni diverse dal Regime generale (Gestione separata, dipendenti pubblici) non sono state viste su estratti reali: se una riga non si legge per intero si passa alla lettura con AI. Coltivatori diretti e altre gestioni non mappate restano segnalate come "gestione non riconosciuta".
 
+## Stima "in verifica" = prospetto provvisorio già consegnato (dal 2026-11-11)
+
+Quando i controlli chiedono una verifica (`revisione_consigliata` non vuota → stato `da_rivedere`) il cliente **scarica comunque il prospetto**, indicato come provvisorio (riquadro rosa in prima pagina e sulla pagina della pratica), e viene invitato a prenotare l'appuntamento telefonico o a scrivere in chat. L'operatore riceve nota e compito sul CRM, completa la stima con il cliente e la conferma dalla pagina dell'ufficio ("Verificato: conferma la stima" → `consegnata`, email di conferma).
+
+## Impaginazione del prospetto e della pagina della pratica (dal 2026-11-11)
+
+- `prospetto_pdf.py`: testo a 11 punti, numero di pagine libero (di solito 3). Prima era forzato in due pagine rimpicciolendo il carattere fino all'82%: non rifarlo. Struttura: apertura con prima uscita e tre cifre chiave, "In breve", strada consigliata, una scheda per strada, alternative, cosa decidere, consulenza inclusa, QR, note in fondo (limiti, avvertenze, note tecniche, senza tagli).
+- `pratica.astro`: quando la stima è consegnata o provvisoria la pagina la mostra anche a schermo (`riepilogo_stima` in `pratiche.py`), con le stesse sezioni.
+
 ## Consulenza con l'operatore inclusa (dal 2026-11-11)
 
 Nei 60 € è compresa una consulenza facoltativa con un operatore, al telefono o in chat. Lo dicono la pagina del servizio, il banner in home, la pagina della pratica (pulsante "Prenota la consulenza inclusa") e l'email di consegna del prospetto (`CONSULENZA` in `crm.py`; link in `STIMA_LINK_CONSULENZA`, predefinito il calendario generale delle prenotazioni).

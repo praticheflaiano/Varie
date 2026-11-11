@@ -394,4 +394,31 @@ def vista_cliente(pratica):
         v["da_abbinare"] = bool(_pagamenti_aperti(pratica))
     if pratica["stato"] == "fallita":
         v["riprovabile"] = pratica.get("tentativi", 0) < MAX_TENTATIVI
+    if pratica["stato"] in ("consegnata", "da_rivedere") and pratica.get("stima"):
+        v["riepilogo"] = riepilogo_stima(pratica["stima"])
     return v
+
+
+def riepilogo_stima(stima):
+    """La stima in breve, per mostrarla sulla pagina della pratica (stessi dati del prospetto, nessun calcolo)."""
+    scenari = stima.get("scenari") or [{}]
+    base = scenari[0].get("esito") or {}
+    testo = stima.get("testo") or {}
+    nome_base = scenari[0].get("nome")
+    spiegazioni = {x.get("canale"): x.get("testo") for x in testo.get("spiegazione_canali") or [] if x.get("scenario") == nome_base}
+    canali = []
+    for c in base.get("canali") or []:
+        imp = c.get("importo") or {}
+        canali.append({"canale": c.get("canale"), "stato": c.get("stato"), "maturazione": c.get("data_maturazione"), "decorrenza": c.get("decorrenza"),
+                       "eta": c.get("eta_alla_decorrenza"), "lordo": imp.get("lordo_mensile_13"), "netto": imp.get("netto_mensile_13_stima"),
+                       "indennita": imp.get("indennita_mensile_lorda_12"), "affidabilita": imp.get("affidabilita"), "spiegazione": spiegazioni.get(c.get("canale"), "")})
+    alternative = []
+    for sc in scenari[1:]:
+        e = sc.get("esito") or {}
+        pu = e.get("prima_uscita_pensione") or {}
+        canale = next((c for c in e.get("canali") or [] if c.get("canale") == pu.get("canale")), {})
+        alternative.append({"nome": sc.get("nome"), "canale": pu.get("canale"), "decorrenza": pu.get("decorrenza"),
+                            "netto": (canale.get("importo") or {}).get("netto_mensile_13_stima"), "note": " ".join(sc.get("note") or []) or sc.get("motivo") or ""})
+    return {"prima_uscita": base.get("prima_uscita_pensione"), "contributi": base.get("contributi_ad_oggi"), "sistema": base.get("sistema_calcolo"),
+            "sintesi": testo.get("sintesi", ""), "consigliata": testo.get("uscita_consigliata") or {}, "canali": canali, "alternative": alternative,
+            "decisioni": testo.get("decisioni") or [], "revisione": stima.get("revisione_consigliata") or [], "data_calcolo": stima.get("data_calcolo")}

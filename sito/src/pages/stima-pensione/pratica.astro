@@ -9,7 +9,7 @@ import Attesa from "~/components/pensione/Attesa.svelte";
 const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/stima\/invia$/, "");
 ---
 <BaseLayout title="La tua stima della pensione" description="Stato della tua Stima e Calcolo della pensione." noindex={true} share={false}>
-  <section class="mx-auto max-w-xl px-4 py-12" data-pagefind-ignore="all">
+  <section class="mx-auto max-w-2xl px-4 py-12" data-pagefind-ignore="all">
     <h1 class="text-3xl font-extrabold text-[#14142B] sm:text-4xl">La tua stima della pensione</h1>
     <form id="pr-form" class="mt-6 hidden rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
       <p class="mb-4 text-[#3F3F5A]">Inserisci il codice pratica e la tua data di nascita.</p>
@@ -30,6 +30,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
       </form>
       <div id="pr-azioni" class="mt-5 flex flex-wrap gap-3"></div>
     </div>
+    <div id="pr-stima" class="mt-8 hidden text-[#14142B]"></div>
     <Attesa client:load variante="pagamento" evento="stima-attesa-pagamento" />
     <Attesa client:load variante="calcolo" evento="stima-attesa" />
     <div id="pr-link" class="mt-5 hidden rounded-2xl bg-[#F1EEFF] p-4 text-[#14142B]">
@@ -98,6 +99,77 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
         b.disabled = true;
         try { mostra(await chiedi("simula-pagamento")); } catch { avvisa("Pagamento simulato non riuscito."); b.disabled = false; }
       }
+      // La stima in breve, sulla pagina: stessi dati del prospetto, con caratteri grandi e una scheda per strada.
+      const PRECISIONE = { media: "buona", "media-bassa": "discreta", bassa: "di massima", parziale: "incompleta" };
+      const dataIt = (d) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${m[3]}/${m[2]}/${m[1]}` : "—"; };
+      const soldi = (n) => (typeof n === "number" ? n.toLocaleString("it-IT", { style: "currency", currency: "EUR", useGrouping: "always" }) : "—");
+      const eta = (s) => { const m = /^\s*(\d+)a\s+(\d+)m\s*$/.exec(s || ""); return m ? `${m[1]} anni` + (+m[2] ? ` e ${+m[2]} ${+m[2] === 1 ? "mese" : "mesi"}` : "") : (s || "—"); };
+      function el(tag, classe, testo) { const e = document.createElement(tag); if (classe) e.className = classe; if (testo != null) e.textContent = testo; return e; }
+      function cifra(etichetta, valore) {
+        const d = el("div");
+        d.append(el("dt", "text-xs font-bold uppercase tracking-wide text-[#5C5C78]", etichetta), el("dd", "mt-0.5 text-xl font-extrabold", valore));
+        return d;
+      }
+      function mostraStima(s) {
+        const dove = $("pr-stima");
+        dove.replaceChildren();
+        dove.classList.toggle("hidden", !s);
+        if (!s) return;
+        if (s.revisione && s.revisione.length) {
+          const r = el("div", "mb-5 rounded-[22px] bg-[#FFE3EC] p-5");
+          r.append(el("p", "text-xl font-extrabold", "Stima provvisoria: un nostro operatore la sta completando"),
+            el("p", "mt-2 text-lg", "Punti da verificare a mano: " + s.revisione.join("; ") + ". Fino alla conferma considera date e importi come indicativi."));
+          dove.append(r);
+        }
+        const primo = s.prima_uscita && (s.canali || []).find((c) => c.canale === s.prima_uscita.canale);
+        if (s.prima_uscita) {
+          const h = el("div", "rounded-[22px] bg-[#D4FF4F] p-6");
+          h.append(el("p", "text-sm font-extrabold uppercase tracking-wide", "Prima uscita possibile"), el("p", "mt-1 text-3xl font-extrabold leading-tight", s.prima_uscita.canale),
+            el("p", "mt-1 text-xl font-bold", `dal ${dataIt(s.prima_uscita.decorrenza)}` + (primo && primo.eta ? ` · a ${eta(primo.eta)}` : "")));
+          dove.append(h);
+        }
+        const tre = el("dl", "mt-4 grid gap-4 rounded-[22px] bg-[#F7F7FB] p-5 sm:grid-cols-3");
+        tre.append(cifra("Contributi ad oggi", String(s.contributi || "—").replace("a ", " anni ").replace("m", " mesi")), cifra("Netto mensile stimato", soldi(primo && primo.netto)), cifra("Sistema di calcolo", String(s.sistema || "—").split(" (")[0]));
+        dove.append(tre);
+        if (s.sintesi) dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "In breve"), el("p", "mt-2 text-lg leading-relaxed", s.sintesi));
+        if (s.consigliata && s.consigliata.canale) {
+          const c = el("div", "mt-4 rounded-[22px] bg-[#F1EEFF] p-5");
+          c.append(el("p", "text-sm font-extrabold uppercase tracking-wide text-[#5C5C78]", "La strada che ti consigliamo"), el("p", "mt-1 text-xl font-extrabold", s.consigliata.canale), el("p", "mt-2 text-lg leading-relaxed", s.consigliata.motivo || ""));
+          dove.append(c);
+        }
+        if (s.canali && s.canali.length) {
+          dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "Le tue strade per la pensione"));
+          for (const c of s.canali) {
+            const prima = s.prima_uscita && c.canale === s.prima_uscita.canale;
+            const k = el("div", `mt-4 rounded-[22px] p-5 ${prima ? "border-2 border-[#14142B] bg-white" : "bg-[#F7F7FB]"}`);
+            k.append(el("h3", "text-xl font-extrabold", c.canale), el("p", "text-sm font-semibold text-[#5C5C78]", prima ? "Prima uscita possibile" : (c.stato || "")));
+            const dl = el("dl", "mt-3 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3");
+            dl.append(cifra("Maturi il diritto", dataIt(c.maturazione)), cifra("Primo pagamento", dataIt(c.decorrenza)), cifra("Età", eta(c.eta)));
+            if (c.lordo != null) dl.append(cifra("Lordo mensile", soldi(c.lordo)), cifra("Netto stimato", soldi(c.netto)), cifra("Precisione", PRECISIONE[c.affidabilita] || "—"));
+            else if (c.indennita != null) dl.append(cifra("Indennità mensile lorda", soldi(c.indennita)), cifra("Precisione", PRECISIONE[c.affidabilita] || "—"));
+            k.append(dl);
+            if (c.lordo != null) k.append(el("p", "mt-2 text-sm text-[#5C5C78]", "Importi al mese, su 13 mensilità."));
+            if (c.spiegazione) k.append(el("p", "mt-3 text-lg leading-relaxed", c.spiegazione));
+            dove.append(k);
+          }
+        }
+        if (s.alternative && s.alternative.length) {
+          dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "Le alternative a confronto"));
+          for (const a of s.alternative) {
+            const k = el("div", "mt-3 rounded-[22px] bg-[#F7F7FB] p-5");
+            k.append(el("h3", "text-lg font-extrabold", a.nome || ""), el("p", "mt-1 text-lg", `${a.canale || "—"} dal ${dataIt(a.decorrenza)} · netto stimato ${soldi(a.netto)} al mese`));
+            if (a.note) k.append(el("p", "mt-1 text-[#3F3F5A]", a.note));
+            dove.append(k);
+          }
+        }
+        if (s.decisioni && s.decisioni.length) {
+          dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "Cosa decidere"));
+          const ol = el("ol", "mt-2 list-decimal space-y-2 pl-6 text-lg leading-relaxed");
+          for (const d of s.decisioni) ol.append(el("li", "", d.cosa + (d.entro ? ` (entro ${d.entro})` : "")));
+          dove.append(ol);
+        }
+        dove.append(el("p", "mt-6 text-[#5C5C78]", "Nel prospetto in PDF trovi anche le note, le avvertenze e il dettaglio del calcolo. Stima indicativa: non sostituisce la certificazione dell'INPS."));
+      }
       function mostra(p) {
         clearTimeout(timer);
         form.classList.add("hidden");
@@ -140,6 +212,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
         }
         $("pr-titolo").textContent = titolo;
         $("pr-testo").textContent = testo;
+        mostraStima(p.riepilogo);
         // Durante il calcolo il riquadro di testo lascia il posto a quello animato (componente Attesa).
         box.classList.toggle("hidden", p.stato === "in_elaborazione");
         // Appena tornati dal pagamento la conferma di GHL può metterci fino a un minuto: intanto
