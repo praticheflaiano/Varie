@@ -252,7 +252,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         accesso.classList.add("hidden"); area.classList.remove("hidden");
         const cfg = d.configurazione || {}, righe = d.richieste || [];
         const note = [];
-        if (!cfg.openapi) note.push("manca il token Openapi (il catalogo non si legge e le richieste non partono)");
+        if (!cfg.openapi) note.push("questa build non vede la variabile OPENAPI_TOKEN (il catalogo non si legge e le richieste non partono): su Vercel deve valere per questo ambiente, e dopo averla salvata va rifatto il deploy di questo ramo");
         if (cfg.prova) note.push("ambiente di PROVA Openapi: i documenti non sono veri e non vengono addebitati");
         if (!cfg.ghl) note.push("CRM non collegato in questo ambiente");
         $("rp-config").textContent = note.length ? "Attenzione: " + note.join("; ") + "." : "";
