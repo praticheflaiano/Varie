@@ -1,0 +1,232 @@
+---
+// Pagina riservata al titolare: richiesta del Report Persona di Openapi (API Risk), elenco delle
+// richieste, download del PDF, collegamento al contatto del CRM. Non è collegata da nessun menu,
+// è esclusa dai motori di ricerca e dalla sitemap. Si apre con la password REPORT_PERSONA_PASSWORD;
+// la sessione (12 ore) resta solo nella scheda del browser. Vedi vault/procedure/07-report-persona.md.
+import BaseLayout from "~/layouts/BaseLayout.astro";
+// Le funzioni server stanno nel progetto praticheflaiano-sito: sul sito pubblico si ricavano da PUBLIC_STIMA_PENSIONE_API.
+const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/stima\/invia$/, "");
+const campo = "w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B] focus:border-[#5B3DF5] focus:outline-none";
+const etichetta = "mb-1.5 block text-sm font-bold text-[#14142B]";
+---
+<BaseLayout title="Report Persona - area riservata" description="Pagina riservata all'ufficio." noindex={true} share={false}>
+  <section class="mx-auto max-w-3xl px-4 py-12" data-pagefind-ignore="all">
+    <h1 class="text-3xl font-extrabold text-[#14142B] sm:text-4xl">Report Persona</h1>
+    <p class="mt-2 text-[#4E4B66]">Area riservata all'ufficio.</p>
+
+    <form id="rp-accesso" class="mt-6 rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
+      <label class={etichetta} for="rp-password">Password</label>
+      <input id="rp-password" type="password" class={campo} autocomplete="current-password" />
+      <button type="submit" class="mt-5 rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50">Entra</button>
+    </form>
+
+    <p id="rp-msg" class="mt-4 hidden rounded-2xl bg-[#FFE3EC] p-3 font-semibold text-[#14142B]" role="alert"></p>
+
+    <div id="rp-area" class="hidden">
+      <p id="rp-config" class="mt-6 hidden rounded-2xl bg-[#FFF4CC] p-3 font-semibold text-[#14142B]"></p>
+
+      <form id="rp-form" class="mt-6 rounded-[28px] bg-[#F7F7FB] p-6" novalidate>
+        <h2 class="text-2xl font-extrabold text-[#14142B]">Nuova richiesta</h2>
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div><label class={etichetta} for="rp-nome">Nome</label><input id="rp-nome" class={campo} autocomplete="off" /></div>
+          <div><label class={etichetta} for="rp-cognome">Cognome</label><input id="rp-cognome" class={campo} autocomplete="off" /></div>
+        </div>
+        <label class={`${etichetta} mt-4`} for="rp-cf">Codice fiscale</label>
+        <input id="rp-cf" class={`${campo} uppercase tracking-wider`} maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" />
+        <label class={`${etichetta} mt-4`} for="rp-finalita">Finalità</label>
+        <select id="rp-finalita" class={campo}>
+          <option value="">Scegli…</option>
+          <option value="sovraindebitamento">Pratica di sovraindebitamento</option>
+          <option value="successione">Successione</option>
+          <option value="isee-redditi">ISEE o dichiarazione dei redditi</option>
+          <option value="affitto">Verifica dell'inquilino (contratto di affitto)</option>
+          <option value="altro">Altro (scrivi quale)</option>
+        </select>
+        <label class={`${etichetta} mt-4`} for="rp-nota">Nota <span class="font-normal">(facoltativa; obbligatoria con "Altro")</span></label>
+        <input id="rp-nota" class={campo} maxlength="200" autocomplete="off" />
+        <label class="mt-5 flex items-start gap-3 font-semibold text-[#14142B]">
+          <input id="rp-consenso" type="checkbox" class="mt-1 h-5 w-5 shrink-0" />
+          <span>Ho il consenso scritto dell'interessato a richiedere questo report.</span>
+        </label>
+        <button type="submit" class="mt-5 rounded-full bg-[#5B3DF5] px-7 py-3 font-bold text-white shadow-[0_6px_0_#14142B] disabled:opacity-50">Richiedi il report (<span id="rp-costo">3,60</span> € + IVA)</button>
+        <p class="mt-3 text-sm text-[#4E4B66]">Ogni richiesta viene addebitata sul credito Openapi. Il report arriva da 10 minuti fino a 24-48 ore dopo.</p>
+      </form>
+
+      <div class="mt-10 flex flex-wrap items-center justify-between gap-3">
+        <h2 class="text-2xl font-extrabold text-[#14142B]">Richieste</h2>
+        <div class="flex gap-3">
+          <button id="rp-aggiorna" type="button" class="rounded-full border-2 border-[#14142B] bg-white px-5 py-2 font-bold text-[#14142B] disabled:opacity-50">Aggiorna</button>
+          <button id="rp-esci" type="button" class="rounded-full border-2 border-[#14142B] bg-white px-5 py-2 font-bold text-[#14142B]">Esci</button>
+        </div>
+      </div>
+      <p id="rp-spesa" class="mt-2 text-[#4E4B66]"></p>
+      <div id="rp-elenco" class="mt-4 grid gap-4"></div>
+      <p class="mt-6 text-sm text-[#4E4B66]">I report restano in questo archivio per 12 mesi, poi vengono cancellati. La copia allegata al contatto nel CRM non ha scadenza.</p>
+    </div>
+  </section>
+  <script is:inline define:vars={{ API }}>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const accesso = $("rp-accesso"), area = $("rp-area"), msg = $("rp-msg"), elenco = $("rp-elenco"), form = $("rp-form");
+      const PRIMARIO = "rounded-full bg-[#5B3DF5] px-5 py-2 font-bold text-white disabled:opacity-50";
+      const SECONDARIO = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 font-bold text-[#14142B] disabled:opacity-50";
+      const STATI = { invio: "Invio in corso", in_lavorazione: "In lavorazione", pronto: "Pronto", errore: "Non riuscita" };
+      const COLORI = { invio: "bg-[#FFF4CC]", in_lavorazione: "bg-[#FFF4CC]", pronto: "bg-[#D4FF4F]", errore: "bg-[#FFE3EC]" };
+      let sessione = "", timer = null;
+      try { sessione = sessionStorage.getItem("report-persona") || ""; } catch { /* archivio del browser non disponibile */ }
+
+      const avvisa = (t) => { msg.textContent = t; msg.classList.toggle("hidden", !t); if (t) msg.scrollIntoView({ block: "nearest" }); };
+      const quando = (s) => { const d = new Date(s); return isNaN(d) ? "" : d.toLocaleString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); };
+      const giorno = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ""); return m ? `${m[3]}/${m[2]}/${m[1]}` : ""; };
+      const euro = (c) => (c / 100).toLocaleString("it-IT", { minimumFractionDigits: 2 });
+      const nodo = (tag, classe, testo) => { const e = document.createElement(tag); if (classe) e.className = classe; if (testo !== undefined) e.textContent = testo; return e; };
+
+      async function chiedi(azione, altro) {
+        const res = await fetch(API + "/api/report/persona", { method: "POST", headers: { "Content-Type": "application/json", "x-report-sessione": sessione }, body: JSON.stringify({ azione, ...altro }) });
+        const dati = await res.json().catch(() => ({}));
+        if (!res.ok) throw Object.assign(new Error("richiesta"), { stato: res.status, dati });
+        return dati;
+      }
+      function esci() {
+        sessione = "";
+        try { sessionStorage.removeItem("report-persona"); } catch { /* facoltativo */ }
+        clearTimeout(timer);
+        area.classList.add("hidden"); accesso.classList.remove("hidden");
+      }
+      function errore(e) {
+        if (e.stato === 401) { esci(); return avvisa("Sessione scaduta: inserisci di nuovo la password."); }
+        const d = (e.dati && e.dati.errore) || "";
+        avvisa(d === "non-configurato" ? "La pagina non è ancora configurata (manca la password o l'archivio su Vercel)."
+          : d === "openapi-non-configurato" ? "Manca il token Openapi tra le variabili su Vercel: la richiesta non è partita."
+          : d === "dati" ? "Controlla i dati: nome, cognome, codice fiscale valido e finalità (con \"Altro\" scrivi la nota)."
+          : d === "consenso" ? "Serve la conferma del consenso dell'interessato."
+          : d === "troppo-grande" ? "Il PDF è troppo grande per essere scaricato da qui: aprilo dal contatto nel CRM."
+          : e.stato === 404 ? "Non trovato in archivio." : "Operazione non riuscita. Riprova tra poco.");
+      }
+      function bottone(testo, classe, azione) {
+        const b = nodo("button", classe, testo);
+        b.type = "button";
+        b.addEventListener("click", async () => {
+          b.disabled = true; avvisa("");
+          try { await azione(); } catch (e) { errore(e); } finally { b.disabled = false; }
+        });
+        return b;
+      }
+      async function scarica(c) {
+        const { pdf_base64, nome } = await chiedi("pdf", { c });
+        const bin = atob(pdf_base64), bytes = new Uint8Array(bin.length);
+        for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+        const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+        const link = nodo("a");
+        link.href = url; link.download = nome; link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      }
+      function crm(r, box) {
+        const g = r.ghl || {};
+        const riga = nodo("div", "mt-3 rounded-2xl bg-[#F7F7FB] p-3 text-sm");
+        const testo = (t) => riga.append(nodo("p", "font-semibold", t));
+        if (g.stato === "trovato") {
+          testo(`CRM: ${g.nome || "contatto"} (trovato per ${g.come})${g.cf_aggiunto ? " · codice fiscale aggiunto" : ""}`);
+          testo(g.allegato ? `PDF allegato al contatto il ${quando(g.allegato)}` : r.stato === "pronto" ? "PDF non ancora allegato al contatto" : "Il PDF verrà allegato appena pronto");
+          if (r.stato === "pronto" && !g.allegato) riga.append(bottone("Allega ora", `${SECONDARIO} mt-2`, async () => mostra(await chiedi("allega", { c: r.codice }))));
+        } else if (g.stato === "da_scegliere") {
+          testo("CRM: più contatti possibili. Scegli quello giusto:");
+          for (const c of g.candidati || []) {
+            const b = bottone(`${c.nome}${c.cf ? " · CF " + c.cf : " · senza codice fiscale"}${c.email ? " · " + c.email : ""}${c.telefono ? " · " + c.telefono : ""}`, `${SECONDARIO} mt-2 block w-full text-left`, async () => mostra(await chiedi("collega", { c: r.codice, contatto: c.id })));
+            riga.append(b);
+          }
+          riga.append(bottone("Nessuno di questi: crea un nuovo contatto", `${SECONDARIO} mt-2 block w-full text-left`, async () => { if (confirm(`Creare nel CRM il contatto ${r.nome} ${r.cognome}?`)) mostra(await chiedi("collega", { c: r.codice, crea: true })); }));
+        } else if (g.stato === "nessuno") {
+          testo("CRM: nessun contatto con questo codice fiscale o con questo nome.");
+          riga.append(bottone("Crea il contatto", `${SECONDARIO} mt-2`, async () => mostra(await chiedi("collega", { c: r.codice, crea: true }))),
+            bottone("Cerca di nuovo", `${SECONDARIO} ml-2 mt-2`, async () => mostra(await chiedi("ricerca", { c: r.codice }))));
+        } else if (g.stato === "non_configurato") {
+          testo("CRM non collegato in questo ambiente: il PDF resta solo in archivio.");
+        } else if (r.stato !== "errore") {
+          testo("CRM: contatto non ancora cercato.");
+          riga.append(bottone("Cerca il contatto", `${SECONDARIO} mt-2`, async () => mostra(await chiedi("ricerca", { c: r.codice }))));
+        } else return;
+        if (g.avviso) riga.append(nodo("p", "mt-1", g.avviso));
+        if (g.errore) riga.append(nodo("p", "mt-1 text-[#B00020]", g.errore));
+        box.append(riga);
+      }
+      function mostra(d) {
+        accesso.classList.add("hidden"); area.classList.remove("hidden");
+        const cfg = d.configurazione || {}, righe = d.richieste || [];
+        $("rp-costo").textContent = euro(cfg.costo || 360);
+        const note = [];
+        if (!cfg.openapi) note.push("manca il token Openapi (le richieste non partono)");
+        if (cfg.prova) note.push("ambiente di PROVA Openapi: i report non sono veri e non vengono addebitati");
+        if (!cfg.ghl) note.push("CRM non collegato in questo ambiente");
+        $("rp-config").textContent = note.length ? "Attenzione: " + note.join("; ") + "." : "";
+        $("rp-config").classList.toggle("hidden", !note.length);
+        const mese = new Date().toISOString().slice(0, 7);
+        const spesi = righe.filter((r) => !r.prova && r.creata.startsWith(mese)).reduce((s, r) => s + (r.costo || 0), 0);
+        $("rp-spesa").textContent = righe.length ? `${righe.length} in archivio · spesa di questo mese: ${euro(spesi)} € + IVA` : "Nessuna richiesta in archivio.";
+        elenco.replaceChildren();
+        for (const r of righe) {
+          const box = nodo("div", "rounded-[28px] bg-white p-5 text-[#14142B] shadow-[0_0_0_2px_#E4E4EE]");
+          const testa = nodo("div", "flex flex-wrap items-center justify-between gap-2");
+          testa.append(nodo("h3", "text-lg font-extrabold", `${r.nome} ${r.cognome}`), nodo("span", `rounded-full px-3 py-1 text-sm font-bold ${COLORI[r.stato] || ""}`, (STATI[r.stato] || r.stato) + (r.prova ? " · prova" : "")));
+          box.append(testa, nodo("p", "mt-1 text-sm tracking-wider", r.cf),
+            nodo("p", "mt-1 text-sm text-[#4E4B66]", `Richiesto il ${quando(r.creata)} · ${r.finalita}${r.nota ? " · " + r.nota : ""}${r.pronta ? " · pronto il " + quando(r.pronta) : ""} · in archivio fino al ${giorno(r.scade)}`));
+          if (r.errore) box.append(nodo("p", "mt-2 font-semibold text-[#B00020]", r.errore));
+          if (r.ultimo_controllo) box.append(nodo("p", "mt-2 text-sm text-[#B00020]", "Ultimo controllo: " + r.ultimo_controllo));
+          if (r.stato === "pronto") {
+            const azioni = nodo("div", "mt-3 flex flex-wrap gap-2");
+            azioni.append(r.scaricabile ? bottone("Scarica il PDF", PRIMARIO, () => scarica(r.codice)) : nodo("p", "text-sm font-semibold", "PDF troppo grande per il download da qui: aprilo dal contatto nel CRM."));
+            box.append(azioni);
+          }
+          crm(r, box);
+          elenco.append(box);
+        }
+        clearTimeout(timer);
+        if (righe.some((r) => r.stato === "in_lavorazione")) timer = setTimeout(() => { if (!document.hidden && sessione) aggiorna(true); else mostra(d); }, 60000);
+      }
+      async function aggiorna(silenzioso) {
+        const b = $("rp-aggiorna");
+        b.disabled = true; b.textContent = "Controllo…";
+        try { mostra(await chiedi("aggiorna")); if (!silenzioso) avvisa(""); } catch (e) { errore(e); } finally { b.disabled = false; b.textContent = "Aggiorna"; }
+      }
+
+      accesso.addEventListener("submit", async (e) => {
+        e.preventDefault(); avvisa("");
+        const b = accesso.querySelector("button");
+        b.disabled = true;
+        try {
+          const res = await fetch(API + "/api/report/persona", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ azione: "accedi", password: $("rp-password").value }) });
+          const dati = await res.json().catch(() => ({}));
+          if (!res.ok) { avvisa(res.status === 429 ? "Troppi tentativi sbagliati: la pagina resta bloccata per 15 minuti." : res.status === 503 ? "La pagina non è ancora configurata (manca la password o l'archivio su Vercel)." : res.status === 403 && dati.errore === "password" ? "Password non corretta." : "Accesso non riuscito."); return; }
+          sessione = dati.sessione; $("rp-password").value = "";
+          try { sessionStorage.setItem("report-persona", sessione); } catch { /* facoltativo */ }
+          mostra(await chiedi("elenco"));
+        } catch (err) { errore(err); } finally { b.disabled = false; }
+      });
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); avvisa("");
+        const dati = { nome: $("rp-nome").value.trim(), cognome: $("rp-cognome").value.trim(), cf: $("rp-cf").value.replace(/\s/g, "").toUpperCase(), finalita: $("rp-finalita").value, nota: $("rp-nota").value.trim(), consenso: $("rp-consenso").checked };
+        if (!dati.nome || !dati.cognome || dati.cf.length !== 16 || !dati.finalita || (dati.finalita === "altro" && !dati.nota)) return avvisa("Compila nome, cognome, codice fiscale (16 caratteri) e finalità. Con \"Altro\" scrivi la nota.");
+        if (!dati.consenso) return avvisa("Serve la conferma del consenso dell'interessato.");
+        if (!confirm(`Richiedere il Report Persona di ${dati.nome} ${dati.cognome} (${dati.cf})?\nLa richiesta viene addebitata sul credito Openapi.`)) return;
+        const b = form.querySelector("button[type=submit]");
+        b.disabled = true;
+        try {
+          let risposta;
+          try { risposta = await chiedi("richiedi", dati); }
+          catch (err) {
+            if (err.stato !== 409) throw err;
+            if (!confirm(`Hai già richiesto un report per questo codice fiscale il ${quando(err.dati.quando)}.\nVuoi richiederne (e pagarne) un altro?`)) return;
+            risposta = await chiedi("richiedi", { ...dati, conferma: true });
+          }
+          form.reset();
+          mostra(risposta);
+          const nuova = (risposta.richieste || []).find((r) => r.codice === risposta.nuova);
+          if (nuova && nuova.stato === "errore") avvisa("La richiesta non è andata a buon fine: leggi il motivo qui sotto.");
+        } catch (err) { errore(err); } finally { b.disabled = false; }
+      });
+      $("rp-aggiorna").addEventListener("click", () => aggiorna(false));
+      $("rp-esci").addEventListener("click", () => { esci(); avvisa(""); });
+      if (sessione) chiedi("elenco").then(mostra).catch((e) => { if (e.stato === 401) esci(); else errore(e); });
+    })();
+  </script>
+</BaseLayout>
