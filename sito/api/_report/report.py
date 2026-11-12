@@ -32,7 +32,7 @@ Variabili d'ambiente:
   GHL_API_TOKEN             lo stesso della stima pensione (vedi _pensione/crm.py)
   REPORT_PERSONA_URL        facoltativa: indirizzo pubblico delle funzioni per l'avviso di Openapi
 """
-import hashlib, hmac, json, os, re, secrets, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
+import base64, hashlib, hmac, json, os, re, secrets, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_pensione"))
@@ -42,6 +42,8 @@ import crm  # noqa: E402
 COSTO_CENTESIMI = 360          # Report Persona, richiesta singola, IVA esclusa (listino Openapi del 12/11/2026)
 CATALOGO_ORE = 6
 MAX_FILE = 25_000_000          # un file più grande non viene copiato in archivio
+MAX_ALLEGATI = 2_800_000       # byte, somma degli allegati di una richiesta (le funzioni Vercel accettano circa 4,5 MB, e il base64 pesa un terzo in più)
+TIPI_ALLEGATO = {"pdf": "application/pdf", "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png"}
 CONSERVAZIONE_GIORNI = 365     # sull'archivio Vercel; nel CRM il PDF resta senza scadenza
 SESSIONE_ORE = 12
 MAX_ERRATI, BLOCCO_MINUTI = 5, 15
@@ -91,7 +93,7 @@ def rispondi(h, codice, corpo):
     h.wfile.write(dati)
 
 
-def corpo_json(h, massimo=20_000):
+def corpo_json(h, massimo=4_300_000):
     try:
         n = int(h.headers.get("content-length") or 0)
         dati = json.loads(h.rfile.read(n)) if 0 < n <= massimo else None
@@ -410,7 +412,7 @@ def _voce(d):
             "ricerca": bool(d.get("hasSearch")), "prezzo": _centesimi(d.get("totalPrice") if d.get("totalPrice") is not None else d.get("documentPrice")),
             "prezzo_ricerca": _centesimi(d.get("searchPrice")), "prezzo_documento": _centesimi(d.get("documentPrice")),
             "opzioni": [{"nome": str(o.get("name")), "prezzo": _centesimi(o.get("price"))} for o in (d.get("options") or []) if isinstance(o, dict) and o.get("name")],
-            "campi": campi, "richiedibile": not any(c["tipo"] == "file" and c["obbligatorio"] for c in campi),
+            "campi": campi, "richiedibile": True, "allegati": any(c["tipo"] == "file" for c in campi),
             "successione": bool(re.search(SUCCESSIONE, normale(d.get("name"))))}
 
 
@@ -641,13 +643,35 @@ def _controlla_catasto(r, v, dati=None):
 
 def prepara(v, valori, opzioni):
     """Controlla i dati inseriti per una voce del catalogo. Restituisce (ricerca, campi leggibili, opzioni, costo) oppure (None, motivo, None, None)."""
-    if not v.get("richiedibile"):
-        return None, "Questo documento richiede di allegare dei file: da questa pagina non si può ancora chiedere.", None, None
-    ricerca, leggibili = {}, []
+    ricerca, leggibili, peso = {}, [], 0
     for c in v["campi"]:
-        valore = " ".join(str((valori or {}).get(c["chiave"]) or "").split())[:300]
         if c["tipo"] == "file":
+            # Allegato (documento d'identità, delega...): {"nome": "...", "base64": "..."} dalla pagina.
+            # Openapi lo vuole come stringa in base64 dentro "search" (la documentazione ammette anche un indirizzo).
+            dato = (valori or {}).get(c["chiave"])
+            dato = dato if isinstance(dato, dict) else {}
+            nome, contenuto = re.sub(r"[^A-Za-z0-9._ -]", "_", str(dato.get("nome") or ""))[:80], str(dato.get("base64") or "")
+            if not contenuto:
+                if c["obbligatorio"]:
+                    return None, f"Manca l'allegato obbligatorio: {c['nome']}.", None, None
+                continue
+            estensione = nome.rsplit(".", 1)[-1].lower() if "." in nome else ""
+            if estensione not in TIPI_ALLEGATO:
+                return None, f"{c['nome']}: l'allegato deve essere un PDF, un JPG o un PNG.", None, None
+            try:
+                byte = base64.b64decode(contenuto, validate=True)
+            except ValueError:
+                return None, f"{c['nome']}: l'allegato non è arrivato integro, ricaricalo.", None, None
+            firme = {"pdf": b"%PDF", "png": b"\x89PNG", "jpg": b"\xff\xd8", "jpeg": b"\xff\xd8"}
+            if not byte.startswith(firme[estensione]):
+                return None, f"{c['nome']}: il file non è un vero {estensione.upper()}.", None, None
+            peso += len(byte)
+            if peso > MAX_ALLEGATI:
+                return None, "Gli allegati superano il limite di " + f"{MAX_ALLEGATI / 1_000_000:.1f}".replace(".", ",") + " MB in tutto: riduci le scansioni.", None, None
+            ricerca[c["chiave"]] = contenuto
+            leggibili.append({"nome": c["nome"], "valore": f"{nome} ({max(1, len(byte) // 1024)} kB)"})
             continue
+        valore = " ".join(str((valori or {}).get(c["chiave"]) or "").split())[:300]
         if c["tipo"] == "taxCode" or c["chiave"] == "cf":
             valore = valore.replace(" ", "").upper()
         if not valore:
@@ -674,6 +698,13 @@ def prepara(v, valori, opzioni):
     return ricerca, leggibili, scelte, v["prezzo"] + sum(ammesse[o] for o in scelte)
 
 
+def senza_allegati(v, ricerca):
+    """La ricerca come va conservata in archivio: al posto del contenuto di ogni allegato, solo la sua impronta.
+    Documenti d'identità e deleghe vanno a Openapi e non restano nel nostro archivio."""
+    allegati = {c["chiave"] for c in v["campi"] if c["tipo"] == "file"}
+    return {k: ("allegato:" + hashlib.sha256(val.encode()).hexdigest()[:16] if k in allegati else val) for k, val in ricerca.items()}
+
+
 def doppione(documento, ricerca):
     """Stessa richiesta (stesso documento, stessi dati) nelle ultime 24 ore, per non pagare due volte per sbaglio."""
     limite = iso(adesso() - timedelta(hours=DOPPIONE_ORE))
@@ -688,7 +719,7 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
     traccia, e l'esito incerto viene segnalato (potrebbe essere stata addebitata).
     `persona`: {"nome", "cognome", "cf"} della persona a cui collegare il documento nel CRM (anche vuoti)."""
     codice = secrets.token_urlsafe(15)
-    r = {"codice": codice, "servizio": v["servizio"], "documento": v["id"], "titolo": v["nome"], "immediato": v["immediato"], "ricerca": ricerca, "campi": leggibili,
+    r = {"codice": codice, "servizio": v["servizio"], "documento": v["id"], "titolo": v["nome"], "immediato": v["immediato"], "ricerca": senza_allegati(v, ricerca), "campi": leggibili,
          "opzioni": opzioni, "nome": persona.get("nome") or "", "cognome": persona.get("cognome") or "", "cf": persona.get("cf") or "", "finalita": finalita, "nota": nota,
          "consenso": True, "creata": iso(), "stato": "invio", "costo": costo, "file": [], "ghl": {"stato": "da_cercare"}, "prova": in_prova()}
     salva(r)

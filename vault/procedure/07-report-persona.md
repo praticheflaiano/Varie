@@ -59,8 +59,8 @@ I valori non vanno mai scritti nel repository né in questa nota.
 1. **Accesso**: password, poi sessione firmata di 12 ore tenuta nella scheda del browser. Dopo 5 password
    sbagliate la pagina resta bloccata 15 minuti (contatore nell'archivio, vale per tutti).
 2. **Catalogo**: ricerca per parola, filtro per categoria, filtro "solo quelli che arrivano subito". Ogni voce
-   mostra prezzo e tempi. I documenti che richiedono allegati (campi di tipo `file`: documento d'identità,
-   delega) sono mostrati ma non richiedibili da qui.
+   mostra prezzo e tempi. I documenti che richiedono allegati (campi di tipo `file`) hanno l'etichetta
+   "Con allegati" e si chiedono da qui caricando i file nel modulo.
 3. **Richiesta**: modulo generato dai campi della voce (codice fiscale o partita IVA controllati, scelte a
    tendina, opzioni a pagamento con totale aggiornato), cliente facoltativo da collegare nel CRM, finalità,
    conferma di avere titolo. La richiesta viene salvata in archivio **prima** di chiamare Openapi. Stessa
@@ -143,8 +143,11 @@ richiesta e non consegnare mai un file.
   `urlExpire`, `downloadUrl`; 422 con errore 225 = non ancora disponibili.
 - **Altri errori utili**: 402 (610) credito insufficiente; 417 (208/316) documento temporaneamente non disponibile;
   400 (202) documento inesistente.
-- **Campi di tipo `file`**: la documentazione dice che il valore è una stringa, in base64 oppure un indirizzo, senza
-  precisare il formato. Non ancora gestiti dalla pagina.
+- **Campi di tipo `file`** (documento d'identità, delega): la documentazione dice che il valore è una stringa, in
+  base64 oppure un indirizzo, senza precisare il formato. La pagina fa scegliere il file (PDF, JPG, PNG; 2,8 MB in tutto
+  per richiesta, limite delle funzioni Vercel), lo controlla e lo manda a Openapi come **base64 semplice**, senza prefisso.
+  Il contenuto non viene salvato in archivio: nella richiesta resta solo un'impronta (`senza_allegati`). Da verificare
+  alla prima richiesta vera: se Openapi rifiuta il formato, la variante da provare è il data URI (`data:application/pdf;base64,…`).
 - **Risk**: nella risposta l'`id` e lo stato possono stare dentro `callback`; lo stato finale è indicato come `evaso`.
   Il codice non si fida del nome dello stato e prova direttamente il download (406 = non pronto).
 

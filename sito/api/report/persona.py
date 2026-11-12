@@ -107,7 +107,7 @@ class handler(BaseHTTPRequestHandler):
                    "cf": (ricerca.get("cf") if v["servizio"] == "risk" else str(p.get("cf") or "")).replace(" ", "").upper()}
         if persona["cf"] and not report.cf_valido(persona["cf"]):
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": "Il codice fiscale del cliente da collegare nel CRM non è valido."})
-        precedente = report.doppione(v["id"], ricerca)
+        precedente = report.doppione(v["id"], report.senza_allegati(v, ricerca))
         if precedente and dati.get("conferma") is not True:
             return report.rispondi(self, 409, {"errore": "gia-richiesto", "quando": precedente["creata"]})
         r = report.richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota)

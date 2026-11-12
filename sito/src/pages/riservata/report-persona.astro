@@ -165,7 +165,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           testa.append(nodo("span", "font-extrabold", v.nome), nodo("span", "shrink-0 font-extrabold", v.prezzo ? `${euro(v.prezzo)} €` : "Gratis"));
           const sotto = nodo("div", "mt-2 flex flex-wrap items-center gap-2 text-sm");
           sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : v.servizio === "risk" ? "10 minuti - 48 ore" : v.servizio === "catasto" ? (v.tempi.includes("24") ? "Entro 24 ore" : "Pochi minuti") : "In differita"), nodo("span", "text-[#4E4B66]", v.categoria));
-          if (!v.richiedibile) sotto.append(nodo("span", "rounded-full bg-[#FFE3EC] px-3 py-1 font-bold", "Servono allegati: non da qui"));
+          if (v.allegati) sotto.append(nodo("span", "rounded-full bg-[#E4E4EE] px-3 py-1 font-bold", "Con allegati"));
           card.append(testa);
           if (v.descrizione) card.append(nodo("span", "mt-1 block text-sm text-[#4E4B66]", v.descrizione));
           card.append(sotto);
@@ -194,13 +194,20 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         $("rp-titolo").textContent = v.nome;
         $("rp-info").textContent = (v.prezzo ? `${euro(v.prezzo)} € + IVA` : "Gratis") + ` · arriva ${v.tempi}`;
         $("rp-descrizione").textContent = v.descrizione || "";
-        $("rp-avviso-ricerca").textContent = v.richiedibile ? (v.ricerca ? `Questo documento prevede prima una ricerca${v.prezzo_ricerca ? " (" + euro(v.prezzo_ricerca) + " €)" : ""}: se trova più risultati ti chiedo di scegliere quello giusto prima di procedere.` : v.servizio === "prova" ? "Nessun addebito: questo documento lo crea la pagina, non Openapi." : "La richiesta viene addebitata sul credito Openapi.")
-          : "Questo documento richiede di allegare dei file (documento d'identità o delega): per ora si chiede da console.openapi.com.";
-        form.querySelector("button[type=submit]").disabled = !v.richiedibile;
+        $("rp-avviso-ricerca").textContent = (v.ricerca ? `Questo documento prevede prima una ricerca${v.prezzo_ricerca ? " (" + euro(v.prezzo_ricerca) + " €)" : ""}: se trova più risultati ti chiedo di scegliere quello giusto prima di procedere.` : v.servizio === "prova" ? "Nessun addebito: questo documento lo crea la pagina, non Openapi." : "La richiesta viene addebitata sul credito Openapi.")
+          + (v.allegati ? " Gli allegati vanno a Openapi insieme alla richiesta e non restano in questo archivio." : "");
+        form.querySelector("button[type=submit]").disabled = false;
         const campi = $("rp-campi"); campi.replaceChildren();
         for (const c of v.campi) {
-          if (c.tipo === "file") continue;
           const id = "rp-c-" + c.chiave;
+          if (c.tipo === "file") {   // allegato: PDF, JPG o PNG, letto dal browser e spedito con la richiesta
+            const lab = nodo("label", "mb-1.5 mt-4 block text-sm font-bold text-[#14142B]", c.nome + (c.obbligatorio ? " *" : ""));
+            lab.htmlFor = id;
+            const scegli = nodo("input", "block w-full rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 text-[#14142B]");
+            scegli.type = "file"; scegli.id = id; scegli.accept = ".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"; scegli.dataset.allegato = c.chiave;
+            campi.append(lab, scegli, nodo("p", "mt-1 text-sm text-[#4E4B66]", (c.aiuto ? c.aiuto + " " : "") + "PDF, JPG o PNG. Tutti gli allegati insieme non devono superare 2,8 MB."));
+            continue;
+          }
           const lab = nodo("label", "mb-1.5 mt-4 block text-sm font-bold text-[#14142B]", c.nome + (c.obbligatorio ? " *" : ""));
           lab.htmlFor = id;
           let inp;
@@ -229,6 +236,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         totale();
         form.scrollIntoView({ block: "start" });
       }
+      const c_manca = (c) => c.tipo === "file" ? `Manca l'allegato obbligatorio: ${c.nome}.` : `Manca il dato obbligatorio: ${c.nome}.`;
       function chiudiVoce() { scelta = null; form.classList.add("hidden"); vetrina.classList.remove("hidden"); }
 
       // ---------- richieste ----------
@@ -334,8 +342,18 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         if (!scelta) return;
         const valori = {};
         for (const i of document.querySelectorAll("#rp-campi [data-chiave]")) valori[i.dataset.chiave] = i.value.trim();
-        const mancante = scelta.campi.find((c) => c.tipo !== "file" && c.obbligatorio && !valori[c.chiave]);
-        if (mancante) return avvisa(`Manca il dato obbligatorio: ${mancante.nome}.`);
+        let peso = 0;
+        for (const i of document.querySelectorAll("#rp-campi [data-allegato]")) {
+          const f = i.files && i.files[0];
+          if (!f) continue;
+          peso += f.size;
+          if (peso > 2800000) return avvisa("Gli allegati superano 2,8 MB in tutto: riduci le scansioni (bianco e nero, 150 dpi) e riprova.");
+          const testo = await new Promise((ok, ko) => { const r = new FileReader(); r.onload = () => ok(String(r.result)); r.onerror = () => ko(r.error); r.readAsDataURL(f); }).catch(() => "");
+          if (!testo.includes(",")) return avvisa(`Non sono riuscito a leggere il file "${f.name}". Riprova a sceglierlo.`);
+          valori[i.dataset.allegato] = { nome: f.name, base64: testo.slice(testo.indexOf(",") + 1) };
+        }
+        const mancante = scelta.campi.find((c) => c.obbligatorio && !valori[c.chiave]);
+        if (mancante) return avvisa(c_manca(mancante));
         const dati = { documento: scelta.id, valori, opzioni: [...document.querySelectorAll("#rp-opzioni input:checked")].map((i) => i.value),
           persona: { nome: $("rp-pnome").value.trim(), cognome: $("rp-pcognome").value.trim(), cf: $("rp-pcf").value.replace(/\s/g, "").toUpperCase() },
           finalita: $("rp-finalita").value, nota: $("rp-nota").value.trim(), consenso: $("rp-consenso").checked };
@@ -357,7 +375,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           const nuova = (risposta.richieste || []).find((r) => r.codice === risposta.nuova);
           if (nuova && (nuova.stato === "errore" || nuova.stato === "annullata")) avvisa("La richiesta non è andata a buon fine: leggi il motivo qui sotto.");
           else elenco.scrollIntoView({ block: "start" });
-        } catch (err) { errore(err); } finally { b.disabled = !scelta || !scelta.richiedibile; }
+        } catch (err) { errore(err); } finally { b.disabled = false; }
       });
       for (const id of ["rp-cerca", "rp-categoria", "rp-subito", "rp-successione"]) $(id).addEventListener("input", () => { mostrati = 20; $("rp-defunto").classList.toggle("hidden", !$("rp-successione").checked); disegnaCatalogo(); });
       $("rp-altri").addEventListener("click", () => { mostrati += 40; disegnaCatalogo(); });
