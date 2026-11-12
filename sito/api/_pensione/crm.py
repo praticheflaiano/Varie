@@ -57,7 +57,9 @@ def _api(metodo, percorso, corpo=None):
     richiesta = urllib.request.Request(
         base + percorso, data=json.dumps(corpo).encode() if corpo is not None else None, method=metodo,
         headers={"authorization": "Bearer " + os.environ["GHL_API_TOKEN"], "version": "2021-07-28",
-                 "content-type": "application/json", "accept": "application/json"})
+                 "content-type": "application/json", "accept": "application/json",
+                 # Cloudflare davanti alle API GHL rifiuta lo user-agent predefinito "Python-urllib" (errore 1010, HTTP 403)
+                 "user-agent": "praticheflaiano-stima-pensione/1.0 (+https://praticheflaiano.it)"})
     with urllib.request.urlopen(richiesta, timeout=10) as r:
         return json.loads(r.read() or b"{}")
 
