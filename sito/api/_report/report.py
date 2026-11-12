@@ -277,6 +277,8 @@ def _riconosci():
 
 
 def _base(servizio):
+    if servizio == "catasto":
+        return (os.environ.get("OPENAPI_CATASTO_BASE") or ("https://test.catasto.openapi.it" if in_prova() else "https://catasto.openapi.it")).rstrip("/")
     if servizio == "risk":
         return (os.environ.get("OPENAPI_RISK_BASE") or ("https://test.risk.openapi.com" if in_prova() else "https://risk.openapi.com")).rstrip("/")
     return (os.environ.get("OPENAPI_DOCUENGINE_BASE") or ("https://test.docuengine.openapi.com" if in_prova() else "https://docuengine.openapi.com")).rstrip("/")
@@ -401,7 +403,8 @@ def _voce(d):
             "ricerca": bool(d.get("hasSearch")), "prezzo": _centesimi(d.get("totalPrice") if d.get("totalPrice") is not None else d.get("documentPrice")),
             "prezzo_ricerca": _centesimi(d.get("searchPrice")), "prezzo_documento": _centesimi(d.get("documentPrice")),
             "opzioni": [{"nome": str(o.get("name")), "prezzo": _centesimi(o.get("price"))} for o in (d.get("options") or []) if isinstance(o, dict) and o.get("name")],
-            "campi": campi, "richiedibile": not any(c["tipo"] == "file" and c["obbligatorio"] for c in campi)}
+            "campi": campi, "richiedibile": not any(c["tipo"] == "file" and c["obbligatorio"] for c in campi),
+            "successione": bool(re.search(SUCCESSIONE, normale(d.get("name"))))}
 
 
 def catalogo(rinnova=False):
@@ -433,14 +436,198 @@ def catalogo(rinnova=False):
             errore = f"Catalogo dei documenti non letto ({type(e).__name__})."
     stessa_base = salvato.get("base") == _base("docuengine")
     voci = (salvato.get("voci") or []) if stessa_base else []
-    return {"voci": [VOCE_PROVA, VOCE_REPORT_PERSONA] + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
+    pubbliche = [{k: val for k, val in v.items() if k != "catasto"} for v in VOCI_CATASTO]
+    return {"voci": [VOCE_PROVA, VOCE_REPORT_PERSONA] + pubbliche + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
 
 
 def voce(ident):
+    for v in VOCI_CATASTO:
+        if v["id"] == ident:
+            return v
     for v in catalogo()["voci"]:
         if v["id"] == ident:
             return v
     return None
+
+
+# ----- Catasto e Conservatoria (API Catasto di Openapi: non sta nel catalogo DocuEngine) -----
+# Voci fisse. Prezzi a richiesta singola, IVA esclusa, dal listino pubblico Openapi letto il 12/11/2026:
+# vanno ricontrollati se Openapi cambia listino (console.openapi.com/it/apis/catasto/pricing).
+
+def _c(chiave, nome, tipo="string", obbligatorio=True, aiuto="", scelte=()):
+    return {"chiave": chiave, "nome": nome, "tipo": tipo, "obbligatorio": obbligatorio, "aiuto": aiuto, "scelte": [{"codice": a, "nome": b} for a, b in scelte]}
+
+
+_CF = _c("cf_piva", "Codice fiscale o partita IVA dell'intestatario", "taxCode", aiuto="Per una successione: il codice fiscale del defunto.")
+_PROVINCIA = _c("provincia", "Provincia (sigla)", "provincia", aiuto="Due lettere, per esempio RM.")
+_TIPO_TF = _c("tipo_catasto", "Catasto", scelte=(("TF", "Fabbricati e terreni"), ("F", "Solo fabbricati"), ("T", "Solo terreni")))
+_TIPO_FT = _c("tipo_catasto", "Catasto", scelte=(("F", "Fabbricati"), ("T", "Terreni")))
+_TIPO_VISURA = _c("tipo_visura", "Tipo di visura", scelte=(("ordinaria", "Attuale"), ("storica", "Storica (con tutti i passaggi)")))
+_COMUNE = _c("comune", "Comune", aiuto="Il nome per esteso, per esempio ROMA.")
+_FOGLIO, _PARTICELLA = _c("foglio", "Foglio", "integer"), _c("particella", "Particella", "integer")
+_SUBALTERNO = _c("subalterno", "Subalterno", "integer", False)
+_SEZIONE = _c("sezione", "Sezione", obbligatorio=False, aiuto="Solo per i comuni divisi in sezioni.")
+_CONSERVATORIA = _c("conservatoria", "Conservatoria", aiuto="Il nome dell'ufficio, per esempio ROMA 1. Con l'ispezione nazionale scopri in quali conservatorie ci sono formalità.")
+_NON_TN_BZ = " Non disponibile per le province di Trento e Bolzano."
+
+
+def _catasto(ident, nome, descrizione, prezzo, tempi, campi, percorso, lettura, fisso=None, adatta=None):
+    return {"id": "catasto-" + ident, "servizio": "catasto", "nome": nome, "categoria": "Catasto e Conservatoria", "descrizione": descrizione + _NON_TN_BZ,
+            "immediato": False, "tempi": tempi, "ricerca": False, "prezzo": prezzo, "prezzo_ricerca": 0, "opzioni": [], "richiedibile": True, "successione": True,
+            "campi": campi, "catasto": {"percorso": percorso, "lettura": lettura, "fisso": fisso or {}, "adatta": adatta}}
+
+
+VOCI_CATASTO = [
+    _catasto("ricerca-nazionale", "Ricerca nazionale immobili",
+             "Dice in quali province e comuni d'Italia il soggetto ha fabbricati o terreni e quanti. È il primo passo: non dà il dettaglio degli immobili.",
+             30, "in pochi minuti", [_CF, _TIPO_TF], "/richiesta/ricerca_nazionale/", "/richiesta"),
+    _catasto("ricerca-persona", "Elenco immobili di una persona in una provincia",
+             "Elenco dei fabbricati e dei terreni intestati al soggetto in una provincia, con categoria, classe, consistenza, rendita e quota di titolarità.",
+             30, "in pochi minuti", [_CF, _PROVINCIA, _TIPO_TF], "/richiesta/ricerca_persona/", "/richiesta"),
+    _catasto("visura-soggetto", "Visura catastale per soggetto",
+             "Il documento ufficiale del Catasto (PDF) con tutti gli immobili intestati al soggetto in una provincia: dati catastali, rendite e quote.",
+             190, "in pochi minuti", [_CF, _PROVINCIA, _TIPO_TF, _TIPO_VISURA], "/visura_catastale", "/visura_catastale", {"entita": "soggetto"}),
+    _catasto("visura-immobile", "Visura catastale per immobile",
+             "Il documento ufficiale del Catasto (PDF) di un singolo immobile: categoria, classe, consistenza, rendita, superficie e intestatari con le quote. La storica riporta tutti i passaggi.",
+             190, "in pochi minuti", [_TIPO_FT, _PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA, _SUBALTERNO, _TIPO_VISURA], "/visura_catastale", "/visura_catastale", {"entita": "immobile"}),
+    _catasto("ipoteche-nazionale", "Ispezione ipotecaria nazionale",
+             "Dice in quali conservatorie d'Italia risultano trascrizioni, iscrizioni o annotazioni a nome del soggetto. Serve a sapere dove chiedere poi l'ispezione vera.",
+             2370, "in pochi minuti", [_CF], "/ipotecarie-ispezione_nazionale", "/ipotecarie"),
+    _catasto("ipoteche-soggetto", "Ispezione ipotecaria per soggetto",
+             "Elenco delle formalità in una conservatoria a nome del soggetto: compravendite, successioni, donazioni, ipoteche, pignoramenti. "
+             "Riporta notaio, data e repertorio di ogni atto: sono gli estremi per chiedere la copia dell'atto di provenienza.",
+             1090, "in pochi minuti", [_CF, _CONSERVATORIA], "/ipotecarie-elenco-note", "/ipotecarie", {"entita": "ispezione_soggetto"}),
+    _catasto("ipoteche-immobile", "Ispezione ipotecaria per immobile",
+             "Elenco delle formalità registrate su un immobile: passaggi di proprietà, ipoteche (per esempio il mutuo del defunto), pignoramenti.",
+             1090, "in pochi minuti", [_CONSERVATORIA, _COMUNE, _TIPO_FT, _FOGLIO, _PARTICELLA, _SUBALTERNO], "/ipotecarie-elenco-note", "/ipotecarie", {"entita": "ispezione_immobile"}),
+    _catasto("nota", "Dettaglio di una nota di conservatoria",
+             "Il testo completo (PDF) di una singola nota di trascrizione o iscrizione, trovata con l'ispezione ipotecaria: parti, immobili e contenuto dell'atto.",
+             690, "in pochi minuti",
+             [_CF, _CONSERVATORIA, _c("anno", "Anno della nota", "integer"),
+              _c("tipo_registro", "Registro", scelte=(("generale", "Generale"), ("particolare", "Particolare"))), _c("numero", "Numero di registro", "integer"),
+              _c("tipo_nota", "Tipo di nota", obbligatorio=False, aiuto="Serve solo con il registro particolare.", scelte=(("trascrizioni", "Trascrizione"), ("iscrizioni", "Iscrizione"), ("annotazioni", "Annotazione")))],
+             "/ipotecarie-dettaglio-nota", "/ipotecarie", {"tipo_restrizione": "soggetto"}, "nota"),
+    _catasto("elaborato-planimetrico", "Elaborato planimetrico",
+             "Il disegno (PDF) che mostra come è diviso un fabbricato in subalterni e parti comuni. Non è la planimetria del singolo appartamento, che richiede la delega del proprietario.",
+             690, "entro 24 ore lavorative", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/elaborato_planimetrico", "/elaborato_planimetrico"),
+    _catasto("estratto-mappa", "Estratto di mappa",
+             "La porzione di mappa del Catasto terreni (PDF) con la particella e i suoi confini. Utile per i terreni caduti in successione.",
+             690, "entro 24 ore lavorative", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/estratto_mappa", "/estratto_mappa"),
+]
+
+# Documenti del catalogo DocuEngine che servono in una successione, riconosciuti dal nome.
+SUCCESSIONE = r"famiglia|residenza|matrimon|morte|decess|\bpra\b|targa|planimetr|ipotec|catast|eredi|successio"
+
+
+def _corpo_catasto(v, ricerca):
+    """Corpo della chiamata all'API Catasto, dai dati inseriti. Restituisce (corpo, None) oppure (None, motivo)."""
+    corpo = {**v["catasto"]["fisso"], **ricerca}
+    for c in v["campi"]:
+        if c["tipo"] == "integer" and c["chiave"] in corpo:
+            corpo[c["chiave"]] = int(corpo[c["chiave"]])
+    if v["catasto"]["adatta"] == "nota":
+        numero, tipo_nota = corpo.pop("numero"), corpo.pop("tipo_nota", None)
+        if corpo["tipo_registro"] == "generale":
+            corpo["registro_generale"] = numero
+        elif not tipo_nota:
+            return None, "Con il registro particolare va indicato il tipo di nota."
+        else:
+            corpo.update(registro_particolare=numero, tipo_nota=tipo_nota)
+    return corpo, None
+
+
+def _righe(dati, rientro=0):
+    """Righe di testo leggibili da un risultato JSON di Openapi (dizionari e liste annidati)."""
+    spazio = "    " * rientro
+    if isinstance(dati, dict):
+        for chiave, valore in dati.items():
+            etichetta = str(chiave).replace("_", " ").capitalize()
+            if isinstance(valore, (dict, list)):
+                if valore:
+                    yield f"{spazio}{etichetta}:"
+                    yield from _righe(valore, rientro + 1)
+            elif valore not in (None, ""):
+                yield f"{spazio}{etichetta}: {valore}"
+    elif isinstance(dati, list):
+        for n, elemento in enumerate(dati, 1):
+            if isinstance(elemento, (dict, list)):
+                yield f"{spazio}{n}."
+                yield from _righe(elemento, rientro + 1)
+            else:
+                yield f"{spazio}- {elemento}"
+    elif dati not in (None, ""):
+        yield f"{spazio}{dati}"
+
+
+def _pdf_esito(titolo, sottotitolo, dati):
+    """PDF leggibile con il risultato di una ricerca che Openapi restituisce solo come dati (senza documento)."""
+    from io import BytesIO
+    from reportlab.lib.pagesizes import A4
+    from reportlab.pdfgen import canvas
+    uscita = BytesIO()
+    c = canvas.Canvas(uscita, pagesize=A4)
+    c.setTitle(titolo)
+
+    def testata():
+        c.setFont("Helvetica-Bold", 15)
+        c.drawString(50, 800, titolo.encode("latin-1", "replace").decode("latin-1")[:80])
+        c.setFont("Helvetica", 9)
+        c.drawString(50, 785, sottotitolo.encode("latin-1", "replace").decode("latin-1")[:120])
+        return 760
+    y = testata()
+    c.setFont("Helvetica", 10)
+    righe = list(_righe(dati)) or ["Nessun risultato."]
+    for riga in righe[:3000]:
+        riga = riga.encode("latin-1", "replace").decode("latin-1")
+        for pezzo in ([riga[i:i + 105] for i in range(0, len(riga), 105)] or [""]):
+            if y < 50:
+                c.showPage()
+                y = testata()
+                c.setFont("Helvetica", 10)
+            c.drawString(50, y, pezzo)
+            y -= 13
+    c.showPage()
+    c.save()
+    return uscita.getvalue()
+
+
+def _controlla_catasto(r, v, dati=None):
+    """Legge lo stato di una richiesta all'API Catasto e, se evasa, salva il documento ufficiale e/o il risultato.
+    Restituisce True se la richiesta è arrivata a una conclusione (pronta o fallita)."""
+    lettura, ident = v["catasto"]["lettura"], urllib.parse.quote(r["openapi"], safe="")
+    if dati is None:
+        dati = json.loads(_openapi("catasto", "GET", f"{lettura}/{ident}") or b"{}").get("data") or {}
+    stato = str(dati.get("stato") or "").lower()
+    r["stato_openapi"], r["controllata"] = stato or "?", iso()
+    if stato != "evasa":
+        return False
+    esito = dati.get("esito")
+    codice = esito.get("codice") if isinstance(esito, dict) else None
+    risultato, giorno = dati.get("risultato"), r["creata"][:10]
+    r["file"] = []
+    if dati.get("documento") and lettura != "/richiesta":
+        try:
+            pdf = _openapi("catasto", "GET", f"{lettura}/{ident}/documento", attesa=40)
+            if pdf.startswith(b"%PDF"):
+                _salva_file(r, len(r["file"]), f"{v['id']}-{giorno}.pdf", "application/pdf", pdf)
+        except urllib.error.HTTPError as e:
+            if e.code == 422:   # documento non ancora disponibile
+                return False
+            raise
+    if risultato:
+        sottotitolo = " · ".join(f"{c['nome']}: {c['valore']}" for c in r.get("campi") or []) + f" · richiesta del {giorno[8:]}/{giorno[5:7]}/{giorno[:4]}"
+        _salva_file(r, len(r["file"]), f"{v['id']}-esito-{giorno}.pdf", "application/pdf", _pdf_esito(v["nome"], sottotitolo, risultato))
+        _salva_file(r, len(r["file"]), f"{v['id']}-dati-{giorno}.json", "application/json", json.dumps(risultato, ensure_ascii=False, indent=2).encode())
+    if not r["file"]:
+        # Evasa senza documento né dati: di solito vuol dire "non risulta nulla" (nessun immobile, nessuna formalità).
+        # È comunque una risposta, e va conservata: PDF con l'esito dichiarato da Openapi.
+        dettaglio = str((esito.get("info") if isinstance(esito, dict) else esito) or "nessun dettaglio")[:200]
+        sottotitolo = " · ".join(f"{c['nome']}: {c['valore']}" for c in r.get("campi") or []) + f" · richiesta del {giorno[8:]}/{giorno[5:7]}/{giorno[:4]}"
+        _salva_file(r, 0, f"{v['id']}-esito-{giorno}.pdf", "application/pdf",
+                    _pdf_esito(v["nome"], sottotitolo, {"esito": "Openapi ha evaso la richiesta senza risultati", "risposta di Openapi": dettaglio, "codice": codice}))
+        r["avviso"] = f"Openapi ha evaso la richiesta senza risultati ({dettaglio}). Nel PDF trovi l'esito."
+    r.update(stato="pronto", pronta=iso())
+    return True
 
 
 # ----- richieste -----
@@ -462,6 +649,12 @@ def prepara(v, valori, opzioni):
             continue
         if c["scelte"] and valore not in {s["codice"] for s in c["scelte"]}:
             return None, f"Valore non ammesso per: {c['nome']}.", None, None
+        if c["tipo"] == "provincia":
+            valore = valore.upper()
+            if not re.fullmatch(r"[A-Z]{2}", valore):
+                return None, f"{c['nome']}: servono le due lettere della sigla, per esempio RM.", None, None
+        if c["tipo"] == "integer" and not re.fullmatch(r"\d{1,9}", valore):
+            return None, f"{c['nome']}: deve essere un numero.", None, None
         if c["tipo"] == "taxCode" and not (re.fullmatch(r"\d{11}", valore) or cf_valido(valore)):
             return None, f"{c['nome']}: non è un codice fiscale o una partita IVA valida.", None, None
         ricerca[c["chiave"]] = valore
@@ -507,6 +700,17 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
             risposta = json.loads(_openapi("risk", "POST", "/IT-report-persona/", corpo) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id") or (dati.get("callback") or {}).get("id")   # nell'esempio ufficiale l'id è dentro "callback"
+        elif v["servizio"] == "catasto":
+            corpo, motivo = _corpo_catasto(v, ricerca)
+            if corpo is None:
+                r.update(stato="errore", errore=motivo, costo=0)
+                salva(r)
+                return r
+            if avviso:
+                corpo["callback"] = {"url": avviso, "method": "JSON"}
+            risposta = json.loads(_openapi("catasto", "POST", v["catasto"]["percorso"], corpo, attesa=60) or b"{}")
+            dati = risposta.get("data") or {}
+            ident = dati.get("id")
         else:
             corpo = {"documentId": v["id"], "search": ricerca}
             if opzioni:
@@ -522,6 +726,8 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
             r.update(stato="in_lavorazione", openapi=str(ident))
             if v["servizio"] == "docuengine":
                 _stato_docuengine(r, dati)
+            elif v["servizio"] == "catasto":
+                _controlla_catasto(r, v, dati)   # in prova (e a volte dal vero) la risposta è già completa
     except urllib.error.HTTPError as e:
         r.update(stato="errore", errore=_motivo(e), costo=0)
     except Exception as e:
@@ -615,6 +821,14 @@ def controlla(r):
                 return r
             r["file"] = []
             _salva_file(r, 0, f"report-persona-{r['cf']}-{r['creata'][:10]}.pdf", "application/pdf", dati)
+        elif r.get("servizio") == "catasto":
+            v = voce(r["documento"])
+            if not v or not _controlla_catasto(r, v):
+                salva(r)
+                return r
+            if r["stato"] != "pronto":
+                salva(r)
+                return r
         else:
             if r["stato"] == "in_lavorazione":
                 _stato_docuengine(r, json.loads(_openapi("docuengine", "GET", f"/requests/{ident}") or b"{}").get("data") or {})

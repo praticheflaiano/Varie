@@ -8,6 +8,11 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import pytest
 
 CF_ROSSI = "RSSMRA80A01H501U"
+
+
+def planimetria_successione(c):
+    per_id = {v["id"]: v for v in c["voci"]}
+    return per_id["doc-planimetria"]["successione"] and not per_id["doc-protesti"]["successione"] and per_id["catasto-visura-soggetto"]["successione"]
 stato = {}
 CATALOGO = [
     {"id": "doc-protesti", "name": "Protests Report", "category": "Camerali", "isSync": True, "hasSearch": False, "searchPrice": 0, "documentPrice": 0.9, "totalPrice": 0.9,
@@ -43,6 +48,20 @@ class Finto(BaseHTTPRequestHandler):
             self.send_header("content-length", str(len(dati)))
             self.end_headers()
             return self.wfile.write(dati)
+        if p == "/richiesta/q1":
+            return self._json(200, {"success": True, "data": {"id": "q1", "stato": stato["catasto_stato"], "esito": {"codice": 200, "info": "OK"}, "risultato": {"soggetti": [
+                {"denominazione": "ROSSI MARIO", "cf": CF_ROSSI, "id_soggetto": "abc", "catasti": [{"citta": "ROMA", "provincia": "RM", "fabbricati": 2, "terreni": 0}]}]} if stato["catasto_stato"] == "evasa" else None}})
+        if p == "/visura_catastale/v1":
+            return self._json(200, {"success": True, "data": {"id": "v1", "stato": stato["catasto_stato"], "documento": "v1.pdf" if stato["catasto_stato"] == "evasa" else None}})
+        if p == "/visura_catastale/v1/documento":
+            dati = b"%PDF visura ufficiale"
+            self.send_response(200)
+            self.send_header("content-type", "application/PDF")
+            self.send_header("content-length", str(len(dati)))
+            self.end_headers()
+            return self.wfile.write(dati)
+        if p == "/ipotecarie/i1":
+            return self._json(200, {"success": True, "data": {"id": "i1", "stato": "evasa", "esito": {"codice": 404, "info": "nessuna formalita"}, "risultato": None, "documento": None}})
         if p == "/documents":
             stato["letture_catalogo"] = stato.get("letture_catalogo", 0) + 1
             return self._json(200, {"success": True, "data": CATALOGO})
@@ -74,6 +93,15 @@ class Finto(BaseHTTPRequestHandler):
             if stato.get("openapi_errore"):
                 return self._json(stato["openapi_errore"], {"success": False, "message": "no"})
             return self._json(200, {"data": {"id": "abc123", "state": "processing"}, "success": True, "message": "", "error": None})
+        if p == "/richiesta/ricerca_nazionale/":
+            stato["richieste"].append(json.loads(corpo))
+            return self._json(200, {"success": True, "data": {"id": "q1", "stato": "in_erogazione", "risultato": None}})
+        if p == "/visura_catastale":
+            stato["richieste"].append(json.loads(corpo))
+            return self._json(200, {"success": True, "data": {"id": "v1", "stato": stato["catasto_stato"], "documento": "v1.pdf" if stato["catasto_stato"] == "evasa" else None}})
+        if p in ("/ipotecarie-dettaglio-nota", "/ipotecarie-elenco-note"):
+            stato["richieste"].append(json.loads(corpo))
+            return self._json(200, {"success": True, "data": {"id": "i1", "stato": "in_erogazione"}})
         if p == "/requests":
             stato["richieste"].append(json.loads(corpo))
             return self._json(200, {"success": True, "data": {"id": "d1", "state": stato["doc_stato"], "totalPrice": 0.9, "optionsPrice": 0, "results": stato.get("risultati")}})
@@ -125,9 +153,9 @@ def report(monkeypatch):
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{server.server_port}"
     stato.clear()
-    stato.update(pronto=False, doc_stato="WAIT", richieste=[], allegati=[], note=[], contatti=[], campi=[{"id": "cfid", "name": "Codice Fiscale", "dataType": "TEXT", "fieldKey": "contact.codice_fiscale"}])
+    stato.update(pronto=False, doc_stato="WAIT", catasto_stato="in_erogazione", richieste=[], allegati=[], note=[], contatti=[], campi=[{"id": "cfid", "name": "Codice Fiscale", "dataType": "TEXT", "fieldKey": "contact.codice_fiscale"}])
     cartella = tempfile.mkdtemp()
-    for k, v in {"STIMA_ARCHIVIO_DIR": cartella, "REPORT_PERSONA_PASSWORD": "segreta", "OPENAPI_TOKEN": "t", "OPENAPI_RISK_BASE": base, "OPENAPI_DOCUENGINE_BASE": base, "GHL_API_TOKEN": "g", "GHL_API_BASE": base}.items():
+    for k, v in {"STIMA_ARCHIVIO_DIR": cartella, "REPORT_PERSONA_PASSWORD": "segreta", "OPENAPI_TOKEN": "t", "OPENAPI_RISK_BASE": base, "OPENAPI_DOCUENGINE_BASE": base, "OPENAPI_CATASTO_BASE": base, "GHL_API_TOKEN": "g", "GHL_API_BASE": base}.items():
         monkeypatch.setenv(k, v)
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import report as modulo
@@ -236,7 +264,8 @@ def test_vista_senza_dati_interni(report):
 
 def test_catalogo_letto_da_openapi(report):
     c = report.catalogo()
-    assert [v["id"] for v in c["voci"]] == [report.DOCUMENTO_DI_PROVA, report.REPORT_PERSONA, "doc-protesti", "doc-planimetria"]   # per categoria, poi per nome and c["errore"] is None
+    assert [v["id"] for v in c["voci"]] == [report.DOCUMENTO_DI_PROVA, report.REPORT_PERSONA] + [v["id"] for v in report.VOCI_CATASTO] + ["doc-protesti", "doc-planimetria"]
+    assert all("catasto" not in v for v in c["voci"]) and planimetria_successione(c)   # per categoria, poi per nome and c["errore"] is None
     protesti, planimetria = report.voce("doc-protesti"), report.voce("doc-planimetria")
     assert protesti["prezzo"] == 90 and protesti["immediato"] and protesti["tempi"] == "subito" and protesti["descrizione"].startswith("Visura protesti: assegni e cambiali")
     assert protesti["campi"][0] == {"chiave": "field0", "nome": "Codice fiscale", "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}
@@ -314,7 +343,7 @@ def test_ambiente_riconosciuto_dal_token(report, monkeypatch):
     assert not report.in_prova()
     c = report.catalogo()
     assert chiamate == ["https://docuengine.openapi.com", "https://test.docuengine.openapi.com"]
-    assert c["prova"] and len(c["voci"]) == 4 and c["errore"] is None and report.configurazione()["prova"]
+    assert c["prova"] and len(c["voci"]) == 4 + len(report.VOCI_CATASTO) and c["errore"] is None and report.configurazione()["prova"]
     assert report._base("risk") == "https://test.risk.openapi.com"
     report._ambiente.clear()                      # nuova esecuzione della funzione: lo rilegge dall'archivio
     assert report.in_prova()
@@ -344,3 +373,50 @@ def test_documento_di_prova_senza_openapi(report, monkeypatch):
     assert r["stato"] == "pronto" and r["costo"] == 0 and r["prova"] and report.file(r["codice"], 0).startswith(b"%PDF")
     r = report.allega(report.cerca_contatto(r))
     assert r["ghl"]["allegato"] and len(stato["allegati"]) == 1 and "DOCUMENTO DI PROVA" in stato["note"][0]
+
+
+def chiedi(report, ident, valori, persona=None):
+    v = report.voce(ident)
+    ricerca, leggibili, opzioni, costo = report.prepara(v, valori, [])
+    assert ricerca is not None, leggibili
+    return report.richiedi(v, ricerca, leggibili, opzioni, costo, persona or {}, "successione", "")
+
+
+def test_catasto_ricerca_nazionale_con_esito_leggibile(report):
+    r = chiedi(report, "catasto-ricerca-nazionale", {"cf_piva": CF_ROSSI.lower(), "tipo_catasto": "TF"})
+    assert stato["richieste"][0] == {"cf_piva": CF_ROSSI, "tipo_catasto": "TF"}
+    assert r["stato"] == "in_lavorazione" and r["stato_openapi"] == "in_erogazione" and r["costo"] == 30
+    stato["catasto_stato"] = "evasa"
+    r = report.controlla(r)
+    assert r["stato"] == "pronto" and [f["nome"][-4:] for f in r["file"]] == [".pdf", "json"]
+    assert report.file(r["codice"], 0).startswith(b"%PDF") and b"ROSSI MARIO" in report.file(r["codice"], 1)
+    assert list(report._righe({"soggetti": [{"cf": "X", "catasti": [{"citta": "ROMA"}], "vuoto": None}]})) == ["Soggetti:", "    1.", "        Cf: X", "        Catasti:", "            1.", "                Citta: ROMA"]
+
+
+def test_catasto_visura_soggetto_documento_ufficiale(report):
+    stato["catasto_stato"] = "evasa"   # in prova Openapi risponde subito
+    r = chiedi(report, "catasto-visura-soggetto", {"cf_piva": CF_ROSSI, "provincia": "rm", "tipo_catasto": "TF", "tipo_visura": "storica"})
+    assert stato["richieste"][0] == {"entita": "soggetto", "cf_piva": CF_ROSSI, "provincia": "RM", "tipo_catasto": "TF", "tipo_visura": "storica"}
+    assert r["stato"] == "pronto" and len(r["file"]) == 1 and report.file(r["codice"], 0) == b"%PDF visura ufficiale"
+
+
+def test_catasto_controlli_e_nota(report):
+    v = report.voce("catasto-visura-immobile")
+    base = {"tipo_catasto": "F", "provincia": "RM", "comune": "ROMA", "foglio": "872", "particella": "405", "tipo_visura": "ordinaria"}
+    assert report.prepara(v, {**base, "provincia": "Roma"}, [])[0] is None
+    assert report.prepara(v, {**base, "foglio": "12a"}, [])[0] is None
+    assert report._corpo_catasto(v, report.prepara(v, base, [])[0])[0] == {"entita": "immobile", **base, "foglio": 872, "particella": 405}
+    nota = report.voce("catasto-nota")
+    dati = {"cf_piva": CF_ROSSI, "conservatoria": "ROMA 1", "anno": "2019", "tipo_registro": "particolare", "numero": "1234"}
+    assert report._corpo_catasto(nota, report.prepara(nota, dati, [])[0])[0] is None   # manca il tipo di nota
+    corpo, _ = report._corpo_catasto(nota, report.prepara(nota, {**dati, "tipo_nota": "trascrizioni"}, [])[0])
+    assert corpo == {"tipo_restrizione": "soggetto", "cf_piva": CF_ROSSI, "conservatoria": "ROMA 1", "anno": 2019, "tipo_registro": "particolare", "registro_particolare": 1234, "tipo_nota": "trascrizioni"}
+    corpo, _ = report._corpo_catasto(nota, report.prepara(nota, {**dati, "tipo_registro": "generale"}, [])[0])
+    assert corpo["registro_generale"] == 1234 and "tipo_nota" not in corpo
+
+
+def test_catasto_evasa_senza_risultati(report):
+    r = chiedi(report, "catasto-ipoteche-soggetto", {"cf_piva": CF_ROSSI, "conservatoria": "ROMA 1"})
+    assert stato["richieste"][0] == {"entita": "ispezione_soggetto", "cf_piva": CF_ROSSI, "conservatoria": "ROMA 1"}
+    r = report.controlla(r)
+    assert r["stato"] == "pronto" and "nessuna formalita" in r["avviso"] and report.file(r["codice"], 0).startswith(b"%PDF")

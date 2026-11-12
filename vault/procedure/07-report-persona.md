@@ -83,6 +83,37 @@ I valori non vanno mai scritti nel repository né in questa nota.
    documento, data e finalità. Il campo del codice fiscale viene riconosciuto dal nome ("Codice Fiscale", "CF");
    se non esiste viene creato "Codice Fiscale".
 
+## Catasto e Conservatoria (API Catasto)
+
+L'API Catasto di Openapi (`catasto.openapi.it`, prova `test.catasto.openapi.it`) **non** fa parte del catalogo DocuEngine,
+quindi le sue voci sono fisse nel codice (`VOCI_CATASTO` in `report.py`), ognuna richiedibile da sola:
+
+| Voce | Chiamata | Prezzo (12/11/2026, + IVA) |
+|---|---|---|
+| Ricerca nazionale immobili | `POST /richiesta/ricerca_nazionale/` | 0,30 € |
+| Elenco immobili di una persona in una provincia | `POST /richiesta/ricerca_persona/` | 0,30 € |
+| Visura catastale per soggetto / per immobile | `POST /visura_catastale` (`entita`) | 1,90 € |
+| Ispezione ipotecaria nazionale | `POST /ipotecarie-ispezione_nazionale` | 23,70 € |
+| Ispezione ipotecaria per soggetto / per immobile | `POST /ipotecarie-elenco-note` (`entita`) | 10,90 € |
+| Dettaglio di una nota | `POST /ipotecarie-dettaglio-nota` | 6,90 € |
+| Elaborato planimetrico, Estratto di mappa | `POST /elaborato_planimetrico`, `/estratto_mappa` | 6,90 € |
+
+- **I prezzi di queste voci sono scritti nel codice**, presi dal listino pubblico: l'API non li espone. Se Openapi cambia
+  listino vanno aggiornati a mano (console.openapi.com/it/apis/catasto/pricing).
+- Stati: `in_erogazione`, `in_lavorazione`, `evasa`. Il documento ufficiale (PDF) si scarica da `<percorso>/{id}/documento`
+  (422 = non ancora disponibile). Le ricerche restituiscono solo dati: la pagina ne fa un PDF leggibile ("esito") e
+  conserva anche il JSON. Una richiesta evasa senza documento né dati ("non risulta nulla") diventa un PDF con l'esito.
+- Il token deve avere anche gli scope dell'API Catasto.
+- L'Anagrafica Persona (Risk, `IT-anagrafica`) non è stata aggiunta: il 12/11/2026 la pagina prodotto la dava come
+  non disponibile, in attesa di una nuova versione.
+
+## Successione
+
+Spunta "Documenti per una successione" nel catalogo: restano le voci del Catasto e quelle del catalogo DocuEngine il cui
+nome richiama una successione (`SUCCESSIONE` in `report.py`: stato di famiglia, residenza, matrimonio, morte, PRA,
+planimetria…). Codice fiscale del defunto e provincia si scrivono una volta e vengono riportati in ogni modulo; la finalità
+è già "Successione". Ogni documento si chiede e si paga da solo.
+
 ## Prova del giro senza Openapi
 
 In cima al catalogo c'è **"Documento di prova (gratis)"**: non chiama Openapi, crea un PDF di una pagina e gli fa
