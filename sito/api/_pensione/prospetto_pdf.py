@@ -11,6 +11,8 @@ from datetime import date
 from io import BytesIO
 from xml.sax.saxutils import escape
 
+from alternative import alternativa
+
 from reportlab.graphics.barcode import qr
 from reportlab.graphics.shapes import Drawing
 from reportlab.lib import colors
@@ -226,14 +228,12 @@ def _contenuto(stima, risposte, url, codice):
     if len(stima["scenari"]) > 1:
         f.append(CondPageBreak(60 * mm))
         f.append(Paragraph("Le alternative a confronto", S["h2"]))
-        righe = [[Paragraph(x, S["th"]) for x in ("Se…", "Prima uscita", "Dal", "Netto al mese", "Cosa sapere")]]
-        for sc in stima["scenari"]:
-            e = sc["esito"]
-            pu = e.get("prima_uscita_pensione") or {}
-            canale = next((c for c in e["canali"] if c["canale"] == pu.get("canale")), {})
-            n = (canale.get("importo") or {}).get("netto_mensile_13_stima")
-            righe.append([_p(sc["nome"], "cellab"), _p(pu.get("canale", "—"), "cella"), _p(_data(pu.get("decorrenza")), "cella"),
-                          _p(_euro(n), "cellab"), _p(" ".join(sc.get("note") or []) or sc.get("motivo") or "", "cella")])
+        righe = [[Paragraph(x, S["th"]) for x in ("Se…", "Uscita", "Dal", "Netto al mese", "Cosa sapere")]]
+        for i, sc in enumerate(stima["scenari"]):
+            a = alternativa(sc, base, stima.get("data_calcolo")) if i else alternativa(sc, {}, None)
+            sapere = " ".join(x for x in (a["confronto"], " ".join(sc.get("note") or []) or sc.get("motivo") or "") if x)
+            righe.append([_p(sc["nome"], "cellab"), _p(a["canale"] or "—", "cella"), _p(_data(a["decorrenza"]), "cella"),
+                          _p(_euro(a["netto"]), "cellab"), _p(sapere, "cella")])
         f.append(_tabella(righe, [LARGHEZZA * x for x in (0.22, 0.20, 0.14, 0.17, 0.27)]))
 
     if stima.get("confronto_inps"):

@@ -22,6 +22,7 @@ import base64, hashlib, json, os, re, secrets, time
 from datetime import date, datetime, timezone
 
 import archivio
+from alternative import alternativa
 import crm
 
 PREZZO_BASE, PREZZO_ESTRATTO = 6000, 500  # centesimi
@@ -424,11 +425,9 @@ def riepilogo_stima(stima):
                        "indennita": imp.get("indennita_mensile_lorda_12"), "affidabilita": imp.get("affidabilita"), "spiegazione": spiegazioni.get(c.get("canale"), "")})
     alternative = []
     for sc in scenari[1:]:
-        e = sc.get("esito") or {}
-        pu = e.get("prima_uscita_pensione") or {}
-        canale = next((c for c in e.get("canali") or [] if c.get("canale") == pu.get("canale")), {})
-        alternative.append({"nome": sc.get("nome"), "canale": pu.get("canale"), "decorrenza": pu.get("decorrenza"),
-                            "netto": (canale.get("importo") or {}).get("netto_mensile_13_stima"), "note": " ".join(sc.get("note") or []) or sc.get("motivo") or ""})
+        a = alternativa(sc, base, stima.get("data_calcolo"))
+        note = " ".join(x for x in (a["confronto"], " ".join(sc.get("note") or []) or sc.get("motivo") or "") if x)
+        alternative.append({"nome": sc.get("nome"), "canale": a["canale"], "decorrenza": a["decorrenza"], "netto": a["netto"], "note": note})
     prima = base.get("prima_uscita_pensione") or {}
     ape = next((c for c in canali if str(c["canale"]).startswith("APE")), None)
     ponte = {"decorrenza": ape["decorrenza"], "indennita": ape["indennita"]} if ape and (not prima or ape["decorrenza"] < prima.get("decorrenza", "9999")) else None

@@ -464,7 +464,12 @@ def calcola(inp):
     c = Caso(inp); out = []
     sesso_f = c.sesso == "F"
     cond = c.cond
-    gravoso = bool(cond.get("gravoso_7su10")); usurante = bool(cond.get("usurante"))
+    gravoso_dich = bool(cond.get("gravoso_7su10")); usurante = bool(cond.get("usurante"))
+    # La mansione gravosa vale solo se svolta per almeno 7 dei 10 anni prima della pensione: chi smette di lavorare
+    # (o lavora fino a una data) la perde se tra la fine del lavoro e l'uscita passano piu' di 3 anni.
+    fine_gravoso = None if (c.continua and not c.fine_lavoro) else (c.fine_lavoro if c.continua else c.oggi)
+    def gravoso_a(dt):
+        return gravoso_dich and (fine_gravoso is None or dt <= fine_gravoso + relativedelta(years=3))
     finestra_lunga = c.gestione in PARAMS["finestre_lunghe_pa"]
 
     def fin_anticipata(mat):
@@ -502,13 +507,17 @@ def calcola(inp):
 
     # 1. VECCHIAIA ORDINARIA ------------------------------------------
     note = []
+    def ok_vec_ord(dt):
+        return dt >= eta_req(req(PARAMS["vecchiaia_eta"], dt.year)) and c.tot_weeks(dt) >= 20*SETT_ANNO - 1e-6
     def ok_vec(dt):
-        if gravoso: am = PARAMS["gravosi_vecchiaia_eta"]; minc = 30
-        else: am = req(PARAMS["vecchiaia_eta"], dt.year); minc = 20
-        return dt >= (eta_raggiunta(c.nascita, am) if gravoso else eta_req(am)) and c.tot_weeks(dt) >= minc*SETT_ANNO - 1e-6
+        if gravoso_a(dt) and dt >= eta_raggiunta(c.nascita, PARAMS["gravosi_vecchiaia_eta"]) and c.tot_weeks(dt) >= 30*SETT_ANNO - 1e-6:
+            return True
+        return ok_vec_ord(dt)
     mat = c.scan(ok_vec)
-    if mesi_madre and not gravoso: note.append(nota_madre)
-    if gravoso: note.append("Requisito agevolato gravosi (66a7m + 30 anni, 7 anni su 10 di attivita' gravosa): VERIFICARE documentazione.")
+    agevolata = bool(mat) and gravoso_a(mat) and not ok_vec_ord(mat)
+    if mesi_madre and not agevolata: note.append(nota_madre)
+    if agevolata: note.append("Requisito agevolato gravosi (66a7m + 30 anni, 7 anni su 10 di attivita' gravosa prima della pensione): VERIFICARE documentazione.")
+    elif gravoso_dich and fine_gravoso is not None: note.append("Requisito agevolato gravosi NON applicato: lasciando il lavoro in questa data, prima della pensione non ci sono 7 anni su 10 di attivita' gravosa.")
     r = add("Pensione di vecchiaia", mat, 0, note)
     if mat and c.puro and "importo" in r:
         soglia = c.assegno_sociale(d(r["decorrenza"]).year)
@@ -527,7 +536,7 @@ def calcola(inp):
     # 3. ANTICIPATA ORDINARIA ---------------------------------------
     note = []
     def ok_ant(dt):
-        if gravoso: am = PARAMS["gravosi_anticipata_d" if sesso_f else "gravosi_anticipata_u"]
+        if gravoso_a(dt): am = PARAMS["gravosi_anticipata_d" if sesso_f else "gravosi_anticipata_u"]
         else: am = req(PARAMS["anticipata_donne" if sesso_f else "anticipata_uomini"], dt.year)
         return c.tot_weeks(dt) >= to_weeks(am) - 1e-6 and trentacinque(dt)
     mat = c.scan(ok_ant, start=c.primo_accredito)
@@ -587,6 +596,7 @@ def calcola(inp):
         else:
             esente = cat in ("gravoso","usurante")
             def ok_q41(dt):
+                if cat == "gravoso" and not gravoso_a(dt): return False   # la categoria richiede 7 anni su 10 di mansione prima dell'uscita
                 am = PARAMS["gravosi_precoci"] if esente else req(PARAMS["precoci"], dt.year)
                 return c.tot_weeks(dt) >= to_weeks(am) - 1e-6 and trentacinque(dt)
             mat = c.scan(ok_q41, start=c.primo_accredito)
@@ -617,6 +627,7 @@ def calcola(inp):
         rid = min(c.figli, 2) if sesso_f else 0
         def ok_ape(dt):
             if dt.year > max(PARAMS["ape_sociale_eta"]): return False
+            if cat_ape == "gravoso" and not gravoso_a(dt): return False
             return dt >= eta_raggiunta(c.nascita, req(PARAMS["ape_sociale_eta"], dt.year)) and \
                    c.tot_weeks(dt) >= (min_c - rid)*SETT_ANNO - 1e-6
         mat = c.scan(ok_ape)
