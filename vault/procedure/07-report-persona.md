@@ -83,6 +83,37 @@ I valori non vanno mai scritti nel repository né in questa nota.
    documento, data e finalità. Il campo del codice fiscale viene riconosciuto dal nome ("Codice Fiscale", "CF");
    se non esiste viene creato "Codice Fiscale".
 
+## Catasto e Conservatoria (API Catasto)
+
+L'API Catasto di Openapi (`catasto.openapi.it`, prova `test.catasto.openapi.it`) **non** fa parte del catalogo DocuEngine,
+quindi le sue voci sono fisse nel codice (`VOCI_CATASTO` in `report.py`), ognuna richiedibile da sola:
+
+| Voce | Chiamata | Prezzo (12/11/2026, + IVA) |
+|---|---|---|
+| Ricerca nazionale immobili | `POST /richiesta/ricerca_nazionale/` | 0,30 € |
+| Elenco immobili di una persona in una provincia | `POST /richiesta/ricerca_persona/` | 0,30 € |
+| Visura catastale per soggetto / per immobile | `POST /visura_catastale` (`entita`) | 1,90 € |
+| Ispezione ipotecaria nazionale | `POST /ipotecarie-ispezione_nazionale` | 23,70 € |
+| Ispezione ipotecaria per soggetto / per immobile | `POST /ipotecarie-elenco-note` (`entita`) | 10,90 € |
+| Dettaglio di una nota | `POST /ipotecarie-dettaglio-nota` | 6,90 € |
+| Elaborato planimetrico, Estratto di mappa | `POST /elaborato_planimetrico`, `/estratto_mappa` | 6,90 € |
+
+- **I prezzi di queste voci sono scritti nel codice**, presi dal listino pubblico: l'API non li espone. Se Openapi cambia
+  listino vanno aggiornati a mano (console.openapi.com/it/apis/catasto/pricing).
+- Stati: `in_erogazione`, `in_lavorazione`, `evasa`. Il documento ufficiale (PDF) si scarica da `<percorso>/{id}/documento`
+  (422 = non ancora disponibile). Le ricerche restituiscono solo dati: la pagina ne fa un PDF leggibile ("esito") e
+  conserva anche il JSON. Una richiesta evasa senza documento né dati ("non risulta nulla") diventa un PDF con l'esito.
+- Il token deve avere anche gli scope dell'API Catasto.
+- L'Anagrafica Persona (Risk, `IT-anagrafica`) non è stata aggiunta: il 12/11/2026 la pagina prodotto la dava come
+  non disponibile, in attesa di una nuova versione.
+
+## Successione
+
+Spunta "Documenti per una successione" nel catalogo: restano le voci del Catasto e quelle del catalogo DocuEngine il cui
+nome richiama una successione (`SUCCESSIONE` in `report.py`: stato di famiglia, residenza, matrimonio, morte, PRA,
+planimetria…). Codice fiscale del defunto e provincia si scrivono una volta e vengono riportati in ogni modulo; la finalità
+è già "Successione". Ogni documento si chiede e si paga da solo.
+
 ## Prova del giro senza Openapi
 
 In cima al catalogo c'è **"Documento di prova (gratis)"**: non chiama Openapi, crea un PDF di una pagina e gli fa
@@ -97,6 +128,25 @@ richiesta e non consegnare mai un file.
 - Ogni richiesta in lavorazione mostra lo stato letto da Openapi e l'ora dell'ultimo controllo.
 - Ogni chiamata a Openapi lascia una riga nei log di Vercel (`report: openapi <servizio> <metodo> <percorso> -> <codice>`),
   senza identificativi né dati della richiesta. Il piano Hobby conserva i log per un'ora.
+
+## Riletto sulla documentazione Openapi (12/11/2026, sera)
+
+- **Callback**: l'oggetto `headers` è di fatto obbligatorio. Senza, Risk risponde 428 ("object headers not set in
+  'callback', required") e DocuEngine 428 con errore 311. Successo davvero su una richiesta di Report Persona.
+  Il callback si costruisce in un punto solo (`_callback`).
+- **DocuEngine, stati**: una POST senza `state` viene lavorata subito (di solito `WAIT`). Con `state: NEW` la
+  richiesta resta aperta e parte solo con una PATCH `{"state": "SEARCH"}`: se Openapi la restituisce in `NEW`, il
+  codice la avvia (`_avvia_docuengine`).
+- **DocuEngine, risultati da scegliere**: ogni risultato ha `id` e i valori dentro `data`; la scelta è una PATCH
+  `{"resultId": "..."}`. Errore 213 = la ricerca non ha risultati da scegliere.
+- **DocuEngine, documenti**: `GET /requests/{id}/documents` restituisce `fileName`, `mimeType`, `fileSize`, `md5`,
+  `urlExpire`, `downloadUrl`; 422 con errore 225 = non ancora disponibili.
+- **Altri errori utili**: 402 (610) credito insufficiente; 417 (208/316) documento temporaneamente non disponibile;
+  400 (202) documento inesistente.
+- **Campi di tipo `file`**: la documentazione dice che il valore è una stringa, in base64 oppure un indirizzo, senza
+  precisare il formato. Non ancora gestiti dalla pagina.
+- **Risk**: nella risposta l'`id` e lo stato possono stare dentro `callback`; lo stato finale è indicato come `evaso`.
+  Il codice non si fida del nome dello stato e prova direttamente il download (406 = non pronto).
 
 ## Limiti noti
 

@@ -38,6 +38,16 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           <select id="rp-categoria" class={campo} aria-label="Categoria"><option value="">Tutte le categorie</option></select>
           <label class="flex items-center gap-3 rounded-2xl border-2 border-[#E4E4EE] bg-white px-4 py-3 font-semibold text-[#14142B]"><input id="rp-subito" type="checkbox" class="h-5 w-5" /> Solo quelli che arrivano subito</label>
         </div>
+        <label class="mt-3 flex items-center gap-3 rounded-2xl border-2 border-[#14142B] bg-[#D4FF4F] px-4 py-3 font-bold text-[#14142B]"><input id="rp-successione" type="checkbox" class="h-5 w-5" /> Documenti per una successione</label>
+        <div id="rp-defunto" class="mt-3 hidden rounded-2xl bg-white p-4">
+          <p class="font-bold text-[#14142B]">Dati del defunto <span class="font-normal">(li riporto in ogni richiesta, così li scrivi una volta sola)</span></p>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">
+            <input id="rp-dcf" class={`${campo} uppercase tracking-wider`} placeholder="Codice fiscale del defunto" maxlength="16" autocomplete="off" spellcheck="false" />
+            <input id="rp-dprov" class={`${campo} uppercase`} placeholder="Provincia degli immobili (es. RM)" maxlength="2" autocomplete="off" />
+          </div>
+          <p class="mt-3 text-sm text-[#4E4B66]">Ordine consigliato: 1) Ricerca nazionale immobili, per sapere dove sono; 2) Visura catastale per soggetto in ogni provincia trovata; 3) Ispezione ipotecaria se servono mutui e atti di provenienza. Ogni documento si chiede e si paga da solo.</p>
+          <p class="mt-2 text-sm text-[#4E4B66]">Da Openapi non arrivano: documenti e codici fiscali degli eredi, dichiarazione sostitutiva, certificato di destinazione urbanistica (Comune), certificazioni di banche e poste, testamento e rinunce, copia del rogito (con l'ispezione ipotecaria hai però notaio, data e repertorio per chiederla).</p>
+        </div>
         <p id="rp-conta" class="mt-3 text-sm font-semibold text-[#4E4B66]"></p>
         <div id="rp-voci" class="mt-3 grid gap-3"></div>
         <button id="rp-altri" type="button" class={`${secondario} mt-4 hidden`}>Mostra altri</button>
@@ -141,8 +151,8 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
 
       // ---------- catalogo ----------
       function filtrate() {
-        const parole = $("rp-cerca").value.toLowerCase().split(/\s+/).filter(Boolean), cat = $("rp-categoria").value, subito = $("rp-subito").checked;
-        return voci.filter((v) => (!cat || v.categoria === cat) && (!subito || v.immediato) && parole.every((p) => `${v.nome} ${v.categoria} ${v.descrizione}`.toLowerCase().includes(p)));
+        const parole = $("rp-cerca").value.toLowerCase().split(/\s+/).filter(Boolean), cat = $("rp-categoria").value, subito = $("rp-subito").checked, succ = $("rp-successione").checked;
+        return voci.filter((v) => (!cat || v.categoria === cat) && (!subito || v.immediato) && (!succ || v.successione) && parole.every((p) => `${v.nome} ${v.categoria} ${v.descrizione}`.toLowerCase().includes(p)));
       }
       function disegnaCatalogo() {
         const lista = filtrate(), box = $("rp-voci");
@@ -154,7 +164,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           const testa = nodo("div", "flex items-start justify-between gap-3");
           testa.append(nodo("span", "font-extrabold", v.nome), nodo("span", "shrink-0 font-extrabold", v.prezzo ? `${euro(v.prezzo)} €` : "Gratis"));
           const sotto = nodo("div", "mt-2 flex flex-wrap items-center gap-2 text-sm");
-          sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : v.servizio === "risk" ? "10 minuti - 48 ore" : "In differita"), nodo("span", "text-[#4E4B66]", v.categoria));
+          sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : v.servizio === "risk" ? "10 minuti - 48 ore" : v.servizio === "catasto" ? (v.tempi.includes("24") ? "Entro 24 ore" : "Pochi minuti") : "In differita"), nodo("span", "text-[#4E4B66]", v.categoria));
           if (!v.richiedibile) sotto.append(nodo("span", "rounded-full bg-[#FFE3EC] px-3 py-1 font-bold", "Servono allegati: non da qui"));
           card.append(testa);
           if (v.descrizione) card.append(nodo("span", "mt-1 block text-sm text-[#4E4B66]", v.descrizione));
@@ -197,6 +207,12 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           if (c.scelte.length) { inp = nodo("select", CAMPO); inp.append(new Option("Scegli…", ""), ...c.scelte.map((o) => new Option(o.nome, o.codice))); }
           else { inp = nodo("input", CAMPO + (c.tipo === "taxCode" ? " uppercase tracking-wider" : "")); inp.type = c.tipo === "date" ? "date" : c.tipo === "email" ? "email" : "text"; inp.autocomplete = "off"; inp.spellcheck = false; if (c.tipo === "integer" || c.tipo === "float") inp.inputMode = "decimal"; }
           inp.id = id; inp.dataset.chiave = c.chiave;
+          if (c.tipo === "provincia") { inp.maxLength = 2; inp.className += " uppercase"; }
+          if ($("rp-successione").checked) {   // dati del defunto già scritti sopra
+            if (c.tipo === "taxCode" && !c.scelte.length) inp.value = $("rp-dcf").value.replace(/\s/g, "").toUpperCase();
+            if (c.tipo === "provincia") inp.value = $("rp-dprov").value.trim().toUpperCase();
+          }
+          if (v.servizio === "catasto" && c.scelte.length && c.obbligatorio) inp.value = c.scelte[0].codice;   // prima scelta = quella più comune
           campi.append(lab, inp);
           if (c.aiuto) campi.append(nodo("p", "mt-1 text-sm text-[#4E4B66]", c.aiuto));
         }
@@ -209,6 +225,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           opz.append(riga);
         }
         $("rp-persona").classList.toggle("hidden", v.servizio === "risk");
+        if ($("rp-successione").checked) $("rp-finalita").value = "successione";
         totale();
         form.scrollIntoView({ block: "start" });
       }
@@ -335,14 +352,14 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
             if (!confirm(`Hai già fatto la stessa richiesta il ${quando(err.dati.quando)}.\nVuoi rifarla (e pagarla) di nuovo?`)) return;
             risposta = await chiedi("richiedi", { ...dati, conferma: true });
           }
-          form.reset(); chiudiVoce();
+          form.reset(); chiudiVoce();   // il filtro e i dati del defunto stanno fuori dal modulo: restano per la richiesta successiva
           mostra(risposta);
           const nuova = (risposta.richieste || []).find((r) => r.codice === risposta.nuova);
           if (nuova && (nuova.stato === "errore" || nuova.stato === "annullata")) avvisa("La richiesta non è andata a buon fine: leggi il motivo qui sotto.");
           else elenco.scrollIntoView({ block: "start" });
         } catch (err) { errore(err); } finally { b.disabled = !scelta || !scelta.richiedibile; }
       });
-      for (const id of ["rp-cerca", "rp-categoria", "rp-subito"]) $(id).addEventListener("input", () => { mostrati = 20; disegnaCatalogo(); });
+      for (const id of ["rp-cerca", "rp-categoria", "rp-subito", "rp-successione"]) $(id).addEventListener("input", () => { mostrati = 20; $("rp-defunto").classList.toggle("hidden", !$("rp-successione").checked); disegnaCatalogo(); });
       $("rp-altri").addEventListener("click", () => { mostrati += 40; disegnaCatalogo(); });
       $("rp-indietro").addEventListener("click", chiudiVoce);
       $("rp-rinnova").addEventListener("click", async () => {
