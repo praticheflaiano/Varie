@@ -276,7 +276,7 @@ def test_catalogo_letto_da_openapi(report):
     assert protesti["campi"][0] == {"chiave": "field0", "nome": "Codice fiscale", "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}
     assert protesti["opzioni"] == [{"nome": "Storico", "prezzo": 150}]
     assert planimetria["descrizione"].startswith("Planimetria catastale: il disegno")   # spiegazione scelta dal nome
-    assert planimetria["prezzo"] == 700 and planimetria["prezzo_ricerca"] == 10 and not planimetria["immediato"] and not planimetria["richiedibile"]
+    assert planimetria["prezzo"] == 700 and planimetria["prezzo_ricerca"] == 10 and not planimetria["immediato"] and planimetria["richiedibile"] and planimetria["allegati"] and not protesti["allegati"]
     report.catalogo()
     assert stato["letture_catalogo"] == 1   # resta in archivio: non si rilegge a ogni apertura
     report.catalogo(rinnova=True)
@@ -288,7 +288,7 @@ def test_controlli_sui_dati(report):
     assert report.prepara(v, {}, [])[0] is None
     assert report.prepara(v, {"field0": "RSSMRA80A01H501X"}, [])[0] is None            # codice fiscale sbagliato
     assert report.prepara(v, {"field0": CF_ROSSI, "field1": "Z"}, [])[0] is None      # scelta non ammessa
-    assert report.prepara(report.voce("doc-planimetria"), {}, [])[0] is None           # servono allegati
+    assert report.prepara(report.voce("doc-planimetria"), {}, [])[0] is None           # manca l'allegato obbligatorio
     ricerca, leggibili, opzioni, costo = report.prepara(v, {"field0": " rssmra80a01h501u ", "field1": "A", "altro": "x"}, ["Storico", "Inventata"])
     assert ricerca == {"field0": CF_ROSSI, "field1": "A"} and opzioni == ["Storico"] and costo == 240
     assert leggibili == [{"nome": "Codice fiscale", "valore": CF_ROSSI}, {"nome": "Tipo", "valore": "Attuale"}]
@@ -443,3 +443,20 @@ def test_richiesta_aperta_in_new_viene_avviata(report):
     stato["doc_stato"] = "NEW"
     r = chiedi(report, "doc-protesti", {"field0": CF_ROSSI})
     assert stato["avviate"] == 1 and r["stato"] == "in_lavorazione" and r["stato_openapi"] == "WAIT"
+
+
+def test_documento_con_allegato(report):
+    import base64
+    v = report.voce("doc-planimetria")
+    pdf = base64.b64encode(b"%PDF-1.4 carta d'identita").decode()
+    assert "PDF, un JPG o un PNG" in report.prepara(v, {"field0": {"nome": "carta.docx", "base64": pdf}}, [])[1]
+    assert "non è un vero PDF" in report.prepara(v, {"field0": {"nome": "carta.pdf", "base64": base64.b64encode(b"ciao").decode()}}, [])[1]
+    assert "integro" in report.prepara(v, {"field0": {"nome": "carta.pdf", "base64": "%%%"}}, [])[1]
+    grande = base64.b64encode(b"%PDF" + b"x" * report.MAX_ALLEGATI).decode()
+    assert "superano il limite" in report.prepara(v, {"field0": {"nome": "carta.pdf", "base64": grande}}, [])[1]
+    ricerca, leggibili, opzioni, costo = report.prepara(v, {"field0": {"nome": "carta identità.pdf", "base64": pdf}}, [])
+    assert ricerca == {"field0": pdf} and leggibili == [{"nome": "Documento di identità", "valore": "carta identit_.pdf (1 kB)"}]
+    r = report.richiedi(v, ricerca, leggibili, opzioni, costo, {}, "successione", "")
+    assert stato["richieste"][0]["search"] == {"field0": pdf}                       # a Openapi arriva il file
+    assert r["ricerca"]["field0"].startswith("allegato:") and pdf not in __import__("json").dumps(r)   # in archivio no
+    assert report.doppione(v["id"], report.senza_allegati(v, ricerca))["codice"] == r["codice"]
