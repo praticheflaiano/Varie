@@ -3,6 +3,7 @@ title: "Procedura: servizio Stima e Calcolo della pensione"
 type: procedura
 tags: [pensioni, servizio-a-pagamento, ghl, stima-pensione]
 created: 2026-11-11
+updated: 2026-11-12
 ---
 
 # Stima e Calcolo della pensione (`/stima-pensione`)
@@ -10,7 +11,33 @@ created: 2026-11-11
 Servizio online a pagamento: 60 €, più 5 € se l'estratto contributivo lo richiediamo noi.
 Il cliente compila questionario e carica i documenti **prima** del pagamento.
 
-## Stato (2026-11-11): flusso completo sulle anteprime, servizio NON attivo in produzione
+## Punto di partenza per chi riprende (aggiornato 2026-11-12)
+
+**Stato:** in produzione su praticheflaiano.it dall'11/11/2026, pagamenti GHL veri, collegamento al CRM attivo
+dal 12/11 (prima bloccato da Cloudflare, vedi [[lessons/2026-11-ghl-cloudflare-user-agent]]).
+
+Cosa leggere, in quest'ordine:
+1. [[riferimenti/stima-pensione-registro]]: **registro delle modifiche e dei casi controllati**, il più recente in alto. Ogni modifica al servizio aggiunge una riga lì.
+2. Questa nota: come funziona e dove sta il codice.
+3. Project claude.ai "AGENZIA SITO WEB PRATICHE FLAIANO": documenti `claude/aggiornamento-AAAA-MM-GG.md` con il resoconto per Antonio.
+
+Dove guardare quando un cliente o Antonio segnala un problema:
+- **Log delle funzioni**: Vercel, progetto `praticheflaiano-sito` (`prj_61Xs3AKvE8w2fbTKK7E4MrwgBect`, team `team_3d3wtSuFBvCDAPeG2qcEO8sx`). Il piano Hobby conserva **solo l'ultima ora**: controllare subito. Righe utili: `crm: ... non riuscito, HTTP n`, `pagamento: nessuna pratica in attesa`, i percorsi Blob `stime/<codice>/...`.
+- **Pratica**: pagina dell'ufficio `https://praticheflaiano.it/stima-pensione/ufficio#c=<codice>` (serve il segreto dell'ufficio, che ha Antonio). Da lì: stato, motivi della verifica, "riavvia calcolo", "segna pagata".
+- **Prospetto del cliente**: Antonio di solito lo scarica in `D:\Downloads\stima-pensione*.pdf` (raggiungibile con il server Filesystem del suo PC).
+- **CRM**: pipeline "Calcolo Pensione" (`KbPBLg1iBHuKF1XNlnLp`), contatto con tag `stima-pensione`.
+
+Prima di ogni modifica al calcolo e prima di ogni deploy:
+```bash
+cd sito/api/_pensione && for t in test_regole.py test_regressione.py test_pratiche.py test_estratto.py; do python3 $t || break; done
+```
+Ogni errore di calcolo trovato su un caso reale diventa un caso in `test_regole.py` (dati inventati, mai quelli del cliente).
+
+**Il motore vive in tre posti che devono restare uguali**: questo repository (`sito/api/_pensione/conteggi_pensione.py`),
+il calcolatore d'ufficio (artefatto `65b90f55-fe67-4b36-b51f-0cb19674c856`, copia byte per byte dei file del sito, con il commit nel piè di pagina)
+e la skill `conteggi-pensionistici`. Il registro indica per ogni modifica se gli altri due sono stati allineati.
+
+## Stato iniziale (2026-11-11, superato): flusso completo sulle anteprime
 
 Fatto:
 - `sito/src/pages/stima-pensione.astro`: pagina del servizio.
@@ -272,13 +299,23 @@ nessun avviso automatico all'ufficio per `da_rivedere`, `fallita`, `attesa_estra
 - Il webhook GHL del pagamento punta a `https://praticheflaiano-sito.vercel.app/api/stima/pagamento`;
   i link di pagamento riportano a `https://praticheflaiano.it/stima-pensione/pratica`.
 
-## Da fare per attivarlo
+## Mansione gravosa e confronto delle alternative (dal 2026-11-12)
 
-1. In GHL: link di pagamento dei due prodotti, ritorno su `/stima-pensione/pratica`, workflow con
-   webhook verso `/api/stima/pagamento`. Poi le variabili qui sopra su Vercel.
-2. Avvisi all'ufficio e al cliente (email, WhatsApp) e pipeline "Stima pensione" in GHL.
-3. Informativa privacy dedicata (dati sulla salute), condizioni di vendita, verifica con
-   ENASC/UNSIC su chi può vendere il servizio.
+- Le agevolazioni dei gravosi (vecchiaia a 66 anni e 7 mesi, anticipata senza adeguamento, Quota 41 categoria
+  gravosi, APE gravosi) valgono solo se la mansione copre 7 dei 10 anni prima dell'uscita. Nel motore
+  (`gravoso_a(dt)` in `calcola`): con "smetti ora" o "lavora fino a" l'agevolazione vale solo se tra la fine
+  del lavoro e la maturazione passano al massimo 3 anni. Prima veniva data anche a chi smetteva subito.
+- La riga di ogni alternativa (PDF e pagina della pratica) si costruisce in `sito/api/_pensione/alternative.py`:
+  con "lavora fino a" l'uscita mostrata è la migliore già maturata a fine lavoro (non la prima in assoluto);
+  accanto c'è la stessa pensione nella situazione attuale e, per "smetti ora", gli anni senza stipendio né pensione.
+  Motivo: un importo più alto che arriva 9 anni dopo sembrava un guadagno (caso del 12/11, vedi registro).
+
+## Da fare (aggiornato 2026-11-12)
+
+1. Informativa privacy dedicata (dati sulla salute), condizioni di vendita e recesso, verifica con
+   ENASC/UNSIC su chi può vendere il servizio; frase "con la tessera consulenze gratis" in `/pensioni`.
+2. Descrizione del prodotto su GHL da aggiornare.
+3. Allineare calcolatore d'ufficio e skill `conteggi-pensionistici` a ogni modifica del motore (vedi registro).
 
 ## Attenzioni
 

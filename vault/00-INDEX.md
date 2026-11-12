@@ -31,10 +31,12 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[procedure/03-redesign-frontend]] - Modificare design system del sito Astro (palette, font, componenti)
 - [[procedure/04-pubblicazione-articolo]] - Scrivere e pubblicare un nuovo articolo dalla A alla Z
 - [[procedure/05-knowledge-base-vault]] - Come mantenere e consultare questo vault
-- [[procedure/06-stima-pensione]] - Servizio a pagamento Stima e Calcolo della pensione: stato e cosa manca per attivarlo
+- [[procedure/06-stima-pensione]] - Servizio a pagamento Stima e Calcolo della pensione: come funziona, dove guardare, come riprendere
+- [[riferimenti/stima-pensione-registro]] - **Registro di modifiche, deploy e casi controllati della Stima pensione (leggere per primo)**
 
 ## Lessons learned (errori incontrati e risoluzioni)
 
+- [[lessons/2026-11-ghl-cloudflare-user-agent]] - API GHL: 403 di Cloudflare con lo user-agent predefinito di Python
 - [[lessons/2026-04-vercel-rootdir-trap]] - **CRITICO**: rootDirectory mancante = articoli markdown invisibili in produzione
 - [[lessons/2026-04-stream-timeout-recovery]] - Recupero da stream timeout dei subagent Claude
 - [[lessons/2026-04-race-condition-agent]] - Race condition tra fact-checker e seo-specialist sullo stesso file

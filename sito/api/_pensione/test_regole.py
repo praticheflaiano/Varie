@@ -210,3 +210,24 @@ assert imp_cresce > imp_fermo, "con la retribuzione che cresce l'importo deve sa
 uguale(fermo["contributi_stimati"]["dal"], "2024-01-01", "inizio del periodo stimato")
 assert fermo["contributi_stimati"]["settimane"] >= 52 + 52 + 44 and any("dipendono anche da questa proiezione" in d for d in fermo["dubbi"])
 print("OK: retribuzione futura e proiezione dall'estratto")
+
+# ---- mansione gravosa: vale solo con 7 anni su 10 prima della pensione (caso del 12/11/2026)
+import copy
+from alternative import alternativa
+grav = {"assistito": {"nascita": "1969-11-14", "sesso": "M", "figli": 0}, "data_calcolo": "2026-11-12", "gestione_principale": "FPLD",
+        "primo_accredito": "1986-01-01",
+        "contributi": [{"anno": y, "gestione": "FPLD", "settimane": 52 if y < 2026 else 46, "figurative": 0, "imponibile": 25000} for y in range(1986, 2027)],
+        "proiezione": {"continua_lavoro": True, "settimane_annue": 52, "imponibile_annuo": 28000, "fino_a": None, "gestione": "FPLD"},
+        "condizioni": {"gravoso_7su10": True, "precoce": True, "categoria_precoci": "gravoso"}}
+lavora = m.calcola(grav)
+ferma_in = copy.deepcopy(grav); ferma_in["proiezione"]["continua_lavoro"] = False
+ferma = m.calcola(ferma_in)
+uguale(canale(lavora, "Pensione di vecchiaia")["eta_alla_decorrenza"][:3], "66a", "vecchiaia gravosi lavorando")
+assert canale(ferma, "Pensione di vecchiaia")["decorrenza"] > canale(lavora, "Pensione di vecchiaia")["decorrenza"], "smettendo ora si perde la vecchiaia agevolata dei gravosi"
+assert not canale(ferma, "Quota 41 precoci (gravoso)").get("decorrenza"), "smettendo ora si perde Quota 41"
+riga = alternativa({"esito": ferma, "ipotesi": ferma_in["proiezione"]}, lavora, "2026-11-12")
+assert "situazione attuale" in riga["confronto"] and "senza stipendio" in riga["confronto"], riga
+fino_in = copy.deepcopy(grav); fino_in["proiezione"]["fino_a"] = "2029-05-31"
+riga = alternativa({"esito": m.calcola(fino_in), "ipotesi": fino_in["proiezione"]}, lavora, "2026-11-12")
+uguale((riga["canale"], riga["decorrenza"]), ("Pensione anticipata ordinaria", "2029-06-01"), "lavorando fino a maggio 2029 l'uscita mostrata è l'anticipata")
+print("OK: mansione gravosa e confronto delle alternative")
