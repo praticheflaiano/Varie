@@ -317,6 +317,12 @@ def _indirizzo_avviso(codice):
     return f"{base.rstrip('/')}/api/report/avviso?r={codice}&k={segreto_avviso(codice)}" if base.startswith("https://") else ""
 
 
+def _callback(indirizzo):
+    """Avviso di ritorno per Openapi. L'oggetto "headers" è obbligatorio: senza, Risk risponde 428 e DocuEngine 311
+    (visto il 12/11/2026 su una richiesta vera di Report Persona)."""
+    return {"url": indirizzo, "method": "JSON", "headers": {"x-origine": "praticheflaiano"}}
+
+
 # ----- catalogo -----
 
 VOCE_REPORT_PERSONA = {
@@ -696,7 +702,7 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
         if v["servizio"] == "risk":
             corpo = {"name": ricerca["nome"], "surname": ricerca["cognome"], "taxCode": ricerca["cf"]}
             if avviso:
-                corpo["callback"] = {"url": avviso, "method": "JSON"}
+                corpo["callback"] = _callback(avviso)
             risposta = json.loads(_openapi("risk", "POST", "/IT-report-persona/", corpo) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id") or (dati.get("callback") or {}).get("id")   # nell'esempio ufficiale l'id è dentro "callback"
@@ -707,7 +713,7 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
                 salva(r)
                 return r
             if avviso:
-                corpo["callback"] = {"url": avviso, "method": "JSON"}
+                corpo["callback"] = _callback(avviso)
             risposta = json.loads(_openapi("catasto", "POST", v["catasto"]["percorso"], corpo, attesa=60) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id")
@@ -716,7 +722,7 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
             if opzioni:
                 corpo["selectedOptions"] = opzioni
             if avviso:
-                corpo["callback"] = {"url": avviso, "method": "JSON", "headers": {"x-origine": "praticheflaiano"}}   # senza "headers" Openapi rifiuta (errore 311)
+                corpo["callback"] = _callback(avviso)
             risposta = json.loads(_openapi("docuengine", "POST", "/requests", corpo, attesa=60) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id")

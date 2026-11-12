@@ -420,3 +420,15 @@ def test_catasto_evasa_senza_risultati(report):
     assert stato["richieste"][0] == {"entita": "ispezione_soggetto", "cf_piva": CF_ROSSI, "conservatoria": "ROMA 1"}
     r = report.controlla(r)
     assert r["stato"] == "pronto" and "nessuna formalita" in r["avviso"] and report.file(r["codice"], 0).startswith(b"%PDF")
+
+
+def test_avviso_di_ritorno_sempre_con_headers(report, monkeypatch):
+    """In produzione le richieste portano il callback: Openapi lo rifiuta (428) se manca l'oggetto headers."""
+    monkeypatch.setenv("REPORT_PERSONA_URL", "https://funzioni.example")
+    report.persona("Mario", "Rossi", CF_ROSSI, "successione", "")
+    chiedi(report, "catasto-ricerca-nazionale", {"cf_piva": CF_ROSSI, "tipo_catasto": "TF"})
+    chiedi(report, "doc-protesti", {"field0": CF_ROSSI})
+    assert len(stato["richieste"]) == 3
+    for corpo in stato["richieste"]:
+        c = corpo["callback"]
+        assert c["url"].startswith("https://funzioni.example/api/report/avviso?r=") and c["method"] == "JSON" and isinstance(c["headers"], dict) and c["headers"]
