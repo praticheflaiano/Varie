@@ -6,8 +6,10 @@ lime, badge rosa del tipo, titolo bianco). Non serve nessuna chiave API.
 
 Uso:
   python3 sito/scripts/genera-og-card.py content/pensioni/2026-11-12-xxx.md [...]
+  python3 sito/scripts/genera-og-card.py ARTICOLO --formato quadrato --testo "Testo breve"
 
-Scrive sito/public/og/<slug>.jpg. Il titolo della scheda è `og_title` se
+Formato og: scrive sito/public/og/<slug>.jpg. Formati quadrato (Facebook/Instagram)
+e google (scheda Google): scrivono social/immagini/<slug>-<formato>.jpg. Il titolo della scheda è `og_title` se
 presente nel frontmatter, altrimenti `seo_title`, altrimenti `title`.
 """
 import re
@@ -95,10 +97,10 @@ def forma_ruotata(img, box, colore, angolo, raggio=40):
 def pillola(img, xy, testo, fnt, fondo, colore, angolo=0, ancora_destra=False):
     d = ImageDraw.Draw(img)
     tw = d.textlength(testo, font=fnt)
-    pw, ph = int(tw + 44), 50
+    pw, ph = int(tw + 44), max(50, int(fnt.size * 2.2))
     tile = Image.new("RGBA", (pw, ph), (0, 0, 0, 0))
     td = ImageDraw.Draw(tile)
-    td.rounded_rectangle((0, 0, pw - 1, ph - 1), radius=25, fill=fondo)
+    td.rounded_rectangle((0, 0, pw - 1, ph - 1), radius=ph // 2, fill=fondo)
     td.text((pw / 2, ph / 2), testo, font=fnt, fill=colore, anchor="mm")
     if angolo:
         tile = tile.rotate(angolo, expand=True, resample=Image.BICUBIC)
@@ -108,45 +110,67 @@ def pillola(img, xy, testo, fnt, fondo, colore, angolo=0, ancora_destra=False):
     img.alpha_composite(tile, (x, y))
 
 
-def genera(percorso: Path) -> Path:
+FORMATI = {"og": (1200, 630), "quadrato": (1080, 1080), "google": (1200, 900)}
+
+
+def genera(percorso: Path, formato: str = "og", testo: str | None = None) -> Path:
+    global W, H
+    W, H = FORMATI[formato]
     fm = frontmatter(percorso)
     slug = fm["slug"]
-    titolo = fm.get("og_title") or fm.get("seo_title") or fm["title"]
+    titolo = testo or fm.get("og_title") or fm.get("seo_title") or fm["title"]
     scuro = sum(map(ord, slug)) % 2 == 1
     fondo, forma = (NOTTE, VIOLA) if scuro else (VIOLA, NOTTE)
 
     img = Image.new("RGBA", (W, H), fondo + (255,))
-    forma_ruotata(img, (810, -90, 950, 70), ROSA + (255,), -8, 34)
-    forma_ruotata(img, (880, 330, 1260, 700), forma + (255,), 12, 60)
+    forma_ruotata(img, (W - 390, -90, W - 250, 70), ROSA + (255,), -8, 34)
+    forma_ruotata(img, (W - 320, H - 300, W + 60, H + 70), forma + (255,), 12, 60)
 
     pillola(img, (70, 64), CATEGORIE.get(fm.get("category", ""), "Blog"), font("bold", 22), LIME + (255,), (17, 17, 17))
-    pillola(img, (1130, 70), TIPI.get(fm.get("type", ""), "Info"), font("bold", 22), ROSA + (255,), BIANCO, angolo=-4, ancora_destra=True)
+    pillola(img, (W - 70, 70), TIPI.get(fm.get("type", ""), "Info"), font("bold", 22), ROSA + (255,), BIANCO, angolo=-4, ancora_destra=True)
 
     d = ImageDraw.Draw(img)
-    for size in (74, 66, 58, 52):
+    larg = W - 380 if formato == "og" else W - 160
+    max_righe = 4 if formato == "og" else (6 if formato == "quadrato" else 4)
+    sizes = (74, 66, 58, 52) if formato == "og" else (108, 98, 88, 80, 72, 64)
+    for size in sizes:
         fnt = font("black", size)
-        righe = a_capo(d, titolo, fnt, 820)
-        if len(righe) <= 4:
+        righe = a_capo(d, titolo, fnt, larg)
+        if len(righe) <= max_righe:
             break
-    y = 150
+    y = 150 if formato == "og" else 170
     for riga in righe:
         d.text((70, y), riga, font=fnt, fill=BIANCO)
         y += int(size * 1.12)
 
-    d.rounded_rectangle((70, 522, 122, 574), radius=12, fill=VIOLA if scuro else NOTTE)
-    d.text((96, 548), "F", font=font("black", 28), fill=LIME, anchor="mm")
-    d.text((136, 522), "Pratiche Flaiano", font=font("bold", 22), fill=BIANCO)
-    d.text((136, 552), "CAF UNSIC e Patronato ENASC · Roma", font=font("regular", 19), fill=GRIGIO)
+    if formato != "og":
+        pillola(img, (70, y + 40), "Leggi la guida su praticheflaiano.it", font("bold", 30), LIME + (255,), (17, 17, 17))
 
-    OUT.mkdir(parents=True, exist_ok=True)
-    dest = OUT / f"{slug}.jpg"
+    fy = H - 108
+    d.rounded_rectangle((70, fy, 122, fy + 52), radius=12, fill=VIOLA if scuro else NOTTE)
+    d.text((96, fy + 26), "F", font=font("black", 28), fill=LIME, anchor="mm")
+    d.text((136, fy), "Pratiche Flaiano", font=font("bold", 22), fill=BIANCO)
+    d.text((136, fy + 30), "CAF UNSIC e Patronato ENASC · Roma", font=font("regular", 19), fill=GRIGIO)
+
+    if formato == "og":
+        OUT.mkdir(parents=True, exist_ok=True)
+        dest = OUT / f"{slug}.jpg"
+    else:
+        cartella = RADICE / "social" / "immagini"
+        cartella.mkdir(parents=True, exist_ok=True)
+        dest = cartella / f"{slug}-{formato}.jpg"
     img.convert("RGB").save(dest, "JPEG", quality=88, optimize=True)
     return dest
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(__doc__)
-        sys.exit(1)
-    for arg in sys.argv[1:]:
-        print(genera(Path(arg)))
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("articoli", nargs="+")
+    ap.add_argument("--formato", choices=sorted(FORMATI), default="og",
+                    help="og 1200x630 (sito), quadrato 1080x1080 (Facebook/Instagram), google 1200x900 (scheda Google)")
+    ap.add_argument("--testo", help="testo da stampare al posto del titolo (solo con un articolo)")
+    a = ap.parse_args()
+    for arg in a.articoli:
+        print(genera(Path(arg), a.formato, a.testo))

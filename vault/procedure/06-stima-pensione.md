@@ -257,7 +257,10 @@ nessun avviso automatico all'ufficio per `da_rivedere`, `fallita`, `attesa_estra
 - **praticheflaiano.it** è servito dal progetto `info-praticheflaiano` (`prj_9WOxx9htTscB8WRb1huS4yaqazWZ`):
   statico, senza funzioni server, costruito da `build.sh` dal ramo `nuova-grafica-info`. Contiene i
   reindirizzamenti dei vecchi indirizzi nel suo `vercel.json` (non in questo repository): non
-  sostituirlo, si aggiorna con **Redeploy** dell'ultimo deploy di produzione.
+  sostituirlo, si aggiorna con **Redeploy** dell'ultimo deploy di produzione. Con l'API:
+  `create_deployment` con `deploymentId` dell'ultimo deploy di produzione e `withLatestCommit: true`
+  (senza target = anteprima da controllare), poi di nuovo con `deploymentId` dell'anteprima e
+  `target: production`. Senza `withLatestCommit` riusa il commit vecchio.
 - Le **funzioni della stima** girano nel progetto `praticheflaiano-sito` (produzione:
   `https://praticheflaiano-sito.vercel.app`), che ha chiavi, archivio Blob e variabili. Il deploy
   di produzione di questo progetto NON parte da solo dal ramo: va creato con `target: production`

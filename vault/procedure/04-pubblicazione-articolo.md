@@ -73,6 +73,17 @@ Agent({
 
 **ATTENZIONE race condition**: NON lanciare fact-checker e seo-specialist in parallelo. Sequenza obbligata. Vedi [[lessons/2026-04-race-condition-agent]].
 
+### Step 4-bis - Immagine OG (senza API)
+
+Dopo la SEO (il titolo della scheda è `seo_title`), genera la scheda 1200x630 nello stile del sito:
+
+```bash
+python3 sito/scripts/genera-og-card.py content/<categoria>/YYYY-MM-DD-slug.md
+# scrive sito/public/og/<slug>.jpg ; nel frontmatter: image: "/og/<slug>.jpg"
+```
+
+Usa i font Inter installati nel sistema (fallback DejaVu se mancano). Alternativa con illustrazione AI: `generate-og-via-openrouter.py` (serve OPENROUTER_API_KEY).
+
 ### Step 5 - Status published
 
 ```bash
