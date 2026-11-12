@@ -152,11 +152,13 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           const card = nodo("button", "block w-full rounded-2xl bg-white p-4 text-left text-[#14142B] shadow-[0_0_0_2px_#E4E4EE] hover:shadow-[0_0_0_2px_#5B3DF5]");
           card.type = "button";
           const testa = nodo("div", "flex items-start justify-between gap-3");
-          testa.append(nodo("span", "font-extrabold", v.nome), nodo("span", "shrink-0 font-extrabold", `${euro(v.prezzo)} €`));
+          testa.append(nodo("span", "font-extrabold", v.nome), nodo("span", "shrink-0 font-extrabold", v.prezzo ? `${euro(v.prezzo)} €` : "Gratis"));
           const sotto = nodo("div", "mt-2 flex flex-wrap items-center gap-2 text-sm");
           sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : v.servizio === "risk" ? "10 minuti - 48 ore" : "In differita"), nodo("span", "text-[#4E4B66]", v.categoria));
           if (!v.richiedibile) sotto.append(nodo("span", "rounded-full bg-[#FFE3EC] px-3 py-1 font-bold", "Servono allegati: non da qui"));
-          card.append(testa, sotto);
+          card.append(testa);
+          if (v.descrizione) card.append(nodo("span", "mt-1 block text-sm text-[#4E4B66]", v.descrizione));
+          card.append(sotto);
           card.addEventListener("click", () => apriVoce(v));
           box.append(card);
         }
@@ -180,9 +182,9 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         scelta = v; avvisa("");
         vetrina.classList.add("hidden"); form.classList.remove("hidden");
         $("rp-titolo").textContent = v.nome;
-        $("rp-info").textContent = `${euro(v.prezzo)} € + IVA · arriva ${v.tempi}`;
+        $("rp-info").textContent = (v.prezzo ? `${euro(v.prezzo)} € + IVA` : "Gratis") + ` · arriva ${v.tempi}`;
         $("rp-descrizione").textContent = v.descrizione || "";
-        $("rp-avviso-ricerca").textContent = v.richiedibile ? (v.ricerca ? `Questo documento prevede prima una ricerca${v.prezzo_ricerca ? " (" + euro(v.prezzo_ricerca) + " €)" : ""}: se trova più risultati ti chiedo di scegliere quello giusto prima di procedere.` : "La richiesta viene addebitata sul credito Openapi.")
+        $("rp-avviso-ricerca").textContent = v.richiedibile ? (v.ricerca ? `Questo documento prevede prima una ricerca${v.prezzo_ricerca ? " (" + euro(v.prezzo_ricerca) + " €)" : ""}: se trova più risultati ti chiedo di scegliere quello giusto prima di procedere.` : v.servizio === "prova" ? "Nessun addebito: questo documento lo crea la pagina, non Openapi." : "La richiesta viene addebitata sul credito Openapi.")
           : "Questo documento richiede di allegare dei file (documento d'identità o delega): per ora si chiede da console.openapi.com.";
         form.querySelector("button[type=submit]").disabled = !v.richiedibile;
         const campi = $("rp-campi"); campi.replaceChildren();
@@ -270,6 +272,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
             nodo("p", "mt-1 text-sm text-[#4E4B66]", `Richiesto il ${quando(r.creata)} · ${euro(r.costo || 0)} € · ${r.finalita}${r.nota ? " · " + r.nota : ""}${r.pronta ? " · pronto il " + quando(r.pronta) : ""} · in archivio fino al ${giorno(r.scade)}`));
           if (r.errore) box.append(nodo("p", "mt-2 font-semibold text-[#B00020]", r.errore));
           if (r.avviso) box.append(nodo("p", "mt-2 text-sm font-semibold", r.avviso));
+          if (r.stato === "in_lavorazione") box.append(nodo("p", "mt-2 text-sm font-semibold", `Openapi l'ha ricevuta e la sta lavorando${r.stato_openapi ? " (stato su Openapi: " + r.stato_openapi + ")" : ""}${r.controllata ? " · ultimo controllo " + quando(r.controllata) : ""}.` + (r.prova ? " In ambiente di prova Openapi può tenerla ferma senza mai consegnare un file: per provare il giro completo usa \"Documento di prova\"." : "")));
           if (r.ultimo_controllo) box.append(nodo("p", "mt-2 text-sm text-[#B00020]", "Ultimo controllo: " + r.ultimo_controllo));
           if (r.stato === "da_scegliere") {
             box.append(nodo("p", "mt-3 font-semibold", "Openapi ha trovato più risultati. Scegli quello giusto: da qui parte il documento."));
@@ -321,7 +324,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           finalita: $("rp-finalita").value, nota: $("rp-nota").value.trim(), consenso: $("rp-consenso").checked };
         if (!dati.finalita || (dati.finalita === "altro" && !dati.nota)) return avvisa("Scegli la finalità. Con \"Altro\" scrivi la nota.");
         if (!dati.consenso) return avvisa("Serve la conferma che hai titolo a richiedere il documento.");
-        if (!confirm(`Richiedere "${scelta.nome}" per ${$("rp-totale").textContent} € + IVA?\nLa richiesta viene addebitata sul credito Openapi.`)) return;
+        if (scelta.servizio !== "prova" && !confirm(`Richiedere "${scelta.nome}" per ${$("rp-totale").textContent} € + IVA?\nLa richiesta viene addebitata sul credito Openapi.`)) return;
         const b = form.querySelector("button[type=submit]");
         b.disabled = true;
         try {
