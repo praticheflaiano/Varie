@@ -23,7 +23,7 @@ Cosa leggere, in quest'ordine:
 
 Dove guardare quando un cliente o Antonio segnala un problema:
 - **Log delle funzioni**: Vercel, progetto `praticheflaiano-sito` (`prj_61Xs3AKvE8w2fbTKK7E4MrwgBect`, team `team_3d3wtSuFBvCDAPeG2qcEO8sx`). Il piano Hobby conserva **solo l'ultima ora**: controllare subito. Righe utili: `crm: ... non riuscito, HTTP n`, `pagamento: nessuna pratica in attesa`, i percorsi Blob `stime/<codice>/...`.
-- **Pratica**: pagina dell'ufficio `https://praticheflaiano.it/stima-pensione/ufficio#c=<codice>` (serve il segreto dell'ufficio, che ha Antonio). Da lì: stato, motivi della verifica, "riavvia calcolo", "segna pagata".
+- **Pratica**: pagina dell'ufficio `https://praticheflaiano.it/stima-pensione/ufficio#c=<codice>`. Il segreto dell'ufficio è il valore di `STIMA_PENSIONE_TOKEN` (Vercel `praticheflaiano-sito`), uguale all'intestazione `x-stima-token` del webhook nel workflow GHL "Stima pensione - avviso pagamento al sito": lo ha solo Antonio, mai in chat. Da lì: stato, motivi della verifica, "Ricalcola con le regole aggiornate" (stime già consegnate: nuovo calcolo, CRM aggiornato, nuova email al cliente), "Rimetti in coda", "Segna come pagata".
 - **Prospetto del cliente**: Antonio di solito lo scarica in `D:\Downloads\stima-pensione*.pdf` (raggiungibile con il server Filesystem del suo PC).
 - **CRM**: pipeline "Calcolo Pensione" (`KbPBLg1iBHuKF1XNlnLp`), contatto con tag `stima-pensione`.
 

@@ -326,6 +326,21 @@ def riprova(codice):
     return pratica
 
 
+def rimetti_in_calcolo(codice):
+    """L'ufficio fa rifare da capo una stima già consegnata o da rivedere (es. dopo una correzione delle regole).
+    La stima precedente resta in "stime_precedenti"; al termine il cliente riceve di nuovo l'email del prospetto."""
+    pratica = carica(codice)
+    if not pratica or pratica["stato"] not in ("consegnata", "da_rivedere"):
+        return None
+    vecchia = pratica.get("stima")
+    if vecchia:
+        pratica.setdefault("stime_precedenti", []).append({"consegnata": pratica.get("consegnata"), "stato": pratica["stato"],
+                                                            "versione_parametri": vecchia.get("versione_parametri")})
+    pratica.update(stato="pagata", tentativi=0, errore="")
+    salva(codice, pratica)
+    return pratica
+
+
 def vista_ufficio(codice, pratica):
     """Tutto quello che serve all'operatore per controllare una pratica (richiede il segreto dell'ufficio)."""
     stima = pratica.get("stima") or {}

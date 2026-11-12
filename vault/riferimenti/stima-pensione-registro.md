@@ -19,6 +19,7 @@ madri, estratto): per un calcolo con le regole aggiornate fa fede il sito o il c
 
 | Data | Cosa | Perché / caso | Commit, PR, deploy | Ufficio | Skill |
 |---|---|---|---|---|---|
+| 2026-11-12 | Pulsante ufficio "Ricalcola con le regole aggiornate" (azione `ricalcola`, stime consegnate o da rivedere; la stima vecchia resta in `stime_precedenti`). CRM: se il contatto nasce in ritardo si scrivono le note perse (questionario, pagamento) senza ripetere le email | Pratica `E3-BF4qPfwLvHjvqQuN_`: consegnata prima della correzione, non si poteva né ricalcolare né mandare a GHL | ramo `claude/ricalcola-crm` | — | — |
 | 2026-11-12 | Agevolazioni gravosi solo con 7 anni su 10 prima dell'uscita; tabella delle alternative con l'uscita giusta per "lavora fino a" e il confronto con la situazione attuale | Pratica `E3-BF4qPfwLvHjvqQuN_`: "se smetti ora" dava vecchiaia gravosi a 66a7m nel 2036 con netto più alto delle uscite 2027-2029, letto come un guadagno | PR #10 (commit `f63a8bb`) | sì (versione `1794475150-82f5`) | proposta ad Antonio, da salvare |
 | 2026-11-12 | Chiamate a GHL con user-agent proprio | Stessa pratica: contatto, opportunità, note ed email mai arrivate in GHL (403 di Cloudflare, errore 1010). Vedi [[lessons/2026-11-ghl-cloudflare-user-agent]] | PR #10 (commit `71a05fe`) | — | — |
 | 2026-11-12 | `GHL_API_TOKEN` inserito da Antonio su Vercel | Attivare il collegamento al CRM | deploy `dpl_D4pD46rE6t2UmSxhw6PXCktLFv2E` | — | — |

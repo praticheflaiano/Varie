@@ -246,6 +246,22 @@ esiti["revisione"] = []
 os.environ["GHL_API_BASE"] = "http://127.0.0.1:9"
 c = nuova(email="senza-crm@example.com")
 assert stato(c)[1]["stato"] == "ricevuta"
+#    ... poi il CRM torna raggiungibile: il contatto nasce al pagamento e recupera la nota del questionario
+os.environ["GHL_API_BASE"] = f"http://127.0.0.1:{ghl.server_port}"
+chiamate.clear()
+stato(c, "simula-pagamento")
+assert [x[:2] for x in chiamate][:3] == [("POST", "/contacts/upsert"), ("GET", "/opportunities/pipelines"), ("POST", "/opportunities/")], chiamate
+note = [x[2]["body"] for x in chiamate if x[1].endswith("/notes")]
+assert len(note) == 2 and "questionario ricevuto" in note[0] and "pagamento registrato" in note[1], note
+assert not any(x[1] == "/conversations/messages" for x in chiamate), "nessuna email ripetuta nel recupero"
+#    Ricalcolo dall'ufficio di una stima consegnata: nuovo calcolo, CRM aggiornato, email al cliente
+assert stato(c, "avvia")[1]["stato"] == "consegnata"
+n = esiti["chiamate"]; chiamate.clear()
+assert chiama("pratica", {"c": c, "azione": "ricalcola"})[0] == 403, "il ricalcolo è solo per l'ufficio"
+st, v = chiama("pratica", {"c": c, "azione": "ricalcola"}, **TOKEN)
+assert st == 200 and v["stato"] == "consegnata" and esiti["chiamate"] == n + 1, v
+assert pratiche.carica(c)["stime_precedenti"] and chiamate[-1][1] == "/conversations/messages"
+assert chiama("pratica", {"c": nuova(email="r@example.com"), "azione": "ricalcola"}, **TOKEN)[0] == 409, "non si ricalcola una pratica non pagata"
 del os.environ["GHL_API_TOKEN"]
 chiudi_attese()
 

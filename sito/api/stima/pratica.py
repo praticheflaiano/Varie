@@ -9,7 +9,8 @@ Cliente (codice pratica + data di nascita, risposta uniforme se non corrispondon
   {"azione": "simula-pagamento"}   solo fuori produzione: segna pagata senza passare da GHL
 Ufficio (intestazione x-stima-token = STIMA_PENSIONE_TOKEN, basta il codice; pagina /stima-pensione/ufficio):
   dettaglio, pdf, rilascia (rende scaricabile un prospetto trattenuto), carica-estratto
-  (con "pdf": base64), riprova (rimette in coda un calcolo fallito), segna-pagata, calcola
+  (con "pdf": base64), riprova (rimette in coda un calcolo fallito), segna-pagata, calcola,
+  ricalcola (rifà da capo una stima consegnata o da rivedere, es. dopo una correzione delle regole)
 """
 import base64, hmac, os, sys
 from http.server import BaseHTTPRequestHandler
@@ -20,7 +21,7 @@ import archivio  # noqa: E402
 import pratiche  # noqa: E402
 
 
-AZIONI_UFFICIO = ("dettaglio", "pdf", "rilascia", "carica-estratto", "riprova", "segna-pagata", "calcola")
+AZIONI_UFFICIO = ("dettaglio", "pdf", "rilascia", "carica-estratto", "riprova", "segna-pagata", "calcola", "ricalcola")
 
 
 class handler(BaseHTTPRequestHandler):
@@ -40,7 +41,9 @@ class handler(BaseHTTPRequestHandler):
             p = pratiche.riprova(codice)
         elif azione == "segna-pagata":
             p = pratiche.paga(codice, "ufficio") if p["stato"] == "ricevuta" else None
-        elif azione == "calcola":
+        elif azione in ("calcola", "ricalcola"):
+            if azione == "ricalcola" and not pratiche.rimetti_in_calcolo(codice):
+                return pratiche.rispondi(self, 409, {"errore": "stato-non-compatibile"})
             chiave = os.environ.get("ANTHROPIC_API_KEY")
             if not chiave:
                 return pratiche.rispondi(self, 503, {"errore": "non-configurato"})

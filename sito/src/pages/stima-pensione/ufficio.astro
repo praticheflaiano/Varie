@@ -104,6 +104,7 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
         if (p.stato === "da_rivedere") bottone("Verificato: conferma la stima", PRIMARIO, async () => { if (confirm("Il cliente riceverà l'avviso che la stima è stata verificata e confermata. Confermi?")) mostra(await chiedi("rilascia")); });
         if (p.stato === "attesa_estratto") bottone("Carica l'estratto", PRIMARIO, caricaEstratto);
         if (p.stato === "fallita") bottone("Rimetti in coda il calcolo", PRIMARIO, async () => mostra(await chiedi("riprova")));
+        if (p.stato === "consegnata" || p.stato === "da_rivedere") bottone("Ricalcola con le regole aggiornate (alcuni minuti)", SECONDARIO, async () => { if (confirm("Rifare da capo la stima? Il calcolo dura alcuni minuti e ha un costo; alla fine il cliente riceve di nuovo l'email con il prospetto aggiornato e il CRM viene aggiornato.")) mostra(await chiedi("ricalcola")); });
         if (p.stato === "pagata") bottone("Avvia il calcolo ora (alcuni minuti)", PRIMARIO, async () => mostra(await chiedi("calcola")));
         if (p.stato === "ricevuta") bottone("Segna come pagata", SECONDARIO, async () => { if (confirm("Segnare la pratica come pagata senza un pagamento registrato?")) mostra(await chiedi("segna-pagata")); });
         bottone("Aggiorna", SECONDARIO, async () => mostra(await chiedi("dettaglio")));
