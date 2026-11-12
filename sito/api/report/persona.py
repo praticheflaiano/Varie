@@ -45,6 +45,10 @@ class handler(BaseHTTPRequestHandler):
                 return report.rispondi(self, 200 if sessione else 429 if motivo == "bloccato" else 403, {"sessione": sessione} if sessione else {"errore": motivo})
             if not report.sessione_ok(self.headers):
                 return report.rispondi(self, 401, {"errore": "sessione"})
+            if azione == "territorio":
+                provincia = dati.get("provincia")
+                voci = report.territorio(str(provincia) if provincia else None, str(dati.get("tipo_catasto") or "F"))
+                return report.rispondi(self, 200, {"voci": voci or [], "disponibile": voci is not None})
             if azione == "diagnostica":
                 return report.rispondi(self, 200, {"righe": report.diagnostica()})
             if azione == "catalogo":

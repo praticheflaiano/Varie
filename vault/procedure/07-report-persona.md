@@ -172,6 +172,23 @@ richiesta e non consegnare mai un file.
   `GET /documento/{id}` (422 = non pronto). Gli allegati vanno nel formato `nome|data:<tipo>;base64,<contenuto>`.
 - Catasto: Elaborato planimetrico ed Estratto di mappa arrivano "in pochi secondi" (listino), non entro 24 ore.
 
+## Elenchi a discesa con ricerca (12/11/2026, notte)
+
+- I campi con valori vincolati non si scrivono a mano: elenco che si restringe mentre si scrive (frecce, Invio, Tab,
+  clic). Vale solo una voce dell'elenco; un testo che non corrisponde resta rosso e la richiesta non parte.
+- **Catasto**: provincia, comune e sezione vengono da `GET /territorio` (province) e `GET /territorio/{sigla}` (comuni con
+  sezioni e codice catastale), con `tipo_catasto` F o T ("fabbricati e terreni" usa F). Costano 0,001 € a chiamata:
+  restano in archivio 30 giorni (`report/territorio/<prova|vero>-<F|T>[-<sigla>].json`). Il comune si accende dopo la
+  provincia, la sezione dopo il comune (spenta se il comune non ha sezioni). L'ispezione per immobile non chiede la
+  provincia: la pagina mostra una provincia "di aiuto" che serve solo a trovare il comune e non viene spedita.
+- Il server ricontrolla prima di spendere (`_verifica_territorio` in `prepara`): provincia, comune e sezione devono stare
+  negli elenchi; il comune viene riscritto nella forma del Catasto. Se gli elenchi non si leggono il controllo si salta
+  e la pagina passa al campo libero con un avviso.
+- Le scelte dei documenti DocuEngine/VisEngine con più di 6 voci usano lo stesso elenco; fino a 6 resta il menu a tendina.
+- Modalità successione: anche la provincia del defunto si sceglie dall'elenco e passa già scelta nei moduli del Catasto.
+- Restano a testo libero, perché Openapi non dà un elenco: la Conservatoria (es. ROMA 1) e i campi di DocuEngine/VisEngine
+  senza scelte.
+
 ## Limiti noti
 
 - Un PDF oltre circa 3,2 MB non si scarica dalla pagina (limite di risposta delle funzioni): si apre dal CRM.

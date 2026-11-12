@@ -47,6 +47,15 @@ class Finto(BaseHTTPRequestHandler):
 
     def do_GET(self):
         p = self.path
+        if p.startswith("/territorio"):
+            stato["territorio"] = stato.get("territorio", 0) + 1
+            base, _, query = p.partition("?")
+            if base == "/territorio":
+                return self._json(200, {"success": True, "data": [{"provincia": "TR", "nome_provincia": "TERNI", "id": "x"}, {"provincia": "RM", "nome_provincia": "ROMA", "id": "y"}]})
+            if base == "/territorio/RM":
+                return self._json(200, {"success": True, "data": {"provincia": "RM", "nome_provincia": "ROMA", "comuni": [
+                    {"comune": "TIVOLI", "sezioni": [], "codice_catastale": "L182"}, {"comune": "ROMA", "sezioni": ["A", {"sezione": "B", "nome": "Sezione B"}], "codice_catastale": "H501"}]}})
+            return self._json(404, {"success": False, "message": "provincia non trovata"})
         if p == "/visure":
             return self._json(200, {"data": VISURE})
         if p.startswith("/visure/"):
@@ -548,3 +557,31 @@ def test_visengine_catalogo_ricerca_e_documento(report):
     r = report.controlla(r)
     assert r["stato"] == "pronto" and r["file"][0]["nome"] == "visura_pra.pdf" and report.file(r["codice"], 0) == b"%PDF visura pra"
     assert r["costo"] == 3240                                                  # visura + ricerca + opzione
+
+
+def test_elenchi_del_territorio(report):
+    """Province, comuni e sezioni vengono dal Catasto, restano in archivio e il server rifiuta i valori fuori elenco."""
+    assert report.territorio() == [{"codice": "RM", "nome": "ROMA"}, {"codice": "TR", "nome": "TERNI"}]
+    comuni = report.territorio("rm", "TF")
+    assert [c["codice"] for c in comuni] == ["ROMA", "TIVOLI"] and comuni[0]["catastale"] == "H501"
+    assert comuni[0]["sezioni"] == [{"codice": "A", "nome": "A"}, {"codice": "B", "nome": "Sezione B"}]
+    letture = stato["territorio"]
+    report.territorio(); report.territorio("RM")
+    assert stato["territorio"] == letture                     # dall'archivio, senza pagare di nuovo
+    assert report.territorio("ZZ") == [] and report.territorio("R") is None
+    v = report.voce("catasto-visura-immobile")
+    base = {"tipo_catasto": "F", "provincia": "RM", "comune": "roma", "sezione": "b", "foglio": "872", "particella": "405", "tipo_visura": "ordinaria"}
+    ricerca, leggibili, _, _ = report.prepara(v, base, [])
+    assert ricerca["comune"] == "ROMA" and ricerca["sezione"] == "B" and {"nome": "Comune", "valore": "ROMA"} in leggibili
+    assert "non è nell'elenco" in report.prepara(v, {**base, "provincia": "MI"}, [])[1]
+    assert "non risulta nella provincia" in report.prepara(v, {**base, "comune": "FIUMICINO"}, [])[1]
+    assert "non esiste" in report.prepara(v, {**base, "sezione": "Z"}, [])[1]
+    assert report.prepara(v, {**base, "comune": "TIVOLI", "sezione": ""}, [])[0]["comune"] == "TIVOLI"
+
+
+def test_elenchi_non_disponibili_non_bloccano(report, monkeypatch):
+    """Se Openapi non dà gli elenchi il controllo si salta: decide il Catasto alla richiesta."""
+    monkeypatch.delenv("OPENAPI_TOKEN")
+    assert report.territorio() is None and report.territorio("RM") is None
+    v = report.voce("catasto-visura-immobile")
+    assert report._verifica_territorio(v, {"provincia": "RM", "comune": "ROMA"}) is None

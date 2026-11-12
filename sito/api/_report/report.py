@@ -362,7 +362,7 @@ def diagnostica():
 
 def _da_annotare(metodo, percorso, codice):
     """Le letture riuscite del catalogo sono tante e non dicono nulla: si annotano solo se falliscono."""
-    catalogo = percorso in ("/documents", "/visure") or percorso.startswith("/visure/")
+    catalogo = percorso in ("/documents", "/visure") or percorso.startswith(("/visure/", "/territorio"))
     return not (metodo == "GET" and catalogo and codice == 200)
 
 
@@ -648,14 +648,14 @@ def _c(chiave, nome, tipo="string", obbligatorio=True, aiuto="", scelte=()):
 
 
 _CF = _c("cf_piva", "Codice fiscale o partita IVA dell'intestatario", "taxCode", aiuto="Per una successione: il codice fiscale del defunto.")
-_PROVINCIA = _c("provincia", "Provincia (sigla)", "provincia", aiuto="Due lettere, per esempio RM.")
+_PROVINCIA = _c("provincia", "Provincia", "provincia", aiuto="Scrivi le prime lettere e scegli dall'elenco del Catasto.")
 _TIPO_TF = _c("tipo_catasto", "Catasto", scelte=(("TF", "Fabbricati e terreni"), ("F", "Solo fabbricati"), ("T", "Solo terreni")))
 _TIPO_FT = _c("tipo_catasto", "Catasto", scelte=(("F", "Fabbricati"), ("T", "Terreni")))
 _TIPO_VISURA = _c("tipo_visura", "Tipo di visura", scelte=(("ordinaria", "Attuale"), ("storica", "Storica (con tutti i passaggi)")))
-_COMUNE = _c("comune", "Comune", aiuto="Il nome per esteso, per esempio ROMA.")
+_COMUNE = _c("comune", "Comune", "comune", aiuto="Scrivi le prime lettere e scegli dall'elenco del Catasto.")
 _FOGLIO, _PARTICELLA = _c("foglio", "Foglio", "integer"), _c("particella", "Particella", "integer")
 _SUBALTERNO = _c("subalterno", "Subalterno", "integer", False)
-_SEZIONE = _c("sezione", "Sezione", obbligatorio=False, aiuto="Solo per i comuni divisi in sezioni.")
+_SEZIONE = _c("sezione", "Sezione", "sezione", obbligatorio=False, aiuto="Solo per i comuni divisi in sezioni: l'elenco compare dopo aver scelto il comune.")
 _CONSERVATORIA = _c("conservatoria", "Conservatoria", aiuto="Il nome dell'ufficio, per esempio ROMA 1. Con l'ispezione nazionale scopri in quali conservatorie ci sono formalità.")
 _NON_TN_BZ = " Non disponibile per le province di Trento e Bolzano."
 
@@ -703,6 +703,84 @@ VOCI_CATASTO = [
              "La porzione di mappa del Catasto terreni (PDF) con la particella e i suoi confini. Utile per i terreni caduti in successione.",
              690, "in pochi secondi", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/estratto_mappa", "/estratto_mappa"),
 ]
+
+# ----- elenchi del territorio (province, comuni, sezioni) dal Catasto -----
+# GET /territorio costa 0,001 € a chiamata (listino Catasto): gli elenchi restano in archivio 30 giorni,
+# così la pagina propone solo valori che il Catasto riconosce e il server li ricontrolla prima di spendere.
+TERRITORIO_GIORNI = 30
+
+
+def _tipo_territorio(tipo_catasto):
+    """Il Catasto ha elenchi distinti per fabbricati (F) e terreni (T); "fabbricati e terreni" usa quello dei fabbricati."""
+    return "T" if str(tipo_catasto or "").upper() == "T" else "F"
+
+
+def _sezioni(c):
+    sezioni = []
+    for x in c.get("sezioni") or []:
+        if isinstance(x, dict):
+            codice = str(x.get("sezione") or x.get("codice") or x.get("nome") or "").strip()
+            nome = str(x.get("nome") or x.get("descrizione") or codice).strip()
+        else:
+            codice = nome = str(x or "").strip()
+        if codice:
+            sezioni.append({"codice": codice, "nome": nome})
+    return sezioni
+
+
+def territorio(provincia=None, tipo_catasto="F"):
+    """Senza provincia: [{"codice": "RM", "nome": "ROMA"}...]. Con la provincia: [{"codice": "ROMA", "nome": "ROMA",
+    "catastale": "H501", "sezioni": [...]}...]. Restituisce None se l'elenco non si può leggere (manca il token, Openapi non risponde)."""
+    tipo = _tipo_territorio(tipo_catasto)
+    sigla = re.sub(r"[^A-Z]", "", str(provincia or "").upper())[:2]
+    if provincia is not None and len(sigla) != 2:
+        return None
+    percorso = f"report/territorio/{'prova' if in_prova() else 'vero'}-{tipo}{'-' + sigla if sigla else ''}.json"
+    salvato = _leggi_json(percorso) or {}
+    if salvato.get("letto", "") > iso(adesso() - timedelta(days=TERRITORIO_GIORNI)) and salvato.get("voci"):
+        return salvato["voci"]
+    if not _token():
+        return salvato.get("voci")
+    try:
+        dati = json.loads(_openapi("catasto", "GET", f"/territorio{'/' + sigla if sigla else ''}?tipo_catasto={tipo}", attesa=30) or b"{}").get("data")
+    except urllib.error.HTTPError as e:
+        if e.code == 404 and sigla:
+            return []   # provincia che il Catasto non conosce
+        return salvato.get("voci")
+    except Exception:
+        return salvato.get("voci")
+    if sigla:
+        voci = [{"codice": str(c.get("comune")).strip().upper(), "nome": str(c.get("comune")).strip().upper(), "catastale": str(c.get("codice_catastale") or ""),
+                 "sezioni": _sezioni(c)} for c in ((dati or {}).get("comuni") or []) if isinstance(c, dict) and c.get("comune")]
+    else:
+        voci = [{"codice": str(p.get("provincia")).strip().upper(), "nome": str(p.get("nome_provincia") or p.get("provincia")).strip().upper()}
+                for p in (dati or []) if isinstance(p, dict) and p.get("provincia")]
+    voci.sort(key=lambda x: x["nome"])
+    if voci:
+        _scrivi_json(percorso, {"letto": iso(), "voci": voci})
+    return voci or salvato.get("voci")
+
+
+def _verifica_territorio(v, ricerca):
+    """Prima di spendere: provincia, comune e sezione devono stare negli elenchi del Catasto. Se gli elenchi non si
+    possono leggere il controllo si salta (la richiesta la valuterà comunque il Catasto). Restituisce il motivo o None."""
+    tipo = ricerca.get("tipo_catasto", "F")
+    sigla, comune, sezione = ricerca.get("provincia"), ricerca.get("comune"), ricerca.get("sezione")
+    if sigla:
+        province = territorio(None, tipo)
+        if province and sigla not in {p["codice"] for p in province}:
+            return f"La provincia {sigla} non è nell'elenco del Catasto: sceglila dall'elenco."
+    if sigla and comune:
+        comuni = territorio(sigla, tipo)
+        if comuni is not None:
+            trovato = next((c for c in comuni if c["codice"] == comune.upper()), None)
+            if not trovato:
+                return f"Il comune {comune} non risulta nella provincia {sigla}: sceglilo dall'elenco."
+            ricerca["comune"] = trovato["codice"]
+            if sezione and trovato["sezioni"] and sezione.upper() not in {x["codice"].upper() for x in trovato["sezioni"]}:
+                return f"La sezione {sezione} non esiste per il comune {trovato['codice']}: sceglila dall'elenco."
+    return None
+
 
 # Documenti del catalogo DocuEngine che servono in una successione, riconosciuti dal nome.
 SUCCESSIONE = r"famiglia|residenza|matrimon|morte|decess|\bpra\b|targa|planimetr|ipotec|catast|eredi|successio"
@@ -861,6 +939,8 @@ def prepara(v, valori, opzioni):
             continue
         if c["scelte"] and valore not in {s["codice"] for s in c["scelte"]}:
             return None, f"Valore non ammesso per: {c['nome']}.", None, None
+        if c["tipo"] in ("comune", "sezione"):
+            valore = valore.upper()
         if c["tipo"] == "provincia":
             valore = valore.upper()
             if not re.fullmatch(r"[A-Z]{2}", valore):
@@ -874,6 +954,13 @@ def prepara(v, valori, opzioni):
         leggibili.append({"nome": c["nome"], "valore": scelta})
     if not ricerca:
         return None, "Inserisci almeno un dato per la ricerca.", None, None
+    if v["servizio"] == "catasto":
+        motivo = _verifica_territorio(v, ricerca)
+        if motivo:
+            return None, motivo, None, None
+        for riga in leggibili:   # il comune nella forma del Catasto anche nel riepilogo
+            if riga["nome"] == "Comune" and ricerca.get("comune"):
+                riga["valore"] = ricerca["comune"]
     ammesse = {o["nome"]: o["prezzo"] for o in v["opzioni"]}
     scelte = [o for o in (opzioni or []) if o in ammesse]
     return ricerca, leggibili, scelte, v["prezzo"] + sum(ammesse[o] for o in scelte)

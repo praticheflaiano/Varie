@@ -43,7 +43,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           <p class="font-bold text-[#14142B]">Dati del defunto <span class="font-normal">(li riporto in ogni richiesta, così li scrivi una volta sola)</span></p>
           <div class="mt-3 grid gap-3 sm:grid-cols-2">
             <input id="rp-dcf" class={`${campo} uppercase tracking-wider`} placeholder="Codice fiscale del defunto" maxlength="16" autocomplete="off" spellcheck="false" />
-            <input id="rp-dprov" class={`${campo} uppercase`} placeholder="Provincia degli immobili (es. RM)" maxlength="2" autocomplete="off" />
+            <input id="rp-dprov" class={campo} placeholder="Provincia degli immobili (es. RM)" autocomplete="off" />
           </div>
           <p class="mt-3 text-sm text-[#4E4B66]">Ordine consigliato: 1) Ricerca nazionale immobili, per sapere dove sono; 2) Visura catastale per soggetto in ogni provincia trovata; 3) Ispezione ipotecaria se servono mutui e atti di provenienza. Ogni documento si chiede e si paga da solo.</p>
           <p class="mt-2 text-sm text-[#4E4B66]">Da Openapi non arrivano: documenti e codici fiscali degli eredi, dichiarazione sostitutiva, certificato di destinazione urbanistica (Comune), certificazioni di banche e poste, testamento e rinunce, copia del rogito (con l'ispezione ipotecaria hai però notaio, data e repertorio per chiederla).</p>
@@ -156,6 +156,161 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         return b;
       }
 
+      // ---------- elenchi a discesa con ricerca ----------
+      // Campo di testo con l'elenco che si restringe mentre si scrive. Vale solo una voce scelta dall'elenco:
+      // il codice sta in dataset.valore; un testo che non corrisponde a nessuna voce resta segnato in rosso.
+      const piano = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+      const territori = {};
+      let defunto = null;   // provincia degli immobili del defunto (modalità successione)
+      async function territorio(provincia, tipo) {
+        const chiave = `${tipo === "T" ? "T" : "F"}-${provincia || ""}`;
+        if (!territori[chiave]) territori[chiave] = chiedi("territorio", { provincia: provincia || null, tipo_catasto: tipo }).catch((e) => { delete territori[chiave]; throw e; });
+        return territori[chiave];
+      }
+      function conRicerca(inp, nota, etichetta) {
+        const box = nodo("div", "relative");
+        inp.replaceWith(box);
+        box.append(inp);
+        const lista = nodo("ul", "absolute left-0 right-0 z-30 mt-1 hidden max-h-72 overflow-auto rounded-2xl border-2 border-[#14142B] bg-white py-1 shadow-lg");
+        lista.id = inp.id + "-lista"; lista.setAttribute("role", "listbox");
+        box.append(lista);
+        inp.type = "text"; inp.autocomplete = "off"; inp.spellcheck = false; inp.dataset.elenco = "1"; inp.dataset.valore = "";
+        inp.setAttribute("role", "combobox"); inp.setAttribute("aria-autocomplete", "list"); inp.setAttribute("aria-controls", lista.id); inp.setAttribute("aria-expanded", "false");
+        let voci = [], trovate = [], attiva = -1, cambia = null;
+        const testo = (o) => (etichetta ? etichetta(o) : o.nome);
+        const segna = (ok, messaggio) => { inp.style.borderColor = ok ? "" : "#E5484D"; if (nota) { nota.textContent = messaggio || ""; nota.classList.toggle("hidden", !messaggio); } };
+        const chiudi = () => { lista.classList.add("hidden"); inp.setAttribute("aria-expanded", "false"); };
+        function disegna() {
+          lista.replaceChildren();
+          if (!trovate.length) lista.append(nodo("li", "px-4 py-2 text-sm text-[#4E4B66]", voci.length ? "Nessuna voce corrisponde: controlla cosa hai scritto." : "Elenco vuoto."));
+          trovate.slice(0, 80).forEach((o, n) => {
+            const li = nodo("li", `cursor-pointer px-4 py-2 text-[#14142B] ${n === attiva ? "bg-[#EDE9FF]" : "hover:bg-[#F7F7FB]"}`, testo(o));
+            li.id = `${lista.id}-${n}`; li.setAttribute("role", "option"); li.setAttribute("aria-selected", String(n === attiva));
+            li.addEventListener("mousedown", (e) => { e.preventDefault(); scegli(o); });   // prima del blur del campo
+            lista.append(li);
+          });
+          if (trovate.length > 80) lista.append(nodo("li", "px-4 py-2 text-sm text-[#4E4B66]", `Altre ${trovate.length - 80} voci: continua a scrivere per restringere.`));
+          inp.setAttribute("aria-activedescendant", attiva >= 0 ? `${lista.id}-${attiva}` : "");
+          const li = attiva >= 0 && lista.children[attiva];
+          if (li) li.scrollIntoView({ block: "nearest" });
+        }
+        function filtra() {
+          const q = piano(inp.value);
+          if (!q) trovate = voci;
+          else {
+            const inizio = [], dentro = [];
+            for (const o of voci) {
+              const c = piano(o.codice), t = piano(testo(o));
+              if (c === q || t.startsWith(q) || c.startsWith(q)) inizio.push(o); else if (t.includes(q)) dentro.push(o);
+            }
+            inizio.sort((a, b) => (piano(b.codice) === q) - (piano(a.codice) === q));
+            trovate = inizio.concat(dentro);
+          }
+          attiva = trovate.length ? 0 : -1;
+          disegna();
+        }
+        const apri = () => { if (inp.disabled || !voci.length) return; filtra(); lista.classList.remove("hidden"); inp.setAttribute("aria-expanded", "true"); };
+        function scegli(o, zitto) {
+          const prima = inp.dataset.valore;
+          inp.value = o ? testo(o) : ""; inp.dataset.valore = o ? o.codice : "";
+          segna(true); chiudi();
+          if (cambia && !zitto && prima !== inp.dataset.valore) cambia(o || null);
+        }
+        function verifica() {
+          if (inp.dataset.valore || !inp.value.trim() || !voci.length) return;
+          const q = piano(inp.value);
+          const esatta = voci.find((o) => piano(o.codice) === q || piano(o.nome) === q || piano(testo(o)) === q);
+          filtra();
+          if (esatta || trovate.length === 1) scegli(esatta || trovate[0]);
+          else segna(false, "Scegli una voce dall'elenco: il testo scritto così non viene accettato.");
+        }
+        inp.addEventListener("input", () => { const prima = inp.dataset.valore; inp.dataset.valore = ""; segna(true); apri(); if (prima && cambia) cambia(null); });
+        inp.addEventListener("focus", apri);
+        inp.addEventListener("click", apri);
+        inp.addEventListener("blur", () => { chiudi(); verifica(); });
+        inp.addEventListener("keydown", (e) => {
+          const aperto = !lista.classList.contains("hidden");
+          if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!aperto) return apri();
+            if (trovate.length) { attiva = (attiva + (e.key === "ArrowDown" ? 1 : -1) + Math.min(trovate.length, 80)) % Math.min(trovate.length, 80); disegna(); }
+          } else if (e.key === "Enter" && aperto) { e.preventDefault(); if (trovate[attiva]) scegli(trovate[attiva]); }
+          else if (e.key === "Escape" && aperto) { e.preventDefault(); chiudi(); }
+          else if (e.key === "Tab" && aperto && inp.value.trim() && trovate[attiva] && !inp.dataset.valore) scegli(trovate[attiva]);
+        });
+        return {
+          campo: inp,
+          // Elenco pronto: il campo accetta solo le sue voci.
+          imposta(nuove, segnaposto) {
+            voci = nuove || []; inp.dataset.elenco = "1"; inp.disabled = !voci.length; inp.placeholder = segnaposto || (voci.length ? "Scrivi per cercare…" : "");
+            const tenuta = voci.find((o) => o.codice === inp.dataset.valore);
+            if (tenuta) scegli(tenuta, true); else { inp.value = ""; inp.dataset.valore = ""; segna(true); }
+          },
+          // In attesa o senza elenco possibile: campo spento con una spiegazione.
+          spento(segnaposto) { voci = []; inp.disabled = true; inp.value = ""; inp.dataset.valore = ""; inp.placeholder = segnaposto; segna(true); chiudi(); },
+          // Elenco non leggibile da Openapi: si scrive a mano (il server ricontrolla quando può).
+          libero(segnaposto, messaggio) { voci = []; inp.disabled = false; inp.dataset.elenco = ""; inp.placeholder = segnaposto; segna(true, messaggio); },
+          scegliCodice(codice) { const o = voci.find((x) => piano(x.codice) === piano(codice)); if (o) scegli(o, true); return !!o; },
+          alCambio(f) { cambia = f; },
+          valore: () => (inp.dataset.elenco ? inp.dataset.valore : inp.value.trim()),
+        };
+      }
+      // Provincia, comune e sezione del Catasto, collegati: la scelta di uno prepara l'elenco del successivo.
+      function territorioCatasto(v, campi, ctl) {
+        const tipoCampo = campi.querySelector('[data-chiave="tipo_catasto"]');
+        const tipo = () => (tipoCampo && tipoCampo.value === "T" ? "T" : "F");
+        let prov = ctl.provincia;
+        if (ctl.comune && !prov) {   // l'ispezione per immobile non chiede la provincia: serve solo a trovare il comune
+          const lab = nodo("label", "mb-1.5 mt-4 block text-sm font-bold text-[#14142B]", "Provincia del comune *");
+          const inp = nodo("input", CAMPO), nota = nodo("p", "mt-1 hidden text-sm font-semibold text-[#E5484D]");
+          inp.id = "rp-c-aiuto-provincia"; lab.htmlFor = inp.id;
+          const prima = campi.querySelector(`label[for="${ctl.comune.campo.id}"]`);
+          prima.before(lab, inp, nota, nodo("p", "mt-1 text-sm text-[#4E4B66]", "Serve solo a trovare il comune: non viene spedita."));
+          prov = conRicerca(inp, nota, (o) => `${o.codice} · ${o.nome}`);
+        }
+        const attuale = () => scelta === v;
+        function senzaElenchi() {   // Openapi non dà gli elenchi: si scrive a mano, il server ricontrolla appena può
+          if (prov) prov.libero("Sigla, per esempio RM", "Elenco del Catasto non disponibile ora: scrivi la sigla di due lettere.");
+          if (ctl.comune) ctl.comune.libero("Nome del comune, per esempio ROMA", "Elenco dei comuni non disponibile ora: scrivi il nome come lo usa il Catasto.");
+          if (ctl.sezione) ctl.sezione.libero("Lettera della sezione, se c'è", "");
+        }
+        async function caricaProvince() {
+          if (!prov) return;
+          prov.spento("Carico le province del Catasto…");
+          try {
+            const d = await territorio(null, tipo());
+            if (!attuale()) return;
+            if (!d.disponibile || !d.voci.length) return senzaElenchi();
+            prov.imposta(d.voci);
+            const dprov = defunto ? defunto.valore() : "";
+            if ($("rp-successione").checked && dprov && !prov.valore()) prov.scegliCodice(dprov);
+            caricaComuni(prov.valore());
+          } catch (e) { if (attuale()) senzaElenchi(); }
+        }
+        async function caricaComuni(sigla) {
+          if (ctl.sezione) ctl.sezione.spento("Prima scegli il comune");
+          if (!ctl.comune) return;
+          if (!sigla) return ctl.comune.spento("Prima scegli la provincia");
+          ctl.comune.spento("Carico i comuni…");
+          try {
+            const d = await territorio(sigla, tipo());
+            if (!attuale()) return;
+            if (!d.disponibile) return ctl.comune.libero("Nome del comune, per esempio ROMA", "Elenco dei comuni non disponibile ora: scrivi il nome come lo usa il Catasto.");
+            ctl.comune.imposta(d.voci.map((o) => ({ ...o, nome: o.nome + (o.catastale ? ` (${o.catastale})` : "") })));
+          } catch (e) { if (attuale()) ctl.comune.libero("Nome del comune, per esempio ROMA", "Elenco dei comuni non disponibile ora: scrivi il nome come lo usa il Catasto."); }
+        }
+        if (prov) prov.alCambio((o) => caricaComuni(o && o.codice));
+        if (ctl.comune) ctl.comune.alCambio((o) => {
+          if (!ctl.sezione) return;
+          if (!o) return ctl.sezione.spento("Prima scegli il comune");
+          if (o.sezioni && o.sezioni.length) ctl.sezione.imposta(o.sezioni); else ctl.sezione.spento("Questo comune non ha sezioni: lascia vuoto");
+        });
+        if (tipoCampo) tipoCampo.addEventListener("change", () => { for (const k in ctl) if (ctl[k] && k !== "provincia") ctl[k].spento("Prima scegli la provincia"); caricaProvince(); });
+        if (ctl.sezione) ctl.sezione.spento("Prima scegli il comune");
+        if (ctl.comune) ctl.comune.spento("Prima scegli la provincia");
+        caricaProvince();
+      }
+
       // ---------- catalogo ----------
       function filtrate() {
         const parole = $("rp-cerca").value.toLowerCase().split(/\s+/).filter(Boolean), cat = $("rp-categoria").value, subito = $("rp-subito").checked, succ = $("rp-successione").checked;
@@ -205,6 +360,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           + (v.allegati ? " Gli allegati vanno a Openapi insieme alla richiesta e non restano in questo archivio." : "");
         form.querySelector("button[type=submit]").disabled = false;
         const campi = $("rp-campi"); campi.replaceChildren();
+        const territorioCtl = {};
         for (const c of v.campi) {
           const id = "rp-c-" + c.chiave;
           if (c.tipo === "file") {   // allegato: PDF, JPG o PNG, letto dal browser e spedito con la richiesta
@@ -217,6 +373,16 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           }
           const lab = nodo("label", "mb-1.5 mt-4 block text-sm font-bold text-[#14142B]", c.nome + (c.obbligatorio ? " *" : ""));
           lab.htmlFor = id;
+          if ((v.servizio === "catasto" && ["provincia", "comune", "sezione"].includes(c.tipo)) || c.scelte.length > 6) {
+            // valori vincolati: elenco a discesa con ricerca, si accetta solo una voce dell'elenco
+            const inp = nodo("input", CAMPO), nota = nodo("p", "mt-1 hidden text-sm font-semibold text-[#E5484D]");
+            inp.id = id; inp.dataset.chiave = c.chiave;
+            campi.append(lab, inp, nota);
+            const ctl = conRicerca(inp, nota, c.tipo === "provincia" ? (o) => `${o.codice} · ${o.nome}` : null);
+            if (c.scelte.length) ctl.imposta(c.scelte); else territorioCtl[c.tipo] = ctl;
+            if (c.aiuto) campi.append(nodo("p", "mt-1 text-sm text-[#4E4B66]", c.aiuto));
+            continue;
+          }
           let inp;
           if (c.scelte.length) { inp = nodo("select", CAMPO); inp.append(new Option("Scegli…", ""), ...c.scelte.map((o) => new Option(o.nome, o.codice))); }
           else { inp = nodo("input", CAMPO + (c.tipo === "taxCode" ? " uppercase tracking-wider" : "")); inp.type = c.tipo === "date" ? "date" : c.tipo === "email" ? "email" : "text"; inp.autocomplete = "off"; inp.spellcheck = false; if (c.tipo === "integer" || c.tipo === "float") inp.inputMode = "decimal"; }
@@ -224,12 +390,12 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           if (c.tipo === "provincia") { inp.maxLength = 2; inp.className += " uppercase"; }
           if ($("rp-successione").checked) {   // dati del defunto già scritti sopra
             if (c.tipo === "taxCode" && !c.scelte.length) inp.value = $("rp-dcf").value.replace(/\s/g, "").toUpperCase();
-            if (c.tipo === "provincia") inp.value = $("rp-dprov").value.trim().toUpperCase();
           }
           if (v.servizio === "catasto" && c.scelte.length && c.obbligatorio) inp.value = c.scelte[0].codice;   // prima scelta = quella più comune
           campi.append(lab, inp);
           if (c.aiuto) campi.append(nodo("p", "mt-1 text-sm text-[#4E4B66]", c.aiuto));
         }
+        if (Object.keys(territorioCtl).length) territorioCatasto(v, campi, territorioCtl);
         const opz = $("rp-opzioni"); opz.replaceChildren();
         if (v.opzioni.length) opz.append(nodo("p", "mt-4 text-sm font-bold text-[#14142B]", "Opzioni"));
         for (const o of v.opzioni) {
@@ -348,7 +514,9 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         e.preventDefault(); avvisa("");
         if (!scelta) return;
         const valori = {};
-        for (const i of document.querySelectorAll("#rp-campi [data-chiave]")) valori[i.dataset.chiave] = i.value.trim();
+        for (const i of document.querySelectorAll("#rp-campi [data-chiave]")) valori[i.dataset.chiave] = i.dataset.elenco ? i.dataset.valore || "" : i.value.trim();
+        const nonScelto = [...document.querySelectorAll("#rp-campi [data-elenco='1']")].find((i) => i.value.trim() && !i.dataset.valore);
+        if (nonScelto) { nonScelto.focus(); return avvisa(`"${nonScelto.value.trim()}" non è nell'elenco: scegli una voce tra quelle proposte.`); }
         let peso = 0;
         for (const i of document.querySelectorAll("#rp-campi [data-allegato]")) {
           const f = i.files && i.files[0];
@@ -384,7 +552,16 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           else elenco.scrollIntoView({ block: "start" });
         } catch (err) { errore(err); } finally { b.disabled = false; }
       });
-      for (const id of ["rp-cerca", "rp-categoria", "rp-subito", "rp-successione"]) $(id).addEventListener("input", () => { mostrati = 20; $("rp-defunto").classList.toggle("hidden", !$("rp-successione").checked); disegnaCatalogo(); });
+      defunto = conRicerca($("rp-dprov"), null, (o) => `${o.codice} · ${o.nome}`);
+      defunto.libero("Provincia degli immobili (es. RM)");
+      $("rp-successione").addEventListener("change", async () => {
+        if (!$("rp-successione").checked || defunto.campo.dataset.elenco) return;
+        try {
+          const d = await territorio(null, "F");
+          if (d.disponibile && d.voci.length) defunto.imposta(d.voci, "Provincia degli immobili: scrivi per cercare");
+        } catch { /* resta il campo libero */ }
+      });
+            for (const id of ["rp-cerca", "rp-categoria", "rp-subito", "rp-successione"]) $(id).addEventListener("input", () => { mostrati = 20; $("rp-defunto").classList.toggle("hidden", !$("rp-successione").checked); disegnaCatalogo(); });
       $("rp-altri").addEventListener("click", () => { mostrati += 40; disegnaCatalogo(); });
       $("rp-indietro").addEventListener("click", chiudiVoce);
       $("rp-rinnova").addEventListener("click", async () => {
