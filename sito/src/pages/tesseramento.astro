@@ -48,10 +48,11 @@ const offerData = {
   "@type": "Product",
   name: "Tessera Centro Pratiche Flaiano",
   description: "Tessera annuale o semestrale per il nucleo familiare: consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche.",
+  image: `${SITE.url}/og/p-tesseramento.jpg`,
   brand: { "@type": "Organization", name: SITE.name },
   offers: [
-    { "@type": "Offer", name: "Tessera annuale (nucleo familiare)", price: TESSERAMENTO.annual.price, priceCurrency: TESSERAMENTO.currency, url: `${SITE.url}/tesseramento` },
-    { "@type": "Offer", name: "Tessera semestrale (nucleo familiare)", price: TESSERAMENTO.semester.price, priceCurrency: TESSERAMENTO.currency, url: `${SITE.url}/tesseramento` },
+    { "@type": "Offer", name: "Tessera annuale (nucleo familiare)", price: TESSERAMENTO.annual.price, priceCurrency: TESSERAMENTO.currency, availability: "https://schema.org/InStock", url: `${SITE.url}/tesseramento` },
+    { "@type": "Offer", name: "Tessera semestrale (nucleo familiare)", price: TESSERAMENTO.semester.price, priceCurrency: TESSERAMENTO.currency, availability: "https://schema.org/InStock", url: `${SITE.url}/tesseramento` },
   ],
 };
 ---
