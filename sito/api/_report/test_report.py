@@ -23,6 +23,14 @@ CATALOGO = [
     {"id": "doc-planimetria", "name": "Planimetria Catastale", "category": "Catastali", "isSync": False, "hasSearch": True, "searchPrice": 0.1, "documentPrice": 6.9, "totalPrice": 7.0, "options": None,
      "requestStructure": {"fields": {"field0": {"name": "ID", "nameIT": "Documento di identità", "type": "file", "required": True, "options": None, "help": ""}}}},
 ]
+import base64 as _b64
+VISURE = [{"hash_visura": "h1", "nome_visura": "Visura PRA Proprietari", "nome_categoria": "Veicoli"},
+          {"hash_visura": "h2", "nome_visura": "Estratto contributivo", "nome_categoria": "Patronato"}]
+DETTAGLIO_H1 = {"hash_visura": "h1", "nome_visura": "Visura PRA Proprietari", "nome_categoria": "Veicoli", "prezzo_visura": 29.9, "prezzo_ricerca": 0.5,
+                "ricerca": True, "sincrona": False, "opzioni": [{"tipo": "x", "prezzo": "2,00", "nome": "Storico"}],
+                "json_struttura": {"validazione": "$0", "istruzioni": _b64.b64encode("<p>Indica la <b>targa</b></p>".encode()).decode(), "campi": {
+                    "$1": {"nome": "Delega firmata", "tipo": "file", "null": "1", "ordine": "2"},
+                    "$0": {"nome": "Codice fiscale intestatario", "tipo": "codice_fiscale_persona_fisica", "null": "0", "ordine": "1"}}}}
 
 
 class Finto(BaseHTTPRequestHandler):
@@ -39,7 +47,17 @@ class Finto(BaseHTTPRequestHandler):
 
     def do_GET(self):
         p = self.path
-        if p.startswith("/IT-report-persona/") and p.endswith("/download"):
+        if p == "/visure":
+            return self._json(200, {"data": VISURE})
+        if p.startswith("/visure/"):
+            return self._json(200, {"data": DETTAGLIO_H1}) if p.endswith("/h1") else self._json(404, {"message": "non trovato"})
+        if p == "/richiesta/ve1":
+            return self._json(200, {"data": {"_id": "ve1", "stato_richiesta": stato["ve_stato"], "indice_ricerca": 1, "prezzo_visura": 29.9, "prezzo_ricerca": 0.5, "ricerca": True}})
+        if p == "/documento/ve1":
+            if stato["ve_stato"] != "Visura evasa":
+                return self._json(422, {"success": False, "error": 247, "message": "documento non pronto"})
+            return self._json(200, {"data": {"nome": "visura pra.pdf", "dimensione": 20, "file": _b64.b64encode(b"%PDF visura pra").decode()}})
+        if p.startswith("/IT-") and p.endswith("/download"):
             if not stato["pronto"]:
                 return self._json(406, {"success": False, "error": 303})
             dati = b"%PDF-1.4 finto"
@@ -88,7 +106,11 @@ class Finto(BaseHTTPRequestHandler):
 
     def do_POST(self):
         p, corpo = self.path, self._corpo()
-        if p == "/IT-report-persona/":
+        if p == "/richiesta":
+            stato["richieste"].append(json.loads(corpo))
+            ricerca = {"id_ricerca": "rc1", "stato_ricerca": "Ricerca evasa", "json_risultato": json.dumps({"indice_0": {"targa": "AB123CD", "proprietario": "ROSSI MARIO"}, "indice_1": {"targa": "EF456GH", "proprietario": "ROSSI MARIO"}})}
+            return self._json(200, {"success": True, "data": {"_id": "ve1", "stato_richiesta": "In ricerca", "indice_ricerca": None, "ricerche": [ricerca]}})
+        if p.startswith("/IT-") and p.endswith("/"):
             stato["richieste"].append(json.loads(corpo))
             if stato.get("openapi_errore"):
                 return self._json(stato["openapi_errore"], {"success": False, "message": "no"})
@@ -143,6 +165,10 @@ class Finto(BaseHTTPRequestHandler):
         self._json(200, {"success": True, "data": {"id": "d1", "state": "DONE", "totalPrice": 0.9, "resultId": stato["scelto"]}})
 
     def do_PUT(self):
+        if self.path == "/richiesta/ve1/ricerche":
+            stato["scelta_ve"] = json.loads(self._corpo())
+            stato["ve_stato"] = "In erogazione"
+            return self._json(200, {"data": {"_id": "ve1", "stato_richiesta": "In erogazione", "indice_ricerca": stato["scelta_ve"]["indice"]}})
         ident = self.path.rsplit("/", 1)[-1]
         contatto = next(c for c in stato["contatti"] if c["id"] == ident)
         contatto.setdefault("customFields", []).extend(json.loads(self._corpo())["customFields"])
@@ -158,12 +184,13 @@ def report(monkeypatch):
     threading.Thread(target=server.serve_forever, daemon=True).start()
     base = f"http://127.0.0.1:{server.server_port}"
     stato.clear()
-    stato.update(pronto=False, doc_stato="WAIT", catasto_stato="in_erogazione", richieste=[], allegati=[], note=[], contatti=[], campi=[{"id": "cfid", "name": "Codice Fiscale", "dataType": "TEXT", "fieldKey": "contact.codice_fiscale"}])
+    stato.update(pronto=False, ve_stato="In ricerca", doc_stato="WAIT", catasto_stato="in_erogazione", richieste=[], allegati=[], note=[], contatti=[], campi=[{"id": "cfid", "name": "Codice Fiscale", "dataType": "TEXT", "fieldKey": "contact.codice_fiscale"}])
     cartella = tempfile.mkdtemp()
-    for k, v in {"STIMA_ARCHIVIO_DIR": cartella, "REPORT_PERSONA_PASSWORD": "segreta", "OPENAPI_TOKEN": "t", "OPENAPI_RISK_BASE": base, "OPENAPI_DOCUENGINE_BASE": base, "OPENAPI_CATASTO_BASE": base, "GHL_API_TOKEN": "g", "GHL_API_BASE": base}.items():
+    for k, v in {"STIMA_ARCHIVIO_DIR": cartella, "REPORT_PERSONA_PASSWORD": "segreta", "OPENAPI_TOKEN": "t", "OPENAPI_RISK_BASE": base, "OPENAPI_DOCUENGINE_BASE": base, "OPENAPI_CATASTO_BASE": base, "OPENAPI_VISENGINE_BASE": base, "GHL_API_TOKEN": "g", "GHL_API_BASE": base}.items():
         monkeypatch.setenv(k, v)
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import report as modulo
+    modulo._registro.clear()   # il modulo resta caricato tra un test e l'altro
 
     def persona(nome, cognome, cf, finalita, nota):
         """Richiesta di un Report Persona, come la fa la funzione della pagina."""
@@ -269,8 +296,8 @@ def test_vista_senza_dati_interni(report):
 
 def test_catalogo_letto_da_openapi(report):
     c = report.catalogo()
-    assert [v["id"] for v in c["voci"]] == [report.DOCUMENTO_DI_PROVA, report.REPORT_PERSONA] + [v["id"] for v in report.VOCI_CATASTO] + ["doc-protesti", "doc-planimetria"]
-    assert all("catasto" not in v for v in c["voci"]) and planimetria_successione(c)   # per categoria, poi per nome and c["errore"] is None
+    assert [v["id"] for v in c["voci"]] == [report.DOCUMENTO_DI_PROVA] + [v["id"] for v in report.VOCI_RISK + report.VOCI_CATASTO] + ["doc-protesti", "doc-planimetria", "ve-h1"]
+    assert c["errore"] is None and all("catasto" not in v and "risk" not in v for v in c["voci"]) and planimetria_successione(c)   # per categoria, poi per nome and c["errore"] is None
     protesti, planimetria = report.voce("doc-protesti"), report.voce("doc-planimetria")
     assert protesti["prezzo"] == 90 and protesti["immediato"] and protesti["tempi"] == "subito" and protesti["descrizione"].startswith("Visura protesti: assegni e cambiali")
     assert protesti["campi"][0] == {"chiave": "field0", "nome": "Codice fiscale", "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}
@@ -339,16 +366,19 @@ def test_ambiente_riconosciuto_dal_token(report, monkeypatch):
         chiamate.append(report._base(servizio))
         if "test." not in report._base(servizio):
             raise report.urllib.error.HTTPError("u", 401, "no", {}, __import__("io").BytesIO(b"{}"))
+        if servizio == "visengine":
+            return __import__("json").dumps({"data": VISURE if percorso == "/visure" else DETTAGLIO_H1}).encode()
         return __import__("json").dumps({"success": True, "data": CATALOGO}).encode()
     monkeypatch.delenv("OPENAPI_DOCUENGINE_BASE")
+    monkeypatch.delenv("OPENAPI_VISENGINE_BASE")
     monkeypatch.delenv("OPENAPI_RISK_BASE")
     monkeypatch.setenv("OPENAPI_TOKEN", "token-di-prova")
     monkeypatch.setattr(report, "_openapi", finto)
     report._ambiente.clear()
     assert not report.in_prova()
     c = report.catalogo()
-    assert chiamate == ["https://docuengine.openapi.com", "https://test.docuengine.openapi.com"]
-    assert c["prova"] and len(c["voci"]) == 4 + len(report.VOCI_CATASTO) and c["errore"] is None and report.configurazione()["prova"]
+    assert chiamate[:2] == ["https://docuengine.openapi.com", "https://test.docuengine.openapi.com"] and set(chiamate[2:]) == {"https://test.visengine2.altravia.com"}
+    assert c["prova"] and len(c["voci"]) == 1 + len(report.VOCI_RISK) + len(report.VOCI_CATASTO) + 3 and c["errore"] is None and report.configurazione()["prova"]
     assert report._base("risk") == "https://test.risk.openapi.com"
     report._ambiente.clear()                      # nuova esecuzione della funzione: lo rilegge dall'archivio
     assert report.in_prova()
@@ -460,3 +490,61 @@ def test_documento_con_allegato(report):
     assert stato["richieste"][0]["search"] == {"field0": pdf}                       # a Openapi arriva il file
     assert r["ricerca"]["field0"].startswith("allegato:") and pdf not in __import__("json").dumps(r)   # in archivio no
     assert report.doppione(v["id"], report.senza_allegati(v, ricerca))["codice"] == r["codice"]
+
+
+def test_registro_diagnostico(report):
+    """Ogni chiamata lascia una riga senza dati personali; le ripetizioni uguali diventano una riga con il contatore."""
+    report.persona("Mario", "Rossi", CF_ROSSI, "successione", "")
+    stato["openapi_errore"] = 402
+    report.persona("Mario", "Rossi", CF_ROSSI, "successione", "")
+    r = next(x for x in report.tutte() if x["stato"] == "in_lavorazione")
+    for _ in range(3):
+        report.controlla(r)                      # 406: non ancora pronto, tre volte
+    report.catalogo(rinnova=True)                # letture del catalogo riuscite: non annotate
+    report.salva_registro()
+    righe = report.diagnostica()                 # dalla più recente
+    testo = json.dumps(righe)
+    assert CF_ROSSI not in testo and "Rossi" not in testo
+    assert [(x["metodo"], x["codice"]) for x in reversed(righe)] == [("POST", 200), ("POST", 402), ("GET", 406)]
+    assert righe[0]["volte"] == 3 and righe[0]["percorso"] == "/IT-report-persona/abc123/download"   # gli id veri (24 caratteri) diventano <id>
+    report.controlla({**r, "openapi": "65a1b2c3d4e5f60718293a4b"})
+    assert report._registro[-1]["percorso"] == "/IT-report-persona/<id>/download"
+    assert "state=processing" in righe[-1]["sintesi"] and righe[1]["sintesi"] == "no"
+    assert report._oscura(f"cf {CF_ROSSI} piva 12345678901") == "cf *** piva ***"
+
+
+def test_report_eredi_del_defunto(report):
+    v = report.voce("eredi-senza-accettazione")
+    assert v["successione"] and v["crm_da_ricerca"] is False and v["prezzo"] == 2400 and v["campi"][2]["nome"] == "Codice fiscale del defunto"
+    ricerca, leggibili, opzioni, costo = report.prepara(v, {"nome": "Mario", "cognome": "Rossi", "cf": CF_ROSSI}, [])
+    r = report.richiedi(v, ricerca, leggibili, opzioni, costo, {"nome": "Luca", "cognome": "Rossi", "cf": ""}, "successione", "")
+    assert r["stato"] == "in_lavorazione" and r["risk_percorso"] == "/IT-eredi-senza-accettazione" and r["nome"] == "Luca"
+    stato["pronto"] = True
+    r = report.controlla(r)
+    assert r["stato"] == "pronto" and r["file"][0]["nome"].startswith("eredi-senza-accettazione-" + CF_ROSSI)
+
+
+def test_visengine_catalogo_ricerca_e_documento(report):
+    import base64
+    c = report.catalogo()
+    assert not any(v["categoria"] == "Patronato" for v in c["voci"])        # le pratiche di Patronato le fa l'ufficio
+    v = report.voce("ve-h1")
+    assert v["prezzo"] == 3040 and v["prezzo_ricerca"] == 50 and v["opzioni"] == [{"nome": "Storico", "prezzo": 200}] and v["allegati"] and not v["immediato"]
+    assert [(x["chiave"], x["tipo"], x["obbligatorio"]) for x in v["campi"]] == [("$0", "taxCode", True), ("$1", "file", False)]
+    assert v["descrizione"].startswith("Visura PRA: proprietario")              # spiegazione scelta dal nome
+    pdf = base64.b64encode(b"%PDF delega").decode()
+    ricerca, leggibili, opzioni, costo = report.prepara(v, {"$0": CF_ROSSI, "$1": {"nome": "delega.pdf", "base64": pdf}}, ["Storico"])
+    assert ricerca["$1"] == "delega.pdf|data:application/pdf;base64," + pdf     # formato degli allegati di VisEngine
+    r = report.richiedi(v, ricerca, leggibili, opzioni, costo, {"nome": "Mario", "cognome": "Rossi", "cf": CF_ROSSI}, "altro", "prova")
+    inviata = stato["richieste"][0]
+    assert inviata["hash_visura"] == "h1" and inviata["json_visura"]["$0"] == CF_ROSSI and inviata["opzioni"] == {"opzione_0": True} and inviata["state"] == 1
+    assert r["stato"] == "da_scegliere" and [x["id"] for x in r["risultati"]] == ["rc1|0", "rc1|1"] and "EF456GH" in r["risultati"][1]["testo"]
+    assert pdf not in json.dumps(r)                                            # l'allegato non resta in archivio
+    r = report.scegli(r, "rc1|1")
+    assert stato["scelta_ve"] == {"id_ricerca": "rc1", "indice": 1} and r["stato"] == "in_lavorazione"
+    r = report.controlla(r)
+    assert r["stato"] == "in_lavorazione" and r["stato_openapi"] == "In erogazione"
+    stato["ve_stato"] = "Visura evasa"
+    r = report.controlla(r)
+    assert r["stato"] == "pronto" and r["file"][0]["nome"] == "visura_pra.pdf" and report.file(r["codice"], 0) == b"%PDF visura pra"
+    assert r["costo"] == 3240                                                  # visura + ricerca + opzione

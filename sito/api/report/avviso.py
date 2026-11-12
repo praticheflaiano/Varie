@@ -33,6 +33,8 @@ class handler(BaseHTTPRequestHandler):
                     report.controlla(r)
         except Exception as e:
             print("report: avviso non gestito", type(e).__name__)
+        finally:
+            report.salva_registro()
         self._fatto()
 
     def do_GET(self):
@@ -45,6 +47,8 @@ class handler(BaseHTTPRequestHandler):
                     report.controlla(r)
         except Exception as e:
             print("report: manutenzione non riuscita", type(e).__name__)
+        finally:
+            report.salva_registro()
         self._fatto()
 
     def log_message(self, *args):

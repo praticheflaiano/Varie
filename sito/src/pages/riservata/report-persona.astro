@@ -97,6 +97,12 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
       <p id="rp-spesa" class="mt-2 text-[#4E4B66]"></p>
       <div id="rp-elenco" class="mt-4 grid gap-4"></div>
       <p class="mt-6 text-sm text-[#4E4B66]">I documenti restano in questo archivio per 12 mesi, poi vengono cancellati. La copia allegata al contatto nel CRM non ha scadenza.</p>
+      <details id="rp-diag" class="mt-8 rounded-[28px] bg-[#F7F7FB] p-6">
+        <summary class="cursor-pointer text-lg font-extrabold text-[#14142B]">Diagnostica: le ultime risposte di Openapi</summary>
+        <p class="mt-2 text-sm text-[#4E4B66]">Ogni chiamata a Openapi con il codice di risposta e il messaggio, senza dati dei clienti (codici fiscali oscurati). Se qualcosa non va, il motivo è qui. 200 e 201 = tutto bene; 401 token, 402 credito, 403 permessi, 404/406/422 di solito "non ancora pronto".</p>
+        <button id="rp-diag-rinnova" type="button" class={`${secondario} mt-3`}>Rileggi</button>
+        <div id="rp-diag-righe" class="mt-4 grid gap-2 text-sm"></div>
+      </details>
     </div>
   </section>
   <script is:inline define:vars={{ API }}>
@@ -115,6 +121,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
       const quando = (s) => { const d = new Date(s); return isNaN(d) ? "" : d.toLocaleString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }); };
       const giorno = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ""); return m ? `${m[3]}/${m[2]}/${m[1]}` : ""; };
       const euro = (c) => (c / 100).toLocaleString("it-IT", { minimumFractionDigits: 2 });
+      const breve = (t) => { const s = String(t || "in differita").split(":")[0].trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
       const nodo = (tag, classe, testo) => { const e = document.createElement(tag); if (classe) e.className = classe; if (testo !== undefined) e.textContent = testo; return e; };
 
       async function chiedi(azione, altro) {
@@ -164,7 +171,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           const testa = nodo("div", "flex items-start justify-between gap-3");
           testa.append(nodo("span", "font-extrabold", v.nome), nodo("span", "shrink-0 font-extrabold", v.prezzo ? `${euro(v.prezzo)} €` : "Gratis"));
           const sotto = nodo("div", "mt-2 flex flex-wrap items-center gap-2 text-sm");
-          sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : v.servizio === "risk" ? "10 minuti - 48 ore" : v.servizio === "catasto" ? (v.tempi.includes("24") ? "Entro 24 ore" : "Pochi minuti") : "In differita"), nodo("span", "text-[#4E4B66]", v.categoria));
+          sotto.append(nodo("span", `rounded-full px-3 py-1 font-bold ${v.immediato ? "bg-[#D4FF4F]" : "bg-[#FFF4CC]"}`, v.immediato ? "Subito" : breve(v.tempi)), nodo("span", "text-[#4E4B66]", v.categoria));
           if (v.allegati) sotto.append(nodo("span", "rounded-full bg-[#E4E4EE] px-3 py-1 font-bold", "Con allegati"));
           card.append(testa);
           if (v.descrizione) card.append(nodo("span", "mt-1 block text-sm text-[#4E4B66]", v.descrizione));
@@ -180,7 +187,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         cat.replaceChildren(new Option("Tutte le categorie", ""), ...[...new Set(voci.map((v) => v.categoria))].sort().map((c) => new Option(c, c)));
         cat.value = attuale;
         if (d.prova) { const c = $("rp-config"); if (!c.textContent.includes("PROVA")) { c.textContent = (c.textContent ? c.textContent + " " : "") + "Ambiente di PROVA Openapi: i documenti non sono veri e non vengono addebitati."; c.classList.remove("hidden"); } }
-        $("rp-letto").textContent = (d.letto ? `Prezzi e tempi letti da Openapi il ${quando(d.letto)}, IVA esclusa.` : "Catalogo Openapi non ancora letto: è disponibile solo il Report Persona.") + (d.errore ? " " + d.errore : "");
+        $("rp-letto").textContent = (d.letto ? `Prezzi e tempi letti da Openapi il ${quando(d.letto)}, IVA esclusa.` : "Catalogo Openapi non ancora letto: per ora ci sono solo i report sulla persona e le voci del Catasto.") + (d.errore ? " " + d.errore : "");
         disegnaCatalogo();
       }
       function totale() {
@@ -231,7 +238,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
           riga.append(box, nodo("span", "", `${o.nome} (+${euro(o.prezzo)} €)`));
           opz.append(riga);
         }
-        $("rp-persona").classList.toggle("hidden", v.servizio === "risk");
+        $("rp-persona").classList.toggle("hidden", v.crm_da_ricerca === true);   // per i report sulla persona il cliente è la persona cercata
         if ($("rp-successione").checked) $("rp-finalita").value = "successione";
         totale();
         form.scrollIntoView({ block: "start" });
@@ -385,6 +392,23 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         b.disabled = true; b.textContent = "Leggo…";
         try { mostraCatalogo(await chiedi("catalogo", { rinnova: true })); } catch (e) { errore(e); } finally { b.disabled = false; b.textContent = "Aggiorna catalogo"; }
       });
+      async function diagnostica() {
+        const box = $("rp-diag-righe");
+        box.replaceChildren(nodo("p", "text-[#4E4B66]", "Leggo…"));
+        try {
+          const righe = (await chiedi("diagnostica")).righe || [];
+          box.replaceChildren(...(righe.length ? [] : [nodo("p", "text-[#4E4B66]", "Nessuna chiamata registrata finora.")]));
+          for (const r of righe) {
+            const ok = typeof r.codice === "number" && r.codice < 300, attesa = [404, 406, 422].includes(r.codice);
+            const riga = nodo("div", `rounded-2xl p-3 ${ok ? "bg-white" : attesa ? "bg-[#FFF4CC]" : "bg-[#FFE3EC]"}`);
+            riga.append(nodo("p", "font-bold text-[#14142B]", `${quando(r.quando)} · ${r.servizio} ${r.metodo} ${r.percorso} → ${r.codice}${r.volte > 1 ? ` (×${r.volte})` : ""}`),
+              nodo("p", "text-[#4E4B66]", `${r.sintesi || "nessun messaggio"} · ${r.ms} ms · ${r.ambiente === "prova" ? "prova" : "vero"}`));
+            box.append(riga);
+          }
+        } catch (e) { box.replaceChildren(); errore(e); }
+      }
+      $("rp-diag").addEventListener("toggle", () => { if ($("rp-diag").open) diagnostica(); });
+      $("rp-diag-rinnova").addEventListener("click", diagnostica);
       $("rp-aggiorna").addEventListener("click", () => aggiorna(false));
       $("rp-esci").addEventListener("click", () => { esci(); avvisa(""); });
       if (sessione) entra().catch((e) => { if (e.stato === 401) esci(); else errore(e); });

@@ -46,7 +46,7 @@ Le funzioni girano nel progetto Vercel `praticheflaiano-sito`, come quelle della
 | Variabile | A cosa serve |
 |---|---|
 | `REPORT_PERSONA_PASSWORD` | Password della pagina. Senza, la pagina resta chiusa (503). |
-| `OPENAPI_TOKEN` | Token Openapi con i permessi Risk (`IT-report-persona`) e DocuEngine (`documents`, `requests`). Senza, il catalogo non si legge e le richieste non partono. Vale anche il vecchio nome `OPENAPI_RISK_TOKEN`. |
+| `OPENAPI_TOKEN` | Token Openapi con i permessi Risk (`IT-report-persona`, `IT-report-persona-top`, `IT-patrimoniale-persona`, `IT-patrimoniale-persona-top`, `IT-eredi-senza-accettazione`, `IT-eredi-con-accettazione`), Catasto, DocuEngine (`documents`, `requests`) e VisEngine (`visure`, `richiesta`, `documento`). Un servizio senza permesso non blocca gli altri: il suo errore compare sopra il catalogo. Senza, il catalogo non si legge e le richieste non partono. Vale anche il vecchio nome `OPENAPI_RISK_TOKEN`. |
 | `OPENAPI_PROVA` | Facoltativa. `1` = ambienti di prova di Openapi (`test.risk…`, `test.docuengine…`), `0` = veri. **Senza la variabile l'ambiente si riconosce dal token**: se il catalogo risponde 401 in produzione e 200 in prova, la pagina passa alla prova, lo scrive in `report/ambiente.json` e mostra l'avviso "Ambiente di PROVA". Cambiando token si riparte dalla produzione. |
 | `GHL_API_TOKEN` | Già presente (stima pensione). |
 | `REPORT_PERSONA_URL` | Facoltativa: indirizzo pubblico delle funzioni per l'avviso di Openapi. In produzione si ricava da solo. |
@@ -128,6 +128,12 @@ richiesta e non consegnare mai un file.
 - Ogni richiesta in lavorazione mostra lo stato letto da Openapi e l'ora dell'ultimo controllo.
 - Ogni chiamata a Openapi lascia una riga nei log di Vercel (`report: openapi <servizio> <metodo> <percorso> -> <codice>`),
   senza identificativi né dati della richiesta. Il piano Hobby conserva i log per un'ora.
+- **Registro diagnostico** (dal 12/11/2026, PR "diagnostica + VisEngine"): le stesse chiamate restano anche in
+  `report/diagnostica.json` (ultime 150 righe) e si leggono nella pagina, sezione "Diagnostica" in fondo.
+  Per ogni chiamata: servizio, metodo, percorso (identificativi con cifre oscurati come `<id>`), codice, sintesi
+  (stato e messaggio di Openapi, codici fiscali e partite IVA oscurati), millisecondi, ambiente. Le letture riuscite
+  del catalogo non si annotano; le ripetizioni uguali consecutive diventano una riga con `volte`. Si salva alla fine
+  di ogni chiamata della pagina e dell'avviso (`salva_registro()` nel `finally`).
 
 ## Riletto sulla documentazione Openapi (12/11/2026, sera)
 
@@ -151,6 +157,21 @@ richiesta e non consegnare mai un file.
 - **Risk**: nella risposta l'`id` e lo stato possono stare dentro `callback`; lo stato finale è indicato come `evaso`.
   Il codice non si fida del nome dello stato e prova direttamente il download (406 = non pronto).
 
+## Altri report Risk e VisEngine (12/11/2026, notte)
+
+- **Risk**: oltre al Report Persona ci sono Report Persona Top (18 €), Patrimoniale Persona (36 €), Patrimoniale
+  Top (48 €), Eredi senza accettazione (24 €) ed Eredi con accettazione (48 €), prezzi del listino pubblico IVA esclusa.
+  Stesso schema: nome, cognome, codice fiscale, callback con `headers`, PDF da `/<prodotto>/{id}/download` (406 = non
+  pronto). Il percorso del prodotto è salvato nella richiesta (`risk_percorso`). Per i report **Eredi** la persona
+  cercata è il defunto (`crm_da_ricerca: False`): nel CRM il documento va al cliente indicato a parte.
+- **VisEngine** (`visengine2.altravia.com`, prova `test.visengine2.altravia.com`): catalogo letto da `GET /visure` più
+  il dettaglio di ogni voce (`GET /visure/{hash}`, 8 in parallelo, massimo 120), copia in `report/catalogo-visengine.json`
+  per 6 ore. Escluse le categorie Patronato/CAF (pratiche che l'ufficio fa da sé). Richiesta `POST /richiesta`
+  {hash_visura, json_visura, state 1, opzioni `opzione_N`, callback_data}; risultati da scegliere in `ricerche[].json_risultato`
+  (chiavi `indice_N`), scelta con `PUT /richiesta/{id}/ricerche` {id_ricerca, indice}; documento in base64 da
+  `GET /documento/{id}` (422 = non pronto). Gli allegati vanno nel formato `nome|data:<tipo>;base64,<contenuto>`.
+- Catasto: Elaborato planimetrico ed Estratto di mappa arrivano "in pochi secondi" (listino), non entro 24 ore.
+
 ## Limiti noti
 
 - Un PDF oltre circa 3,2 MB non si scarica dalla pagina (limite di risposta delle funzioni): si apre dal CRM.
@@ -171,7 +192,8 @@ richiesta e non consegnare mai un file.
 - Chiamate reali a DocuEngine: forma del catalogo, lingua dei nomi, forma dei `results` da scegliere (il codice
   mostra i valori di testo di ogni risultato), documenti immediati (se arrivano già `DONE` nella risposta), tempi
   reali dei documenti in differita (il catalogo dice solo immediato o no).
-- Come si passano i campi di tipo `file`: non documentato, per questo quei documenti non si chiedono da qui.
+- Campi di tipo `file`: per VisEngine il formato è documentato; per DocuEngine si manda il base64 semplice (non documentato, da verificare).
+- Chiamate reali a VisEngine e agli altri report Risk: mai provate (il token di prova deve includere anche questi servizi).
 - Chiamate reali a GHL: ricerca contatti (`POST /contacts/search`), creazione dei campi, caricamento del
   file (`POST /forms/upload-custom-files`), comportamento con più file nello stesso campo.
 - Da chiarire fuori dal codice: condizioni d'uso Openapi e inquadramento privacy (finalità, consenso)

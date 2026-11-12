@@ -2,11 +2,11 @@
 Documenti Openapi richiesti dall'ufficio dalla pagina riservata /riservata/report-persona.
 Uso interno: la pagina la apre solo il titolare, con una password.
 
-Due servizi di Openapi dietro la stessa pagina:
-  - Report Persona (API Risk, risk.openapi.com): voce fissa del catalogo;
-  - DocuEngine (docuengine.openapi.com): il catalogo dei documenti si legge da Openapi
-    (GET /documents: nome, categoria, prezzo, immediato o in differita, dati richiesti),
-    quindi nuove voci e nuovi prezzi compaiono da soli.
+Quattro servizi di Openapi dietro la stessa pagina:
+  - Risk (risk.openapi.com): report su persone (Report Persona, Patrimoniale, Eredi...), voci fisse;
+  - Catasto (catasto.openapi.it): visure, ricerche immobili, ispezioni ipotecarie, voci fisse;
+  - DocuEngine (docuengine.openapi.com) e VisEngine (visengine2.altravia.com): il catalogo si legge
+    da Openapi (nome, categoria, prezzo, dati richiesti), quindi nuove voci e nuovi prezzi compaiono da soli.
 
 Cosa fa:
   - accesso con password (REPORT_PERSONA_PASSWORD) e sessione firmata di 12 ore;
@@ -20,6 +20,8 @@ Archivio:
   report/richieste/<codice>.json   dati della richiesta
   report/file/<codice>/<n>.bin     i file del documento (di solito un PDF)
   report/catalogo.json             copia del catalogo DocuEngine (si rinnova ogni 6 ore)
+  report/catalogo-visengine.json   copia del catalogo VisEngine (si rinnova ogni 6 ore)
+  report/diagnostica.json          ultime chiamate a Openapi, senza dati personali (registro diagnostico)
   report/accesso/tentativi.json    contatore degli accessi sbagliati
 
 Variabili d'ambiente:
@@ -28,11 +30,11 @@ Variabili d'ambiente:
                             (documents, requests). In alternativa OPENAPI_RISK_TOKEN.
   OPENAPI_PROVA             facoltativa: "1" = ambienti di prova di Openapi, "0" = veri. Senza, l'ambiente si
                             riconosce dal token alla lettura del catalogo (report/ambiente.json)
-  OPENAPI_RISK_BASE, OPENAPI_DOCUENGINE_BASE   solo per i test
+  OPENAPI_RISK_BASE, OPENAPI_DOCUENGINE_BASE, OPENAPI_CATASTO_BASE, OPENAPI_VISENGINE_BASE   solo per i test
   GHL_API_TOKEN             lo stesso della stima pensione (vedi _pensione/crm.py)
   REPORT_PERSONA_URL        facoltativa: indirizzo pubblico delle funzioni per l'avviso di Openapi
 """
-import base64, hashlib, hmac, json, os, re, secrets, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
+import base64, concurrent.futures, hashlib, hmac, json, os, re, secrets, sys, time, unicodedata, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "_pensione"))
@@ -279,6 +281,8 @@ def _riconosci():
 
 
 def _base(servizio):
+    if servizio == "visengine":
+        return (os.environ.get("OPENAPI_VISENGINE_BASE") or ("https://test.visengine2.altravia.com" if in_prova() else "https://visengine2.altravia.com")).rstrip("/")
     if servizio == "catasto":
         return (os.environ.get("OPENAPI_CATASTO_BASE") or ("https://test.catasto.openapi.it" if in_prova() else "https://catasto.openapi.it")).rstrip("/")
     if servizio == "risk":
@@ -286,27 +290,115 @@ def _base(servizio):
     return (os.environ.get("OPENAPI_DOCUENGINE_BASE") or ("https://test.docuengine.openapi.com" if in_prova() else "https://docuengine.openapi.com")).rstrip("/")
 
 
+# ----- registro diagnostico -----
+# Ogni chiamata a Openapi lascia una riga: servizio, operazione (senza identificativi), codice, stato e messaggio
+# di Openapi, con codici fiscali e partite IVA oscurati. Niente corpi delle richieste né dati delle risposte.
+# Le righe si accumulano durante l'esecuzione e vengono salvate in archivio una volta sola (salva_registro).
+_registro = []
+REGISTRO_MAX = 150
+_CF_O_PIVA = re.compile(r"\b[A-Za-z]{6}[0-9LMNPQRSTUVlmnpqrstuv]{2}[A-Za-z][0-9LMNPQRSTUVlmnpqrstuv]{2}[A-Za-z][0-9LMNPQRSTUVlmnpqrstuv]{3}[A-Za-z]\b|\b\d{11}\b")
+
+
+def _oscura(testo):
+    return _CF_O_PIVA.sub("***", str(testo or ""))
+
+
+def _sintesi(dati):
+    """Dalla risposta di Openapi solo ciò che spiega l'esito: stato, messaggio, codice d'errore. Mai i dati."""
+    if not dati or dati[:4] == b"%PDF":
+        return "PDF" if dati else ""
+    try:
+        j = json.loads(dati)
+    except (ValueError, UnicodeDecodeError):
+        return f"{len(dati)} byte non JSON"
+    if not isinstance(j, dict):
+        return ""
+    d = j.get("data") if isinstance(j.get("data"), dict) else {}
+    pezzi = []
+    for fonte in (d, d.get("callback") if isinstance(d.get("callback"), dict) else {}):
+        for k in ("state", "stato", "stato_richiesta"):
+            if fonte.get(k) not in (None, ""):
+                pezzi.append(f"{k}={fonte[k]}")
+    esito = d.get("esito")
+    if isinstance(esito, dict) and esito.get("info"):
+        pezzi.append(f"esito={esito.get('codice')} {esito.get('info')}")
+    if isinstance(j.get("data"), list):
+        pezzi.append(f"{len(j['data'])} elementi")
+    if j.get("error") not in (None, "", 0):
+        pezzi.append(f"errore {j['error']}")
+    if j.get("message"):
+        pezzi.append(str(j["message"]))
+    return _oscura(" · ".join(pezzi))[:240]
+
+
+def _annota(servizio, metodo, percorso, codice, sintesi, inizio):
+    _registro.append({"quando": iso(), "servizio": servizio, "metodo": metodo, "percorso": percorso, "codice": codice,
+                      "sintesi": sintesi, "ms": int((time.time() - inizio) * 1000), "ambiente": "prova" if in_prova() else "vero", "volte": 1})
+
+
+def salva_registro():
+    """Aggiunge all'archivio le righe di questa esecuzione. Le chiamate ripetute uguali (i controlli periodici)
+    diventano una riga sola con il contatore."""
+    if not _registro:
+        return
+    nuove = _registro[:]
+    del _registro[:]
+    try:
+        righe = _leggi_json("report/diagnostica.json") or []
+        for riga in nuove:
+            chiave = (riga["servizio"], riga["metodo"], riga["percorso"], riga["codice"], riga["sintesi"])
+            if righe and (righe[-1]["servizio"], righe[-1]["metodo"], righe[-1]["percorso"], righe[-1]["codice"], righe[-1]["sintesi"]) == chiave:
+                righe[-1].update(quando=riga["quando"], ms=riga["ms"], volte=righe[-1].get("volte", 1) + 1)
+            else:
+                righe.append(riga)
+        _scrivi_json("report/diagnostica.json", righe[-REGISTRO_MAX:])
+    except Exception as e:
+        print("report: registro non salvato", type(e).__name__)
+
+
+def diagnostica():
+    return list(reversed(_leggi_json("report/diagnostica.json") or []))
+
+
+def _da_annotare(metodo, percorso, codice):
+    """Le letture riuscite del catalogo sono tante e non dicono nulla: si annotano solo se falliscono."""
+    catalogo = percorso in ("/documents", "/visure") or percorso.startswith("/visure/")
+    return not (metodo == "GET" and catalogo and codice == 200)
+
+
 def _openapi(servizio, metodo, percorso, corpo=None, attesa=30):
     richiesta = urllib.request.Request(
         _base(servizio) + percorso, data=json.dumps(corpo).encode() if corpo is not None else None, method=metodo,
         headers={"authorization": "Bearer " + _token(), "content-type": "application/json",
                  "accept": "application/pdf, application/json", "accept-language": "it", "user-agent": "praticheflaiano-report-persona/1.0 (+https://praticheflaiano.it)"})
-    percorso_log = re.sub(r"/[A-Za-z0-9_-]{16,}", "/<id>", percorso)   # nel registro niente identificativi né dati
+    percorso_log = re.sub(r"/(?=[A-Za-z_-]*\d)[A-Za-z0-9_-]{16,}", "/<id>", percorso)   # identificativi (con cifre) oscurati, nomi dei servizi no
+    inizio = time.time()
     try:
         with urllib.request.urlopen(richiesta, timeout=attesa) as r:
             dati = r.read()
         print(f"report: openapi {servizio} {metodo} {percorso_log} -> {r.status} ({len(dati)} byte, {'prova' if in_prova() else 'vero'})")
+        if _da_annotare(metodo, percorso, r.status):
+            _annota(servizio, metodo, percorso_log, r.status, _sintesi(dati), inizio)
         return dati
     except urllib.error.HTTPError as e:
+        try:
+            e.corpo = e.read()   # letto una volta sola: serve sia al registro sia al messaggio per la pagina
+        except Exception:
+            e.corpo = b""
         print(f"report: openapi {servizio} {metodo} {percorso_log} -> {e.code} ({'prova' if in_prova() else 'vero'})")
+        _annota(servizio, metodo, percorso_log, e.code, _sintesi(e.corpo), inizio)
+        raise
+    except Exception as e:
+        _annota(servizio, metodo, percorso_log, "rete", type(e).__name__, inizio)
         raise
 
 
 def _motivo(e):
     """Spiegazione leggibile di un rifiuto di Openapi (senza dati della richiesta)."""
     try:
-        dettaglio = str((json.loads(e.read() or b"{}") or {}).get("message") or "")[:200]
-    except ValueError:
+        corpo = e.corpo if hasattr(e, "corpo") else e.read()
+        dettaglio = _oscura((json.loads(corpo or b"{}") or {}).get("message") or "")[:200]
+    except (ValueError, AttributeError):
         dettaglio = ""
     noti = {401: "token Openapi non valido o scaduto", 402: "credito Openapi insufficiente", 403: "il token Openapi non ha il permesso per questo servizio",
             417: "documento temporaneamente non disponibile su Openapi: riprova più tardi"}
@@ -328,14 +420,40 @@ def _callback(indirizzo):
 
 # ----- catalogo -----
 
-VOCE_REPORT_PERSONA = {
-    "id": REPORT_PERSONA, "servizio": "risk", "nome": "Report Persona", "categoria": "Report sulla persona",
-    "descrizione": "Anagrafica, affidabilità, protesti, pregiudizievoli, cariche, partecipazioni e dati catastali nazionali in un unico PDF.",
-    "immediato": False, "tempi": "da 10 minuti a 24-48 ore", "ricerca": False, "prezzo": COSTO_CENTESIMI, "prezzo_ricerca": 0, "opzioni": [], "richiedibile": True,
-    "campi": [{"chiave": "nome", "nome": "Nome", "tipo": "string", "obbligatorio": True, "aiuto": "", "scelte": []},
-              {"chiave": "cognome", "nome": "Cognome", "tipo": "string", "obbligatorio": True, "aiuto": "", "scelte": []},
-              {"chiave": "cf", "nome": "Codice fiscale", "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}],
-}
+def _risk(ident, percorso, nome, descrizione, prezzo, tempi, chi="", successione=False, crm_da_ricerca=True):
+    """Report dell'API Risk: tutti con nome, cognome e codice fiscale, PDF da scaricare a lavorazione finita.
+    Prezzi a richiesta singola, IVA esclusa, dal listino pubblico Openapi del 12/11/2026."""
+    campi = [{"chiave": "nome", "nome": "Nome" + chi, "tipo": "string", "obbligatorio": True, "aiuto": "", "scelte": []},
+             {"chiave": "cognome", "nome": "Cognome" + chi, "tipo": "string", "obbligatorio": True, "aiuto": "", "scelte": []},
+             {"chiave": "cf", "nome": "Codice fiscale" + chi, "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}]
+    return {"id": ident, "servizio": "risk", "nome": nome, "categoria": "Report sulla persona", "descrizione": descrizione, "immediato": False,
+            "tempi": tempi, "ricerca": False, "prezzo": prezzo, "prezzo_ricerca": 0, "opzioni": [], "richiedibile": True, "campi": campi,
+            "successione": successione, "crm_da_ricerca": crm_da_ricerca, "risk": {"percorso": percorso}}
+
+
+VOCI_RISK = [
+    _risk(REPORT_PERSONA, "/IT-report-persona", "Report Persona",
+          "Anagrafica, affidabilità, protesti, pregiudizievoli, cariche, partecipazioni e dati catastali nazionali in un unico PDF.",
+          COSTO_CENTESIMI, "da 10 minuti a 24-48 ore"),
+    _risk("report-persona-top", "/IT-report-persona-top", "Report Persona Top",
+          "Versione approfondita del Report Persona, con residenza e domicilio, posto di lavoro, indice di recuperabilità, cariche e negatività.",
+          1800, "in 10 giorni lavorativi"),
+    _risk("patrimoniale-persona", "/IT-patrimoniale-persona", "Report Patrimoniale Persona",
+          "Anagrafica, affidabilità, occupazione (azienda, retribuzione o pensione), cariche, partecipazioni, rapporti bancari, protesti, "
+          "pregiudizievoli e dati catastali nazionali. Utile per sovraindebitamento e recupero crediti.",
+          3600, "in 10 giorni lavorativi"),
+    _risk("patrimoniale-persona-top", "/IT-patrimoniale-persona-top", "Report Patrimoniale Persona Top",
+          "Tutto il Report Patrimoniale più commento, informazioni ipocatastali, informazioni finanziarie se disponibili e veicoli intestati.",
+          4800, "in 12 giorni lavorativi"),
+    _risk("eredi-senza-accettazione", "/IT-eredi-senza-accettazione", "Report Eredi senza accettazione",
+          "Individua i possibili eredi legittimi di una persona deceduta, con nome e residenza, anche prima che abbiano accettato l'eredità.",
+          2400, "in 12 giorni lavorativi", " del defunto", True, False),
+    _risk("eredi-con-accettazione", "/IT-eredi-con-accettazione", "Report Eredi con accettazione",
+          "Gli eredi che hanno accettato l'eredità di una persona deceduta, con stato civile e coniuge, data di decesso, cariche, partecipazioni, "
+          "rapporti bancari e trascrizioni.",
+          4800, "in 12 giorni lavorativi", " del defunto", True, False),
+]
+VOCE_REPORT_PERSONA = VOCI_RISK[0]
 
 
 DOCUMENTO_DI_PROVA = "documento-di-prova"
@@ -386,7 +504,7 @@ def spiegazione(nome, aiuto=""):
 
 def _centesimi(euro):
     try:
-        return round(float(euro or 0) * 100)
+        return round(float(str(euro or 0).replace(",", ".")) * 100)
     except (TypeError, ValueError):
         return 0
 
@@ -408,7 +526,7 @@ def _voce(d):
     campi.sort(key=lambda c: (len(c["chiave"]), c["chiave"]))
     sincrono = bool(d.get("isSync"))
     return {"id": str(d.get("id")), "servizio": "docuengine", "nome": str(d.get("name") or "Documento"), "categoria": str(d.get("category") or "Altro"),
-            "descrizione": spiegazione(d.get("name"), _testo(struttura.get("help"))), "immediato": sincrono, "tempi": "subito" if sincrono else "in differita (da qualche minuto a qualche giorno, secondo il documento)",
+            "descrizione": spiegazione(d.get("name"), _testo(struttura.get("help"))), "immediato": sincrono, "tempi": "subito" if sincrono else "in differita: da pochi minuti a qualche giorno, secondo il documento",
             "ricerca": bool(d.get("hasSearch")), "prezzo": _centesimi(d.get("totalPrice") if d.get("totalPrice") is not None else d.get("documentPrice")),
             "prezzo_ricerca": _centesimi(d.get("searchPrice")), "prezzo_documento": _centesimi(d.get("documentPrice")),
             "opzioni": [{"nome": str(o.get("name")), "prezzo": _centesimi(o.get("price"))} for o in (d.get("options") or []) if isinstance(o, dict) and o.get("name")],
@@ -416,41 +534,103 @@ def _voce(d):
             "successione": bool(re.search(SUCCESSIONE, normale(d.get("name"))))}
 
 
-def catalogo(rinnova=False):
-    """Catalogo dei documenti: Report Persona più tutto DocuEngine, letto da Openapi e tenuto in archivio per 6 ore.
-    Restituisce {"voci": [...], "letto": iso, "errore": testo o None}."""
-    salvato = _leggi_json("report/catalogo.json") or {}
-    stessa_base = salvato.get("base") == _base("docuengine")
-    fresco = stessa_base and salvato.get("letto", "") > iso(adesso() - timedelta(hours=CATALOGO_ORE))
-    errore = None
+# Categorie VisEngine escluse: sono pratiche di CAF e Patronato (730, ISEE, NASpI, pensioni...) che Openapi
+# rivende e che l'ufficio fa già da sé.
+ESCLUSE_VISENGINE = r"patronat|\bcaf\b|assistenza fiscale"
+
+
+def _voce_visengine(d):
+    """Voce del catalogo VisEngine nella forma usata dalla pagina."""
+    struttura = d.get("json_struttura") or {}
+    validazione = str(struttura.get("validazione") or "")
+    nominati = set(re.findall(r"\$\d+", validazione))
+    alternativi = "||" in validazione   # campi alternativi: obbligatorietà controllata da Openapi, non dalla pagina
+    campi = []
+    for chiave, c in (struttura.get("campi") or {}).items():
+        if not isinstance(c, dict):
+            continue
+        tipo_ve = normale(c.get("tipo")).replace(" ", "_")
+        tipo = "file" if re.search(r"file|allegat|upload", tipo_ve) else "taxCode" if re.search(r"codice_fiscale|partita_iva|cf_piva", tipo_ve) else "string"
+        facoltativo = str(c.get("null")).lower() in ("1", "true")
+        campi.append({"chiave": chiave, "nome": str(c.get("nome") or chiave), "tipo": tipo,
+                      "obbligatorio": False if alternativi and chiave in nominati else (chiave in nominati) if nominati else not facoltativo,
+                      "aiuto": _testo(c.get("istruzioni")), "scelte": [], "ordine": str(c.get("ordine") or "")})
+    campi.sort(key=lambda c: (int(c["ordine"]) if c["ordine"].isdigit() else 999, len(c["chiave"]), c["chiave"]))
+    try:
+        istruzioni = _testo(base64.b64decode(struttura.get("istruzioni") or "").decode("utf-8", "ignore"))
+    except ValueError:
+        istruzioni = ""
+    if validazione and "||" in validazione:
+        istruzioni = (istruzioni + " Alcuni campi sono alternativi: basta compilarne uno per gruppo.").strip()
+    sincrona, ricerca = bool(d.get("sincrona")), bool(d.get("ricerca"))
+    prezzo = _centesimi(d.get("prezzo_visura")) + (_centesimi(d.get("prezzo_ricerca")) if ricerca else 0)
+    return {"id": "ve-" + str(d.get("hash_visura")), "hash": str(d.get("hash_visura")), "servizio": "visengine", "nome": str(d.get("nome_visura") or "Documento"),
+            "categoria": str(d.get("nome_categoria") or "Altro"), "descrizione": spiegazione(d.get("nome_visura"), istruzioni[:400]),
+            "immediato": sincrona, "tempi": "subito" if sincrona else "in differita: da qualche ora a qualche giorno, secondo il documento",
+            "ricerca": ricerca, "prezzo": prezzo, "prezzo_ricerca": _centesimi(d.get("prezzo_ricerca")) if ricerca else 0,
+            "opzioni": [{"nome": str(o.get("nome")), "prezzo": _centesimi(o.get("prezzo"))} for o in (d.get("opzioni") or []) if isinstance(o, dict) and o.get("nome")],
+            "campi": campi, "richiedibile": True, "allegati": any(c["tipo"] == "file" for c in campi),
+            "successione": bool(re.search(SUCCESSIONE, normale(d.get("nome_visura"))))}
+
+
+def _leggi_docuengine():
+    try:
+        grezzo = _openapi("docuengine", "GET", "/documents", attesa=40)
+    except urllib.error.HTTPError as e:
+        grezzo = _riconosci() if e.code == 401 else None   # prima lettura: capisce se il token è di prova o vero
+        if grezzo is None:
+            raise
+    return [_voce(d) for d in (json.loads(grezzo or b"{}").get("data") or []) if isinstance(d, dict) and d.get("id")]
+
+
+def _leggi_visengine():
+    """Elenco dei servizi e poi il dettaglio di ognuno (prezzi e campi), in parallelo."""
+    elenco = [x for x in (json.loads(_openapi("visengine", "GET", "/visure", attesa=40) or b"{}").get("data") or [])
+              if isinstance(x, dict) and x.get("hash_visura") and not re.search(ESCLUSE_VISENGINE, normale(x.get("nome_categoria")))]
+
+    def dettaglio(x):
+        try:
+            d = json.loads(_openapi("visengine", "GET", f"/visure/{urllib.parse.quote(str(x['hash_visura']), safe='')}", attesa=30) or b"{}").get("data")
+            return d if isinstance(d, dict) else None
+        except Exception:
+            return None
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as gruppo:
+        dettagli = list(gruppo.map(dettaglio, elenco[:120]))
+    return [_voce_visengine(d) for d in dettagli if d and d.get("hash_visura")]
+
+
+def _catalogo_servizio(servizio, etichetta, percorso, leggi, rinnova):
+    """Catalogo di un servizio, letto da Openapi e tenuto in archivio per 6 ore. Restituisce (voci, letto, errore)."""
+    salvato, errore = _leggi_json(percorso) or {}, None
+    fresco = salvato.get("base") == _base(servizio) and salvato.get("letto", "") > iso(adesso() - timedelta(hours=CATALOGO_ORE))
     if _token() and (rinnova or not fresco):
         try:
-            try:
-                grezzo = _openapi("docuengine", "GET", "/documents", attesa=40)
-            except urllib.error.HTTPError as e:
-                grezzo = _riconosci() if e.code == 401 else None
-                if grezzo is None:
-                    raise
-            risposta = json.loads(grezzo or b"{}")
-            voci = [_voce(d) for d in (risposta.get("data") or []) if isinstance(d, dict) and d.get("id")]
+            voci = leggi()
             if voci:
-                salvato = {"letto": iso(), "base": _base("docuengine"), "voci": sorted(voci, key=lambda v: (v["categoria"].lower(), v["nome"].lower()))}
-                _scrivi_json("report/catalogo.json", salvato)
-                stessa_base = True
+                salvato = {"letto": iso(), "base": _base(servizio), "voci": sorted(voci, key=lambda v: (v["categoria"].lower(), v["nome"].lower()))}
+                _scrivi_json(percorso, salvato)
             else:
-                errore = "Openapi ha restituito un catalogo vuoto."
+                errore = f"{etichetta}: Openapi ha restituito un catalogo vuoto."
         except urllib.error.HTTPError as e:
-            errore = "Catalogo dei documenti non letto. " + _motivo(e)
+            errore = f"{etichetta}: catalogo non letto. " + _motivo(e)
         except Exception as e:
-            errore = f"Catalogo dei documenti non letto ({type(e).__name__})."
-    stessa_base = salvato.get("base") == _base("docuengine")
-    voci = (salvato.get("voci") or []) if stessa_base else []
-    pubbliche = [{k: val for k, val in v.items() if k != "catasto"} for v in VOCI_CATASTO]
-    return {"voci": [VOCE_PROVA, VOCE_REPORT_PERSONA] + pubbliche + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
+            errore = f"{etichetta}: catalogo non letto ({type(e).__name__})."
+    stessa = salvato.get("base") == _base(servizio)
+    return ((salvato.get("voci") or []) if stessa else []), (salvato.get("letto") if stessa else None), errore
+
+
+def catalogo(rinnova=False):
+    """Catalogo dei documenti: voci fisse (prova, Risk, Catasto) più DocuEngine e VisEngine letti da Openapi.
+    Restituisce {"voci": [...], "letto": iso, "errore": testo o None, "prova": bool}."""
+    docu, letto, errore_docu = _catalogo_servizio("docuengine", "Documenti", "report/catalogo.json", _leggi_docuengine, rinnova)
+    vis, letto_vis, errore_vis = _catalogo_servizio("visengine", "VisEngine", "report/catalogo-visengine.json", _leggi_visengine, rinnova)
+    fisse = [{k: val for k, val in v.items() if k not in ("catasto", "risk")} for v in VOCI_RISK + VOCI_CATASTO]
+    errori = " ".join(e for e in (errore_docu, errore_vis) if e) or None
+    return {"voci": [VOCE_PROVA] + fisse + docu + vis, "letto": letto or letto_vis, "errore": errori, "prova": in_prova()}
 
 
 def voce(ident):
-    for v in VOCI_CATASTO:
+    for v in VOCI_RISK + VOCI_CATASTO:
         if v["id"] == ident:
             return v
     for v in catalogo()["voci"]:
@@ -518,10 +698,10 @@ VOCI_CATASTO = [
              "/ipotecarie-dettaglio-nota", "/ipotecarie", {"tipo_restrizione": "soggetto"}, "nota"),
     _catasto("elaborato-planimetrico", "Elaborato planimetrico",
              "Il disegno (PDF) che mostra come è diviso un fabbricato in subalterni e parti comuni. Non è la planimetria del singolo appartamento, che richiede la delega del proprietario.",
-             690, "entro 24 ore lavorative", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/elaborato_planimetrico", "/elaborato_planimetrico"),
+             690, "in pochi secondi", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/elaborato_planimetrico", "/elaborato_planimetrico"),
     _catasto("estratto-mappa", "Estratto di mappa",
              "La porzione di mappa del Catasto terreni (PDF) con la particella e i suoi confini. Utile per i terreni caduti in successione.",
-             690, "entro 24 ore lavorative", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/estratto_mappa", "/estratto_mappa"),
+             690, "in pochi secondi", [_PROVINCIA, _COMUNE, _SEZIONE, _FOGLIO, _PARTICELLA], "/estratto_mappa", "/estratto_mappa"),
 ]
 
 # Documenti del catalogo DocuEngine che servono in una successione, riconosciuti dal nome.
@@ -668,7 +848,8 @@ def prepara(v, valori, opzioni):
             peso += len(byte)
             if peso > MAX_ALLEGATI:
                 return None, "Gli allegati superano il limite di " + f"{MAX_ALLEGATI / 1_000_000:.1f}".replace(".", ",") + " MB in tutto: riduci le scansioni.", None, None
-            ricerca[c["chiave"]] = contenuto
+            # VisEngine li vuole come "nome|data:<tipo>;base64,<contenuto>" (documentazione); DocuEngine come base64 semplice.
+            ricerca[c["chiave"]] = f"{nome}|data:{TIPI_ALLEGATO[estensione]};base64,{contenuto}" if v["servizio"] == "visengine" else contenuto
             leggibili.append({"nome": c["nome"], "valore": f"{nome} ({max(1, len(byte) // 1024)} kB)"})
             continue
         valore = " ".join(str((valori or {}).get(c["chiave"]) or "").split())[:300]
@@ -735,7 +916,8 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
             corpo = {"name": ricerca["nome"], "surname": ricerca["cognome"], "taxCode": ricerca["cf"]}
             if avviso:
                 corpo["callback"] = _callback(avviso)
-            risposta = json.loads(_openapi("risk", "POST", "/IT-report-persona/", corpo) or b"{}")
+            r["risk_percorso"] = v["risk"]["percorso"]
+            risposta = json.loads(_openapi("risk", "POST", v["risk"]["percorso"] + "/", corpo) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id") or (dati.get("callback") or {}).get("id")   # nell'esempio ufficiale l'id è dentro "callback"
         elif v["servizio"] == "catasto":
@@ -749,6 +931,18 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
             risposta = json.loads(_openapi("catasto", "POST", v["catasto"]["percorso"], corpo, attesa=60) or b"{}")
             dati = risposta.get("data") or {}
             ident = dati.get("id")
+        elif v["servizio"] == "visengine":
+            corpo = {"hash_visura": v["hash"], "json_visura": ricerca, "state": 1}
+            scelte = {f"opzione_{n}": True for n, o in enumerate(v["opzioni"]) if o["nome"] in opzioni}
+            if scelte:
+                corpo["opzioni"] = scelte
+            if avviso:
+                corpo["callback_data"] = {"url": avviso, "method": "JSON", "field": "data", "data": {"origine": "praticheflaiano"}}
+            risposta = json.loads(_openapi("visengine", "POST", "/richiesta", corpo, attesa=60) or b"{}")
+            dati = risposta.get("data") or {}
+            ident = dati.get("_id") or dati.get("id")
+            if ident and "success" not in risposta:
+                risposta["success"] = True   # se VisEngine non riporta "success", vale l'identificativo
         else:
             corpo = {"documentId": v["id"], "search": ricerca}
             if opzioni:
@@ -766,6 +960,8 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
                 _stato_docuengine(r, _avvia_docuengine(r, dati))
             elif v["servizio"] == "catasto":
                 _controlla_catasto(r, v, dati)   # in prova (e a volte dal vero) la risposta è già completa
+            elif v["servizio"] == "visengine":
+                _stato_visengine(r, dati)
     except urllib.error.HTTPError as e:
         r.update(stato="errore", errore=_motivo(e), costo=0)
     except Exception as e:
@@ -820,6 +1016,47 @@ def _stato_docuengine(r, dati):
         r["stato"] = "in_lavorazione"
 
 
+def _stato_visengine(r, dati):
+    """Porta nella richiesta lo stato di VisEngine: In ricerca, In erogazione, Dati disponibili, Visura evasa, Annullata."""
+    stato = str(dati.get("stato_richiesta") or "")
+    r["stato_openapi"], r["controllata"] = stato or "?", iso()
+    s = normale(stato)
+    if dati.get("prezzo_visura") is not None:
+        r["costo"] = _centesimi(dati["prezzo_visura"]) + (_centesimi(dati.get("prezzo_ricerca")) if dati.get("ricerca") else 0) + sum(
+            o["prezzo"] for o in (voce(r["documento"]) or {}).get("opzioni", []) if o["nome"] in (r.get("opzioni") or []))
+    esito = dati.get("esito") if isinstance(dati.get("esito"), dict) else {}
+    if "annullat" in s:
+        r.update(stato="annullata", errore="Openapi ha annullato la richiesta" + (f": {_oscura(esito.get('info'))[:200]}" if esito.get("info") else "."), costo=0)
+        return
+    if "evasa" in s:
+        r["stato"] = "pronto_da_scaricare"
+        return
+    risultati, fallite = [], []
+    if dati.get("indice_ricerca") in (None, "", -1):
+        for rc in dati.get("ricerche") or []:
+            if not isinstance(rc, dict) or not rc.get("id_ricerca"):
+                continue
+            grezzo = rc.get("json_risultato")
+            try:
+                trovati = json.loads(grezzo) if isinstance(grezzo, str) else grezzo
+            except ValueError:
+                trovati = None
+            if isinstance(trovati, dict):
+                for k, val in trovati.items():
+                    m = re.fullmatch(r"indice_(\d+)", str(k))
+                    if m:
+                        testo = _testo_risultato({"data": val} if isinstance(val, dict) else {"valore": val})
+                        risultati.append({"id": f"{rc['id_ricerca']}|{m.group(1)}", "testo": testo or f"Risultato {int(m.group(1)) + 1}"})
+            elif "errore" in normale(rc.get("stato_ricerca")):
+                fallite.append(str(rc.get("stato_ricerca")))
+    if risultati:
+        r["stato"], r["risultati"] = "da_scegliere", risultati[:50]
+    elif fallite and "ricerca" in s:
+        r.update(stato="errore", errore=f"La ricerca su Openapi non è andata a buon fine ({_oscura(fallite[-1])[:120]}). Controlla i dati e ripeti la richiesta.")
+    else:
+        r["stato"] = "in_lavorazione"
+
+
 def _avvia_docuengine(r, dati):
     """Per la documentazione una richiesta in stato NEW è solo aperta (modificabile) e parte quando la si porta a
     SEARCH con una PATCH. Se Openapi la restituisce in NEW, la si avvia subito: altrimenti resterebbe ferma."""
@@ -834,10 +1071,19 @@ def scegli(r, risultato):
     if r.get("stato") != "da_scegliere" or risultato not in {x["id"] for x in r.get("risultati") or []}:
         return None
     try:
-        risposta = json.loads(_openapi("docuengine", "PATCH", f"/requests/{urllib.parse.quote(r['openapi'], safe='')}", {"resultId": risultato}, attesa=60) or b"{}")
+        ident = urllib.parse.quote(r["openapi"], safe="")
         r.pop("risultati", None)
         r["stato"] = "in_lavorazione"
-        _stato_docuengine(r, risposta.get("data") or {})
+        if r.get("servizio") == "visengine":
+            id_ricerca, _, indice = risultato.rpartition("|")
+            risposta = json.loads(_openapi("visengine", "PUT", f"/richiesta/{ident}/ricerche", {"id_ricerca": id_ricerca, "indice": int(indice)}, attesa=60) or b"{}")
+            _stato_visengine(r, risposta.get("data") or {})
+            if r["stato"] == "da_scegliere":   # la risposta riporta ancora i risultati: la scelta è fatta, si attende l'erogazione
+                r.pop("risultati", None)
+                r["stato"] = "in_lavorazione"
+        else:
+            risposta = json.loads(_openapi("docuengine", "PATCH", f"/requests/{ident}", {"resultId": risultato}, attesa=60) or b"{}")
+            _stato_docuengine(r, risposta.get("data") or {})
         r.pop("errore", None)
     except urllib.error.HTTPError as e:
         r["errore"] = _motivo(e)
@@ -869,11 +1115,28 @@ def controlla(r):
     ident = urllib.parse.quote(r["openapi"], safe="")
     try:
         if r.get("servizio") == "risk":
-            dati = _openapi("risk", "GET", f"/IT-report-persona/{ident}/download", attesa=40)
+            percorso = r.get("risk_percorso") or "/IT-report-persona"
+            dati = _openapi("risk", "GET", f"{percorso}/{ident}/download", attesa=40)
             if not dati.startswith(b"%PDF"):
                 return r
             r["file"] = []
-            _salva_file(r, 0, f"report-persona-{r['cf']}-{r['creata'][:10]}.pdf", "application/pdf", dati)
+            _salva_file(r, 0, f"{percorso.strip('/').lower().removeprefix('it-')}-{(r.get('ricerca') or {}).get('cf') or r.get('cf', '')}-{r['creata'][:10]}.pdf", "application/pdf", dati)
+        elif r.get("servizio") == "visengine":
+            if r["stato"] == "in_lavorazione":
+                _stato_visengine(r, json.loads(_openapi("visengine", "GET", f"/richiesta/{ident}") or b"{}").get("data") or {})
+                if r["stato"] != "pronto_da_scaricare":
+                    salva(r)
+                    return r
+            documento = json.loads(_openapi("visengine", "GET", f"/documento/{ident}", attesa=40) or b"{}").get("data") or {}
+            contenuto = base64.b64decode(documento.get("file") or "")
+            if not contenuto:
+                r["ultimo_controllo"] = "Openapi dice che il documento è pronto ma il file è vuoto: riprova con Aggiorna."
+                salva(r)
+                return r
+            nome = re.sub(r"[^A-Za-z0-9._-]", "_", str(documento.get("nome") or f"{r['documento']}.pdf"))[:120]
+            tipo = {"zip": "application/zip", "pdf": "application/pdf", "xml": "application/xml", "p7m": "application/pkcs7-mime"}.get(nome.rsplit(".", 1)[-1].lower(), "application/octet-stream")
+            r["file"] = []
+            _salva_file(r, 0, nome, tipo, contenuto)
         elif r.get("servizio") == "catasto":
             v = voce(r["documento"])
             if not v or not _controlla_catasto(r, v):
