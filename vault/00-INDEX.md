@@ -36,6 +36,7 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 
 ## Lessons learned (errori incontrati e risoluzioni)
 
+- [[lessons/2026-11-artefatti-niente-download-esterni]] - Artefatti claude.ai: fetch verso altri siti bloccato (Pyodide va incluso nella pagina)
 - [[lessons/2026-11-vercel-blob-cache-lettura]] - Vercel Blob: dopo una sovrascrittura la lettura torna il file vecchio (usare ?cache=0)
 - [[lessons/2026-11-ghl-cloudflare-user-agent]] - API GHL: 403 di Cloudflare con lo user-agent predefinito di Python
 - [[lessons/2026-04-vercel-rootdir-trap]] - **CRITICO**: rootDirectory mancante = articoli markdown invisibili in produzione

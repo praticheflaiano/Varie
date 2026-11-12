@@ -37,6 +37,11 @@ Ogni errore di calcolo trovato su un caso reale diventa un caso in `test_regole.
 il calcolatore d'ufficio (artefatto `65b90f55-fe67-4b36-b51f-0cb19674c856`, copia byte per byte dei file del sito, con il commit nel piè di pagina)
 e la skill `conteggi-pensionistici`. Il registro indica per ogni modifica se gli altri due sono stati allineati.
 
+**Allineare il calcolatore d'ufficio** dopo ogni modifica a `conteggi_pensione.py`, `estratto_inps.py`, `elabora.py`, `alternative.py`
+o ai file di regressione: copiare i file come `motore/<nome>.py.txt`, aggiornare commit e data nel piè di pagina di `index.html`,
+ripubblicare in modalità patch e controllare che la pagina mostri "Verifica superata". Python (Pyodide) e le librerie sono già
+file dell'artefatto: non vanno ricaricati. Vedi [[lessons/2026-11-artefatti-niente-download-esterni]].
+
 ## Stato iniziale (2026-11-11, superato): flusso completo sulle anteprime
 
 Fatto:
