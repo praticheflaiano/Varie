@@ -128,7 +128,7 @@ richiesta e non consegnare mai un file.
 - Ogni richiesta in lavorazione mostra lo stato letto da Openapi e l'ora dell'ultimo controllo.
 - Ogni chiamata a Openapi lascia una riga nei log di Vercel (`report: openapi <servizio> <metodo> <percorso> -> <codice>`),
   senza identificativi né dati della richiesta. Il piano Hobby conserva i log per un'ora.
-- **Registro diagnostico** (dal 12/11/2026, PR "diagnostica + VisEngine"): le stesse chiamate restano anche in
+- **Registro diagnostico** (dal 12/11/2026, PR #23 unita e in produzione alle 22:45): le stesse chiamate restano anche in
   `report/diagnostica.json` (ultime 150 righe) e si leggono nella pagina, sezione "Diagnostica" in fondo.
   Per ogni chiamata: servizio, metodo, percorso (identificativi con cifre oscurati come `<id>`), codice, sintesi
   (stato e messaggio di Openapi, codici fiscali e partite IVA oscurati), millisecondi, ambiente. Le letture riuscite
