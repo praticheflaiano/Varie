@@ -45,6 +45,8 @@ class handler(BaseHTTPRequestHandler):
                 return report.rispondi(self, 200 if sessione else 429 if motivo == "bloccato" else 403, {"sessione": sessione} if sessione else {"errore": motivo})
             if not report.sessione_ok(self.headers):
                 return report.rispondi(self, 401, {"errore": "sessione"})
+            if azione == "diagnostica":
+                return report.rispondi(self, 200, {"righe": report.diagnostica()})
             if azione == "catalogo":
                 return report.rispondi(self, 200, report.catalogo(rinnova=dati.get("rinnova") is True))
             if azione == "elenco":
@@ -82,6 +84,8 @@ class handler(BaseHTTPRequestHandler):
         except Exception as e:
             print("report: errore", type(e).__name__)
             report.rispondi(self, 500, {"errore": "archivio"})
+        finally:
+            report.salva_registro()
 
     def _richiedi(self, dati):
         pulito = lambda t, n=60: " ".join(str(t or "").split())[:n]   # noqa: E731
@@ -101,10 +105,12 @@ class handler(BaseHTTPRequestHandler):
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": leggibili})
         if v["servizio"] == "risk" and not report.cf_valido(ricerca["cf"]):
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": "Il codice fiscale non è valido."})
-        # Persona a cui collegare il documento nel CRM: quella del Report Persona, oppure quella indicata a parte.
+        # Persona a cui collegare il documento nel CRM: quella del report sulla persona, oppure quella indicata a parte
+        # (per i report sugli eredi la persona cercata è il defunto: nel CRM va il cliente indicato a parte).
+        dalla_ricerca = v.get("crm_da_ricerca") is True
         p = dati.get("persona") if isinstance(dati.get("persona"), dict) else {}
-        persona = {"nome": pulito(ricerca.get("nome") if v["servizio"] == "risk" else p.get("nome")), "cognome": pulito(ricerca.get("cognome") if v["servizio"] == "risk" else p.get("cognome")),
-                   "cf": (ricerca.get("cf") if v["servizio"] == "risk" else str(p.get("cf") or "")).replace(" ", "").upper()}
+        persona = {"nome": pulito(ricerca.get("nome") if dalla_ricerca else p.get("nome")), "cognome": pulito(ricerca.get("cognome") if dalla_ricerca else p.get("cognome")),
+                   "cf": (ricerca.get("cf") if dalla_ricerca else str(p.get("cf") or "")).replace(" ", "").upper()}
         if persona["cf"] and not report.cf_valido(persona["cf"]):
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": "Il codice fiscale del cliente da collegare nel CRM non è valido."})
         precedente = report.doppione(v["id"], report.senza_allegati(v, ricerca))
