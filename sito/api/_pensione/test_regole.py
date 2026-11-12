@@ -231,3 +231,18 @@ fino_in = copy.deepcopy(grav); fino_in["proiezione"]["fino_a"] = "2029-05-31"
 riga = alternativa({"esito": m.calcola(fino_in), "ipotesi": fino_in["proiezione"]}, lavora, "2026-11-12")
 uguale((riga["canale"], riga["decorrenza"]), ("Pensione anticipata ordinaria", "2029-06-01"), "lavorando fino a maggio 2029 l'uscita mostrata è l'anticipata")
 print("OK: mansione gravosa e confronto delle alternative")
+
+# ---- "lavora fino a": la pensione decorre dopo la fine del lavoro e l'importo si calcola a quella data
+fino62 = copy.deepcopy(grav); fino62["proiezione"]["fino_a"] = "2031-11-30"
+r62 = m.calcola(fino62)
+a62 = canale(r62, "Pensione anticipata ordinaria")
+uguale(a62["decorrenza"], "2031-12-01", "anticipata dopo la fine del lavoro")
+assert a62["importo"]["netto_mensile_13_stima"] > canale(lavora, "Pensione anticipata ordinaria")["importo"]["netto_mensile_13_stima"], "lavorando di più l'importo cresce"
+riga = alternativa({"esito": ferma, "ipotesi": ferma_in["proiezione"]}, lavora, "2026-11-12")
+assert "incasseresti già circa" in riga["confronto"], riga
+print("OK: lavora fino a una data e confronto con la prima uscita")
+assert riga["avviso"].startswith("Solo per conoscenza"), riga
+assert alternativa({"esito": r62, "ipotesi": fino62["proiezione"]}, lavora, "2026-11-12")["avviso"].startswith("Importo non garantito")
+fino27 = copy.deepcopy(grav); fino27["proiezione"]["fino_a"] = "2027-07-31"
+assert alternativa({"esito": m.calcola(fino27), "ipotesi": fino27["proiezione"]}, lavora, "2026-11-12")["avviso"] == "", "uscita vicina: nessun avviso"
+print("OK: avvisi sugli importi non garantiti")

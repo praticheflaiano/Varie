@@ -11,7 +11,7 @@ from datetime import date
 from io import BytesIO
 from xml.sax.saxutils import escape
 
-from alternative import alternativa
+from alternative import SPIEGAZIONE_AVVISO, alternativa
 
 from reportlab.graphics.barcode import qr
 from reportlab.graphics.shapes import Drawing
@@ -229,12 +229,17 @@ def _contenuto(stima, risposte, url, codice):
         f.append(CondPageBreak(60 * mm))
         f.append(Paragraph("Le alternative a confronto", S["h2"]))
         righe = [[Paragraph(x, S["th"]) for x in ("Se…", "Uscita", "Dal", "Netto al mese", "Cosa sapere")]]
+        incerti = False
         for i, sc in enumerate(stima["scenari"]):
             a = alternativa(sc, base, stima.get("data_calcolo")) if i else alternativa(sc, {}, None)
             sapere = " ".join(x for x in (a["confronto"], " ".join(sc.get("note") or []) or sc.get("motivo") or "") if x)
-            righe.append([_p(sc["nome"], "cellab"), _p(a["canale"] or "—", "cella"), _p(_data(a["decorrenza"]), "cella"),
-                          _p(_euro(a["netto"]), "cellab"), _p(sapere, "cella")])
+            cosa = Paragraph((f"<b>{escape(a['avviso'])}</b> " if a["avviso"] else "") + escape(sapere), S["cella"])
+            netto = Paragraph(escape(_euro(a["netto"])) + ("<br/><b>non garantito</b>" if a["avviso"] else ""), S["cellab"])
+            incerti = incerti or bool(a["avviso"])
+            righe.append([_p(sc["nome"], "cellab"), _p(a["canale"] or "—", "cella"), _p(_data(a["decorrenza"]), "cella"), netto, cosa])
         f.append(_tabella(righe, [LARGHEZZA * x for x in (0.22, 0.20, 0.14, 0.17, 0.27)]))
+        if incerti:
+            f += [Spacer(1, 4), Paragraph("<b>Attenzione.</b> " + escape(SPIEGAZIONE_AVVISO), S["p"])]
 
     if stima.get("confronto_inps"):
         f.append(Paragraph("Confronto con la simulazione INPS", S["h2"]))
