@@ -154,6 +154,9 @@ ISTRUZIONI_TESTO = (
     "NON consigliare mai di usare simulatori, calcolatori o servizi online dell'INPS o di altri (es. 'La mia pensione futura', 'Pensami') "
     "e non citarli: il calcolo lo facciamo noi con le regole INPS e, per i dubbi, c'è la consulenza con il nostro operatore compresa nel prezzo. "
     "Le note 'Quota A' e 'Quota B' spiegano come è calcolata la parte di pensione maturata prima del 1996: riassumile in parole semplici, senza formule. "
+    "Le strade in cui il cliente smette di lavorare molto prima della pensione e le uscite dal 2029 in poi sono solo indicative: "
+    "coefficienti e regole cambiano prima di allora (l'INPS aggiorna i coefficienti ogni due anni). Non presentarle come convenienti, "
+    "non consigliarle e, se le citi, dillo chiaramente. "
     "Non promettere nulla: è una stima indicativa."
 )
 

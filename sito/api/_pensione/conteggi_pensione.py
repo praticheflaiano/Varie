@@ -495,6 +495,11 @@ def calcola(inp):
             note.append("Diritto gia' maturato (cristallizzato): decorrenza dal 1° del mese successivo alla domanda, a finestra trascorsa.")
             dec = max(dec, (c.oggi.replace(day=1) + relativedelta(months=1)))
         else: r["stato"] = "da maturare"
+        if c.continua and c.fine_lavoro and dec <= c.fine_lavoro:
+            # Chi lavora fino a una data esce dopo quella data: la pensione decorre dal 1° del mese successivo alla fine
+            # del lavoro e l'importo si calcola a quella data (piu' contributi, eta' piu' alta).
+            dec = c.fine_lavoro.replace(day=1) + relativedelta(months=1)
+            note.append(f"Decorrenza spostata dopo la fine del lavoro indicata ({c.fine_lavoro.strftime('%d/%m/%Y')}): il diritto matura prima, ma la pensione si prende quando si smette di lavorare.")
         a, m = eta_at(c.nascita, dec)
         r.update({"data_maturazione": mat.isoformat(), "finestra_mesi": fin, "decorrenza": dec.isoformat(),
                   "eta_alla_decorrenza": f"{a}a {m}m", "contributi_alla_decorrenza": fmt_am(c.tot_weeks(dec))})

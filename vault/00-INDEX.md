@@ -33,9 +33,12 @@ I markdown del blog (in `content/`) alimentano il sito tramite **Content Layer A
 - [[procedure/05-knowledge-base-vault]] - Come mantenere e consultare questo vault
 - [[procedure/06-stima-pensione]] - Servizio a pagamento Stima e Calcolo della pensione: come funziona, dove guardare, come riprendere
 - [[riferimenti/stima-pensione-registro]] - **Registro di modifiche, deploy e casi controllati della Stima pensione (leggere per primo)**
+- [[procedure/07-report-persona]] - Documenti Openapi (Report Persona e catalogo DocuEngine): pagina riservata del titolare, prezzi e tempi letti da Openapi, archivio 12 mesi, allegato al contatto GHL
 
 ## Lessons learned (errori incontrati e risoluzioni)
 
+- [[lessons/2026-11-artefatti-niente-download-esterni]] - Artefatti claude.ai: fetch verso altri siti bloccato (Pyodide va incluso nella pagina)
+- [[lessons/2026-11-vercel-blob-cache-lettura]] - Vercel Blob: dopo una sovrascrittura la lettura torna il file vecchio (usare ?cache=0)
 - [[lessons/2026-11-ghl-cloudflare-user-agent]] - API GHL: 403 di Cloudflare con lo user-agent predefinito di Python
 - [[lessons/2026-04-vercel-rootdir-trap]] - **CRITICO**: rootDirectory mancante = articoli markdown invisibili in produzione
 - [[lessons/2026-04-stream-timeout-recovery]] - Recupero da stream timeout dei subagent Claude

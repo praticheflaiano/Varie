@@ -22,7 +22,7 @@ import base64, hashlib, json, os, re, secrets, time
 from datetime import date, datetime, timezone
 
 import archivio
-from alternative import alternativa
+from alternative import SPIEGAZIONE_AVVISO, alternativa
 import crm
 
 PREZZO_BASE, PREZZO_ESTRATTO = 6000, 500  # centesimi
@@ -326,6 +326,21 @@ def riprova(codice):
     return pratica
 
 
+def rimetti_in_calcolo(codice):
+    """L'ufficio fa rifare da capo una stima già consegnata o da rivedere (es. dopo una correzione delle regole).
+    La stima precedente resta in "stime_precedenti"; al termine il cliente riceve di nuovo l'email del prospetto."""
+    pratica = carica(codice)
+    if not pratica or pratica["stato"] not in ("consegnata", "da_rivedere"):
+        return None
+    vecchia = pratica.get("stima")
+    if vecchia:
+        pratica.setdefault("stime_precedenti", []).append({"consegnata": pratica.get("consegnata"), "stato": pratica["stato"],
+                                                            "versione_parametri": vecchia.get("versione_parametri")})
+    pratica.update(stato="pagata", tentativi=0, errore="")
+    salva(codice, pratica)
+    return pratica
+
+
 def vista_ufficio(codice, pratica):
     """Tutto quello che serve all'operatore per controllare una pratica (richiede il segreto dell'ufficio)."""
     stima = pratica.get("stima") or {}
@@ -427,10 +442,12 @@ def riepilogo_stima(stima):
     for sc in scenari[1:]:
         a = alternativa(sc, base, stima.get("data_calcolo"))
         note = " ".join(x for x in (a["confronto"], " ".join(sc.get("note") or []) or sc.get("motivo") or "") if x)
-        alternative.append({"nome": sc.get("nome"), "canale": a["canale"], "decorrenza": a["decorrenza"], "netto": a["netto"], "note": note})
+        alternative.append({"nome": sc.get("nome"), "canale": a["canale"], "decorrenza": a["decorrenza"], "netto": a["netto"], "note": note,
+                            "avviso": a["avviso"]})
     prima = base.get("prima_uscita_pensione") or {}
     ape = next((c for c in canali if str(c["canale"]).startswith("APE")), None)
     ponte = {"decorrenza": ape["decorrenza"], "indennita": ape["indennita"]} if ape and (not prima or ape["decorrenza"] < prima.get("decorrenza", "9999")) else None
     return {"ponte": ponte, "stimati": (stima.get("estratto") or {}).get("contributi_stimati"), "prima_uscita": base.get("prima_uscita_pensione"), "contributi": base.get("contributi_ad_oggi"), "sistema": base.get("sistema_calcolo"),
             "sintesi": testo.get("sintesi", ""), "consigliata": testo.get("uscita_consigliata") or {}, "canali": canali, "alternative": alternative,
+            "avviso_alternative": SPIEGAZIONE_AVVISO if any(a["avviso"] for a in alternative) else "",
             "decisioni": testo.get("decisioni") or [], "revisione": stima.get("revisione_consigliata") or [], "data_calcolo": stima.get("data_calcolo")}
