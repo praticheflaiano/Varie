@@ -60,9 +60,24 @@ def _leggi(percorso):
             return None
     from vercel.blob.sync import BlobNotFoundError, get_blob
     try:
-        return bytes(get_blob(percorso, access="private").body)
+        return bytes(get_blob(_senza_cache(percorso), access="private").body)
     except BlobNotFoundError:
         return None
+
+
+def _senza_cache(percorso):
+    """Indirizzo del file con ?cache=0: dopo una sovrascrittura la cache di Vercel Blob restituisce per un po' la
+    versione vecchia, e la funzione che ha appena salvato lo stato della pratica rileggeva quello precedente
+    (caso del 12/11/2026: il ricalcolo trovava la pratica ancora "consegnata"). Senza lo store resta il percorso."""
+    store = os.environ.get("BLOB_STORE_ID") or ""
+    if not store:
+        parti = (os.environ.get("BLOB_READ_WRITE_TOKEN") or "").split("_")   # vercel_blob_rw_<store>_<segreto>
+        store = parti[3] if len(parti) >= 5 else ""
+    store = store.removeprefix("store_").lower()
+    if not re.fullmatch(r"[a-z0-9]{8,40}", store):
+        return percorso
+    from urllib.parse import quote
+    return f"https://{store}.private.blob.vercel-storage.com/{quote(percorso, safe='/')}?cache=0"
 
 
 def salva(codice, nome, dati, tipo):
