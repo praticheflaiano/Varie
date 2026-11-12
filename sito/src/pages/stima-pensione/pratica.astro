@@ -170,10 +170,12 @@ const API = (import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "").replace(/\/api\/st
           dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "Le alternative a confronto"));
           for (const a of s.alternative) {
             const k = el("div", "mt-3 rounded-[22px] bg-[#F7F7FB] p-5");
-            k.append(el("h3", "text-lg font-extrabold", a.nome || ""), el("p", "mt-1 text-lg", `${a.canale || "—"} dal ${dataIt(a.decorrenza)} · netto stimato ${soldi(a.netto)} al mese`));
+            k.append(el("h3", "text-lg font-extrabold", a.nome || ""), el("p", "mt-1 text-lg", `${a.canale || "—"} dal ${dataIt(a.decorrenza)} · netto stimato ${soldi(a.netto)} al mese${a.avviso ? " (non garantito)" : ""}`));
+            if (a.avviso) k.append(el("p", "mt-2 rounded-2xl border-2 border-[#F2B705] bg-[#FFF6D6] p-3 font-bold text-[#5C4300]", a.avviso));
             if (a.note) k.append(el("p", "mt-1 text-[#3F3F5A]", a.note));
             dove.append(k);
           }
+          if (s.avviso_alternative) dove.append(el("p", "mt-3 rounded-2xl border-2 border-[#F2B705] bg-[#FFF6D6] p-4 text-[#5C4300]", s.avviso_alternative));
         }
         if (s.decisioni && s.decisioni.length) {
           dove.append(el("h2", "mt-8 text-2xl font-extrabold text-[#4B2FE0]", "Cosa decidere"));

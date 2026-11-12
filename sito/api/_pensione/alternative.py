@@ -24,6 +24,25 @@ def _pensioni(esito):
                   key=lambda c: c["decorrenza"])
 
 
+SPIEGAZIONE_AVVISO = ("Gli importi segnati \"non garantito\" sono calcolati con le regole di oggi. L'INPS aggiorna i coefficienti "
+                      "che trasformano i contributi in pensione ogni due anni (con l'ultimo aggiornamento, dal 2027, sono scesi tra "
+                      "l'1,2% e il 2%) e la rivalutazione dei contributi dipende dall'andamento dell'economia; anche i requisiti possono "
+                      "cambiare. Se cambiano, quelle cifre non valgono più e con ogni probabilità saranno più basse: servono solo per "
+                      "conoscenza e non sono un consiglio.")
+
+
+def avviso(sc, scelta):
+    """Avviso breve accanto a un importo senza certezza: strade che lasciano il lavoro molto prima della pensione e
+    uscite dal 2029, per cui i coefficienti non sono ancora pubblicati. La spiegazione è SPIEGAZIONE_AVVISO."""
+    ip = sc.get("ipotesi") or {}
+    dec = str(scelta.get("decorrenza") or "")
+    if ip.get("continua_lavoro") is False and not ip.get("settimane_volontari_annue"):
+        return "Solo per conoscenza, nessuna certezza: coefficienti e regole cambieranno prima di questa data."
+    if dec[:4].isdigit() and int(dec[:4]) >= 2029:
+        return "Importo non garantito: coefficienti e regole possono cambiare prima di questa data."
+    return ""
+
+
 def alternativa(sc, base, data_calcolo=None):
     """Restituisce {canale, decorrenza, netto, confronto} per lo scenario `sc` rispetto all'esito di base."""
     e = sc.get("esito") or {}
@@ -63,4 +82,5 @@ def alternativa(sc, base, data_calcolo=None):
             if incassato > 0:
                 frasi.append(f"Restando al lavoro fino alla {prima['canale']} ({_data(prima['decorrenza'])}), prima di quella data incasseresti già circa "
                              f"{_euro(round(incassato, -3)).replace(',00', '')} netti di pensione.")
-    return {"canale": scelta.get("canale"), "decorrenza": scelta.get("decorrenza"), "netto": netto, "confronto": " ".join(frasi)}
+    return {"canale": scelta.get("canale"), "decorrenza": scelta.get("decorrenza"), "netto": netto, "confronto": " ".join(frasi),
+            "avviso": avviso(sc, scelta)}

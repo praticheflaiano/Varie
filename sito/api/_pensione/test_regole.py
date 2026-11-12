@@ -241,3 +241,8 @@ assert a62["importo"]["netto_mensile_13_stima"] > canale(lavora, "Pensione antic
 riga = alternativa({"esito": ferma, "ipotesi": ferma_in["proiezione"]}, lavora, "2026-11-12")
 assert "incasseresti già circa" in riga["confronto"], riga
 print("OK: lavora fino a una data e confronto con la prima uscita")
+assert riga["avviso"].startswith("Solo per conoscenza"), riga
+assert alternativa({"esito": r62, "ipotesi": fino62["proiezione"]}, lavora, "2026-11-12")["avviso"].startswith("Importo non garantito")
+fino27 = copy.deepcopy(grav); fino27["proiezione"]["fino_a"] = "2027-07-31"
+assert alternativa({"esito": m.calcola(fino27), "ipotesi": fino27["proiezione"]}, lavora, "2026-11-12")["avviso"] == "", "uscita vicina: nessun avviso"
+print("OK: avvisi sugli importi non garantiti")
