@@ -19,7 +19,8 @@ madri, estratto): per un calcolo con le regole aggiornate fa fede il sito o il c
 
 | Data | Cosa | Perché / caso | Commit, PR, deploy | Ufficio | Skill |
 |---|---|---|---|---|---|
-| 2026-11-12 | Pulsante ufficio "Ricalcola con le regole aggiornate" (azione `ricalcola`, stime consegnate o da rivedere; la stima vecchia resta in `stime_precedenti`). CRM: se il contatto nasce in ritardo si scrivono le note perse (questionario, pagamento) senza ripetere le email | Pratica `E3-BF4qPfwLvHjvqQuN_`: consegnata prima della correzione, non si poteva né ricalcolare né mandare a GHL | ramo `claude/ricalcola-crm` | — | — |
+| 2026-11-12 | Letture dell'archivio Vercel Blob senza cache (`?cache=0`) | Il ricalcolo della pratica `E3-BF4qPfwLvHjvqQuN_` rileggeva lo stato vecchio e non partiva; la pratica è rimasta "pagata". Vedi [[lessons/2026-11-vercel-blob-cache-lettura]] | ramo `claude/blob-senza-cache` | — | — |
+| 2026-11-12 | Pulsante ufficio "Ricalcola con le regole aggiornate" (azione `ricalcola`, stime consegnate o da rivedere; la stima vecchia resta in `stime_precedenti`). CRM: se il contatto nasce in ritardo si scrivono le note perse (questionario, pagamento) senza ripetere le email | Pratica `E3-BF4qPfwLvHjvqQuN_`: consegnata prima della correzione, non si poteva né ricalcolare né mandare a GHL | PR #14, produzione `dpl_AJ9YYsKpLC3Cm11G2X46aUopYpi6` (pulsante sulla pagina pubblica dopo il redeploy di `info-praticheflaiano`) | — | — |
 | 2026-11-12 | Agevolazioni gravosi solo con 7 anni su 10 prima dell'uscita; tabella delle alternative con l'uscita giusta per "lavora fino a" e il confronto con la situazione attuale | Pratica `E3-BF4qPfwLvHjvqQuN_`: "se smetti ora" dava vecchiaia gravosi a 66a7m nel 2036 con netto più alto delle uscite 2027-2029, letto come un guadagno | PR #10 (commit `f63a8bb`) | sì (versione `1794475150-82f5`) | proposta ad Antonio, da salvare |
 | 2026-11-12 | Chiamate a GHL con user-agent proprio | Stessa pratica: contatto, opportunità, note ed email mai arrivate in GHL (403 di Cloudflare, errore 1010). Vedi [[lessons/2026-11-ghl-cloudflare-user-agent]] | PR #10 (commit `71a05fe`) | — | — |
 | 2026-11-12 | `GHL_API_TOKEN` inserito da Antonio su Vercel | Attivare il collegamento al CRM | deploy `dpl_D4pD46rE6t2UmSxhw6PXCktLFv2E` | — | — |
@@ -33,4 +34,5 @@ Casi reali segnalati da Antonio, con l'esito del controllo. Il caso di prova cor
 - **2026-11-12, `E3-BF4qPfwLvHjvqQuN_`** (uomo, 1969, misto, precoce e gravoso, estratto fermo a settembre 2026, pagamento fatto con un nome diverso).
   Pagamento abbinato correttamente alla pratica. CRM: niente arrivato (403 Cloudflare), corretto.
   Calcolo: vecchiaia gravosi concessa anche smettendo ora (errore, corretto); tabella delle alternative fuorviante (corretta).
-  Da fare dopo il deploy: "riavvia calcolo" dalla pagina dell'ufficio, poi controllare in GHL contatto e opportunità.
+  Ricalcolata il 12/11 alle 12:40 circa (dopo PR #10 e #14): "se smetti ora" porta ora alla vecchiaia dal 01/03/2037; pratica collegata al CRM
+  (contatto, opportunità, note recuperate) ed email "La tua stima della pensione è pronta" arrivata da info@praticheflaiano.it (in Gmail finisce in "Aggiornamenti").
