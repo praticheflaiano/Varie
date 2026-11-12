@@ -34,4 +34,5 @@ Casi reali segnalati da Antonio, con l'esito del controllo. Il caso di prova cor
 - **2026-11-12, `E3-BF4qPfwLvHjvqQuN_`** (uomo, 1969, misto, precoce e gravoso, estratto fermo a settembre 2026, pagamento fatto con un nome diverso).
   Pagamento abbinato correttamente alla pratica. CRM: niente arrivato (403 Cloudflare), corretto.
   Calcolo: vecchiaia gravosi concessa anche smettendo ora (errore, corretto); tabella delle alternative fuorviante (corretta).
-  Da fare dopo il deploy: "riavvia calcolo" dalla pagina dell'ufficio, poi controllare in GHL contatto e opportunità.
+  Ricalcolata il 12/11 alle 12:40 circa (dopo PR #10 e #14): "se smetti ora" porta ora alla vecchiaia dal 01/03/2037; pratica collegata al CRM
+  (contatto, opportunità, note recuperate) ed email "La tua stima della pensione è pronta" arrivata da info@praticheflaiano.it (in Gmail finisce in "Aggiornamenti").
