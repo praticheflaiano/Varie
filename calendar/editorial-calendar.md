@@ -49,8 +49,8 @@ Successioni, invalidita civile, Legge 104, assunzione colf/badanti, bonus ristru
 
 ## Calendario
 
-> **Ultimo aggiornamento:** 13 aprile 2026
-> **Periodo coperto:** 14 aprile - 31 maggio 2026
+> **Ultimo aggiornamento:** 12 novembre 2026
+> **Periodo coperto:** 14 aprile - 31 maggio 2026; 12 novembre - 15 dicembre 2026
 > **Fonti utilizzate:** Agenzia delle Entrate (agenziaentrate.gov.it), INPS (inps.it), FISCOeTASSE.com, QuiFinanza, Sky TG24, Altroconsumo, Money.it
 
 ---
@@ -85,6 +85,33 @@ Successioni, invalidita civile, Legge 104, assunzione colf/badanti, bonus ristru
 | 26 mag 2026 | IMU 2026: guida al calcolo e al versamento con modello F24 - scadenza 16 giugno | IMU e Tributi Locali | guida/scadenza | calcolo IMU 2026, F24 IMU, versamento IMU giugno, aliquote IMU | Pianificato | Secondo articolo IMU di approfondimento operativo. Scadenza acconto: 16 giugno 2026 (fonte: Agenzia delle Entrate). |
 | 28 mag 2026 | NASpI 2026: come fare domanda, importo, durata e requisiti aggiornati | NASpI e Disoccupazione | guida | naspi 2026, domanda naspi, indennita disoccupazione, quanto dura naspi | Pianificato | Articolo evergreen. Copre una categoria con pochi contenuti. |
 | 30 mag 2026 | Assegno Unico e ISEE: presenta la DSU entro giugno per non perdere gli arretrati | Assegno Unico | scadenza/guida | DSU assegno unico 2026, ISEE scadenza giugno, arretrati assegno unico | Pianificato | DSU entro 30 giugno 2026 per recuperare arretrati da marzo (fonte: INPS). Pubblicare un mese prima. |
+
+---
+
+### NOVEMBRE - DICEMBRE 2026 (piano SEO del 12 novembre 2026)
+
+> Piano nato dalla ricerca SEO del 12/11/2026. Le misure della legge di bilancio 2027 (A.C. 3174) vanno sempre indicate come proposte finché la legge non è in Gazzetta Ufficiale.
+
+| Data pubblicazione | Titolo | Categoria | Tipo | Keyword target | Stato | Note |
+|---|---|---|---|---|---|---|
+| 12 nov 2026 | Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce | Pensioni | novita | rivalutazione pensioni 2027, aumento pensioni gennaio 2027 | Pubblicato | Nota INPS 11/11/2026; DDL art. 55. Percentuale ufficiale in corso di definizione (decreto MEF di fine anno): aggiornare appena esce. |
+| 12 nov 2026 | Requisiti pensione 2027: vecchiaia, anticipata e precoci | Pensioni | guida | requisiti pensione 2027, pensione anticipata 2027 | Pubblicato | Circolare INPS 28/2026. CTA stima pensione. |
+| 12 nov 2026 | Scadenze 30 novembre 2026: acconto IRPEF, TARI Roma e APE sociale | Dichiarazione dei Redditi | scadenza | acconto irpef novembre 2026, scadenze 30 novembre | Pubblicato | AdE "Come si paga l'Irpef"; TARI Roma da fonti stampa (pagina Roma Capitale non consultabile). |
+| 12 nov 2026 | Legge di bilancio 2027: novità per famiglie e pensionati | Bonus Fiscali | novita | legge di bilancio 2027 novità, manovra 2027 famiglie | Pubblicato | Hub da aggiornare a ogni passaggio parlamentare e all'approvazione. |
+| 17 nov 2026 | Pensione anticipata 2027: tutte le strade per uscire prima | Pensioni | guida | pensione anticipata 2027, come andare in pensione prima | Pianificato | Precoci, contributiva, APE sociale (DDL), usuranti, invalidi 80%. |
+| 19 nov 2026 | Successione a Roma: documenti, tempi e costi | Successioni e Volture | guida | dichiarazione di successione roma, successione documenti | Pianificato | Evergreen locale, categoria scoperta. |
+| 21 nov 2026 | Pensione di reversibilità 2027: quanto spetta e come fare domanda | Pensioni | guida | pensione reversibilità 2027, domanda reversibilità | Pianificato | Verificare percentuali e tagli per reddito su fonti INPS. |
+| 24 nov 2026 | Canone RAI 2027: esenzione over 75 e dichiarazione di non detenzione | Bonus Fiscali | scadenza | canone rai 2027 esenzione, non detenzione canone rai | Pianificato | Riconfermare le date sullo Scadenzario AdE prima di scrivere. |
+| 26 nov 2026 | ADI 2027: rinnovo, ISEE e sospensione dopo 18 mesi | Bonus Fiscali | guida | assegno di inclusione rinnovo, adi 2027 | Pianificato | Fonti INPS. |
+| 28 nov 2026 | Dimissioni online e NASpI: quando spetta la disoccupazione | NASpI e Disoccupazione | guida | dimissioni online naspi, dimissioni giusta causa naspi | Pianificato | Collegare a /dimissioni-online e /naspi. |
+| 1 dic 2026 | Cedolino pensione gennaio 2027: cosa cambia | Pensioni | informativo | cedolino pensione gennaio 2027 | Pianificato | Dopo il decreto sulla percentuale di rivalutazione. |
+| 3 dic 2026 | Assegno sociale 2027: importo e requisiti | Pensioni | guida | assegno sociale 2027 importo | Pianificato | Solo con importi ufficiali (circolare INPS di rinnovo). |
+| 5 dic 2026 | Bonus sociali 2027: luce, gas, acqua e rifiuti con l'ISEE | Bonus Fiscali | guida | bonus sociali 2027, bonus bollette isee | Pianificato | Fonti ARERA. |
+| 9 dic 2026 | Congedo parentale e bonus mamme 2027 | Bonus Fiscali | novita | congedo parentale 2027, bonus mamme 2027 | Pianificato | Pubblicare solo con il testo approvato o aggiornare l'hub. |
+| 11 dic 2026 | Legge 104 a Roma: permessi, agevolazioni e domanda | Invalidità Civile | guida | legge 104 roma, permessi 104 | Pianificato | Evergreen locale. |
+| 15 dic 2026 | Affitto a Roma 2027: canone concordato e cedolare secca | Bonus Fiscali | guida | canone concordato roma, cedolare secca 2027 | Pianificato | Dopo l'approvazione della manovra (art. 5 DDL). |
+
+**Da aggiornare a dicembre-gennaio:** APE sociale (proroga 2027), cedolino pensione, Assegno Unico 2027, colf e badanti (scadenza 4° trimestre), Carta Dedicata a te, TARI Roma, bonus mamme, ISEE 2027, rottamazione.
 
 ---
 
