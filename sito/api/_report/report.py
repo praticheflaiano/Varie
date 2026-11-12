@@ -306,7 +306,8 @@ def _motivo(e):
         dettaglio = str((json.loads(e.read() or b"{}") or {}).get("message") or "")[:200]
     except ValueError:
         dettaglio = ""
-    noti = {401: "token Openapi non valido o scaduto", 402: "credito Openapi insufficiente", 403: "il token Openapi non ha il permesso per questo servizio"}
+    noti = {401: "token Openapi non valido o scaduto", 402: "credito Openapi insufficiente", 403: "il token Openapi non ha il permesso per questo servizio",
+            417: "documento temporaneamente non disponibile su Openapi: riprova più tardi"}
     return f"Openapi ha risposto {e.code}: {noti.get(e.code) or dettaglio or 'richiesta rifiutata'}"
 
 
@@ -731,7 +732,7 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
         else:
             r.update(stato="in_lavorazione", openapi=str(ident))
             if v["servizio"] == "docuengine":
-                _stato_docuengine(r, dati)
+                _stato_docuengine(r, _avvia_docuengine(r, dati))
             elif v["servizio"] == "catasto":
                 _controlla_catasto(r, v, dati)   # in prova (e a volte dal vero) la risposta è già completa
     except urllib.error.HTTPError as e:
@@ -762,6 +763,13 @@ def _pdf_di_prova(testo, quando):
     return uscita.getvalue()
 
 
+def _testo_risultato(x):
+    """Una riga leggibile per un risultato di ricerca di DocuEngine: i valori stanno in "data" (oggetto), a volte in piano."""
+    dati = x.get("data") if isinstance(x.get("data"), dict) else {k: v for k, v in x.items() if k not in ("id", "resultId", "data")}
+    pezzi = [f"{str(k).replace('_', ' ')}: {v}" for k, v in dati.items() if isinstance(v, (str, int, float)) and not isinstance(v, bool) and str(v)]
+    return " · ".join(pezzi)[:300]
+
+
 def _stato_docuengine(r, dati):
     """Porta nella richiesta lo stato letto da DocuEngine (NEW, SEARCH, WAIT, DONE, CANCELLED)."""
     stato = str(dati.get("state") or "").upper()
@@ -776,10 +784,18 @@ def _stato_docuengine(r, dati):
     elif risultati and not dati.get("resultId"):
         # la ricerca ha trovato più risultati (più immobili, più annualità...): va scelto quello giusto
         r["stato"] = "da_scegliere"
-        r["risultati"] = [{"id": str(x.get("id") or x.get("resultId") or ""), "testo": " · ".join(str(val) for k, val in x.items() if k not in ("id", "resultId") and isinstance(val, (str, int, float)) and str(val))[:300]}
-                          for x in risultati[:50] if x.get("id") or x.get("resultId")]
+        r["risultati"] = [{"id": str(x.get("id") or x.get("resultId") or ""), "testo": _testo_risultato(x)} for x in risultati[:50] if x.get("id") or x.get("resultId")]
     else:
         r["stato"] = "in_lavorazione"
+
+
+def _avvia_docuengine(r, dati):
+    """Per la documentazione una richiesta in stato NEW è solo aperta (modificabile) e parte quando la si porta a
+    SEARCH con una PATCH. Se Openapi la restituisce in NEW, la si avvia subito: altrimenti resterebbe ferma."""
+    if str(dati.get("state") or "").upper() != "NEW":
+        return dati
+    risposta = json.loads(_openapi("docuengine", "PATCH", f"/requests/{urllib.parse.quote(r['openapi'], safe='')}", {"state": "SEARCH"}, attesa=60) or b"{}")
+    return risposta.get("data") or dati
 
 
 def scegli(r, risultato):

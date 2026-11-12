@@ -129,6 +129,25 @@ richiesta e non consegnare mai un file.
 - Ogni chiamata a Openapi lascia una riga nei log di Vercel (`report: openapi <servizio> <metodo> <percorso> -> <codice>`),
   senza identificativi né dati della richiesta. Il piano Hobby conserva i log per un'ora.
 
+## Riletto sulla documentazione Openapi (12/11/2026, sera)
+
+- **Callback**: l'oggetto `headers` è di fatto obbligatorio. Senza, Risk risponde 428 ("object headers not set in
+  'callback', required") e DocuEngine 428 con errore 311. Successo davvero su una richiesta di Report Persona.
+  Il callback si costruisce in un punto solo (`_callback`).
+- **DocuEngine, stati**: una POST senza `state` viene lavorata subito (di solito `WAIT`). Con `state: NEW` la
+  richiesta resta aperta e parte solo con una PATCH `{"state": "SEARCH"}`: se Openapi la restituisce in `NEW`, il
+  codice la avvia (`_avvia_docuengine`).
+- **DocuEngine, risultati da scegliere**: ogni risultato ha `id` e i valori dentro `data`; la scelta è una PATCH
+  `{"resultId": "..."}`. Errore 213 = la ricerca non ha risultati da scegliere.
+- **DocuEngine, documenti**: `GET /requests/{id}/documents` restituisce `fileName`, `mimeType`, `fileSize`, `md5`,
+  `urlExpire`, `downloadUrl`; 422 con errore 225 = non ancora disponibili.
+- **Altri errori utili**: 402 (610) credito insufficiente; 417 (208/316) documento temporaneamente non disponibile;
+  400 (202) documento inesistente.
+- **Campi di tipo `file`**: la documentazione dice che il valore è una stringa, in base64 oppure un indirizzo, senza
+  precisare il formato. Non ancora gestiti dalla pagina.
+- **Risk**: nella risposta l'`id` e lo stato possono stare dentro `callback`; lo stato finale è indicato come `evaso`.
+  Il codice non si fida del nome dello stato e prova direttamente il download (406 = non pronto).
+
 ## Limiti noti
 
 - Un PDF oltre circa 3,2 MB non si scarica dalla pagina (limite di risposta delle funzioni): si apre dal CRM.

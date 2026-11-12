@@ -133,7 +133,12 @@ class Finto(BaseHTTPRequestHandler):
         self._json(404, {})
 
     def do_PATCH(self):
-        stato["scelto"] = json.loads(self._corpo())["resultId"]
+        corpo = json.loads(self._corpo())
+        if corpo == {"state": "SEARCH"}:
+            stato["avviate"] = stato.get("avviate", 0) + 1
+            stato["doc_stato"] = "WAIT"
+            return self._json(200, {"success": True, "data": {"id": "d1", "state": "WAIT", "totalPrice": 0.9}})
+        stato["scelto"] = corpo["resultId"]
         stato["doc_stato"] = "DONE"
         self._json(200, {"success": True, "data": {"id": "d1", "state": "DONE", "totalPrice": 0.9, "resultId": stato["scelto"]}})
 
@@ -306,11 +311,11 @@ def test_documento_immediato_con_piu_file(report):
 
 
 def test_documento_in_differita_e_scelta_del_risultato(report):
-    stato["risultati"] = [{"id": "r1", "indirizzo": "Via Roma 1", "foglio": 12}, {"id": "r2", "indirizzo": "Via Milano 2"}]
+    stato["risultati"] = [{"id": "r1", "data": {"indirizzo": "Via Roma 1", "foglio": 12, "interno": None}}, {"id": "r2", "indirizzo": "Via Milano 2"}]
     v = report.voce("doc-protesti")
     ricerca, leggibili, opzioni, costo = report.prepara(v, {"field0": "12485671007"}, [])
     r = report.richiedi(v, ricerca, leggibili, opzioni, costo, {}, "altro", "prova")
-    assert r["stato"] == "da_scegliere" and r["risultati"][0] == {"id": "r1", "testo": "Via Roma 1 · 12"}
+    assert r["stato"] == "da_scegliere" and r["risultati"] == [{"id": "r1", "testo": "indirizzo: Via Roma 1 · foglio: 12"}, {"id": "r2", "testo": "indirizzo: Via Milano 2"}]
     assert report.cerca_contatto(r)["ghl"]["stato"] == "senza_persona"   # documento su un'azienda: nessun contatto
     assert report.scegli(r, "inventato") is None
     r = report.scegli(r, "r2")
@@ -432,3 +437,9 @@ def test_avviso_di_ritorno_sempre_con_headers(report, monkeypatch):
     for corpo in stato["richieste"]:
         c = corpo["callback"]
         assert c["url"].startswith("https://funzioni.example/api/report/avviso?r=") and c["method"] == "JSON" and isinstance(c["headers"], dict) and c["headers"]
+
+
+def test_richiesta_aperta_in_new_viene_avviata(report):
+    stato["doc_stato"] = "NEW"
+    r = chiedi(report, "doc-protesti", {"field0": CF_ROSSI})
+    assert stato["avviate"] == 1 and r["stato"] == "in_lavorazione" and r["stato_openapi"] == "WAIT"
