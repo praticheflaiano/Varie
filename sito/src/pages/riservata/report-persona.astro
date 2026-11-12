@@ -167,6 +167,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         const cat = $("rp-categoria"), attuale = cat.value;
         cat.replaceChildren(new Option("Tutte le categorie", ""), ...[...new Set(voci.map((v) => v.categoria))].sort().map((c) => new Option(c, c)));
         cat.value = attuale;
+        if (d.prova) { const c = $("rp-config"); if (!c.textContent.includes("PROVA")) { c.textContent = (c.textContent ? c.textContent + " " : "") + "Ambiente di PROVA Openapi: i documenti non sono veri e non vengono addebitati."; c.classList.remove("hidden"); } }
         $("rp-letto").textContent = (d.letto ? `Prezzi e tempi letti da Openapi il ${quando(d.letto)}, IVA esclusa.` : "Catalogo Openapi non ancora letto: è disponibile solo il Report Persona.") + (d.errore ? " " + d.errore : "");
         disegnaCatalogo();
       }

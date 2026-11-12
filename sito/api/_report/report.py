@@ -26,7 +26,8 @@ Variabili d'ambiente:
   REPORT_PERSONA_PASSWORD   password della pagina (obbligatoria: senza, la pagina resta chiusa)
   OPENAPI_TOKEN             token Openapi con i permessi Risk (IT-report-persona) e DocuEngine
                             (documents, requests). In alternativa OPENAPI_RISK_TOKEN.
-  OPENAPI_PROVA             facoltativa: "1" = ambienti di prova di Openapi (serve il token di prova)
+  OPENAPI_PROVA             facoltativa: "1" = ambienti di prova di Openapi, "0" = veri. Senza, l'ambiente si
+                            riconosce dal token alla lettura del catalogo (report/ambiente.json)
   OPENAPI_RISK_BASE, OPENAPI_DOCUENGINE_BASE   solo per i test
   GHL_API_TOKEN             lo stesso della stima pensione (vedi _pensione/crm.py)
   REPORT_PERSONA_URL        facoltativa: indirizzo pubblico delle funzioni per l'avviso di Openapi
@@ -238,8 +239,41 @@ def _token():
     return os.environ.get("OPENAPI_TOKEN") or os.environ.get("OPENAPI_RISK_TOKEN") or ""
 
 
+_ambiente = {}   # in memoria: impronta del token -> True (prova) / False (vero)
+
+
+def _impronta():
+    return hashlib.sha256(_token().encode()).hexdigest()[:16]
+
+
 def in_prova():
-    return os.environ.get("OPENAPI_PROVA") == "1"
+    """True se si lavora sugli ambienti di prova di Openapi (gratuiti, dati finti).
+    OPENAPI_PROVA=1 o 0 lo impone; altrimenti vale quello che è stato riconosciuto dal token (vedi _riconosci)."""
+    imposto = os.environ.get("OPENAPI_PROVA")
+    if imposto in ("0", "1"):
+        return imposto == "1"
+    impronta = _impronta()
+    if impronta not in _ambiente:
+        salvato = _leggi_json("report/ambiente.json") or {}
+        _ambiente[impronta] = bool(salvato.get("prova")) if salvato.get("token") == impronta else False
+    return _ambiente[impronta]
+
+
+def _riconosci():
+    """Il token è rifiutato (401) dall'ambiente in uso: prova l'altro. Un token di prova vale solo sui domini test.*,
+    uno vero solo su quelli di produzione, quindi basta una lettura del catalogo (gratuita) per capire quale è.
+    Restituisce il catalogo letto dall'altro ambiente, oppure None."""
+    if os.environ.get("OPENAPI_PROVA") in ("0", "1") or os.environ.get("OPENAPI_DOCUENGINE_BASE"):
+        return None
+    impronta, altro = _impronta(), not in_prova()
+    _ambiente[impronta] = altro
+    try:
+        risposta = _openapi("docuengine", "GET", "/documents", attesa=40)
+    except Exception:
+        _ambiente[impronta] = not altro
+        return None
+    _scrivi_json("report/ambiente.json", {"token": impronta, "prova": altro, "riconosciuto": iso()})
+    return risposta
 
 
 def _base(servizio):
@@ -326,7 +360,13 @@ def catalogo(rinnova=False):
     errore = None
     if _token() and (rinnova or not fresco):
         try:
-            risposta = json.loads(_openapi("docuengine", "GET", "/documents", attesa=40) or b"{}")
+            try:
+                grezzo = _openapi("docuengine", "GET", "/documents", attesa=40)
+            except urllib.error.HTTPError as e:
+                grezzo = _riconosci() if e.code == 401 else None
+                if grezzo is None:
+                    raise
+            risposta = json.loads(grezzo or b"{}")
             voci = [_voce(d) for d in (risposta.get("data") or []) if isinstance(d, dict) and d.get("id")]
             if voci:
                 salvato = {"letto": iso(), "base": _base("docuengine"), "voci": sorted(voci, key=lambda v: (v["categoria"].lower(), v["nome"].lower()))}
@@ -338,8 +378,9 @@ def catalogo(rinnova=False):
             errore = "Catalogo dei documenti non letto. " + _motivo(e)
         except Exception as e:
             errore = f"Catalogo dei documenti non letto ({type(e).__name__})."
+    stessa_base = salvato.get("base") == _base("docuengine")
     voci = (salvato.get("voci") or []) if stessa_base else []
-    return {"voci": [VOCE_REPORT_PERSONA] + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore}
+    return {"voci": [VOCE_REPORT_PERSONA] + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
 
 
 def voce(ident):

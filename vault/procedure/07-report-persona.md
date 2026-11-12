@@ -47,7 +47,7 @@ Le funzioni girano nel progetto Vercel `praticheflaiano-sito`, come quelle della
 |---|---|
 | `REPORT_PERSONA_PASSWORD` | Password della pagina. Senza, la pagina resta chiusa (503). |
 | `OPENAPI_TOKEN` | Token Openapi con i permessi Risk (`IT-report-persona`) e DocuEngine (`documents`, `requests`). Senza, il catalogo non si legge e le richieste non partono. Vale anche il vecchio nome `OPENAPI_RISK_TOKEN`. |
-| `OPENAPI_PROVA` | Facoltativa. `1` = ambienti di prova di Openapi (`test.risk…`, `test.docuengine…`): gratuiti, serve il token di prova. |
+| `OPENAPI_PROVA` | Facoltativa. `1` = ambienti di prova di Openapi (`test.risk…`, `test.docuengine…`), `0` = veri. **Senza la variabile l'ambiente si riconosce dal token**: se il catalogo risponde 401 in produzione e 200 in prova, la pagina passa alla prova, lo scrive in `report/ambiente.json` e mostra l'avviso "Ambiente di PROVA". Cambiando token si riparte dalla produzione. |
 | `GHL_API_TOKEN` | Già presente (stima pensione). |
 | `REPORT_PERSONA_URL` | Facoltativa: indirizzo pubblico delle funzioni per l'avviso di Openapi. In produzione si ricava da solo. |
 | `BLOB_READ_WRITE_TOKEN` | Già presente: archivio Vercel Blob. |
@@ -90,6 +90,12 @@ I valori non vanno mai scritti nel repository né in questa nota.
   lo scrive e invita a controllare su console.openapi.com prima di ripetere.
 - Stati di Openapi: la documentazione cita `processing`, `completed`, `evaso`. Il codice non si fida del
   nome dello stato: prova direttamente il download.
+
+## Stato (12/11/2026, sera)
+
+- Pubblicata in produzione su richiesta di Antonio (pagina privata), con token Openapi **di prova**: si passerà al
+  token vero quando ci sarà credito, sostituendo solo il valore di `OPENAPI_TOKEN` (più Redeploy).
+- I deploy di produzione di `praticheflaiano-sito` non partono dal ramo: vanno creati (vedi [[procedure/06-stima-pensione]]).
 
 ## Non ancora verificato contro i servizi veri (12/11/2026)
 

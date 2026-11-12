@@ -294,3 +294,30 @@ def test_documento_in_attesa_poi_pronto(report):
     assert r["stato"] == "in_lavorazione" and report.controlla(r)["stato"] == "in_lavorazione"
     stato["doc_stato"] = "CANCELLED"
     assert report.controlla(r)["stato"] == "annullata" and r["costo"] == 0
+
+
+def test_ambiente_riconosciuto_dal_token(report, monkeypatch):
+    """Un token di prova è rifiutato (401) in produzione: la pagina passa da sola agli ambienti di prova e lo ricorda."""
+    chiamate = []
+
+    def finto(servizio, metodo, percorso, corpo=None, attesa=30):
+        chiamate.append(report._base(servizio))
+        if "test." not in report._base(servizio):
+            raise report.urllib.error.HTTPError("u", 401, "no", {}, __import__("io").BytesIO(b"{}"))
+        return __import__("json").dumps({"success": True, "data": CATALOGO}).encode()
+    monkeypatch.delenv("OPENAPI_DOCUENGINE_BASE")
+    monkeypatch.delenv("OPENAPI_RISK_BASE")
+    monkeypatch.setenv("OPENAPI_TOKEN", "token-di-prova")
+    monkeypatch.setattr(report, "_openapi", finto)
+    report._ambiente.clear()
+    assert not report.in_prova()
+    c = report.catalogo()
+    assert chiamate == ["https://docuengine.openapi.com", "https://test.docuengine.openapi.com"]
+    assert c["prova"] and len(c["voci"]) == 3 and c["errore"] is None and report.configurazione()["prova"]
+    assert report._base("risk") == "https://test.risk.openapi.com"
+    report._ambiente.clear()                      # nuova esecuzione della funzione: lo rilegge dall'archivio
+    assert report.in_prova()
+    monkeypatch.setenv("OPENAPI_TOKEN", "token-vero")   # token cambiato: si riparte dalla produzione
+    assert not report.in_prova()
+    monkeypatch.setenv("OPENAPI_PROVA", "1")      # la variabile, se c'è, comanda
+    assert report.in_prova()
