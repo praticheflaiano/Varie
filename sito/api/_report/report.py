@@ -287,8 +287,15 @@ def _openapi(servizio, metodo, percorso, corpo=None, attesa=30):
         _base(servizio) + percorso, data=json.dumps(corpo).encode() if corpo is not None else None, method=metodo,
         headers={"authorization": "Bearer " + _token(), "content-type": "application/json",
                  "accept": "application/pdf, application/json", "accept-language": "it", "user-agent": "praticheflaiano-report-persona/1.0 (+https://praticheflaiano.it)"})
-    with urllib.request.urlopen(richiesta, timeout=attesa) as r:
-        return r.read()
+    percorso_log = re.sub(r"/[A-Za-z0-9_-]{16,}", "/<id>", percorso)   # nel registro niente identificativi né dati
+    try:
+        with urllib.request.urlopen(richiesta, timeout=attesa) as r:
+            dati = r.read()
+        print(f"report: openapi {servizio} {metodo} {percorso_log} -> {r.status} ({len(dati)} byte, {'prova' if in_prova() else 'vero'})")
+        return dati
+    except urllib.error.HTTPError as e:
+        print(f"report: openapi {servizio} {metodo} {percorso_log} -> {e.code} ({'prova' if in_prova() else 'vero'})")
+        raise
 
 
 def _motivo(e):
@@ -320,6 +327,52 @@ VOCE_REPORT_PERSONA = {
 }
 
 
+DOCUMENTO_DI_PROVA = "documento-di-prova"
+VOCE_PROVA = {
+    "id": DOCUMENTO_DI_PROVA, "servizio": "prova", "nome": "Documento di prova (gratis)", "categoria": "Prova della pagina",
+    "descrizione": "Non chiama Openapi e non costa nulla. Crea un PDF di esempio e gli fa fare tutto il giro vero: archivio, download e, "
+                   "se indichi un cliente, ricerca del contatto e allegato nel CRM. Serve a verificare che la pagina funzioni.",
+    "immediato": True, "tempi": "subito", "ricerca": False, "prezzo": 0, "prezzo_ricerca": 0, "opzioni": [], "richiedibile": True,
+    "campi": [{"chiave": "testo", "nome": "Testo da stampare nel PDF", "tipo": "string", "obbligatorio": True, "aiuto": "Per esempio: prova del 12 novembre.", "scelte": []}],
+}
+
+# Spiegazioni in parole semplici, scelte dal nome del documento (Openapi nel catalogo dà solo il nome).
+# La prima regola che corrisponde vince: le più specifiche stanno in alto.
+SPIEGAZIONI = [
+    (r"bilanc|balance", "Il bilancio depositato dalla società al Registro Imprese: stato patrimoniale, conto economico e nota integrativa, così come è stato presentato."),
+    (r"storic.*(visura|camer|impres|societ)|(visura|camer|impres|societ).*storic|historic", "Visura camerale storica: i dati attuali dell'impresa più tutte le variazioni dalla nascita (sedi, cariche, capitale, oggetto sociale)."),
+    (r"visura.*(camer|ordinar|impres|societ)|company (registration )?report|chamber", "Visura camerale ordinaria: i dati ufficiali dell'impresa oggi (sede, attività, capitale, amministratori, stato)."),
+    (r"certificat.*(iscrizion|vigenz)|registration certificate", "Certificato della Camera di Commercio: attesta l'iscrizione dell'impresa e, se di vigenza, che non ha procedure concorsuali in corso."),
+    (r"soci|shareholder|quote", "Elenco dei soci e delle quote di partecipazione della società."),
+    (r"cariche|representative|amministrator", "Elenco di chi ricopre cariche nell'impresa (amministratori, sindaci, procuratori), oppure le cariche ricoperte da una persona."),
+    (r"protest.*(pregiud|prejud)|(pregiud|prejud).*protest", "Visura completa su una persona o impresa: protesti, pregiudizievoli di conservatoria (ipoteche giudiziali, pignoramenti) e procedure concorsuali."),
+    (r"protest", "Visura protesti: assegni e cambiali non pagati registrati a nome del soggetto, con importo, data e motivo."),
+    (r"pregiud|prejud", "Pregiudizievoli di conservatoria: ipoteche giudiziali, pignoramenti e sequestri iscritti contro il soggetto."),
+    (r"negativ|negative", "Controllo veloce: dice se a carico del soggetto risultano protesti, pregiudizievoli o procedure, senza il dettaglio."),
+    (r"planimetr", "Planimetria catastale: il disegno in scala dell'unità immobiliare depositato al Catasto. Si rilascia solo al proprietario o a chi ha la sua delega."),
+    (r"mappa|map extract|estratto di mappa", "Estratto di mappa catastale: la porzione di mappa del Catasto terreni con la particella e i confini."),
+    (r"ipotec|mortgage|ispezion", "Ispezione ipotecaria: le formalità in Conservatoria (compravendite, ipoteche, pignoramenti) su un immobile o a nome di una persona."),
+    (r"visura.*catast|catast.*(visura|report)|cadastral", "Visura catastale: i dati del Catasto su un immobile o su tutti gli immobili di un soggetto (categoria, classe, rendita, intestatari)."),
+    (r"durc", "DURC: attesta che l'impresa è in regola con i contributi INPS, INAIL e Cassa Edile."),
+    (r"\bpra\b|targa|veicol|vehicle", "Visura PRA: proprietario e dati del veicolo, con eventuali fermi amministrativi, ipoteche o altri vincoli."),
+    (r"anagraf|residenz|stato di famiglia|nascita|matrimon|morte", "Certificato anagrafico o di stato civile rilasciato dal Comune."),
+    (r"casellario|carichi pendenti", "Certificato del Tribunale: casellario giudiziale o carichi pendenti della persona."),
+    (r"statuto|atto costitutivo", "Copia dell'atto costitutivo o dello statuto depositato dalla società al Registro Imprese."),
+    (r"fascicol", "Fascicolo dell'impresa: visura più statuto, ultimo bilancio e altri documenti depositati, in un unico file."),
+]
+
+
+def spiegazione(nome, aiuto=""):
+    """Cosa si ottiene, in parole semplici. Usa il testo di Openapi se c'è, altrimenti la spiegazione scelta dal nome."""
+    if len(aiuto) > 30:
+        return aiuto
+    testo = normale(nome)
+    for regola, frase in SPIEGAZIONI:
+        if re.search(regola, testo):
+            return frase
+    return aiuto
+
+
 def _centesimi(euro):
     try:
         return round(float(euro or 0) * 100)
@@ -344,7 +397,7 @@ def _voce(d):
     campi.sort(key=lambda c: (len(c["chiave"]), c["chiave"]))
     sincrono = bool(d.get("isSync"))
     return {"id": str(d.get("id")), "servizio": "docuengine", "nome": str(d.get("name") or "Documento"), "categoria": str(d.get("category") or "Altro"),
-            "descrizione": _testo(struttura.get("help")), "immediato": sincrono, "tempi": "subito" if sincrono else "in differita (da qualche minuto a qualche giorno, secondo il documento)",
+            "descrizione": spiegazione(d.get("name"), _testo(struttura.get("help"))), "immediato": sincrono, "tempi": "subito" if sincrono else "in differita (da qualche minuto a qualche giorno, secondo il documento)",
             "ricerca": bool(d.get("hasSearch")), "prezzo": _centesimi(d.get("totalPrice") if d.get("totalPrice") is not None else d.get("documentPrice")),
             "prezzo_ricerca": _centesimi(d.get("searchPrice")), "prezzo_documento": _centesimi(d.get("documentPrice")),
             "opzioni": [{"nome": str(o.get("name")), "prezzo": _centesimi(o.get("price"))} for o in (d.get("options") or []) if isinstance(o, dict) and o.get("name")],
@@ -380,7 +433,7 @@ def catalogo(rinnova=False):
             errore = f"Catalogo dei documenti non letto ({type(e).__name__})."
     stessa_base = salvato.get("base") == _base("docuengine")
     voci = (salvato.get("voci") or []) if stessa_base else []
-    return {"voci": [VOCE_REPORT_PERSONA] + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
+    return {"voci": [VOCE_PROVA, VOCE_REPORT_PERSONA] + voci, "letto": salvato.get("letto") if stessa_base else None, "errore": errore, "prova": in_prova()}
 
 
 def voce(ident):
@@ -439,6 +492,12 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
          "opzioni": opzioni, "nome": persona.get("nome") or "", "cognome": persona.get("cognome") or "", "cf": persona.get("cf") or "", "finalita": finalita, "nota": nota,
          "consenso": True, "creata": iso(), "stato": "invio", "costo": costo, "file": [], "ghl": {"stato": "da_cercare"}, "prova": in_prova()}
     salva(r)
+    if v["servizio"] == "prova":
+        r["prova"] = True
+        _salva_file(r, 0, f"documento-di-prova-{r['creata'][:10]}.pdf", "application/pdf", _pdf_di_prova(ricerca.get("testo", ""), r["creata"]))
+        r.update(stato="pronto", pronta=iso())
+        salva(r)
+        return r
     avviso = _indirizzo_avviso(codice)
     try:
         if v["servizio"] == "risk":
@@ -471,9 +530,30 @@ def richiedi(v, ricerca, leggibili, opzioni, costo, persona, finalita, nota):
     return controlla(r) if r["stato"] == "pronto_da_scaricare" else r
 
 
+def _pdf_di_prova(testo, quando):
+    """PDF di una pagina creato qui, senza Openapi: serve a provare archivio, download e CRM."""
+    from io import BytesIO
+    from reportlab.lib.pagesizes import A4
+    from reportlab.pdfgen import canvas
+    uscita = BytesIO()
+    c = canvas.Canvas(uscita, pagesize=A4)
+    c.setTitle("Documento di prova")
+    c.setFont("Helvetica-Bold", 20)
+    c.drawString(60, 770, "Documento di prova")
+    c.setFont("Helvetica", 12)
+    righe = ["Creato dalla pagina riservata di Centro Pratiche Flaiano il " + f"{quando[8:10]}/{quando[5:7]}/{quando[:4]} alle {quando[11:16]} UTC.",
+             "Non proviene da Openapi e non contiene dati reali.", "", "Testo inserito:", testo[:90]]
+    for n, riga in enumerate(righe):
+        c.drawString(60, 730 - 20 * n, riga.encode("latin-1", "replace").decode("latin-1"))
+    c.showPage()
+    c.save()
+    return uscita.getvalue()
+
+
 def _stato_docuengine(r, dati):
     """Porta nella richiesta lo stato letto da DocuEngine (NEW, SEARCH, WAIT, DONE, CANCELLED)."""
     stato = str(dati.get("state") or "").upper()
+    r["stato_openapi"], r["controllata"] = stato or "?", iso()
     if dati.get("totalPrice") is not None:
         r["costo"] = _centesimi(dati["totalPrice"]) + _centesimi(dati.get("optionsPrice"))
     risultati = [x for x in (dati.get("results") or []) if isinstance(x, dict)]
@@ -537,11 +617,9 @@ def controlla(r):
             _salva_file(r, 0, f"report-persona-{r['cf']}-{r['creata'][:10]}.pdf", "application/pdf", dati)
         else:
             if r["stato"] == "in_lavorazione":
-                prima = (r["stato"], r.get("costo"), len(r.get("risultati") or []))
                 _stato_docuengine(r, json.loads(_openapi("docuengine", "GET", f"/requests/{ident}") or b"{}").get("data") or {})
                 if r["stato"] != "pronto_da_scaricare":
-                    if (r["stato"], r.get("costo"), len(r.get("risultati") or [])) != prima:
-                        salva(r)
+                    salva(r)
                     return r
             elenco = json.loads(_openapi("docuengine", "GET", f"/requests/{ident}/documents", attesa=40) or b"{}").get("data") or []
             r["file"], saltati = [], 0
@@ -561,7 +639,10 @@ def controlla(r):
     except urllib.error.HTTPError as e:
         if e.code not in (404, 406, 422):   # 406 / 422 = il documento non è ancora stato creato
             r["ultimo_controllo"] = f"Openapi ha risposto {e.code}"
-            salva(r)
+        elif r.get("servizio") == "risk":
+            r["stato_openapi"] = "non ancora pronto"
+        r["controllata"] = iso()
+        salva(r)
         return r
     except Exception as e:
         print("report: controllo non riuscito", type(e).__name__)
@@ -766,7 +847,7 @@ def vista(r):
     return {"codice": r["codice"], "titolo": r.get("titolo") or "Report Persona", "campi": r.get("campi") or [], "opzioni": r.get("opzioni") or [],
             "persona": " ".join(x for x in (r.get("nome"), r.get("cognome")) if x), "cf": r.get("cf") or "", "finalita": FINALITA.get(r.get("finalita"), r.get("finalita")), "nota": r.get("nota") or "",
             "creata": r["creata"], "pronta": r.get("pronta"), "stato": stato, "errore": r.get("errore"), "incerto": bool(r.get("incerto")), "ultimo_controllo": r.get("ultimo_controllo"),
-            "avviso": r.get("avviso"), "costo": r.get("costo", 0), "prova": bool(r.get("prova")), "risultati": r.get("risultati") if stato == "da_scegliere" else None,
+            "stato_openapi": r.get("stato_openapi"), "controllata": r.get("controllata"), "avviso": r.get("avviso"), "costo": r.get("costo", 0), "prova": bool(r.get("prova")), "risultati": r.get("risultati") if stato == "da_scegliere" else None,
             "file": [{"n": f["n"], "nome": f["nome"], "scaricabile": f["dimensione"] <= MAX_PDF_RISPOSTA} for f in r.get("file") or []] if stato == "pronto" else [],
             "scade": iso(_da_iso(r["creata"]) + timedelta(days=CONSERVAZIONE_GIORNI))[:10],
             "ghl": {k: g.get(k) for k in ("stato", "nome", "come", "candidati", "allegato", "errore", "avviso", "cf_aggiunto") if g.get(k)}}

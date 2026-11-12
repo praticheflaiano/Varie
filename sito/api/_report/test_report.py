@@ -236,11 +236,12 @@ def test_vista_senza_dati_interni(report):
 
 def test_catalogo_letto_da_openapi(report):
     c = report.catalogo()
-    assert [v["id"] for v in c["voci"]] == [report.REPORT_PERSONA, "doc-protesti", "doc-planimetria"]   # per categoria, poi per nome and c["errore"] is None
+    assert [v["id"] for v in c["voci"]] == [report.DOCUMENTO_DI_PROVA, report.REPORT_PERSONA, "doc-protesti", "doc-planimetria"]   # per categoria, poi per nome and c["errore"] is None
     protesti, planimetria = report.voce("doc-protesti"), report.voce("doc-planimetria")
-    assert protesti["prezzo"] == 90 and protesti["immediato"] and protesti["tempi"] == "subito" and protesti["descrizione"] == "Visura protesti"
+    assert protesti["prezzo"] == 90 and protesti["immediato"] and protesti["tempi"] == "subito" and protesti["descrizione"].startswith("Visura protesti: assegni e cambiali")
     assert protesti["campi"][0] == {"chiave": "field0", "nome": "Codice fiscale", "tipo": "taxCode", "obbligatorio": True, "aiuto": "", "scelte": []}
     assert protesti["opzioni"] == [{"nome": "Storico", "prezzo": 150}]
+    assert planimetria["descrizione"].startswith("Planimetria catastale: il disegno")   # spiegazione scelta dal nome
     assert planimetria["prezzo"] == 700 and planimetria["prezzo_ricerca"] == 10 and not planimetria["immediato"] and not planimetria["richiedibile"]
     report.catalogo()
     assert stato["letture_catalogo"] == 1   # resta in archivio: non si rilegge a ogni apertura
@@ -313,7 +314,7 @@ def test_ambiente_riconosciuto_dal_token(report, monkeypatch):
     assert not report.in_prova()
     c = report.catalogo()
     assert chiamate == ["https://docuengine.openapi.com", "https://test.docuengine.openapi.com"]
-    assert c["prova"] and len(c["voci"]) == 3 and c["errore"] is None and report.configurazione()["prova"]
+    assert c["prova"] and len(c["voci"]) == 4 and c["errore"] is None and report.configurazione()["prova"]
     assert report._base("risk") == "https://test.risk.openapi.com"
     report._ambiente.clear()                      # nuova esecuzione della funzione: lo rilegge dall'archivio
     assert report.in_prova()
@@ -321,3 +322,25 @@ def test_ambiente_riconosciuto_dal_token(report, monkeypatch):
     assert not report.in_prova()
     monkeypatch.setenv("OPENAPI_PROVA", "1")      # la variabile, se c'è, comanda
     assert report.in_prova()
+
+
+def test_spiegazioni(report):
+    assert "bilancio depositato" in report.spiegazione("Bilancio ottico")
+    assert report.spiegazione("Visura Camerale Storica - società di capitale").startswith("Visura camerale storica")
+    assert report.spiegazione("Visura Camerale Ordinaria - impresa individuale").startswith("Visura camerale ordinaria")
+    assert report.spiegazione("Visura Protesti Persona").startswith("Visura protesti")
+    assert report.spiegazione("Visura catastale per soggetto").startswith("Visura catastale")
+    assert report.spiegazione("Qualcosa di ignoto") == ""
+    lunga = "Testo di Openapi abbastanza lungo da essere usato com'è."
+    assert report.spiegazione("Bilancio", lunga) == lunga
+
+
+def test_documento_di_prova_senza_openapi(report, monkeypatch):
+    monkeypatch.setattr(report, "_openapi", lambda *a, **k: (_ for _ in ()).throw(AssertionError("non deve chiamare Openapi")))
+    stato["contatti"].append({"id": "c1", "firstName": "Mario", "lastName": "Rossi", "customFields": []})
+    v = report.VOCE_PROVA
+    ricerca, leggibili, opzioni, costo = report.prepara(v, {"testo": "prova del 12 novembre"}, [])
+    r = report.richiedi(v, ricerca, leggibili, opzioni, costo, {"nome": "Mario", "cognome": "Rossi", "cf": CF_ROSSI}, "altro", "prova")
+    assert r["stato"] == "pronto" and r["costo"] == 0 and r["prova"] and report.file(r["codice"], 0).startswith(b"%PDF")
+    r = report.allega(report.cerca_contatto(r))
+    assert r["ghl"]["allegato"] and len(stato["allegati"]) == 1 and "DOCUMENTO DI PROVA" in stato["note"][0]

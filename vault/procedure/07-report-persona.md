@@ -83,6 +83,21 @@ I valori non vanno mai scritti nel repository né in questa nota.
    documento, data e finalità. Il campo del codice fiscale viene riconosciuto dal nome ("Codice Fiscale", "CF");
    se non esiste viene creato "Codice Fiscale".
 
+## Prova del giro senza Openapi
+
+In cima al catalogo c'è **"Documento di prova (gratis)"**: non chiama Openapi, crea un PDF di una pagina e gli fa
+fare il giro vero (archivio, download, ricerca del contatto e allegato nel CRM se si indica un cliente). È il modo
+per verificare la pagina quando si lavora con il token di prova, perché la sandbox di Openapi può accettare la
+richiesta e non consegnare mai un file.
+
+## Spiegazioni e diagnosi
+
+- Ogni voce del catalogo mostra una spiegazione in parole semplici. Se Openapi fornisce un testo (`requestStructure.help`)
+  si usa quello; altrimenti la frase è scelta dal nome del documento (`SPIEGAZIONI` in `report.py`).
+- Ogni richiesta in lavorazione mostra lo stato letto da Openapi e l'ora dell'ultimo controllo.
+- Ogni chiamata a Openapi lascia una riga nei log di Vercel (`report: openapi <servizio> <metodo> <percorso> -> <codice>`),
+  senza identificativi né dati della richiesta. Il piano Hobby conserva i log per un'ora.
+
 ## Limiti noti
 
 - Un PDF oltre circa 3,2 MB non si scarica dalla pagina (limite di risposta delle funzioni): si apre dal CRM.

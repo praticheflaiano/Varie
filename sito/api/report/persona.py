@@ -90,9 +90,9 @@ class handler(BaseHTTPRequestHandler):
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": "Scegli la finalità (con \"Altro\" scrivi la nota)."})
         if dati.get("consenso") is not True:
             return report.rispondi(self, 400, {"errore": "consenso"})
-        if not report._token():
-            return report.rispondi(self, 503, {"errore": "openapi-non-configurato"})
         v = report.voce(str(dati.get("documento") or ""))
+        if v and v["servizio"] != "prova" and not report._token():
+            return report.rispondi(self, 503, {"errore": "openapi-non-configurato"})
         if not v:
             return report.rispondi(self, 400, {"errore": "dati", "dettaglio": "Documento non più in catalogo: aggiorna il catalogo."})
         valori = dati.get("valori") if isinstance(dati.get("valori"), dict) else {}
