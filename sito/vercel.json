@@ -36,6 +36,44 @@
       ]
     },
     {
+      "source": "/api/report/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://praticheflaiano.it"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "content-type, x-report-sessione"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "600"
+        },
+        {
+          "key": "Vary",
+          "value": "Origin"
+        }
+      ]
+    },
+    {
+      "source": "/riservata/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -117,6 +155,18 @@
     },
     "api/stima/pagamento.py": {
       "maxDuration": 30
+    },
+    "api/report/persona.py": {
+      "maxDuration": 120
+    },
+    "api/report/avviso.py": {
+      "maxDuration": 120
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/report/avviso",
+      "schedule": "17 4 * * *"
+    }
+  ]
 }
