@@ -302,7 +302,7 @@ const secondario = "rounded-full border-2 border-[#14142B] bg-white px-5 py-2 fo
         try {
           const res = await fetch(API + "/api/report/persona", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ azione: "accedi", password: $("rp-password").value }) });
           const dati = await res.json().catch(() => ({}));
-          if (!res.ok) { avvisa(res.status === 429 ? "Troppi tentativi sbagliati: la pagina resta bloccata per 15 minuti." : res.status === 503 ? "La pagina non è ancora configurata (manca la password o l'archivio su Vercel)." : res.status === 403 && dati.errore === "password" ? "Password non corretta." : "Accesso non riuscito."); return; }
+          if (!res.ok) { avvisa(res.status === 429 ? "Troppi tentativi sbagliati: la pagina resta bloccata per 15 minuti." : res.status === 503 ? (dati.manca === "password" ? "Su Vercel non trovo la variabile REPORT_PERSONA_PASSWORD per questo ambiente (Preview o Production): controlla il nome e gli ambienti spuntati, poi fai Redeploy." : dati.manca === "archivio" ? "La password c'è, ma in questo ambiente non è collegato l'archivio Vercel Blob (BLOB_READ_WRITE_TOKEN)." : "La pagina non è ancora configurata (manca la password o l'archivio su Vercel).") : res.status === 403 && dati.errore === "password" ? "Password non corretta." : "Accesso non riuscito."); return; }
           sessione = dati.sessione; $("rp-password").value = "";
           try { sessionStorage.setItem("report-persona", sessione); } catch { /* facoltativo */ }
           await entra();

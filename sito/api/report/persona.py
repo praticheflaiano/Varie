@@ -33,8 +33,10 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if not report.origine(self.headers):
             return report.rispondi(self, 403, {"errore": "origine"})
-        if not report.archivio.configurato() or not os.environ.get("REPORT_PERSONA_PASSWORD"):
-            return report.rispondi(self, 503, {"errore": "non-configurato"})
+        if not os.environ.get("REPORT_PERSONA_PASSWORD"):
+            return report.rispondi(self, 503, {"errore": "non-configurato", "manca": "password"})
+        if not report.archivio.configurato():
+            return report.rispondi(self, 503, {"errore": "non-configurato", "manca": "archivio"})
         dati = report.corpo_json(self)
         azione = str(dati.get("azione") or "")
         try:
