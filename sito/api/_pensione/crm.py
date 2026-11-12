@@ -175,6 +175,9 @@ def sincronizza(codice, pratica, evento):
             corpo["phone"] = r["telefono"]
         esito = _prova("contatto", lambda: _api("POST", "/contacts/upsert", corpo))
         crm["contatto"] = ((esito or {}).get("contact") or {}).get("id")
+        recupera = bool(crm.get("contatto")) and evento != "ricevuta"   # contatto nato in ritardo: mancano le note degli eventi precedenti
+    else:
+        recupera = False
     if not crm.get("contatto"):
         pratica["crm"] = crm
         return crm != prima
@@ -200,6 +203,17 @@ def sincronizza(codice, pratica, evento):
     def compito(titolo, testo):
         _prova("compito", lambda: _api("POST", f"/contacts/{contatto}/tasks", {"title": titolo, "body": testo, "dueDate": pratica.get("aggiornata") or pratica["creata"], "completed": False}))
 
+    def nota_pagamento():
+        p = pratica.get("pagamento") or {}
+        nota(f"STIMA PENSIONE - pagamento registrato ({p.get('come', '')})\nCodice pratica: {codice}\nRiferimento: {p.get('riferimento') or 'n.d.'}"
+             f"\nImporto incassato: {p.get('importo') or 'n.d.'}\nStato: {ETICHETTE[pratica['stato']]}\nPagina dell'ufficio: {ufficio}")
+
+    if recupera:
+        # Il CRM non era raggiungibile agli eventi precedenti: si scrivono ora le note perse (senza ripetere le email).
+        nota(_nota_questionario(codice, pratica))
+        if pratica.get("pagamento") and evento != "pagata":
+            nota_pagamento()
+
     if evento == "ricevuta":
         nota(_nota_questionario(codice, pratica))
         _email(contatto, "La tua Stima e Calcolo della pensione: il link della tua pratica", [
@@ -208,9 +222,7 @@ def sincronizza(codice, pratica, evento):
             "Conservalo: ti serve per completare il pagamento, seguire il calcolo e scaricare il prospetto, anche da un altro dispositivo. Ti verrà chiesta la tua data di nascita.",
             "Centro Pratiche Flaiano - 06 97845429 - WhatsApp 371 623 0690"])
     elif evento == "pagata":
-        p = pratica.get("pagamento") or {}
-        nota(f"STIMA PENSIONE - pagamento registrato ({p.get('come', '')})\nCodice pratica: {codice}\nRiferimento: {p.get('riferimento') or 'n.d.'}"
-             f"\nImporto incassato: {p.get('importo') or 'n.d.'}\nStato: {ETICHETTE[pratica['stato']]}\nPagina dell'ufficio: {ufficio}")
+        nota_pagamento()
         if pratica["stato"] == "attesa_estratto":
             _email(contatto, "Stiamo richiedendo il tuo estratto contributivo", [
                 f"Ciao {r.get('nome', '')},", "abbiamo ricevuto il pagamento e la tua richiesta dell'estratto contributivo.",
