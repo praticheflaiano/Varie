@@ -1,0 +1,59 @@
+---
+import ZonaPage from "~/components/zone/ZonaPage.astro";
+
+const transport = [
+  {
+    title: "Con la metro B1 e poi l'autobus",
+    html: `Dalla zona di Talenti e Montesacro la metro B1 arriva a <strong>Jonio</strong> (capolinea) e a <strong>Conca d'Oro</strong>. Dalla stazione Conca d'Oro passano le linee <strong>38</strong> (Termini - Porta di Roma), <strong>336</strong> e <strong>86</strong>, che toccano Vigne Nuove. La 38 ha una fermata a Vigne Nuove/Lumiere, da cui servono circa 6 minuti a piedi. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+  },
+  {
+    title: "Linea 336: da Montesacro a Vigne Nuove",
+    html: `Nel percorso della <strong>336</strong> ci sono le fermate Tirreno/Sempione, Piazzale Adriatico, Adriatico/Lampedusa e poi Vigne Nuove (tra cui Vigne Nuove/Lumiere). Collega quindi la zona di Piazza Sempione e di Via Lampedusa con il nostro quartiere. Fonte: <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>.`,
+  },
+  {
+    title: "Linee 339 e 349 da Jonio",
+    html: `Le linee circolari <strong>339</strong> e <strong>349</strong> passano da Jonio (metro B1) e dal quartiere Vigne Nuove. Le fermate sono su vie interne del quartiere (per esempio Isole Curzolane, Monte Massico): prima di partire controlla la fermata più vicina all'ufficio. Fonte: <a href="https://it.busti.me/rome/rome-bus-339/" rel="noopener">Bustime linea 339</a>.`,
+  },
+];
+
+const offices = [
+  {
+    title: "INPS: filiale Roma Nomentano-Montesacro",
+    html: `Via Nizza 152-156. Dal 2025 la filiale ha competenza sui CAP 00137, 00138, 00139, 00141, 00197, 00198 e 00199: controlla il tuo CAP nell'elenco. Fonte: <a href="https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.inps-inaugurazione-filiale-roma-nomentano-montesacro.html" rel="noopener">INPS, inaugurazione della filiale</a>.`,
+  },
+  {
+    title: "Municipio III (ex Montesacro)",
+    html: `Il Municipio III è nell'area nord-est di Roma, tra Via Salaria, Via Nomentana e il Grande Raccordo Anulare. Per orari e servizi controlla il sito di Roma Capitale: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+  },
+  {
+    title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
+    html: `Via Lampedusa 23-27. Ospita lo sportello polifunzionale (scelta e revoca del medico, esenzioni, tessera sanitaria) e il Punto Unico di Accesso (tel. 06 6010 5752). Prenotazioni CUP: 06 9939. Secondo la Carta dei servizi si raggiunge con le linee ATAC 60, 63, 90, 86 e 336. Fonte: <a href="https://www.aslroma1.it/uploads/files/30_23_impaginato_cdc_MONTESACRO_rev18mar.pdf" rel="noopener">Carta dei servizi ASL Roma 1</a>. Per la domanda di invalidità civile vedi <a href="/invalidita-104">la nostra pagina</a>.`,
+  },
+  {
+    title: "Centro per l'impiego",
+    html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la nostra pagina</a>.`,
+  },
+];
+---
+
+<ZonaPage
+  title="CAF e patronato Talenti e Montesacro"
+  description="CAF e patronato per Talenti e Montesacro: come arrivare in Via Filoteo Alberini a Vigne Nuove, uffici INPS, Municipio III e ASL di zona. ISEE, 730, pensioni."
+  slug="caf-patronato-talenti-montesacro"
+  breadcrumbName="Talenti e Montesacro"
+  eyebrow="Zone servite · Talenti, Montesacro"
+  h1="CAF e patronato per Talenti e Montesacro"
+  intro="Se abiti a Talenti o a Montesacro ci trovi a Vigne Nuove, nello stesso Municipio III, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano). Qui sotto trovi come arrivare dalla tua zona e gli uffici pubblici di riferimento."
+  transportTitle="Come arrivare da Talenti e Montesacro"
+  transportIntro="Le linee che servono Via delle Vigne Nuove e la zona di partenza, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
+  transport={transport}
+  transportNote="Dati verificati il 13/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  officesTitle="Uffici pubblici per chi abita qui"
+  officesIntro="Gli uffici che servono più spesso a chi abita a Talenti e a Montesacro."
+  offices={offices}
+  officesNote="Orari e sportelli degli enti pubblici cambiano: prima di andare controlla sempre il sito ufficiale."
+  otherZones={[
+    { name: "Fidene, Serpentara, Nuovo Salario", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
+    { name: "Tufello, Conca d'Oro, Val Melaina", href: "/zone/caf-patronato-tufello-conca-oro" },
+  ]}
+/>

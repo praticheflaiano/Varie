@@ -3,6 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
 
 /*
  * Fonti verificate (9/11/2026):
@@ -31,6 +32,8 @@ const faqs = [
   { q: "Funziona anche se non abito a Roma?", a: "Sì, il servizio online vale in tutta Italia: compili il mandato, paghi con carta e al resto pensiamo noi." },
   { q: "Mi dimetto e trovo subito un altro lavoro: se lo perdo ho la NASpI?", a: "Attenzione: se nei 12 mesi prima ti sei dimesso volontariamente da un contratto a tempo indeterminato, nel nuovo lavoro servono almeno 13 settimane di contributi (INPS, circolare 98/2025). Valutalo prima di dimetterti." },
   { q: "Ci sono casi in cui non si fanno online?", a: "Sì: lavoro domestico, periodo di prova e pubblico impiego seguono altre procedure. In gravidanza o con un figlio sotto i 3 anni (anche in adozione o affido) le dimissioni vanno convalidate all'Ispettorato del lavoro. In questi casi ti diciamo noi come procedere, senza costi." },
+  { q: "Chi può inviare le dimissioni online?", a: "Il lavoratore stesso dal sito del Ministero del Lavoro con SPID o CIE, oppure un intermediario abilitato: patronato, sindacato, ente bilaterale, commissione di certificazione, consulente del lavoro o sede dell'Ispettorato. Noi le inviamo come patronato, anche se non hai SPID (fonte: Ministero del Lavoro)." },
+  { q: "Quali rapporti di lavoro restano fuori dalla procedura online?", a: "Il Ministero esclude il lavoro alle dipendenze della pubblica amministrazione, il lavoro domestico e le dimissioni fatte nelle sedi di conciliazione previste dal codice di procedura (art. 2113 c.c., quarto comma) e davanti alle commissioni di certificazione." },
 ];
 
 const props = {
@@ -208,5 +211,17 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
     <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
   </section>
 
+  <div class="lp"><section class="c47" id="fonti">
+    <h2 class="c55">Fonti ufficiali</h2>
+    <p class="c4"><b>Aggiornato il 13 novembre 2026.</b> Preavviso e giusta causa seguono il codice civile (artt. 2118 e 2119) e il contratto collettivo; i prezzi sono quelli pubblicati in questa pagina.</p>
+    <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+      <li><a href="https://www.lavoro.gov.it/strumenti-e-servizi/Dimissioni-volontarie/Pagine/default" target="_blank" rel="noopener">Ministero del Lavoro - Dimissioni volontarie</a> · procedura telematica, intermediari abilitati, revoca entro 7 giorni, casi esclusi</li>
+      <li><a href="https://www.lavoro.gov.it/documenti-e-norme/normative/Documents/2015/Decreto_Legislativo_14_settembre_2015_n.151.pdf" target="_blank" rel="noopener">D.Lgs. 14 settembre 2015, n. 151, art. 26 (testo sul sito del Ministero del Lavoro)</a></li>
+      <li><a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.12.naspi-chiarimenti-sulla-gestione-delle-assenze-ingiustificate.html" target="_blank" rel="noopener">INPS - Circolare n. 154 del 22 dicembre 2025: assenze ingiustificate e dimissioni per fatti concludenti</a></li>
+      <li><a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.naspi-nuovo-requisito-contributivo.html" target="_blank" rel="noopener">INPS - Circolare n. 98 del 5 giugno 2025: nuovo requisito contributivo NASpI</a></li>
+      <li><a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" target="_blank" rel="noopener">INPS - NASpI: indennità mensile di disoccupazione</a> · termine di 68 giorni</li>
+    </ul>
+    <p class="c4">Hai un dubbio sul tuo caso? <a href={"/prenota"} style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
+  </section></div>
   <LandingArticles categories={["naspi-disoccupazione"]} />
 </BaseLayout>

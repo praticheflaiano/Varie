@@ -1,0 +1,59 @@
+---
+import ZonaPage from "~/components/zone/ZonaPage.astro";
+
+const transport = [
+  {
+    title: "Da Conca d'Oro: linee 38, 336 e 86",
+    html: `Alla stazione <strong>Conca d'Oro</strong> della metro B1 si prendono la <strong>38</strong> (Termini - Porta di Roma) e la <strong>336</strong>, che arrivano a Vigne Nuove. Anche la <strong>86</strong> collega Conca d'Oro a Vigne Nuove. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+  },
+  {
+    title: "Da Tufello e Val Melaina: linee 339 e 349",
+    html: `Le linee circolari <strong>339</strong> e <strong>349</strong> passano da Jonio (metro B1), da Tufello e da Valle Melaina e arrivano nel quartiere Vigne Nuove. Le fermate sono su vie interne del quartiere (per esempio Isole Curzolane, Monte Massico): prima di partire controlla la fermata più vicina all'ufficio. Fonti: <a href="https://moovitapp.com/index/it/mezzi_pubblici-Vigne_Nuove-Roma_e_Lazio-site_14810963-61" rel="noopener">Moovit Vigne Nuove</a>, <a href="https://it.busti.me/rome/rome-bus-339/" rel="noopener">Bustime linea 339</a>.`,
+  },
+  {
+    title: "Dalla fermata all'ufficio",
+    html: `La fermata <strong>Vigne Nuove/Lumiere</strong> (linea 38) è a circa 6 minuti a piedi dall'ingresso del Centro Acquisti Flaiano.`,
+  },
+];
+
+const offices = [
+  {
+    title: "INPS: filiale Roma Nomentano-Montesacro",
+    html: `Via Nizza 152-156. Dal 2025 la filiale ha competenza sui CAP 00137, 00138, 00139, 00141, 00197, 00198 e 00199: controlla il tuo CAP nell'elenco. Fonte: <a href="https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.inps-inaugurazione-filiale-roma-nomentano-montesacro.html" rel="noopener">INPS, inaugurazione della filiale</a>.`,
+  },
+  {
+    title: "Municipio III",
+    html: `Tufello, Conca d'Oro e Val Melaina sono nell'area del Municipio III, nord-est di Roma. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+  },
+  {
+    title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
+    html: `Via Lampedusa 23-27 (Distretto 3, Municipio III). Sportello polifunzionale (scelta e revoca del medico, esenzioni, tessera sanitaria) e Punto Unico di Accesso (tel. 06 6010 5752). Prenotazioni CUP: 06 9939. Fonte: <a href="https://www.aslroma1.it/uploads/files/30_23_impaginato_cdc_MONTESACRO_rev18mar.pdf" rel="noopener">Carta dei servizi ASL Roma 1</a>. Per la domanda di invalidità civile vedi <a href="/invalidita-104">la nostra pagina</a>.`,
+  },
+  {
+    title: "Centro per l'impiego",
+    html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la nostra pagina</a>.`,
+  },
+];
+---
+
+<ZonaPage
+  title="CAF e patronato Tufello e Conca d'Oro"
+  description="CAF e patronato per Tufello, Conca d'Oro e Val Melaina: come arrivare in Via Filoteo Alberini a Vigne Nuove, uffici INPS, Municipio III e ASL. ISEE e 730."
+  slug="caf-patronato-tufello-conca-oro"
+  breadcrumbName="Tufello, Conca d'Oro, Val Melaina"
+  eyebrow="Zone servite · Tufello, Conca d'Oro, Val Melaina"
+  h1="CAF e patronato per Tufello, Conca d'Oro e Val Melaina"
+  intro="Se abiti a Tufello, Conca d'Oro o Val Melaina siamo vicini: il Centro Pratiche Flaiano è a Vigne Nuove, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano), nello stesso Municipio III. Qui trovi come arrivare e gli uffici pubblici di riferimento."
+  transportTitle="Come arrivare da Tufello, Conca d'Oro e Val Melaina"
+  transportIntro="Le linee che servono Via delle Vigne Nuove e le zone di partenza, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
+  transport={transport}
+  transportNote="Dati verificati il 13/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  officesTitle="Uffici pubblici per chi abita qui"
+  officesIntro="Gli uffici che servono più spesso a chi abita a Tufello, Conca d'Oro e Val Melaina."
+  offices={offices}
+  officesNote="Orari e sportelli degli enti pubblici cambiano: prima di andare controlla sempre il sito ufficiale."
+  otherZones={[
+    { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
+    { name: "Fidene, Serpentara, Nuovo Salario", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
+  ]}
+/>

@@ -1,0 +1,63 @@
+---
+import ZonaPage from "~/components/zone/ZonaPage.astro";
+
+const transport = [
+  {
+    title: "Da Fidene: linea 341",
+    html: `La <strong>341</strong> ha il capolinea alla stazione di Fidene (FL1), passa da Bufalotta e da Vigne Nuove e arriva a Ponte Mammolo (metro B). Alla fermata Vigne Nuove/Pasinetti passano anche 38, 86, 336 e 338. Fonti: <a href="https://it.busti.me/rome/rome-bus-341/" rel="noopener">Bustime linea 341</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_Delle_Vigne_Nuove-Roma_e_Lazio-site_22342855-61" rel="noopener">Moovit Via delle Vigne Nuove</a>.`,
+  },
+  {
+    title: "Da Nuovo Salario: linee 339 e 349",
+    html: `Le linee circolari <strong>339</strong> e <strong>349</strong> passano dalla stazione di Nuovo Salario (FL1), da Jonio (metro B1) e dal quartiere Vigne Nuove. Le fermate di Vigne Nuove sono su vie interne (per esempio Isole Curzolane, Monte Massico): prima di partire controlla la fermata più vicina all'ufficio. Fonte: <a href="https://it.busti.me/rome/rome-bus-339/" rel="noopener">Bustime linea 339</a>.`,
+  },
+  {
+    title: "Da Serpentara e Colle Salario",
+    html: `Per Serpentara e Colle Salario non abbiamo trovato una linea diretta verificata verso Via delle Vigne Nuove. Usa il pulsante &laquo;Calcola il percorso&raquo; qui sotto: parte dal tuo indirizzo e mostra le soluzioni aggiornate con i mezzi pubblici o in auto.`,
+  },
+  {
+    title: "Dalla fermata all'ufficio",
+    html: `La fermata <strong>Vigne Nuove/Lumiere</strong> (linea 38) è a circa 6 minuti a piedi dall'ingresso del Centro Acquisti Flaiano.`,
+  },
+];
+
+const offices = [
+  {
+    title: "INPS: filiale Roma Nomentano-Montesacro",
+    html: `Via Nizza 152-156. Dal 2025 la filiale ha competenza sui CAP 00137, 00138, 00139, 00141, 00197, 00198 e 00199: controlla il tuo CAP nell'elenco. Fonte: <a href="https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.inps-inaugurazione-filiale-roma-nomentano-montesacro.html" rel="noopener">INPS, inaugurazione della filiale</a>.`,
+  },
+  {
+    title: "Municipio III",
+    html: `Fidene, Serpentara, Nuovo Salario e Colle Salario sono nell'area del Municipio III, nord-est di Roma, tra Via Salaria, Via Nomentana e il Grande Raccordo Anulare. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+  },
+  {
+    title: "ASL Roma 1, Distretto 3",
+    html: `Il Distretto 3 corrisponde al Municipio III. La Casa della Comunità Montesacro-Hub (Via Lampedusa 23-27) ha lo sportello polifunzionale (scelta e revoca del medico, esenzioni, tessera sanitaria) e il Punto Unico di Accesso (tel. 06 6010 5752). Prenotazioni CUP: 06 9939. Fonte: <a href="https://www.aslroma1.it/uploads/files/30_23_impaginato_cdc_MONTESACRO_rev18mar.pdf" rel="noopener">Carta dei servizi ASL Roma 1</a>. Per la domanda di invalidità civile vedi <a href="/invalidita-104">la nostra pagina</a>.`,
+  },
+  {
+    title: "Centro per l'impiego",
+    html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la nostra pagina</a>.`,
+  },
+];
+---
+
+<ZonaPage
+  title="CAF e patronato Fidene e Nuovo Salario"
+  description="CAF e patronato per Fidene, Serpentara, Nuovo Salario e Colle Salario: come arrivare a Vigne Nuove, uffici INPS, Municipio III e ASL. ISEE, 730 e pensioni."
+  slug="caf-patronato-fidene-serpentara-nuovo-salario"
+  breadcrumbName="Fidene, Serpentara, Nuovo Salario"
+  eyebrow="Zone servite · Fidene, Serpentara, Nuovo Salario, Colle Salario"
+  h1="CAF e patronato per Fidene, Serpentara, Nuovo Salario e Colle Salario"
+  intro="Se abiti a Fidene, Serpentara, Nuovo Salario o Colle Salario siamo nel tuo stesso Municipio III, a Vigne Nuove, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano). Ecco come arrivare e quali uffici pubblici ti riguardano."
+  transportTitle="Come arrivare da Fidene, Serpentara e Salario"
+  transportIntro="Le linee che servono Via delle Vigne Nuove e le zone di partenza, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
+  transport={transport}
+  transportNote="Dati verificati il 13/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  officesTitle="Uffici pubblici per chi abita qui"
+  officesIntro="Gli uffici che servono più spesso a chi abita nella zona di Fidene e della Salaria."
+  offices={offices}
+  officesNote="Orari e sportelli degli enti pubblici cambiano: prima di andare controlla sempre il sito ufficiale."
+  otherZones={[
+    { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
+    { name: "Tufello, Conca d'Oro, Val Melaina", href: "/zone/caf-patronato-tufello-conca-oro" },
+  ]}
+/>

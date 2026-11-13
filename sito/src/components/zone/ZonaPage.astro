@@ -1,0 +1,137 @@
+---
+/**
+ * Struttura comune delle pagine "zona servita". Il contenuto (trasporti, uffici, note)
+ * arriva dalle singole pagine e contiene solo fatti con fonte. Nessun JSON-LD proprio:
+ * il LocalBusiness è già nel BaseLayout, le briciole di pane sono nel componente Breadcrumb.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import SectionHeading from "~/components/ui/SectionHeading.astro";
+import Button from "~/components/ui/Button.astro";
+import { CONTACT, LANDING } from "~/consts";
+
+interface Item { title: string; html: string }
+interface Props {
+  title: string;
+  description: string;
+  breadcrumbName: string;
+  slug: string;
+  eyebrow: string;
+  h1: string;
+  intro: string;
+  transportTitle: string;
+  transportIntro: string;
+  transport: Item[];
+  transportNote?: string;
+  officesTitle: string;
+  officesIntro: string;
+  offices: Item[];
+  officesNote?: string;
+  otherZones: { name: string; href: string }[];
+}
+
+const p = Astro.props;
+const SERVIZI = ["/isee", "/730", "/pensioni", "/invalidita-104", "/naspi", "/successioni"];
+const servizi = SERVIZI.map((href) => {
+  const l = LANDING.find((x) => x.href === href);
+  return l ? { label: l.label, href, tag: l.tag } : { label: href, href, tag: "" };
+});
+const mapsDir = "https://www.google.com/maps/dir/?api=1&destination=Centro+Pratiche+Flaiano%2C+Via+Filoteo+Alberini+25%2C+00139+Roma";
+---
+
+<BaseLayout title={p.title} description={p.description}>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-12">
+      <Breadcrumb
+        items={[
+          { name: "Zone servite", href: "/zone" },
+          { name: p.breadcrumbName, href: `/zone/${p.slug}` },
+        ]}
+        class="mb-6"
+      />
+      <SectionHeading eyebrow={p.eyebrow} level="h1" title={p.h1} subtitle={p.intro} />
+      <div class="mt-6 flex flex-wrap gap-3">
+        <Button variant="accent" href="/prenota" icon="heroicons:calendar-days" iconPosition="left">Prenota un appuntamento</Button>
+        <Button variant="secondary" href={CONTACT.whatsapp.link} external>WhatsApp {CONTACT.phone.mobile}</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-wide grid gap-8 lg:grid-cols-12">
+      <div class="lg:col-span-7 space-y-8">
+        <div>
+          <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">{p.transportTitle}</h2>
+          <p class="mt-3 text-[var(--color-ink-soft)] leading-relaxed">{p.transportIntro}</p>
+          <ul class="mt-4 space-y-3">
+            {p.transport.map((t) => (
+              <li class="rounded-[20px] bg-[#F7F7FB] p-5">
+                <h3 class="font-display text-base font-bold text-[var(--color-ink)]">{t.title}</h3>
+                <p class="mt-1 text-sm text-[var(--color-ink-soft)] leading-relaxed" set:html={t.html} />
+              </li>
+            ))}
+          </ul>
+          {p.transportNote && <p class="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.transportNote}</p>}
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">
+            <strong>Parcheggio:</strong> gratuito, nel centro acquisti e in strada. Riceviamo su appuntamento, in sede o online.
+          </p>
+          <a class="mt-4 inline-flex items-center rounded-full bg-[#14142B] px-5 py-3 text-sm font-extrabold text-white no-underline hover:bg-[#5B3DF5]" href={mapsDir} target="_blank" rel="noopener">Calcola il percorso da casa tua ↗</a>
+        </div>
+
+        <div>
+          <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">{p.officesTitle}</h2>
+          <p class="mt-3 text-[var(--color-ink-soft)] leading-relaxed">{p.officesIntro}</p>
+          <ul class="mt-4 space-y-3">
+            {p.offices.map((o) => (
+              <li class="rounded-[20px] border border-[var(--color-border)] bg-white p-5">
+                <h3 class="font-display text-base font-bold text-[var(--color-ink)]">{o.title}</h3>
+                <p class="mt-1 text-sm text-[var(--color-ink-soft)] leading-relaxed" set:html={o.html} />
+              </li>
+            ))}
+          </ul>
+          {p.officesNote && <p class="mt-3 text-sm text-[var(--color-ink-muted)] leading-relaxed">{p.officesNote}</p>}
+        </div>
+      </div>
+
+      <aside class="lg:col-span-5 space-y-6">
+        <div class="rounded-[28px] bg-[var(--color-brand-50)] p-6">
+          <h2 class="font-display text-xl font-bold text-[var(--color-brand-900)]">Dove siamo</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">
+            {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality}.
+            Dentro il Centro Acquisti Flaiano, quartiere Vigne Nuove (Municipio III). Entra nel centro acquisti e cerca l'insegna Centro Pratiche Flaiano.
+          </p>
+          <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">
+            Tel <a href={`tel:${CONTACT.phone.landlineRaw}`}>{CONTACT.phone.landline}</a><br />
+            WhatsApp <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener">{CONTACT.phone.mobile}</a><br />
+            Orari e indicazioni: <a href="/contatti">pagina contatti</a>
+          </p>
+        </div>
+
+        <div class="rounded-[28px] bg-[#F7F7FB] p-6">
+          <h2 class="font-display text-xl font-bold text-[var(--color-ink)]">Le pratiche più richieste</h2>
+          <ul class="mt-4 space-y-2">
+            {servizi.map((s) => (
+              <li class="flex items-center justify-between gap-3 text-sm">
+                <a href={s.href} class="font-semibold">{s.label}</a>
+                {s.tag && <span class="text-xs text-[var(--color-ink-muted)]">{s.tag}</span>}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 text-sm text-[var(--color-ink-soft)]">
+            Non trovi la tua pratica? Guarda <a href="/servizi">tutti i servizi</a> o <a href="/contatti">scrivici</a>.
+          </p>
+        </div>
+
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Altre zone</p>
+          <ul class="mt-3 flex flex-wrap gap-2">
+            {p.otherZones.map((z) => (
+              <li><a href={z.href} class="inline-flex rounded-full border border-[var(--color-border-strong)] bg-white px-3 py-1 text-xs font-semibold text-[var(--color-ink-soft)] no-underline">{z.name}</a></li>
+            ))}
+            <li><a href="/zone" class="inline-flex rounded-full border border-[var(--color-border-strong)] bg-white px-3 py-1 text-xs font-semibold text-[var(--color-ink-soft)] no-underline">Tutte le zone</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
