@@ -88,7 +88,7 @@ const GESTIONI: [RegExp, string][] = [
   // "ART." e "COM." valgono solo per titolari e collaboratori d'impresa (non "art. 13", non "settore commercio")
   [/(titolare|coadiuv|collaborator|impresa).*(artigian|\bart\.)|^artigian|gestione (degli )?artigian/, "ARTIGIANI"],
   [/(titolare|coadiuv|collaborator|impresa).*(commerc|\bcomm?\.)|^commerc|gestione (dei )?commerc/, "COMMERCIANTI"],
-  [/dipend|fpld|domestic/, "FPLD"],
+  [/dipend|fpld|domestic|apprendist/, "FPLD"],
 ];
 export function codiceGestione(testo: string): string {
   const t = (testo || "").toLowerCase().trim();
@@ -256,7 +256,7 @@ export function componi(an: Anagrafica, righeIn: RigaEstratto[], avvisiIniziali:
     righe,
     anni,
     totaleSettimane,
-    situazione: ultima ? situazioneDa(ultima.tipo) : "",
+    situazione: ultima ? situazioneDa(ultima.tipo) || (ultima.gestione === "GS" ? "separata" : "") : "",
     ultimaRetribuzione: annoPieno ? annoPieno.imponibile : null,
     avvisi,
     gestioni,
@@ -280,6 +280,9 @@ const DIST_IMPORTO_DA_UNITA = 190;
 const RE_SEZIONE = /^(regime|gestion[ei]|fondo|fondi|cassa|lavoratori)\b/i;
 const RE_VOCE_NOTA = /^(\S{1,3})\)\s+(.+)$/;
 const RE_PIEDE = /^(estratto conto di\b|pagina\s+\d+)/i;
+const RE_ANNO_CELLA = /^(19|20)\d{2}$/;
+// colonne "a numero" senza unità sulla riga: la cella sta sotto il titolo della colonna (allineata a destra)
+const DIST_COLONNA = 45;
 const TOLLERANZA_RIGA = 2.5;
 
 function lettereCf(parola: string, nome = false): string {
@@ -370,6 +373,16 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
   const problemi: string[] = [];
   let xNote: number | null = null;
   let xUnita: number | null = null;
+  // Sezione Spettacolo: i contributi sono in una colonna "Giorni", senza unità sulla riga; a destra Gruppo e Codice qualifica
+  let xGiorni: number | null = null;
+  let xGruppo: number | null = null;
+  // Gestione separata: tabelle per anno ("anno solare" con i committenti e "montante contributivo" con i mesi accreditati)
+  let tabella: "periodi" | "gs-solare" | "gs-montante" = "periodi";
+  let xMesi: number | null = null;
+  let xMeta = 0;
+  const gsSolare: { anno: string; tipo: string; committente: string; reddito: string }[] = [];
+  const gsMontante: { anno: string; tipo: string; reddito: string; mesi: string }[] = [];
+  let paginaCorrente = -1;
   let sezione = "";
   let zona: "tabella" | "note" | "segnalazioni" = "tabella";
   let ultimaPagina = -1;
@@ -379,12 +392,46 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
     const c = r.c;
     const testi = c.map((k) => k.t);
     const primo = testi[0];
+    // legenda e segnalazioni finiscono con la pagina: la pagina dopo ricomincia con l'intestazione (anche di un'altra gestione)
+    if (r.p !== paginaCorrente) {
+      paginaCorrente = r.p;
+      zona = "tabella";
+    }
     // piè di pagina ("Estratto conto di …", "Pagina n di m") e numeri di pagina isolati
     if (testi.some((t) => RE_PIEDE.test(t)) || (c.length === 1 && RE_INTERO.test(primo))) continue;
     // intestazione della tabella: fissa la colonna delle note (si ripete a ogni pagina)
     if (testi.includes("Note") && testi.some((t) => /^(azienda|tipo di contribuzione)/i.test(t))) {
       xNote = c.find((k) => k.t === "Note")!.x;
+      xGiorni = c.find((k) => /^giorni$/i.test(k.t))?.x ?? null;
+      xGruppo = c.find((k) => /^gruppo$/i.test(k.t))?.x ?? null;
+      tabella = "periodi";
       zona = "tabella";
+      continue;
+    }
+    // intestazione delle tabelle per anno della Gestione separata
+    if (testi.some((t) => /^tipo di attivit/i.test(t))) {
+      xMesi = c.find((k) => /^mesi$/i.test(k.t))?.x ?? null;
+      tabella = xMesi !== null ? "gs-montante" : "gs-solare";
+      const xCommittente = c.find((k) => /committente/i.test(k.t))?.x ?? 0;
+      xMeta = (xCommittente + c.find((k) => /^tipo di attivit/i.test(k.t))!.x) / 2;
+      zona = "tabella";
+      continue;
+    }
+    if (tabella !== "periodi" && zona === "tabella" && RE_ANNO_CELLA.test(primo) && c.length >= 2) {
+      const importi = c.slice(1).filter((k) => RE_IMPORTO_CELLA.test(k.t)).map((k) => k.t);
+      const parole = c.slice(1).filter((k) => !RE_IMPORTO_CELLA.test(k.t) && !RE_INTERO.test(k.t));
+      if (tabella === "gs-montante") {
+        // le righe senza attività riportano solo il montante rivalutato: non sono contributi dell'anno
+        const tipoAnno = parole.map((k) => k.t).join(" ");
+        const mesi = c.slice(1).find((k) => RE_INTERO.test(k.t) && Math.abs(k.x - xMesi!) <= DIST_COLONNA)?.t ?? "0";
+        if (tipoAnno) gsMontante.push({ anno: primo, tipo: tipoAnno, reddito: importi[0] ?? "", mesi });
+      } else {
+        gsSolare.push({
+          anno: primo, reddito: importi[0] ?? "",
+          committente: parole.filter((k) => k.x < xMeta).map((k) => k.t).join(" "),
+          tipo: parole.filter((k) => k.x >= xMeta).map((k) => k.t).join(" "),
+        });
+      }
       continue;
     }
     if (c.length >= 2 && RE_DATA_CELLA.test(c[0].t) && RE_DATA_CELLA.test(c[1].t)) {
@@ -403,6 +450,14 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
         if (!unita && RE_UNITA.test(t)) {
           unita = /^sett/i.test(t) ? "settimane" : /^mes/i.test(t) ? "mesi" : "giorni";
           xUnita = x;
+        } else if (!unita && xGiorni !== null && RE_INTERO.test(t) && Math.abs(x - xGiorni) <= DIST_COLONNA) {
+          // colonna "Giorni" (Spettacolo): il numero è già il contributo, l'unità è nel titolo della colonna
+          unita = "giorni";
+          diritto = t;
+          xDir = x;
+          xUnita = x;
+        } else if (xGiorni !== null && xGruppo !== null && x >= xGruppo - 30) {
+          // Gruppo e Codice qualifica: non sono né azienda né nota
         } else if ((xNote !== null && x >= xNote - 30 && t.length <= 4) || (xNote === null && x >= 740 && t.length <= 2)) nota = `${nota} ${t}`.trim();
         else if (unita && RE_INTERO.test(t) && !diritto && !importo && !azienda.length) {
           diritto = t;
@@ -464,6 +519,22 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
       ultimaY = r.y;
     }
   }
+  // Gestione separata: una riga per anno e attività. I mesi accreditati stanno solo nella tabella del montante
+  // (cella vuota = nessun mese); se c'è solo la tabella "anno solare" i mesi non sono scritti e la riga resta da verificare.
+  const committenti = (anno: string) => [...new Set(gsSolare.filter((s) => s.anno === anno && s.committente).map((s) => s.committente))].join(", ");
+  const conMontante = new Set(gsMontante.map((m) => m.anno));
+  for (const m of gsMontante)
+    periodi.push({
+      dal: `${m.anno}-01-01`, al: `${m.anno}-12-31`, tipo: m.tipo, settimane: inSettimane("mesi", m.mesi), importo: m.reddito ? numIt(m.reddito) : null, figurativa: false,
+      unita: "mesi", contributi: numIt(m.mesi), contributiCalcolo: null, azienda: committenti(m.anno), nota: "", gestione: "GS",
+    });
+  for (const s of gsSolare.filter((s) => !conMontante.has(s.anno))) {
+    problemi.push(`Gestione separata ${s.anno}: mesi accreditati non indicati`);
+    periodi.push({
+      dal: `${s.anno}-01-01`, al: `${s.anno}-12-31`, tipo: s.tipo, settimane: null, importo: s.reddito ? numIt(s.reddito) : null, figurativa: false,
+      unita: "", contributi: null, contributiCalcolo: null, azienda: s.committente, nota: "", gestione: "GS",
+    });
+  }
   const pagineConTesto = new Set(celle.map((c) => c.p)).size;
   if (pagineConTesto < pagine) problemi.push(`${pagine - pagineConTesto} pagine senza testo leggibile`);
 
@@ -474,7 +545,7 @@ export function leggiEstrattoDaCelle(celle: Cella[], pagine = 1): EstrattoLetto 
     { nome: maiuscola(nomeGrezzo), cognome: maiuscola(cognomeGrezzo), codiceFiscale: cf, nascita: dalCf?.nascita || nascita, sesso: dalCf?.sesso || "", dataEstratto: emesso },
     periodi,
     avvisi,
-    { residenza: residenza.join(", "), legenda, segnalazioni, lettura: "diretta", completa },
+    { residenza: residenza.join(", "), legenda, segnalazioni: [...new Set(segnalazioni)], lettura: "diretta", completa },
   );
 }
 

@@ -28,6 +28,8 @@ CF = re.compile(r"\b([A-Z]{6}\d{2}[ABCDEHLMPRST]\d{2}[A-Z]\d{3}[A-Z])\b")
 SEZIONE = re.compile(r"^(regime|gestion[ei]|fondo|fondi|cassa|lavoratori)\b", re.I)
 VOCE_NOTA = re.compile(r"^(\S{1,3})\)\s+(.+)$")
 PIEDE = re.compile(r"^(estratto conto di\b|pagina\s+\d+)", re.I)
+ANNO = re.compile(r"^(19|20)\d{2}$")
+DIST_COLONNA = 45   # colonne "a numero" senza unità sulla riga: la cella sta sotto il titolo della colonna
 TOLLERANZA_RIGA = 2.5
 
 # Gestione dedotta dal tipo di contribuzione o dal titolo della sezione (codici del motore di calcolo).
@@ -38,7 +40,7 @@ GESTIONI = (
     # "ART." e "COM." valgono solo per titolari e collaboratori d'impresa (non "art. 13", non "settore commercio")
     (r"(titolare|coadiuv|collaborator|impresa).*(artigian|\bart\.)|^artigian|gestione (degli )?artigian", "ARTIGIANI"),
     (r"(titolare|coadiuv|collaborator|impresa).*(commerc|\bcomm?\.)|^commerc|gestione (dei )?commerc", "COMMERCIANTI"),
-    (r"dipend|fpld|domestic", "FPLD"),
+    (r"dipend|fpld|domestic|apprendist", "FPLD"),
 )
 
 
@@ -180,6 +182,13 @@ def leggi_celle(celle, pagine=1):
 
     periodi, legenda, segnalazioni, problemi = [], [], [], []
     x_note = x_unita = None
+    # Sezione Spettacolo: i contributi sono in una colonna "Giorni", senza unità sulla riga; a destra Gruppo e Codice qualifica
+    x_giorni = x_gruppo = None
+    # Gestione separata: tabelle per anno ("anno solare" con i committenti e "montante contributivo" con i mesi accreditati)
+    tabella = "periodi"  # periodi | gs-solare | gs-montante
+    x_mesi, x_meta = None, 0.0
+    gs_solare, gs_montante = [], []
+    pagina_corrente = -1
     sezione = ""
     zona = "tabella"  # tabella | note | segnalazioni
     pagina_ultima, y_ultima = -1, 0.0  # posizione dell'ultima riga di dati (per il testo andato a capo)
@@ -188,13 +197,40 @@ def leggi_celle(celle, pagine=1):
         c = r["c"]
         testi = [t for _, t in c]
         primo = testi[0]
+        # legenda e segnalazioni finiscono con la pagina: la pagina dopo ricomincia con l'intestazione (anche di un'altra gestione)
+        if r["p"] != pagina_corrente:
+            pagina_corrente, zona = r["p"], "tabella"
         # piè di pagina ("Estratto conto di …", "Pagina n di m") e numeri di pagina isolati
         if any(PIEDE.match(t) for t in testi) or (len(c) == 1 and INTERO.match(primo)):
             continue
         # intestazione della tabella: fissa la colonna delle note e riporta alla tabella (si ripete a ogni pagina)
         if any(t == "Note" for t in testi) and any(re.match(r"^(azienda|tipo di contribuzione)", t, re.I) for t in testi):
             x_note = next(x for x, t in c if t == "Note")
+            x_giorni = next((x for x, t in c if re.match(r"^giorni$", t, re.I)), None)
+            x_gruppo = next((x for x, t in c if re.match(r"^gruppo$", t, re.I)), None)
+            tabella, zona = "periodi", "tabella"
+            continue
+        # intestazione delle tabelle per anno della Gestione separata
+        if any(re.match(r"^tipo di attivit", t, re.I) for t in testi):
+            x_mesi = next((x for x, t in c if re.match(r"^mesi$", t, re.I)), None)
+            tabella = "gs-montante" if x_mesi is not None else "gs-solare"
+            x_committente = next((x for x, t in c if re.search(r"committente", t, re.I)), 0.0)
+            x_meta = (x_committente + next(x for x, t in c if re.match(r"^tipo di attivit", t, re.I))) / 2
             zona = "tabella"
+            continue
+        if tabella != "periodi" and zona == "tabella" and ANNO.match(primo) and len(c) >= 2:
+            importi = [t for _, t in c[1:] if IMPORTO.match(t)]
+            parole = [(x, t) for x, t in c[1:] if not IMPORTO.match(t) and not INTERO.match(t)]
+            if tabella == "gs-montante":
+                # le righe senza attività riportano solo il montante rivalutato: non sono contributi dell'anno
+                tipo_anno = " ".join(t for _, t in parole)
+                mesi = next((t for x, t in c[1:] if INTERO.match(t) and abs(x - x_mesi) <= DIST_COLONNA), "0")
+                if tipo_anno:
+                    gs_montante.append({"anno": primo, "tipo": tipo_anno, "reddito": importi[0] if importi else "", "mesi": mesi})
+            else:
+                gs_solare.append({"anno": primo, "reddito": importi[0] if importi else "",
+                                  "committente": " ".join(t for x, t in parole if x < x_meta),
+                                  "tipo": " ".join(t for x, t in parole if x >= x_meta)})
             continue
         if len(c) >= 2 and DATA.match(c[0][1]) and DATA.match(c[1][1]):
             zona = "tabella"
@@ -205,6 +241,12 @@ def leggi_celle(celle, pagine=1):
             for x, t in c[2:]:
                 if not visto_unita and UNITA.match(t):
                     p["unita"], visto_unita, x_unita = _unita(t), True, x
+                elif not visto_unita and x_giorni is not None and INTERO.match(t) and abs(x - x_giorni) <= DIST_COLONNA:
+                    # colonna "Giorni" (Spettacolo): il numero è già il contributo, l'unità è nel titolo della colonna
+                    p["unita"], visto_unita, x_unita = "giorni", True, x
+                    p["contributi_diritto"], x_dir = t, x
+                elif x_giorni is not None and x_gruppo is not None and x >= x_gruppo - 30:
+                    pass  # Gruppo e Codice qualifica: non sono né azienda né nota
                 elif (x_note is not None and x >= x_note - 30 and len(t) <= 4) or (x_note is None and x >= 740 and len(t) <= 2):
                     p["nota"] = (p["nota"] + " " + t).strip()
                 elif visto_unita and INTERO.match(t) and not p["contributi_diritto"] and not p["importo"] and not azienda:
@@ -262,6 +304,22 @@ def leggi_celle(celle, pagine=1):
                 campo = "tipo" if x < x_unita else "azienda"
                 periodi[-1][campo] = (periodi[-1][campo] + " " + t).strip()
             y_ultima = r["y"]
+    # Gestione separata: una riga per anno e attività. I mesi accreditati stanno solo nella tabella del montante
+    # (cella vuota = nessun mese); se c'è solo la tabella "anno solare" i mesi non sono scritti e la riga resta da verificare.
+    def committenti(anno):
+        return ", ".join(dict.fromkeys(s["committente"] for s in gs_solare if s["anno"] == anno and s["committente"]))
+
+    con_montante = {m["anno"] for m in gs_montante}
+    for m in gs_montante:
+        periodi.append({"dal": f"{m['anno']}-01-01", "al": f"{m['anno']}-12-31", "gestione": "Gestione separata", "tipo": m["tipo"], "unita": "mesi",
+                        "contributi_diritto": m["mesi"], "contributi_calcolo": "", "importo": m["reddito"], "azienda": committenti(m["anno"]), "nota": ""})
+    for s in gs_solare:
+        if s["anno"] in con_montante:
+            continue
+        problemi.append(f"Gestione separata {s['anno']}: mesi accreditati non indicati")
+        periodi.append({"dal": f"{s['anno']}-01-01", "al": f"{s['anno']}-12-31", "gestione": "Gestione separata", "tipo": s["tipo"], "unita": "sconosciuta",
+                        "contributi_diritto": "", "contributi_calcolo": "", "importo": s["reddito"], "azienda": s["committente"], "nota": ""})
+    segnalazioni = list(dict.fromkeys(segnalazioni))  # la stessa segnalazione è ripetuta nelle pagine di ogni gestione
     return _chiudi(periodi, legenda, segnalazioni, problemi, cognome, nome, cf, nascita, luogo, emesso, residenza, e_estratto, pagine, celle)
 
 
