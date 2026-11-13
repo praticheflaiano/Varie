@@ -65,6 +65,36 @@ def pdf_finto():
     return buf.getvalue()
 
 
+def celle_piu_gestioni():
+    """Celle (pagina, x, y, testo) di un estratto finto con tre gestioni, alle posizioni dell'estratto vero."""
+    intestazione = lambda p: [(p, 494, 80, "DE LUCA MARIO"), (p, 494, 134, "Codice fiscale DLCMRA60A01H501X"), (p, 48, 523, "Estratto conto di DE LUCA MARIO DLCMRA60A01H501X"), (p, 48, 543, f"Pagina {p + 1} di 4")]
+    return [
+        *intestazione(0), (0, 221, 84, "Estratto Conto Previdenziale"), (0, 284, 104, "Regime generale"),
+        (0, 87, 240, "Periodo"), (0, 203, 243, "Tipo di contribuzione"), (0, 628, 243, "Azienda"), (0, 770, 243, "Note"),
+        (0, 56, 269, "01/01/2000"), (0, 112, 269, "31/12/2000"), (0, 162, 269, "Lavoro dipendente"), (0, 339, 269, "sett."), (0, 390, 269, "52"),
+        (0, 431, 269, "52,000"), (0, 492, 269, "22.155,00"), (0, 574, 269, "SRL ESEMPIO"),
+        (0, 50, 350, "Segnalazioni personalizzate e/o pratiche in corso"), (0, 50, 374, "- Gestione Separata dal 06/06/2014."),
+        *intestazione(1), (1, 275, 84, "Estratto Conto"), (1, 271, 104, "Parasubordinati"),
+        (1, 61, 240, "Anno"), (1, 741, 240, "Aliquota"), (1, 116, 247, "Reddito imponibile"), (1, 271, 247, "Descrizione committente"),
+        (1, 458, 247, "Tipo di attività / contribuzione"), (1, 626, 247, "Contributi versati"), (1, 61, 250, "solare"), (1, 737, 250, "contributiva"),
+        (1, 65, 265, "2016"), (1, 190, 265, "10,00"), (1, 309, 265, "ROSSI"), (1, 438, 265, "Lavoro accessorio"), (1, 702, 265, "1,30"), (1, 747, 265, "13,00"),
+        (1, 65, 279, "2022"), (1, 179, 279, "3.377,00"), (1, 296, 279, "ESEMPIO SRL"), (1, 438, 279, "Attivita' di collaborazione"), (1, 686, 279, "1.138,72"), (1, 747, 279, "33,72"),
+        (1, 50, 350, "Segnalazioni personalizzate e/o pratiche in corso"), (1, 50, 374, "- Gestione Separata dal 06/06/2014."),
+        *intestazione(2), (2, 216, 84, "ESTRATTO CONTO DEL MONTANTE CONTRIBUTIVO"), (2, 262, 94, "GESTIONE PARASUBORDINATI"), (2, 669, 257, "Montante"),
+        (2, 63, 260, "Anno"), (2, 137, 260, "Tipo di attività / contribuzione"), (2, 314, 260, "Retribuzione imponibile o Reddito"), (2, 489, 260, "Mesi"),
+        (2, 539, 260, "Contributi dell'anno"), (2, 762, 260, "Note"), (2, 664, 267, "contributivo"),
+        (2, 65, 282, "2016"), (2, 102, 282, "Lavoro accessorio"), (2, 451, 282, "10,00"), (2, 620, 282, "1,30"), (2, 727, 282, "1,30"),
+        (2, 65, 296, "2017"), (2, 727, 296, "1,32"),
+        (2, 65, 311, "2022"), (2, 102, 311, "Attivita' di collaborazione"), (2, 440, 311, "3.377,00"), (2, 497, 311, "2"), (2, 604, 311, "1.114,41"), (2, 716, 311, "1.115,80"),
+        *intestazione(3), (3, 288, 78, "Estratto Conto"), (3, 253, 92, "Lavoratori dello Spettacolo"),
+        (3, 86, 240, "Periodo"), (3, 731, 240, "Codice"), (3, 199, 243, "Tipo di contribuzione"), (3, 338, 243, "Giorni"), (3, 382, 243, "Retribuzione"),
+        (3, 549, 243, "Azienda"), (3, 687, 243, "Gruppo"), (3, 771, 243, "Note"), (3, 729, 250, "qualifica"), (3, 68, 255, "Dal"), (3, 126, 255, "Al"),
+        (3, 55, 269, "01/03/2007"), (3, 110, 269, "31/03/2007"), (3, 160, 269, "P.A.L.S. Obbligatoria"), (3, 354, 269, "30"), (3, 405, 269, "3.000,00"),
+        (3, 486, 269, "TEATRO DI PROVA SAS"), (3, 701, 269, "1"), (3, 736, 269, "032"),
+        (3, 50, 296, "Gruppo:"), (3, 50, 311, "1) Artisti"), (3, 50, 325, "Qualifica:"), (3, 50, 340, "032) Disc - jockey"),
+    ]
+
+
 def uguale(a, b, cosa):
     assert a == b, f"{cosa}: atteso {b!r}, letto {a!r}"
 
@@ -104,6 +134,25 @@ def main():
     assert any("Nota «O»" in d and "requisito di prova" in d for d in dubbi), dubbi
     assert any("Segnalazione INPS" in d for d in dubbi), dubbi
     assert not any("gestione non riconosciuta" in d for d in dubbi), dubbi
+
+    # estratto con più gestioni: Regime generale, Gestione separata (tabelle per anno) e Spettacolo (colonna "Giorni")
+    letto = estratto_inps.leggi_celle(celle_piu_gestioni(), 4)
+    assert letto["completo"], letto["note"]
+    gs = [(p["dal"], p["al"], p["tipo"], p["unita"], p["contributi_diritto"], p["importo"], p["azienda"]) for p in letto["periodi"] if p["gestione"] == "Gestione separata"]
+    uguale(gs, [("2016-01-01", "2016-12-31", "Lavoro accessorio", "mesi", "0", "10,00", "ROSSI"),
+                ("2022-01-01", "2022-12-31", "Attivita' di collaborazione", "mesi", "2", "3.377,00", "ESEMPIO SRL")], "Gestione separata: una riga per anno con attività")
+    sp = [p for p in letto["periodi"] if p["gestione"] == "Lavoratori dello Spettacolo"]
+    uguale([(p["unita"], p["contributi_diritto"], p["importo"], p["azienda"]) for p in sp], [("giorni", "30", "3.000,00", "TEATRO DI PROVA SAS")], "Spettacolo: colonna Giorni")
+    uguale(letto["segnalazioni"], ["Gestione Separata dal 06/06/2014."], "segnalazioni: non proseguono nella pagina dopo e non si ripetono")
+    contributi, dubbi, _ = elabora.righe_in_contributi(letto)
+    per = {(c["anno"], c["gestione"]): c for c in contributi}
+    uguale((per[(2016, "GS")]["settimane"], per[(2016, "GS")]["imponibile"]), (0, 10.0), "anno con soli contributi minimi: presente, zero settimane")
+    uguale(per[(2022, "GS")]["settimane"], 9, "2 mesi di Gestione separata")
+    uguale(estratto_inps.codice_gestione("Apprendista"), "FPLD", "apprendista")
+    # solo la tabella per anno solare: i mesi non sono scritti, la lettura non è completa
+    solo = estratto_inps.leggi_celle([c for c in celle_piu_gestioni() if c[0] != 2], 4)
+    assert not solo["completo"] and "mesi accreditati non indicati" in solo["note"], solo["note"]
+    uguale(sorted({p["dal"][:4] for p in solo["periodi"] if p["gestione"] == "Gestione separata"}), ["2016", "2022"], "anno solare: gli anni restano")
 
     # un PDF senza testo (scansione) non si legge così: si passa alla lettura con il modello
     from reportlab.pdfgen import canvas
