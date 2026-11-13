@@ -1,5 +1,5 @@
 ---
-import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE, LANDING, EXTERNAL_PORTALS, CLOSURES } from "~/consts";
+import { SITE, CONTACT, HOURS_SCHEMA, BOOKING, SOCIAL, ZONE_SERVITE, LANDING, EXTERNAL_PORTALS, CLOSURES, ORG_CREDENTIALS } from "~/consts";
 
 const data = {
   "@context": "https://schema.org",
@@ -12,7 +12,7 @@ const data = {
   logo: `${SITE.url}/apple-touch-icon.png`,
   image: `${SITE.url}${SITE.ogImage}`,
   slogan: SITE.claim,
-  telephone: CONTACT.phone.landlineRaw,
+  telephone: CONTACT.phone.landline,
   email: CONTACT.email,
   priceRange: "€€",
   address: {
@@ -31,11 +31,22 @@ const data = {
   hasMap: CONTACT.mapsUrl,
   openingHoursSpecification: HOURS_SCHEMA,
   specialOpeningHoursSpecification: CLOSURES.map((c) => ({ "@type": "OpeningHoursSpecification", opens: "00:00", closes: "00:00", validFrom: c.from, validThrough: c.to })),
-  areaServed: ZONE_SERVITE.map((z) => ({
-    "@type": "Place",
-    name: `${z.name}, Roma`,
-  })),
-  sameAs: [SOCIAL.facebook, SOCIAL.whatsappChannel, "https://praticheflaiano.it", EXTERNAL_PORTALS.naspi.url],
+  contactPoint: [
+    { "@type": "ContactPoint", contactType: "customer service", telephone: CONTACT.phone.landline, email: CONTACT.email, areaServed: "IT", availableLanguage: "it" },
+    { "@type": "ContactPoint", contactType: "customer service", telephone: CONTACT.phone.mobile, description: "WhatsApp", areaServed: "IT", availableLanguage: "it" },
+  ],
+  memberOf: [
+    { "@type": "Organization", name: ORG_CREDENTIALS.caf.fullName },
+    { "@type": "Organization", name: ORG_CREDENTIALS.patronato.fullName },
+  ],
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Municipio III Montesacro, Roma" },
+    ...ZONE_SERVITE.map((z) => ({
+      "@type": "Place",
+      name: `${z.name}, Roma`,
+    })),
+  ],
+  sameAs: [SOCIAL.facebook, SOCIAL.whatsappChannel, EXTERNAL_PORTALS.naspi.url],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Servizi CAF e Patronato",

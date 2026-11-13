@@ -29,7 +29,7 @@ const {
 
 const data = {
   "@context": "https://schema.org",
-  "@type": isNews ? "NewsArticle" : "Article",
+  "@type": isNews ? "NewsArticle" : "BlogPosting",
   headline,
   description,
   datePublished,
@@ -37,14 +37,20 @@ const data = {
   author: {
     "@type": "Organization",
     name: authorName,
-    url: SITE.url,
+    url: `${SITE.url}/chi-siamo`,
   },
-  publisher: { "@id": `${SITE.url}/#organization` },
+  publisher: {
+    "@type": "Organization",
+    "@id": `${SITE.url}/#organization`,
+    name: SITE.name,
+    url: SITE.url,
+    logo: { "@type": "ImageObject", url: `${SITE.url}/apple-touch-icon.png` },
+  },
   mainEntityOfPage: {
     "@type": "WebPage",
     "@id": url,
   },
-  ...(image && { image: new URL(image, SITE.url).toString() }),
+  image: [new URL(image ?? SITE.ogImage, SITE.url).toString()],
   ...(category && { articleSection: category }),
   ...(keywords && { keywords: keywords.join(", ") }),
   inLanguage: "it-IT",

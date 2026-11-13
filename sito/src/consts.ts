@@ -41,7 +41,7 @@ export const CONTACT = {
     mobile: "+39 371 6230 690",
     mobileRaw: "+393716230690",
   },
-  email: "praticheflaiano@gmail.com",
+  email: "info@praticheflaiano.it",
   whatsapp: {
     number: "+393716230690",
     link: "https://wa.me/393716230690",
