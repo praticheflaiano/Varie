@@ -31,6 +31,8 @@ fact_check_result: "PUBBLICABILE CON CORREZIONI - Corretti importi maggiorazioni
 
 **Ultimo aggiornamento: 29 aprile 2026**
 
+**Nota (13 novembre 2026):** la scadenza del 30 giugno 2026 per avere gli arretrati dell'Assegno unico da marzo è passata. L'ISEE 2026 vale fino al 31 dicembre 2026: per il rinnovo leggi la [guida all'ISEE 2027](/blog/isee-2027-documenti-quando-rinnovare-roma) e la [guida all'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
+
 **SCADENZA: 30 giugno 2026 - termine per presentare la DSU 2026 con diritto agli arretrati AUU da marzo**
 *(Fonte: D.Lgs. 230/2021 art. 6 e Circolare INPS n. 7 del 30 gennaio 2026)*
 

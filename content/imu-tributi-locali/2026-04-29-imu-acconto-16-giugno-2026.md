@@ -27,6 +27,8 @@ image_alt: "Illustrazione editoriale: facciata stilizzata di un edificio italian
 
 **Ultimo aggiornamento: 8 novembre 2026** (corrette le aliquote di Roma)
 
+**Nota (13 novembre 2026):** la scadenza del 16 giugno 2026 per l'acconto IMU è passata. Se non hai pagato, il ravvedimento operoso si può ancora valutare: [contattaci](/imu-tari). Il prossimo versamento è il saldo del 16 dicembre 2026: leggi la [guida all'IMU saldo a Roma](/blog/imu-saldo-16-dicembre-2026-roma).
+
 **SCADENZA: 16 giugno 2026 - acconto IMU 2026 (50% dell'imposta annuale)**
 *(Fonte: D.Lgs. 504/1992 e L. 160/2019)*
 

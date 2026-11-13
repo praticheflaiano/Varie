@@ -237,6 +237,8 @@ URL slug consigliato per il CMS: /rottamazione-quinquies-2026
 
 **Ultimo aggiornamento: 14 aprile 2026**
 
+**Nota (13 novembre 2026):** la scadenza del 30 aprile 2026 per presentare la domanda di adesione è passata. Per capire a che punto è la tua posizione, [vai alla pagina cartelle e rateizzazioni](/cartelle-rateizzazione) o contattaci.
+
 Ha cartelle esattoriali pendenti e vorrebbe chiudere i conti con il Fisco pagando meno di quanto dovuto? La **Rottamazione Quinquies**, introdotta dalla Legge di Bilancio 2026 (Legge n. 199/2025, art. 1, commi 82-101), offre la possibilita di estinguere i debiti iscritti a ruolo **senza pagare sanzioni, interessi di mora e aggio**. In questa guida Le spieghiamo tutto quello che serve sapere per aderire entro la scadenza del **30 aprile 2026**.
 
 ## Cos'e la Rottamazione Quinquies 2026 e come funziona

@@ -215,6 +215,8 @@ fact_check_status: "PUBBLICABILE CON CORREZIONI - correzioni applicate"
 
 **Ultimo aggiornamento: 13 aprile 2026**
 
+**Nota (13 novembre 2026):** la scadenza del 30 aprile 2026 per la dichiarazione annuale IVA è passata. Se non hai ancora presentato la dichiarazione, [contattaci](/richiesta): verifichiamo con te come regolarizzare.
+
 **SCADENZA: 30 aprile 2026 - Presentazione della dichiarazione annuale IVA**
 *(Fonte: art. 8 del D.P.R. n. 322/1998; Provvedimento Agenzia delle Entrate n. 51732 del 15/01/2026)*
 

@@ -142,7 +142,7 @@ Serve un'identità digitale (SPID, CIE o CNS). In ufficio ti aiutiamo a leggerlo
 ## Articoli correlati
 
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
-- [Modello RED 2026: scadenza 28 febbraio 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
+- [Modello RED 2026: scadenza 1° marzo 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
 - [RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli](/blog/red-icric-iclav-accas-ps-2026-guida)
 
 ---

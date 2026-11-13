@@ -26,6 +26,8 @@ image_alt: "Illustrazione editoriale: pattern bar-chart astratto in toni di blu 
 
 **Ultimo aggiornamento: 29 aprile 2026**
 
+**Nota (13 novembre 2026):** la scadenza del 30 giugno 2026 per avere gli arretrati da marzo è passata. Per il rinnovo dell'ISEE e le date del 2027 leggi la [guida all'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
+
 L'**Assegno Unico Universale (AUU)** e dal 2022 la principale prestazione INPS a sostegno delle famiglie con figli a carico. Nel **2026** gli importi sono stati **rivalutati del +1,4%** in base all'inflazione ISTAT 2025 (Circolare INPS n. 7 del 30 gennaio 2026). Questa guida completa del **Centro Pratiche Flaiano** (CAF UNSIC + Patronato ENASC con sede a Roma Vigne Nuove) ti spiega quanto spetta in base al tuo **ISEE 2026**, quali maggiorazioni hai diritto a chiedere e cosa cambia per figli maggiorenni e con disabilita.
 
 ## Importo base per figlio minorenne 2026

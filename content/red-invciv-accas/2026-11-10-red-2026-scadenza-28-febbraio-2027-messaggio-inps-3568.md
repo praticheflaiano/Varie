@@ -1,14 +1,15 @@
 ---
-title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (28 febbraio 2027)"
-seo_title: "RED 2026: scadenza 28 febbraio 2027, chi deve farlo"
+title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (1° marzo 2027)"
+seo_title: "RED 2026: scadenza 1° marzo 2027, chi deve farlo"
 slug: "red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-13
 category: "red-invciv-accas"
 tags: ["inps", "pensionati", "red", "assegno sociale", "caf", "novita"]
-meta_description: "Messaggio INPS 3568/2026: RED sui redditi 2025 e ACC.AS/PS entro il 28 febbraio 2027. Chi deve farli, documenti, ricoveri e rischi. Ti aiutiamo a Roma."
+meta_description: "Messaggi INPS 3568 e 3697 del 2026: RED sui redditi 2025 e ACC.AS/PS entro il 1° marzo 2027. Chi deve farli, documenti, ricoveri e rischi. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, Messaggio 12 novembre 2026, n. 3697 (campagna RED ordinaria 2026 sui redditi 2025 e dichiarazioni di responsabilita 2026, scadenza 1 marzo 2027) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3697-del-12-11-2026_16418.html"
   - "INPS, Messaggio 3 novembre 2026, n. 3568 - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3568-del-03-11-2026_16406.html"
   - "INPS, Allegato 1 al messaggio 3568/2026: schema di convenzione con i soggetti abilitati all'assistenza fiscale (deliberazione CdA n. 116 del 15 luglio 2026), artt. 3, 4, 5, 13"
   - "INPS, Allegato 2 al messaggio 3568/2026: Addendum sui compensi (deliberazione CdA n. 162 del 28 ottobre 2026)"
@@ -22,12 +23,14 @@ sources:
 status: published
 type: novita
 image: "/og/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568.jpg"
-image_alt: "Modello RED 2026: scadenza 28 febbraio 2027"
+image_alt: "Modello RED 2026: scadenza 1 marzo 2027"
 ---
 
-# Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (28 febbraio 2027)
+# Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (1° marzo 2027)
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 13 novembre 2026**
+
+**Aggiornamento del 13 novembre 2026:** con il **messaggio INPS n. 3697 del 12 novembre 2026** l'INPS ha indicato come termine della campagna RED ordinaria 2026 (redditi 2025) e delle dichiarazioni di responsabilità 2026 (ACC.AS/PS) il **1° marzo 2027**. Nella prima versione di questo articolo, basata sul messaggio 3568 del 3 novembre, avevamo scritto 28 febbraio 2027: il 28 febbraio 2027 cade di domenica e il nuovo messaggio indica lunedì 1° marzo 2027. Il resto dell'articolo resta valido.
 
 Con il **messaggio n. 3568 del 3 novembre 2026** l'INPS ha fissato le regole delle prossime campagne di verifica: il **modello RED** sui redditi del 2025 e del 2026 e la **dichiarazione di responsabilità ACC.AS/PS** per chi prende l'assegno sociale. Il messaggio riguarda soprattutto i CAF, che possono firmare la convenzione con l'INPS. Dentro però ci sono le date e le regole che servono a te, se prendi una pensione o una prestazione legata al reddito.
 
@@ -35,9 +38,9 @@ Con il **messaggio n. 3568 del 3 novembre 2026** l'INPS ha fissato le regole del
 
 | Cosa | Chi | Entro |
 |---|---|---|
-| **RED 2026** (redditi 2025) | Chi ha prestazioni legate al reddito e non ha dichiarato tutto al Fisco | **28 febbraio 2027** |
-| **ACC.AS/PS 2026** | Chi prende pensione sociale, assegno sociale o assegno sociale sostitutivo dell'invalidità civile | **28 febbraio 2027** |
-| **RED solleciti 2025** (redditi 2024) | Chi non ha risposto alla verifica dell'anno scorso | **28 febbraio 2027** |
+| **RED 2026** (redditi 2025) | Chi ha prestazioni legate al reddito e non ha dichiarato tutto al Fisco | **1° marzo 2027** |
+| **ACC.AS/PS 2026** | Chi prende pensione sociale, assegno sociale o assegno sociale sostitutivo dell'invalidità civile | **1° marzo 2027** |
+| **RED solleciti 2025** (redditi 2024) | Chi non ha risposto alla verifica dell'anno scorso | **28 febbraio 2027** (indicato dal messaggio 3568; nel testo del messaggio 3697 che abbiamo consultato i solleciti non compaiono. Chiedici conferma sulla tua lettera) |
 
 Le prime due campagne sono partite il **1° settembre 2026**; la data di avvio dei solleciti la comunica l'INPS almeno 15 giorni prima.
 
@@ -71,7 +74,7 @@ Le famiglie che nell'ultima verifica avevano **tutti i redditi a zero** sono ind
 
 La dichiarazione di responsabilità **ACC.AS/PS** riguarda solo chi prende la **pensione sociale**, l'**assegno sociale** o l'**assegno sociale sostitutivo dell'invalidità civile**. Serve a confermare che **vivi stabilmente in Italia**, uno dei requisiti per avere queste prestazioni (legge 335/1995, art. 3). Per il tempo in cui il titolare vive all'estero la prestazione non spetta.
 
-Anche questa campagna va dal **1° settembre 2026 al 28 febbraio 2027**.
+Anche questa campagna va dal **1° settembre 2026 al 1° marzo 2027**.
 
 Le dichiarazioni **ICRIC e ICLAV** degli invalidi civili non rientrano in questo messaggio e non si possono presentare tramite CAF: si fanno online o con il Contact Center INPS. Le trovi spiegate nella nostra [guida a RED, ICRIC, ICLAV e ACC.AS/PS](/blog/red-icric-iclav-accas-ps-2026-guida).
 
@@ -170,7 +173,7 @@ Siamo **CAF UNSIC** e **Patronato ENASC** a **Roma Nord**, nel Centro Acquisti F
 
 Siamo **CAF convenzionato con l'INPS** per il RED e l'ACC.AS/PS. Guardiamo insieme a te la lettera dell'INPS, verifichiamo se il RED serve davvero o se i tuoi redditi sono già tutti nel 730, e se serve lo trasmettiamo noi oppure lo facciamo online insieme a te con il tuo SPID o la tua CIE. Se ti è già arrivata una trattenuta o una sospensione, controlliamo come rimettere a posto la posizione.
 
-## Non aspettare febbraio: portaci la lettera INPS
+## Non aspettare l'ultimo giorno: portaci la lettera INPS
 
 - **Prenota:** [in ufficio o in videochiamata](/prenota)
 - **Richiesta online:** [mandaci la lettera INPS](/richiesta)
@@ -179,7 +182,7 @@ Siamo **CAF convenzionato con l'INPS** per il RED e l'ACC.AS/PS. Guardiamo insie
 ## Domande frequenti
 
 **Entro quando va presentato il RED 2026?**
-La campagna ordinaria sui redditi 2025 va dal 1° settembre 2026 al 28 febbraio 2027. Meglio non aspettare l'ultimo giorno: il CAF ha poi fino a 30 giorni per trasmetterlo.
+La campagna ordinaria sui redditi 2025 va dal 1° settembre 2026 al 1° marzo 2027 (messaggio INPS 3697/2026). Meglio non aspettare l'ultimo giorno: il CAF ha poi fino a 30 giorni per trasmetterlo.
 
 **Ho fatto il 730: devo fare anche il RED?**
 No, se tu e i familiari che contano avete dichiarato nel 730 tutti i redditi che servono all'INPS. Se però hai interessi su conti, titoli o buoni postali, redditi esteri o redditi esenti non presenti nel 730, il RED serve.
@@ -194,7 +197,7 @@ Dipende dalla prestazione. Per l'accompagnamento contano i ricoveri gratuiti di 
 La dichiarazione ACC.AS/PS, che conferma che vivi stabilmente in Italia. Se hai anche redditi da comunicare, pure il RED.
 
 **Mi è arrivato un sollecito: cosa faccio?**
-Il sollecito riguarda la verifica dell'anno prima (redditi 2024 per i solleciti 2025). Vanno dichiarati tutti i redditi tuoi e dei familiari richiesti, entro il 28 febbraio 2027. Portaci la lettera e lo facciamo subito.
+Il sollecito riguarda la verifica dell'anno prima (redditi 2024 per i solleciti 2025). Vanno dichiarati tutti i redditi tuoi e dei familiari richiesti, entro la data indicata nella lettera (il messaggio 3568 parlava del 28 febbraio 2027). Portaci la lettera e lo facciamo subito.
 
 **La mia famiglia ha tutti i redditi a zero: posso farlo al CAF?**
 Se l'INPS ti ha inserito tra i nuclei con tutti i redditi a zero nell'ultima verifica, no: la dichiarazione si fa solo online o in una sede INPS. Ti aiutiamo comunque a farla online.

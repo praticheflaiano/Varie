@@ -24,6 +24,8 @@ image_alt: "Illustrazione editoriale: scontrini farmacia, croce sanitaria stiliz
 
 **Ultimo aggiornamento: 30 aprile 2026**
 
+**Nota (13 novembre 2026):** le scadenze per presentare il 730/2026 (30 settembre 2026) e il modello Redditi PF (2 novembre 2026) sono passate. Se non hai ancora dichiarato le spese mediche del 2025, [contattaci](/730): vediamo insieme come regolarizzare.
+
 Ogni primavera in CAF arrivano famiglie del Municipio III con la **busta delle ricevute mediche** dell'anno: scontrini della farmacia, fatture del dentista, ricevute della fisioterapia. La domanda e sempre la stessa: "Cosa posso scaricare?". In questa guida mettiamo in fila le regole pratiche per il **modello 730/2026 (redditi 2025)**: la franchigia, l'obbligo di pagamento tracciabile, lo scontrino parlante, dove si indicano le spese e quando conviene rateizzare.
 
 ## Panoramica

@@ -143,7 +143,7 @@ I file vanno caricati **in PDF e leggibili**. Se EBIT chiede integrazioni, hai *
 
 - La domanda si invia **solo online**, dall'area riservata di ebitlazio.it. Non si mandano documenti per email.
 - Il rimborso arriva di norma **entro 40 giorni** dalla scadenza (60 giorni per cultura, spese funerarie e malattia).
-- Il rimborso è **soggetto a IRPEF**: EBIT Lazio lo aumenta della ritenuta calcolata con l'aliquota del primo scaglione.
+- Il rimborso di **libri e tasse universitarie** è **soggetto a IRPEF**: EBIT Lazio lo aumenta della ritenuta calcolata con l'aliquota del primo scaglione, trattiene l'imposta e rilascia la Certificazione Unica. Per le altre prestazioni controlla il regolamento.
 
 ## Come ti aiuta il Centro Pratiche Flaiano
 
@@ -180,7 +180,7 @@ Entro 30 giorni dall'ultimo pagamento e comunque non oltre il 31 ottobre. Per il
 Non è obbligatorio, ma se i fondi non bastano viene pagato prima chi ha l'ISEE più basso. Senza ISEE si passa in fondo.
 
 **Il rimborso è tassato?**
-Sì, è soggetto a IRPEF. EBIT Lazio aggiunge al rimborso la ritenuta calcolata con l'aliquota del primo scaglione.
+Per libri e tasse universitarie sì: è soggetto a IRPEF, ed EBIT Lazio aggiunge al rimborso la ritenuta calcolata con l'aliquota del primo scaglione. Per le altre prestazioni controlla il regolamento.
 
 ## Articoli correlati
 

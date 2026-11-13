@@ -161,7 +161,7 @@ No, non è reversibile.
 
 ## Articoli correlati
 
-- [Modello RED 2026: scadenza 28 febbraio 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
+- [Modello RED 2026: scadenza 1° marzo 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
 - [Colf e badanti a Roma: contributi INPS e scadenze](/blog/colf-badanti-roma-contributi-inps-2026-scadenze)
 - [Tipi di ISEE: differenze e quale serve](/blog/tipi-di-isee-differenze-quale-serve)
 

@@ -3,7 +3,7 @@ title: "Modello RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli e cosa rischi se l
 seo_title: "Modello RED, ICRIC, ICLAV e ACC.AS/PS: guida 2026"
 slug: "red-icric-iclav-accas-ps-2026-guida"
 date: 2026-11-08
-last_updated: 2026-11-10
+last_updated: 2026-11-13
 category: "red-invciv-accas"
 tags: ["inps", "pensionati", "disabilita", "patronato", "guida"]
 meta_description: "Campagna RED 2026 sui redditi 2025 e dichiarazioni ICRIC, ICLAV, ACC.AS/PS per invalidi civili: chi deve farle, documenti e rischi. Le inviamo noi a Roma."
@@ -13,6 +13,7 @@ sources:
   - "D.L. 30 dicembre 2008, n. 207, art. 35, comma 10-bis (sospensione e revoca delle prestazioni in caso di mancata comunicazione dei redditi)"
   - "Legge 23 dicembre 1996, n. 662, art. 1, commi 248-249 e 254 (dichiarazioni annuali degli invalidi civili; certificato per disabilità intellettive e psichiche)"
   - "CGIL Roma e Lazio, Pensioni RED: sospensione e scadenza 15 settembre 2026 - https://lazio.cgil.it/2026/08/sospensione-pensioni-red-scadenza-15-settembre-2026/"
+  - "INPS, Messaggio 12 novembre 2026, n. 3697 (scadenza 1 marzo 2027) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3697-del-12-11-2026_16418.html"
   - "INPS, Messaggio 3 novembre 2026, n. 3568 e convenzione allegata (campagne RED e DICH. RESP. 2026-2027)"
   - "HandyLex, Le dichiarazioni periodiche per gli invalidi civili - https://handylex.org/le-dichiarazioni-periodiche-per-gli-invalidi-civili/"
 status: published
@@ -23,7 +24,7 @@ image_alt: "Modello RED, ICRIC, ICLAV e ACC.AS/PS"
 
 # Modello RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli e cosa rischi se li salti
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 13 novembre 2026**
 
 Se prendi una **pensione legata al reddito** (integrazione al minimo, maggiorazioni, quattordicesima, assegno sociale, pensione ai superstiti) o una **prestazione di invalidità civile**, ogni anno l'INPS può chiederti di confermare i tuoi redditi e la tua situazione. Lo fai con il **modello RED** e, per gli invalidi civili, con le dichiarazioni **ICRIC, ICLAV e ACC.AS/PS**.
 
@@ -47,7 +48,7 @@ L'INPS ha avviato la **Campagna RED 2026**, che riguarda i **redditi del 2025** 
 - **non serve** il RED se tu e i tuoi familiari avete già dichiarato **tutti** i redditi nel **730** o nel **modello Redditi**;
 - vanno dichiarati soprattutto i redditi che **non passano dal 730**: interessi di conti, titoli di Stato e buoni postali, redditi da lavoro all'estero, alcuni redditi esenti.
 
-La campagna va dal **1° settembre 2026 al 28 febbraio 2027** (messaggio INPS 3568/2026, [qui tutti i dettagli](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)). Ti conviene muoverti presto: se l'INPS ti ha già scritto, la richiesta la trovi anche nella tua area **MyINPS**.
+La campagna va dal **1° settembre 2026 al 1° marzo 2027** (messaggi INPS 3568 del 3 novembre e 3697 del 12 novembre 2026, [qui tutti i dettagli](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)). Ti conviene muoverti presto: se l'INPS ti ha già scritto, la richiesta la trovi anche nella tua area **MyINPS**.
 
 ### Cosa succede se non rispondi: l'esempio dei redditi 2022
 
@@ -67,7 +68,7 @@ Riguarda chi prende l'**assegno mensile di invalidità** (invalidità parziale).
 
 ### ACC.AS/PS: assegno e pensione sociale
 
-Riguarda chi prende la **pensione sociale**, l'**assegno sociale** o l'**assegno sociale sostitutivo dell'invalidità civile** (quello che arriva dopo i 67 anni al posto della prestazione di invalidità). Serve a confermare che **vivi stabilmente in Italia**. La campagna 2026 va dal **1° settembre 2026 al 28 febbraio 2027** (messaggio INPS 3568/2026).
+Riguarda chi prende la **pensione sociale**, l'**assegno sociale** o l'**assegno sociale sostitutivo dell'invalidità civile** (quello che arriva dopo i 67 anni al posto della prestazione di invalidità). Serve a confermare che **vivi stabilmente in Italia**. La campagna 2026 va dal **1° settembre 2026 al 1° marzo 2027** (messaggi INPS 3568/2026 e 3697/2026).
 
 ### Chi non deve presentarle
 
@@ -125,7 +126,7 @@ Sì, online sul sito INPS con SPID, CIE o CNS. Se preferisci, RED e ACC.AS/PS li
 ## Articoli correlati
 
 - [Invalidità civile e Legge 104: come funziona da noi](/invalidita-104)
-- [RED 2026: scadenza 28 febbraio 2027 e cosa dice il messaggio INPS 3568](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
+- [RED 2026: scadenza 1° marzo 2027 e cosa dicono i messaggi INPS 3568 e 3697](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
 - [Servizi di patronato](/servizi/patronato)
 - [ISEE 2027: quando rinnovarlo e documenti](/blog/isee-2027-documenti-quando-rinnovare-roma)
 

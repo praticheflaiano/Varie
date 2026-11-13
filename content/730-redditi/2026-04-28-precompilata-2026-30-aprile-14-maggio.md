@@ -24,6 +24,8 @@ image_alt: "Illustrazione editoriale del 730 Precompilato 2026: documenti fiscal
 
 **Ultimo aggiornamento: 28 aprile 2026**
 
+**Nota (13 novembre 2026):** le scadenze di questo articolo sono passate: il 730/2026 si poteva inviare fino al 30 settembre 2026 e il modello Redditi PF fino al 2 novembre 2026. Se non hai ancora presentato la dichiarazione dei redditi 2025, [contattaci](/730): vediamo insieme come regolarizzare.
+
 **SCADENZA: 30 settembre 2026 - termine ultimo invio Modello 730/2026 precompilato**
 *(Fonte: Comunicato stampa Agenzia delle Entrate del 28 aprile 2026 e Istruzioni Modello 730/2026)*
 

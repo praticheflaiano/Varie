@@ -26,6 +26,8 @@ image_alt: "Illustrazione editoriale: cappello da diploma con coccarda, libri un
 
 **Ultimo aggiornamento: 30 aprile 2026**
 
+**Nota (13 novembre 2026):** alcune scadenze di questo articolo (per esempio quelle di giugno e luglio 2026) sono passate. Per sapere cosa è ancora aperto, [contattaci](/isee).
+
 Subito dopo l'esame di maturita molte famiglie del Municipio III ci chiedono quali aiuti economici possono richiedere per il figlio neodiplomato: che si iscriva all'universita, scelga un ITS Academy o cerchi lavoro, esistono nel 2026 diverse misure pubbliche cumulabili. In questa guida mettiamo in fila **10 bonus reali** con i requisiti aggiornati, le scadenze e le voci dove serve l'ISEE - che il CAF rilascia gratuitamente alla prima presentazione.
 
 ## Panoramica
