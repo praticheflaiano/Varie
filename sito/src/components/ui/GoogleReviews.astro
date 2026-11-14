@@ -1,6 +1,6 @@
 ---
 /** Recensioni Google trascritte, con il link per verificarle sulla scheda. */
-import { REVIEWS } from "~/consts";
+import { CONTACT, REVIEWS } from "~/consts";
 import { RECENSIONI, REVIEWS_URL } from "~/data/recensioni";
 interface Props { limit?: number; heading?: "h1" | "h2"; title?: string; showAllLink?: boolean }
 const { limit, heading = "h2", title = "Cosa dice chi è già passato da noi", showAllLink = true } = Astro.props;
@@ -29,6 +29,7 @@ const H = heading;
   </ul>
   <div class="grv-foot">
     <a class="grv-btn" href={REVIEWS_URL} target="_blank" rel="noopener">Verifica e leggi tutte le recensioni su Google ↗</a>
+    <a class="grv-btn" href={CONTACT.reviewWriteUrl} target="_blank" rel="noopener">Sei già nostro cliente? Lascia una recensione ↗</a>
     {showAllLink && limit && limit < RECENSIONI.length && <a class="grv-link" href="/recensioni">Vedi altre recensioni</a>}
   </div>
   <p class="grv-note">Testi trascritti dalla nostra scheda Google, senza modifiche. Per riservatezza mostriamo solo nome e iniziale.</p>
