@@ -1,12 +1,12 @@
 ---
 title: "Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dicembre"
-seo_title: "Carta Dedicata a te 2026: primo acquisto entro il 16/12"
+seo_title: "Carta Dedicata a te 2026: 500 €, primo acquisto entro 16/12"
 slug: "carta-dedicata-a-te-2026-2027-scadenza-16-dicembre"
 date: 2026-11-09
 last_updated: 2026-11-09
 category: "bonus-fiscali"
 tags: ["bonus", "famiglie", "isee", "inps", "scadenza"]
-meta_description: "Carta Dedicata a te 2026-2027: 500 euro per la spesa con ISEE fino a 15.000 €. Primo acquisto entro il 16 dicembre 2026 o perdi la quota. Chi la riceve a Roma."
+meta_description: "Carta Dedicata a te 2026-2027: 500 euro per la spesa con ISEE fino a 15.000 €. Primo acquisto entro il 16 dicembre o perdi la quota. Chi la riceve a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto interministeriale 24 giugno 2026 (Gazzetta Ufficiale n. 178 del 3 agosto 2026) - criteri, beneficiari e modalità della Carta Dedicata a te 2026-2027"

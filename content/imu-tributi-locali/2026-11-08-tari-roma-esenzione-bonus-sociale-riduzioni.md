@@ -1,11 +1,12 @@
 ---
 title: "TARI Roma: esenzione, bonus sociale del 25% e come pagare meno"
 slug: "tari-roma-esenzione-bonus-sociale-riduzioni"
+seo_title: "TARI Roma 2026: esenzione ISEE fino a 6.500 € e bonus 25%"
 date: 2026-11-08
 last_updated: 2026-11-08
 category: "imu-tributi-locali"
 tags: ["tari", "tributi-locali", "famiglie", "isee", "bonus"]
-meta_description: "TARI Roma: esenzione con ISEE fino a 6.500 €, bonus rifiuti del 25% automatico, rate 2026 e cosa fare se l'avviso AMA è sbagliato. Ti aiuta il CAF di Vigne Nuove."
+meta_description: "TARI Roma 2026: esenzione con ISEE fino a 6.500 €, bonus rifiuti del 25% automatico e rate. Avviso AMA sbagliato? Ti aiuta il CAF di Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 27 dicembre 2013, n. 147, art. 1, commi 639 e seguenti (istituzione TARI; comma 646 superficie tassabile)"

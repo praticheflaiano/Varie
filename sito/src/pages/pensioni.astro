@@ -12,6 +12,7 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
   <JsonLdService slot="head" slug="pensioni" name={"Pensioni e consulenza previdenziale"} description={"Controllo dell'estratto contributivo, calcolo della pensione e domanda all'INPS tramite patronato."} serviceType={"Patronato - pensioni"} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
   <ServiceLanding {...props} />
+  <div class="lp"><p class="c4" style="max-width:1200px;margin:0 auto;padding:16px 24px 0"><b>Date dei pagamenti di questo mese:</b> <a href="/pagamenti-inps" style="font-weight:700">calendario dei pagamenti INPS</a>.</p></div>
   <div class="lp"><section class="c47" id="fonti">
     <h2 class="c55">Fonti ufficiali</h2>
     <p class="c4"><b>Aggiornato il 13 novembre 2026.</b> Requisiti di età e contributi: quelli previsti per il 2027 e il 2028. Tengono conto dell'adeguamento alla speranza di vita, ma ogni caso va controllato sul tuo estratto contributivo.</p>

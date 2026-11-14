@@ -1,6 +1,6 @@
 ---
 title: "Legge sul caregiver familiare: cosa prevede il testo ora al Senato"
-seo_title: "Legge caregiver familiare: cosa prevede il ddl"
+seo_title: "Caregiver, ddl al Senato: fino a 1.200 € a trimestre"
 slug: "legge-caregiver-familiare-ddl-senato-contributo"
 date: 2026-11-13
 last_updated: 2026-11-13

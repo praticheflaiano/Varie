@@ -1,11 +1,12 @@
 ---
 title: "Bonus Asilo Nido 2026: fino a 3.600 € | Domanda INPS, ISEE | CAF Roma"
 slug: "bonus-asilo-nido-2026-3600-euro-domanda-inps"
+seo_title: "Bonus asilo nido 2026: fino a 3.600 €, a chi spetta"
 date: 2026-04-29
 last_updated: 2026-11-10
 category: "bonus-fiscali"
 tags: ["bonus", "guida", "famiglie", "inps", "asilo-nido", "isee"]
-meta_description: "Bonus Asilo Nido 2026: fino a 3.600 euro per famiglie con ISEE minorenni sotto 40.000. Domanda INPS aperta. Documenti, scadenze. CAF Roma Vigne Nuove."
+meta_description: "Bonus asilo nido 2026: fino a 3.600 € con ISEE minorenni fino a 40.000 €. Requisiti, documenti e domanda INPS entro il 31 dicembre. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS - Circolare 27 marzo 2026, n. 29 (istruzioni bonus asilo nido 2026)"

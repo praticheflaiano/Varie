@@ -1,11 +1,12 @@
 ---
 title: "ISEE 2027: quando rinnovarlo, documenti e novità per chi vive a Roma"
 slug: "isee-2027-documenti-quando-rinnovare-roma"
+seo_title: "ISEE 2027 a Roma: quando rinnovarlo e documenti da portare"
 date: 2026-11-08
 last_updated: 2026-11-08
 category: "isee-dsu"
 tags: ["isee", "inps", "famiglie", "assegno-unico", "guida"]
-meta_description: "ISEE 2027: scade il 31 dicembre, si rinnova da gennaio con redditi e patrimoni 2025. Documenti, novità prima casa e scadenze. ISEE gratis al CAF di Roma Nord."
+meta_description: "ISEE 2027: scade il 31 dicembre, si rinnova da gennaio con redditi e patrimoni 2025. Documenti e novità prima casa. Gratis al CAF di Roma Nord."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "DPCM 5 dicembre 2013, n. 159 (regolamento ISEE)"
