@@ -75,6 +75,7 @@ const props = {
     { label: "Colf e badanti", href: "/colf-badanti" },
     { label: "Disability Card", href: "/disability-card" },
     { label: "Contrassegno CUDE", href: "/cude" },
+    { label: "Scopri cosa ti spetta", href: "/quale-isee?modo=bonus" },
   ],
 };
 const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });

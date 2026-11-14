@@ -3,7 +3,8 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import { CONTACT, HOURS } from "~/consts";
-import body from "~/fragments/isee.html?raw";
+import DaCasa from "~/components/ui/DaCasa.astro";
+import rawBody from "~/fragments/isee.html?raw";
 
 /*
  * BOZZA da approvare (14/11/2026). Fonti verificate su inps.it e camera.it il 14/11/2026:
@@ -18,6 +19,18 @@ import body from "~/fragments/isee.html?raw";
  */
 
 const AGGIORNATO = "14 novembre 2026";
+
+/* Blocco "ISEE 2027 da casa" (id da-casa, dati in src/data/dacasa.ts): i pulsanti "Fai tutto online" puntano a #da-casa. */
+const DACASA_SOSTITUZIONI: [string, string][] = [
+  ['<a href="/richiesta" class="c20">Fai tutto online</a>', '<a href="#da-casa" class="c20">Fai tutto online</a>'],
+  ['<a href="/richiesta" class="c15">', '<a href="#da-casa" class="c15">'],
+  ["Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi.", "Ci scrivi su WhatsApp e mandi le foto dei documenti dal telefono. La DSU la firmi in ufficio, in pochi minuti."],
+];
+let body = rawBody;
+for (const [da, a] of DACASA_SOSTITUZIONI) {
+  if (!body.includes(da)) throw new Error("isee.astro: testo non trovato nel frammento: " + da.slice(0, 60));
+  body = body.replace(da, a);
+}
 const BOOK_2027 = "https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G";
 
 const faqs = [
@@ -28,7 +41,7 @@ const faqs = [
   { q: "E se dimentico un conto o un reddito?", a: "Va presentata una nuova DSU. Se la rifacciamo perché mancavano dati importanti, nello stesso anno e per la stessa famiglia, chiediamo 25 € di servizio. Non li paghi se cambia la famiglia, per l'ISEE corrente o se l'errore è nostro. Per questo conviene controllare la lista documenti prima di venire." },
   { q: "Ho una casa di proprietà a Roma: cosa cambia?", a: "Per Assegno Unico, bonus nido, bonus nuovi nati, ADI e SFL la casa in cui vivi pesa meno: nei capoluoghi di città metropolitana, come Roma, è esclusa fino a 120.000 €, più 2.500 € per ogni figlio convivente dopo il primo (legge 199/2025)." },
   { q: "Ho buoni postali o titoli di Stato: contano?", a: "Titoli di Stato, buoni e libretti postali sono esclusi dal calcolo fino a 50.000 € per famiglia. Diccelo comunque: verifichiamo noi come vanno indicati." },
-  { q: "Devo portare il 730 o la CU? Posso fare tutto da casa?", a: "No, 730 e CU di solito li recuperiamo noi online, con la tua delega. E sì: puoi scegliere la videochiamata o la richiesta online, senza venire in ufficio." },
+  { q: "Devo portare il 730 o la CU? Posso fare tutto da casa?", a: "No, 730 e CU di solito li recuperiamo noi online, con la tua delega. Quasi tutto lo fai da casa: scrivici su WhatsApp e mandi le foto dei documenti dal telefono (<a href='#da-casa'>ISEE 2027 da casa</a>). La DSU la firma il dichiarante, cioè tu: la firmi in ufficio, in pochi minuti." },
 ];
 
 const ld = JSON.stringify({
@@ -46,16 +59,20 @@ const M_TRE_MOSSE = '<section class="c46"><h2 class="c1">Fatto in 3 mosse</h2>';
 const M_CALENDARI = '<section class="c44" id="calendari">';
 const M_FAQ = '<section style="background: #F7F7FB"><div class="c48"><h2 class="c22">Domande veloci</h2>';
 const M_GIA = '<section class="c47"><h2 class="c55">Già che ci sei</h2>';
-for (const m of [M_TRE_MOSSE, M_CALENDARI, M_FAQ, M_GIA]) {
+const M_COME = '<section class="c44"><h2 class="c1">Come preferisci?</h2>';
+for (const m of [M_TRE_MOSSE, M_CALENDARI, M_COME, M_FAQ, M_GIA]) {
   if (!body.includes(m)) throw new Error("isee.astro: marcatore non trovato nel frammento: " + m.slice(0, 60));
 }
 const i1 = body.indexOf(M_TRE_MOSSE);
 const i2 = body.indexOf(M_CALENDARI);
 const i3 = body.indexOf(M_FAQ);
 const i4 = body.indexOf(M_GIA);
+const iCome = body.indexOf(M_COME);
+if (!(i2 < iCome && iCome < i3)) throw new Error("isee.astro: \"Come preferisci?\" non è tra i calendari e le domande");
 const part1 = body.slice(0, i1).replace("ISEE 2027 · Vigne Nuove e online", "ISEE 2027 · CAF a Vigne Nuove, Roma · anche online"); // fino al banner del test
 const part2 = body.slice(i1, i2); // 3 mosse, documenti, prezzo
-const part3 = body.slice(i2, i3); // calendari e "Come preferisci"
+const part3a = body.slice(i2, iCome); // calendari ("Quale ISEE devi prenotare?")
+const part3b = body.slice(iCome, i3); // "Come preferisci?"
 const part4 = body.slice(i4); // "Già che ci sei" + chiusura del div c36
 
 const tipi = [
@@ -71,7 +88,7 @@ const oraRiga = HOURS.filter((h) => h.open).map((h) => `${h.day.slice(0, 3)} ${h
 ---
 <BaseLayout title={"ISEE gratis a Roma: CAF Vigne Nuove"} description={"ISEE 2027 gratis a Roma Nord: CAF a Vigne Nuove o in videochiamata. Scadenza 31 dicembre, documenti, rinnovo per l'Assegno Unico. Prenota online."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="isee" name="ISEE e DSU" description={"Calcolo ISEE ordinario, corrente e universitario: compilazione e invio della DSU all'INPS. Gratuito."} serviceType="Assistenza fiscale - ISEE" offers={[{ name: "ISEE", price: 0 }]} />
+  <JsonLdService slot="head" slug="isee" name="ISEE e DSU" description={"Calcolo ISEE ordinario, corrente e universitario: compilazione e invio della DSU all'INPS. Gratuito."} serviceType="Assistenza fiscale - ISEE" offers={[{ name: "ISEE", price: 0 }]} onlineUrl="#da-casa" />
   <script slot="head" type="application/ld+json" set:html={ld} />
 
   <div class="lp"><Fragment set:html={part1 + "</div>"} /></div>
@@ -86,7 +103,7 @@ const oraRiga = HOURS.filter((h) => h.open).map((h) => `${h.day.slice(0, 3)} ${h
           <div class={x.c}><h3 class="c8">{x.t}</h3><p class="c4">{x.d}</p></div>
         ))}
       </div>
-      <p class="c4" style="max-width:760px">Non sai quale ti serve? <a href="/quale-isee" style="font-weight:700">Fai il test</a> o leggi la <a href="/blog/tipi-di-isee-differenze-quale-serve" style="font-weight:700">guida completa ai tipi di ISEE</a>. Se hai perso il lavoro, vedi anche l'<a href="/blog/isee-corrente-quando-conviene-roma" style="font-weight:700">ISEE corrente</a>.</p>
+      <p class="c4" style="max-width:760px">Non sai quale ti serve? <a href="/quale-isee" style="font-weight:700">Fai il test</a> o leggi la <a href="/blog/tipi-di-isee-differenze-quale-serve" style="font-weight:700">guida completa ai tipi di ISEE</a>. Se hai perso il lavoro, vedi anche l'<a href="/blog/isee-corrente-quando-conviene-roma" style="font-weight:700">ISEE corrente</a>. Con l'ISEE in mano, <a href="/quale-isee?modo=bonus" style="font-weight:700">scopri cosa ti spetta</a>.</p>
     </section>
   </div></div>
 
@@ -117,7 +134,12 @@ const oraRiga = HOURS.filter((h) => h.open).map((h) => `${h.day.slice(0, 3)} ${h
     </section>
   </div></div>
 
-  <div class="lp"><Fragment set:html={part3 + "</div>"} /></div>
+  <div class="lp"><Fragment set:html={part3a + "</div>"} /></div>
+
+  <!-- NUOVO: blocco "ISEE 2027 da casa", subito prima di "Come preferisci?" -->
+  <div class="lp"><div class="c36"><DaCasa slug="isee" aggiornato={AGGIORNATO} /></div></div>
+
+  <div class="lp"><Fragment set:html={part3b + "</div>"} /></div>
 
   <!-- NUOVO: come raggiungerci e prenotare -->
   <div class="lp"><div class="c36">

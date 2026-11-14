@@ -1,0 +1,1981 @@
+{
+ "meta": {
+  "titolo": "Scopri cosa ti spetta - catalogo misure (Roma e Lazio)",
+  "versione": "2026-11-14.2",
+  "generato_il": "2026-11-14",
+  "nota": "Solo misure lette il 14/11/2026 su fonte ufficiale (pagina o PDF indicati in 'fonti'). Dove un dato viene solo dagli articoli del sito è scritto in 'campi_da_riverificare'. Nessun prezzo inventato: 'prezzo_pubblicato_sul_sito' ripete solo quanto è già scritto nelle pagine del sito.",
+  "come_leggere_i_requisiti": {
+   "regola_generale": "Un requisito null o assente = non conta. I requisiti si combinano con E (tutti devono essere compatibili). Dentro un array vale O (basta uno).",
+   "residenza": "italia < lazio < roma: chi vive a Roma soddisfa anche 'lazio' e 'italia'.",
+   "isee_max": "Valore massimo dell'ISEE in euro. null = l'ISEE non è un requisito. Fascia dell'utente tutta sotto il valore = probabile; fascia a cavallo = forse; fascia tutta sopra = non mostrare.",
+   "isee_max_con_4_figli": "Soglia alternativa per le famiglie con almeno 4 figli a carico.",
+   "reddito_max_personale": "Soglie di reddito (non ISEE): il quiz le mostra come 'cosa controlliamo', non filtra.",
+   "scadenza_tipo": [
+    "sempre_aperto",
+    "data_fissa",
+    "a_evento",
+    "automatico",
+    "finestre"
+   ],
+   "stato": [
+    "aperto",
+    "scadenza_vicina",
+    "automatico",
+    "finestra_chiusa"
+   ],
+   "il_motore_calcola": "giorni_alla_scadenza = data - oggi, a ogni apertura della pagina; se scadenza.data è nel passato la misura non si mostra come attiva."
+  },
+  "codici": {
+   "lavoro": [
+    "dipendente",
+    "autonomo",
+    "disoccupato",
+    "pensionato",
+    "studente",
+    "non_lavora",
+    "dipendente_domestico"
+   ],
+   "disabilita": [
+    "invalidita_67",
+    "invalidita_74",
+    "invalidita_100",
+    "legge104_grave",
+    "accompagnamento",
+    "cieco_sordo",
+    "assisto_familiare"
+   ],
+   "figli": [
+    "nessuno",
+    "in_attesa",
+    "nato_2026_entro_120gg",
+    "sotto_3",
+    "minorenni",
+    "maggiorenni_18_20",
+    "universitario_fino_30"
+   ],
+   "casa": [
+    "affitto",
+    "proprieta",
+    "utenze_intestate",
+    "altro"
+   ],
+   "aiuto_del_centro": {
+    "te_lo_facciamo_noi": "presentiamo noi la domanda (pulsante: Te lo facciamo noi)",
+    "ti_aiutiamo": "prepariamo documenti e ti guidiamo (pulsante: Chiedi aiuto)",
+    "solo_informazione": "nessuna domanda da fare: spieghiamo e controlliamo l'ISEE (pulsante: Controlliamo il tuo ISEE)"
+   }
+  },
+  "correzioni_14_11_sera": [
+   "DiSCo: bando 2026/2027 chiuso (domanda e DSU erano entro il 22/7/2026); il 10/12/2026 vale solo per non residenti (ISEEUP, CAF convenzionati DiSCo: non il nostro). Misura spostata in \"Riapre presto\", il Centro fa solo l'ISEE universitario.",
+   "Campo requisiti.universitario (richiesto | o_lavoratore): vale se lo studente è chi risponde o c'è un figlio universitario.",
+   "cta.prezzo_testo: testo pubblico del prezzo (solo prezzi già pubblicati o \"te lo diciamo prima\").",
+   "carta-acquisti: ISEE non filtra (conta il reddito personale), vale età 65+ o figlio sotto 3 anni."
+  ]
+ },
+ "misure": [
+  {
+   "id": "assegno-unico",
+   "nome": "Assegno unico e universale",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "famiglia",
+   "a_chi_spetta": "Famiglie con figli a carico: ogni figlio minorenne, i figli fino a 21 anni (con reddito sotto 8.000 € e studio, lavoro o iscrizione come disoccupato) e i figli con disabilità senza limite di età. Per i nuovi nati dal settimo mese di gravidanza.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "ISEE valido (senza ISEE o sopra 46.582,71 € si prende l'importo minimo)",
+    "figli": {
+     "min_numero": 1,
+     "richiede_uno_tra": [
+      "in_attesa",
+      "nato_2026_entro_120gg",
+      "sotto_3",
+      "minorenni",
+      "maggiorenni_18_20"
+     ]
+    },
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Da 58,3 € a 203,8 € al mese per ogni figlio minorenne (2026). Massimo con ISEE fino a 17.468,51 €; minimo senza ISEE o con ISEE da 46.582,71 € in su. Maggiorazioni per figli sotto 1 anno, per 3 o più figli e per disabilità.",
+    "min": 58.3,
+    "max": 203.8,
+    "periodicita": "mensile",
+    "per": "ogni figlio minorenne"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "La domanda non scade e continua da sola. Rifai l'ISEE a gennaio: con DSU presentata entro il 30 giugno l'INPS paga gli arretrati."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS (SPID, CIE o CNS) o tramite patronato. Serve l'ISEE.",
+   "il_centro_controlla": [
+    "ISEE giusto (calcolo 2026 con casa di proprietà esclusa fino a 120.000 € a Roma)",
+    "Nuovo figlio o variazioni da comunicare",
+    "Ripartizione 50% tra genitori separati"
+   ],
+   "pagina_sito": "/assegno-unico",
+   "articolo_sito": "/blog/assegno-unico-2027-rinnovo-isee-scadenze",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis. Domanda o modifica: 15 € in ufficio, 19 € online (con tessera 10 € e 15 €).",
+    "prezzo_testo": "ISEE gratis. Domanda o modifica: 15 € in ufficio, 19 € online (con tessera 10 € e 15 €)."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Assegno unico e universale per i figli a carico (scheda, agg. 10/9/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "importi 2027 (rivalutazione a inizio 2027)"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "adi",
+   "nome": "Assegno di inclusione (ADI)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "poverta",
+   "a_chi_spetta": "Nuclei familiari con almeno un componente con disabilità, minorenne, con almeno 60 anni o in condizione di svantaggio seguito dai servizi sociosanitari, con ISEE basso e residenza in Italia da almeno 5 anni (gli ultimi 2 continuativi).",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 10140,
+    "isee_tipo": "ISEE del nucleo in corso di validità",
+    "figli": {
+     "min_numero": null,
+     "richiede_uno_tra": [
+      "minorenni"
+     ],
+     "nota": "oppure in famiglia c'è una persona con disabilità, un over 60 o una persona in condizione di svantaggio",
+     "o_disabilita_o_over60": true
+    },
+    "eta": {
+     "min": null,
+     "max": null,
+     "nota": "serve almeno un componente minorenne, con disabilità, over 60 o in svantaggio"
+    },
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Integra il reddito familiare fino a una soglia (6.500 € annui moltiplicati per la scala di equivalenza ADI) e, per chi è in affitto con contratto registrato, aggiunge un sostegno per l'affitto. L'importo lo calcola l'INPS.",
+    "min": null,
+    "max": null,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Si paga per 18 mesi, poi si rinnova per periodi di 12 mesi con una nuova domanda."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS o tramite patronato; poi iscrizione al SIISL e firma del Patto di attivazione digitale.",
+   "il_centro_controlla": [
+    "Soglia di reddito familiare e scala di equivalenza",
+    "Auto e moto intestate (limiti di cilindrata e immatricolazione)",
+    "Residenza continuativa",
+    "Iscrizione SIISL e Patto di attivazione"
+   ],
+   "pagina_sito": "/adi-sfl",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis. Prezzo della domanda non pubblicato sul sito: da dire prima all'utente.",
+    "prezzo_testo": "ISEE gratis. Il prezzo della domanda te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Assegno di Inclusione (ADI) (scheda, agg. 29/7/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "sfl",
+   "nome": "Supporto per la formazione e il lavoro (SFL)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "lavoro",
+   "a_chi_spetta": "Persone tra 18 e 59 anni, in nuclei con ISEE basso, che partecipano a corsi, progetti di formazione o politiche attive del lavoro.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 10140,
+    "isee_tipo": "ISEE del nucleo in corso di validità",
+    "figli": null,
+    "eta": {
+     "min": 18,
+     "max": 59
+    },
+    "lavoro": [
+     "disoccupato",
+     "non_lavora"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "500 € al mese per la durata della partecipazione alle attività, fino a 12 mesi (prorogabili di altri 12 se c'è un percorso formativo in corso).",
+    "min": 500,
+    "max": 500,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS, iscrizione al SIISL, Patto di attivazione digitale e Patto di servizio personalizzato.",
+   "il_centro_controlla": [
+    "Limiti di patrimonio mobiliare e immobiliare",
+    "Iscrizione ai cicli di istruzione per chi ha 18-29 anni e non ha assolto l'obbligo scolastico",
+    "Iscrizione SIISL"
+   ],
+   "pagina_sito": "/adi-sfl",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis. Prezzo della domanda non pubblicato sul sito.",
+    "prezzo_testo": "ISEE gratis. Il prezzo della domanda te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Supporto per la Formazione e il Lavoro (SFL) (scheda, agg. 5/3/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.supporto-per-la-formazione-e-il-lavoro-sfl-.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bonus-nido",
+   "nome": "Bonus asilo nido",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "famiglia",
+   "a_chi_spetta": "Genitori con figli sotto i 3 anni che pagano la retta di un nido o di una struttura 0-3 abilitata, oppure con figli sotto i 3 anni con gravi patologie croniche assistiti a casa.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "ISEE per le prestazioni familiari (minorenni), neutralizzato dall'Assegno unico. Senza ISEE si prende il minimo.",
+    "figli": {
+     "min_numero": 1,
+     "richiede_uno_tra": [
+      "sotto_3"
+     ]
+    },
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Fino a 3.600 € l'anno per i nati dal 1° gennaio 2024 con ISEE fino a 40.000 €. Per i nati prima: 3.000 € con ISEE fino a 25.000 €, 2.500 € fino a 40.000 €, 1.500 € oltre o senza ISEE. Rimborso mensile delle rette pagate.",
+    "min": 1500,
+    "max": 3600,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda valida fino ad agosto dell'anno in cui il bambino compie 3 anni. Le ricevute si caricano entro il 30 aprile dell'anno dopo."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS (SPID, CIE, CNS) dal genitore che paga la retta, o tramite patronato.",
+   "il_centro_controlla": [
+    "ISEE minorenni valido",
+    "Struttura abilitata (l'INPS controlla gli elenchi regionali e comunali)",
+    "Ricevute intestate a chi paga",
+    "Niente doppia detrazione nel 730 sulle stesse spese"
+   ],
+   "pagina_sito": "/bonus-famiglia",
+   "articolo_sito": "/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Le domande INPS presentate dal patronato sono gratuite. ISEE gratis.",
+    "prezzo_testo": "Le domande INPS presentate dal patronato sono gratuite. ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Bonus asilo nido 2026: attivo il servizio per la domanda (31/3/2026)",
+     "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.03.bonus-asilo-nido-2026-attivo-il-servizio-per-la-domanda.html"
+    },
+    {
+     "titolo": "INPS - Circolare 27 marzo 2026, n. 29 (importi per fasce ISEE)",
+     "url": "https://servizi2.inps.it/Servizi/CircMessStd/maestro.ashx?idAllegato=16651&flagOriginale=1"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bonus-nuovi-nati",
+   "nome": "Bonus nuovi nati",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "famiglia",
+   "a_chi_spetta": "Genitori di un figlio nato, adottato o in affido preadottivo, con ISEE per le prestazioni familiari fino a 40.000 € (senza contare l'Assegno unico).",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 40000,
+    "isee_tipo": "ISEE per le prestazioni familiari (minorenni), senza contare l'Assegno unico",
+    "figli": {
+     "min_numero": 1,
+     "richiede_uno_tra": [
+      "nato_2026_entro_120gg"
+     ]
+    },
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "1.000 € una tantum per ogni figlio, non tassati.",
+    "min": 1000,
+    "max": 1000,
+    "periodicita": "una_tantum",
+    "per": "ogni figlio"
+   },
+   "scadenza": {
+    "tipo": "a_evento",
+    "data": null,
+    "testo": "Entro 120 giorni dalla nascita o dall'ingresso in famiglia, a pena di decadenza."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS, Contact Center o patronato. Una domanda per ogni figlio. Serve ISEE minorenni valido.",
+   "il_centro_controlla": [
+    "ISEE minorenni fatto subito dopo la nascita",
+    "Data di nascita e conteggio dei 120 giorni",
+    "Aggiornamento dell'Assegno unico con il nuovo figlio"
+   ],
+   "pagina_sito": "/bonus-famiglia",
+   "articolo_sito": "/blog/bonus-nuovi-nati-1000-euro-domanda-120-giorni",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Le domande INPS presentate dal patronato sono gratuite. ISEE gratis.",
+    "prezzo_testo": "Le domande INPS presentate dal patronato sono gratuite. ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Bonus nuovi nati (scheda, agg. 27/4/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "nati dal 2027: la scheda INPS dice 'dal 1° gennaio 2025' senza data finale, l'articolo del sito parla solo del 2026 e di nuove istruzioni per il 2027"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bonus-mamme-2026",
+   "nome": "Nuovo bonus mamme 2026",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "famiglia",
+   "a_chi_spetta": "Lavoratrici dipendenti o autonome con almeno 2 figli (il più piccolo sotto i 10 anni) o con 3 o più figli (il più piccolo sotto i 18 anni), con reddito da lavoro 2026 fino a 40.000 €. Escluse le lavoratrici domestiche; con 3 o più figli e contratto a tempo indeterminato non spetta nei mesi di esonero contributivo.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non conta l'ISEE: conta il reddito da lavoro 2026 fino a 40.000 €",
+    "figli": {
+     "min_numero": 2,
+     "richiede_uno_tra": [
+      "minorenni"
+     ],
+     "nota": "2 figli con il minore sotto i 10 anni, oppure 3 o più figli con il minore sotto i 18"
+    },
+    "eta": null,
+    "lavoro": [
+     "dipendente",
+     "autonomo"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "60 € per ogni mese (o frazione di mese) di lavoro nel 2026, fino a 720 €. Non tassato e non conta per l'ISEE. Pagamento a dicembre 2026 se la domanda è chiusa in tempo.",
+    "min": 60,
+    "max": 720,
+    "periodicita": "una_tantum_annuale"
+   },
+   "scadenza": {
+    "tipo": "data_fissa",
+    "data": "2026-12-31",
+    "testo": "Domanda entro il 31 dicembre 2026 (31 gennaio 2027 se il requisito matura a dicembre 2026)."
+   },
+   "stato": "scadenza_vicina",
+   "come_si_chiede": "Domanda online all'INPS, Contact Center o patronato.",
+   "il_centro_controlla": [
+    "Quali mesi spettano (tipo di contratto, età dei figli)",
+    "Reddito da lavoro entro 40.000 €",
+    "Ufficio chiuso dal 23/12/2026 al 10/1/2027: prenotare entro metà dicembre"
+   ],
+   "pagina_sito": "/bonus-famiglia",
+   "articolo_sito": "/blog/nuovo-bonus-mamme-2026-domanda-inps-31-dicembre",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Le domande INPS presentate dal patronato sono gratuite.",
+    "prezzo_testo": "Le domande INPS presentate dal patronato sono gratuite."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Nuovo Bonus mamme 2026: presentazione della domanda (19-20/10/2026)",
+     "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.10.nuovo-bonus-mamme-2026-aggiornamenti.html"
+    },
+    {
+     "titolo": "INPS - Nuovo Bonus mamme 2026 (scheda)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.nuovo-bonus-mamme-2026.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la data 31 gennaio 2027 per chi matura il requisito a dicembre viene dall'articolo del sito (circolare INPS 106/2026): non riletta nella news INPS"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "carta-dedicata-a-te",
+   "nome": "Carta Dedicata a te 2026-2027",
+   "ente": "Stato (INPS, Poste, Comune)",
+   "livello": "nazionale",
+   "categoria": "poverta",
+   "a_chi_spetta": "Nuclei residenti in Italia con ISEE ordinario fino a 15.000 € e tutti i componenti iscritti all'anagrafe. Non spetta se in famiglia c'è chi prende ADI, Carta acquisti, NASpI, DIS-COLL, cassa integrazione o simili. Le liste le fa il Comune: non si fa domanda.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 15000,
+    "isee_tipo": "ISEE ordinario",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null,
+    "esclusi_se": [
+     "percepisce ADI",
+     "percepisce NASpI o cassa integrazione"
+    ]
+   },
+   "importo": {
+    "testo": "500 € per il 2026 e altri 500 € per il 2027 su carta prepagata, solo per alimentari di prima necessità.",
+    "min": 500,
+    "max": 1000,
+    "periodicita": "annuale_2_anni"
+   },
+   "scadenza": {
+    "tipo": "automatico",
+    "data": "2026-12-16",
+    "testo": "Nessuna domanda. Se sei in lista, il primo acquisto va fatto entro il 16 dicembre 2026 o perdi i 500 € del 2026. Ricarica 2027 da aprile."
+   },
+   "stato": "scadenza_vicina",
+   "come_si_chiede": "Non si fa domanda. Il Comune avvisa chi è in lista; la carta si ritira all'ufficio postale indicato. Liste già chiuse (13/10/2026).",
+   "il_centro_controlla": [
+    "ISEE valido per le altre misure",
+    "Spiegare a chi non è in lista cosa fare per il 2027"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": "/blog/carta-dedicata-a-te-2026-2027-scadenza-16-dicembre",
+   "cta": {
+    "aiuto": "solo_informazione",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Carta Dedicata a te: modalità operative per il 2026-2027 (24/9/2026)",
+     "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "nota_motore": "Mostrarla solo come 'controlla se sei in lista': non esiste domanda.",
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bonus-sociale-luce-gas-acqua",
+   "nome": "Bonus sociale luce, gas e acqua",
+   "ente": "ARERA (applicato in bolletta)",
+   "livello": "nazionale",
+   "categoria": "bollette",
+   "a_chi_spetta": "Famiglie con ISEE fino a 9.796 € (fino a 20.000 € con almeno 4 figli a carico), con contratto di luce, gas o acqua per uso domestico intestato a un componente del nucleo ISEE.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 9796,
+    "isee_max_con_4_figli": 20000,
+    "isee_tipo": "ISEE ordinario",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": [
+     "utenze_intestate"
+    ]
+   },
+   "importo": {
+    "testo": "Luce: sconto pari al 30% della spesa dell'utente medio. Gas: 15% della spesa al netto delle imposte. Acqua: 50 litri per abitante al giorno. Si sommano.",
+    "min": null,
+    "max": null,
+    "periodicita": "in_bolletta"
+   },
+   "scadenza": {
+    "tipo": "automatico",
+    "data": null,
+    "testo": "Automatico: basta presentare la DSU e avere un ISEE sotto soglia."
+   },
+   "stato": "automatico",
+   "come_si_chiede": "Nessuna domanda: presenti la DSU all'INPS e il bonus arriva in bolletta.",
+   "il_centro_controlla": [
+    "Che l'ISEE sia sotto soglia",
+    "Che le bollette siano intestate a un componente del nucleo ISEE",
+    "Contratto per uso domestico (acqua: residente)"
+   ],
+   "pagina_sito": "/luce-gas",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis. Controllo bolletta gratuito (pagina Luce e gas).",
+    "prezzo_testo": "ISEE gratis. Controllo bolletta gratuito."
+   },
+   "fonti": [
+    {
+     "titolo": "ARERA - Bonus sociale per disagio economico: quali sono i requisiti",
+     "url": "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/quali-sono-i-requisiti"
+    },
+    {
+     "titolo": "ARERA - comunicato 23/1/2026: soglia ISEE 9.796 € dal 1° gennaio 2026",
+     "url": "https://www.arera.it/comunicati-stampa/dettaglio/bonus-sociali-arera-alza-a-9796-euro-la-soglia-isee-per-laccesso-alle-agevolazioni-per-acqua-luce-gas-e-rifiuti"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bonus-sociale-rifiuti",
+   "nome": "Bonus sociale rifiuti (TARI -25%)",
+   "ente": "ARERA (applicato dal gestore, a Roma AMA)",
+   "livello": "nazionale",
+   "categoria": "casa",
+   "a_chi_spetta": "Famiglie con ISEE fino a 9.796 € (fino a 20.000 € con almeno 4 figli a carico) con utenza TARI domestica intestata a un componente del nucleo ISEE.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 9796,
+    "isee_max_con_4_figli": 20000,
+    "isee_tipo": "ISEE ordinario",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": [
+     "utenze_intestate"
+    ]
+   },
+   "importo": {
+    "testo": "Sconto del 25% sulla TARI. Si applica una volta all'anno, nell'avviso dell'anno dopo la DSU.",
+    "min": null,
+    "max": null,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "automatico",
+    "data": null,
+    "testo": "Automatico con la DSU. Se la DSU è presentata dopo il 20 dicembre e l'ISEE esce a gennaio, lo sconto slitta di un anno."
+   },
+   "stato": "automatico",
+   "come_si_chiede": "Nessuna domanda: presenti la DSU. A Roma l'esenzione totale (ISEE fino a 6.500 €) e il bonus non si sommano: conviene l'esenzione.",
+   "il_centro_controlla": [
+    "ISEE sotto soglia",
+    "Utenza TARI intestata a un componente del nucleo",
+    "Se l'ISEE è sotto 6.500 €, chiedere l'esenzione totale"
+   ],
+   "pagina_sito": "/imu-tari",
+   "articolo_sito": "/blog/tari-roma-esenzione-bonus-sociale-riduzioni",
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis.",
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "ARERA - Bonus sociale rifiuti",
+     "url": "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico/bonus-sociale-rifiuti-2-1"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la pagina di Roma Capitale del 24/2/2026 riporta ancora la soglia 9.530 €: vale 9.796 € dal 1/1/2026 (ARERA)"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "carta-acquisti",
+   "nome": "Carta acquisti ordinaria",
+   "ente": "INPS / Poste Italiane",
+   "livello": "nazionale",
+   "categoria": "poverta",
+   "a_chi_spetta": "Persone dai 65 anni in su con trattamenti (pensioni) sotto 8.230,81 € l'anno (65-69 anni) o sotto 10.974,42 € (70 anni e più), oppure bambini sotto i 3 anni con ISEE sotto 8.230,81 € (la carta è intestata al genitore). Servono cittadinanza o soggiorno e iscrizione all'anagrafe.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "ISEE in corso di validità per i bambini sotto 3 anni; per gli over 65 contano i redditi e le pensioni, non l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 65,
+     "max": null,
+     "nota": "oppure bambino sotto 3 anni"
+    },
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null,
+    "reddito_max_personale": {
+     "da_65_a_69": 8230.81,
+     "da_70": 10974.42
+    },
+    "eta_o_figli_sotto3": true,
+    "isee_max_percorso_figli": 8230.81
+   },
+   "importo": {
+    "testo": "80 € ogni due mesi su carta di pagamento, per spesa alimentare e bollette di luce e gas pagate alle Poste. Sconto del 5% nei negozi e nelle farmacie convenzionati.",
+    "min": 480,
+    "max": 480,
+    "periodicita": "bimestrale"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta; ISEE da rifare ogni gennaio, altrimenti il pagamento si sospende."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda all'ufficio postale con i moduli INPS/Poste; l'ufficio la invia all'INPS.",
+   "il_centro_controlla": [
+    "Soglie di reddito o ISEE",
+    "Limiti su immobili, auto e utenze",
+    "ISEE rinnovato a gennaio"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - La Carta acquisti (agg. 30/12/2025)",
+     "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.la-carta-acquisti.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "nota_motore": "Il motore la tratta con la fascia di età; per gli over 65 l'ISEE non è il criterio.",
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "assegno-maternita-comuni",
+   "nome": "Assegno di maternità dei Comuni",
+   "ente": "Comune (a Roma, Municipio) e INPS",
+   "livello": "nazionale",
+   "categoria": "famiglia",
+   "a_chi_spetta": "Madri residenti (italiane, comunitarie o straniere con soggiorno adatto) senza copertura previdenziale, o con copertura sotto un importo fissato ogni anno, con ISEE fino a 20.668,26 € per nascite, adozioni o affidi preadottivi del 2026.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 20668.26,
+    "isee_tipo": "ISEE (soglia 2026)",
+    "figli": {
+     "min_numero": 1,
+     "richiede_uno_tra": [
+      "nato_2026_entro_120gg"
+     ]
+    },
+    "eta": null,
+    "lavoro": [
+     "non_lavora",
+     "disoccupato",
+     "studente"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "413,10 € al mese per 5 mesi, in tutto 2.065,50 € se spetta intero (nascite 2026).",
+    "min": 2065.5,
+    "max": 2065.5,
+    "periodicita": "una_tantum_5_mesi"
+   },
+   "scadenza": {
+    "tipo": "a_evento",
+    "data": null,
+    "testo": "Domanda al Comune di residenza entro 6 mesi dalla nascita o dall'ingresso in famiglia."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Si presenta al Comune di residenza, che verifica i requisiti; paga l'INPS.",
+   "il_centro_controlla": [
+    "Assenza di copertura previdenziale (o importo sotto soglia)",
+    "Non cumulabile con altri trattamenti di maternità",
+    "ISEE sotto 20.668,26 €"
+   ],
+   "pagina_sito": "/bonus-famiglia",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis.",
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Assegno di maternità e soglia ISEE: aggiornamenti per il 2026 (11/2/2026, circ. 16/2026)",
+     "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.assegno-di-maternit-e-soglia-isee-aggiornamenti-per-il-2026.html"
+    },
+    {
+     "titolo": "INPS - Assegno di maternità dei Comuni (scheda)",
+     "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.assegno-di-maternit--dei-comuni.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "a Roma verificare con quale ufficio del Municipio si presenta la domanda"
+   ],
+   "nota_motore": "Il motore non sa se la madre ha copertura previdenziale: mostrarla come 'Può spettarti'.",
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "naspi",
+   "nome": "NASpI (indennità di disoccupazione)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "lavoro",
+   "a_chi_spetta": "Lavoratori dipendenti che hanno perso il lavoro in modo involontario, con almeno 13 settimane di contributi contro la disoccupazione nei 4 anni prima. Di regola le dimissioni la escludono, salvo giusta causa e altri casi.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": null,
+    "lavoro": [
+     "disoccupato"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Il 75% della retribuzione media mensile degli ultimi 4 anni, fino a un importo di riferimento fissato dalla legge. Dura la metà delle settimane di contributi degli ultimi 4 anni.",
+    "min": null,
+    "max": null,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "a_evento",
+    "data": null,
+    "testo": "Domanda solo online entro 68 giorni dalla fine del rapporto di lavoro, a pena di decadenza."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda telematica all'INPS (SPID, CIE) o tramite patronato.",
+   "il_centro_controlla": [
+    "Motivo della cessazione (dimissioni, giusta causa, risoluzione consensuale)",
+    "Settimane di contributi",
+    "Iscrizione al SIISL e Patto di attivazione entro 15 giorni"
+   ],
+   "pagina_sito": "/naspi",
+   "articolo_sito": "/blog/naspi-2026-patronato-vs-caf-cosa-fa-cosa",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Domanda NASpI gratis. SIISL compilato da noi: 25 € (20 € con tessera).",
+    "prezzo_testo": "Domanda NASpI gratis. SIISL compilato da noi: 25 € (20 € con tessera)."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - NASpI: indennità mensile di disoccupazione (scheda, agg. 2/2/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "ape-sociale",
+   "nome": "APE sociale",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "pensione",
+   "a_chi_spetta": "Chi ha almeno 63 anni e 5 mesi e almeno 30 anni di contributi (36 per i lavori gravosi) ed è disoccupato che ha finito la NASpI, caregiver, invalido dal 74% o addetto a lavori gravosi. Vale per chi matura i requisiti entro il 31/12/2026.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 63,
+     "max": null,
+     "nota": "63 anni e 5 mesi"
+    },
+    "lavoro": [
+     "disoccupato",
+     "dipendente"
+    ],
+    "disabilita": [
+     "invalidita_74",
+     "invalidita_100",
+     "legge104_grave",
+     "assisto_familiare"
+    ],
+    "casa": null,
+    "altro_requisiti": [
+     "almeno 30 anni di contributi (36 per i gravosi)"
+    ]
+   },
+   "importo": {
+    "testo": "Indennità pari alla pensione maturata, fino a 1.500 € lordi al mese, fino all'arrivo della pensione di vecchiaia.",
+    "min": null,
+    "max": 1500,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "data_fissa",
+    "data": "2026-11-30",
+    "testo": "Ultima scadenza per la domanda di verifica dei requisiti nel 2026: 30 novembre 2026."
+   },
+   "stato": "scadenza_vicina",
+   "come_si_chiede": "Domanda di verifica dei requisiti all'INPS (online, Contact Center o patronato); chi ha già i requisiti presenta anche la domanda di APE sociale.",
+   "il_centro_controlla": [
+    "Anni di contributi",
+    "Condizione (disoccupazione finita, caregiver da 6 mesi con convivenza, invalidità, lavoro gravoso)",
+    "Se conviene la pensione ordinaria"
+   ],
+   "pagina_sito": "/pensioni",
+   "articolo_sito": "/blog/ape-sociale-2026-ultima-scadenza-30-novembre",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - APE Sociale confermata per chi matura i requisiti entro l'anno (15/1/2026)",
+     "url": "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.ape-sociale-confermata-per-chi-matura-i-requisiti-entro-l-anno.html"
+    },
+    {
+     "titolo": "INPS - APE Sociale: verifica requisiti (scheda)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.ape-sociale---anticipo-pensionistico---verifica-requisiti.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "APE sociale 2027: è solo nella legge di bilancio 2027, non ancora approvata"
+   ],
+   "nota_motore": "Mostrare solo se età >= 60 (il quiz ha la fascia 60-64: 'forse', serve avere 63 anni e 5 mesi entro il 31/12/2026).",
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "prestazione-universale-anziani",
+   "nome": "Prestazione universale per anziani non autosufficienti (sperimentale)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "anziani",
+   "a_chi_spetta": "Persone di 80 anni o più, con bisogno assistenziale gravissimo riconosciuto dall'INPS, indennità di accompagnamento, ISEE sociosanitario fino a 6.000 €, non ricoverate in RSA.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": 6000,
+    "isee_tipo": "ISEE sociosanitario",
+    "figli": null,
+    "eta": {
+     "min": 80,
+     "max": null
+    },
+    "lavoro": null,
+    "disabilita": [
+     "accompagnamento"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "L'indennità di accompagnamento più una quota integrativa di circa 850 € al mese, nei limiti delle risorse, da usare per un assistente domestico con contratto regolare o per servizi di cura.",
+    "min": null,
+    "max": null,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "data_fissa",
+    "data": "2026-12-31",
+    "testo": "Misura sperimentale fino al 31 dicembre 2026. La proroga al 2027 è solo una proposta della legge di bilancio 2027, non ancora approvata."
+   },
+   "stato": "scadenza_vicina",
+   "come_si_chiede": "Domanda all'INPS, anche con patronato. Decorre dal mese di presentazione.",
+   "il_centro_controlla": [
+    "ISEE sociosanitario sotto 6.000 €",
+    "Livello di bisogno gravissimo (criteri DM 155/2024)",
+    "Che l'assistente abbia un contratto regolare"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Decreto Anziani - Prestazione Universale (scheda, agg. 8/6/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.decreto-anziani-prestazione-universale.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "proroga 2027 (art. 53 legge di bilancio 2027, non approvata)"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "permessi-104-congedo",
+   "nome": "Permessi legge 104 e congedo straordinario di 2 anni",
+   "ente": "INPS (dipendenti pubblici: il proprio ente)",
+   "livello": "nazionale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Lavoratori dipendenti con disabilità o che assistono un familiare con handicap grave (art. 3 comma 3 legge 104): coniuge, convivente, genitori, figli, parenti e affini fino al terzo grado. Il congedo di 2 anni richiede la convivenza ed è per i dipendenti privati.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": null,
+    "lavoro": [
+     "dipendente"
+    ],
+    "disabilita": [
+     "legge104_grave",
+     "assisto_familiare"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "Permessi retribuiti (3 giorni al mese). Congedo straordinario: periodo di assenza retribuito fino a 2 anni in tutta la vita lavorativa.",
+    "min": null,
+    "max": null,
+    "periodicita": "a_evento"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Si chiedono quando servono."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda all'INPS (anche con patronato). I dipendenti pubblici fanno domanda al proprio ente.",
+   "il_centro_controlla": [
+    "Verbale 104 con gravità",
+    "Ordine di priorità tra i familiari per il congedo",
+    "Convivenza"
+   ],
+   "pagina_sito": "/caregiver",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Prezzo non pubblicato: la pagina Caregiver dice che lo diciamo prima.",
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Permessi legge 104/1992 (scheda, agg. 21/10/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50098.indennit-per-permessi-fruiti-dai-lavoratori-per-assistere-familiari-disabili-in-situazione-di-gravit-o-fruiti-dai-lavoratori-disabili.html"
+    },
+    {
+     "titolo": "INPS - Domande di congedi straordinari (scheda, agg. 21/10/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50097.indennit-per-congedi-straordinari-assistenza-familiari-disabili-.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "i '3 giorni al mese' e il tetto dell'indennità del congedo vengono dalla pagina Caregiver del sito (fonti INPS 21/10/2026): non riletti nelle schede"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "indennita-accompagnamento",
+   "nome": "Indennità di accompagnamento",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Invalidi civili totali che non riescono a camminare da soli o a compiere gli atti quotidiani senza aiuto continuo. Spetta a chi vive stabilmente in Italia, a qualsiasi età e senza limiti di reddito personale.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non dipende dal reddito",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "accompagnamento",
+     "invalidita_100"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "551,53 € al mese per 12 mensilità (2026).",
+    "min": 551.53,
+    "max": 551.53,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta, dopo il riconoscimento nel verbale."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Prima il certificato medico introduttivo e l'accertamento sanitario; poi la domanda all'INPS, anche con patronato.",
+   "il_centro_controlla": [
+    "Che il verbale riconosca il requisito",
+    "Compatibilità con altre prestazioni"
+   ],
+   "pagina_sito": "/invalidita-104",
+   "articolo_sito": "/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Invalidità e 104: primo incontro gratis (come da pagina).",
+    "prezzo_testo": "Il primo incontro è gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Indennità di accompagnamento agli invalidi civili (agg. 20/7/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.indennit-di-accompagnamento-agli-invalidi-civili.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "pensione-inabilita-assegno-assistenza",
+   "nome": "Pensione di inabilità e assegno mensile di assistenza (invalidità civile)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Invalidi civili tra 18 e 67 anni: pensione di inabilità per l'invalidità totale (100%) con reddito personale fino a 20.029,55 €; assegno mensile per l'invalidità dal 74% al 99%, senza attività lavorativa, con reddito personale fino a 5.852,21 €. Cittadinanza e residenza richieste.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Conta il reddito personale, non l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 18,
+     "max": 67
+    },
+    "lavoro": [
+     "disoccupato",
+     "non_lavora",
+     "pensionato"
+    ],
+    "disabilita": [
+     "invalidita_74",
+     "invalidita_100"
+    ],
+    "casa": null,
+    "reddito_max_personale": {
+     "pensione_inabilita": 20029.55,
+     "assegno_mensile": 5852.21
+    }
+   },
+   "importo": {
+    "testo": "340,71 € al mese per 13 mensilità (2026), con possibile maggiorazione in base al reddito.",
+    "min": 340.71,
+    "max": 340.71,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta, dopo il riconoscimento dell'invalidità."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda all'INPS dopo il verbale di invalidità, anche con patronato. A 67 anni si trasforma in assegno sociale sostitutivo.",
+   "il_centro_controlla": [
+    "Percentuale di invalidità nel verbale",
+    "Reddito personale sotto soglia",
+    "Incompatibilità con pensioni dirette di invalidità"
+   ],
+   "pagina_sito": "/invalidita-104",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Invalidità e 104: primo incontro gratis (come da pagina).",
+    "prezzo_testo": "Il primo incontro è gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Pensione di inabilità agli invalidi civili (agg. 20/7/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.pensione-di-inabilit-agli-invalidi-civili.html"
+    },
+    {
+     "titolo": "INPS - Assegno mensile di assistenza (agg. 2/11/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.assegno-mensile-di-assistenza.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "disability-card",
+   "nome": "Carta europea della disabilità (Disability Card)",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Invalidi civili dal 67%, minorenni invalidi, titolari di accompagnamento o di 104 art. 3 comma 3, ciechi e sordi civili, invalidi e inabili (legge 222/1984), invalidi del lavoro oltre il 35% e altre categorie dell'allegato 3 DPCM 159/2013.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "invalidita_67",
+     "invalidita_74",
+     "invalidita_100",
+     "legge104_grave",
+     "accompagnamento",
+     "cieco_sordo"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "La carta è gratuita. Dà accesso a ingressi gratuiti o ridotti per trasporti, cultura e tempo libero in Italia e in altri Paesi UE.",
+    "min": 0,
+    "max": 0,
+    "periodicita": "a_evento"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda online all'INPS con SPID o CIE; la carta arriva per posta.",
+   "il_centro_controlla": [
+    "Rientro nelle categorie",
+    "Foto: la facciamo noi in ufficio"
+   ],
+   "pagina_sito": "/disability-card",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "10 € con la tessera, 15 € senza.",
+    "prezzo_testo": "10 € con la tessera, 15 € senza."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Carta europea della disabilità - Disability Card (scheda, agg. 18/6/2026)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.carta-europea-della-disabilit---disability-card-58828.carta-europea-della-disabilit---disability-card.html"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "assegno-sociale",
+   "nome": "Assegno sociale",
+   "ente": "INPS",
+   "livello": "nazionale",
+   "categoria": "pensione",
+   "a_chi_spetta": "Chi ha 67 anni, vive in Italia (con 10 anni di soggiorno legale continuativo), è cittadino italiano o equiparato e ha un reddito sotto soglia: 7.101,12 € se non coniugato, 14.202,24 € se coniugato (2026).",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Conta il reddito personale (o coniugale), non l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 67,
+     "max": null
+    },
+    "lavoro": [
+     "pensionato",
+     "non_lavora",
+     "disoccupato"
+    ],
+    "disabilita": null,
+    "casa": null,
+    "reddito_max_personale": {
+     "non_coniugato": 7101.12,
+     "coniugato": 14202.24
+    }
+   },
+   "importo": {
+    "testo": "546,24 € al mese per 13 mensilità (2026), intero se non si ha alcun reddito; ridotto se il reddito è sotto soglia.",
+    "min": null,
+    "max": 546.24,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda sempre aperta."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda all'INPS, anche con patronato.",
+   "il_centro_controlla": [
+    "Redditi computati e esclusi",
+    "Anni di soggiorno in Italia",
+    "Collegamento con le esenzioni ticket (E03) e altre agevolazioni"
+   ],
+   "pagina_sito": "/pensioni",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "INPS - Assegno sociale (scheda)",
+     "url": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-sociale-50184.assegno-sociale.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la scheda fetchata non riporta la data di aggiornamento: rileggere importi e soglie a gennaio 2027"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "canone-rai-over75",
+   "nome": "Esenzione canone RAI per over 75",
+   "ente": "Agenzia delle Entrate",
+   "livello": "nazionale",
+   "categoria": "anziani",
+   "a_chi_spetta": "Chi ha 75 anni o più, con reddito proprio e del coniuge fino a 8.000 € l'anno, senza conviventi con reddito proprio (esclusi colf e badanti). La TV deve essere nella casa di residenza.",
+   "requisiti": {
+    "residenza": "italia",
+    "isee_max": null,
+    "isee_tipo": "Conta il reddito (8.000 € con il coniuge), non l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 75,
+     "max": null
+    },
+    "lavoro": [
+     "pensionato",
+     "non_lavora"
+    ],
+    "disabilita": null,
+    "casa": null,
+    "reddito_max_personale": {
+     "proprio_e_coniuge": 8000
+    }
+   },
+   "importo": {
+    "testo": "Il canone non si paga: oggi sono 90 € l'anno, in 10 rate da 9 € in bolletta (secondo l'articolo del sito; l'importo 2027 è in corso di definizione).",
+    "min": 90,
+    "max": 90,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "data_fissa",
+    "data": "2027-04-30",
+    "testo": "Per l'esenzione di tutto il 2027: dichiarazione entro il 30 aprile 2027 (chi compie 75 anni entro il 31 gennaio 2027). Vale anche negli anni dopo."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Dichiarazione sostitutiva all'Agenzia delle Entrate (raccomandata, PEC o in un ufficio).",
+   "il_centro_controlla": [
+    "Reddito dell'anno prima",
+    "Conviventi con reddito",
+    "Se il canone è già stato pagato: richiesta di rimborso"
+   ],
+   "pagina_sito": "/luce-gas",
+   "articolo_sito": "/blog/canone-rai-2027-esenzione-over-75-non-detenzione",
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Agenzia delle Entrate - Canone TV: ultrasettantacinquenni con reddito basso",
+     "url": "https://www.agenziaentrate.gov.it/portale/aree-tematiche/canone-tv/casi-di-esonero/ultrasettantacinquenni"
+    }
+   ],
+   "campi_da_riverificare": [
+    "scadenza 30 aprile 2027 e importo 90 €: vengono dall'articolo del sito (circolare AdE 46/E 2010); nella pagina AdE letta il 14/11/2026 non compaiono. Riconfermare sulla pagina AdE prima di pubblicare la data."
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "bollo-disabili-lazio",
+   "nome": "Esenzione bollo auto per persone con disabilità",
+   "ente": "Regione Lazio",
+   "livello": "regione_lazio",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Persone con disabilità (non vedenti e sordi; disabilità psichica o mentale con accompagnamento; grave limitazione della deambulazione o pluriamputazioni; capacità motorie ridotte con auto adattata) o familiari che le hanno fiscalmente a carico. Un solo veicolo, entro i limiti di cilindrata.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "L'ISEE non vale per il carico fiscale: serve la dichiarazione dei redditi o la CU",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "cieco_sordo",
+     "legge104_grave",
+     "accompagnamento"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "Non si paga la tassa automobilistica (bollo) per un veicolo.",
+    "min": null,
+    "max": null,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "a_evento",
+    "data": null,
+    "testo": "Domanda entro 90 giorni dalla scadenza del pagamento del bollo per avere l'esenzione dall'anno in corso; dopo, dall'anno successivo."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Solo online sul Portale del Contribuente della Regione Lazio (SPID, CIE, CNS), dal 1° marzo 2025. Non è automatica.",
+   "il_centro_controlla": [
+    "Quale delle 4 categorie si applica",
+    "Adattamento dell'auto sulla carta di circolazione",
+    "Carico fiscale (reddito fino a 2.840,51 €, 4.000 € per figli fino a 24 anni)",
+    "Verbale con scadenza: nuova domanda entro 90 giorni"
+   ],
+   "pagina_sito": "/invalidita-104",
+   "articolo_sito": "/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "Prezzo non pubblicato sul sito.",
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Regione Lazio - Tassa automobilistica: esenzione per disabilità",
+     "url": "https://www.regione.lazio.it/tributi-regionali/tassa-automobilistica/esenzione-disabilita"
+    }
+   ],
+   "campi_da_riverificare": [
+    "importi del carico fiscale (2.840,51 € e 4.000 €) e limiti di cilindrata vengono dall'articolo del sito: nella pagina della Regione si rimanda alla Guida (det. G00609/2025)"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "caregiver-lazio-card-giver",
+   "nome": "Riconoscimento caregiver familiare e Card Giver",
+   "ente": "Regione Lazio",
+   "livello": "regione_lazio",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Chi assiste in modo volontario e gratuito una persona non autosufficiente o con disabilità. Il riconoscimento si chiede al Punto Unico di Accesso (PUA) del distretto e dà il tesserino Card Giver.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "assisto_familiare"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "Nessun contributo in denaro. Dà accesso a informazione, sostituzione temporanea nell'assistenza (sollievo), sostegno psicologico e formazione.",
+    "min": 0,
+    "max": 0,
+    "periodicita": "servizi"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Si chiede in qualsiasi momento al PUA."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Domanda allo sportello caregiver del PUA, con aiuto degli operatori.",
+   "il_centro_controlla": [
+    "Verbale 104 / accompagnamento della persona assistita",
+    "A quale PUA rivolgersi",
+    "Un solo caregiver riconosciuto per assistito, salvo eccezioni"
+   ],
+   "pagina_sito": "/caregiver",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "Prezzo non pubblicato: la pagina Caregiver dice che lo diciamo prima.",
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Regione Lazio - Caregiver familiare",
+     "url": "https://www.regione.lazio.it/cittadini/sociale-famiglie/caregiver-familiare"
+    },
+    {
+     "titolo": "Regione Lazio - Caregiver familiare: 5 cose da sapere (ott. 2024)",
+     "url": "https://www.regione.lazio.it/sites/default/files/2024-10/Caregiver-familiare-5-cose-17-10-2024.pdf"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "disco-diritto-studio",
+   "nome": "Borsa di studio e servizi DiSCo (Regione Lazio)",
+   "ente": "Lazio DiSCo (Regione Lazio)",
+   "livello": "regione_lazio",
+   "categoria": "studio",
+   "a_chi_spetta": "Studenti universitari che rispettano i requisiti di merito e di ISEE universitario del bando DiSCo. Soglie e importi sono nel bando.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "ISEE università",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null,
+    "universitario": "richiesto"
+   },
+   "importo": {
+    "testo": "Borsa di studio, posto alloggio e servizi secondo il bando DiSCo.",
+    "min": null,
+    "max": null,
+    "periodicita": "secondo_bando"
+   },
+   "scadenza": {
+    "tipo": "finestre",
+    "data": null,
+    "testo": "Il bando 2026/2027 è chiuso. Il prossimo (2027/2028) di norma esce in estate: date da confermare sul portale DiSCo."
+   },
+   "stato": "finestra_chiusa",
+   "come_si_chiede": "La domanda DiSCo la presenti tu sul portale DiSCo, quando esce il bando. Noi ti facciamo l'ISEE universitario.",
+   "il_centro_controlla": [
+    "Quale ISEE universitario ti serve (con la famiglia o da studente autonomo)",
+    "Documenti da preparare per la DSU"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": "/blog/tipi-di-isee-differenze-quale-serve",
+   "cta": {
+    "aiuto": "isee_uni",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis.",
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "Lazio DiSCo - bando diritto allo studio 2026/2027 (PDF)",
+     "url": "https://laziodisco.it/wp-content/uploads/2026/07/BANDO-DIRITTO-ALLO-STUDIO-26-27-con-EC.pdf"
+    }
+   ],
+   "campi_da_riverificare": [
+    "date del bando 2027/2028 (di norma estate); nostro CAF NON convenzionato DiSCo: la domanda e l'ISEEUP per non residenti non sono servizi nostri"
+   ],
+   "nota_motore": "Bando chiuso: sezione \"Riapre presto\". Il Centro fa solo l'ISEE universitario.",
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "ticket-esenzione-reddito",
+   "nome": "Esenzione ticket sanitario per reddito (E01, E02, E03, E04)",
+   "ente": "Regione Lazio / ASL",
+   "livello": "regione_lazio",
+   "categoria": "salute",
+   "a_chi_spetta": "E01: sotto i 6 anni o sopra i 65 con reddito familiare sotto 36.151,98 €. E02: disoccupati iscritti al Centro per l'impiego con reddito familiare fino a 8.263,31 € (più con coniuge e figli). E03: titolari di assegno sociale. E04: titolari di pensione al minimo con più di 60 anni e reddito familiare fino a 8.263,31 € (più con coniuge e figli).",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "Conta il reddito familiare, non l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": null,
+     "max": null,
+     "nota": "E01: sotto 6 o sopra 65 anni; E04: sopra 60 anni"
+    },
+    "lavoro": [
+     "disoccupato",
+     "pensionato"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Niente ticket sulle prestazioni sanitarie prescritte con il codice di esenzione.",
+    "min": null,
+    "max": null,
+    "periodicita": "a_evento"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Autocertificazione alla ASL; il medico deve indicare il codice sulla ricetta."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Autocertificazione presso la ASL (a Roma, distretto di residenza); un modulo per ogni persona esente.",
+   "il_centro_controlla": [
+    "Quale codice spetta",
+    "Reddito familiare dell'anno richiesto",
+    "Ricette con il codice giusto"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "ASL Roma 1 - Esenzione ticket per reddito",
+     "url": "https://www.aslroma1.it/esenzione-ticket-per-reddito"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la pagina ASL scrive 11.362,65 € per E02 e 11.362,05 € per E04 (soglia con coniuge): non pubblicare la cifra finché non è confermata",
+    "fonte è un'ASL, non il sito regione.lazio.it: cercare la pagina regionale equivalente"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "over70-trasporti-gratis",
+   "nome": "Viaggi gratuiti per gli over 70 (Cotral e treni regionali)",
+   "ente": "Regione Lazio (Cotral, Trenitalia)",
+   "livello": "regione_lazio",
+   "categoria": "trasporti",
+   "a_chi_spetta": "Residenti nel Lazio che hanno compiuto 70 anni. Gratis sui bus Cotral e sui treni regionali Trenitalia in seconda classe, entro i confini del Lazio.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": {
+     "min": 70,
+     "max": null
+    },
+    "lavoro": null,
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Viaggi gratuiti (abbonamento annuale a tariffa zero, da ricaricare gratis alla scadenza).",
+    "min": 0,
+    "max": 0,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Si chiede in qualsiasi momento."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Sul sito Cotral: registri il wallet, crei il 'Passeggero agevolato Over 70' e carichi i documenti. Tessera sanitaria e documento sempre con sé.",
+   "il_centro_controlla": [
+    "Che il passeggero abbia SPID o un aiuto per il wallet",
+    "Esclusi i viaggi nella Zona Anello di Roma Capitale sui treni regionali e i servizi Leonardo express/Civitavecchia express"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Regione Lazio - Allegato 6 Sistema tariffario (agg. dic. 2025, file 10/3/2026)",
+     "url": "https://www.regione.lazio.it/sites/default/files/documentazione/2026/Allegato-6-sistema-tariffario-10-03-2026.pdf"
+    },
+    {
+     "titolo": "Cotral - Agevolazioni (Tessera Over 70)",
+     "url": "https://cotralspa.it/assistenza/agevolazioni/"
+    }
+   ],
+   "campi_da_riverificare": [
+    "l'esclusione per la Zona Anello di Roma Capitale è scritta nell'Allegato 6 per i treni: verificare se vale anche per i bus Cotral"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "tari-esenzione-roma",
+   "nome": "Esenzione totale dalla TARI a Roma",
+   "ente": "Roma Capitale (AMA)",
+   "livello": "roma_capitale",
+   "categoria": "casa",
+   "a_chi_spetta": "Residenti a Roma con ISEE ordinario fino a 6.500 €, abitazione principale, utenza TARI intestata a sé e nessun debito TARI/TARES al 31 dicembre dell'anno prima.",
+   "requisiti": {
+    "residenza": "roma",
+    "isee_max": 6500,
+    "isee_tipo": "ISEE ordinario",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": null,
+    "casa": [
+     "affitto",
+     "proprieta",
+     "utenze_intestate"
+    ]
+   },
+   "importo": {
+    "testo": "Non si paga la TARI per l'abitazione principale.",
+    "min": null,
+    "max": null,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "data_fissa",
+    "data": "2027-02-28",
+    "testo": "Domanda entro il 28 febbraio dell'anno per cui chiedi l'esenzione. Una volta concessa continua ogni anno con un ISEE ordinario valido entro il 28 febbraio."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Online sul portale di Roma Capitale con SPID o CIE, oppure tramite CAF. L'ISEE non va allegato: lo legge il Comune.",
+   "il_centro_controlla": [
+    "ISEE ordinario valido entro il 28 febbraio",
+    "Utenza AMA intestata al richiedente",
+    "Debiti TARI pregressi"
+   ],
+   "pagina_sito": "/imu-tari",
+   "articolo_sito": "/blog/tari-roma-esenzione-bonus-sociale-riduzioni",
+   "cta": {
+    "aiuto": "te_lo_facciamo_noi",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis.",
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "Roma Capitale - Esenzione TARI 2026, domande entro il 28 febbraio (24/2/2026)",
+     "url": "https://www.comune.roma.it/web/it/notizia/esenzione-tari-2026-domande-entro-28-febbraio.page"
+    },
+    {
+     "titolo": "Roma Capitale - Regolamento TARI, art. 18 (Delibera AC 315/2025)",
+     "url": "https://www.comune.roma.it/web-resources/cms/documents/Assemblea_Capitolina_315_2025.pdf"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la data del 28 febbraio 2027 è la regola del regolamento, ma l'ultimo avviso ufficiale è quello del 2026: riconfermare quando esce l'avviso 2027"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "assegno-contributo-cura-roma",
+   "nome": "Assegno di cura e contributo caregiver (disabilità gravissima)",
+   "ente": "Roma Capitale",
+   "livello": "roma_capitale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Persone con disabilità gravissima (fisica, psichica o sensoriale), minorenni, adulte e anziane, residenti a Roma. Assegno di cura se si assume un assistente; contributo di cura se assiste il caregiver familiare.",
+   "requisiti": {
+    "residenza": "roma",
+    "isee_max": null,
+    "isee_tipo": "ISEE sociosanitario (e ordinario) per graduare l'importo",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "accompagnamento",
+     "legge104_grave",
+     "assisto_familiare"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "Assegno di cura da 500 a 800 € al mese. Contributo di cura da 400 a 700 € al mese. L'importo dipende dall'ISEE sociosanitario e dagli altri servizi attivi.",
+    "min": 400,
+    "max": 800,
+    "periodicita": "mensile"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Domanda in qualunque momento dell'anno. Il beneficio è erogato in base alle risorse disponibili."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Ai Servizi sociali (Segretariato sociale) o al PUA del Municipio, con certificazione di uno specialista pubblico, verbali, ISEE ordinario e sociosanitario.",
+   "il_centro_controlla": [
+    "Che la condizione rientri nel DM 26/9/2016 (disabilità gravissima)",
+    "ISEE ordinario e sociosanitario",
+    "Compatibilità con accompagnamento e assistenza domiciliare (è compatibile)"
+   ],
+   "pagina_sito": "/caregiver",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "Prezzo non pubblicato: la pagina Caregiver dice che lo diciamo prima.",
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Roma Capitale - Assegno di cura e contributo caregiver familiare per disabilità gravissima",
+     "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF117423"
+    }
+   ],
+   "campi_da_riverificare": [],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "cude-roma",
+   "nome": "Contrassegno disabili europeo CUDE a Roma",
+   "ente": "Roma Capitale (Roma Servizi per la Mobilità)",
+   "livello": "roma_capitale",
+   "categoria": "disabilita",
+   "a_chi_spetta": "Persone con capacità di camminare sensibilmente ridotta o non vedenti, con certificato del medico legale ASL o dell'INPS. È della persona, non dell'auto.",
+   "requisiti": {
+    "residenza": "roma",
+    "isee_max": null,
+    "isee_tipo": "Non serve l'ISEE",
+    "figli": null,
+    "eta": null,
+    "lavoro": null,
+    "disabilita": [
+     "legge104_grave",
+     "accompagnamento",
+     "cieco_sordo",
+     "invalidita_67"
+    ],
+    "casa": null
+   },
+   "importo": {
+    "testo": "Non è un contributo in denaro: permette di usare i posti riservati e di entrare nelle ZTL. A Roma si associano 2 targhe; dal 21/8/2026 solo la principale passa nelle ZTL e nelle corsie preferenziali.",
+    "min": null,
+    "max": null,
+    "periodicita": "a_evento"
+   },
+   "scadenza": {
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Si chiede in qualsiasi momento. Provvisorio di 60 giorni subito dopo la richiesta online."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Dal 1/12/2025 solo online con SPID o CIE sullo sportello di Roma Servizi per la Mobilità, o allo sportello di via Silvio D'Amico 38 su appuntamento.",
+   "il_centro_controlla": [
+    "Che il certificato dica 'deambulazione sensibilmente ridotta' o cecità",
+    "Foto tessera e documento",
+    "Targhe da associare"
+   ],
+   "pagina_sito": "/cude",
+   "articolo_sito": null,
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "Costo del servizio non ancora pubblicato sul sito.",
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "Roma Servizi per la Mobilità - Richiesta CUDE (agg. 15/10/2026)",
+     "url": "https://romamobilita.it/servizi-al-pubblico/contrassegno-persone-con-disabilita/"
+    }
+   ],
+   "campi_da_riverificare": [
+    "la scheda letta non riporta tutti i costi (diritti e bollo): non pubblicarli senza rileggere la pagina"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "ebit-tasse-universitarie",
+   "nome": "EBIT Lazio: rimborso tasse universitarie",
+   "ente": "EBIT Lazio (ente bilaterale terziario)",
+   "livello": "ebit_lazio",
+   "categoria": "studio",
+   "a_chi_spetta": "Lavoratori del commercio, terziario e servizi nel Lazio (CCNL Terziario, azienda in regola con EBIT, 12 mesi di iscrizione; a tempo determinato 12 mesi di lavoro negli ultimi 2 anni) per sé o per figli universitari fino a 30 anni.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "L'ISEE non è obbligatorio ma, se i fondi non bastano, chi lo allega passa prima",
+    "figli": null,
+    "eta": null,
+    "lavoro": [
+     "dipendente"
+    ],
+    "disabilita": null,
+    "casa": null,
+    "universitario": "o_lavoratore"
+   },
+   "importo": {
+    "testo": "Fino a 500 € per anno accademico (rimborso soggetto a IRPEF per i lavoratori iscritti).",
+    "min": 0,
+    "max": 500,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "finestre",
+    "data": null,
+    "testo": "Regolamento 2026: entro 30 giorni dall'ultimo pagamento e non oltre il 30 giugno dell'anno accademico. Se entro il 31 dicembre hai già pagato almeno 500 €, domanda entro il 15 febbraio dell'anno dopo. Le date 2027 dipendono dal regolamento 2027, non ancora pubblicato."
+   },
+   "stato": "aperto",
+   "come_si_chiede": "Solo online dall'area riservata del sito EBIT Lazio.",
+   "il_centro_controlla": [
+    "Contratto applicato (guarda il CCNL in busta paga)",
+    "Azienda in regola con i versamenti",
+    "ISEE da allegare"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": "/blog/ebit-lazio-welfare-2026-rimborsi-libri-tasse-universitarie-trasporti",
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": "ISEE gratis.",
+    "prezzo_testo": "ISEE gratis."
+   },
+   "fonti": [
+    {
+     "titolo": "EBIT Lazio - Regolamento welfare territoriale 2026 (lavoratori)",
+     "url": "https://ebitlazio.it/media/template/ebitlazio/download/regolamento2026_LAVORATORI-LAVORATRICI.pdf"
+    },
+    {
+     "titolo": "EBIT Lazio - Welfare territoriale (budget 2026)",
+     "url": "https://ebitlazio.it/welfare-territoriale.html"
+    }
+   ],
+   "campi_da_riverificare": [
+    "date 2027 (regolamento 2027 non pubblicato)"
+   ],
+   "verificato_il": "2026-11-14"
+  },
+  {
+   "id": "ebit-trasporti-sport",
+   "nome": "EBIT Lazio: rimborso abbonamento trasporti e sport",
+   "ente": "EBIT Lazio (ente bilaterale terziario)",
+   "livello": "ebit_lazio",
+   "categoria": "trasporti",
+   "a_chi_spetta": "Lavoratori del terziario nel Lazio con i requisiti EBIT. Trasporti: abbonamento annuale nominativo casa-lavoro, solo per il lavoratore. Sport: abbonamento di almeno 3 mesi, per sé o per i figli a carico.",
+   "requisiti": {
+    "residenza": "lazio",
+    "isee_max": null,
+    "isee_tipo": "L'ISEE non è obbligatorio",
+    "figli": null,
+    "eta": null,
+    "lavoro": [
+     "dipendente"
+    ],
+    "disabilita": null,
+    "casa": null
+   },
+   "importo": {
+    "testo": "Trasporti: 150 € (rete urbana) o 250 € (extraurbana o integrata, se l'abbonamento costa più di 350 €). Sport: fino a 300 €.",
+    "min": 150,
+    "max": 300,
+    "periodicita": "annuale"
+   },
+   "scadenza": {
+    "tipo": "finestre",
+    "data": null,
+    "testo": "Regolamento 2026: due finestre, dal 15 gennaio al 15 maggio e dal 15 giugno al 15 ottobre, entro 30 giorni dal pagamento. Al 14 novembre 2026 la finestra è chiusa; le date 2027 non sono ancora pubblicate."
+   },
+   "stato": "finestra_chiusa",
+   "come_si_chiede": "Solo online dall'area riservata del sito EBIT Lazio.",
+   "il_centro_controlla": [
+    "Requisiti EBIT",
+    "Ricevute tracciabili",
+    "Quando riapre la finestra 2027"
+   ],
+   "pagina_sito": null,
+   "articolo_sito": "/blog/ebit-lazio-welfare-2026-rimborsi-libri-tasse-universitarie-trasporti",
+   "cta": {
+    "aiuto": "ti_aiutiamo",
+    "prezzo_pubblicato_sul_sito": null,
+    "prezzo_testo": "Il prezzo te lo diciamo prima."
+   },
+   "fonti": [
+    {
+     "titolo": "EBIT Lazio - Regolamento welfare territoriale 2026 (lavoratori)",
+     "url": "https://ebitlazio.it/media/template/ebitlazio/download/regolamento2026_LAVORATORI-LAVORATRICI.pdf"
+    }
+   ],
+   "campi_da_riverificare": [
+    "date 2027 (regolamento 2027 non pubblicato)"
+   ],
+   "nota_motore": "Mostrare come 'riapre a gennaio, da confermare': offrire promemoria con consenso.",
+   "verificato_il": "2026-11-14"
+  }
+ ],
+ "da_verificare": [
+  {
+   "nome": "Bonus psicologo (INPS)",
+   "ente": "INPS",
+   "motivo": "Ultima finestra 15/9-14/11/2025 (ISEE fino a 50.000 €). Nessun bando 2026 trovato sulla scheda INPS (agg. 3/12/2025).",
+   "fonte": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.contributo-per-sostenere-le-spese-relative-a-sessioni-di-psicoterapia-bonus-psicologo.html",
+   "azione": "Non mostrare. Ricontrollare a inizio 2027."
+  },
+  {
+   "nome": "Voucher Sport Regione Lazio 2026",
+   "ente": "Regione Lazio",
+   "motivo": "Finestra 13/4-13/5/2026 chiusa (500 €, 6-18 anni, ISEE fino a 50.000 €). Nessuna notizia sul 2027.",
+   "fonte": "https://www.regione.lazio.it/notizie/presentazione-domande-voucher-sport-2026",
+   "azione": "Tenere per promemoria quando riapre."
+  },
+  {
+   "nome": "Buoni nido Regione Lazio (FSE+)",
+   "ente": "Regione Lazio",
+   "motivo": "Finestra 22/4-21/5/2026 chiusa. Requisiti non letti (avviso pubblico).",
+   "fonte": "https://voucher.regione.lazio.it/",
+   "azione": "Leggere l'avviso e aspettare il prossimo."
+  },
+  {
+   "nome": "Buoni servizio persone non autosufficienti (Regione Lazio)",
+   "ente": "Regione Lazio",
+   "motivo": "Finestra 15/4-14/5/2026 chiusa. Requisiti non letti.",
+   "fonte": "https://voucher.regione.lazio.it/",
+   "azione": "Leggere l'avviso e aspettare il prossimo."
+  },
+  {
+   "nome": "Viaggi di istruzione ed eventi di premiazione (Regione Lazio)",
+   "ente": "Regione Lazio",
+   "motivo": "Domande dal 3/11/2026 a sportello fino a esaurimento fondi, ma sono presentate attraverso le scuole e i requisiti non sono stati letti.",
+   "fonte": "https://voucher.regione.lazio.it/",
+   "azione": "Leggere l'avviso."
+  },
+  {
+   "nome": "Contributo affitto Roma Capitale (Fondo locazione 2025, L. 431/1998)",
+   "ente": "Roma Capitale / Regione Lazio",
+   "motivo": "Domande dal 25/5 al 24/7/2026 (chiuso): fino a 2.000 €, ISEE fino a 14.000 €, canone oltre il 24% dell'ISEE. Prossimo bando da verificare.",
+   "fonte": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF1591853",
+   "azione": "Promemoria per il prossimo bando."
+  },
+  {
+   "nome": "Agevolazione mensa scolastica Roma 2026/27",
+   "ente": "Roma Capitale",
+   "motivo": "Domanda scaduta il 30/9/2026 (dopo si paga la quota massima). Riapertura 2027/28 (di solito da marzo) da confermare.",
+   "fonte": "https://www.comune.roma.it/web/it/notizia/agevolazioni-mensa-scolastica-2026-2027-roma.page",
+   "azione": "Promemoria a febbraio 2027."
+  },
+  {
+   "nome": "Nidi e scuole dell'infanzia di Roma Capitale (iscrizioni e rette in base all'ISEE)",
+   "ente": "Roma Capitale",
+   "motivo": "Bando 2026/27 chiuso. Regole delle rette non lette.",
+   "fonte": "https://www.comune.roma.it/web/it/informazione-di-servizio.page?contentId=IDS1539604",
+   "azione": "Leggere il bando 2027/28 quando esce."
+  },
+  {
+   "nome": "Metrebus agevolato con ISEE (Lazio: -30% con ISEE sotto 25.000 €; -50% in casi di disagio) e abbonamenti ATAC agevolati",
+   "ente": "Regione Lazio / Roma Capitale / Cotral / ATAC",
+   "motivo": "Le soglie sono sulla pagina Cotral e nell'Allegato 6 della Regione, che contiene anche tabelle di prezzi di anni diversi in conflitto (es. giovani e studenti 130-150 € e 120-140 €). Il sito ATAC blocca l'accesso automatico.",
+   "fonte": "https://cotralspa.it/assistenza/agevolazioni/",
+   "azione": "Verificare su regione.lazio.it e atac.roma.it i prezzi 2026."
+  },
+  {
+   "nome": "Bonus idrico integrativo ATO 2 Lazio Centrale (Acea)",
+   "ente": "ATO 2 Roma",
+   "motivo": "Esiste un regolamento 2026 (bonusidrico.ato2roma.it) ma il certificato del sito non è verificabile da qui; non letto.",
+   "fonte": "https://bonusidrico.ato2roma.it/",
+   "azione": "Leggere il Regolamento attuativo BII 2026 da un browser."
+  },
+  {
+   "nome": "Legge di bilancio 2027: bonus lavoratrici madri 100 €/mese, Carta 300 € over 75, fondo Valore nuovi nati, più mesi di congedo parentale all'80%, proroga prestazione universale con ISEE 12.000 €, APE sociale 2027",
+   "ente": "Stato",
+   "motivo": "Sono proposte (A.C. 3174): non sono legge. Nessuna domanda.",
+   "fonte": "https://praticheflaiano.it/blog/legge-di-bilancio-2027-novita-famiglie-pensionati",
+   "azione": "Aggiornare dopo l'approvazione e la circolare INPS (fonte: articolo del sito, non rilettura di fonte ufficiale)."
+  },
+  {
+   "nome": "Legge nazionale sul caregiver familiare (contributo fino a 1.200 € a trimestre)",
+   "ente": "Stato",
+   "motivo": "Approvata dalla Camera il 14/10/2026, al Senato: non è legge.",
+   "fonte": "https://praticheflaiano.it/caregiver",
+   "azione": "Non mostrare finché non è legge."
+  },
+  {
+   "nome": "Indennità di maternità/paternità e congedo parentale (INPS)",
+   "ente": "INPS",
+   "motivo": "Schede INPS trovate (maternità: lavoratrici dipendenti, disoccupate o sospese) ma importi e regole 2026 non rilette in questa verifica.",
+   "fonte": "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50586.indennit-per-congedo-di-maternit-e-di-paternit-alternativo-per-lavoratrici-e-lavoratori-dipendenti.html",
+   "azione": "Aggiungere in una seconda versione."
+  },
+  {
+   "nome": "Bonus dopo il diploma / Carta del Merito / no tax area",
+   "ente": "MiC, MUR, DiSCo",
+   "motivo": "L'articolo del sito è di aprile 2026 e cita il bando DiSCo 2025/26: non rilette le fonti.",
+   "fonte": "https://praticheflaiano.it/blog/bonus-dopo-diploma-2026-agevolazioni-neodiplomati",
+   "azione": "Verificare con le fonti 2026/27."
+  },
+  {
+   "nome": "Esenzione EBIT Lazio: libri di scuola e università, centri estivi",
+   "ente": "EBIT Lazio",
+   "motivo": "Verificate sul regolamento 2026 ma finestre 2026 chiuse (31/10 libri, 30/9 centri estivi): da riaprire con il regolamento 2027.",
+   "fonte": "https://ebitlazio.it/media/template/ebitlazio/download/regolamento2026_LAVORATORI-LAVORATRICI.pdf",
+   "azione": "Aggiungere quando esce il regolamento 2027."
+  }
+ ]
+}

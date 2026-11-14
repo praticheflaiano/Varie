@@ -24,7 +24,7 @@ const targetDir = resolve(projectRoot, ".content-mirror");
 // Box CTA contestuale inserito negli articoli (prima della terza sezione H2).
 // Solo prezzi gia pubblicati sul sito.
 const INLINE_CTA = {
-  "730-redditi": { t: "Il 730 lo facciamo noi", d: "Da 30 €, in ufficio a Vigne Nuove o da casa. Se torni l'anno dopo il prezzo non cambia.", h: "/730", b: "Scopri il 730" },
+  "730-redditi": { t: "Il 730 lo facciamo noi", d: "Da 30 € in ufficio a Vigne Nuove, da 35 € se lo fai da casa. Se torni l'anno dopo il prezzo non cambia.", h: "/730", b: "Scopri il 730" },
   "detrazioni-deduzioni": { t: "Non perdere nessuna detrazione", d: "Controlliamo spese e ricevute e le mettiamo nel 730. Da 30 €.", h: "/730", b: "Fai il 730 con noi" },
   "isee-dsu": { t: "L'ISEE da noi è gratis", d: "Redditi e CU li recuperiamo noi. In ufficio o in videochiamata.", h: "/isee", b: "Fai l'ISEE gratis" },
   "bonus-fiscali": { t: "Per quasi ogni bonus serve l'ISEE", d: "Da noi è gratis e ti diciamo a quali aiuti hai diritto.", h: "/isee", b: "Fai l'ISEE gratis" },

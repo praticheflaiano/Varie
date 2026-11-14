@@ -3,7 +3,9 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import { CONTACT } from "~/consts";
-import body from "~/fragments/730.html?raw";
+import DaCasa from "~/components/ui/DaCasa.astro";
+import { DACASA } from "~/data/dacasa";
+import rawBody from "~/fragments/730.html?raw";
 
 /*
  * Fonti verificate (14/11/2026), Agenzia delle Entrate, sezione 730/2026:
@@ -14,15 +16,33 @@ import body from "~/fragments/730.html?raw";
  * Date del 730/2027 (redditi 2026): NON ancora ufficiali, escono col provvedimento dell'Agenzia delle Entrate.
  * Prezzo "da 30 €" e tessera 30 €: invariati, come già scritti sul sito.
  */
+/* ---- Il frammento viene diviso sul marcatore "Come preferisci?"; se il frammento cambia, la build si ferma. ---- */
+const M_COME = '<section class="c44"><h2 class="c1">Come preferisci?</h2>';
+const SOSTITUZIONI: [string, string][] = [
+  ['<a href="https://link.arcanis.it/widget/survey/o9j5YfCTREJFqkrJmZQ9" class="c20">Fallo da casa</a>', '<a href="#da-casa" class="c20">Fallo da casa</a>'],
+  ['<a href="https://link.arcanis.it/widget/survey/o9j5YfCTREJFqkrJmZQ9" class="c15">', '<a href="#da-casa" class="c15">'],
+  ["Mandi le foto delle ricevute, ti richiamiamo per la delega e la firma.", "Mandi le foto delle ricevute dal telefono, a partire da 35 €. La delega e il modello 730-1 li firmi tu, come ti indichiamo."],
+  ["Il prezzo dipende dalla tua situazione e te lo diciamo prima.", "In ufficio da 30 €, da casa a partire da 35 €. Il prezzo dipende dalla tua situazione e te lo diciamo prima."],
+];
+let body = rawBody;
+for (const [da, a] of SOSTITUZIONI) {
+  if (!body.includes(da)) throw new Error("730.astro: testo non trovato nel frammento: " + da.slice(0, 60));
+  body = body.replace(da, a);
+}
+if (!body.includes(M_COME)) throw new Error("730.astro: marcatore non trovato nel frammento: " + M_COME);
+const iCome = body.indexOf(M_COME);
+const part1 = body.slice(0, iCome) + "</div>"; // chiude il div c36 aperto dal frammento
+const part2 = '<div class="c36">' + body.slice(iCome); // "Come preferisci?" e il resto (chiude il suo div c36)
+
 const faqs = [
   { q: "Perché non lo faccio da solo col precompilato?", a: "Puoi, ma spesso mancano spese o familiari a carico. Noi controlliamo tutto e mettiamo il visto di conformità." },
-  { q: "Quanto pago esattamente?", a: "Da 30 €, in base alla tua situazione. Te lo diciamo prima di iniziare. Se l'anno scorso l'hai fatto da noi, il prezzo resta lo stesso." },
+  { q: "Quanto pago esattamente?", a: "In ufficio da 30 €; da casa a partire da 35 €, in base alla tua situazione. Il prezzo preciso te lo diciamo prima di iniziare e, se lo fai da casa, te lo confermiamo dopo il controllo dei documenti e prima di pagare. Se l'anno scorso l'hai fatto da noi, il prezzo resta lo stesso." },
   { q: "Chi può presentare il 730?", a: "Chi ha redditi di lavoro dipendente o assimilati, di pensione, di terreni e fabbricati, di capitale, di lavoro autonomo senza partita IVA e alcuni redditi diversi (elenco dell'Agenzia delle Entrate per il 730/2026). Se non sei sicuro, ce lo dici e controlliamo." },
   { q: "Posso fare il 730 se non ho un datore di lavoro o un sostituto d'imposta?", a: "Sì. Chi ha redditi di lavoro dipendente o di pensione può presentare il 730 anche senza sostituto d'imposta che faccia il conguaglio. Se non c'è un sostituto, il 730 ordinario va presentato a un CAF o a un professionista abilitato (fonte: Agenzia delle Entrate)." },
   { q: "Quando scade il 730? E quello del prossimo anno?", a: "Il 730/2026 scadeva il 30 settembre 2026, sia il precompilato sia l'ordinario (fonte: Agenzia delle Entrate). Le date del 730/2027, per i redditi 2026, non sono ancora ufficiali: escono con il provvedimento dell'Agenzia delle Entrate e aggiorneremo questa pagina." },
   { q: "Quando arriva il rimborso?", a: "Per chi ha un sostituto d'imposta arriva in busta paga o sulla pensione, generalmente da luglio (per i pensionati da agosto o settembre). Dipende da quando presenti il 730 (fonte: Agenzia delle Entrate)." },
   { q: "Cosa devo consegnare al CAF per il 730 precompilato?", a: "Una delega per accedere alla tua dichiarazione e, in busta chiusa, il modello 730-1 con la scelta di 8, 5 e 2 per mille: va consegnato anche se non scegli nulla (fonte: Agenzia delle Entrate). Ti spieghiamo noi come fare e ti mandiamo la lista dei documenti." },
-  { q: "Posso farlo senza venire in ufficio?", a: "Sì: videochiamata o richiesta online con le foto delle ricevute. Ti richiamiamo per la delega e la firma." },
+  { q: "Posso farlo senza venire in ufficio?", a: "Quasi tutto sì: compili il modulo e mandi le foto delle ricevute dal telefono (730 da casa, a partire da 35 €). La delega e il modello 730-1 li firmi tu, in ufficio in pochi minuti o come ti indichiamo: non possiamo firmare al posto tuo." },
 ];
 
 const faqLd = JSON.stringify({
@@ -33,9 +53,11 @@ const faqLd = JSON.stringify({
 ---
 <BaseLayout title={"730 a Roma: CAF Vigne Nuove, a partire da 30 €"} description={"Modello 730 a partire da 30 € al CAF di Vigne Nuove, Roma: ogni detrazione controllata, in ufficio o da casa. Documenti, tempi e prezzo bloccato per chi torna."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="730" name="Modello 730" description={"Compilazione e invio del modello 730, anche da remoto. Da 30 €; per chi torna l'anno dopo il prezzo resta invariato."} serviceType="Assistenza fiscale - dichiarazione dei redditi" offers={[{ name: "Modello 730 (prezzo di partenza)", price: 30 }]} />
+  <JsonLdService slot="head" slug="730" name="Modello 730" description={"Compilazione e invio del modello 730, anche da remoto. In ufficio da 30 €, online a partire da 35 €; per chi torna l'anno dopo il prezzo resta invariato."} serviceType="Assistenza fiscale - dichiarazione dei redditi" offers={[{ name: "Modello 730 in ufficio (prezzo di partenza)", price: 30 }, ...DACASA["730"].offerte]} onlineUrl="#da-casa" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
-  <div class="lp"><Fragment set:html={body} /></div>
+  <div class="lp"><Fragment set:html={part1} /></div>
+  <div class="lp"><div class="c36"><DaCasa slug="730" aggiornato="14 novembre 2026" /></div></div>
+  <div class="lp"><Fragment set:html={part2} /></div>
 
   <div class="lp">
     <section style="background: #F7F7FB" id="domande">
