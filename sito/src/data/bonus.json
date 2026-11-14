@@ -617,11 +617,11 @@
    "ente": "INPS / Poste Italiane",
    "livello": "nazionale",
    "categoria": "poverta",
-   "a_chi_spetta": "Persone dai 65 anni in su con trattamenti (pensioni) sotto 8.230,81 € l'anno (65-69 anni) o sotto 10.974,42 € (70 anni e più), oppure bambini sotto i 3 anni con ISEE sotto 8.230,81 € (la carta è intestata al genitore). Servono cittadinanza o soggiorno e iscrizione all'anagrafe.",
+   "a_chi_spetta": "Persone dai 65 anni in su con ISEE sotto 8.230,81 € e trattamenti (pensioni) sotto 8.230,81 € l'anno (65-69 anni) o sotto 10.974,42 € (70 anni e più), oppure bambini sotto i 3 anni con ISEE sotto 8.230,81 € (la carta è intestata al genitore). Servono cittadinanza o soggiorno e iscrizione all'anagrafe.",
    "requisiti": {
     "residenza": "italia",
-    "isee_max": null,
-    "isee_tipo": "ISEE in corso di validità per i bambini sotto 3 anni; per gli over 65 contano i redditi e le pensioni, non l'ISEE",
+    "isee_max": 8230.81,
+    "isee_tipo": "ISEE in corso di validità sotto 8.230,81 €, sia per gli over 65 sia per i bambini sotto 3 anni",
     "figli": null,
     "eta": {
      "min": 65,
@@ -670,7 +670,7 @@
     }
    ],
    "campi_da_riverificare": [],
-   "nota_motore": "Il motore la tratta con la fascia di età; per gli over 65 l'ISEE non è il criterio.",
+   "nota_motore": "ISEE sotto 8.230,81 € in entrambi i percorsi; per gli over 65 contano anche i trattamenti.",
    "verificato_il": "2026-11-14"
   },
   {
@@ -799,7 +799,7 @@
    "ente": "INPS",
    "livello": "nazionale",
    "categoria": "pensione",
-   "a_chi_spetta": "Chi ha almeno 63 anni e 5 mesi e almeno 30 anni di contributi (36 per i lavori gravosi) ed è disoccupato che ha finito la NASpI, caregiver, invalido dal 74% o addetto a lavori gravosi. Vale per chi matura i requisiti entro il 31/12/2026.",
+   "a_chi_spetta": "Chi ha almeno 63 anni e 5 mesi e almeno 30 anni di contributi (36 per i lavori gravosi, 32 per alcune categorie come edili e ceramisti) ed è disoccupato che ha finito la NASpI, caregiver, invalido dal 74% o addetto a lavori gravosi. Vale per chi matura i requisiti entro il 31/12/2026.",
    "requisiti": {
     "residenza": "italia",
     "isee_max": null,
@@ -822,7 +822,7 @@
     ],
     "casa": null,
     "altro_requisiti": [
-     "almeno 30 anni di contributi (36 per i gravosi)"
+     "almeno 30 anni di contributi (36 per i gravosi, 32 per alcune categorie)"
     ]
    },
    "importo": {
@@ -930,7 +930,7 @@
    "ente": "INPS (dipendenti pubblici: il proprio ente)",
    "livello": "nazionale",
    "categoria": "disabilita",
-   "a_chi_spetta": "Lavoratori dipendenti con disabilità o che assistono un familiare con handicap grave (art. 3 comma 3 legge 104): coniuge, convivente, genitori, figli, parenti e affini fino al terzo grado. Il congedo di 2 anni richiede la convivenza ed è per i dipendenti privati.",
+   "a_chi_spetta": "Lavoratori dipendenti con disabilità o che assistono un familiare con handicap grave (art. 3 comma 3 legge 104): coniuge, unito civilmente, convivente, genitori, figli, parenti e affini fino al secondo grado; fino al terzo grado solo se genitori o coniuge del disabile hanno 65 anni, una patologia invalidante, sono deceduti o mancanti. Il congedo di 2 anni richiede la convivenza: i dipendenti privati lo chiedono all'INPS, i pubblici al proprio datore di lavoro.",
    "requisiti": {
     "residenza": "italia",
     "isee_max": null,
@@ -1055,11 +1055,7 @@
      "min": 18,
      "max": 67
     },
-    "lavoro": [
-     "disoccupato",
-     "non_lavora",
-     "pensionato"
-    ],
+    "lavoro": null,
     "disabilita": [
      "invalidita_74",
      "invalidita_100"
@@ -1106,7 +1102,8 @@
     }
    ],
    "campi_da_riverificare": [],
-   "verificato_il": "2026-11-14"
+   "verificato_il": "2026-11-14",
+   "nota_motore": "La pensione di inabilità (100%) è compatibile con il lavoro; solo l'assegno 74-99% richiede di non lavorare."
   },
   {
    "id": "disability-card",
@@ -1262,9 +1259,9 @@
     "periodicita": "annuale"
    },
    "scadenza": {
-    "tipo": "data_fissa",
-    "data": "2027-04-30",
-    "testo": "Per l'esenzione di tutto il 2027: dichiarazione entro il 30 aprile 2027 (chi compie 75 anni entro il 31 gennaio 2027). Vale anche negli anni dopo."
+    "tipo": "sempre_aperto",
+    "data": null,
+    "testo": "Non c'è un termine. Se compi 75 anni entro il 31 gennaio sei esente per tutto l'anno; se li compi dopo, dal secondo semestre. La dichiarazione vale anche per gli anni dopo."
    },
    "stato": "aperto",
    "come_si_chiede": "Dichiarazione sostitutiva all'Agenzia delle Entrate (raccomandata, PEC o in un ufficio).",
@@ -1287,7 +1284,7 @@
     }
    ],
    "campi_da_riverificare": [
-    "scadenza 30 aprile 2027 e importo 90 €: vengono dall'articolo del sito (circolare AdE 46/E 2010); nella pagina AdE letta il 14/11/2026 non compaiono. Riconfermare sulla pagina AdE prima di pubblicare la data."
+    "rate in bolletta (10 x 9 €): non sulla pagina AdE"
    ],
    "verificato_il": "2026-11-14"
   },
@@ -1431,12 +1428,12 @@
     "periodicita": "secondo_bando"
    },
    "scadenza": {
-    "tipo": "finestre",
-    "data": null,
-    "testo": "Il bando 2026/2027 è chiuso. Il prossimo (2027/2028) di norma esce in estate: date da confermare sul portale DiSCo."
+    "tipo": "data_fissa",
+    "data": "2026-11-30",
+    "testo": "Il bando 2026/2027 è chiuso. È aperto solo il contributo straordinario DiSCo 2026/2027: domande dal 9 al 30 novembre 2026 alle ore 12:00, per chi per un grave evento personale o familiare (dal 1/10/2025 al 10/8/2026) non ha raggiunto i crediti o non ha potuto fare domanda. Requisiti e importi sono nel bando."
    },
-   "stato": "finestra_chiusa",
-   "come_si_chiede": "La domanda DiSCo la presenti tu sul portale DiSCo, quando esce il bando. Noi ti facciamo l'ISEE universitario.",
+   "stato": "scadenza_vicina",
+   "come_si_chiede": "La domanda DiSCo la presenti tu sul portale DiSCo. Noi ti facciamo l'ISEE universitario: per il contributo straordinario fallo subito.",
    "il_centro_controlla": [
     "Quale ISEE universitario ti serve (con la famiglia o da studente autonomo)",
     "Documenti da preparare per la DSU"
@@ -1450,6 +1447,10 @@
    },
    "fonti": [
     {
+     "titolo": "Lazio DiSCo - Bando contributo straordinario 2026/2027",
+     "url": "https://laziodisco.it/bandi/bando-contributo-straordinario-2026-2027/"
+    },
+    {
      "titolo": "Lazio DiSCo - bando diritto allo studio 2026/2027 (PDF)",
      "url": "https://laziodisco.it/wp-content/uploads/2026/07/BANDO-DIRITTO-ALLO-STUDIO-26-27-con-EC.pdf"
     }
@@ -1457,7 +1458,7 @@
    "campi_da_riverificare": [
     "date del bando 2027/2028 (di norma estate); nostro CAF NON convenzionato DiSCo: la domanda e l'ISEEUP per non residenti non sono servizi nostri"
    ],
-   "nota_motore": "Bando chiuso: sezione \"Riapre presto\". Il Centro fa solo l'ISEE universitario.",
+   "nota_motore": "Bando ordinario chiuso; contributo straordinario aperto fino al 30/11/2026. Il Centro fa solo l'ISEE universitario.",
    "verificato_il": "2026-11-14"
   },
   {
@@ -1477,10 +1478,7 @@
      "max": null,
      "nota": "E01: sotto 6 o sopra 65 anni; E04: sopra 60 anni"
     },
-    "lavoro": [
-     "disoccupato",
-     "pensionato"
-    ],
+    "lavoro": null,
     "disabilita": null,
     "casa": null
    },
@@ -1527,7 +1525,7 @@
    "ente": "Regione Lazio (Cotral, Trenitalia)",
    "livello": "regione_lazio",
    "categoria": "trasporti",
-   "a_chi_spetta": "Residenti nel Lazio che hanno compiuto 70 anni. Gratis sui bus Cotral e sui treni regionali Trenitalia in seconda classe, entro i confini del Lazio.",
+   "a_chi_spetta": "Residenti nel Lazio che hanno compiuto 70 anni. Gratis sui bus Cotral e sui treni regionali Trenitalia in seconda classe, entro i confini del Lazio. Non vale per i viaggi in treno dentro Roma (Zona Anello di Roma Capitale), né sul Leonardo Express e sugli altri servizi esclusi.",
    "requisiti": {
     "residenza": "lazio",
     "isee_max": null,
@@ -1576,7 +1574,7 @@
     }
    ],
    "campi_da_riverificare": [
-    "l'esclusione per la Zona Anello di Roma Capitale è scritta nell'Allegato 6 per i treni: verificare se vale anche per i bus Cotral"
+    "se l'esclusione della Zona Anello vale anche per i bus Cotral"
    ],
    "verificato_il": "2026-11-14"
   },
