@@ -23,6 +23,8 @@ image_alt: "Cedolino pensione di novembre e dicembre 2026: come leggerlo"
 
 **Ultimo aggiornamento: 10 novembre 2026**
 
+**Tutte le date dei pagamenti INPS del mese** (pensioni, Assegno Unico, ADI, bonus mamme): [calendario dei pagamenti INPS](/pagamenti-inps).
+
 Il **cedolino della pensione** è il foglio che ogni mese spiega **quanto ti paga l'INPS e perché**. Se l'importo cambia da un mese all'altro, la spiegazione è lì: una trattenuta, un rimborso, un conguaglio.
 
 Qui trovi le date di novembre e dicembre 2026, le voci che fanno salire o scendere l'importo e come consultarlo.

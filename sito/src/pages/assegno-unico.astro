@@ -10,5 +10,6 @@ const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mai
   <JsonLdService slot="head" slug="assegno-unico" name="Assegno Unico Universale" description={"Domanda, rinnovo e variazioni dell'Assegno Unico per i figli, con ISEE gratuito."} serviceType="Patronato - sostegno famiglie" offers={[{ name: "Domanda in ufficio", price: 15 }, { name: "Domanda online", price: 19 }, { name: "Domanda in ufficio per tesserati", price: 10 }, { name: "Domanda online per tesserati", price: 15 }]} />
   {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
   <div class="lp"><Fragment set:html={body} /></div>
+  <div class="lp"><p class="c4" style="max-width:1200px;margin:0 auto;padding:16px 24px 0"><b>Date dei pagamenti di questo mese:</b> <a href="/pagamenti-inps" style="font-weight:700">calendario dei pagamenti INPS</a>.</p></div>
   <LandingArticles categories={["assegno-unico", "isee-dsu", "bonus-fiscali"]} />
 </BaseLayout>

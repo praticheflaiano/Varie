@@ -1,11 +1,12 @@
 ---
 title: "Detrazioni spese mediche 730/2026: cosa scaricare e come | CAF Roma"
 slug: "detrazioni-spese-mediche-730-2026-guida-completa"
+seo_title: "Spese mediche 730/2026: detrazione 19% e franchigia 129,11 €"
 date: 2026-04-30
 last_updated: 2026-04-30
 category: "detrazioni-deduzioni"
 tags: ["guida", "730", "spese mediche", "detrazioni", "IRPEF", "tessera sanitaria"]
-meta_description: "Detrazioni spese mediche 730/2026: franchigia 129,11 euro, scontrino parlante, pagamento tracciabile, righi E1-E3. Guida completa CAF Roma Vigne Nuove."
+meta_description: "Spese mediche nel 730/2026: detrazione del 19% sopra la franchigia di 129,11 €, scontrino parlante e pagamento tracciabile. Ti aiutiamo a Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Agenzia delle Entrate - Istruzioni 730/2026, Quadro E righi E1-E3, E6"

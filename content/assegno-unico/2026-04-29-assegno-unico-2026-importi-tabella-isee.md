@@ -1,11 +1,12 @@
 ---
 title: "Assegno Unico 2026: tabella importi per fascia ISEE | CAF Roma"
 slug: "assegno-unico-2026-importi-tabella-isee"
+seo_title: "Assegno unico 2026: da 58,30 a 203,80 € per figlio minore"
 date: 2026-04-29
 last_updated: 2026-04-29
 category: "assegno-unico"
 tags: ["assegno-unico", "guida", "famiglie", "inps", "isee", "disabilita"]
-meta_description: "Assegno Unico 2026: importi minimi, massimi e maggiorazioni per fascia ISEE. Figli minorenni, maggiorenni, disabilita. CAF UNSIC Roma Vigne Nuove."
+meta_description: "Assegno unico 2026: da 58,30 a 203,80 € al mese per figlio minorenne in base all'ISEE, maggiorazioni e disabilità. Ti aiutiamo a Vigne Nuove, Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Circolare INPS n. 7 del 30 gennaio 2026 (importi e soglie ISEE AUU 2026)"
