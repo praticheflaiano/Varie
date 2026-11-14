@@ -67,7 +67,7 @@ const tipi = [
   { c: "c40", t: "Famiglie e inclusione (dal 2026)", d: "Calcolo più favorevole per Assegno Unico, ADI, SFL, bonus nido e nuovi nati. Non si chiede a parte: lo calcola l'INPS dalla stessa DSU." },
 ];
 
-const oraRiga = HOURS.map((h) => `${h.day.slice(0, 3)} ${h.open}-${h.close}${h.afternoon ? " / " + h.afternoon.open + "-" + h.afternoon.close : ""}`);
+const oraRiga = HOURS.filter((h) => h.open).map((h) => `${h.day.slice(0, 3)} ${h.open}-${h.close}${h.afternoon ? " / " + h.afternoon.open + "-" + h.afternoon.close : ""}`);
 ---
 <BaseLayout title={"ISEE gratis a Roma: CAF Vigne Nuove"} description={"ISEE 2027 gratis a Roma Nord: CAF a Vigne Nuove o in videochiamata. Scadenza 31 dicembre, documenti, rinnovo per l'Assegno Unico. Prenota online."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />

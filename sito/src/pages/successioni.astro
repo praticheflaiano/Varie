@@ -13,7 +13,7 @@ import SuccessioniCalc from "~/components/ui/SuccessioniCalc.astro";
  * - D.Lgs. 346/1990 (TUS): art. 7 (aliquote e franchigie), art. 24 (spese mediche ultimi 6 mesi, funerarie fino a 1.032,91 €),
  *   art. 28 (esonero: coniuge e linea retta, attivo fino a 100.000 €, niente immobili), art. 31 (12 mesi).
  * - D.Lgs. 139/2024 e circolare AdE 3/E del 16/4/2025: autoliquidazione per le successioni aperte dal 1/1/2025,
- *   imposta di successione entro 90 giorni dal termine della dichiarazione, rate se almeno 1.000 €.
+ *   imposta di successione entro 90 giorni dal termine della dichiarazione, rate con acconto del 20% se il residuo è almeno 1.000 €.
  * - Revisione novembre 2026 (bozza): sezioni chi/volture/tempi/prenotazione/fonti; prezzo riscritto nella forma "a partire da 600 €"
  *   (come da brief; il sito mostrava "600 € tutto compreso"); termini, esonero, aliquote e autoliquidazione come nell'articolo
  *   content/successioni-volture/2026-11-12-dichiarazione-successione-roma-documenti-tempi-costi.md (fonti AdE citate nell'articolo).
@@ -206,7 +206,7 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
         </div>
         <div style={card}>
           <h3 style={h3}>Perdere l'agevolazione prima casa</h3>
-          <p style={p}>Se la casa ereditata con l'agevolazione si vende entro 5 anni senza ricomprarne un'altra entro un anno, si paga la differenza con sanzione. Valutiamolo prima di decidere.</p>
+          <p style={p}>Se la casa ereditata con l'agevolazione si vende entro 5 anni senza ricomprarne un'altra entro un anno, si perde l'agevolazione e si paga la differenza. Valutiamolo prima di decidere.</p>
         </div>
       </div>
     </section>
@@ -238,13 +238,13 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
             <tbody>
               <tr><td style={td}>Coniuge, figli, genitori, nipoti in linea retta</td><td style={td}><b>4%</b> solo sulla parte oltre <b>1.000.000 €</b> a testa</td></tr>
               <tr><td style={td}>Fratelli e sorelle</td><td style={td}><b>6%</b> sulla parte oltre <b>100.000 €</b> a testa</td></tr>
-              <tr><td style={td}>Altri parenti fino al 4° grado e affini fino al 3°</td><td style={td}><b>6%</b> su tutto</td></tr>
+              <tr><td style={td}>Altri parenti fino al 4° grado e affini in linea collaterale fino al 3°</td><td style={td}><b>6%</b> su tutto</td></tr>
               <tr><td style={td}>Tutti gli altri</td><td style={td}><b>8%</b> su tutto</td></tr>
               <tr><td style={td}>Erede con disabilità grave (Legge 104)</td><td style={td}>aliquota della sua parentela, sulla parte oltre <b>1.500.000 €</b></td></tr>
             </tbody>
           </table>
         </div>
-        <p style="margin:0;padding:16px;font-size:15px;line-height:1.55;color:#3F3F5A;border-top:1px solid #E4E0FF">Se ci sono <b>immobili</b> si pagano anche l'imposta <b>ipotecaria (2%)</b> e <b>catastale (1%)</b>, minimo 200 € ciascuna: con l'agevolazione <b>prima casa</b> diventano <b>200 € fisse</b> ciascuna. Si aggiungono bolli e tasse fisse. Per i decessi dal 2025 l'imposta di successione la calcola chi presenta la dichiarazione e si paga entro 90 giorni dalla scadenza; da 1.000 € in su si può rateizzare. Il conto completo te lo mostriamo prima della firma. Per una stima subito, usa il <a href="/calcolo-imposte-successione" style="color:#5B3DF5;font-weight:800">calcolatore delle imposte di successione</a> (riguarda solo le imposte, non il nostro compenso).</p>
+        <p style="margin:0;padding:16px;font-size:15px;line-height:1.55;color:#3F3F5A;border-top:1px solid #E4E0FF">Se ci sono <b>immobili</b> si pagano anche l'imposta <b>ipotecaria (2%)</b> e <b>catastale (1%)</b>, minimo 200 € ciascuna: con l'agevolazione <b>prima casa</b> diventano <b>200 € fisse</b> ciascuna. Si aggiungono bolli e tasse fisse. Per i decessi dal 2025 l'imposta di successione la calcola chi presenta la dichiarazione e si paga entro 90 giorni dalla scadenza; si può rateizzare versando almeno il 20% entro i 90 giorni, se il resto da pagare è di almeno 1.000 € (fino a 8 rate trimestrali, 12 oltre i 20.000 €). Il conto completo te lo mostriamo prima della firma. Per una stima subito, usa il <a href="/calcolo-imposte-successione" style="color:#5B3DF5;font-weight:800">calcolatore delle imposte di successione</a> (riguarda solo le imposte, non il nostro compenso).</p>
       </div>
     </section>
 
@@ -303,7 +303,7 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
         </div>
         <div style={card}>
           <h3 style={h3}>Le imposte</h3>
-          <p style={p}>Ipotecaria, catastale e tasse fisse si pagano con l'invio. Per i decessi dal 2025 l'<b>imposta di successione</b> si paga entro <b>90 giorni dalla scadenza dei 12 mesi</b>; da 1.000 € in su si può rateizzare.</p>
+          <p style={p}>Ipotecaria, catastale e tasse fisse si pagano con l'invio. Per i decessi dal 2025 l'<b>imposta di successione</b> si paga entro <b>90 giorni dalla scadenza dei 12 mesi</b>; si può rateizzare versando almeno il 20% entro i 90 giorni, se il resto da pagare è di almeno 1.000 € (fino a 8 rate trimestrali, 12 oltre i 20.000 €).</p>
         </div>
         <div style={card}>
           <h3 style={h3}>Banca e Poste</h3>
