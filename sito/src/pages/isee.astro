@@ -2,13 +2,164 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT, HOURS } from "~/consts";
 import body from "~/fragments/isee.html?raw";
-const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Ma \\u00e8 davvero gratis?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\\u00ec, la prima DSU dell'anno \\u00e8 gratis. La tessera \\u00e8 consigliata, non obbligatoria: conviene se fai anche altre pratiche.\"}}, {\"@type\": \"Question\", \"name\": \"E se dimentico un conto o un reddito?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Va presentata una nuova DSU. Se la rifacciamo perch\\u00e9 mancavano dati importanti, nello stesso anno e per la stessa famiglia, chiediamo 25 \\u20ac di servizio. Non li paghi se cambia la famiglia, per l'ISEE corrente o se l'errore \\u00e8 nostro. Per questo conviene controllare la guida prima di venire.\"}}, {\"@type\": \"Question\", \"name\": \"Quali anni contano per l'ISEE 2027?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"I redditi del 2025 e i risparmi e gli immobili al 31 dicembre 2025. La famiglia \\u00e8 quella alla data della domanda. Si pu\\u00f2 fare dal 1\\u00b0 gennaio 2027.\"}}, {\"@type\": \"Question\", \"name\": \"Ho buoni postali o titoli di Stato: contano?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Titoli di Stato, buoni e libretti postali sono esclusi dal calcolo fino a 50.000 \\u20ac per famiglia. Diccelo comunque: verifichiamo noi come vanno indicati.\"}}, {\"@type\": \"Question\", \"name\": \"Ho una casa di propriet\\u00e0 a Roma: cosa cambia?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Per Assegno Unico, bonus nido, bonus nuovi nati, ADI e SFL la casa in cui vivi pesa meno: a Roma \\u00e8 esclusa fino a 120.000 \\u20ac, pi\\u00f9 2.500 \\u20ac per ogni figlio convivente dopo il primo.\"}}, {\"@type\": \"Question\", \"name\": \"I genitori non vivono insieme, o lo studente vive fuori casa?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Dillo prima di iniziare: per figli minorenni, universit\\u00e0 e ricoveri in RSA possono servire dati di familiari che non vivono con te. Il test \\\"Quale ISEE ti serve\\\" ti aiuta a capirlo.\"}}, {\"@type\": \"Question\", \"name\": \"Devo portare il 730 o la CU?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"No, li recuperiamo noi online.\"}}, {\"@type\": \"Question\", \"name\": \"Posso farlo senza muovermi da casa?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\\u00ec: videochiamata o richiesta online, scegli tu.\"}}, {\"@type\": \"Question\", \"name\": \"Quando scade?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Il 31 dicembre dell'anno in cui lo fai. Per l'Assegno Unico pieno conviene rinnovarlo a inizio anno.\"}}]}";
+
+/*
+ * BOZZA da approvare (14/11/2026). Fonti verificate su inps.it e camera.it il 14/11/2026:
+ * - INPS, scheda "Portale unico ISEE" (ultimo aggiornamento 20/01/2026): validità ISEE fino al 31 dicembre
+ *   dell'anno di presentazione, redditi e patrimonio del secondo anno precedente, nucleo alla data della DSU,
+ *   attestazione entro 10 giorni lavorativi, ISEE corrente (6 mesi / 31 dicembre), dal 1 aprile variazioni di patrimonio.
+ * - Camera dei deputati, scheda sulle novità ISEE (L. 199/2025, art. 1 commi 208-209): casa 91.500 / 120.000 euro nei
+ *   capoluoghi di città metropolitana, +2.500 euro per ogni figlio convivente dopo il primo.
+ * Prezzi: solo quelli già sul sito (ISEE 0 euro, tessera 30 euro/anno, 25 euro per DSU rifatta per dati mancanti).
+ * Il corpo della pagina resta nel frammento src/fragments/isee.html: qui si aggiungono sezioni nuove
+ * e si sostituisce la vecchia sezione FAQ con quella generata da faqs (stessa fonte per HTML e JSON-LD).
+ */
+
+const AGGIORNATO = "14 novembre 2026";
+const BOOK_2027 = "https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G";
+
+const faqs = [
+  { q: "Quanto costa fare l'ISEE a Roma al Centro Pratiche Flaiano?", a: "Niente: la prima DSU dell'anno è gratis, di persona a Vigne Nuove o in videochiamata. La tessera (30 € l'anno per tutta la famiglia) è consigliata, non obbligatoria: conviene se fai anche altre pratiche." },
+  { q: "Quando scade l'ISEE e quando conviene rifarlo?", a: "L'ISEE vale fino al 31 dicembre dell'anno in cui presenti la DSU (INPS). Quello del 2026 scade il 31 dicembre 2026 e dal 1° gennaio 2027 serve una nuova DSU. Per l'Assegno Unico conviene farla presto, entro febbraio: te lo spieghiamo nella <a href='/blog/assegno-unico-2027-rinnovo-isee-scadenze'>guida al rinnovo</a>." },
+  { q: "Quali anni contano per l'ISEE 2027?", a: "I redditi del 2025 e i risparmi e gli immobili al 31 dicembre 2025. La famiglia è quella dichiarata alla data della domanda. Si può fare dal 1° gennaio 2027. Lo conferma anche l'INPS: contano i dati del secondo anno precedente." },
+  { q: "Quale tipo di ISEE mi serve? E se i genitori non vivono insieme, o lo studente vive fuori casa?", a: "Dipende dall'aiuto che chiedi: ordinario, minorenni, università, sociosanitario o corrente. Con una sola DSU l'INPS calcola più valori, ma in alcuni casi servono dati di familiari che non vivono con te. Dillo prima di iniziare e fai il <a href='/quale-isee'>test Quale ISEE ti serve</a>; i dettagli sono nella <a href='/blog/tipi-di-isee-differenze-quale-serve'>guida ai tipi di ISEE</a>." },
+  { q: "E se dimentico un conto o un reddito?", a: "Va presentata una nuova DSU. Se la rifacciamo perché mancavano dati importanti, nello stesso anno e per la stessa famiglia, chiediamo 25 € di servizio. Non li paghi se cambia la famiglia, per l'ISEE corrente o se l'errore è nostro. Per questo conviene controllare la lista documenti prima di venire." },
+  { q: "Ho una casa di proprietà a Roma: cosa cambia?", a: "Per Assegno Unico, bonus nido, bonus nuovi nati, ADI e SFL la casa in cui vivi pesa meno: nei capoluoghi di città metropolitana, come Roma, è esclusa fino a 120.000 €, più 2.500 € per ogni figlio convivente dopo il primo (legge 199/2025)." },
+  { q: "Ho buoni postali o titoli di Stato: contano?", a: "Titoli di Stato, buoni e libretti postali sono esclusi dal calcolo fino a 50.000 € per famiglia. Diccelo comunque: verifichiamo noi come vanno indicati." },
+  { q: "Devo portare il 730 o la CU? Posso fare tutto da casa?", a: "No, 730 e CU di solito li recuperiamo noi online, con la tua delega. E sì: puoi scegliere la videochiamata o la richiesta online, senza venire in ufficio." },
+];
+
+const ld = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a.replace(/<[^>]+>/g, "") },
+  })),
+});
+
+/* ---- Il frammento viene diviso in 4 punti fissi; se il frammento cambia, la build si ferma. ---- */
+const M_TRE_MOSSE = '<section class="c46"><h2 class="c1">Fatto in 3 mosse</h2>';
+const M_CALENDARI = '<section class="c44" id="calendari">';
+const M_FAQ = '<section style="background: #F7F7FB"><div class="c48"><h2 class="c22">Domande veloci</h2>';
+const M_GIA = '<section class="c47"><h2 class="c55">Già che ci sei</h2>';
+for (const m of [M_TRE_MOSSE, M_CALENDARI, M_FAQ, M_GIA]) {
+  if (!body.includes(m)) throw new Error("isee.astro: marcatore non trovato nel frammento: " + m.slice(0, 60));
+}
+const i1 = body.indexOf(M_TRE_MOSSE);
+const i2 = body.indexOf(M_CALENDARI);
+const i3 = body.indexOf(M_FAQ);
+const i4 = body.indexOf(M_GIA);
+const part1 = body.slice(0, i1).replace("ISEE 2027 · Vigne Nuove e online", "ISEE 2027 · CAF a Vigne Nuove, Roma · anche online"); // fino al banner del test
+const part2 = body.slice(i1, i2); // 3 mosse, documenti, prezzo
+const part3 = body.slice(i2, i3); // calendari e "Come preferisci"
+const part4 = body.slice(i4); // "Già che ci sei" + chiusura del div c36
+
+const tipi = [
+  { c: "c39", t: "Ordinario", d: "Il valore di base: Carta Dedicata a te, bonus sociale su luce, gas e acqua, molte tariffe e riduzioni." },
+  { c: "c41", t: "Minorenni", d: "Per gli aiuti ai figli: Assegno Unico, bonus nido, bonus nuovi nati, nido e mensa. Se i genitori non sono sposati e non vivono insieme conta anche l'altro genitore." },
+  { c: "c40", t: "Università", d: "Tasse universitarie e borse di studio. Di solito conta la famiglia d'origine, anche se lo studente vive fuori." },
+  { c: "c39", t: "Sociosanitario", d: "Per adulti con disabilità o non autosufficienti: assistenza domiciliare e centri diurni. Si può chiedere anche il nucleo ristretto. Per la RSA c'è la versione \"residenze\"." },
+  { c: "c41", t: "Corrente", d: "Se hai perso il lavoro o il reddito è sceso molto: aggiorna l'ISEE con dati recenti. Vale 6 mesi se cambiano i redditi." },
+  { c: "c40", t: "Famiglie e inclusione (dal 2026)", d: "Calcolo più favorevole per Assegno Unico, ADI, SFL, bonus nido e nuovi nati. Non si chiede a parte: lo calcola l'INPS dalla stessa DSU." },
+];
+
+const oraRiga = HOURS.map((h) => `${h.day.slice(0, 3)} ${h.open}-${h.close}${h.afternoon ? " / " + h.afternoon.open + "-" + h.afternoon.close : ""}`);
 ---
-<BaseLayout title={"ISEE gratis a Vigne Nuove, Roma"} description={"ISEE gratuito al CAF di Vigne Nuove o in videochiamata. Redditi e CU li recuperiamo noi. Prenota o invia la richiesta online."}>
+<BaseLayout title={"ISEE gratis a Roma: CAF Vigne Nuove"} description={"ISEE 2027 gratis a Roma Nord: CAF a Vigne Nuove o in videochiamata. Scadenza 31 dicembre, documenti, rinnovo per l'Assegno Unico. Prenota online."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="isee" name="ISEE e DSU" description={"Calcolo ISEE ordinario, corrente e universitario: compilazione e invio della DSU all'INPS. Gratuito."} serviceType="Assistenza fiscale - ISEE" offers={[{ name: "ISEE", price: 0 }]} />
-  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
-  <div class="lp"><Fragment set:html={body} /></div>
+  <script slot="head" type="application/ld+json" set:html={ld} />
+
+  <div class="lp"><Fragment set:html={part1 + "</div>"} /></div>
+
+  <!-- NUOVO: tipi di ISEE in breve + chi serve a Roma -->
+  <div class="lp"><div class="c36">
+    <section class="c42" id="tipi">
+      <h2 class="c1">I tipi di ISEE, in breve</h2>
+      <p class="c4" style="max-width:760px">A Roma l'ISEE serve per Assegno Unico, bonus nido, Assegno di inclusione, tasse universitarie, tariffe e bonus. Ogni aiuto guarda una famiglia diversa, quindi il tipo giusto conta. Con una sola DSU l'INPS calcola più valori.</p>
+      <div class="c17">
+        {tipi.map((x) => (
+          <div class={x.c}><h3 class="c8">{x.t}</h3><p class="c4">{x.d}</p></div>
+        ))}
+      </div>
+      <p class="c4" style="max-width:760px">Non sai quale ti serve? <a href="/quale-isee" style="font-weight:700">Fai il test</a> o leggi la <a href="/blog/tipi-di-isee-differenze-quale-serve" style="font-weight:700">guida completa ai tipi di ISEE</a>. Se hai perso il lavoro, vedi anche l'<a href="/blog/isee-corrente-quando-conviene-roma" style="font-weight:700">ISEE corrente</a>.</p>
+    </section>
+  </div></div>
+
+  <div class="lp"><Fragment set:html={part2 + "</div>"} /></div>
+
+  <!-- NUOVO: scadenza, ISEE 2027 e rinnovo Assegno Unico -->
+  <div class="lp"><div class="c36">
+    <section class="c44" id="scadenza-isee-2027">
+      <h2 class="c1">Scadenza e ISEE 2027</h2>
+      <div class="c59">
+        <div class="c14" style="cursor:default">
+          <span class="c76">Scadenza</span>
+          <span class="c12">Fino al 31 dicembre</span>
+          <span class="c77">L'ISEE vale fino al 31 dicembre dell'anno in cui presenti la DSU, anche se la fai a novembre. L'ISEE 2026 scade il 31 dicembre 2026 e il rinnovo non è automatico.</span>
+        </div>
+        <div class="c14" style="cursor:default">
+          <span class="c76">ISEE 2027</span>
+          <span class="c12">Dal 1° gennaio 2027</span>
+          <span class="c77">Servono i redditi del 2025 e il patrimonio al 31 dicembre 2025. La famiglia è quella alla data della domanda. L'attestazione è disponibile entro 10 giorni lavorativi dalla ricezione della DSU (INPS).</span>
+        </div>
+        <div class="c14" style="cursor:default">
+          <span class="c76">Assegno Unico</span>
+          <span class="c12">Rinnova presto</span>
+          <span class="c77">La domanda continua da sola, ma senza ISEE valido da marzo l'importo scende al minimo. Conviene presentare la DSU entro febbraio; se la presenti entro il 30 giugno si recuperano gli arretrati da marzo.</span>
+        </div>
+      </div>
+      <p class="c4" style="max-width:760px">Gennaio e febbraio sono i mesi più pieni: <a href={BOOK_2027} style="font-weight:700">prenota il calendario ISEE 2027</a> anche prima di Natale. Tutti i dettagli nella <a href="/blog/isee-2027-documenti-quando-rinnovare-roma" style="font-weight:700">guida ISEE 2027</a> e nella pagina <a href="/assegno-unico" style="font-weight:700">Assegno Unico</a>. Per le regole del 2026 e gli arretrati: <a href="/blog/isee-2026-dsu-30-giugno-arretrati-assegno-unico" style="font-weight:700">guida all'ISEE 2026 e all'Assegno Unico</a>.</p>
+    </section>
+  </div></div>
+
+  <div class="lp"><Fragment set:html={part3 + "</div>"} /></div>
+
+  <!-- NUOVO: come raggiungerci e prenotare -->
+  <div class="lp"><div class="c36">
+    <section class="c44" id="come-prenotare">
+      <h2 class="c1">ISEE a Roma Nord: come prenotare</h2>
+      <p class="c4" style="max-width:760px">Siamo al Centro Acquisti Flaiano, nel quartiere Vigne Nuove (Municipio III), e seguiamo anche le famiglie di Tufello, Conca d'Oro, Bufalotta e Porta di Roma. {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality}.</p>
+      <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+        <li><b>Online:</b> <a href={BOOK_2027} style="font-weight:700">calendario ISEE 2027</a> oppure <a href="/prenota" style="font-weight:700">tutti gli appuntamenti</a>. Ti arrivano la lista documenti su WhatsApp e un promemoria il giorno prima.</li>
+        <li><b>Telefono:</b> <a href={"tel:" + CONTACT.phone.landlineRaw} style="font-weight:700">{CONTACT.phone.landline}</a></li>
+        <li><b>WhatsApp:</b> <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">{CONTACT.phone.mobile}</a></li>
+        <li><b>Orari:</b> {oraRiga.join(" · ")}</li>
+      </ul>
+      <p class="c4" style="max-width:760px">Prezzo: l'ISEE da noi è <b>gratis</b>. Se manca qualche dato e va rifatta la DSU, valgono le regole nelle domande qui sotto.</p>
+    </section>
+  </div></div>
+
+  <!-- NUOVO: FAQ (sostituisce la vecchia sezione "Domande veloci") -->
+  <div class="lp"><div class="c36">
+    <section style="background: #F7F7FB" id="domande">
+      <div class="c48">
+        <h2 class="c22">Domande frequenti sull'ISEE a Roma</h2>
+        {faqs.map((f) => (
+          <details class="c11"><summary class="c16">{f.q}</summary><p class="c6" set:html={f.a} /></details>
+        ))}
+      </div>
+    </section>
+  </div></div>
+
+  <!-- NUOVO: Fonti ufficiali -->
+  <div class="lp"><div class="c36"><section class="c47" id="fonti">
+    <h2 class="c55">Fonti ufficiali</h2>
+    <p class="c4"><b>Aggiornato il {AGGIORNATO}.</b> Scadenze e regole sono quelle indicate dall'INPS e dalla legge; l'ISEE da noi è gratuito.</p>
+    <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+      <li><a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.Portale-unico-ISEE.html" target="_blank" rel="noopener">INPS - Portale unico ISEE (scheda, aggiornata il 20/01/2026)</a> · validità fino al 31 dicembre, anni di riferimento di redditi e patrimonio, ISEE corrente, attestazione entro 10 giorni lavorativi</li>
+      <li><a href="https://temi.camera.it/leg19/post/le-novit-sull-indicatore-della-situazione-economica-equivalente-isee.html" target="_blank" rel="noopener">Camera dei deputati - Le novità sull'ISEE (legge 199/2025, art. 1, commi 208-209)</a> · casa fino a 120.000 € nei capoluoghi di città metropolitana, più 2.500 € per ogni figlio convivente dopo il primo</li>
+      <li><a href="https://www.lavoro.gov.it/notizie/pagine/nuovo-isee-specifiche-prestazioni-familiari-e-linclusione" target="_blank" rel="noopener">Ministero del Lavoro - Nuovo ISEE per specifiche prestazioni familiari e per l'inclusione</a></li>
+      <li><a href="https://www.lavoro.gov.it/strumenti-e-servizi/isee-dsu-corrente-2026" target="_blank" rel="noopener">Ministero del Lavoro - DSU ISEE corrente</a></li>
+    </ul>
+    <p class="c4">Approfondimenti nostri: <a href="/blog/isee-2027-documenti-quando-rinnovare-roma">ISEE 2027</a> · <a href="/blog/tipi-di-isee-differenze-quale-serve">tipi di ISEE</a> · <a href="/blog/isee-corrente-quando-conviene-roma">ISEE corrente</a> · <a href="/blog/assegno-unico-2027-rinnovo-isee-scadenze">Assegno Unico 2027</a>.</p>
+    <p class="c4">Hai un dubbio sul tuo caso? <a href="/prenota" style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
+  </section></div></div>
+
+  <div class="lp"><Fragment set:html={'<div class="c36">' + part4} /></div>
   <LandingArticles categories={["isee-dsu", "assegno-unico"]} />
 </BaseLayout>

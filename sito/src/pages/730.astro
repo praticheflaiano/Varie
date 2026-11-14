@@ -2,13 +2,80 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { CONTACT } from "~/consts";
 import body from "~/fragments/730.html?raw";
-const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Perch\u00e9 non lo faccio da solo col precompilato?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Puoi, ma spesso mancano spese o familiari a carico. Noi controlliamo tutto e mettiamo il visto di conformit\u00e0.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto pago esattamente?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Da 30 \u20ac, in base alla tua situazione. Te lo diciamo prima di iniziare.\"}}, {\"@type\": \"Question\", \"name\": \"Quando arriva il rimborso?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di solito in busta paga o sulla pensione nei mesi estivi, a seconda di quando presenti il 730.\"}}, {\"@type\": \"Question\", \"name\": \"Posso farlo senza venire in ufficio?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"S\u00ec: videochiamata o richiesta online con le foto delle ricevute.\"}}]}";
+
+/*
+ * Fonti verificate (14/11/2026), Agenzia delle Entrate, sezione 730/2026:
+ * - Che cos'è, Chi può presentare il 730, Quando e come presentare il 730, Modello e istruzioni (agg. 28/5/2026), FAQ
+ * - Precompilata 2026 (cittadini): 730 consultabile dal 30 aprile
+ * - Scadenza 730/2026 (precompilato e ordinario): 30 settembre 2026
+ * - Modifica e invio dal 14 maggio 2026: comunicato AdE del 28/4/2026 (come riportato nell'articolo del blog)
+ * Date del 730/2027 (redditi 2026): NON ancora ufficiali, escono col provvedimento dell'Agenzia delle Entrate.
+ * Prezzo "da 30 €" e tessera 30 €: invariati, come già scritti sul sito.
+ */
+const faqs = [
+  { q: "Perché non lo faccio da solo col precompilato?", a: "Puoi, ma spesso mancano spese o familiari a carico. Noi controlliamo tutto e mettiamo il visto di conformità." },
+  { q: "Quanto pago esattamente?", a: "Da 30 €, in base alla tua situazione. Te lo diciamo prima di iniziare. Se l'anno scorso l'hai fatto da noi, il prezzo resta lo stesso." },
+  { q: "Chi può presentare il 730?", a: "Chi ha redditi di lavoro dipendente o assimilati, di pensione, di terreni e fabbricati, di capitale, di lavoro autonomo senza partita IVA e alcuni redditi diversi (elenco dell'Agenzia delle Entrate per il 730/2026). Se non sei sicuro, ce lo dici e controlliamo." },
+  { q: "Posso fare il 730 se non ho un datore di lavoro o un sostituto d'imposta?", a: "Sì. Chi ha redditi di lavoro dipendente o di pensione può presentare il 730 anche senza sostituto d'imposta che faccia il conguaglio. Se non c'è un sostituto, il 730 ordinario va presentato a un CAF o a un professionista abilitato (fonte: Agenzia delle Entrate)." },
+  { q: "Quando scade il 730? E quello del prossimo anno?", a: "Il 730/2026 scadeva il 30 settembre 2026, sia il precompilato sia l'ordinario (fonte: Agenzia delle Entrate). Le date del 730/2027, per i redditi 2026, non sono ancora ufficiali: escono con il provvedimento dell'Agenzia delle Entrate e aggiorneremo questa pagina." },
+  { q: "Quando arriva il rimborso?", a: "Per chi ha un sostituto d'imposta arriva in busta paga o sulla pensione, generalmente da luglio (per i pensionati da agosto o settembre). Dipende da quando presenti il 730 (fonte: Agenzia delle Entrate)." },
+  { q: "Cosa devo consegnare al CAF per il 730 precompilato?", a: "Una delega per accedere alla tua dichiarazione e, in busta chiusa, il modello 730-1 con la scelta di 8, 5 e 2 per mille: va consegnato anche se non scegli nulla (fonte: Agenzia delle Entrate). Ti spieghiamo noi come fare e ti mandiamo la lista dei documenti." },
+  { q: "Posso farlo senza venire in ufficio?", a: "Sì: videochiamata o richiesta online con le foto delle ricevute. Ti richiamiamo per la delega e la firma." },
+];
+
+const faqLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+});
 ---
-<BaseLayout title={"Modello 730 da 30 € a Roma Nord"} description={"730 da 30 € con controllo di ogni detrazione. In ufficio a Vigne Nuove o da casa. Prezzo bloccato per chi torna."}>
+<BaseLayout title={"730 a Roma: CAF Vigne Nuove, a partire da 30 €"} description={"Modello 730 a partire da 30 € al CAF di Vigne Nuove, Roma: ogni detrazione controllata, in ufficio o da casa. Documenti, tempi e prezzo bloccato per chi torna."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="730" name="Modello 730" description={"Compilazione e invio del modello 730, anche da remoto. Da 30 €; per chi torna l'anno dopo il prezzo resta invariato."} serviceType="Assistenza fiscale - dichiarazione dei redditi" offers={[{ name: "Modello 730 (prezzo di partenza)", price: 30 }]} />
-  {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
   <div class="lp"><Fragment set:html={body} /></div>
+
+  <div class="lp">
+    <section style="background: #F7F7FB" id="domande">
+      <div class="c48">
+        <h2 class="c22">Domande veloci</h2>
+        {faqs.map((f) => (
+          <details class="c11"><summary class="c16">{f.q}</summary><p class="c6">{f.a}</p></details>
+        ))}
+      </div>
+    </section>
+
+    <section class="c47" id="fonti">
+      <h2 class="c55">Fonti ufficiali</h2>
+      <p class="c4"><b>Aggiornato il 14 novembre 2026.</b> Le categorie, le date e le regole indicate sono quelle del 730/2026 dell'Agenzia delle Entrate. Il prezzo è quello pubblicato in questa pagina.</p>
+      <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+        <li><a href="https://www.agenziaentrate.gov.it/portale/730-2026" target="_blank" rel="noopener">Agenzia delle Entrate - 730/2026</a> · pagina con tutte le informazioni sul modello</li>
+        <li><a href="https://www.agenziaentrate.gov.it/portale/730-2026/chi-puo-presentare-il-730-cittadini" target="_blank" rel="noopener">Agenzia delle Entrate - Chi può presentare il 730</a> · categorie di reddito, 730 senza sostituto d'imposta</li>
+        <li><a href="https://www.agenziaentrate.gov.it/portale/quando-e-come-presentare-il-730-2026" target="_blank" rel="noopener">Agenzia delle Entrate - Quando e come presentare il 730</a> · scadenza del 30 settembre 2026, delega e modello 730-1</li>
+        <li><a href="https://www.agenziaentrate.gov.it/portale/730-2026/che-cos-" target="_blank" rel="noopener">Agenzia delle Entrate - Che cos'è il 730</a> · rimborsi e trattenute in busta paga o sulla pensione</li>
+        <li><a href="https://www.agenziaentrate.gov.it/portale/730-2026/modello-e-istruzioni" target="_blank" rel="noopener">Agenzia delle Entrate - Modello e istruzioni 730/2026</a> (aggiornamento del 28 maggio 2026)</li>
+        <li><a href="https://www.agenziaentrate.gov.it/portale/schede/dichiarazioni/dichiarazione-precompilata/precompilata-cittadini" target="_blank" rel="noopener">Agenzia delle Entrate - Dichiarazione precompilata 2026</a> · precompilato disponibile dal 30 aprile</li>
+      </ul>
+      <p class="c4">Hai un dubbio sul tuo caso? <a href="/prenota" style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
+    </section>
+
+    <section class="c47" id="approfondimenti">
+      <h2 class="c55">Approfondisci sul blog</h2>
+      <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+        <li><a href="/blog/guida-730-2026-documenti-scadenze">Guida al 730: documenti e scadenze</a></li>
+        <li><a href="/blog/precompilata-2026-30-aprile-14-maggio">730 precompilato: date e cosa controllare</a></li>
+        <li><a href="/blog/detrazioni-spese-mediche-730-2026-guida-completa">Spese mediche nel 730: guida alle detrazioni</a></li>
+        <li><a href="/blog/bonus-ristrutturazione-convivente-2026-detrazione">Bonus ristrutturazione e convivente: la detrazione</a></li>
+        <li><a href="/blog/dichiarazione-redditi-defunto-730-eredi-2026">Dichiarazione dei redditi del defunto: 730 per gli eredi</a></li>
+      </ul>
+    </section>
+
+    <section class="c47">
+      <h2 class="c55">Già che ci sei</h2>
+      <div class="c60"><a href="/isee" class="c2">ISEE</a><a href="/imu-tari" class="c2">IMU e TARI</a><a href="/contratti-affitto" class="c2">Contratti di affitto</a><a href="/tesseramento" class="c2">Tessera</a></div>
+    </section>
+  </div>
   <LandingArticles categories={["730-redditi", "detrazioni-deduzioni"]} />
 </BaseLayout>

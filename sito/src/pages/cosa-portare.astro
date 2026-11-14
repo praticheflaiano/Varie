@@ -1,0 +1,477 @@
+---
+/**
+ * /cosa-portare - Documenti da portare per ogni pratica.
+ * BOZZA da approvare. Modello: naspi.astro / ServiceLanding (stili di /landing.css).
+ *
+ * Regole: gli elenchi vengono PRIMA dalle pagine del sito (sito/src/fragments e sito/src/pages),
+ * poi sono confrontati con la fonte ufficiale (vedi FONTI). Nessun prezzo in questa pagina.
+ *
+ * DA VERIFICARE su fonte ufficiale (elenco dalla pagina del sito, non confrontato; non mostrato al pubblico):
+ *  - TARI: documenti per esenzione/riduzione (pagina AMA non raggiungibile il 14/11/2026)
+ *  - Bonus famiglia (nuovi nati, nido, maternita): documenti non confrontati con INPS
+ *  - Caregiver: elenco della pagina /caregiver, che riporta le proprie fonti
+ *  - SIISL: documenti per la compilazione assistita (elenco dell'ufficio)
+ *  - Raccomandate SEND: avviso, documento, delega (pagina SEND non leggibile il 14/11/2026)
+ *  - Luce e gas: elenco bolletta/voltura/subentro e' operativo, ARERA conferma solo il bonus via ISEE
+ *  - Disability Card: INPS non nomina i patronati tra i canali di domanda (solo servizio online e ANMIC, UICI, ENS, ANFFAS);
+ *    fototessera e SPID/CIE come da pagina del sito, non letti sulla scheda INPS
+ *  - Pensione di reversibilita: documenti come da pagina /pensioni, non confrontati con la scheda INPS
+ *  - RED/INVCIV: la scheda INPS non elenca i documenti; verificata solo la regola "chi deve presentarlo"
+ *  - NASpI: INPS non pubblica un elenco di documenti; documento e codice fiscale sono prassi dell'ufficio
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { BOOKING, CONTACT } from "~/consts";
+
+const AGG = "14 novembre 2026";
+
+// ---- Fonti ufficiali (tutte lette il 14/11/2026). "agg" = data riportata dalla pagina stessa, se c'e'. ----
+const FONTI: Record<string, { t: string; u: string; agg?: string; per: string }> = {
+  ade730: { t: "Agenzia delle Entrate - Modello 730/2026, istruzioni per la compilazione", u: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/730_-istruzioni_2026", agg: "redditi 2025", per: "730: documenti da esibire e da conservare" },
+  isee: { t: "INPS - Portale unico ISEE", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.Portale-unico-ISEE.html", agg: "aggiornata il 20 gennaio 2026", per: "ISEE: nucleo, redditi, patrimonio, SPID/CIE" },
+  naspi: { t: "INPS - NASpI, indennità mensile di disoccupazione", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html", agg: "aggiornata il 2 febbraio 2026", per: "NASpI: domanda, reddito presunto, malattia o maternità" },
+  naspiDomanda: { t: "INPS - La NASpI: come fare domanda", u: "https://www.inps.it/it/it/inps-comunica/dossier/la-naspi/come-fare-domanda.html", agg: "pagina del dossier, aggiornata l'8 luglio 2021", per: "NASpI: IBAN" },
+  vecchiaia: { t: "INPS - Pensione di vecchiaia", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.pensione-di-vecchiaia.html", agg: "aggiornata il 12 giugno 2026", per: "Pensioni: come si fa la domanda" },
+  inval: { t: "INPS - Domanda invalidità civile e accertamento sanitario", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.domanda-invalidita-civile-e-accertamento-sanitario-50004.accertamento-sanitario.html", agg: "aggiornata il 5 giugno 2026", per: "Invalidità: certificato introduttivo, visita" },
+  dcard: { t: "INPS - Carta europea della disabilità (Disability Card)", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.carta-europea-della-disabilit---disability-card-58828.carta-europea-della-disabilit---disability-card.html", agg: "aggiornata il 18 giugno 2026", per: "Disability Card: chi può chiederla" },
+  cude: { t: "Roma Servizi per la Mobilità - Contrassegno CUDE", u: "https://romamobilita.it/servizi-al-pubblico/contrassegno-persone-con-disabilita/", agg: "aggiornata il 15 ottobre 2026", per: "CUDE: certificati, foto, delega, SPID/CIE" },
+  succ: { t: "Agenzia delle Entrate - Dichiarazione di successione e volture catastali, Fascicolo 1 (istruzioni), paragrafo \"Quali documenti occorrono\"", u: "https://www.agenziaentrate.gov.it/portale/documents/d/guest/succ_fascicolo_i_nov_23-3-", per: "Successioni: documenti da allegare" },
+  au: { t: "INPS - Assegno unico e universale per i figli a carico", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html", agg: "aggiornata il 10 settembre 2026", per: "Assegno unico: ISEE, IBAN" },
+  adi: { t: "INPS - Assegno di inclusione (ADI)", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html", agg: "aggiornata il 29 luglio 2026", per: "ADI: ISEE, residenza, affitto registrato" },
+  red: { t: "INPS - La dichiarazione della situazione reddituale (RED)", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.la-dichiarazione-della-situazione-reddituale-red--50574.la-dichiarazione-della-situazione-reddituale-red-.html", agg: "aggiornata il 10 novembre 2026", per: "RED: chi deve presentarlo" },
+  imu: { t: "Roma Capitale - Informazioni utili per il pagamento dell'acconto IMU 2026", u: "https://www.comune.roma.it/web-resources/cms/documents/Scheda_Informazioni_Acconto_IMU_2026_14mag2026.pdf", agg: "scheda del 14 maggio 2026", per: "IMU: autoliquidazione, F24, aiuto dei CAF" },
+  dom1: { t: "INPS - Formalizzare l'assunzione di un lavoratore domestico", u: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.formalizzare-l-assunzione-di-un-lavoratore-domestico.html", agg: "aggiornata l'8 luglio 2025", per: "Colf e badanti: comunicazione di assunzione" },
+  dom2: { t: "INPS - Cosa fare prima dell'assunzione di un lavoratore domestico", u: "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.49834.cosa-fare-prima-dell-assunzione-di-un-lavoratore-domestico.html", agg: "aggiornata il 3 novembre 2026", per: "Colf e badanti: documenti della lavoratrice o del lavoratore" },
+  dimiss: { t: "Ministero del Lavoro - Dimissioni volontarie", u: "https://www.lavoro.gov.it/strumenti-e-servizi/Dimissioni-volontarie/Pagine/default", per: "Dimissioni: SPID/CIE o patronato, revoca in 7 giorni" },
+  arera: { t: "ARERA - Bonus sociale per disagio economico", u: "https://www.arera.it/consumatori/bonus-sociale/bonus-sociale-per-disagio-economico", per: "Luce e gas: il bonus sociale parte dall'ISEE" },
+  loc: { t: "Agenzia delle Entrate - Contratto di locazione o affitto di beni immobili, modello RLI", u: "https://www.agenziaentrate.gov.it/portale/schede/fabbricatiterreni/registrazione-di-un-nuovo-contratto/schedainfo-regime-ordinario", agg: "aggiornata il 13 novembre 2026", per: "Affitto: registrazione entro 30 giorni, APE" },
+  ader: { t: "Agenzia delle entrate-Riscossione - Come chiedere la rateizzazione", u: "https://www.agenziaentrateriscossione.gov.it/it/rateizzazione-delle-cartelle-di-pagamento/come-chiedere-la-rateizzazione/", per: "Cartelle: documento, delega, accesso con SPID/CIE" },
+};
+
+// ---- Servizi. Ogni lista parte dalla pagina del sito indicata in "da". ----
+type Group = { title?: string; items: string[] };
+type Servizio = { id: string; nome: string; href: string; chi: string; groups: Group[]; note?: string[]; fonti: string[]; extra?: { label: string; href: string }[] };
+
+const SERVIZI: Servizio[] = [
+  {
+    id: "730", nome: "Modello 730", href: "/730", chi: "Dichiarazione dei redditi per lavoratori dipendenti e pensionati.",
+    groups: [{ items: [
+      "Documento e codice fiscale tuo, del coniuge e dei familiari a carico",
+      "Il 730 dell'anno scorso, se non l'hai fatto da noi",
+      "Ricevute e scontrini: mediche, farmacia, scuola, sport",
+      "Interessi del mutuo, assicurazioni, bonifici per lavori in casa",
+      "Contratto d'affitto, se sei in affitto",
+    ] }],
+    note: [
+      "La CU non serve: la scarichiamo noi.",
+      "Secondo le istruzioni dell'Agenzia delle Entrate, i principali documenti da esibire sono le certificazioni delle ritenute (CU), le ricevute e fatture delle spese, gli F24 pagati. Gli originali vanno conservati fino al 31 dicembre 2031.",
+    ],
+    fonti: ["ade730"],
+    extra: [{ label: "Elenco completo in PDF", href: "https://assets.cdn.filesafe.space/p7rJcrB05COilABdw0FS/media/69ca9d6873e98224da32821b.pdf" }],
+  },
+  {
+    id: "isee", nome: "ISEE", href: "/isee", chi: "Per Assegno unico, bonus, bollette, mensa, università e altre agevolazioni.",
+    groups: [{ items: [
+      "Documento d'identità tuo e codici fiscali di tutta la famiglia",
+      "Contratto d'affitto registrato, o il foglio del canone se abiti in una casa ATER",
+      "Saldo al 31/12 e giacenza media di ogni conto, libretto e carta, anche Postepay e conti chiusi nell'anno",
+      "Buoni postali, titoli, fondi e polizze vita",
+      "Dati di case e terreni, anche all'estero, e mutuo residuo al 31/12",
+      "Targhe di auto e moto da 500 cc in su, ed eventuali barche",
+      "Redditi particolari: NASpI, DIS-COLL, lavoro autonomo, redditi esteri, mantenimento",
+      "Verbale di invalidità o disabilità, se c'è",
+    ] }],
+    note: [
+      "Per l'ISEE 2027 contano i redditi del 2025 e saldi e immobili al 31/12/2025. La famiglia è quella alla data della domanda. Il 730 e la CU di solito non servono: li recuperiamo noi.",
+      "Secondo l'INPS i redditi sono quelli del secondo anno precedente e il patrimonio è quello al 31 dicembre del secondo anno precedente.",
+    ],
+    fonti: ["isee"],
+    extra: [{ label: "Guida completa in PDF", href: "/guide/isee-2027-documenti-centro-pratiche-flaiano.pdf" }, { label: "Quale ISEE ti serve", href: "/quale-isee" }],
+  },
+  {
+    id: "naspi", nome: "NASpI", href: "/naspi", chi: "Indennità di disoccupazione per chi ha perso il lavoro.",
+    groups: [{ items: [
+      "Documento d'identità e codice fiscale",
+      "Data e motivo della fine dell'ultimo rapporto di lavoro (licenziamento, scadenza del contratto...)",
+      "IBAN di un conto intestato o cointestato a te, in Italia o nell'area SEPA, se vuoi l'accredito su conto",
+      "Se hai partita IVA, cariche societarie o sei iscritto alla Gestione Separata: il reddito che pensi di avere nell'anno, anche se è zero",
+      "Se il giorno in cui è finito il lavoro eri in malattia o in maternità: dillo, va scritto nella domanda",
+      "Se sei stato licenziato senza preavviso e hai ricevuto (o riceverai) l'indennità di mancato preavviso: dillo, va scritto nella domanda",
+    ] }],
+    note: ["La domanda si fa solo online ed è gratuita da noi. Il termine è di 68 giorni: non aspettare."],
+    fonti: ["naspi", "naspiDomanda"],
+  },
+  {
+    id: "siisl", nome: "SIISL dopo la NASpI", href: "/siisl", chi: "Curriculum e Patto di attivazione digitale entro 15 giorni dall'inizio della NASpI.",
+    groups: [{ items: [
+      "Il tuo SPID o la tua CIE con PIN, e il telefono per i codici di accesso. Se non li hai, diccelo quando prenoti",
+      "Il tuo curriculum, se ne hai già uno: lo usiamo come base",
+      "Email e cellulare che usi davvero: vengono verificati con un codice",
+      "Titoli di studio e corsi fatti",
+      "Elenco dei lavori svolti, con date e mansioni",
+      "Patenti e abilitazioni, se ne hai",
+    ] }],
+    note: ["Il curriculum resta tuo: lo puoi aggiornare da solo in ogni momento."],
+    fonti: [],
+  },
+  {
+    id: "pensioni", nome: "Pensioni", href: "/pensioni", chi: "Controllo dei contributi, domanda di pensione e reversibilità.",
+    groups: [
+      { title: "Per la domanda di pensione", items: [
+        "Documento d'identità e codice fiscale",
+        "SPID o CIE, per scaricare insieme l'estratto contributivo",
+        "Estratto conto contributivo INPS, se ce l'hai già",
+        "Buste paga o contratti dei periodi che non risultano",
+        "IBAN per l'accredito della pensione",
+      ] },
+      { title: "In più, per la reversibilità", items: [
+        "Certificato di morte e dati del coniuge",
+        "Stato di famiglia e redditi degli ultimi due anni del defunto e del coniuge",
+      ] },
+    ],
+    note: ["Non sai cosa portare? Scrivici su WhatsApp e ti facciamo la lista.", "L'INPS indica che la domanda si può presentare online, dal contact center o tramite i patronati."],
+    fonti: ["vecchiaia"],
+    extra: [{ label: "Stima e calcolo della pensione", href: "/stima-pensione" }],
+  },
+  {
+    id: "stima-pensione", nome: "Stima e calcolo della pensione", href: "/stima-pensione", chi: "Servizio online dell'ufficio: ricevi un prospetto personale in PDF.",
+    groups: [{ items: [
+      "L'estratto conto contributivo INPS in PDF (lo scarichi dal sito INPS con SPID o CIE)",
+      "Le risposte alle domande del modulo online",
+    ] }],
+    note: ["Se non riesci a scaricare l'estratto conto, lo possiamo richiedere noi: il costo è indicato nella pagina del servizio."],
+    fonti: [],
+  },
+  {
+    id: "invalidita", nome: "Invalidità civile e Legge 104", href: "/invalidita-104", chi: "Invalidità, handicap, accompagnamento, aggravamenti.",
+    groups: [{ items: [
+      "Documento d'identità e tessera sanitaria",
+      "Referti e certificati medici recenti",
+      "Vecchio verbale, se chiedi un aggravamento",
+      "Elenco dei farmaci che prendi",
+      "Ricevuta e copia del certificato medico introduttivo (te le dà il medico): da portare alla visita",
+    ] }],
+    note: ["Hai già il verbale? Ti diciamo tutti i benefici che puoi chiedere.", "Secondo l'INPS, alla visita si porta un documento di riconoscimento valido e la documentazione sanitaria che si ha. Il certificato introduttivo vale 90 giorni per presentare la domanda, dove serve ancora."],
+    fonti: ["inval"],
+  },
+  {
+    id: "disability-card", nome: "Disability Card", href: "/disability-card", chi: "Tessera europea della disabilità, rilasciata dall'INPS.",
+    groups: [{ items: [
+      "Documento d'identità e codice fiscale",
+      "SPID o CIE con PIN. Se non li hai, diccelo quando prenoti",
+      "Una fototessera recente",
+      "Il verbale di invalidità o della Legge 104, se lo hai: va allegato solo se è cartaceo e precedente al 2010, o rilasciato in Valle d'Aosta, a Trento o a Bolzano",
+      "Se l'invalidità è stata riconosciuta dal giudice: tribunale e data della sentenza o del decreto di omologa",
+    ] }],
+    note: ["Per un minorenne viene il genitore, con il proprio documento e quello del figlio."],
+    fonti: ["dcard"],
+  },
+  {
+    id: "cude", nome: "Contrassegno CUDE (Roma)", href: "/cude", chi: "Contrassegno per l'auto delle persone con disabilità, a Roma.",
+    groups: [
+      { title: "Primo rilascio", items: [
+        "Certificato del medico legale della ASL che attesta la ridotta capacità di deambulazione o la cecità",
+        "Oppure il verbale INPS che riporta espressamente la ridotta capacità di deambulazione o la cecità, con la lettera dell'INPS che chiude l'iter sanitario",
+        "Una fototessera del titolare",
+        "Documento d'identità del titolare",
+        "SPID o CIE del titolare",
+        "Le targhe dei veicoli da registrare: una principale e una secondaria",
+      ] },
+      { title: "Rinnovo", items: [
+        "Per un contrassegno da 5 anni: certificato del medico di base che conferma che la disabilità persiste",
+        "Per un contrassegno a tempo: la nuova certificazione medico-legale",
+        "Il vecchio contrassegno, da restituire in originale. In caso di furto o smarrimento, la denuncia con il numero del contrassegno",
+      ] },
+    ],
+    note: ["Se la domanda la presenta una persona delegata, serve una delega in carta semplice e la copia dei documenti di chi delega e di chi presenta.", "Per minori e persone tutelate può fare tutto il genitore o il tutore."],
+    fonti: ["cude"],
+  },
+  {
+    id: "caregiver", nome: "Caregiver familiare", href: "/caregiver", chi: "Permessi, congedi, pensione anticipata, aiuti della Regione Lazio e del Comune di Roma.",
+    groups: [{ items: [
+      "Verbale di invalidità civile e verbale della legge 104 della persona assistita",
+      "Documento e codice fiscale tuo e della persona assistita",
+      "Se lavori: l'ultima busta paga e il nome del contratto",
+      "Per il congedo: la residenza di entrambi, perché serve la convivenza",
+      "ISEE in corso di validità, se ce l'hai. Per il Comune di Roma servono sia l'ISEE ordinario sia quello sociosanitario: li facciamo noi",
+      "Per la pensione: l'estratto contributivo, oppure lo scarichiamo noi",
+    ] }],
+    note: ["Non hai ancora il verbale della 104 o l'accompagnamento? Si parte da lì: seguiamo noi la domanda di invalidità.", "Le fonti ufficiali di questo servizio sono elencate nella pagina Caregiver."],
+    fonti: [],
+  },
+  {
+    id: "successioni", nome: "Successioni", href: "/successioni", chi: "Dichiarazione di successione, volture e documenti per la banca.",
+    groups: [
+      { title: "Per il primo incontro bastano", items: [
+        "Certificato di morte o data e luogo del decesso",
+        "Documenti e codici fiscali degli eredi",
+        "Testamento, se c'è",
+        "Indirizzi di case e terreni (le visure le facciamo noi)",
+        "Banche e Poste dove il defunto aveva conti o libretti",
+      ] },
+      { title: "Poi servono, secondo il tuo caso", items: [
+        "Albero genealogico e dichiarazione sostitutiva dello stato di famiglia (li prepariamo noi)",
+        "Copia del testamento e del verbale di pubblicazione, se la successione è testamentaria",
+        "Documenti che provano i debiti del defunto, se ce ne sono",
+        "Copia dell'atto di rinuncia all'eredità, se qualcuno ha rinunciato",
+        "Verbale di apertura della cassetta di sicurezza, se c'era",
+      ] },
+    ],
+    note: ["Non hai tutto? Non importa: partiamo e ti diciamo cosa recuperare. Nella pagina Successioni trovi ogni documento spiegato, con dove si trova.", "Secondo l'Agenzia delle Entrate, questi documenti si allegano alla dichiarazione; quelli già in possesso della pubblica amministrazione non vanno allegati."],
+    fonti: ["succ"],
+    extra: [{ label: "Documenti spiegati uno per uno", href: "/successioni#documenti" }, { label: "Calcolo delle tasse di successione", href: "/calcolo-imposte-successione" }],
+  },
+  {
+    id: "assegno-unico", nome: "Assegno unico", href: "/assegno-unico", chi: "Domanda e rinnovo per i figli a carico.",
+    groups: [{ items: [
+      "Documenti e codici fiscali di genitori e figli",
+      "IBAN su cui ricevere l'assegno",
+      "I documenti per l'ISEE (vedi la sezione ISEE qui sopra)",
+      "Eventuale certificato di disabilità del figlio",
+      "Permesso di soggiorno, se non sei cittadino italiano o dell'Unione europea",
+    ] }],
+    note: ["Secondo l'INPS l'importo dipende dall'ISEE valido al momento della domanda; senza ISEE spettano gli importi minimi. Il pagamento può avvenire su conto con IBAN, libretto con IBAN o carta con IBAN."],
+    fonti: ["au"],
+  },
+  {
+    id: "bonus-famiglia", nome: "Bonus famiglia, nido e maternità", href: "/bonus-famiglia", chi: "Bonus nuovi nati, asilo nido, maternità.",
+    groups: [{ items: [
+      "Documenti e codici fiscali dei genitori e del bambino",
+      "Permesso di soggiorno, per i cittadini extra-UE",
+      "IBAN intestato o cointestato al richiedente",
+      "ISEE minorenni valido (se non c'è lo facciamo noi)",
+      "Per il nido: iscrizione e ricevute della retta intestate al genitore che paga",
+      "Per la maternità: dati del datore di lavoro e certificato di gravidanza",
+    ] }],
+    note: ["Le ricevute del nido vanno caricate ogni mese: ti spieghiamo come fare o le carichiamo noi."],
+    fonti: [],
+  },
+  {
+    id: "adi-sfl", nome: "ADI e SFL", href: "/adi-sfl", chi: "Assegno di inclusione e Supporto per la formazione e il lavoro.",
+    groups: [{ items: [
+      "Documento d'identità e codice fiscale di tutti i componenti",
+      "ISEE valido (se non ce l'hai, lo facciamo noi gratis)",
+      "SPID o CIE",
+      "Contratto d'affitto, se sei in affitto",
+      "Certificati di invalidità, se in famiglia c'è una persona con disabilità",
+      "IBAN per l'accredito",
+    ] }],
+    note: ["Le soglie e gli importi li aggiorna l'INPS: li controlliamo sempre al momento della domanda.", "Secondo l'INPS la quota per l'affitto richiede un contratto registrato, e serve un ISEE in corso di validità."],
+    fonti: ["adi"],
+  },
+  {
+    id: "red", nome: "RED e INVCIV", href: "/red-invciv", chi: "Dichiarazioni dei redditi e dei ricoveri per l'INPS.",
+    groups: [{ items: [
+      "Documento e codice fiscale",
+      "Lettera o richiesta dell'INPS, se l'hai ricevuta",
+      "Certificazione Unica e altri redditi dell'anno",
+      "Interessi di conti, libretti, titoli e buoni postali",
+      "Per ICRIC e ACC.AS/PS: date e struttura di eventuali ricoveri",
+      "Per ICLAV: buste paga o redditi da lavoro",
+      "Per il ricovero in una struttura sanitaria pubblica: il documento che attesta il contributo a carico di enti pubblici o tuo e dei familiari",
+    ] }],
+    note: ["Hai fatto il 730 con tutti i redditi? Spesso il RED non serve: lo verifichiamo insieme.", "Secondo l'INPS non deve presentare il RED chi risiede in Italia e ha dichiarato tutti i redditi con il 730 o con il modello Redditi."],
+    fonti: ["red"],
+  },
+  {
+    id: "imu-tari", nome: "IMU e TARI", href: "/imu-tari", chi: "Calcolo IMU, F24, esenzioni e rate della TARI.",
+    groups: [{ items: [
+      "Documento e codice fiscale",
+      "Visura catastale o atto di acquisto (se non li hai, li recuperiamo)",
+      "F24 dell'acconto già pagato",
+      "Contratto di affitto o comodato, se la casa è data a terzi",
+      "Per la TARI: ultimo avviso AMA e ricevute dei pagamenti",
+      "ISEE valido per esenzione e bonus TARI (lo facciamo gratis)",
+    ] }],
+    note: ["Con l'ISEE in corso di validità controlliamo subito se hai diritto all'esenzione TARI.", "Per l'IMU, Roma Capitale ricorda che è un'imposta in autoliquidazione: gli uffici non fanno i conteggi, il contribuente li fa da solo o con l'aiuto dei CAF."],
+    fonti: ["imu"],
+  },
+  {
+    id: "colf", nome: "Colf e badanti", href: "/colf-badanti", chi: "Contratto, assunzione all'INPS, buste paga e contributi.",
+    groups: [
+      { title: "Del datore di lavoro", items: ["Documento di riconoscimento", "Codice fiscale", "Numero di telefono o cellulare", "Indirizzo di residenza", "Indirizzo dove si svolge il lavoro"] },
+      { title: "Della lavoratrice o del lavoratore", items: ["Documento di riconoscimento", "Codice fiscale", "Se extracomunitario: permesso o carta di soggiorno", "Residenza anagrafica, se non vive con voi"] },
+    ],
+    note: [
+      "Mandaci le foto su WhatsApp: se manca qualcosa te lo diciamo noi.",
+      "Secondo l'INPS, il lavoratore extracomunitario deve avere un permesso di soggiorno valido per lavorare; va bene anche un permesso scaduto, se il rinnovo è stato chiesto in tempo e c'è la ricevuta. Il lavoratore tra i 16 e i 18 anni ha bisogno di documenti in più: chiedici prima.",
+      "La comunicazione di assunzione all'INPS va fatta entro le ore 24 del giorno prima dell'inizio del rapporto.",
+    ],
+    fonti: ["dom1", "dom2"],
+  },
+  {
+    id: "dimissioni", nome: "Dimissioni online", href: "/dimissioni-online", chi: "Invio delle dimissioni al Ministero del Lavoro.",
+    groups: [{ items: [
+      "Documento d'identità e codice fiscale",
+      "Nome e codice fiscale o partita IVA dell'azienda (li trovi in busta paga)",
+      "Data di inizio del rapporto e data di decorrenza delle dimissioni",
+      "PEC o email dell'azienda, se ce l'hai",
+      "Ultima busta paga e contratto, per calcolare il preavviso",
+      "Per la giusta causa: tutto quello che la prova (buste paga mancanti, estratto contributivo, email, messaggi, diffide)",
+    ] }],
+    note: ["Non firmare dimissioni su carta e non dare lettere in mano all'azienda: senza la procedura online non sono valide.", "Secondo il Ministero del Lavoro il lavoratore può inviare le dimissioni da solo con SPID o CIE, oppure rivolgersi a un soggetto abilitato come il patronato. Si possono revocare entro 7 giorni."],
+    fonti: ["dimiss"],
+  },
+  {
+    id: "luce-gas", nome: "Luce e gas", href: "/luce-gas", chi: "Controllo della bolletta, cambio fornitore, voltura e subentro.",
+    groups: [{ items: [
+      "L'ultima bolletta di luce e di gas, completa di tutte le pagine",
+      "Documento d'identità e codice fiscale dell'intestatario",
+      "Per voltura o subentro: dati dell'immobile e lettura del contatore",
+      "IBAN, se vuoi la domiciliazione bancaria",
+      "Lettere o solleciti ricevuti dal fornitore, se ce ne sono",
+    ] }],
+    note: ["Hai l'ISEE basso? Il bonus sociale sulle bollette arriva in automatico se l'ISEE è in corso di validità: lo facciamo noi, gratis.", "Secondo ARERA il bonus parte da una DSU e da un ISEE sotto la soglia; va rinnovata ogni anno."],
+    fonti: ["arera"],
+  },
+  {
+    id: "affitto", nome: "Contratti d'affitto", href: "/contratti-affitto", chi: "Registrazione, cedolare secca, proroghe, subentri e chiusure.",
+    groups: [{ items: [
+      "Contratto firmato da proprietario e inquilino",
+      "Documenti e codici fiscali di tutte le parti",
+      "Dati catastali dell'immobile (visura)",
+      "Attestato di prestazione energetica (APE), se richiesto",
+      "IBAN per l'addebito delle eventuali imposte",
+      "Per proroghe e chiusure: gli estremi della registrazione",
+    ] }],
+    note: ["Non hai la visura? La recuperiamo noi.", "Secondo l'Agenzia delle Entrate il contratto va registrato entro 30 giorni dalla stipula o dalla decorrenza, se anteriore. I nuovi contratti devono contenere la clausola sull'APE e la copia dell'APE va allegata, tranne per la locazione di singole unità immobiliari."],
+    fonti: ["loc"],
+  },
+  {
+    id: "cartelle", nome: "Cartelle e rateizzazione", href: "/cartelle-rateizzazione", chi: "Controllo delle cartelle e richiesta delle rate all'Agenzia delle entrate-Riscossione.",
+    groups: [{ items: [
+      "Documento e codice fiscale",
+      "Cartelle, avvisi e solleciti ricevuti",
+      "SPID o CIE per accedere all'area riservata di AdER",
+      "Eventuali piani di rate o definizioni già in corso",
+      "ISEE, solo se serve documentare la difficoltà per più di 84 rate",
+    ] }],
+    note: ["Non hai le cartelle? Con lo SPID scarichiamo insieme l'estratto di ruolo.", "Secondo l'Agenzia delle entrate-Riscossione, per importi fino a 120 mila euro e fino a 84 rate la richiesta si fa online con SPID, CIE o CNS. Se serve il modulo, si allega il documento di riconoscimento e, se c'è un delegato, anche il suo."],
+    fonti: ["ader"],
+  },
+  {
+    id: "send", nome: "Raccomandate SEND", href: "/raccomandata-send", chi: "Ritiro e stampa degli atti notificati con SEND.",
+    groups: [{ items: [
+      "L'avviso di avvenuta ricezione (il foglio con QR code e codice IUN)",
+      "Documento d'identità valido",
+      "Codice fiscale o tessera sanitaria",
+      "Se ritiri per un'altra persona: la delega compilata e firmata sull'avviso, con copia del suo documento e del suo codice fiscale",
+    ] }],
+    note: ["Hai perso l'avviso? Portaci comunque documento e codice fiscale: vediamo insieme come recuperare la notifica."],
+    fonti: [],
+  },
+];
+
+// Indice: usato anche per l'elenco delle fonti
+const fontiUsate = Object.entries(FONTI).filter(([k]) => SERVIZI.some((s) => s.fonti.includes(k)));
+const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF4F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>`;
+---
+<BaseLayout
+  title="Documenti da portare per ogni pratica | Centro Pratiche Flaiano"
+  description="Cosa portare per 730, ISEE, NASpI, pensioni, invalidità, successioni, Assegno unico, IMU e TARI, colf e badanti e altre pratiche. Elenchi controllati su fonti ufficiali."
+>
+  <link slot="head" rel="stylesheet" href="/landing.css" />
+  <div class="lp"><div class="c36 cp">
+    <section class="cp-hero">
+      <span class="c26">Prima dell'appuntamento</span>
+      <h1 class="cp-h1">Documenti da portare <span class="c57">per ogni pratica.</span></h1>
+      <p class="c63">Scegli la tua pratica e trovi l'elenco di cosa portare. Non hai tutto? Vieni lo stesso: ti diciamo cosa manca e lo recuperiamo con te.</p>
+      <div class="c60 cp-noprint">
+        <a href="/prenota" class="c18">Prenota un appuntamento</a>
+        <button type="button" class="c20 cp-print" onclick="window.print()">Stampa questa pagina</button>
+      </div>
+      <p class="cp-small">Ultimo aggiornamento: {AGG}. Gli elenchi partono dalle nostre pagine di servizio e sono controllati sulle fonti ufficiali indicate in fondo.</p>
+    </section>
+
+    <section class="cp-indice" aria-labelledby="indice-titolo">
+      <h2 id="indice-titolo" class="c55">Vai alla tua pratica</h2>
+      <ul class="cp-chips">
+        {SERVIZI.map((s) => <li><a href={`#${s.id}`} class="c2">{s.nome}</a></li>)}
+        <li><a href="#fonti" class="c2">Fonti ufficiali</a></li>
+      </ul>
+    </section>
+
+    {SERVIZI.map((s) => (
+      <section id={s.id} class="cp-sezione">
+        <div class="cp-card">
+          <div class="cp-head">
+            <h2 class="c55">{s.nome}</h2>
+            <p class="c4">{s.chi}</p>
+          </div>
+          {s.groups.map((g) => (
+            <div class="cp-gruppo">
+              {g.title && <h3 class="cp-h3">{g.title}</h3>}
+              <ul class="c27">
+                {g.items.map((d) => (
+                  <li class="cp-li"><span class="c0"><Fragment set:html={check} /></span><span>{d}</span></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          {s.note?.map((n) => <p class="cp-nota">{n}</p>)}
+          {s.fonti.length > 0 ? (
+            <p class="cp-fonte">Controllato su: {s.fonti.map((k, i) => <>{i > 0 && " · "}<a href={FONTI[k].u} target="_blank" rel="noopener">{FONTI[k].t}</a></>)}</p>
+          ) : null}
+          <div class="c60 cp-noprint">
+            <a href={s.href} class="cp-btn cp-btn-main">Pagina del servizio →</a>
+            <a href="/prenota" class="cp-btn cp-btn-sec">Prenota</a>
+            {s.extra?.map((e) => <a href={e.href} class="cp-btn cp-btn-sec" target={e.href.startsWith("http") ? "_blank" : undefined} rel={e.href.startsWith("http") ? "noopener" : undefined}>{e.label}</a>)}
+            <a href="#indice-titolo" class="cp-su">Torna all'indice ↑</a>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="cp-sezione">
+      <div class="cp-card">
+        <h2 class="c55">Non trovi la tua pratica?</h2>
+        <p class="c4">Per PEC, cambio di residenza, certificati e assicurazioni vedi <a href="/servizi/servizi-vari">Servizi vari</a>. Altrimenti scrivici su <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener">WhatsApp</a>, chiama lo <a href={`tel:${CONTACT.phone.landlineRaw}`}>{CONTACT.phone.landline}</a> o <a href="/prenota">prenota un appuntamento</a>: ti mandiamo la lista giusta per il tuo caso.</p>
+      </div>
+    </section>
+
+    <section class="c47" id="fonti">
+      <h2 class="c55">Fonti ufficiali</h2>
+      <p class="c4"><b>Aggiornato il {AGG}.</b> Le regole cambiano: se la tua situazione è particolare, la lista giusta te la diamo al momento della prenotazione. Le date sono quelle indicate dalle pagine ufficiali alla data del controllo.</p>
+      <ul class="c4 cp-fonti">
+        {fontiUsate.map(([k, f]) => (
+          <li><a href={f.u} target="_blank" rel="noopener">{f.t}</a>{f.agg ? ` (${f.agg})` : ""} · {f.per}</li>
+        ))}
+      </ul>
+      <p class="c4">Hai un dubbio sul tuo caso? <a href="/prenota" style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
+    </section>
+  </div></div>
+</BaseLayout>
+
+<style>
+  .cp-hero { max-width: 1200px; margin: 0 auto; padding: 40px 24px 24px; display: flex; flex-direction: column; gap: 20px; }
+  .cp-h1 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(36px, 7vw, 64px); line-height: 1; font-weight: 800; letter-spacing: -0.03em; }
+  .cp-small { margin: 0; font-size: 14px; color: #5B5B72; max-width: 70ch; }
+  .cp-indice { max-width: 1200px; margin: 0 auto; padding: 8px 24px 32px; display: flex; flex-direction: column; gap: 16px; }
+  .cp-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .cp-chips a { display: inline-block; padding: 8px 16px; font-size: 15px; }
+  .cp-sezione { max-width: 1200px; margin: 0 auto; padding: 12px 24px; scroll-margin-top: 96px; }
+  .cp-card { background: #F7F7FB; border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 18px; }
+  .cp-head { display: flex; flex-direction: column; gap: 6px; }
+  .cp-h3 { margin: 0 0 10px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; }
+  .cp-gruppo { display: flex; flex-direction: column; }
+  .cp-li { display: flex; gap: 12px; }
+  .cp-nota { margin: 0; font-size: 15px; line-height: 1.5; color: #3F3F5A; background: #fff; border-radius: 14px; padding: 12px 16px; }
+  .cp-fonte { margin: 0; font-size: 13px; line-height: 1.5; color: #5B5B72; }
+  .cp-fonte a { color: #4B2FE0; }
+  .cp-btn { text-decoration: none; padding: 12px 20px; border-radius: 999px; font-weight: 700; font-size: 15px; }
+  .cp-btn-main { background: #5B3DF5; color: #fff; }
+  .cp-btn-sec { background: #fff; color: #14142B; border: 2px solid #14142B; padding: 10px 18px; }
+  .cp-su { align-self: center; margin-left: auto; font-size: 14px; color: #4B2FE0; }
+  .cp-print { font-family: inherit; cursor: pointer; }
+  .cp-fonti { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .cp-fonti a, .cp-nota a, .cp .c4 a { color: #4B2FE0; }
+  @media (max-width: 640px) { .cp-card { padding: 20px; border-radius: 22px; } .cp-su { margin-left: 0; } }
+</style>
+<style is:global>
+  @media print {
+    .site-header, .site-footer, .whatsapp-fab, .mab, #closure-notice, .share, .cp-noprint { display: none !important; }
+    .cp-card { background: #fff !important; border: 1px solid #999; border-radius: 8px; break-inside: avoid; }
+    .cp-sezione { padding: 6px 0 !important; break-inside: avoid; }
+    .cp-fonte a::after, .cp-fonti a::after { content: " (" attr(href) ")"; font-size: 11px; word-break: break-all; }
+    .cp-chips { display: none; }
+  }
+</style>
