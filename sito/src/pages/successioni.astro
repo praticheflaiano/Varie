@@ -4,6 +4,7 @@ import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import SuccessioniCalc from "~/components/ui/SuccessioniCalc.astro";
+import DaCasa from "~/components/ui/DaCasa.astro";
 
 /*
  * Fonti (verificate il 10/11/2026):
@@ -17,9 +18,10 @@ import SuccessioniCalc from "~/components/ui/SuccessioniCalc.astro";
  * - Revisione novembre 2026 (bozza): sezioni chi/volture/tempi/prenotazione/fonti; prezzo: 600 € tutto compreso, preventivo solo per casi particolari con molte proprietà (confermato da Antonio il 14/11/2026)
  * - Moduli GHL: "Pre-valutazione successione" (ioylPrrDs1drqeYIpnW8), "Documenti successione" (3xkSAVCqTF0Rdqh652QV);
  *   calendario dedicato link.arcanis.it/widget/bookings/successioni-flaiano.
+ * - Blocco "Successione da casa" (id da-casa, 14/11/2026): dati in src/data/dacasa.ts; acconto 150 € alla consegna dei documenti,
+ *   se la pratica non si può fare acconto restituito meno 49 € (decisione di Antonio, 14/11/2026).
  */
 const VERIFICA = "https://link.arcanis.it/widget/form/ioylPrrDs1drqeYIpnW8";
-const CARICA = "https://link.arcanis.it/widget/form/3xkSAVCqTF0Rdqh652QV";
 const BOOK = "https://link.arcanis.it/widget/bookings/successioni-flaiano";
 const WA = "https://wa.me/393716230690?text=" + encodeURIComponent("Ciao, vorrei informazioni sulla dichiarazione di successione.");
 
@@ -88,7 +90,8 @@ const props = {
   lead: "Dichiarazione di successione, volture delle case, conti in banca e imposte: un solo referente, un prezzo chiaro (600 € tutto compreso) e la lista dei documenti con la spiegazione di dove trovarli. In ufficio a Vigne Nuove o a distanza, anche con eredi in città diverse.",
   bookingHref: BOOK,
   heroCta: { label: "Calcola le tasse di successione", href: "#calcolo" },
-  online: { href: CARICA, title: "Carica i documenti", text: "Hai già fatto il primo colloquio? Carica foto o PDF dei documenti dal telefono. In alternativa mandali su WhatsApp.", cta: "Carica i documenti →" },
+  daCasa: true,
+  online: { href: "#da-casa", title: "Fallo da casa", text: "Rispondi alla pre-valutazione e carica i documenti dal telefono. L'acconto lo paghi solo dopo il nostro controllo.", cta: "Vedi come funziona →" },
   chat: {
     q: "È mancato mio padre, c'è la casa e un conto alle Poste. Da dove partiamo?",
     a: "Ci vediamo anche in video: ti mandiamo la lista dei documenti, le visure le facciamo noi.",
@@ -119,7 +122,7 @@ const props = {
   price: {
     value: "600 €",
     badge: "Tutto compreso",
-    text: "Dichiarazione di successione, <b>volture catastali</b> e <b>documenti per lo svincolo in banca</b>, Solo per casi particolari con molte proprietà facciamo un preventivo scritto. Imposte e bolli dello Stato a parte, calcolati e mostrati prima della firma. Acconto di 150 € alla consegna dei documenti, saldo alla consegna della pratica.",
+    text: "Dichiarazione di successione, <b>volture catastali</b> e <b>documenti per lo svincolo in banca</b>, Solo per casi particolari con molte proprietà facciamo un preventivo scritto. Imposte e bolli dello Stato a parte, calcolati e mostrati prima della firma. Acconto di 150 € alla consegna dei documenti, saldo alla consegna della pratica. Se la pratica non si può fare, l'acconto ti viene restituito meno 49 € di spese di gestione.",
     cta: { label: "Fissa il primo colloquio →", href: BOOK },
   },
   faqs,
@@ -148,10 +151,11 @@ const td = "padding:14px 16px;font-size:16px;line-height:1.45;border-top:1px sol
 
 <BaseLayout title="Successione a Roma: dichiarazione di successione al CAF" description="Dichiarazione di successione a Roma entro 12 mesi: documenti, volture, imposte e tempi. CAF a Vigne Nuove o a distanza, 600 € tutto compreso. Prenota.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="successioni" name="Dichiarazione di successione" description="Dichiarazione di successione telematica, volture catastali e documenti per lo svincolo dei conti, senza limiti di eredi o immobili." serviceType="Assistenza fiscale - successioni" offers={[{ name: "Dichiarazione di successione tutto compreso (imposte escluse)", price: 600 }]} />
+  <JsonLdService slot="head" slug="successioni" name="Dichiarazione di successione" description="Dichiarazione di successione telematica, volture catastali e documenti per lo svincolo dei conti, senza limiti di eredi o immobili." serviceType="Assistenza fiscale - successioni" offers={[{ name: "Dichiarazione di successione tutto compreso (imposte escluse)", price: 600 }]} onlineUrl="#da-casa" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
   <ServiceLanding {...props}>
+    <DaCasa slot="da-casa" slug="successioni" aggiornato="14 novembre 2026" />
     <!-- INDICE RAPIDO -->
     <nav aria-label="In questa pagina" style="max-width:1120px;margin:0 auto;padding:8px 24px 0;display:flex;flex-wrap:wrap;gap:8px">
       {[["#chi","Chi deve presentarla"],["#regole","12 mesi e imposte"],["#calcolo","Calcola le imposte"],["#documenti","Documenti"],["#volture","Volture"],["#tempi","Tempi"],["#prenota","Come prenotare"],["#prezzo","Prezzo"],["#fonti","Fonti"]].map(([h,l]) => (

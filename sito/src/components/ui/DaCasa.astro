@@ -1,0 +1,98 @@
+---
+/**
+ * Blocco "Fallo da casa": uguale in tutte le pagine servizio, subito prima di "Come preferisci?".
+ * Id "da-casa": i pulsanti "Fai tutto online" / "Fallo da casa" in alto e nelle schede puntano qui.
+ * Dati in ~/data/dacasa.ts (prezzi solo quelli pubblicati). HTML statico, nessun JavaScript.
+ * Se non c'e un modulo per il servizio, "Inizia ora" apre WhatsApp con "Vorrei fare da casa: <servizio>".
+ */
+import { DACASA, PRIMA_STANDARD, WA_DA_CASA, type DaCasaSlug } from "~/data/dacasa";
+
+interface Props { slug: DaCasaSlug; aggiornato?: string }
+const { slug, aggiornato } = Astro.props;
+const d = DACASA[slug];
+if (!d) throw new Error("DaCasa: slug sconosciuto: " + slug);
+
+const haModulo = Boolean(d.moduloUrl);
+const startHref = d.moduloUrl ?? WA_DA_CASA(d.waNome);
+const startExt = startHref.startsWith("http");
+const startLabel = haModulo ? (d.moduloLabel ?? "Inizia ora") : "Inizia ora";
+const prima = d.prima ?? PRIMA_STANDARD;
+const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF4F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>`;
+const pill = "align-self:flex-start;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px";
+const btnLink = "font-weight:800;color:#14142B";
+---
+
+<section id="da-casa" aria-labelledby="da-casa-titolo" style="background:#F1EEFF;scroll-margin-top:80px">
+  <div class="c46">
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <span style={`${pill};background:#5B3DF5;color:#fff`}>Da casa</span>
+      {d.badge && <span style={`${pill};background:#D4FF4F;color:#14142B`}>{d.badge}</span>}
+    </div>
+    <h2 class="c1" id="da-casa-titolo">{d.titolo}</h2>
+    <p class="c4" style="font-size:18px;max-width:780px">{d.lead}</p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
+      <div class="c45" style="flex:1 1 300px">
+        <p class="c82">Quanto costa</p>
+        {d.prezzo.prefisso && <p class="c82" style="font-size:18px">{d.prezzo.prefisso}</p>}
+        <p class="c65" style="font-size:clamp(48px,9vw,80px)">{d.prezzo.value}</p>
+        {d.prezzo.sotto && <p class="c84"><b>{d.prezzo.sotto}</b></p>}
+        {d.prezzo.righe?.map((r) => <p class="c84">{r}</p>)}
+        {d.prezzo.nota && <p class="c84">{d.prezzo.nota}</p>}
+      </div>
+      <div class="c9" style="flex:1 1 300px;background:#fff">
+        <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1">Cosa include</h3>
+        <ul class="c27">
+          {d.include.map((x) => <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{x}</span></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin:8px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:32px;line-height:1.1">Come funziona, in 5 passi</h3>
+    <ol style="margin:0;padding:0;list-style:none;display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))">
+      {d.passi.map((p, i) => i < d.passi.length - 1 ? (
+        <li class="c9" style="background:#fff"><span class="c7" style="font-size:40px">{String(i + 1).padStart(2, "0")}</span><b style="font-size:19px;line-height:1.2">{p.t}</b><span class="c4">{p.d}</span></li>
+      ) : (
+        <li class="c21"><span class="c35" style="font-size:40px">{String(i + 1).padStart(2, "0")}</span><b style="font-size:19px;line-height:1.2;color:#fff">{p.t}</b><span class="c71">{p.d}</span></li>
+      ))}
+    </ol>
+
+    <div class="c60" style="align-items:center;gap:16px">
+      <a href={startHref} class="c18" data-dacasa={d.slug} data-passo="modulo" target={startExt ? "_blank" : undefined} rel={startExt ? "noopener" : undefined}>{startLabel}</a>
+      {d.documentiUrl && <a href={d.documentiUrl} class="c20" data-dacasa={d.slug} data-passo="documenti" target="_blank" rel="noopener">Carica i documenti</a>}
+      <span class="c4">oppure <a href="/prenota" style={btnLink} data-dacasa={d.slug} data-passo="prenota">prenota</a></span>
+    </div>
+    {!haModulo && (
+      <p class="c4" style="font-size:15px">Si apre WhatsApp con il messaggio già scritto: ti rispondiamo noi e ti mandiamo il modulo giusto.</p>
+    )}
+
+    <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:stretch">
+      <div class="c9" style="flex:1 1 300px;background:#fff">
+        <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1">Cosa mandarci</h3>
+        <ul class="c27" style="font-size:16px">
+          {d.documenti.map((x) => <li style="display:flex;gap:12px"><span class="c0"><Fragment set:html={check} /></span><span>{x}</span></li>)}
+        </ul>
+        <a href={`/cosa-portare#${d.cosaPortareId}`} style={btnLink}>Lista completa →</a>
+      </div>
+      <div class="c9" style="flex:1 1 300px;background:#fff;border-color:#5B3DF5">
+        <h3 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;line-height:1.1">{d.primaTitolo ?? "Prima di pagare"}</h3>
+        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px" class="c4">
+          {prima.map((x) => <li>{x}</li>)}
+        </ul>
+        {d.limiti && d.limiti.length > 0 && (
+          <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid #E4E0FF;padding-top:12px">
+            <b style="font-size:15px">Da sapere</b>
+            <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px" class="c4">
+              {d.limiti.map((x) => <li>{x}</li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <p class="c4" style="font-size:14px">
+      Fonti ufficiali: {d.fonti.map((f, i) => <>{i > 0 && " · "}<a href={f.href} target="_blank" rel="noopener">{f.label}</a></>)}.
+      {aggiornato && <> Aggiornato il {aggiornato}.</>}
+    </p>
+  </div>
+</section>

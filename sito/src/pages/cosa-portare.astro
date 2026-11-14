@@ -23,6 +23,8 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import { BOOKING, CONTACT } from "~/consts";
 
 const AGG = "14 novembre 2026";
+/* Pratiche con il blocco "da casa" (id da-casa) nella pagina del servizio: link in più, niente altro. */
+const DA_CASA_ID = new Set(["isee", "assegno-unico", "730", "dimissioni", "successioni"]);
 
 // ---- Fonti ufficiali (tutte lette il 14/11/2026). "agg" = data riportata dalla pagina stessa, se c'e'. ----
 const FONTI: Record<string, { t: string; u: string; agg?: string; per: string }> = {
@@ -413,6 +415,7 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
           ) : null}
           <div class="c60 cp-noprint">
             <a href={s.href} class="cp-btn cp-btn-main">Pagina del servizio →</a>
+            {DA_CASA_ID.has(s.id) && <a href={`${s.href}#da-casa`} class="cp-btn cp-btn-sec">Fallo da casa</a>}
             <a href="/prenota" class="cp-btn cp-btn-sec">Prenota</a>
             {s.extra?.map((e) => <a href={e.href} class="cp-btn cp-btn-sec" target={e.href.startsWith("http") ? "_blank" : undefined} rel={e.href.startsWith("http") ? "noopener" : undefined}>{e.label}</a>)}
             <a href="#indice-titolo" class="cp-su">Torna all'indice ↑</a>

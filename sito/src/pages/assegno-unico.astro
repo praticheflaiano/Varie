@@ -2,14 +2,35 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
-import body from "~/fragments/assegno-unico.html?raw";
+import DaCasa from "~/components/ui/DaCasa.astro";
+import { DACASA } from "~/data/dacasa";
+import rawBody from "~/fragments/assegno-unico.html?raw";
 const ld = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Devo rifare la domanda ogni anno?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Di solito no, ma l'ISEE va rinnovato ogni anno per avere l'importo giusto.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto mi spetta?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Dipende dall'ISEE, dal numero e dall'età dei figli. Lo calcoliamo insieme.\"}}, {\"@type\": \"Question\", \"name\": \"I genitori sono separati: come funziona?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"L'assegno si può dividere tra i due genitori. Ti spieghiamo le opzioni al primo incontro.\"}}, {\"@type\": \"Question\", \"name\": \"Entro quando devo rinnovare l'ISEE per non perdere soldi?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Regola del 2026 (circolare INPS n. 7 del 30 gennaio 2026): gennaio e febbraio si pagano con l'ISEE dell'anno prima; da marzo, senza il nuovo ISEE, si ricevono gli importi minimi. Se presenti la nuova DSU entro il 30 giugno, l'INPS ricalcola da marzo e ti paga gli arretrati. Per il 2027 l'INPS non ha ancora pubblicato le nuove regole: conviene comunque rifare l'ISEE a inizio anno, e ti scriviamo noi su WhatsApp.\"}}, {\"@type\": \"Question\", \"name\": \"Chi ha diritto all'Assegno Unico?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Spetta per ogni figlio minorenne a carico, e fino a 21 anni a certe condizioni (vedi la domanda sui figli maggiorenni). Chi chiede deve avere i requisiti di cittadinanza o permesso di soggiorno, di tassazione e di residenza in Italia. Lo verifichiamo con te al primo incontro.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto vale l'Assegno Unico nel 2026?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Con l'ISEE l'importo va da 203,8 € a 58,3 € per ogni figlio minorenne: il massimo spetta con ISEE fino a 17.468,51 €. Senza ISEE, o con ISEE sopra 46.582,71 €, si ricevono gli importi minimi (fonte: INPS).\"}}, {\"@type\": \"Question\", \"name\": \"Se faccio la domanda in ritardo perdo gli arretrati?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Secondo l'INPS (regole 2026), per le domande presentate dal 1° marzo al 30 giugno l'assegno spetta con gli arretrati da marzo. Per le domande presentate dopo il 30 giugno parte dal mese successivo alla domanda.\"}}, {\"@type\": \"Question\", \"name\": \"Mio figlio ha più di 18 anni: l'assegno spetta ancora?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Sì, fino a 21 anni, se il figlio ha un reddito sotto gli 8.000 € l'anno e studia, fa un tirocinio o un lavoro, è iscritto come disoccupato o fa il servizio civile. Per i figli con disabilità non c'è limite di età. Il figlio maggiorenne può anche chiedere di ricevere direttamente la sua quota.\"}}, {\"@type\": \"Question\", \"name\": \"In che percentuale si divide l'assegno tra genitori separati?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Su richiesta, in parti uguali (50% a ciascun genitore che esercita la responsabilità genitoriale). Con affidamento esclusivo, chi chiede può avere il 100%. La quota al secondo genitore parte dal mese dopo la comunicazione all'INPS.\"}}, {\"@type\": \"Question\", \"name\": \"Quanto costa la domanda con voi?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"In ufficio 15 € (10 € se sei tesserato), online 19 € (15 € se sei tesserato). L'ISEE che serve per l'assegno è gratuito. La tessera costa 30 € l'anno per tutta la famiglia.\"}}]}";
+
+/* ---- Il frammento viene diviso sul marcatore "Come preferisci?"; se il frammento cambia, la build si ferma. ---- */
+const M_COME = '<section class="c44"><h2 class="c1">Come preferisci?</h2>';
+const SOSTITUZIONI: [string, string][] = [
+  ['<a href="/richiesta" class="c20">Fai tutto online</a>', '<a href="#da-casa" class="c20">Fai tutto online</a>'],
+  ['<a href="/richiesta" class="c15">', '<a href="#da-casa" class="c15">'],
+  ["Foto dei documenti, due minuti di modulo, al resto pensiamo noi.", "Foto dei documenti dal telefono, al resto pensiamo noi. Paghi dopo il nostro controllo."],
+];
+let body = rawBody;
+for (const [da, a] of SOSTITUZIONI) {
+  if (!body.includes(da)) throw new Error("assegno-unico.astro: testo non trovato nel frammento: " + da.slice(0, 60));
+  body = body.replace(da, a);
+}
+if (!body.includes(M_COME)) throw new Error("assegno-unico.astro: marcatore non trovato nel frammento: " + M_COME);
+const iCome = body.indexOf(M_COME);
+const part1 = body.slice(0, iCome) + "</div>"; // chiude il div c36 aperto dal frammento
+const part2 = '<div class="c36">' + body.slice(iCome); // "Come preferisci?" e il resto (chiude il suo div c36)
 ---
 <BaseLayout title={"Assegno Unico: domanda da 10 €"} description={"Domanda, rinnovo e variazioni dell'Assegno Unico con ISEE gratuito. In ufficio a Vigne Nuove o online."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
-  <JsonLdService slot="head" slug="assegno-unico" name="Assegno Unico Universale" description={"Domanda, rinnovo e variazioni dell'Assegno Unico per i figli, con ISEE gratuito."} serviceType="Patronato - sostegno famiglie" offers={[{ name: "Domanda in ufficio", price: 15 }, { name: "Domanda online", price: 19 }, { name: "Domanda in ufficio per tesserati", price: 10 }, { name: "Domanda online per tesserati", price: 15 }]} />
+  <JsonLdService slot="head" slug="assegno-unico" name="Assegno Unico Universale" description={"Domanda, rinnovo e variazioni dell'Assegno Unico per i figli, con ISEE gratuito."} serviceType="Patronato - sostegno famiglie" offers={[{ name: "Domanda in ufficio", price: 15 }, ...DACASA["assegno-unico"].offerte.slice(0, 1), { name: "Domanda in ufficio per tesserati", price: 10 }, ...DACASA["assegno-unico"].offerte.slice(1)]} onlineUrl="#da-casa" />
   {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
-  <div class="lp"><Fragment set:html={body} /></div>
+  <div class="lp"><Fragment set:html={part1} /></div>
+  <div class="lp"><div class="c36"><DaCasa slug="assegno-unico" aggiornato="14 novembre 2026" /></div></div>
+  <div class="lp"><Fragment set:html={part2} /></div>
   <div class="lp"><p class="c4" style="max-width:1200px;margin:0 auto;padding:16px 24px 0"><b>Date dei pagamenti di questo mese:</b> <a href="/pagamenti-inps" style="font-weight:700">calendario dei pagamenti INPS</a>.</p></div>
   <LandingArticles categories={["assegno-unico", "isee-dsu", "bonus-fiscali"]} />
 </BaseLayout>

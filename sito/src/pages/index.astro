@@ -14,7 +14,7 @@ const articles = (await getVisibleArticles()).slice(0, 4);
 
 const top = [
   { href: "/isee", title: "ISEE", tag: "0 €", desc: "Per Assegno Unico, bonus e università. Redditi e CU li prendiamo noi.", bg: "#D4FF4F", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#14142B", go: "#14142B" },
-  { href: "/730", title: "730", tag: "da 30 €", desc: "Anche da casa. Se torni l'anno dopo, il prezzo non cambia.", bg: "#5B3DF5", fg: "#fff", tagBg: "#D4FF4F", tagFg: "#14142B", sub: "#E4DEFF", go: "#fff" },
+  { href: "/730", title: "730", tag: "da 30 €", desc: "In ufficio da 30 €, online da casa da 35 €. Se torni l'anno dopo, il prezzo non cambia.", bg: "#5B3DF5", fg: "#fff", tagBg: "#D4FF4F", tagFg: "#14142B", sub: "#E4DEFF", go: "#fff" },
   { href: "/invalidita-104", title: "Invalidità e 104", tag: "1° incontro gratis", desc: "Medico certificatore e patronato nello stesso ufficio. Un posto, zero giri.", bg: "#14142B", fg: "#fff", tagBg: "#FF5C8A", tagFg: "#fff", sub: "#D7D7E6", go: "#D4FF4F" },
   { href: "/naspi", title: "NASpI", tag: "Domanda gratis", desc: "Hai perso il lavoro? Domanda e anticipo, senza perdere giorni.", bg: "#F1EEFF", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#3F3F5A", go: "#4B2FE0" },
   { href: "/assegno-unico", title: "Assegno Unico", tag: "da 10 €", desc: "Domanda, rinnovo e variazioni. Con l'ISEE giusto prendi l'importo pieno.", bg: "#FFE3EC", fg: "#14142B", tagBg: "#14142B", tagFg: "#fff", sub: "#3F3F5A", go: "#4B2FE0" },
@@ -22,6 +22,7 @@ const top = [
 ];
 
 const rest = [
+  { k: "TEST GRATUITO", t: "Scopri cosa ti spetta", d: "Bonus e aiuti per te, in un minuto", h: "/quale-isee?modo=bonus" },
   { k: "SOLDI E TASSE", t: "IMU", d: "Saldo di dicembre e F24 pronto", h: "/imu-tari" },
   { k: "SOLDI E TASSE", t: "Cartelle e rate", d: "Riscossione, rottamazione, avvisi", h: "/cartelle-rateizzazione" },
   { k: "SOLDI E TASSE", t: "Bonus e detrazioni", d: "Ristrutturazione, spese mediche, mobili", h: "/servizi/caf" },
@@ -52,7 +53,7 @@ const homeFaq = [
   },
   {
     question: "Quanto costa il 730?",
-    answer: "Da <strong>30 €</strong>, in base alla tua situazione. Se l'anno dopo torni da noi, il prezzo resta quello. <a href='/730'>Tutto sul 730</a>.",
+    answer: "In ufficio da <strong>30 €</strong>, online da casa da <strong>35 €</strong>, in base alla tua situazione. Se l'anno dopo torni da noi, il prezzo resta quello. <a href='/730'>Tutto sul 730</a>.",
   },
   {
     question: "L'ISEE si paga?",

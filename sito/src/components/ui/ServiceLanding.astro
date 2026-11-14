@@ -27,14 +27,17 @@ interface Props {
   price?: { value: string; badge?: string; text: string; cta?: { label: string; href: string } };
   heroCta?: { label: string; href: string };
   online?: { href: string; title: string; text: string; cta: string };
+  /** Se vero la pagina ha il blocco <DaCasa slot="da-casa" />: i pulsanti "online" puntano a #da-casa. */
+  daCasa?: boolean;
   faqs: Faq[];
   related: { label: string; href: string }[];
 }
 
 const {
   eyebrow, title, highlight, lead, bookingHref = BOOKING.arcanisGroup, chat, sticker, strip,
-  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs = [], docsGroups, docsNote, price, faqs, related, heroCta, online,
+  needTitle = "Ti serve se…", needsLead, needs, steps, docsTitle = "Cosa ti serve", docs = [], docsGroups, docsNote, price, faqs, related, heroCta, online, daCasa = false,
 } = Astro.props;
+const onlineHref = daCasa ? "#da-casa" : (online?.href ?? "/richiesta");
 
 const needClass = ["c39", "c41", "c40"];
 const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF4F" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>`;
@@ -55,7 +58,7 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
         ) : (
           <>
             <a href={bookingHref} class="c18">Prenota in 30 secondi</a>
-            <a href="/richiesta" class="c20">Fai tutto online</a>
+            <a href={daCasa ? "#da-casa" : "/richiesta"} class="c20">Fai tutto online</a>
           </>
         )}
       </div>
@@ -141,11 +144,13 @@ const check = `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24
     </div>
   </section>
 
+  <slot name="da-casa" />
+
   <section class="c44">
     <h2 class="c1">Come preferisci?</h2>
     <div class="c59">
       <a href={bookingHref} class="c14"><span class="c76">Di persona o in video</span><span class="c12">Prenota un appuntamento</span><span class="c77">Scegli giorno e ora. Ti diciamo prima quali documenti portare.</span><span class="c24">Scegli l'orario →</span></a>
-      <a href={online?.href ?? "/richiesta"} class="c15"><span class="c78">Dal telefono, quando vuoi</span><span class="c12">{online?.title ?? "Fai tutto online"}</span><span class="c79">{online?.text ?? "Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi."}</span><span class="c25">{online?.cta ?? "Inizia ora →"}</span></a>
+      <a href={onlineHref} class="c15"><span class="c78">Dal telefono, quando vuoi</span><span class="c12">{online?.title ?? "Fai tutto online"}</span><span class="c79">{online?.text ?? "Un modulo da 2 minuti e le foto dei documenti. Se manca qualcosa ti scriviamo noi."}</span><span class="c25">{online?.cta ?? "Inizia ora →"}</span></a>
     </div>
   </section>
 

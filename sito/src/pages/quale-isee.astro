@@ -5,6 +5,16 @@
  * (L. 199/2025 c. 208, DM 3/2026): vedi l'articolo /blog/tipi-di-isee-differenze-quale-serve.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import bonus from "~/data/bonus.json";
+
+// Dati del tab "Cosa ti spetta": solo i campi che servono alla pagina, inseriti a build time.
+const misure = bonus.misure.map((m: any) => ({
+  id: m.id, nome: m.nome, ente: m.ente, a_chi_spetta: m.a_chi_spetta, requisiti: m.requisiti,
+  importo: { testo: m.importo.testo }, scadenza: m.scadenza, stato: m.stato, come_si_chiede: m.come_si_chiede,
+  il_centro_controlla: m.il_centro_controlla, pagina_sito: m.pagina_sito, articolo_sito: m.articolo_sito,
+  cta: { aiuto: m.cta.aiuto, prezzo_testo: m.cta.prezzo_testo }, fonti: m.fonti, nota_motore: m.nota_motore ?? null,
+}));
+const misureJson = JSON.stringify(misure).replace(/</g, "\\u003c");
 
 const ld = {
   "@context": "https://schema.org",
@@ -17,29 +27,79 @@ const ld = {
   inLanguage: "it",
   offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" },
   provider: { "@type": "LocalBusiness", name: "Centro Pratiche Flaiano", url: "https://praticheflaiano.it" },
-  description: "Rispondi a poche domande e scopri quale ISEE ti serve (ordinario, minorenni, università, sociosanitario, ristretto, residenze, corrente) e quali documenti preparare.",
+  description: "Due test gratuiti: scopri quale ISEE ti serve (ordinario, minorenni, università, sociosanitario, ristretto, residenze, corrente) e quali bonus e aiuti ti spettano a Roma e nel Lazio.",
 };
 ---
 
 <BaseLayout
-  title="Quale ISEE ti serve? Il test in un minuto"
-  description="Ordinario, minorenni, università, sociosanitario, ristretto, RSA o corrente? Rispondi a poche domande e scopri quale ISEE fare e quali documenti portare. Gratis."
+  title="Quale ISEE ti serve e cosa ti spetta: test gratis"
+  description="Scopri quale ISEE fare e quali bonus e aiuti ti spettano a Roma e nel Lazio. Due test gratuiti di un minuto. Non salviamo le tue risposte."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
 
   <section class="qi">
     <div class="qi-wrap">
-      <span class="qi-eyebrow">Strumento gratuito</span>
-      <h1 class="qi-title">Quale ISEE ti serve?</h1>
-      <p class="qi-lead">Rispondi a poche domande: ti diciamo quale ISEE chiedere, perché e quali documenti preparare. Ci vuole un minuto e non ti chiediamo nessun dato personale.</p>
+      <span class="qi-eyebrow">Strumenti gratuiti</span>
+      <h1 class="qi-title">Quale ISEE ti serve e cosa ti spetta</h1>
+      <p class="qi-lead">Due test di un minuto: scopri quale ISEE chiedere e quali bonus e aiuti puoi avere a Roma e nel Lazio. Non ti chiediamo nessun dato personale.</p>
 
-      <div class="qi-card" id="qi-app" aria-live="polite">
-        <noscript><p>Per usare il test serve JavaScript. Puoi leggere la <a href="/blog/tipi-di-isee-differenze-quale-serve">guida completa ai tipi di ISEE</a> o chiamarci allo 06 9784 5429.</p></noscript>
+      <div class="qi-tabs" role="tablist" aria-label="Scegli lo strumento" id="qi-tabs" hidden>
+        <button type="button" role="tab" class="qi-tab" id="qi-tab-isee" aria-controls="qi-panel-isee" aria-selected="true" data-modo="isee">Quale ISEE ti serve</button>
+        <button type="button" role="tab" class="qi-tab" id="qi-tab-bonus" aria-controls="qi-panel-bonus" aria-selected="false" tabindex="-1" data-modo="bonus">Cosa ti spetta</button>
       </div>
 
-      <p class="qi-note">Il risultato è un'indicazione generale basata sulle regole ISEE (DPCM 159/2013 e novità 2026). Ogni bando indica il tipo di ISEE richiesto: in caso di dubbio controlliamo noi, gratis. Approfondisci nella <a href="/blog/tipi-di-isee-differenze-quale-serve">guida a tutti i tipi di ISEE</a>.</p>
+      <div role="tabpanel" id="qi-panel-isee" aria-labelledby="qi-tab-isee" class="qi-panel">
+        <div class="qi-card" id="qi-app" aria-live="polite">
+          <noscript><p>Per usare il test serve JavaScript. Puoi leggere la <a href="/blog/tipi-di-isee-differenze-quale-serve">guida completa ai tipi di ISEE</a> o chiamarci allo 06 9784 5429.</p></noscript>
+        </div>
+
+        <p class="qi-note">Il risultato è un'indicazione generale basata sulle regole ISEE (DPCM 159/2013 e novità 2026). Ogni bando indica il tipo di ISEE richiesto: in caso di dubbio controlliamo noi, gratis. Approfondisci nella <a href="/blog/tipi-di-isee-differenze-quale-serve">guida a tutti i tipi di ISEE</a>.</p>
+      </div>
+
+      <div role="tabpanel" id="qi-panel-bonus" aria-labelledby="qi-tab-bonus" class="qi-panel">
+        <div class="qi-card qb-card" id="qb-app" aria-live="polite">
+          <noscript><p>Per usare il test serve JavaScript. Leggi le pagine su <a href="/bonus-famiglia">bonus famiglia</a>, <a href="/adi-sfl">ADI e SFL</a> e <a href="/caregiver">caregiver</a>, o chiamaci allo 06 9784 5429.</p></noscript>
+        </div>
+        <script id="qb-data" type="application/json" is:inline set:html={misureJson} />
+        <p class="qi-note">Strumento indicativo. Non salviamo le tue risposte. Per verificare davvero cosa ti spetta serve il tuo ISEE e, in alcuni casi, i tuoi documenti. Dati verificati su fonti ufficiali il {bonus.meta.generato_il.split("-").reverse().join("/")}. Leggi la <a href="/privacy">privacy</a>.</p>
+      </div>
     </div>
   </section>
+
+  <script is:inline>
+  (function () {
+    var tabs = document.getElementById('qi-tabs');
+    if (!tabs) return;
+    var btn = { isee: document.getElementById('qi-tab-isee'), bonus: document.getElementById('qi-tab-bonus') };
+    var pan = { isee: document.getElementById('qi-panel-isee'), bonus: document.getElementById('qi-panel-bonus') };
+    function show(m, focus, url) {
+      ['isee', 'bonus'].forEach(function (k) {
+        var on = k === m;
+        btn[k].setAttribute('aria-selected', on ? 'true' : 'false');
+        btn[k].setAttribute('tabindex', on ? '0' : '-1');
+        pan[k].hidden = !on;
+      });
+      if (focus) btn[m].focus();
+      if (url) {
+        try { history.replaceState(null, '', m === 'bonus' ? '?modo=bonus' : location.pathname); } catch (e) {}
+      }
+    }
+    var modo = 'isee';
+    try { modo = new URLSearchParams(location.search).get('modo') === 'bonus' ? 'bonus' : 'isee'; } catch (e) {}
+    tabs.hidden = false;
+    show(modo, false, false);
+    ['isee', 'bonus'].forEach(function (k) {
+      btn[k].addEventListener('click', function () { show(k, false, true); });
+      btn[k].addEventListener('keydown', function (ev) {
+        var next = null;
+        if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') next = k === 'isee' ? 'bonus' : 'isee';
+        else if (ev.key === 'Home') next = 'isee';
+        else if (ev.key === 'End') next = 'bonus';
+        if (next) { ev.preventDefault(); show(next, true, true); }
+      });
+    });
+  })();
+  </script>
 
   <script is:inline>
   (function () {
@@ -289,6 +349,193 @@ const ld = {
   })();
   </script>
 
+  <script>
+import { trova, dataLunga, testoGiorni } from "~/scripts/bonus-engine.js";
+
+(function () {
+  var app = document.getElementById('qb-app');
+  var dataEl = document.getElementById('qb-data');
+  if (!app || !dataEl) return;
+  var misure;
+  try { misure = JSON.parse(dataEl.textContent || '[]'); } catch (e) { return; }
+  var WA = 'https://wa.me/393716230690?text=';
+
+  var STEPS = [
+    { k: 'residenza', q: 'Dove abiti?', type: 'one', opts: [['roma', 'A Roma'], ['lazio', 'In un altro comune del Lazio'], ['italia', 'Fuori dal Lazio']] },
+    { k: 'isee', q: 'Quanto è più o meno il tuo ISEE?', help: 'Va bene un valore indicativo. Se non ce l’hai o non lo sai, scegli «Non lo so»: te lo facciamo noi, gratis.', type: 'one', opts: [
+      ['nonso', 'Non lo so o non ho l’ISEE'], ['f1', 'Fino a 6.500 €'], ['f2', 'Da 6.500 a 9.796 €'], ['f3', 'Da 9.796 a 10.140 €'], ['f4', 'Da 10.140 a 15.000 €'],
+      ['f5', 'Da 15.000 a 20.668 €'], ['f6', 'Da 20.668 a 28.340 €'], ['f7', 'Da 28.340 a 40.000 €'], ['f8', 'Da 40.000 a 46.583 €'], ['f9', 'Oltre 46.583 €']] },
+    { k: 'figli', q: 'Hai figli o ne aspetti uno?', help: 'Scegli tutte le risposte che valgono per te.', type: 'many', none: 'nessuno', opts: [
+      ['nessuno', 'Nessun figlio'], ['in_attesa', 'Aspetto un figlio'], ['nato_2026_entro_120gg', 'Un figlio nato o arrivato in famiglia da meno di 120 giorni'], ['sotto_3', 'Figli sotto i 3 anni'],
+      ['minorenni', 'Figli minorenni'], ['maggiorenni_18_20', 'Figli tra 18 e 20 anni'], ['universitario_fino_30', 'Un figlio all’università (fino a 30 anni)']] },
+    { k: 'lavoro', q: 'Qual è la tua situazione di lavoro?', type: 'one', opts: [
+      ['dipendente', 'Lavoro come dipendente'], ['autonomo', 'Lavoro in proprio (partita IVA, autonomo)'], ['disoccupato', 'Sono disoccupato o ho perso il lavoro'], ['studente', 'Sono studente'],
+      ['pensionato', 'Sono in pensione'], ['non_lavora', 'Non lavoro (casalinga, in cerca di lavoro, altro)'], ['dipendente_domestico', 'Lavoro come colf o badante']] },
+    { k: 'eta', q: 'Quanti anni hai?', type: 'one', opts: [
+      ['e18', '18-29'], ['e30', '30-59'], ['e60', '60-64'], ['e65', '65-69'], ['e70', '70-74'], ['e75', '75-79'], ['e80', '80 o più']] },
+    { k: 'disabilita', q: 'Hai una disabilità o assisti un familiare?', help: 'Scegli tutte le risposte che valgono per te.', type: 'many', none: 'nessuna', opts: [
+      ['nessuna', 'No'], ['invalidita_67', 'Invalidità civile dal 67%'], ['invalidita_74', 'Invalidità civile dal 74%'], ['invalidita_100', 'Invalidità civile al 100%'], ['legge104_grave', 'Legge 104 con gravità (art. 3 comma 3)'],
+      ['accompagnamento', 'Indennità di accompagnamento'], ['cieco_sordo', 'Cecità o sordità'], ['assisto_familiare', 'Assisto un familiare con disabilità o non autosufficiente']] },
+    { k: 'casa', q: 'Casa e utenze', help: 'Scegli tutte le risposte che valgono per te.', type: 'many', none: 'altro', opts: [
+      ['affitto', 'Pago un affitto'], ['proprieta', 'Ho una casa di proprietà'], ['utenze_intestate', 'Ho luce, gas o acqua intestati a me o a un familiare convivente'], ['altro', 'Niente di tutto questo']] }
+  ];
+  var COUNT_OPTS = [[1, '1'], [2, '2'], [3, '3'], [4, '4 o più']];
+
+  var a = {};
+  var idx = 0;
+
+  function esc(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+
+  function renderStep() {
+    var s = STEPS[idx];
+    var h = '<p class="qi-step">Domanda ' + (idx + 1) + ' di ' + STEPS.length + '</p><h2 class="qi-q" id="qb-q">' + esc(s.q) + '</h2>';
+    if (s.help) h += '<p class="qi-help">' + esc(s.help) + '</p>';
+    if (s.type === 'one') {
+      h += '<div class="qi-opts" role="group" aria-labelledby="qb-q">';
+      s.opts.forEach(function (o) {
+        h += '<button type="button" class="qi-opt' + (a[s.k] === o[0] ? ' qb-sel' : '') + '" data-v="' + o[0] + '">' + esc(o[1]) + '</button>';
+      });
+      h += '</div>';
+    } else {
+      var cur = a[s.k] || [];
+      h += '<div class="qi-opts" role="group" aria-labelledby="qb-q">';
+      s.opts.forEach(function (o) {
+        h += '<label class="qi-opt qb-check"><input type="checkbox" value="' + o[0] + '"' + (cur.indexOf(o[0]) >= 0 ? ' checked' : '') + '><span>' + esc(o[1]) + '</span></label>';
+      });
+      h += '</div>';
+      if (s.k === 'figli') {
+        h += '<div class="qb-count" id="qb-count" role="group" aria-labelledby="qb-count-l" hidden><p class="qi-help" id="qb-count-l"><b>Quanti figli hai a carico in tutto?</b></p><div class="qb-count-row">';
+        COUNT_OPTS.forEach(function (o) {
+          h += '<label class="qb-pill"><input type="radio" name="qb-n" value="' + o[0] + '"' + ((a.nFigli || 1) === o[0] ? ' checked' : '') + '><span>' + o[1] + '</span></label>';
+        });
+        h += '</div></div>';
+      }
+      h += '<button type="button" class="qi-btn qi-btn-main qb-go" data-go="1">Continua</button>';
+    }
+    if (idx > 0) h += '<button type="button" class="qi-back" data-back="1">← Indietro</button>';
+    app.innerHTML = h;
+
+    if (s.type === 'one') {
+      app.querySelectorAll('.qi-opt').forEach(function (b) {
+        b.addEventListener('click', function () { a[s.k] = b.getAttribute('data-v'); avanti(); });
+      });
+    } else {
+      var boxes = app.querySelectorAll('input[type=checkbox]');
+      var count = document.getElementById('qb-count');
+      function sync() {
+        if (count) {
+          var any = false;
+          boxes.forEach(function (c) { if (c.checked && c.value !== s.none) any = true; });
+          count.hidden = !any;
+        }
+      }
+      boxes.forEach(function (c) {
+        c.addEventListener('change', function () {
+          if (c.checked) {
+            if (c.value === s.none) boxes.forEach(function (o) { if (o !== c) o.checked = false; });
+            else boxes.forEach(function (o) { if (o.value === s.none) o.checked = false; });
+          }
+          sync();
+        });
+      });
+      sync();
+      app.querySelector('[data-go]').addEventListener('click', function () {
+        var v = [];
+        boxes.forEach(function (c) { if (c.checked && c.value !== s.none) v.push(c.value); });
+        a[s.k] = v;
+        if (s.k === 'figli') {
+          var r = app.querySelector('input[name=qb-n]:checked');
+          a.nFigli = r ? +r.value : 1;
+          if (!v.length) delete a.nFigli;
+        }
+        avanti();
+      });
+    }
+    var bk = app.querySelector('[data-back]');
+    if (bk) bk.addEventListener('click', function () { idx--; renderStep(); focusQ(); });
+    if (idx > 0) focusQ();
+  }
+  function focusQ() {
+    var f = document.getElementById('qb-q');
+    if (f) { f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
+    app.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function avanti() {
+    if (idx < STEPS.length - 1) { idx++; renderStep(); focusQ(); }
+    else renderResult();
+  }
+
+  var DUBBI = {
+    isee: 'Il tuo ISEE è vicino alla soglia: controlliamo il valore esatto.',
+    isee_nonso: 'Dipende dal tuo ISEE: te lo facciamo gratis.',
+    eta: 'Dipende dalla tua età esatta.',
+    figli_altro: 'Serve in famiglia un minorenne, una persona con disabilità, un over 60 o una persona in svantaggio.',
+    figli_eta: 'Dipende dall’età del figlio più piccolo.',
+    altro: 'Ci sono altri requisiti (reddito, contributi, elenchi) che non vediamo qui: li controlliamo con i tuoi documenti.'
+  };
+  var CTA = {
+    te_lo_facciamo_noi: { label: 'Te lo facciamo noi', msg: function (n) { return 'Ciao, ho visto "Cosa ti spetta" sul vostro sito: vorrei chiedere "' + n + '". Potete occuparvene voi?'; } },
+    ti_aiutiamo: { label: 'Chiedi aiuto', msg: function (n) { return 'Ciao, ho visto "Cosa ti spetta" sul vostro sito: vorrei un aiuto per "' + n + '".'; } },
+    solo_informazione: { label: 'Controlliamo il tuo ISEE', msg: function (n) { return 'Ciao, ho visto "Cosa ti spetta" sul vostro sito ("' + n + '"). Vorrei far controllare il mio ISEE.'; } },
+    isee_uni: { label: 'Ti facciamo l’ISEE universitario', msg: function () { return 'Ciao, mi serve l’ISEE universitario. La domanda DiSCo la presento io. Posso prenotare?'; } }
+  };
+
+  function card(it) {
+    var m = it.m;
+    var cta = CTA[m.cta.aiuto] || CTA.ti_aiutiamo;
+    var urg = it.giorni !== null && it.giorni <= 60 && m.stato !== 'finestra_chiusa';
+    var h = '<article class="qb-item"><div class="qb-top"><span class="qb-ente">' + esc(m.ente) + '</span>';
+    if (m.stato === 'finestra_chiusa') h += '<span class="qb-chip qb-chip-chiuso">Ora chiuso</span>';
+    else h += it.stato === 'probabile' ? '<span class="qb-chip qb-chip-ok">Probabilmente ti spetta</span>' : '<span class="qb-chip qb-chip-dub">Controlliamo noi</span>';
+    h += '</div><h3 class="qb-nome">' + esc(m.nome) + '</h3>';
+    h += '<p class="qb-imp">' + esc(m.importo.testo) + '</p>';
+    if (it.giorni !== null) h += '<p class="qb-scad' + (urg ? ' qb-urg' : '') + '"><b>Scadenza: ' + dataLunga(m.scadenza.data) + '</b> · ' + testoGiorni(it.giorni) + '</p>';
+    h += '<p class="qb-scad-t">' + esc(m.scadenza.testo) + '</p>';
+    if (it.dubbi.length) {
+      h += '<ul class="qb-dubbi">' + it.dubbi.map(function (d) { return '<li>' + esc(DUBBI[d] || '') + '</li>'; }).join('') + '</ul>';
+    }
+    if (m.cta.aiuto === 'isee_uni') h += '<p class="qb-nota"><b>Ti facciamo l’ISEE universitario; la domanda DiSCo la presenti tu</b> sul portale DiSCo.</p>';
+    h += '<details class="qb-det"><summary>A chi spetta e come si chiede</summary><p>' + esc(m.a_chi_spetta) + '</p><p><b>Come si chiede.</b> ' + esc(m.come_si_chiede) + '</p>';
+    if (m.il_centro_controlla && m.il_centro_controlla.length) h += '<p><b>Cosa controlliamo noi.</b></p><ul>' + m.il_centro_controlla.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>';
+    h += '</details>';
+    if (m.cta.prezzo_testo) h += '<p class="qb-prezzo">' + esc(m.cta.prezzo_testo) + '</p>';
+    h += '<p class="qb-links">';
+    var guida = m.pagina_sito || m.articolo_sito;
+    if (guida) h += '<a href="' + esc(guida) + '">Leggi la guida sul sito</a>';
+    (m.fonti || []).slice(0, 1).forEach(function (f) { h += '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">Fonte ufficiale: ' + esc(f.titolo.split(' - ')[0]) + ' ↗</a>'; });
+    h += '</p>';
+    h += '<div class="qi-cta"><a class="qi-btn qi-btn-wa" href="' + WA + encodeURIComponent(cta.msg(m.nome)) + '" target="_blank" rel="noopener">' + cta.label + '</a><a class="qb-sec" href="/prenota">Oppure prenota</a></div></article>';
+    return h;
+  }
+  function section(titolo, nota, items, cls) {
+    if (!items.length) return '';
+    return '<section class="qb-sec-w ' + (cls || '') + '"><h3 class="qb-h">' + esc(titolo) + ' <span class="qb-n">(' + items.length + ')</span></h3>' + (nota ? '<p class="qi-help">' + esc(nota) + '</p>' : '') + items.map(card).join('') + '</section>';
+  }
+
+  function renderResult() {
+    var r = trova(misure, a, new Date());
+    var tot = r.urgenti.length + r.probabili.length + r.dipende.length;
+    var h = '<p class="qi-step">Il tuo risultato</p><h2 class="qi-res" id="qb-res">' + (tot ? 'Cosa ti spetta: ' + tot + (tot === 1 ? ' aiuto da controllare' : ' aiuti da controllare') : 'Non abbiamo trovato aiuti per le tue risposte') + '</h2>';
+    h += '<p class="qi-help">Sono indicazioni di massima. Per sapere se ti spettano davvero controlliamo ISEE e documenti.</p>';
+    if (r.nonsoIsee) h += '<div class="qb-isee"><p><b>Non conosci il tuo ISEE? Lo facciamo noi, gratis.</b> Molti aiuti dipendono da quello.</p><div class="qi-cta"><a class="qi-btn qi-btn-wa" href="' + WA + encodeURIComponent('Ciao, ho fatto "Cosa ti spetta" sul vostro sito e non conosco il mio ISEE. Vorrei farlo.') + '" target="_blank" rel="noopener">ISEE gratis su WhatsApp</a><a class="qb-sec" href="/prenota">Oppure prenota</a></div></div>';
+    h += section('Scadono presto', 'Ti conviene muoverti subito.', r.urgenti, 'qb-s-urg');
+    h += section('Probabilmente ti spettano', '', r.probabili);
+    h += section('Possono spettarti: controlliamo noi', 'Mancano alcune informazioni, ci pensiamo noi con i tuoi documenti.', r.dipende);
+    h += section('Riapre presto', 'Ora non si può fare domanda. Le date non sono ancora confermate: scrivici per sapere quando riapre.', r.riapre);
+    if (!tot && !r.riapre.length) h += '<p>Prova a cambiare qualche risposta, oppure scrivici: controlliamo la tua situazione.</p><div class="qi-cta"><a class="qi-btn qi-btn-wa" href="' + WA + encodeURIComponent('Ciao, ho fatto "Cosa ti spetta" sul vostro sito. Potete controllare cosa mi spetta?') + '" target="_blank" rel="noopener">Scrivici su WhatsApp</a></div>';
+    h += '<div class="qi-row"><button type="button" class="qi-back" data-back="1">← Cambia l’ultima risposta</button><button type="button" class="qi-back" data-reset="1">Ricomincia</button></div>';
+    app.innerHTML = h;
+    app.querySelector('[data-back]').addEventListener('click', function () { renderStep(); focusQ(); });
+    app.querySelector('[data-reset]').addEventListener('click', function () { a = {}; idx = 0; renderStep(); app.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    var t = document.getElementById('qb-res'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); }
+    app.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    try { window.dataLayer && window.dataLayer.push({ event: 'cosa_ti_spetta_result', n_urgenti: r.urgenti.length, n_probabili: r.probabili.length, n_dipende: r.dipende.length, n_riapre: r.riapre.length }); } catch (e) {}
+  }
+
+  renderStep();
+})();
+  </script>
+
   <style is:global>
     .qi { background: #F1EEFF; padding: 40px 16px 64px; }
     .qi-wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
@@ -317,6 +564,55 @@ const ld = {
     .qi-btn-wa { background: #14142B; color: #fff; }
     .qi-note { margin: 0; font-size: 14px; line-height: 1.5; color: #4A4A60; }
     .qi-note a, .qi-card a:not(.qi-btn) { color: #5B3DF5; font-weight: 700; }
-    @media (max-width: 560px) { .qi-card { padding: 20px; border-radius: 22px; } .qi-btn { width: 100%; } }
+
+    .qi-tabs { display: flex; gap: 8px; background: #fff; padding: 6px; border-radius: 999px; box-shadow: 0 6px 24px rgba(91, 61, 245, .1); }
+    .qi-tabs[hidden], .qi-panel[hidden] { display: none; }
+    .qi-tab { flex: 1 1 0; font: inherit; font-weight: 800; font-size: 16px; min-height: 48px; padding: 10px 14px; border-radius: 999px; border: 0; background: transparent; color: #14142B; cursor: pointer; }
+    .qi-tab[aria-selected="true"] { background: #5B3DF5; color: #fff; }
+    .qi-tab:focus-visible { outline: 3px solid #14142B; outline-offset: 2px; }
+    .qi-panel { display: flex; flex-direction: column; gap: 18px; }
+    .qi-opt:focus-visible, .qi-btn:focus-visible, .qi-back:focus-visible, .qb-sec:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+    .qb-sel { border-color: #5B3DF5; background: #F1EEFF; }
+    .qb-check { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
+    .qb-check input { width: 22px; height: 22px; margin-top: 2px; flex: none; accent-color: #5B3DF5; }
+    .qb-check:has(input:checked) { border-color: #5B3DF5; background: #F1EEFF; }
+    .qb-check:has(input:focus-visible) { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+    .qb-go { align-self: flex-start; border: 0; font: inherit; font-weight: 800; cursor: pointer; }
+    .qb-count[hidden] { display: none; }
+    .qb-count-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .qb-pill { position: relative; }
+    .qb-pill input { position: absolute; opacity: 0; inset: 0; }
+    .qb-pill span { display: inline-flex; align-items: center; justify-content: center; min-width: 56px; min-height: 48px; padding: 0 16px; border-radius: 14px; border: 2px solid #E4E0FF; background: #FAFAFF; font-weight: 800; }
+    .qb-pill input:checked + span { border-color: #5B3DF5; background: #F1EEFF; color: #5B3DF5; }
+    .qb-pill input:focus-visible + span { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+    .qb-sec-w { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+    .qb-h { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; color: #14142B; }
+    .qb-n { color: #5B3DF5; }
+    .qb-item { border: 2px solid #E4E0FF; border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 10px; background: #FAFAFF; }
+    .qb-s-urg .qb-item { border-color: #FF5C8A; }
+    .qb-top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+    .qb-ente { font-size: 13px; font-weight: 800; color: #4A4A60; background: #fff; border: 1px solid #E4E0FF; padding: 4px 10px; border-radius: 999px; }
+    .qb-chip { font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; }
+    .qb-chip-ok { background: #D4FF4F; color: #14142B; }
+    .qb-chip-dub { background: #F1EEFF; color: #3B22C4; }
+    .qb-chip-chiuso { background: #E8E8EE; color: #34344A; }
+    .qb-nome { margin: 0; font-size: 19px; line-height: 1.25; font-weight: 800; color: #14142B; }
+    .qb-imp, .qb-scad, .qb-scad-t, .qb-prezzo, .qb-nota { margin: 0; font-size: 16px; line-height: 1.5; color: #24243A; }
+    .qb-scad-t { font-size: 15px; color: #4A4A60; }
+    .qb-urg { color: #B0123F; }
+    .qb-prezzo { font-weight: 700; }
+    .qb-nota { background: #fff; border-left: 4px solid #5B3DF5; padding: 10px 12px; border-radius: 8px; }
+    .qb-dubbi { margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.5; color: #3B22C4; }
+    .qb-det summary { cursor: pointer; font-weight: 800; color: #5B3DF5; padding: 6px 0; }
+    .qb-det summary:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+    .qb-det p, .qb-det li { font-size: 15px; line-height: 1.5; color: #24243A; }
+    .qb-det ul { margin: 0; padding-left: 20px; }
+    .qb-links { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 15px; }
+    .qb-links a, .qb-sec, .qb-isee a:not(.qi-btn) { color: #5B3DF5; font-weight: 700; }
+    .qb-sec { align-self: center; padding: 10px 4px; }
+    .qb-isee { background: #F1EEFF; border-radius: 16px; padding: 14px 16px; }
+    .qb-isee p { margin: 0 0 8px; }
+    .qi-cta { align-items: center; }
+    @media (max-width: 560px) { .qi-card { padding: 20px; border-radius: 22px; } .qi-btn { width: 100%; } .qi-tab { font-size: 15px; padding: 10px 6px; } .qb-item { padding: 14px; } }
   </style>
 </BaseLayout>
