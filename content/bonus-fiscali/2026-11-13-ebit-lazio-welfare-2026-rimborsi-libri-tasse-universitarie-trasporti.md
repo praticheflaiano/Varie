@@ -1,12 +1,12 @@
 ---
 title: "EBIT Lazio 2026: rimborsi per libri, tasse universitarie, trasporti e sport"
-seo_title: "EBIT Lazio 2026: rimborso libri, tasse universitarie e trasporti"
+seo_title: "EBIT Lazio 2026: rimborsi libri, università e bus | CAF Roma"
 slug: "ebit-lazio-welfare-2026-rimborsi-libri-tasse-universitarie-trasporti"
 date: 2026-11-13
 last_updated: 2026-11-13
 category: "bonus-fiscali"
 tags: ["bonus", "lavoro", "famiglie", "isee", "guida"]
-meta_description: "EBIT Lazio 2026: rimborso libri fino a 300 €, tasse universitarie fino a 500 €, abbonamento bus fino a 250 € e sport. Chi può chiederli, scadenze e ISEE."
+meta_description: "EBIT Lazio 2026: rimborsi per libri, tasse universitarie, trasporti e sport. Chi può chiedere e scadenze. Ti aiutiamo a Vigne Nuove, Roma: prenota."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "EBIT Lazio, Regolamento welfare territoriale 2026 per lavoratrici e lavoratori - https://ebitlazio.it/media/template/ebitlazio/download/regolamento2026_LAVORATORI-LAVORATRICI.pdf"

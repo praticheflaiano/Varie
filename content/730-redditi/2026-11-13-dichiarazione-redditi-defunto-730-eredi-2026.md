@@ -1,12 +1,12 @@
 ---
 title: "Dichiarazione dei redditi del defunto: 730 o Redditi, termini e rimborsi per gli eredi"
-seo_title: "Dichiarazione redditi del defunto 2026: 730 eredi e termini"
+seo_title: "730 per eredi: dichiarazione del defunto 2026 | CAF Roma"
 slug: "dichiarazione-redditi-defunto-730-eredi-2026"
 date: 2026-11-13
 last_updated: 2026-11-13
 category: "730-redditi"
 tags: ["730", "successioni", "eredi", "scadenza", "guida"]
-meta_description: "Dichiarazione dei redditi del defunto nel 2026: quando l'erede può usare il 730, quando serve il Redditi, proroga di sei mesi e rimborsi. CAF a Roma Vigne Nuove."
+meta_description: "Dichiarazione dei redditi del defunto 2026: quando l'erede usa il 730 o il Redditi, proroga di sei mesi e rimborsi. Ti seguiamo a Vigne Nuove, Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "D.P.R. 29 settembre 1973, n. 600, art. 65 (eredi del contribuente)"

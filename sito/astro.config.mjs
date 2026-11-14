@@ -9,6 +9,11 @@ import tailwindcss from "@tailwindcss/vite";
 import fs from "node:fs";
 import path from "node:path";
 
+// Regola: categorie con meno di MIN_ARTICLES articoli = noindex (nella pagina) e fuori dalla sitemap.
+// I tag restano fuori dalla sitemap sempre (pagine di elenco, poco valore per Google);
+// sotto MIN_ARTICLES sono anche noindex (vedi blog/tag/[tag].astro).
+const MIN_ARTICLES = 3;
+const TAGS_IN_SITEMAP = false;
 // Calcola tag e categorie "sottili" (pagine noindex) da escludere dalla sitemap.
 function thinTaxonomy() {
   const root = path.resolve("../content");
@@ -27,7 +32,7 @@ function thinTaxonomy() {
   } };
   walk(root);
   return {
-    tags: new Set([...tagCount].filter(([, n]) => n < 3).map(([t]) => t)),
+    tags: new Set([...tagCount].filter(([, n]) => n < MIN_ARTICLES).map(([t]) => t)),
     cats: catCount,
   };
 }
@@ -74,9 +79,9 @@ export default defineConfig({
         if (p.startsWith("/riservata")) return false; // area riservata dell'ufficio
         if (p === "/stima-pensione/recupera" || p === "/stima-pensione/pratica" || p === "/stima-pensione/ufficio") return false;
         const t = p.match(/^\/blog\/tag\/([^/]+)$/);
-        if (t && THIN.tags.has(t[1])) return false;
+        if (t && (!TAGS_IN_SITEMAP || THIN.tags.has(t[1]))) return false;
         const c = p.match(/^\/blog\/categoria\/([^/]+)$/);
-        if (c && !THIN.cats.get(c[1])) return false;
+        if (c && (THIN.cats.get(c[1]) || 0) < MIN_ARTICLES) return false;
         return true;
       },
       // stessi URL dei canonical (senza "/" finale, come serve Vercel con trailingSlash false)
