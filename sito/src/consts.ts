@@ -52,6 +52,8 @@ export const CONTACT = {
     longitude: 12.539951,
   },
   mapsUrl: "https://maps.app.goo.gl/HBKDcNoEWpPyy9x69",
+  /** Link diretto "scrivi una recensione" della scheda Google (preso dalla scheda il 14/11/2026). */
+  reviewWriteUrl: "https://g.page/r/CYs2X6cuciDIEBM/review",
 } as const;
 
 export const HOURS = [
