@@ -1264,7 +1264,7 @@
     "testo": "Non c'è un termine. Se compi 75 anni entro il 31 gennaio sei esente per tutto l'anno; se li compi dopo, dal secondo semestre. La dichiarazione vale anche per gli anni dopo."
    },
    "stato": "aperto",
-   "come_si_chiede": "Dichiarazione sostitutiva all'Agenzia delle Entrate (raccomandata, PEC o in un ufficio).",
+   "come_si_chiede": "Dichiarazione sostitutiva all'Agenzia delle Entrate: la prepariamo noi, tu firmi e la inviamo noi.",
    "il_centro_controlla": [
     "Reddito dell'anno prima",
     "Conviventi con reddito",
@@ -1273,7 +1273,7 @@
    "pagina_sito": "/luce-gas",
    "articolo_sito": "/blog/canone-rai-2027-esenzione-over-75-non-detenzione",
    "cta": {
-    "aiuto": "ti_aiutiamo",
+    "aiuto": "te_lo_facciamo_noi",
     "prezzo_pubblicato_sul_sito": null,
     "prezzo_testo": "Il prezzo te lo diciamo prima."
    },
@@ -1728,7 +1728,7 @@
     "testo": "Si chiede in qualsiasi momento. Provvisorio di 60 giorni subito dopo la richiesta online."
    },
    "stato": "aperto",
-   "come_si_chiede": "Dal 1/12/2025 solo online con SPID o CIE sullo sportello di Roma Servizi per la Mobilità, o allo sportello di via Silvio D'Amico 38 su appuntamento.",
+   "come_si_chiede": "Dal 1/12/2025 solo online con SPID o CIE sullo sportello di Roma Servizi per la Mobilità, o allo sportello di via Silvio D'Amico 38 su appuntamento. Possiamo farla noi in ufficio con il tuo SPID o la tua CIE.",
    "il_centro_controlla": [
     "Che il certificato dica 'deambulazione sensibilmente ridotta' o cecità",
     "Foto tessera e documento",
@@ -1737,7 +1737,7 @@
    "pagina_sito": "/cude",
    "articolo_sito": null,
    "cta": {
-    "aiuto": "ti_aiutiamo",
+    "aiuto": "te_lo_facciamo_noi",
     "prezzo_pubblicato_sul_sito": "Costo del servizio non ancora pubblicato sul sito.",
     "prezzo_testo": "Il prezzo te lo diciamo prima."
    },
