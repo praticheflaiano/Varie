@@ -1,44 +1,46 @@
 ---
-title: "Cedolino pensione di novembre e dicembre 2026: date, trattenute e come leggerlo"
-seo_title: "Cedolino pensione novembre e dicembre 2026: come leggerlo"
+title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute e come leggerlo"
+seo_title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute"
 slug: "cedolino-pensione-novembre-dicembre-2026-come-leggerlo"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-15
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "guida"]
-meta_description: "Cedolino pensione INPS di novembre e dicembre 2026: date di pagamento, conguagli del 730, addizionali, tredicesima e come consultarlo. Aiuto a Roma Vigne Nuove."
+meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre, tredicesima, niente addizionali, rimborsi 730 e dove vederlo. CAF a Roma, Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Pensionati: il cedolino di pensione di novembre 2026 (29 ottobre 2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.10.pensionati-il-cedolino-di-pensione-di-novembre-2026.html"
   - "INPS, Pensionati: il cedolino di pensione di ottobre 2026 (22 settembre 2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.pensionati-il-cedolino-di-pensione-di-ottobre-2026.html"
   - "INPS, Pensioni: addizionali IRPEF regionali e comunali (aggiornata al 5 maggio 2026) - https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.53546.pensioni-addizionali-irpef-regionali-e-comunali.html"
   - "INPS, Messaggio n. 2829 del 14 settembre 2026"
+  - "INPS, Pensionati: il cedolino di pensione di dicembre 2025 (26 novembre 2025; regole di dicembre: pagamento, addizionali, conguagli 730) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.11.pensionati-il-cedolino-di-pensione-di-dicembre-2025.html"
+  - "INPS, Il pagamento delle pensioni, delle prestazioni assistenziali e di accompagnamento a pensione (art. 1, comma 302, L. 190/2014) - https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.il-pagamento-delle-pensioni-delle-prestazioni-assistenziali-e-di-accompagnamento-a-pensione.html"
+  - "INPS, comunicato stampa dell'11 novembre 2026 sulla perequazione delle pensioni - https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/11/11/Comunicato_52671/Allegati/62003_cs-perequazioni-pensioni.pdf"
 status: published
 type: guida
 image: "/og/cedolino-pensione-novembre-dicembre-2026-come-leggerlo.jpg"
 image_alt: "Cedolino pensione di novembre e dicembre 2026: come leggerlo"
 ---
 
-# Cedolino pensione di novembre e dicembre 2026: date, trattenute e come leggerlo
+# Cedolino pensione dicembre 2026: data, tredicesima, trattenute
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 15 novembre 2026**
 
 **Tutte le date dei pagamenti INPS del mese** (pensioni, Assegno Unico, ADI, bonus mamme): [calendario dei pagamenti INPS](/pagamenti-inps).
 
 Il **cedolino della pensione** è il foglio che ogni mese spiega **quanto ti paga l'INPS e perché**. Se l'importo cambia da un mese all'altro, la spiegazione è lì: una trattenuta, un rimborso, un conguaglio.
 
-Qui trovi le date di novembre e dicembre 2026, le voci che fanno salire o scendere l'importo e come consultarlo.
+Qui trovi tutto sul **cedolino di dicembre 2026**: quando arriva la pensione, la tredicesima, le trattenute e dove vederlo. Più sotto, anche le regole di novembre.
 
-## In breve
+> **L'INPS non ha ancora pubblicato la notizia sul cedolino di dicembre 2026. Aggiorneremo questa pagina appena esce.** Intanto trovi le regole fisse dei pagamenti e quelle indicate dall'INPS nel cedolino di dicembre dello scorso anno.
 
-| | |
-|---|---|
-| **Pagamento di novembre** | valuta **2 novembre 2026** |
-| **Pagamento di dicembre** | primo giorno bancabile: **martedì 1° dicembre 2026** |
-| **Novembre** | conguagli del **730** e **ultima rata delle addizionali** |
-| **Dicembre** | con la pensione arriva la **tredicesima** |
-| **In contanti** | solo fino a **1.000 € netti** |
-| **Dove si vede** | sito INPS, servizio "Cedolino della pensione" |
+## In breve: cedolino pensione dicembre 2026
+
+- **Quando arriva la pensione di dicembre 2026:** l'INPS paga il primo giorno bancabile del mese, quindi **martedì 1° dicembre 2026**.
+- **Tredicesima:** si paga con la rata di dicembre. L'importo lo vedi sul cedolino.
+- **Quando si vede il cedolino:** la notizia INPS sul cedolino esce a fine mese precedente (quella di novembre è uscita il 29 ottobre 2026). Quella di dicembre non c'è ancora.
+- **Trattenute di dicembre:** niente più **addizionali regionale e comunale** (finiscono a novembre). Può restare un rimborso o una trattenuta del **730**, se non si è chiuso a novembre.
+- **Dove vederlo:** sito INPS, servizio "Cedolino della pensione", con SPID, CIE o CNS.
 
 ## Quando viene pagata la pensione
 
@@ -76,11 +78,20 @@ Sulla pensione l'INPS trattiene anche le **addizionali regionale e comunale** al
 
 Tutte le rate finiscono a **novembre**: per questo il cedolino di dicembre non ha queste trattenute.
 
-## Dicembre: la tredicesima
+## Dicembre: tredicesima e trattenute
 
 Con la pensione di **dicembre** l'INPS paga anche la **tredicesima**.
 
-I dettagli del cedolino di dicembre 2026 (eventuali importi aggiuntivi e conguagli di fine anno) l'INPS li comunica con la notizia mensile dedicata: **aggiorneremo questa guida appena esce**.
+Sul cedolino di dicembre, secondo le regole indicate dall'INPS lo scorso anno:
+
+- **non ci sono più le addizionali** regionale e comunale: si recuperano in 11 rate, da gennaio a novembre;
+- se il **730** è ancora aperto, l'INPS **rimborsa** il credito oppure **trattiene** il debito che non è riuscito a recuperare a rate entro novembre.
+
+Eventuali importi aggiuntivi e conguagli di fine anno li comunica l'INPS con la notizia di dicembre: **aggiorneremo questa guida appena esce**.
+
+## E da gennaio 2027?
+
+L'INPS ha comunicato l'11 novembre 2026 che la rivalutazione delle pensioni si applica dalla **rata di gennaio 2027**, con l'aumento riconosciuto subito nel cedolino. Il comunicato non parla del cedolino di dicembre. Fasce e importi: [rivalutazione pensioni 2027](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce).
 
 ## Se prendi l'APE sociale o un assegno di accompagnamento alla pensione
 
@@ -123,26 +134,36 @@ Se sul cedolino trovi una trattenuta che non capisci o l'importo è sceso, porta
 
 ## Domande frequenti
 
-**Quando viene pagata la pensione di dicembre 2026?**
+### Quando esce il cedolino di dicembre 2026?
+L'INPS non ha ancora pubblicato la notizia sul cedolino di dicembre. Quella di novembre è uscita il 29 ottobre 2026. Aggiorneremo questa pagina appena esce quella di dicembre.
+
+### Quando viene pagata la pensione di dicembre 2026?
 Il primo giorno bancabile del mese: martedì 1° dicembre 2026.
 
-**Perché a novembre la pensione è più bassa (o più alta)?**
-Di solito per i conguagli del 730: una trattenuta se hai un debito, un rimborso se hai un credito. Sul cedolino sono voci separate.
+### Quando arriva la tredicesima 2026?
+Con la pensione di dicembre, quindi dal 1° dicembre 2026.
 
-**A dicembre si pagano le addizionali?**
+### Perché la pensione di dicembre può essere più bassa o più alta?
+Può salire per la tredicesima o per un rimborso del 730. Può scendere se resta una trattenuta del 730 non chiusa a novembre. Le addizionali, invece, a dicembre non ci sono più. Ogni voce è separata sul cedolino.
+
+### A dicembre si pagano le addizionali?
 No: le rate delle addizionali regionale e comunale finiscono a novembre.
 
-**Quando arriva la tredicesima?**
-Con la pensione di dicembre.
+### Dove vedo il cedolino di dicembre 2026?
+Sul sito INPS, nel servizio "Cedolino della pensione", con SPID, CIE o CNS.
 
-**Posso ritirare la pensione in contanti?**
+### La rivalutazione del 2027 si vede già a dicembre?
+No: l'INPS dice che si applica dalla rata di gennaio 2027. Leggi [la guida alla rivalutazione](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce).
+
+### Posso ritirare la pensione in contanti?
 Solo se l'importo complessivo non supera 1.000 euro netti.
 
-**Non ho lo SPID: come vedo il cedolino?**
+### Non ho lo SPID: come vedo il cedolino?
 Serve un'identità digitale (SPID, CIE o CNS). In ufficio ti aiutiamo a leggerlo e a capire le voci.
 
 ## Articoli correlati
 
+- [Rivalutazione pensioni 2027: aumento da gennaio e fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
 - [Modello RED 2026: scadenza 1° marzo 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
 - [RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli](/blog/red-icric-iclav-accas-ps-2026-guida)
