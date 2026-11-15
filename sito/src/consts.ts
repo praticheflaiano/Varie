@@ -103,6 +103,8 @@ export const REVIEWS = { rating: "5,0", label: "oltre 290 recensioni" } as const
 
 export const BOOKING = {
   arcanisGroup: "https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1",
+  /** Calendario GHL "Centro pratiche Flaiano" (in sede): da usare per le dimissioni (Antonio, 15/11/2026). */
+  centroPratiche: "https://link.arcanis.it/widget/booking/K5geXmjt2N7PefI1LOqM",
   /** Calendario GHL "Consulenza da remoto" disattivato (404): finché non viene riattivato si prenota via WhatsApp. */
   arcanisRemote: "https://link.arcanis.it/widget/booking/B5HBTQ8m4c7Ab5Ok0zIH",
 } as const;
