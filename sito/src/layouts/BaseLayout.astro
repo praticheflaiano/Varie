@@ -9,6 +9,7 @@ import Footer from "~/components/layout/Footer.astro";
 import WhatsAppFab from "~/components/layout/WhatsAppFab.astro";
 import MobileActionBar from "~/components/layout/MobileActionBar.astro";
 import ShareBar from "~/components/ui/ShareBar.astro";
+import Analytics from "~/components/layout/Analytics.astro";
 import fs from "node:fs";
 
 interface Props {
@@ -105,5 +106,6 @@ const ogAuto = ogSlug && fs.existsSync(`public/og/p-${ogSlug}.jpg`) ? `/og/p-${o
     <Footer />
     {!hideWhatsAppFab && <WhatsAppFab />}
     {!hideWhatsAppFab && <MobileActionBar />}
+    <Analytics />
   </body>
 </html>
