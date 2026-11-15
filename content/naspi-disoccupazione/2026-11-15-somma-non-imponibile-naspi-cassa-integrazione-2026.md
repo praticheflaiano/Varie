@@ -11,7 +11,7 @@ author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Messaggio n. 3649 del 10 novembre 2026 - Modalità di applicazione della somma non imponibile sulle prestazioni non pensionistiche"
   - "Legge 30 dicembre 2024, n. 207 (legge di bilancio 2025), art. 1, commi da 4 a 9"
-  - "Agenzia delle Entrate, Circolare n. 4/E del 2025"
+  - "Agenzia delle Entrate, Circolare n. 4/E del 16 maggio 2025 (reddito annuale teorico ed esempio di calcolo)"
 status: published
 type: novita
 image: "/og/somma-non-imponibile-naspi-cassa-integrazione-2026.jpg"
@@ -69,7 +69,28 @@ La percentuale dipende dal **reddito di lavoro dipendente** dell'anno:
 | da 8.500 a **15.000 €** | **5,3%** |
 | da 15.000 a **20.000 €** | **4,8%** |
 
-Per la NASpI e la cassa integrazione l'INPS calcola il reddito **"rapportato all'anno"**, con le regole della circolare n. 4/E del 2025 dell'Agenzia delle Entrate, e lo **ricalcola ogni mese** se cambia.
+### Come si fa il calcolo
+
+Secondo la circolare n. 4/E del 2025 dell'Agenzia delle Entrate, richiamata dall'INPS:
+
+1. il reddito ricevuto viene **rapportato a un anno intero** (il "reddito annuale teorico"): serve solo a capire **in quale fascia** sei;
+2. la percentuale di quella fascia si applica all'**importo che hai davvero ricevuto**, non al reddito annuo teorico.
+
+L'INPS ripete il calcolo **ogni mese** e lo corregge se gli importi cambiano.
+
+**L'esempio della circolare:** 2.000 euro ricevuti in 62 giorni. Rapportati all'anno fanno 11.774 euro (2.000 ÷ 62 × 365), quindi fascia del **5,3%**. La somma spettante è 2.000 × 5,3% = **106 euro**.
+
+## Esempi di calcolo
+
+Gli esempi usano **importi lordi** e immaginano che nel 2026 la persona abbia **solo quella prestazione**. Se hai lavorato anche con uno stipendio, quel reddito cambia la fascia e il totale. Il calcolo ufficiale lo fa l'INPS, mese per mese.
+
+| Situazione | Reddito rapportato all'anno | Fascia | Somma |
+|---|---|---|---|
+| **Cassa integrazione** di 650 € al mese | 650 × 12 = 7.800 € | **7,1%** | 650 × 7,1% = **46,15 € al mese** |
+| **NASpI** di 900 € al mese, da gennaio a giugno 2026 (poi finita) | 900 × 12 = 10.800 € | **5,3%** | 5.400 × 5,3% = **286,20 €** in tutto, pagati come arretrati |
+| **NASpI** di 1.300 € al mese per tutto il 2026 | 1.300 × 12 = 15.600 € | **4,8%** | 1.300 × 4,8% = **62,40 € al mese**: a novembre arrivano anche gli arretrati di gennaio-ottobre, 10 × 62,40 = **624 €** |
+
+Nel secondo esempio la NASpI è già finita a giugno, ma gli arretrati spettano lo stesso: lo dice il messaggio INPS.
 
 ## Quando arriva e come la riconosci
 
@@ -123,7 +144,7 @@ No, la DIS-COLL è esclusa.
 Sì, gli arretrati del 2026 spettano anche se la prestazione è già cessata.
 
 **Quanto vale?**
-Il 7,1%, il 5,3% o il 4,8% del reddito di lavoro dipendente annuo, a seconda della fascia.
+Il 7,1%, il 5,3% o il 4,8% dell'importo ricevuto. La fascia si sceglie rapportando il reddito a un anno intero: per esempio, con una NASpI di 1.300 euro lordi al mese la fascia è del 4,8% e la somma è di 62,40 euro al mese.
 
 **Paga le tasse?**
 No, è una somma non imponibile.
