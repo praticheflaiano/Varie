@@ -19,6 +19,15 @@ type: novita
 
 **Ultimo aggiornamento: [GG mese AAAA]**
 
+## In breve
+
+- **[Domanda principale, es. quando/scadenza]:** [risposta diretta in una riga]
+- **A chi spetta / chi deve farlo:** [risposta]
+- **Importo o costo:** [solo se verificato]
+- **Come si fa / dove:** [risposta]
+- **Cosa serve:** [documenti principali]
+
+
 **Fonte normativa:** [Riferimento completo alla norma che introduce la novita]
 **In vigore dal:** [Data di entrata in vigore - VERIFICATA]
 
@@ -92,3 +101,14 @@ Operiamo a **Roma Nord**, zona **Vigne Nuove** (Municipio III Montesacro), come 
 *Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC*
 *Via Filoteo Alberini 25 int 10, 00139 Roma | Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it*
 *Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1*
+
+## Domande frequenti
+
+### [Domanda 1 scritta come la cerca la gente]?
+[Risposta breve]
+
+### [Domanda 2]?
+[Risposta breve]
+
+### [Domanda 3]?
+[Risposta breve]
