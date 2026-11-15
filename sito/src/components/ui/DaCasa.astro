@@ -60,7 +60,7 @@ const btnLink = "font-weight:800;color:#14142B";
     <div class="c60" style="align-items:center;gap:16px">
       <a href={startHref} class="c18" data-dacasa={d.slug} data-passo="modulo" target={startExt ? "_blank" : undefined} rel={startExt ? "noopener" : undefined}>{startLabel}</a>
       {d.documentiUrl && <a href={d.documentiUrl} class="c20" data-dacasa={d.slug} data-passo="documenti" target="_blank" rel="noopener">Carica i documenti</a>}
-      <span class="c4">oppure <a href="/prenota" style={btnLink} data-dacasa={d.slug} data-passo="prenota">prenota</a></span>
+      <span class="c4">oppure <a href={d.prenotaUrl ?? "/prenota"} style={btnLink} data-dacasa={d.slug} data-passo="prenota">prenota</a></span>
     </div>
     {!haModulo && (
       <p class="c4" style="font-size:15px">Si apre WhatsApp con il messaggio già scritto: ti rispondiamo noi e ti mandiamo il modulo giusto.</p>

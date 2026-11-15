@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { BOOKING } from "~/consts";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
@@ -105,7 +106,7 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
   <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }, { name: "Revoca delle dimissioni", price: 5 }]} onlineUrl="#da-casa" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <ServiceLanding {...props}>
+  <ServiceLanding {...props} bookingHref={BOOKING.centroPratiche}>
     <DaCasa slot="da-casa" slug="dimissioni" aggiornato="14 novembre 2026" />
     <!-- PREAVVISO -->
     <section class="c46" id="preavviso">
@@ -209,7 +210,7 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
       <div style="background:#fff;border-radius:28px;padding:16px">
         <iframe src={MANDATO} style="width:100%;height:900px;border:none;border-radius:20px" id="inline-14zIQoTpe0cUJhwRPT6t" data-layout="{'id':'INLINE'}" title="Dimissioni online – Mandato"></iframe>
       </div>
-      <p style="margin:0;font-size:15px;color:#3F3F5A">Preferisci parlarne prima? <a href="https://wa.me/393716230690?text=Ciao%2C%20vorrei%20informazioni%20sulle%20dimissioni%20online" target="_blank" rel="noopener" style="font-weight:800">Scrivici su WhatsApp</a> o <a href="/prenota" style="font-weight:800">prenota un appuntamento</a>.</p>
+      <p style="margin:0;font-size:15px;color:#3F3F5A">Preferisci parlarne prima? <a href="https://wa.me/393716230690?text=Ciao%2C%20vorrei%20informazioni%20sulle%20dimissioni%20online" target="_blank" rel="noopener" style="font-weight:800">Scrivici su WhatsApp</a> o <a href={BOOKING.centroPratiche} style="font-weight:800">prenota un appuntamento</a>.</p>
     </div>
     <script is:inline src="https://link.arcanis.it/js/form_embed.js"></script>
   </section>
@@ -224,7 +225,7 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
       <li><a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.naspi-nuovo-requisito-contributivo.html" target="_blank" rel="noopener">INPS - Circolare n. 98 del 5 giugno 2025: nuovo requisito contributivo NASpI</a></li>
       <li><a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" target="_blank" rel="noopener">INPS - NASpI: indennità mensile di disoccupazione</a> · termine di 68 giorni</li>
     </ul>
-    <p class="c4">Hai un dubbio sul tuo caso? <a href={"/prenota"} style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
+    <p class="c4">Hai un dubbio sul tuo caso? <a href={BOOKING.centroPratiche} style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>.</p>
   </section></div>
   <LandingArticles categories={["naspi-disoccupazione"]} />
 </BaseLayout>

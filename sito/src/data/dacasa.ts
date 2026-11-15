@@ -16,6 +16,8 @@ export interface DaCasaFonte { label: string; href: string }
 
 export interface DaCasaDati {
   slug: DaCasaSlug;
+  /** Link "prenota" dedicato (se assente: /prenota). */
+  prenotaUrl?: string;
   /** id della sezione in /cosa-portare (link "Lista completa") */
   cosaPortareId: string;
   titolo: string;
@@ -192,6 +194,7 @@ export const DACASA: Record<DaCasaSlug, DaCasaDati> = {
 
   dimissioni: {
     slug: "dimissioni",
+    prenotaUrl: "https://link.arcanis.it/widget/booking/K5geXmjt2N7PefI1LOqM",
     cosaPortareId: "dimissioni",
     titolo: "Dimissioni online da casa",
     waNome: "dimissioni online",
