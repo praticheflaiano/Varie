@@ -125,4 +125,36 @@ import { Icon } from "astro-icon/components";
       </div>
     </div>
   </section>
+  <section class="section-tight" aria-labelledby="mappa-titolo">
+    <div class="container-wide">
+      <h2 id="mappa-titolo" class="text-2xl font-extrabold text-[#14142B]">Dove siamo</h2>
+      <p class="mt-2 text-[#3F3F5A]">{CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality} – Vigne Nuove, dentro il Centro Acquisti Flaiano.</p>
+      <div id="pf-mappa" class="mt-4 overflow-hidden rounded-[28px] bg-[#F1EEFF]" style="aspect-ratio:16/10;max-height:460px">
+        <button type="button" id="pf-mappa-btn" class="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center text-[#14142B]">
+          <span class="text-4xl" aria-hidden="true">📍</span>
+          <span class="text-lg font-bold">Mostra la mappa</span>
+          <span class="max-w-md text-sm text-[#3F3F5A]">La mappa è di Google Maps: si carica solo se tocchi qui.</span>
+        </button>
+      </div>
+      <p class="mt-3"><a href={CONTACT.mapsUrl} target="_blank" rel="noopener" class="font-bold">Apri le indicazioni su Google Maps →</a></p>
+    </div>
+  </section>
+  <script is:inline>
+    (function () {
+      var b = document.getElementById("pf-mappa-btn");
+      if (!b) return;
+      b.addEventListener("click", function () {
+        var f = document.createElement("iframe");
+        f.src = "https://www.google.com/maps?q=" + encodeURIComponent("Caf - Patronato - servizi Centro Pratiche Flaiano, Via Filoteo Alberini 25, 00139 Roma") + "&output=embed";
+        f.title = "Mappa: Centro Pratiche Flaiano, Via Filoteo Alberini 25, Roma";
+        f.style.cssText = "width:100%;height:100%;border:0";
+        f.setAttribute("allowfullscreen", "");
+        f.setAttribute("referrerpolicy", "no-referrer-when-downgrade");
+        var box = document.getElementById("pf-mappa");
+        box.innerHTML = "";
+        box.appendChild(f);
+        try { window.gtag && window.gtag("event", "apri_mappa", { pagina: location.pathname }); } catch (e) {}
+      });
+    })();
+  </script>
 </BaseLayout>
