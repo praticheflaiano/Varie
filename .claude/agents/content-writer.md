@@ -88,3 +88,7 @@ Gli articoli seguono questo flusso: `draft` → `fact-checked` → `seo-optimize
 ## Dopo aver scritto
 
 Lancia automaticamente il fact-check (`/review-article [path]`). NESSUN articolo va pubblicato senza verifica.
+
+## Struttura obbligatoria (dal 15/11/2026)
+
+Ogni articolo segue `docs/regole-contenuto.md`, sezione 4-bis: riquadro "## In breve" sotto il titolo, titoli a domanda, "## Domande frequenti" in fondo con domande nel formato `### Domanda?`, dati non ufficiali dichiarati come tali.

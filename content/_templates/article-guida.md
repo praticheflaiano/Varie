@@ -18,6 +18,15 @@ type: guida
 
 **Ultimo aggiornamento: [GG mese AAAA]**
 
+## In breve
+
+- **[Domanda principale, es. quando/scadenza]:** [risposta diretta in una riga]
+- **A chi spetta / chi deve farlo:** [risposta]
+- **Importo o costo:** [solo se verificato]
+- **Come si fa / dove:** [risposta]
+- **Cosa serve:** [documenti principali]
+
+
 [Introduzione: 2-3 frasi che descrivono il problema del lettore e cosa trovera in questa guida. Il lettore probabilmente ha cercato "come fare X" su Google - rispondi subito alla sua domanda.]
 
 ## Panoramica
@@ -65,13 +74,13 @@ Verifichi di avere a disposizione:
 
 ## Domande frequenti
 
-**[Domanda 1]?**
+### [Domanda 1]?
 [Risposta chiara e concisa con fonte normativa se necessario]
 
-**[Domanda 2]?**
+### [Domanda 2]?
 [Risposta]
 
-**[Domanda 3]?**
+### [Domanda 3]?
 [Risposta]
 
 ## Perche rivolgersi al Centro Pratiche Flaiano

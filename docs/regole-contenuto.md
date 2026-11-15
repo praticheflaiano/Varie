@@ -120,6 +120,18 @@ deadline: YYYY-MM-DD  # solo per articoli tipo scadenza
 
 ---
 
+## 4-bis. Struttura per Google e risposte AI (OBBLIGATORIA dal 15/11/2026)
+
+Decisa con Antonio il 15/11/2026 dopo i dati di Search Console: gli articoli con molte impressioni in posizione 8-13 non prendevano clic. Vale per **ogni articolo nuovo o aggiornato** e, per quanto possibile, per le pagine servizio.
+
+1. **Titolo con le parole che la gente cerca** (Search Console > Rendimento > Query): es. "ISEE 2027: quando farlo, anni di riferimento e documenti". `seo_title` max 60 caratteri, `meta_description` 120-155 con la risposta chiave.
+2. **Riquadro "## In breve"** subito sotto il titolo e la riga "Ultimo aggiornamento": 4-5 punti che rispondono direttamente (quando, a chi spetta, quanto, come si chiede, cosa serve). Google e gli assistenti AI prendono le risposte da qui.
+3. **Titoli delle sezioni a forma di domanda** dove possibile ("A che anno si riferisce l'ISEE 2027").
+4. **"## Domande frequenti" in fondo**, 5-7 domande come le cerca la gente, ognuna nel formato `### Domanda?` seguito dalla risposta breve. Il sito (`ArticleLayout.astro`) le trasforma da solo in dati strutturati FAQPage: dopo la build controllare che la pagina contenga "FAQPage".
+5. **Dati non ancora ufficiali**: scriverlo in chiaro ("l'INPS non ha ancora comunicato…; aggiorneremo la pagina") invece di ometterlo o inventarlo.
+6. **Link interni**: pagina servizio, /prenota, articoli collegati; dalle pagine servizio (`related`) collegare l'articolo quando il tema è stagionale.
+7. **Pagine servizio**: le domande vanno nell'elenco `faqs` della pagina (già trasformate in FAQPage); la prima schermata deve rispondere alla domanda principale.
+
 ## 5. SEO
 
 ### Keyword

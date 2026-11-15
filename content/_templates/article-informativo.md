@@ -19,6 +19,15 @@ deadline: null  # Compilare solo se articolo tipo scadenza
 
 **Ultimo aggiornamento: [GG mese AAAA]**
 
+## In breve
+
+- **[Domanda principale, es. quando/scadenza]:** [risposta diretta in una riga]
+- **A chi spetta / chi deve farlo:** [risposta]
+- **Importo o costo:** [solo se verificato]
+- **Come si fa / dove:** [risposta]
+- **Cosa serve:** [documenti principali]
+
+
 [Introduzione: 2-3 frasi che spiegano DI COSA si tratta e PERCHE il lettore dovrebbe continuare a leggere. Includere la keyword primaria e almeno un riferimento geografico (es. "a Roma", "Municipio III", "zona Vigne Nuove").]
 
 ## Cos'e [argomento]
@@ -96,3 +105,14 @@ Per [argomento] i nostri operatori:
 *Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC*
 *Via Filoteo Alberini 25 int 10, 00139 Roma | Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it*
 *Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1*
+
+## Domande frequenti
+
+### [Domanda 1 scritta come la cerca la gente]?
+[Risposta breve]
+
+### [Domanda 2]?
+[Risposta breve]
+
+### [Domanda 3]?
+[Risposta breve]

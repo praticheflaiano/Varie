@@ -18,6 +18,15 @@ type: scadenza
 
 **Ultimo aggiornamento: [GG mese AAAA]**
 
+## In breve
+
+- **[Domanda principale, es. quando/scadenza]:** [risposta diretta in una riga]
+- **A chi spetta / chi deve farlo:** [risposta]
+- **Importo o costo:** [solo se verificato]
+- **Come si fa / dove:** [risposta]
+- **Cosa serve:** [documenti principali]
+
+
 **SCADENZA: [data completa] - [argomento]**
 *(Fonte: [riferimento normativo che stabilisce la scadenza])*
 
@@ -85,3 +94,14 @@ I nostri operatori si occuperanno di [descrizione del servizio specifico], verif
 *Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC*
 *Via Filoteo Alberini 25 int 10, 00139 Roma | Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it*
 *Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1*
+
+## Domande frequenti
+
+### [Domanda 1 scritta come la cerca la gente]?
+[Risposta breve]
+
+### [Domanda 2]?
+[Risposta breve]
+
+### [Domanda 3]?
+[Risposta breve]

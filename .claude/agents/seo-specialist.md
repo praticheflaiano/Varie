@@ -131,3 +131,7 @@ Dopo l'ottimizzazione SEO, cambia `status` nel frontmatter a `seo-optimized`.
 ## Flusso degli stati
 
 Gli articoli seguono questo flusso: `draft` → `fact-checked` → `seo-optimized` → `ready` → `published`
+
+## Controllo struttura (dal 15/11/2026)
+
+Verifica che l articolo abbia il riquadro "## In breve", le "## Domande frequenti" in formato `### Domanda?` e un seo_title con le parole cercate (docs/regole-contenuto.md, sezione 4-bis).
