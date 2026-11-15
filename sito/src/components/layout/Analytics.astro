@@ -1,0 +1,92 @@
+---
+// Statistiche: Google Analytics 4 con Consent Mode v2 (parte solo dopo "Accetta")
+// + Vercel Web Analytics (senza cookie). Banner di consenso con Accetta/Rifiuta.
+const GA_ID = "G-R9QW21KB4Y";
+---
+<script is:inline define:vars={{ GA_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+  var scelta = null;
+  try { scelta = localStorage.getItem("pf-consenso"); } catch (e) {}
+  gtag("consent", "default", {
+    ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied",
+    analytics_storage: scelta === "si" ? "granted" : "denied",
+    wait_for_update: 500
+  });
+  gtag("js", new Date());
+  gtag("config", GA_ID, { anonymize_ip: true });
+  var s = document.createElement("script");
+  s.async = true;
+  s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+  document.head.appendChild(s);
+</script>
+<script is:inline>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script is:inline defer src="/_vercel/insights/script.js"></script>
+
+<div id="pf-cookie" class="pf-cookie" role="dialog" aria-live="polite" aria-label="Consenso ai cookie statistici" hidden>
+  <p>
+    Usiamo cookie statistici di Google Analytics per capire quali pagine servono di più.
+    Li attiviamo solo se accetti. <a href="/cookie">Cookie policy</a>
+  </p>
+  <div class="pf-cookie-btn">
+    <button type="button" data-consenso="no">Rifiuta</button>
+    <button type="button" data-consenso="si">Accetta</button>
+  </div>
+</div>
+
+<style>
+  .pf-cookie{position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;max-width:560px;margin:0 auto;background:#14142B;color:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-size:15px;line-height:1.45}
+  .pf-cookie a{color:#D4FF4F;text-decoration:underline}
+  .pf-cookie-btn{display:flex;gap:10px;margin-top:12px}
+  .pf-cookie-btn button{flex:1;padding:11px 14px;border-radius:999px;font-weight:700;font-size:15px;border:2px solid #fff;background:transparent;color:#fff;cursor:pointer}
+  .pf-cookie-btn button[data-consenso="si"]{background:#fff;color:#14142B}
+  .pf-cookie[hidden]{display:none}
+</style>
+
+<script is:inline>
+  (function () {
+    var box = document.getElementById("pf-cookie");
+    var scelta = null;
+    try { scelta = localStorage.getItem("pf-consenso"); } catch (e) {}
+    function mostra() { box.hidden = false; }
+    function salva(v) {
+      try { localStorage.setItem("pf-consenso", v); } catch (e) {}
+      window.gtag("consent", "update", { analytics_storage: v === "si" ? "granted" : "denied" });
+      box.hidden = true;
+    }
+    if (scelta !== "si" && scelta !== "no") mostra();
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-consenso]");
+      if (b) salva(b.getAttribute("data-consenso"));
+    });
+    // link "Preferenze cookie" nel footer o in /cookie
+    document.addEventListener("click", function (e) {
+      var l = e.target.closest("[data-preferenze-cookie]");
+      if (l) { e.preventDefault(); mostra(); }
+    });
+
+    // Eventi: contatti e prenotazioni
+    function ev(nome, extra) {
+      try { window.gtag("event", nome, extra || {}); } catch (e) {}
+      try { window.va("event", { name: nome, data: extra || {} }); } catch (e) {}
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a[href]");
+      if (!a) return;
+      var h = a.getAttribute("href") || "";
+      var pag = { pagina: location.pathname };
+      if (h.indexOf("tel:") === 0) ev("click_telefono", pag);
+      else if (h.indexOf("wa.me") > -1 || h.indexOf("whatsapp") > -1) ev("click_whatsapp", pag);
+      else if (h.indexOf("mailto:") === 0) ev("click_email", pag);
+      else if (h.indexOf("/prenota") === 0 || h.indexOf("arcanis") > -1) ev("click_prenota", pag);
+      else if (h.indexOf("maps.google") > -1 || h.indexOf("goo.gl/maps") > -1 || h.indexOf("google.com/maps") > -1) ev("click_mappa", pag);
+    });
+    document.addEventListener("submit", function (e) {
+      ev("invio_modulo", { pagina: location.pathname, modulo: (e.target && e.target.id) || "" });
+    });
+    if (location.pathname === "/grazie") ev("generate_lead", { pagina: document.referrer || "" });
+  })();
+</script>

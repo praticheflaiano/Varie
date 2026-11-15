@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 
-const updatedAt = "26 aprile 2026";
+const updatedAt = "15 novembre 2026";
 ---
 
 <BaseLayout
@@ -19,13 +19,23 @@ const updatedAt = "26 aprile 2026";
 
   <article class="container-narrow prose-article py-12">
     <p>
-      Questo sito utilizza esclusivamente <strong>cookie tecnici di prima parte</strong>, strettamente necessari al funzionamento delle pagine. Non utilizziamo cookie di profilazione o di tracciamento pubblicitario.
+      Questo sito utilizza <strong>cookie tecnici di prima parte</strong>, necessari al funzionamento delle pagine, e, <strong>solo se accetti</strong>, <strong>cookie statistici di Google Analytics</strong>. Non utilizziamo cookie di profilazione o di tracciamento pubblicitario.
+    </p>
+    <h2>Cookie statistici (Google Analytics 4)</h2>
+    <p>
+      Se clicchi "Accetta" nel banner, usiamo Google Analytics 4 (Google Ireland Limited) per sapere quante persone visitano il sito, quali pagine leggono e se ci contattano (clic su telefono, WhatsApp, prenotazione). I cookie <code>_ga</code> e <code>_ga_*</code> durano fino a 14 mesi. I segnali pubblicitari sono disattivati e i dati non servono a fare pubblicità.
+      Se clicchi "Rifiuta" o non scegli, questi cookie non vengono installati: Google riceve solo segnali anonimi senza cookie (Consent Mode), che non ti identificano.
+      Puoi cambiare la tua scelta quando vuoi: <a href="/cookie" data-preferenze-cookie>apri le preferenze cookie</a>.
+    </p>
+    <h2>Statistiche senza cookie (Vercel Web Analytics)</h2>
+    <p>
+      Per contare le visite in forma aggregata usiamo anche Vercel Web Analytics, che non installa cookie e non raccoglie dati che ti identificano.
     </p>
 
     <h2>Cookie tecnici utilizzati</h2>
     <ul>
       <li><strong>Cookie di sessione</strong>: necessari al funzionamento delle pagine dinamiche e al mantenimento dello stato di navigazione. Si cancellano alla chiusura del browser.</li>
-      <li><strong>Cookie di preferenza</strong>: memorizzano scelte come consenso ai cookie o lingua. Durata massima 12 mesi.</li>
+      <li><strong>Cookie di preferenza</strong>: memorizzano scelte come consenso ai cookie o lingua. Durata massima 12 mesi. La tua scelta sul banner è salvata nel browser (voce <code>pf-consenso</code>).</li>
     </ul>
 
     <h2>Cookie di terze parti</h2>
