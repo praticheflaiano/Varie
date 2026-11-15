@@ -1,35 +1,69 @@
 ---
-title: "ISEE 2027: quando rinnovarlo, documenti e novità per chi vive a Roma"
+title: "ISEE 2027: quando farlo, a che anno si riferisce e quali documenti servono a Roma"
 slug: "isee-2027-documenti-quando-rinnovare-roma"
-seo_title: "ISEE 2027 a Roma: quando rinnovarlo e documenti da portare"
+seo_title: "ISEE 2027: quando farlo, anni di riferimento e documenti"
 date: 2026-11-08
-last_updated: 2026-11-08
+last_updated: 2026-11-15
 category: "isee-dsu"
 tags: ["isee", "inps", "famiglie", "assegno-unico", "guida"]
-meta_description: "ISEE 2027: scade il 31 dicembre, si rinnova da gennaio con redditi e patrimoni 2025. Documenti e novità prima casa. Gratis al CAF di Roma Nord."
+meta_description: "ISEE 2027 a Roma: si rinnova da gennaio con redditi 2025 e patrimoni al 31/12/2025. Quando farlo e documenti da portare. Gratis al CAF di Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
-  - "DPCM 5 dicembre 2013, n. 159 (regolamento ISEE)"
-  - "INPS, Messaggio n. 3835 del 23 ottobre 2019 (validità della DSU fino al 31 dicembre)"
-  - "INPS, Messaggio n. 96 del 13 gennaio 2020 (redditi e patrimoni del secondo anno precedente)"
-  - "Legge 30 dicembre 2025, n. 199, art. 1, commi 208-209 (modifiche ISEE per ADI, SFL, Assegno unico, bonus nido, bonus nuovi nati) - scheda Camera dei deputati: https://temi.camera.it/leg19/post/le-novit-sull-indicatore-della-situazione-economica-equivalente-isee.html"
-  - "Decreto Ministero del lavoro n. 3 del 2 marzo 2026 (nuovo modello DSU) e INPS, Messaggio n. 799 del 6 marzo 2026"
-  - "Legge 30 dicembre 2023, n. 213, art. 1, comma 183 (esclusione titoli di Stato e risparmio postale fino a 50.000 euro)"
+  - "DPCM 5 dicembre 2013, n. 159 (regolamento ISEE), come modificato dal DPCM 14 gennaio 2025, n. 13 (in vigore dal 5 marzo 2025) - INPS, notizia del 2 aprile 2025 (validità della DSU fino al 31 dicembre dell'anno di presentazione; esclusione di titoli di Stato e risparmio postale fino a 50.000 euro): https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.04.isee-e-dsu-nuove-regole-dal-3-aprile-2025.html"
+  - "INPS, Portale unico ISEE (redditi del secondo anno solare precedente; patrimonio al 31 dicembre del secondo anno precedente; validità fino al 31 dicembre dell'anno di presentazione): https://www.inps.it/content/inps-site/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.Portale-unico-ISEE.html"
+  - "INPS, Messaggio n. 96 del 13 gennaio 2020 (riscontri di reddito e patrimonio riferiti al secondo anno solare precedente)"
+  - "Legge 30 dicembre 2025, n. 199, art. 1, commi 208-209 (ISEE per specifiche prestazioni familiari e per l'inclusione) - scheda Camera dei deputati: https://temi.camera.it/leg19/post/le-novit-sull-indicatore-della-situazione-economica-equivalente-isee.html"
+  - "INPS, Messaggio n. 102 del 12 gennaio 2026 e notizia del 13 gennaio 2026 (prestazioni interessate, franchigia casa 91.500 / 120.000 euro, +2.500 euro per figlio dal secondo): https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.nuovi-criteri-isee-per-l-inclusione-sociale-aggiornamento-procedure.html"
+  - "Decreto Ministero del lavoro n. 3 del 2 marzo 2026 (nuovo modello DSU) e INPS, Messaggio n. 799 del 6 marzo 2026: https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15192/Allegati/16613_Messaggio-numero-799-del-06-03-2026.pdf"
+  - "INPS, Circolare n. 7 del 30 gennaio 2026 (Assegno unico: domanda valida anche negli anni successivi; senza ISEE importo minimo da marzo; DSU entro il 30 giugno con arretrati; regola 2026, istruzioni 2027 in corso di definizione): https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf"
+  - "Legge 30 dicembre 2023, n. 213, art. 1, commi 183-185 (esclusione titoli di Stato e risparmio postale fino a 50.000 euro), attuata dal DPCM n. 13/2025; INPS, Circolare n. 73 del 3 aprile 2025 e Messaggio n. 1895 del 16 giugno 2025"
 status: published
 type: guida
 image: "/og/isee-2027-documenti-quando-rinnovare-roma.jpg"
 image_alt: "ISEE 2027 a Roma: documenti e scadenze"
 ---
 
-# ISEE 2027: quando rinnovarlo, documenti e novità per chi vive a Roma
+# ISEE 2027: quando farlo, a che anno si riferisce e quali documenti servono a Roma
 
-**Ultimo aggiornamento: 8 novembre 2026**
+**Ultimo aggiornamento: 15 novembre 2026**
 
-L'**ISEE 2026 scade il 31 dicembre 2026**. Dal 1° gennaio 2027 serve una nuova DSU (Dichiarazione Sostitutiva Unica, il modulo da cui l'INPS calcola l'ISEE) per continuare a ricevere Assegno Unico, bonus nido, Assegno di inclusione, sconti sulle tariffe e tutte le prestazioni legate al reddito.
+L'**ISEE 2026 scade il 31 dicembre 2026**. Dal 1° gennaio 2027 serve una nuova DSU (Dichiarazione Sostitutiva Unica, il modulo da cui l'INPS calcola l'ISEE) per continuare a ricevere Assegno Unico, bonus nido, Assegno di inclusione, sconti sulle tariffe e le altre prestazioni legate al reddito.
 
-In questa guida trovi quando conviene rinnovarlo, quali anni di reddito e patrimonio servono, i documenti da preparare e cosa cambia per le famiglie di **Roma**.
+In questa guida trovi **quando fare l'ISEE 2027**, **a che anno si riferiscono redditi e patrimoni**, i **documenti** da preparare e cosa cambia per le famiglie di **Roma**.
 
-## L'ISEE 2027 in breve
+## In breve: ISEE 2027 in 5 risposte
+
+> **Quando si fa l'ISEE 2027?** L'ISEE 2026 vale fino al 31 dicembre 2026. La nuova DSU si presenta **dal 1° gennaio 2027**. Non c'è rinnovo automatico.
+>
+> **A che anno si riferiscono i redditi?** Al **secondo anno precedente**: per l'ISEE 2027 sono i **redditi 2025**.
+>
+> **E il patrimonio?** Alla situazione al **31 dicembre del secondo anno precedente**: cioè al **31 dicembre 2025**.
+>
+> **Entro quando rinnovarlo per l'Assegno Unico?** Gennaio e febbraio sono pagati con l'ISEE precedente. Da marzo, senza ISEE valido, l'importo è il minimo. Con la regola applicata nel 2026 (circolare INPS n. 7/2026), se presenti la DSU **entro il 30 giugno** l'INPS ricalcola da marzo e paga gli arretrati. Le istruzioni INPS per il 2027 sono **in corso di definizione**. Per non restare al minimo nemmeno per qualche mese, conviene presentarla **entro febbraio**. Dettagli nella [guida all'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
+>
+> **Quali documenti servono?** Documenti d'identità e codici fiscali del nucleo, **730 o Redditi 2026 e CU 2026** (redditi 2025), **saldi e giacenza media 2025** di conti e carte con IBAN, valori di titoli e polizze al 31/12/2025, dati degli immobili e del mutuo, contratto di affitto. Elenco completo più sotto, o su [cosa portare](/cosa-portare).
+
+## A che anno si riferisce l'ISEE 2027
+
+La regola, indicata dall'INPS, è questa: i **redditi** sono quelli del **secondo anno solare precedente** alla presentazione della DSU. Il **patrimonio** (mobiliare e immobiliare) è quello posseduto al **31 dicembre del secondo anno precedente**. Nel suo esempio l'INPS scrive: nel 2023 l'anno di riferimento è il 2021.
+
+Per l'ISEE 2027, cioè per una DSU presentata nel 2027, l'anno di riferimento è quindi il **2025**.
+
+| Che cosa | Anno di riferimento per l'ISEE 2027 |
+|---|---|
+| Redditi | 2025 (730 o Redditi presentati nel 2026, CU 2026) |
+| Patrimonio mobiliare e immobiliare | Situazione al 31 dicembre 2025 |
+| Nucleo familiare | Quello dichiarato alla data di presentazione della DSU |
+
+**Esempio semplice.** La famiglia Bianchi presenta la DSU a febbraio 2027. Dichiara lo stipendio percepito nel **2025** (lo trova nella CU 2026) e il saldo del conto corrente al **31 dicembre 2025**, non quello di febbraio 2027. Il nucleo familiare, invece, è quello che risulta il giorno della presentazione.
+
+Attenzione a non confondere: i redditi **2026** non servono per l'ISEE 2027, serviranno per l'ISEE 2028. Se la situazione economica è peggiorata molto da allora (ad esempio per la perdita del lavoro), puoi valutare l'**ISEE corrente**: leggi [ISEE corrente: quando conviene a Roma](/blog/isee-corrente-quando-conviene-roma).
+
+## Quando fare l'ISEE 2027 e perché scade il 31 dicembre
+
+La DSU vale **fino al 31 dicembre dell'anno in cui la presenti** (INPS, Portale unico ISEE). Non conta quando l'hai fatta: anche un ISEE presentato a novembre 2026 scade a fine anno.
+
+Il rinnovo **non è automatico**: se non presenti una nuova DSU, dal 2027 resti senza ISEE valido. Puoi presentarla **da gennaio 2027**.
 
 | | |
 |---|---|
@@ -37,47 +71,30 @@ In questa guida trovi quando conviene rinnovarlo, quali anni di reddito e patrim
 | **Da quando si rinnova** | Dal 1° gennaio 2027 |
 | **Redditi da dichiarare** | Quelli del **2025** |
 | **Patrimoni da dichiarare** | Situazione al **31 dicembre 2025** |
-| **Validità** | Fino al 31 dicembre 2027 |
+| **Validità del nuovo ISEE** | Fino al 31 dicembre 2027 |
 | **Costo al CAF** | Gratis per la prima presentazione dell'anno |
 
-## Perché l'ISEE scade il 31 dicembre
+A gennaio e febbraio i CAF sono pieni: prenotare a dicembre ti fa evitare le code.
 
-Dal 2020 la DSU vale **dal giorno in cui la presenti fino al 31 dicembre successivo** (INPS, messaggio n. 3835/2019). Non conta quando l'hai fatta: anche un ISEE presentato a novembre 2026 scade a fine anno.
+## Le novità sul calcolo dell'ISEE
 
-Il rinnovo **non è automatico**: se non presenti una nuova DSU, dal 2027 resti senza ISEE valido.
+La **Legge di bilancio 2026** (legge 199/2025, art. 1, commi 208-209) ha introdotto un nuovo valore dell'ISEE, ma **solo per alcune prestazioni dell'INPS**: Assegno di inclusione (ADI), Supporto per la formazione e il lavoro (SFL), Assegno unico e universale, bonus asilo nido e supporto domiciliare, bonus nuovi nati (messaggio INPS n. 102/2026). Il nuovo modello di DSU è stato approvato con il decreto n. 3 del 2 marzo 2026.
 
-## Quali redditi e patrimoni servono per l'ISEE 2027
-
-L'ISEE usa i dati del **secondo anno precedente** (INPS, messaggio n. 96/2020). Per l'ISEE 2027 quindi servono:
-
-- i **redditi 2025**, cioè quelli dichiarati nel 730 o nel modello Redditi presentati nel 2026, oppure nella CU 2026;
-- il **patrimonio al 31 dicembre 2025**: saldi e giacenze medie dei conti, investimenti, immobili.
-
-Se nel frattempo il reddito della famiglia è sceso molto (ad esempio per la perdita del lavoro), puoi chiedere l'**ISEE corrente**, che usa dati più recenti. Lo valutiamo insieme.
-
-## Le novità che valgono anche nel 2027
-
-La **Legge di bilancio 2026** (legge 199/2025, commi 208-209) ha cambiato il calcolo dell'ISEE, ma **solo per alcune prestazioni**: Assegno unico, bonus asilo nido, bonus nuovi nati, Assegno di inclusione (ADI) e Supporto per la formazione e il lavoro (SFL). Il nuovo modello di DSU è stato approvato con il decreto n. 3 del 2 marzo 2026. Queste regole restano valide anche nel 2027, salvo modifiche della legge di bilancio 2027, ancora in discussione mentre scriviamo: se cambia qualcosa, aggiorniamo questa guida.
+Le fonti ufficiali che abbiamo consultato non indicano una scadenza di queste regole. Se la legge di bilancio 2027, **in corso di definizione**, le modificherà, aggiorneremo questa guida. Allo stesso modo, un eventuale nuovo modello di DSU per il 2027 è **in corso di definizione**.
 
 ### Prima casa: per chi vive a Roma la franchigia è più alta
 
-Per queste prestazioni la casa di proprietà in cui vivi pesa meno:
-
-- il valore escluso dal calcolo sale **da 52.500 a 91.500 euro**;
-- nei **capoluoghi delle città metropolitane**, come **Roma**, arriva a **120.000 euro**;
-- aumenta di **2.500 euro per ogni figlio convivente dopo il primo**.
-
-Per le famiglie romane con una casa di proprietà significa, in molti casi, un ISEE più basso e quindi importi più alti.
+Per queste prestazioni, il valore della casa di abitazione escluso dal calcolo sale a **91.500 euro**. Nei **Comuni capoluogo delle città metropolitane**, come **Roma**, arriva a **120.000 euro**. Si aggiungono **2.500 euro per ogni figlio convivente successivo al primo** (INPS, notizia del 13 gennaio 2026).
 
 ### Più peso ai figli
 
-Per le stesse prestazioni cresce la maggiorazione della **scala di equivalenza** per le famiglie con più figli: **0,1** con due figli, **0,25** con tre, **0,40** con quattro, **0,55** con cinque o più.
+Per le stesse prestazioni cresce la maggiorazione della **scala di equivalenza** in base ai figli: **0,1** con due figli, **0,25** con tre, **0,40** con quattro, **0,55** con almeno cinque (scheda Camera dei deputati sulla legge 199/2025).
 
 ### Titoli di Stato e risparmio postale
 
-Resta l'esclusione dal patrimonio dei **titoli di Stato, buoni fruttiferi e libretti postali** fino a **50.000 euro** per nucleo (legge 213/2023, comma 183).
+Dal 2025 i **titoli di Stato, i buoni fruttiferi postali e i libretti di risparmio postale** sono esclusi dal patrimonio mobiliare **fino a 50.000 euro per nucleo** (DPCM 13/2025). Nelle DSU precompilate l'esclusione è automatica; nelle DSU autodichiarate la fa il dichiarante (INPS, messaggio n. 1895/2025 e circolare n. 73/2025).
 
-## Documenti da preparare per l'ISEE 2027
+## Documenti per l'ISEE 2027
 
 - [ ] Documento d'identità e codice fiscale di tutti i componenti del nucleo
 - [ ] **730 o modello Redditi 2026** e **CU 2026** (redditi 2025)
@@ -87,16 +104,10 @@ Resta l'esclusione dal patrimonio dei **titoli di Stato, buoni fruttiferi e libr
 - [ ] Visure o dati catastali degli immobili posseduti al 31/12/2025
 - [ ] Mutuo: **capitale residuo al 31/12/2025**
 - [ ] Contratto di affitto registrato, se vivi in affitto
-- [ ] Targhe di auto e moto oltre i 500 cc
+- [ ] Targhe dei veicoli posseduti (ti diciamo noi quali vanno dichiarati)
 - [ ] Certificati di invalidità o disabilità, se presenti
 
-Non trovi qualcosa? Molti dati li recuperiamo noi online, con la tua delega.
-
-## Quando conviene presentarlo
-
-Non serve aspettare: **dal 1° gennaio 2027** puoi già presentare la nuova DSU. Per l'**Assegno unico** conviene farlo entro la **fine di febbraio**, così da marzo l'importo viene calcolato sul nuovo ISEE e non scende al minimo. Le regole e le date per l'Assegno unico sono spiegate nella [guida al rinnovo dell'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
-
-A gennaio e febbraio i CAF sono pieni: prenotare a dicembre ti fa evitare le code.
+Non trovi qualcosa? Molti dati li recuperiamo noi online, con la tua delega. Trovi la lista pronta da stampare in [cosa portare](/cosa-portare). Non sai quale ISEE ti serve (ordinario, universitario, sociosanitario)? Leggi [quale ISEE scegliere](/quale-isee).
 
 ## Da soli o al CAF?
 
@@ -118,25 +129,28 @@ Recuperiamo noi redditi e CU, controlliamo che la franchigia per la casa e le ma
 
 ## Domande frequenti
 
-**L'ISEE 2026 vale ancora a gennaio 2027?**
-No. Scade il 31 dicembre 2026, qualunque sia la data in cui l'hai presentato.
+### ISEE 2027 a che anno si riferisce?
+Ai redditi del **2025** e al patrimonio al **31 dicembre 2025**. L'ISEE usa i dati del secondo anno precedente alla presentazione della DSU.
 
-**Per l'ISEE 2027 servono i redditi 2026?**
-No, servono i redditi del 2025 e il patrimonio al 31 dicembre 2025.
+### ISEE 2027: quando farlo?
+Dal **1° gennaio 2027**. L'ISEE 2026 scade il 31 dicembre 2026 e il rinnovo non è automatico. Per l'Assegno unico conviene presentarlo entro febbraio.
 
-**Quanto costa l'ISEE al CAF?**
-La prima presentazione dell'anno è gratuita. Da noi l'ISEE è gratis.
+### Quando si fa l'ISEE 2027 per non perdere l'Assegno unico?
+La domanda di Assegno unico continua da sola, ma da marzo senza ISEE l'importo è il minimo. Con la regola del 2026, la DSU presentata entro il 30 giugno dà diritto agli arretrati da marzo. Per il 2027 le istruzioni INPS sono in corso di definizione.
 
-**Ho una casa di proprietà a Roma: cosa cambia?**
-Per Assegno unico, bonus nido, bonus nuovi nati, ADI e SFL la parte di valore esclusa dal calcolo arriva fino a 120.000 euro, più 2.500 euro per ogni figlio convivente dopo il primo.
+### Quali documenti servono per l'ISEE 2027?
+Documenti d'identità e codici fiscali, 730 o Redditi 2026 e CU 2026, saldi e giacenze medie dei conti al 31/12/2025 e 2025, valore di titoli e polizze, dati degli immobili, mutuo e affitto. Trovi l'elenco in [cosa portare](/cosa-portare).
 
-**Devo rifare l'ISEE se non è cambiato niente?**
-Sì. Ogni anno serve una nuova DSU con i dati aggiornati.
+### Per l'ISEE 2027 servono i redditi 2026?
+No. Servono i redditi del 2025 e il patrimonio al 31 dicembre 2025. I redditi 2026 servono per l'ISEE 2028.
+
+### Quanto costa l'ISEE al CAF?
+La prima presentazione dell'anno al CAF è gratuita. Da noi l'ISEE è gratis.
 
 ## Articoli correlati
 
 - [Assegno unico 2027: rinnovo dell'ISEE e scadenze](/blog/assegno-unico-2027-rinnovo-isee-scadenze)
-- [Bonus asilo nido 2026: domanda INPS e ISEE](/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps)
+- [ISEE corrente: quando conviene a Roma](/blog/isee-corrente-quando-conviene-roma)
 - [ISEE gratis al CAF di Vigne Nuove](/isee)
 
 ---
