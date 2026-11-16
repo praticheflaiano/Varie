@@ -3,7 +3,7 @@ title: "APE sociale 2026: ultima scadenza il 30 novembre per la domanda"
 seo_title: "APE sociale 2026: domanda entro il 30 novembre"
 slug: "ape-sociale-2026-ultima-scadenza-30-novembre"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-16
 category: "pensioni"
 tags: ["pensione", "scadenza", "inps", "invalidita", "legge-104", "disoccupati"]
 meta_description: "APE sociale 2026: a 63 anni e 5 mesi per disoccupati, caregiver, invalidi dal 74% e lavori gravosi. Ultima domanda di verifica entro il 30 novembre, a Roma."
@@ -13,6 +13,7 @@ sources:
   - "Legge 11 dicembre 2016, n. 232, art. 1, commi 179-186"
   - "INPS, Messaggio n. 128 del 14 gennaio 2026 - APE sociale, riapertura delle domande di verifica"
   - "INPS, APE sociale confermata per chi matura i requisiti entro l'anno (15 gennaio 2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.01.ape-sociale-confermata-per-chi-matura-i-requisiti-entro-l-anno.html"
+  - "INPS, Messaggio n. 3694 del 12 novembre 2026 - Chiarimenti in materia di accesso all'APE sociale (contributivi puri e lavoratori domestici con rapporto cessato per decesso del datore)"
   - "INPS, scheda APE sociale - verifica requisiti - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.ape-sociale---anticipo-pensionistico---verifica-requisiti.html"
 status: published
 type: scadenza
@@ -23,7 +24,7 @@ image_alt: "APE sociale 2026: ultima scadenza il 30 novembre"
 
 # APE sociale 2026: ultima scadenza il 30 novembre per la domanda
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 16 novembre 2026**
 
 L'**APE sociale** è un assegno che l'INPS paga a chi ha almeno **63 anni e 5 mesi** e si trova in una situazione difficile, fino a quando arriva la pensione di vecchiaia. Non è una pensione vera e propria: è un **ponte** pagato dallo Stato.
 
@@ -73,9 +74,15 @@ Per alcuni **operai edili** e **ceramisti** bastano **32 anni** di contributi.
 
 Per le donne i contributi richiesti si riducono di **12 mesi per ogni figlio**, fino a un massimo di **due anni**. Con due figli, ad esempio, bastano 28 anni invece di 30.
 
+### Badanti e colf: la morte del datore vale come licenziamento
+
+Con il **messaggio n. 3694 del 12 novembre 2026** l'INPS ha chiarito che, per i **lavoratori domestici**, la fine del rapporto per **morte del datore di lavoro** vale come **licenziamento per giustificato motivo oggettivo**. Quindi badanti e colf rimaste senza lavoro per la morte dell'assistito possono rientrare tra i **disoccupati**, se hanno gli altri requisiti. Ne parliamo nell'articolo [badante senza lavoro per la morte dell'assistito](/blog/badante-morte-assistito-ape-sociale-precoci-messaggio-inps-3694).
+
 ### Chi è escluso
 
 Non puoi avere l'APE sociale se sei già titolare di una **pensione diretta**.
+
+Dallo stesso messaggio INPS n. 3694 del 12 novembre 2026: sono esclusi anche i **contributivi puri**, cioè chi ha il **primo contributo dopo il 31 dicembre 1995**. Con le leggi attuali l'APE sociale non può proseguire oltre l'età della vecchiaia se a quell'età non spetta la pensione, e l'INPS respinge queste domande.
 
 ## Quanto si prende
 
@@ -156,12 +163,19 @@ Sì, se vive con te, ha l'handicap grave e la assisti da almeno sei mesi, e se h
 **Posso lavorare mentre prendo l'APE sociale?**
 Solo con lavoro autonomo occasionale fino a 5.000 euro lordi l'anno.
 
+**Sono una badante e la persona che assistevo è morta: conto come disoccupata?**
+Sì. Con il messaggio n. 3694 del 12 novembre 2026 l'INPS considera la fine del lavoro domestico per morte del datore come licenziamento per giustificato motivo oggettivo. Servono comunque gli altri requisiti.
+
+**Il mio primo contributo è dopo il 1995: posso averla?**
+No, con le leggi attuali i contributivi puri (primo contributo, compresi riscatti e figurativi, dopo il 31 dicembre 1995) sono esclusi dall'APE sociale (messaggio INPS n. 3694 del 12 novembre 2026).
+
 **L'APE sociale passa al coniuge se muoio?**
 No, non è reversibile.
 
 ## Articoli correlati
 
 - [Modello RED 2026: scadenza 1° marzo 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
+- [Badante senza lavoro per la morte dell'assistito: APE sociale e precoci](/blog/badante-morte-assistito-ape-sociale-precoci-messaggio-inps-3694)
 - [Colf e badanti a Roma: contributi INPS e scadenze](/blog/colf-badanti-roma-contributi-inps-2026-scadenze)
 - [Tipi di ISEE: differenze e quale serve](/blog/tipi-di-isee-differenze-quale-serve)
 
