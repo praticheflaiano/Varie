@@ -163,6 +163,7 @@ Serve un'identità digitale (SPID, CIE o CNS). In ufficio ti aiutiamo a leggerlo
 
 ## Articoli correlati
 
+- [Bonus 154,94 euro sulla pensione di dicembre 2026: a chi spetta](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026)
 - [Rivalutazione pensioni 2027: aumento da gennaio e fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
 - [Modello RED 2026: scadenza 1° marzo 2027](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568)
