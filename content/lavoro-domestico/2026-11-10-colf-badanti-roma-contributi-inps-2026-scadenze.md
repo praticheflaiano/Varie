@@ -3,12 +3,13 @@ title: "Colf e badanti a Roma: contributi INPS 2026, scadenze e cosa deve fare l
 seo_title: "Colf e badanti 2026: contributi INPS e scadenze"
 slug: "colf-badanti-roma-contributi-inps-2026-scadenze"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-17
 category: "lavoro-domestico"
 tags: ["colf", "badanti", "inps", "lavoro-domestico", "scadenza", "famiglie"]
 meta_description: "Colf e badanti nel 2026: contributi INPS orari, scadenze trimestrali, assunzione entro il giorno prima, detrazioni nel 730. Guida per le famiglie di Roma Nord."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, Messaggio n. 3691 del 12 novembre 2026 - Contributi per i lavoratori domestici. Chiarimenti sulle modalità di pagamento - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3691-del-12-11-2026_16412.html"
   - "INPS, Circolare n. 9 del 3 febbraio 2026 - contributi dovuti per i lavoratori domestici nel 2026"
   - "INPS, notizia del 3 febbraio 2026: Lavoratori domestici, i contributi dovuti per il 2026 - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.lavoratori-domestici-i-contributi-dovuti-per-il-2026.html"
   - "INPS, scheda Formalizzare l'assunzione di un lavoratore domestico - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.formalizzare-l-assunzione-di-un-lavoratore-domestico.html"
@@ -25,7 +26,7 @@ image_alt: "Colf e badanti 2026: contributi INPS e scadenze"
 
 # Colf e badanti a Roma: contributi INPS 2026, scadenze e cosa deve fare la famiglia
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 17 novembre 2026** (aggiunti i chiarimenti del messaggio INPS n. 3691 del 12 novembre 2026 su come pagare i contributi)
 
 Chi ha in casa una **colf**, una **badante** o una **baby sitter** è a tutti gli effetti un **datore di lavoro**. Deve comunicare l'assunzione all'INPS, pagare i contributi ogni tre mesi, fare la busta paga e, a fine rapporto, il TFR.
 
@@ -75,7 +76,17 @@ I contributi si pagano **quattro volte l'anno**, dopo la fine di ogni trimestre,
 | luglio-settembre | 1-10 ottobre |
 | ottobre-dicembre | 1-10 gennaio dell'anno dopo |
 
-> **Novità 2026:** se hai **meno di 76 anni** l'INPS non ti manda più l'avviso pagoPA per posta. Lo trovi nel Portale dei pagamenti dell'INPS, nella sezione Lavoratori domestici, oppure te lo prepariamo noi.
+> **Niente più bollettino per posta:** da gennaio 2026 l'INPS non spedisce più gli avvisi pagoPA cartacei ai datori di lavoro domestico con **meno di 76 anni** che in passato ne avevano chiesto l'invio per posta: i modelli pagoPA sono disponibili solo online. Lo ha ricordato il **messaggio INPS n. 3691 del 12 novembre 2026**.
+
+### Come si pagano i contributi senza bollettino cartaceo
+
+Secondo il messaggio INPS n. 3691/2026 il modello pagoPA si trova solo **online sul sito INPS**, nel servizio "Portale dei Pagamenti", sezione "Lavoratori Domestici", dove puoi anche pagarlo subito. In alternativa paghi con i canali dei prestatori di servizi di pagamento aderenti a pagoPA:
+
+- **home banking**, con la funzione **CBILL**;
+- **sportelli bancari** e **uffici postali**;
+- **app INPS Mobile** o **app IO**.
+
+Il servizio INPS di "emissione massiva" degli avvisi è riservato ai **professionisti abilitati** e alle **associazioni sindacali dei datori di lavoro domestico** che gestiscono almeno 200 rapporti di lavoro a trimestre. Se non hai SPID o non ti trovi con il portale, l'avviso **te lo prepariamo noi** in ufficio.
 
 Se il rapporto finisce, la cessazione va comunicata all'INPS **entro 5 giorni**. Anche in quel caso pensiamo noi a calcolare l'ultimo trimestre e il TFR.
 
@@ -113,6 +124,9 @@ Entro le ore 24 del giorno prima dell'inizio del lavoro, anche se è un festivo.
 
 **Quando si pagano i contributi di colf e badanti?**
 Ogni trimestre, dal 1° al 10 di aprile, luglio, ottobre e gennaio. I contributi di ottobre-dicembre 2026 si pagano a inizio gennaio 2027.
+
+**Non mi è arrivato il bollettino dei contributi della badante: cosa faccio?**
+Se hai meno di 76 anni e in passato avevi chiesto l'invio per posta, da gennaio 2026 l'INPS non lo spedisce più (messaggio INPS n. 3691 del 12 novembre 2026). Lo scarichi e lo paghi dal Portale dei Pagamenti INPS, sezione Lavoratori Domestici, oppure paghi con home banking (CBILL), negli sportelli bancari e negli uffici postali aderenti a pagoPA, con l'app INPS Mobile o l'app IO. Se preferisci, lo prepariamo noi.
 
 **Quanto costano i contributi INPS di una colf nel 2026?**
 Da 1,70 a 2,34 euro per ogni ora lavorata, in base alla paga oraria. Oltre le 24 ore settimanali con lo stesso datore, 1,24 euro l'ora.
