@@ -8,3 +8,4 @@ Per cambiare un rimando: modificare `vercel.json` qui, poi fare un deploy di pro
 (create_deployment con `files`; build.sh si può indicare per sha). Un semplice redeploy riusa il vercel.json del deploy precedente.
 
 Ultimo aggiornamento: 14/11/2026, aggiunto /luce-e-gas → /luce-gas (deploy dpl_9SCTMqVj66XznGESi4bcgbG3nd3G).
+Aggiornamento 18/11/2026: aggiunto il rimando esplicito della radice di info.praticheflaiano.it (rispondeva 200 con la home invece di 308; le altre pagine di info. rimandavano già).
