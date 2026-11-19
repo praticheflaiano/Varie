@@ -318,7 +318,7 @@ Affidarsi a un intermediario qualificato e particolarmente consigliabile per evi
 - [ ] Modello F24 con i versamenti IVA effettuati nel 2025 e a marzo 2026
 - [ ] Dichiarazione IVA dell'anno precedente (modello IVA/2025)
 - [ ] Eventuale documentazione relativa a operazioni intracomunitarie
-- [ ] Tessera di iscrizione al Centro Pratiche Flaiano (30 euro/anno o 20 euro/semestre per nucleo familiare)
+- [ ] Tessera di iscrizione al Centro Pratiche Flaiano (30 euro l'anno per nucleo familiare)
 
 ## Come il Centro Pratiche Flaiano puo aiutarLa
 

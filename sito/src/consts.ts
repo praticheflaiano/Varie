@@ -139,6 +139,7 @@ export const ZONE_SERVITE = [
 
 export const TESSERAMENTO = {
   annual: { price: 30, label: "Annuale", validity: "12 mesi", recommended: true },
+  /* Non pubblicizzata (decisione di Antonio 19/11/2026): possibile promozione da settembre 2027. */
   semester: { price: 20, label: "Semestrale", validity: "6 mesi", recommended: false },
   scope: "Per tutto il nucleo familiare",
   currency: "EUR",

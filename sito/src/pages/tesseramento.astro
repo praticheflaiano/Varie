@@ -27,7 +27,7 @@ const examples = [
 const faq = [
   {
     question: "Quanto costa la tessera?",
-    answer: `<strong>${TESSERAMENTO.annual.price} € l'anno</strong> oppure <strong>${TESSERAMENTO.semester.price} € per sei mesi</strong>. Vale per tutto il nucleo familiare, non per una persona sola.`,
+    answer: `<strong>${TESSERAMENTO.annual.price} € l'anno</strong>. Vale per tutto il nucleo familiare, non per una persona sola.`,
   },
   {
     question: "È obbligatoria?",
@@ -47,18 +47,17 @@ const offerData = {
   "@context": "https://schema.org",
   "@type": "Product",
   name: "Tessera Centro Pratiche Flaiano",
-  description: "Tessera annuale o semestrale per il nucleo familiare: consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche.",
+  description: "Tessera annuale per il nucleo familiare: consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche.",
   image: `${SITE.url}/og/p-tesseramento.jpg`,
   brand: { "@type": "Organization", name: SITE.name },
   offers: [
     { "@type": "Offer", name: "Tessera annuale (nucleo familiare)", price: TESSERAMENTO.annual.price, priceCurrency: TESSERAMENTO.currency, availability: "https://schema.org/InStock", url: `${SITE.url}/tesseramento` },
-    { "@type": "Offer", name: "Tessera semestrale (nucleo familiare)", price: TESSERAMENTO.semester.price, priceCurrency: TESSERAMENTO.currency, availability: "https://schema.org/InStock", url: `${SITE.url}/tesseramento` },
   ],
 };
 ---
 <BaseLayout
   title="Tessera: 30 € l'anno per tutta la famiglia"
-  description="Tessera Centro Pratiche Flaiano: 30 € l'anno (20 € a semestre) per tutto il nucleo familiare. Consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche."
+  description="Tessera Centro Pratiche Flaiano: 30 € l'anno per tutto il nucleo familiare. Consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche."
 >
   <JsonLdFaq slot="head" items={faq} />
   <script slot="head" is:inline type="application/ld+json" set:html={JSON.stringify(offerData)} />
@@ -77,17 +76,16 @@ const offerData = {
           <a class="btn btn-ghost btn-lg" href="/prenota">Falla in ufficio</a>
         </div>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2" style="flex:1 1 440px;min-width:0">
-        <div style="background:#5B3DF5;color:#fff;border-radius:32px;padding:28px;position:relative;transform:rotate(-1.5deg)">
-          <span class="sticker" style="position:absolute;right:-8px;top:-14px;background:#FF5C8A;color:#fff">Consigliata</span>
-          <p style="font-weight:700;color:#E4DEFF">Annuale</p>
-          <p style="font-family:var(--font-display);font-weight:800;font-size:56px;line-height:1;color:#D4FF4F;white-space:nowrap">{TESSERAMENTO.annual.price} €</p>
-          <p style="color:#E4DEFF">12 mesi · tutto il nucleo</p>
-        </div>
-        <div style="background:#F7F7FB;border-radius:32px;padding:28px;transform:rotate(1deg)">
-          <p style="font-weight:700">Semestrale</p>
-          <p style="font-family:var(--font-display);font-weight:800;font-size:56px;line-height:1;color:#5B3DF5;white-space:nowrap">{TESSERAMENTO.semester.price} €</p>
-          <p>6 mesi · tutto il nucleo</p>
+      <div style="flex:1 1 400px;min-width:0">
+        <div style="background:#5B3DF5;color:#fff;border-radius:32px;padding:28px 30px;transform:rotate(-1deg)">
+          <p style="font-weight:700;color:#E4DEFF">Tessera annuale</p>
+          <p style="font-family:var(--font-display);font-weight:800;font-size:64px;line-height:1;color:#D4FF4F;white-space:nowrap">{TESSERAMENTO.annual.price} €</p>
+          <p style="color:#E4DEFF">12 mesi · tutto il nucleo familiare</p>
+          <ul style="list-style:none;margin:20px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.25);display:grid;gap:8px">
+            {["Prima consulenza al ritiro dell'ISEE", "Consulenze gratuite", "Assistenza al telefono e su WhatsApp", "Appuntamenti prioritari", "Sconti sulle pratiche"].map((x) => (
+              <li style="display:flex;gap:10px;align-items:center;font-weight:600;color:#fff"><span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:999px;background:#D4FF4F;color:#14142B;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">✓</span>{x}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
