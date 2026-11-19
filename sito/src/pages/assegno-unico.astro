@@ -24,7 +24,7 @@ const iCome = body.indexOf(M_COME);
 const part1 = body.slice(0, iCome) + "</div>"; // chiude il div c36 aperto dal frammento
 const part2 = '<div class="c36">' + body.slice(iCome); // "Come preferisci?" e il resto (chiude il suo div c36)
 ---
-<BaseLayout title={"Assegno Unico: domanda da 10 €"} description={"Domanda, rinnovo e variazioni dell'Assegno Unico con ISEE gratuito. In ufficio a Vigne Nuove o online."}>
+<BaseLayout title={"Assegno Unico: domanda da 10 €"} description={"Domanda, rinnovo e variazioni dell'Assegno Unico: 15 € in ufficio, 10 € con la tessera. ISEE gratuito. CAF e Patronato a Vigne Nuove, Roma, anche online."}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="assegno-unico" name="Assegno Unico Universale" description={"Domanda, rinnovo e variazioni dell'Assegno Unico per i figli, con ISEE gratuito."} serviceType="Patronato - sostegno famiglie" offers={[{ name: "Domanda in ufficio", price: 15 }, ...DACASA["assegno-unico"].offerte.slice(0, 1), { name: "Domanda in ufficio per tesserati", price: 10 }, ...DACASA["assegno-unico"].offerte.slice(1)]} onlineUrl="#da-casa" />
   {ld && <script slot="head" type="application/ld+json" set:html={ld} />}

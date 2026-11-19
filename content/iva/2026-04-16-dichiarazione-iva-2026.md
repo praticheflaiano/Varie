@@ -1,5 +1,6 @@
 ---
-title: "Dichiarazione IVA 2026: guida alla scadenza del 30 aprile - CAF Roma"
+title: "Dichiarazione IVA 2026: guida alla scadenza del 30 aprile"
+seo_title: "Dichiarazione IVA 2026: scadenza del 30 aprile"
 slug: "dichiarazione-iva-2026-scadenza-30-aprile"
 date: 2026-04-16
 last_updated: 2026-04-13

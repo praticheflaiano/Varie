@@ -13,7 +13,10 @@ interface Props {
 const { article, variant = "default" } = Astro.props;
 const cat = getCategory(article.data.category);
 const href = articlePath(article);
-const dateStr = formatDateIt(article.data.last_updated ?? article.data.date);
+const shownDate = article.data.last_updated ?? article.data.date;
+const isUpdated = !!article.data.last_updated && article.data.last_updated.getTime() > article.data.date.getTime();
+const dateStr = (isUpdated ? "Aggiornato: " : "") + formatDateIt(shownDate);
+const dateIso = shownDate.toISOString();
 
 const typeLabels: Record<string, string> = {
   guida: "Guida",
@@ -31,7 +34,7 @@ const typeLabels: Record<string, string> = {
           {cat.label}
         </span>
       )}
-      <time>{dateStr}</time>
+      <time datetime={dateIso}>{dateStr}</time>
     </div>
     <h3 class="mt-1.5 font-display text-base font-bold text-[var(--color-ink)] group-hover:text-[var(--color-brand-700)] transition-colors">
       {article.data.title}
@@ -87,7 +90,7 @@ const typeLabels: Record<string, string> = {
       </p>
 
       <div class="mt-auto pt-5 flex items-center justify-between text-xs text-[var(--color-ink-muted)]">
-        <time datetime={article.data.date.toISOString()}>{dateStr}</time>
+        <time datetime={dateIso}>{dateStr}</time>
         <span class="inline-flex items-center gap-1 font-semibold text-[var(--color-brand-700)] group-hover:gap-2 transition-all">
           Leggi
           <Icon name="heroicons:arrow-right" class="size-3.5" aria-hidden="true" />

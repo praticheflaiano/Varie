@@ -1,5 +1,5 @@
 ---
-title: "Detrazioni spese mediche 730/2026: cosa scaricare e come | CAF Roma"
+title: "Detrazioni spese mediche 730/2026: cosa scaricare e come"
 slug: "detrazioni-spese-mediche-730-2026-guida-completa"
 seo_title: "Spese mediche 730/2026: detrazione 19% e franchigia 129,11 €"
 date: 2026-04-30

@@ -1,5 +1,6 @@
 ---
 title: "Bonus dopo il diploma 2026: 10 agevolazioni per neodiplomati a Roma"
+seo_title: "Bonus dopo il diploma 2026: 10 agevolazioni a Roma"
 slug: "bonus-dopo-diploma-2026-agevolazioni-neodiplomati"
 date: 2026-04-30
 last_updated: 2026-04-30

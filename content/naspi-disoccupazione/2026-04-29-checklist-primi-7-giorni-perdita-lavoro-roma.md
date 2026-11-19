@@ -1,5 +1,6 @@
 ---
-title: "Hai perso il lavoro? La checklist dei primi 7 giorni | CAF Roma"
+title: "Hai perso il lavoro? La checklist dei primi 7 giorni"
+seo_title: "Hai perso il lavoro? Cosa fare nei primi 7 giorni"
 slug: "checklist-primi-7-giorni-perdita-lavoro-roma"
 date: 2026-04-29
 last_updated: 2026-04-29

@@ -1,6 +1,6 @@
 ---
 title: "NASpI e cassa integrazione: da novembre la somma esentasse con gli arretrati 2026"
-seo_title: "Somma non imponibile su NASpI e CIG: pagamenti da novembre 2026"
+seo_title: "Somma non imponibile NASpI e CIG da novembre 2026"
 slug: "somma-non-imponibile-naspi-cassa-integrazione-2026"
 date: 2026-11-15
 last_updated: 2026-11-15

@@ -3,7 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import body from "~/fragments/richiesta.html?raw";
 const ld = null;
 ---
-<BaseLayout title={"Richiesta online"} description={"Invia la tua richiesta online al Centro Pratiche Flaiano: ti ricontattiamo noi."}>
+<BaseLayout title={"Richiesta online"} description={"Invia la tua richiesta online al Centro Pratiche Flaiano: ti ricontattiamo noi."} noindex={true}>
   <link slot="head" rel="stylesheet" href="/landing.css" />
   {ld && <script slot="head" type="application/ld+json" set:html={ld} />}
   <div class="lp"><Fragment set:html={body} /></div>

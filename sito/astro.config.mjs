@@ -73,7 +73,7 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const p = new URL(page).pathname.replace(/\/$/, "");
-        if (p === "/grazie" || p === "/404" || p === "/cerca") return false;
+        if (p === "/grazie" || p === "/404" || p === "/cerca" || p === "/mandato" || p === "/richiesta") return false; // pagine operative: noindex
         // Stima pensione: in sitemap solo quando il servizio è attivo (prima è noindex).
         if (p === "/stima-pensione" && !process.env.PUBLIC_STIMA_PENSIONE_API) return false;
         if (p.startsWith("/riservata")) return false; // area riservata dell'ufficio

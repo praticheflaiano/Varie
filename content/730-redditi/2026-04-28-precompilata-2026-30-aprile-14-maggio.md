@@ -1,5 +1,5 @@
 ---
-title: "730 Precompilato 2026: 30 aprile e 14 maggio | CAF Roma"
+title: "730 Precompilato 2026: 30 aprile e 14 maggio"
 slug: "precompilata-2026-30-aprile-14-maggio"
 date: 2026-04-28
 last_updated: 2026-04-28

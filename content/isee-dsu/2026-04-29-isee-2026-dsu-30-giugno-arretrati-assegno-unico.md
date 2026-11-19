@@ -1,5 +1,6 @@
 ---
-title: "ISEE 2026 e DSU entro il 30 giugno per gli arretrati AUU | CAF Roma"
+title: "ISEE 2026 e DSU entro il 30 giugno per gli arretrati AUU"
+seo_title: "ISEE 2026 entro il 30 giugno: arretrati Assegno Unico"
 slug: "isee-2026-dsu-30-giugno-arretrati-assegno-unico"
 date: 2026-04-29
 last_updated: 2026-04-29

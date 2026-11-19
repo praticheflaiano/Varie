@@ -1,5 +1,5 @@
 ---
-title: "IMU Acconto 16 giugno 2026: chi paga, calcolo e F24 | CAF Roma"
+title: "IMU Acconto 16 giugno 2026: chi paga, calcolo e F24"
 slug: "imu-acconto-16-giugno-2026"
 date: 2026-04-29
 last_updated: 2026-11-08
