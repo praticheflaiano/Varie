@@ -1,5 +1,6 @@
 ---
-title: "NASpI 2026: cosa fa il Patronato gratis e cosa fa il CAF | Roma"
+title: "NASpI 2026: cosa fa il Patronato gratis e cosa fa il CAF"
+seo_title: "NASpI 2026: cosa fa il patronato gratis e cosa il CAF"
 slug: "naspi-2026-patronato-vs-caf-cosa-fa-cosa"
 date: 2026-04-29
 last_updated: 2026-04-29
