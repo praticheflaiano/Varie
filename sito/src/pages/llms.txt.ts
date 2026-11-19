@@ -17,7 +17,7 @@ export async function GET(_context: APIContext) {
   lines.push(`> ${SITE.tagline}`);
   lines.push("");
   lines.push(
-    `${SITE.name} (Pratiche Flaiano) è un CAF (Centro di Assistenza Fiscale) UNSIC e un Patronato ENASC con sede a Roma, ${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality} (quartiere Vigne Nuove, Municipio III). Telefono: ${CONTACT.phone.landline}. WhatsApp: ${CONTACT.phone.mobile}. Email: ${CONTACT.email}. Prenotazioni online: ${BOOKING.arcanisGroup}. Tessera: ${TESSERAMENTO.annual.price} EUR all'anno o ${TESSERAMENTO.semester.price} EUR a semestre per nucleo familiare.`,
+    `${SITE.name} (Pratiche Flaiano) è un CAF (Centro di Assistenza Fiscale) UNSIC e un Patronato ENASC con sede a Roma, ${CONTACT.address.street}, ${CONTACT.address.postalCode} ${CONTACT.address.locality} (quartiere Vigne Nuove, Municipio III). Telefono: ${CONTACT.phone.landline}. WhatsApp: ${CONTACT.phone.mobile}. Email: ${CONTACT.email}. Prenotazioni online: ${BOOKING.arcanisGroup}. Tessera: ${TESSERAMENTO.annual.price} EUR all'anno per nucleo familiare.`,
   );
   lines.push("");
   lines.push(`## Servizi principali e prezzi`);
@@ -57,7 +57,7 @@ export async function GET(_context: APIContext) {
   lines.push(`- [Servizi CAF](${baseUrl}/servizi/caf): 730, ISEE, IMU, successioni, contratti di affitto, bonus fiscali.`);
   lines.push(`- [Servizi Patronato](${baseUrl}/servizi/patronato): pensioni, NASpI, invalidità civile, Legge 104, assegno unico, maternità, ADI, RED.`);
   lines.push(`- [Servizi vari](${baseUrl}/servizi/servizi-vari): PEC, utenze, certificati, assicurazioni, comunicazioni con la PA.`);
-  lines.push(`- [Tesseramento](${baseUrl}/tesseramento): consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche (${TESSERAMENTO.annual.price} EUR/anno o ${TESSERAMENTO.semester.price} EUR/semestre per nucleo familiare).`);
+  lines.push(`- [Tesseramento](${baseUrl}/tesseramento): consulenze gratuite, appuntamenti prioritari, sconti sulle pratiche (${TESSERAMENTO.annual.price} EUR/anno per nucleo familiare).`);
   lines.push(`- [Blog](${baseUrl}/blog): guide, scadenze, novità normative.`);
   lines.push(`- [FAQ](${baseUrl}/faq): domande frequenti su tutti i servizi.`);
   lines.push(`- [Prenota](${baseUrl}/prenota): calendario online appuntamenti, in sede o da remoto.`);

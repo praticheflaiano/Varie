@@ -7,7 +7,7 @@ Sede: Via Filoteo Alberini 25 int 10, 00139 Roma (Centro Acquisti Flaiano, zona 
 Zone servite: Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma, Municipio III Montesacro.
 Tel: 0697845429 | WhatsApp: 3716230690 | Email: info@praticheflaiano.it
 Orari: Lun-Gio 9:30-13:00 / 15:30-18:00 | Ven 9:30-14:00
-Sito: praticheflaiano.it | Tessera: 30 euro/anno o 20 euro/semestre per nucleo familiare
+Sito: praticheflaiano.it | Tessera: 30 euro/anno per nucleo familiare (semestrale 20 euro non pubblicizzata)
 Prenotazioni: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1
 Base URL blog: https://praticheflaiano.it/blog/
 
