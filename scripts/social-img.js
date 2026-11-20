@@ -26,14 +26,17 @@ const d = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
   .brand{position:absolute;right:72px;bottom:60px;background:#fff;padding:18px 26px 18px 18px;border-radius:28px;display:flex;align-items:center;gap:18px;font-weight:700;font-size:32px;text-align:left}
   .g{width:72px;height:72px;border-radius:20px;background:#5B3DF5;color:#D4FF4F;font-family:Brico;font-weight:800;font-size:42px;display:grid;place-items:center}
   .sub{font-weight:500;opacity:.75;font-size:25px}
+  .foot{position:absolute;left:72px;right:72px;bottom:176px;background:#fff;border-radius:22px;padding:16px 24px;font-size:24px;line-height:1.45}
+  .foot b{font-weight:700}
   </style></head><body><div class="b1"></div><div class="b2"></div>
   <span class="pill">${d.pill}</span>
   <h1>${d.title}</h1>
   <span class="dead">${d.dead}</span>
   <ul>${d.items.map(x=>`<li><i>✓</i><span>${x}</span></li>`).join('')}</ul>
+  ${d.foot?`<div class="foot">${d.foot}</div>`:''}
   <div class="brand"><span class="g">F</span><span>Pratiche Flaiano<br><span class="sub">CAF UNSIC e Patronato ENASC · Vigne Nuove, Roma</span></span></div>
   </body></html>`);
   await p.waitForTimeout(200);
-  await p.screenshot({ path: d.out, type: 'jpeg', quality: 90 });
+  await p.screenshot({ path: d.out, ...(d.out.endsWith('.png')?{type:'png'}:{type:'jpeg',quality:90}) });
   await b.close();
 })();

@@ -3,7 +3,7 @@ title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute e come le
 seo_title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute"
 slug: "cedolino-pensione-novembre-dicembre-2026-come-leggerlo"
 date: 2026-11-10
-last_updated: 2026-11-15
+last_updated: 2026-11-20
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "guida"]
 meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre, tredicesima, niente addizionali, rimborsi 730 e dove vederlo. CAF a Roma, Vigne Nuove."
@@ -16,6 +16,7 @@ sources:
   - "INPS, Pensionati: il cedolino di pensione di dicembre 2025 (26 novembre 2025; regole di dicembre: pagamento, addizionali, conguagli 730) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.11.pensionati-il-cedolino-di-pensione-di-dicembre-2025.html"
   - "INPS, Il pagamento delle pensioni, delle prestazioni assistenziali e di accompagnamento a pensione (art. 1, comma 302, L. 190/2014) - https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.il-pagamento-delle-pensioni-delle-prestazioni-assistenziali-e-di-accompagnamento-a-pensione.html"
   - "INPS, comunicato stampa dell'11 novembre 2026 sulla perequazione delle pensioni - https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/11/11/Comunicato_52671/Allegati/62003_cs-perequazioni-pensioni.pdf"
+  - "INPS, Messaggio n. 3801 del 19 novembre 2026 (indebiti notificati tramite SEND da gennaio 2027) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3801-del-19-11-2026_16422.html"
 status: published
 type: guida
 image: "/og/cedolino-pensione-novembre-dicembre-2026-come-leggerlo.jpg"
@@ -24,7 +25,7 @@ image_alt: "Cedolino pensione di novembre e dicembre 2026: come leggerlo"
 
 # Cedolino pensione dicembre 2026: data, tredicesima, trattenute
 
-**Ultimo aggiornamento: 15 novembre 2026**
+**Ultimo aggiornamento: 20 novembre 2026**
 
 **Tutte le date dei pagamenti INPS del mese** (pensioni, Assegno Unico, ADI, bonus mamme): [calendario dei pagamenti INPS](/pagamenti-inps).
 
@@ -112,11 +113,11 @@ Sull'APE sociale c'è una scadenza vicina: [ultima domanda entro il 30 novembre]
 
 Puoi confrontare un mese con l'altro per capire **che cosa è cambiato**.
 
-## Dal 2027 le comunicazioni INPS arrivano con SEND
+## Dal 2027 le lettere di indebito INPS arrivano con SEND
 
-L'INPS ha annunciato che dal **2027** userà sempre di più la piattaforma **SEND** per le notifiche digitali ai pensionati. Le leggerai dall'**app IO** o dal sito SEND, con SPID o CIE.
+Con il **messaggio n. 3801 del 19 novembre 2026** l'INPS ha stabilito che **da gennaio 2027**, in modo progressivo e dopo una campagna informativa, le lettere di **indebito** (richieste di restituire somme pagate in più su pensioni e assegno sociale) arriveranno tramite la piattaforma **SEND**. Le leggerai dall'**app IO**, con la **PEC** o dal sito notifichedigitali.it con SPID o CIE.
 
-Chi non ha l'identità digitale riceverà un avviso (email, PEC o SMS) e potrà ritirare la comunicazione in un **Punto di ritiro SEND**.
+Chi non ha attivato l'identità digitale riceverà a casa una **raccomandata** con un avviso; se la copia su carta non è nella busta, potrà ritirare l'atto in un **Punto di ritiro SEND**. Per ora restano con la posta tradizionale le lettere a chi ha un'**età superiore a 75 anni** e quelle sugli indebiti di **invalidità civile**. Tutti i dettagli: [indebiti INPS con SEND dal 2027](https://praticheflaiano.it/blog/indebiti-inps-send-notifica-digitale-2027-messaggio-3801).
 
 Se ti arriva un avviso SEND e non sai come aprirlo, [ti stampiamo l'atto e ti spieghiamo cosa fare](/raccomandata-send).
 
