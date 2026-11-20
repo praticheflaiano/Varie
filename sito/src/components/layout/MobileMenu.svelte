@@ -17,23 +17,63 @@
 
   let open = $state(false);
   let openSub = $state<number | null>(null);
+  let top = $state(64);
+
+  // Il pannello viene spostato dentro <body>: l'header ha backdrop-filter,
+  // che su Safari/iOS e su alcuni browser fa da contenitore per gli elementi
+  // "fixed" e taglia il menu all'altezza dell'header.
+  function portal(node: HTMLElement) {
+    document.body.appendChild(node);
+    return { destroy() { node.remove(); } };
+  }
+
+  function lock(on: boolean) {
+    // Solo su <html>: bloccare anche <body> sgancia l'header "sticky".
+    document.documentElement.style.overflow = on ? "hidden" : "";
+  }
+
+  function measure() {
+    const h = document.querySelector(".site-header");
+    top = h ? Math.max(0, Math.round(h.getBoundingClientRect().bottom)) : 64;
+  }
+
+  function setOpen(v: boolean) {
+    if (v) measure();
+    open = v;
+    if (!open) openSub = null;
+    lock(open);
+  }
 
   function toggle() {
-    open = !open;
-    if (!open) openSub = null;
-    document.body.style.overflow = open ? "hidden" : "";
+    setOpen(!open);
   }
 
   function handleKey(e: KeyboardEvent) {
-    if (e.key === "Escape" && open) toggle();
+    if (e.key === "Escape" && open) setOpen(false);
+  }
+
+  function handleResize() {
+    if (!open) return;
+    if (window.innerWidth >= 1024) setOpen(false);
+    else measure();
+  }
+
+  // Tornando indietro (cache del browser) il menu non deve restare aperto
+  // né la pagina bloccata.
+  function handlePageShow() {
+    setOpen(false);
+  }
+
+  function closeOnLink(e: MouseEvent) {
+    if ((e.target as HTMLElement).closest("a")) setOpen(false);
   }
 </script>
 
-<svelte:window onkeydown={handleKey} />
+<svelte:window onkeydown={handleKey} onresize={handleResize} onpageshow={handlePageShow} />
 
 <button
   type="button"
-  class="md:hidden inline-flex items-center justify-center rounded-xl p-2 text-[var(--color-brand-900)] hover:bg-[var(--color-brand-50)]"
+  class="lg:hidden inline-flex items-center justify-center rounded-xl p-2 text-[var(--color-brand-900)] hover:bg-[var(--color-brand-50)]"
   aria-expanded={open}
   aria-controls="mobile-menu-panel"
   aria-label={open ? "Chiudi menu" : "Apri menu"}
@@ -52,8 +92,11 @@
 
 {#if open}
   <div
+    use:portal
     id="mobile-menu-panel"
-    class="fixed inset-x-0 top-[64px] bottom-0 z-50 overflow-y-auto bg-white md:hidden"
+    class="fixed inset-x-0 bottom-0 overflow-y-auto overscroll-contain bg-white lg:hidden"
+    style="top:{top}px;z-index:60;padding-bottom:env(safe-area-inset-bottom)"
+    onclick={closeOnLink}
     role="dialog"
     aria-modal="true"
     aria-label="Menu di navigazione"
