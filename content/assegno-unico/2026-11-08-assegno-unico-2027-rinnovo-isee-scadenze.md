@@ -119,6 +119,7 @@ Da noi è gratis. La domanda di Assegno unico costa 15 euro in ufficio o 19 euro
 
 ## Articoli correlati
 
+- [Assegno Unico dicembre 2026: quando arriva il pagamento](/blog/assegno-unico-dicembre-2026-quando-arriva-pagamento)
 - [ISEE 2027: quando rinnovarlo e quali documenti servono](/blog/isee-2027-documenti-quando-rinnovare-roma)
 - [Assegno unico 2026: tabella importi per fascia ISEE](/blog/assegno-unico-2026-importi-tabella-isee)
 - [Bonus asilo nido 2026: domanda INPS e ISEE](/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps)

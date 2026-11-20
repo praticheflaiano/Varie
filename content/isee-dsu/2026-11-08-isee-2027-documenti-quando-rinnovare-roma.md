@@ -149,6 +149,7 @@ La prima presentazione dell'anno al CAF è gratuita. Da noi l'ISEE è gratis.
 
 ## Articoli correlati
 
+- [Assegno di inclusione 2027: ISEE e rinnovo senza mese di stop](/blog/assegno-di-inclusione-2027-isee-rinnovo)
 - [Assegno unico 2027: rinnovo dell'ISEE e scadenze](/blog/assegno-unico-2027-rinnovo-isee-scadenze)
 - [ISEE corrente: quando conviene a Roma](/blog/isee-corrente-quando-conviene-roma)
 - [ISEE gratis al CAF di Vigne Nuove](/isee)
