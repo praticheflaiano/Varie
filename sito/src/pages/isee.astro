@@ -93,6 +93,20 @@ const oraRiga = HOURS.filter((h) => h.open).map((h) => `${h.day.slice(0, 3)} ${h
 
   <div class="lp"><Fragment set:html={part1 + "</div>"} /></div>
 
+  <!-- Avviso scadenza ISEE 2026 (fonte: INPS, Portale unico ISEE: vale fino al 31 dicembre dell'anno di presentazione) -->
+  <div class="lp"><div class="c36">
+    <section id="scadenza" style="background:#14142B;color:#fff;border-radius:28px;padding:24px 26px;margin:8px 0 24px;display:flex;flex-wrap:wrap;gap:16px 24px;align-items:center;justify-content:space-between">
+      <div style="flex:1 1 420px;min-width:0">
+        <p style="font-weight:800;font-size:20px;line-height:1.25;color:#D4FF4F;margin:0 0 6px">L'ISEE 2026 scade il 31 dicembre 2026</p>
+        <p style="margin:0;color:#E4DEFF;line-height:1.5">Dal 1° gennaio 2027 serve una nuova DSU. A gennaio gli uffici si riempiono: prenota adesso il tuo appuntamento per l'ISEE 2027, così sei tra i primi. Per l'Assegno Unico pieno da marzo conta presentarla entro fine febbraio.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <a href={BOOK_2027} style="background:#D4FF4F;color:#14142B;font-weight:800;border-radius:999px;padding:12px 20px;text-decoration:none;white-space:nowrap">Prenota l'ISEE 2027</a>
+        <a href="/blog/assegno-unico-2027-rinnovo-isee-scadenze" style="border:2px solid #fff;color:#fff;font-weight:700;border-radius:999px;padding:10px 18px;text-decoration:none;white-space:nowrap">Assegno Unico e ISEE</a>
+      </div>
+    </section>
+  </div></div>
+
   <!-- NUOVO: tipi di ISEE in breve + chi serve a Roma -->
   <div class="lp"><div class="c36">
     <section class="c42" id="tipi">

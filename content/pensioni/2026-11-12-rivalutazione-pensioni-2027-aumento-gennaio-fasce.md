@@ -1,9 +1,9 @@
 ---
 title: "Rivalutazione pensioni 2027: aumento da gennaio per tutti e nuove fasce in manovra"
-seo_title: "Rivalutazione pensioni 2027: aumento e nuove fasce"
+seo_title: "Perequazione pensioni 2027: aumento di gennaio e fasce"
 slug: "rivalutazione-pensioni-2027-aumento-gennaio-fasce"
 date: 2026-11-12
-last_updated: 2026-11-12
+last_updated: 2026-11-20
 category: "pensioni"
 tags: ["pensione", "rivalutazione", "perequazione", "inps", "legge-di-bilancio-2027", "cedolino"]
 meta_description: "Rivalutazione pensioni 2027: l'aumento arriva dalla rata di gennaio per tutti. Scopri le nuove fasce della manovra e fatti aiutare a Roma, a Vigne Nuove."
@@ -21,9 +21,9 @@ image_alt: "Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce"
 
 # Rivalutazione pensioni 2027: aumento da gennaio per tutti e nuove fasce in manovra
 
-**Ultimo aggiornamento: 12 novembre 2026**
+**Ultimo aggiornamento: 20 novembre 2026.** Al 20 novembre il decreto del Ministero dell'Economia con la percentuale ufficiale per il 2027 non risulta ancora pubblicato: appena esce aggiorniamo la tabella con gli aumenti veri.
 
-Ogni gennaio le pensioni aumentano per recuperare l'inflazione dell'anno prima. Si chiama **rivalutazione** (o perequazione). Sulla **rivalutazione pensioni 2027** ci sono due novità: l'INPS ha confermato che **l'aumento arriverà dalla rata di gennaio per tutti**, e la legge di bilancio 2027, ancora in discussione, **cambia il modo di calcolarlo** per chi prende più di quattro volte il minimo.
+Ogni gennaio le pensioni aumentano per recuperare l'inflazione dell'anno prima. Si chiama **rivalutazione** o **perequazione automatica**: sono la stessa cosa. Sulla **rivalutazione pensioni 2027** ci sono due novità: l'INPS ha confermato che **l'aumento arriverà dalla rata di gennaio per tutti**, e la legge di bilancio 2027, ancora in discussione, **cambia il modo di calcolarlo** per chi prende più di quattro volte il minimo.
 
 ## In breve
 
@@ -129,6 +129,7 @@ No. Sono nel disegno di legge di bilancio 2027, all'esame del Parlamento.
 
 ## Articoli correlati
 
+- [Pensione minima 2027: quanto aumenta](/blog/pensione-minima-2027-quanto-aumenta)
 - [Cedolino pensione novembre e dicembre 2026: come leggerlo](/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
 - [Requisiti pensione 2027: vecchiaia e anticipata](/blog/requisiti-pensione-2027-vecchiaia-anticipata)
 - [Legge di bilancio 2027: le novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)

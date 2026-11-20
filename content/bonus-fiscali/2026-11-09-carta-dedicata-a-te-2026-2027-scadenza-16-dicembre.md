@@ -3,7 +3,7 @@ title: "Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dice
 seo_title: "Carta Dedicata a te 2026: 500 €, primo acquisto entro 16/12"
 slug: "carta-dedicata-a-te-2026-2027-scadenza-16-dicembre"
 date: 2026-11-09
-last_updated: 2026-11-09
+last_updated: 2026-11-20
 category: "bonus-fiscali"
 tags: ["bonus", "famiglie", "isee", "inps", "scadenza"]
 meta_description: "Carta Dedicata a te 2026-2027: 500 euro per la spesa con ISEE fino a 15.000 €. Primo acquisto entro il 16 dicembre o perdi la quota. Chi la riceve a Roma."
@@ -13,6 +13,7 @@ sources:
   - "INPS, Messaggio n. 2906 del 22 settembre 2026 - modalità operative per il 2026-2027"
   - "INPS, notizia del 24 settembre 2026: Carta Dedicata a te, modalità operative per il 2026-2027 - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html"
   - "ANSA, 23 settembre 2026: in arrivo 1.177.597 carte Dedicata a te"
+  - "Poste Italiane, pagina Carta Dedicata a te (consultata il 20 novembre 2026) - https://www.poste.it/carta-dedicata-a-te"
   - "Legge 30 dicembre 2025, n. 199 (legge di bilancio 2026)"
 status: published
 type: scadenza
@@ -23,7 +24,7 @@ image_alt: "Carta Dedicata a te 2026-2027: primo acquisto entro il 16 dicembre"
 
 # Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dicembre
 
-**Ultimo aggiornamento: 9 novembre 2026**
+**Ultimo aggiornamento: 20 novembre 2026** (aggiunti saldo, numeri utili e dove si usa)
 
 La **Carta Dedicata a te** è tornata: è una carta prepagata di Poste Italiane con **500 euro per la spesa alimentare**, per le famiglie con **ISEE fino a 15.000 euro**. Vale per **due anni**: 500 euro nel 2026 e altri 500 euro nel 2027.
 
@@ -76,6 +77,22 @@ Non devi fare domanda. Il **Comune di residenza** (a Roma, Roma Capitale) ha pre
 
 Solo **generi alimentari di prima necessità**, nei negozi che vendono alimentari. Sono esclusi gli **alcolici**. Non puoi usarla per carburante, abbonamenti dei mezzi, farmaci o prodotti non alimentari.
 
+## Come controllare il saldo
+
+Secondo Poste Italiane, **saldo e movimenti** si controllano a qualsiasi **ATM Postamat**, cioè gli sportelli automatici di Poste.
+
+Il **numero verde 800 210 170** (dall'estero +39 06 45 26 33 22) è quello che Poste indica per **bloccare la carta** in caso di furto o smarrimento. Sulla pagina di Poste non è indicato come numero per conoscere il saldo.
+
+Se la carta è smagnetizzata o non funziona, la sostituzione si chiede in qualsiasi **ufficio postale**.
+
+## Dove si usa e come pagare
+
+- Nei **supermercati e negozi alimentari** che accettano carte del circuito **Mastercard**.
+- Si paga con il **PIN** al POS. **Senza PIN**, appoggiando la carta (contactless), solo per spese **sotto i 50 euro**.
+- Nei negozi che aderiscono alle convenzioni del Ministero dell'Agricoltura (MASAF) c'è uno **sconto in più del 15%**, che si somma alle altre promozioni. L'elenco dei negozi è sul sito del Ministero.
+- **Non si possono prelevare contanti** e la carta **non si può ricaricare**.
+- Non ci sono **costi** né commissioni.
+
 ## Perché l'ISEE è decisivo
 
 Le liste si fanno con l'**ISEE presente nella banca dati INPS**. Se non avevi un ISEE valido, o era più alto del dovuto per un errore, **non sei entrato in lista**. Per la quota del 2026 le liste sono chiuse, ma l'ISEE ti serve comunque per l'Assegno unico, il bonus sociale sulle bollette e la TARI.
@@ -110,6 +127,15 @@ No. Se un componente della famiglia prende NASpI, DIS-COLL, cassa integrazione o
 
 **Cosa posso comprare?**
 Solo alimentari di prima necessità. Niente alcolici, carburante, abbonamenti dei mezzi o prodotti non alimentari.
+
+**Come vedo quanti soldi ci sono sulla carta?**
+A un ATM Postamat di Poste Italiane: lì vedi saldo e movimenti.
+
+**Il numero verde 800 210 170 serve per il saldo?**
+Poste lo indica per bloccare la carta in caso di furto o smarrimento. Per il saldo indica gli ATM Postamat.
+
+**C'è uno sconto nei negozi?**
+Sì, del 15% nei negozi che aderiscono alle convenzioni del Ministero dell'Agricoltura (MASAF). L'elenco è sul sito del Ministero.
 
 **Non sono in lista: posso chiederla?**
 Per il 2026-2027 c'è una sola lista e le liste sono già chiuse. Conviene comunque tenere l'ISEE aggiornato per gli altri aiuti.
