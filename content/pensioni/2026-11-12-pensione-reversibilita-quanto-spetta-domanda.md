@@ -196,7 +196,9 @@ Nel nostro ufficio di **Vigne Nuove, a Roma** (Municipio III Montesacro), siamo 
 
 Sappiamo che sono giorni difficili. Per questo **la domanda all'INPS la presentiamo noi**: controlliamo chi ha diritto, calcoliamo le percentuali, verifichiamo i limiti di reddito e seguiamo la pratica fino al primo pagamento. Dopo un lutto spesso serve anche la **dichiarazione di successione**: possiamo occuparci anche di quella. Qui trovi [documenti, tempi e costi della successione a Roma](/blog/dichiarazione-successione-roma-documenti-tempi-costi).
 
-Se prendi la reversibilità e sei **invalido al 100%** o hai l'**accompagnamento**, potresti avere in più l'**assegno di vedovanza** (fino a 52,91 € al mese, con arretrati fino a 5 anni): verifica con il [calcolatore dell'assegno di vedovanza](/assegno-vedovanza).
+Se prendi la reversibilità e sei **invalido al 100%** o hai l'**accompagnamento**, potresti avere in più l'**assegno di vedovanza**: fino a 52,91 € al mese, con arretrati fino a 5 anni.
+
+> [calcolatore dell'assegno di vedovanza](/assegno-vedovanza): rispondi a 5 domande e scopri se ti spetta.
 
 Vuoi sapere prima quanto ti spetterà? Con il servizio **[Stima e Calcolo della pensione](/stima-pensione)** ti diamo un prospetto con l'importo stimato.
 

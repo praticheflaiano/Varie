@@ -52,6 +52,14 @@ Ogni articolo tratta materia fiscale/previdenziale. Un dato errato causa danni r
 - Ogni articolo deve avere data "ultimo aggiornamento" e disclaimer
 - Leggere `docs/regole-contenuto.md` per le regole complete
 
+## Link a calcolatori e documenti: sempre come pulsante grande
+
+Regola di Antonio (21/11/2026): i rimandi a calcolatori e PDF devono essere ben visibili, mai un link nel testo.
+- Negli articoli (markdown): una citazione con un solo link allo strumento, es.
+  `> [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi.`
+  Il plugin `sito/src/lib/remark-cta.mjs` la trasforma in pulsante (vale per /calcolo-*, /assegno-vedovanza, /calcolatore*, file .pdf).
+- Nelle pagine/fragment HTML: usare la classe `pdf-btn` (landing.css) come nella pagina ISEE.
+
 ## Flusso degli stati di un articolo
 
 ```
