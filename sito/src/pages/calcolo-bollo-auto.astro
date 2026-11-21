@@ -1,0 +1,246 @@
+---
+/**
+ * Calcolo bollo auto Lazio: esenzioni + importo.
+ * Fonti verificate il 21/11/2026:
+ * - Regione Lazio, Tariffario tasse automobilistiche dal 1° gennaio 2026 (allegato D.D. G17596 del 22/12/2025):
+ *   autovetture/promiscuo €/kW annuali: Euro0 3,30 (>100 kW 4,95); Euro1 3,19 (4,79); Euro2 3,08 (4,62);
+ *   Euro3 2,97 (4,46); Euro4/5/6 2,84 (4,26). Minimo 21,02 €. kW senza decimali; CV x 0,736.
+ *   Elettrica/metano/GPL/idrogeno (esclusiva o doppia): 2,84 €/kW a prescindere dalla classe Euro.
+ *   Elettriche: esenti 5 anni dalla prima immatricolazione, poi 1/4. Esenti dal 30° anno dalla costruzione
+ *   (se circolano: tassa fissa 28,40 € auto / 11,36 € moto). Storiche 20-29 anni con CRS: -50%.
+ *   Motocicli oltre 50 cc fino a 11 kW: Euro0 28,60 / Euro1 25,30 / Euro2 23,10 / Euro3+ 21,02; oltre 11 kW
+ *   per ogni kW: 1,87 / 1,43 / 1,10 / 0,97. Domiciliazione bancaria: -10% (DGR 1084 del 20/11/2025).
+ * - Esenzione 2027: art. 2 D.L. 162/2026 conv. L. 209/2026 (auto benzina/gasolio anche ibride fino a 80 kW,
+ *   persona fisica, un veicolo, termine ordinario di pagamento nel 2027).
+ * - Esenzione disabilità: guida Regione Lazio (aggiornata 20/01/2025), art. 8 L. 449/1997, art. 30 c.7 L. 388/2000,
+ *   art. 50 L. 342/2000.
+ * - Superbollo: 20 €/kW oltre 185 kW; dopo 5, 10, 15 anni dalla costruzione 60%, 30%, 15%; non dovuto dopo 20 anni.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const faqs = [
+  { q: "Come si calcola il bollo auto nel Lazio?", a: "Si moltiplicano i kW della carta di circolazione (voce P.2, senza decimali) per la tariffa della classe Euro. Per un'auto Euro 4, 5 o 6 nel 2026 la tariffa è 2,84 € per kW fino a 100 kW e 4,26 € per ogni kW oltre i 100. Il minimo è 21,02 €." },
+  { q: "Chi non paga il bollo auto nel 2027?", a: "Con la legge 209/2026 sono esenti, per un solo veicolo per persona, le auto a benzina o gasolio (anche ibride) fino a 80 kW intestate a una persona fisica e assicurate, per i bolli che scadono nel 2027. Restano le esenzioni del Lazio: disabilità, auto elettriche per 5 anni, veicoli con più di 30 anni." },
+  { q: "Ho la 104: non pago il bollo?", a: "Non basta la 104. Serve una delle condizioni previste (non vedenti e sordi, handicap psichico grave con accompagnamento, grave limitazione della deambulazione o pluriamputazioni, oppure ridotte capacità motorie con auto adattata), i limiti di cilindrata e una domanda alla Regione Lazio: l'esenzione non è automatica." },
+  { q: "Quanto paga un'auto elettrica nel Lazio?", a: "Niente per i primi 5 anni dalla prima immatricolazione. Dopo paga un quarto della tassa calcolata a 2,84 € per kW." },
+  { q: "Quanto paga un'auto a GPL o metano?", a: "Nel Lazio le auto con alimentazione esclusiva o doppia a GPL o metano pagano 2,84 € per kW, qualunque sia la classe Euro scritta sulla carta di circolazione." },
+  { q: "C'è uno sconto se pago con la domiciliazione?", a: "Sì: la Regione Lazio prevede una riduzione del 10% se paghi con domiciliazione bancaria, con i limiti della delibera di Giunta n. 1084 del 20 novembre 2025." },
+  { q: "Cos'è il superbollo?", a: "È una tassa dello Stato per le auto con più di 185 kW: 20 € per ogni kW oltre i 185. Si riduce al 60%, 30% e 15% dopo 5, 10 e 15 anni dalla costruzione e non si paga più dopo 20 anni. Si versa con F24, codice tributo 3364." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo bollo auto Lazio", url: "https://praticheflaiano.it/calcolo-bollo-auto", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
+const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B";
+const TD = "padding:10px;border-top:1px solid #E4E0FF";
+const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
+---
+
+<BaseLayout title="Calcolo bollo auto Lazio 2026: importo ed esenzioni" description="Calcola il bollo auto nel Lazio con le tariffe ufficiali 2026 e scopri se sei esente: auto fino a 80 kW nel 2027, disabilità, elettriche, auto storiche.">
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <section style="background:#F1EEFF">
+    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · Regione Lazio</span>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Bollo auto: devi pagarlo? E quanto?</h1>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Prendi la <b>carta di circolazione</b>: ti servono i <b>kW</b> (voce <b>P.2</b>), l'<b>alimentazione</b> (voce <b>P.3</b>) e la <b>classe Euro</b>. Il calcolatore controlla prima se sei <b>esente</b> e poi ti dice <b>quanto pagare</b> con le tariffe ufficiali della Regione Lazio.</p>
+
+      <form id="bl" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
+        <fieldset class="bl-f"><legend>1. Che veicolo è?</legend>
+          <label class="bl-o"><input type="radio" name="tipo" value="auto" checked> Auto</label><label class="bl-o"><input type="radio" name="tipo" value="moto"> Moto oltre 50 cc</label></fieldset>
+
+        <fieldset class="bl-f"><legend>2. Alimentazione</legend>
+          <select id="bl-al" class="bl-in">
+            <option value="benzina">Benzina</option><option value="gasolio">Gasolio (diesel)</option>
+            <option value="ibrida">Ibrida benzina o gasolio + elettrico</option>
+            <option value="gpl">Benzina + GPL o metano, oppure solo GPL o metano</option>
+            <option value="elettrica">Solo elettrica</option>
+          </select></fieldset>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <label class="bl-l">3. Potenza
+            <span style="display:flex;gap:8px"><input id="bl-kw" type="number" min="1" step="1" inputmode="numeric" placeholder="es. 51" class="bl-in" style="max-width:140px">
+            <select id="bl-u" class="bl-in" style="max-width:110px"><option value="kw">kW</option><option value="cv">CV</option></select></span>
+            <small>Voce P.2 della carta di circolazione.</small></label>
+          <label class="bl-l">4. Classe Euro
+            <select id="bl-eu" class="bl-in" style="max-width:200px"><option value="6">Euro 4, 5 o 6</option><option value="3">Euro 3</option><option value="2">Euro 2</option><option value="1">Euro 1</option><option value="0">Euro 0</option></select></label>
+          <label class="bl-l">5. Anno di prima immatricolazione
+            <input id="bl-an" type="number" min="1900" max="2027" step="1" inputmode="numeric" placeholder="es. 2015" class="bl-in" style="max-width:160px"></label>
+        </div>
+
+        <fieldset class="bl-f"><legend>6. A chi è intestata?</legend>
+          <label class="bl-o"><input type="radio" name="int" value="pf" checked> A una persona</label><label class="bl-o"><input type="radio" name="int" value="soc"> A una società o ditta</label></fieldset>
+
+        <fieldset class="bl-f"><legend>7. Nel verbale di invalidità tuo o di un familiare a tuo carico c'è una di queste condizioni?</legend>
+          <select id="bl-dis" class="bl-in">
+            <option value="no">No, nessuna</option>
+            <option value="vs">Non vedente o sordo</option>
+            <option value="psi">Handicap grave (104 art. 3 c. 3) di natura psichica o mentale, con accompagnamento</option>
+            <option value="deamb">Handicap grave con grave limitazione della deambulazione, o pluriamputazioni</option>
+            <option value="mot">Ridotte capacità motorie, con auto adattata (adattamento sulla carta di circolazione)</option>
+          </select>
+          <small style="display:block;color:#5B5B72;margin-top:4px">La sola 104 o la sola invalidità non bastano. Leggi la <a href="/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda" style="color:#5B3DF5">guida all'esenzione per disabili</a>.</small>
+          <label id="bl-cc-w" class="bl-l" style="margin-top:10px" hidden>Cilindrata in cc (voce P.1)
+            <input id="bl-cc" type="number" min="1" step="1" inputmode="numeric" placeholder="es. 1242" class="bl-in" style="max-width:160px"></label></fieldset>
+
+        <fieldset class="bl-f"><legend>8. Altre situazioni</legend>
+          <label class="bl-o" style="display:flex"><input type="checkbox" id="bl-27"> Il bollo da pagare scade nel 2027</label>
+          <label class="bl-o" style="display:flex"><input type="checkbox" id="bl-st"> Auto o moto storica (20-29 anni) con certificato di rilevanza storica sulla carta di circolazione</label>
+          <label class="bl-o" style="display:flex"><input type="checkbox" id="bl-dom"> Pago con domiciliazione bancaria</label>
+        </fieldset>
+
+        <button id="bl-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola</button>
+        <div id="bl-out" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 21 novembre 2026.</b> Tariffe del tariffario della Regione Lazio in vigore dal 1° gennaio 2026. Per i bolli del 2027 useremo le nuove tariffe appena la Regione le pubblica.</p>
+
+    <h2 style={H2.replace("24px 0 0","0")}>Prima domanda: devi pagarlo?</h2>
+    <p style="margin:0">Nel Lazio <b>non paghi il bollo</b> in questi casi:</p>
+    <ul style="margin:0;padding-left:22px">
+      <li><b>Esenzione 2027</b>: auto a benzina o gasolio, anche ibride, <b>fino a 80 kW</b>, intestate a una <b>persona</b> e assicurate, per i bolli che scadono nel 2027. Vale per <b>un solo veicolo</b> a persona (legge 209/2026). Leggi <a href="/blog/bollo-auto-2027-esenzione-80-kw-legge-209-2026" style="color:#5B3DF5;font-weight:700">chi non paga nel 2027</a>.</li>
+      <li><b>Disabilità</b>: solo per le condizioni previste dalla legge e con i limiti di cilindrata (2.000 cc benzina o ibrida, 2.800 cc diesel, 150 kW elettrica). Serve la <b>domanda alla Regione</b>.</li>
+      <li><b>Auto e moto elettriche</b>: per <b>5 anni</b> dalla prima immatricolazione.</li>
+      <li><b>Veicoli con 30 anni o più</b> dalla costruzione. Se circolano pagano una tassa fissa di 28,40 € (auto) o 11,36 € (moto).</li>
+    </ul>
+
+    <h2 style={H2}>Seconda domanda: quanto paghi</h2>
+    <p style="margin:0">Il bollo si calcola sui <b>kW</b> (senza decimali) moltiplicati per la tariffa della <b>classe Euro</b>. Se il libretto riporta i cavalli: CV × 0,736.</p>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:16px">
+      <thead><tr><th style={TH}>Auto · classe</th><th style={TH}>€ per kW fino a 100 kW</th><th style={TH}>€ per ogni kW oltre 100</th></tr></thead>
+      <tbody>
+        <tr><td style={TD}>Euro 0</td><td style={TD}>3,30</td><td style={TD}>4,95</td></tr>
+        <tr><td style={TD}>Euro 1</td><td style={TD}>3,19</td><td style={TD}>4,79</td></tr>
+        <tr><td style={TD}>Euro 2</td><td style={TD}>3,08</td><td style={TD}>4,62</td></tr>
+        <tr><td style={TD}>Euro 3</td><td style={TD}>2,97</td><td style={TD}>4,46</td></tr>
+        <tr><td style={TD}><b>Euro 4, 5 e 6</b></td><td style={TD}><b>2,84</b></td><td style={TD}><b>4,26</b></td></tr>
+        <tr><td style={TD}>GPL, metano, elettrica (anche doppia alimentazione)</td><td style={TD} colspan="2">2,84 per ogni kW</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin:0">Il bollo non può essere sotto <b>21,02 €</b>. Le moto oltre 50 cc pagano una quota fissa fino a 11 kW (da 21,02 € per Euro 3 e successive a 28,60 € per Euro 0) più un importo per ogni kW in più.</p>
+
+    <h2 style={H2}>Esempi</h2>
+    <ul style="margin:0;padding-left:22px">
+      <li><b>Utilitaria a benzina Euro 6 da 51 kW</b>: 51 × 2,84 = <b>144,84 €</b>. Se il bollo scade nel 2027 ed è il tuo unico veicolo: <b>esente</b>.</li>
+      <li><b>SUV diesel Euro 6 da 110 kW</b>: 100 × 2,84 + 10 × 4,26 = <b>326,60 €</b>. Supera gli 80 kW: niente esenzione 2027.</li>
+      <li><b>Auto Euro 3 da 74 kW</b>: 74 × 2,97 = <b>219,78 €</b>.</li>
+    </ul>
+
+    <h2 style={H2}>Superbollo</h2>
+    <p style="margin:0">Per le auto con <b>più di 185 kW</b> c'è anche il <b>superbollo</b>, una tassa dello Stato: <b>20 € per ogni kW oltre i 185</b>. Si riduce al 60%, 30% e 15% dopo 5, 10 e 15 anni dalla costruzione e non si paga più dopo 20 anni. Si versa con <b>F24</b>, codice tributo <b>3364</b>.</p>
+
+    <h2 style={H2}>Hai saltato un bollo?</h2>
+    <p style="margin:0">Puoi metterti in regola con il <b>ravvedimento operoso</b>, con una sanzione ridotta. Ti calcoliamo noi quanto pagare e se ci sono avvisi della Regione o cartelle. <a href="/prenota" style="color:#5B3DF5;font-weight:800">Prenota</a> oppure scrivici su <a href="https://wa.me/393716230690" style="color:#5B3DF5;font-weight:800">WhatsApp 371 623 0690</a>.</p>
+
+    <h2 style={H2}>Domande frequenti</h2>
+    {faqs.map((f) => (
+      <details style="background:#F7F7FB;border-radius:18px;padding:16px 20px"><summary style="font-weight:800;cursor:pointer">{f.q}</summary><p style="margin:10px 0 0">{f.a}</p></details>
+    ))}
+    <p style="margin:12px 0 0;font-size:14px;color:#5B5B72">Fonti: <a href="https://regione.lazio.it/sites/default/files/documentazione/2026/BIL-DD-G17596-22-12-2025-Tariffario.pdf" target="_blank" rel="noopener">Regione Lazio, Tariffario tasse automobilistiche dal 1° gennaio 2026</a> (determinazione G17596 del 22/12/2025); D.L. 162/2026, art. 2, convertito dalla L. 13 novembre 2026, n. 209; <a href="https://www.regione.lazio.it/tributi-regionali/tassa-automobilistica/esenzione-disabilita" target="_blank" rel="noopener">Regione Lazio, esenzione per disabilità</a>; art. 8 L. 449/1997; art. 30 c. 7 L. 388/2000; art. 50 L. 342/2000; D.L. 98/2011, art. 23 c. 21 (superbollo). Il calcolatore dà una stima: l'importo esatto è quello dell'ACI e della Regione Lazio. Per verificare puoi usare anche i servizi dell'<a href="https://aci.gov.it/approfondimento/guida-al-bollo-auto/regioni-e-province-autonome-convenzionate/regione-lazio/" target="_blank" rel="noopener">ACI per la Regione Lazio</a>.</p>
+  </section>
+
+  <style is:global>
+    .bl-f{border:0;padding:0;margin:0}
+    .bl-f legend{font-weight:800;margin-bottom:8px}
+    .bl-l{display:flex;flex-direction:column;gap:6px;font-weight:800}
+    .bl-l small{font-weight:400;color:#5B5B72}
+    .bl-in{border:2px solid #14142B;border-radius:14px;padding:11px 12px;font-size:17px;background:#fff;width:100%;max-width:100%;font-weight:400}
+    .bl-o{display:inline-flex;align-items:center;gap:8px;margin:0 16px 8px 0;font-size:16px;cursor:pointer;font-weight:400}
+    .bl-o input{width:20px;height:20px;accent-color:#5B3DF5;flex:none}
+    .bl-res{border-radius:20px;padding:18px 20px;line-height:1.5;margin-top:4px}
+    .bl-ok{background:#D4FF4F;color:#14142B}
+    .bl-pay{background:#F1EEFF;color:#14142B}
+    .bl-warn{background:#FFF4D6;color:#14142B}
+    .bl-res b.big{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:40px;line-height:1.05;margin:4px 0}
+    .bl-res table{border-collapse:collapse;margin-top:8px;font-size:15px}
+    .bl-res td{padding:3px 12px 3px 0}
+  </style>
+  <script is:inline>
+  (function(){
+    var $=function(i){return document.getElementById(i)};
+    var R={"0":[3.30,4.95],"1":[3.19,4.79],"2":[3.08,4.62],"3":[2.97,4.46],"6":[2.84,4.26]};
+    var M={"0":[28.60,1.87],"1":[25.30,1.43],"2":[23.10,1.10],"3":[21.02,0.97],"6":[21.02,0.97]};
+    var ANNO=2026;
+    var eur=function(n){var p=(Math.round(n*100)/100).toFixed(2).split('.');return p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+p[1]+' €'};
+    var r2=function(n){return Math.round(n*100)/100};
+    var v=function(n){var x=document.querySelector('input[name="'+n+'"]:checked');return x?x.value:''};
+    var cta='<p style="margin:10px 0 0">Vuoi che controlliamo noi, anche bolli arretrati e avvisi? <a href="/prenota" style="color:#5B3DF5;font-weight:800">Prenota</a> o scrivici su <a href="https://wa.me/393716230690" style="color:#5B3DF5;font-weight:800">WhatsApp</a>.</p>';
+    $('bl-dis').addEventListener('change',function(){$('bl-cc-w').hidden=this.value==='no'});
+    function show(cls,html){$('bl-out').innerHTML='<div class="bl-res '+cls+'">'+html+'</div>';$('bl-out').scrollIntoView({behavior:'smooth',block:'nearest'})}
+    $('bl-b').addEventListener('click',function(){
+      var tipo=v('tipo'),al=$('bl-al').value,eu=$('bl-eu').value,an=parseInt($('bl-an').value,10);
+      var p=parseFloat(String($('bl-kw').value).replace(',','.'));
+      if(!(p>0)){show('bl-warn','Inserisci la potenza (voce P.2 della carta di circolazione).');return}
+      var kw=Math.floor($('bl-u').value==='cv'?p*0.736:p);
+      var eta=an>1900?ANNO-an:null;
+      var pf=v('int')==='pf',dis=$('bl-dis').value,cc=parseInt($('bl-cc').value,10);
+      var note=[];
+      if($('bl-u').value==='cv') note.push(p+' CV = '+kw+' kW (CV × 0,736, senza decimali).');
+
+      // 1. Esenzioni
+      if(dis!=='no'){
+        var okv=true,lim='';
+        if(tipo==='auto'){
+          if(al==='elettrica'){okv=kw<=150;lim='150 kW'}
+          else if(al==='gasolio'){okv=!(cc>2800);lim='2.800 cc'}
+          else if(al==='gpl'||al==='ibrida'){okv=!(cc>2800);lim='2.000 cc (benzina) o 2.800 cc (diesel)'; if(cc>2000&&cc<=2800) note.push('Con cilindrata tra 2.000 e 2.800 cc l’esenzione vale solo se il motore è diesel.')}
+          else {okv=!(cc>2000);lim='2.000 cc'}
+        }
+        if(tipo==='moto'&&dis==='vs'){okv=false;lim='veicolo'}
+        var ccn=(okv&&isNaN(cc)&&tipo==='auto')?' Controlla anche la <b>cilindrata</b> (voce P.1): ci sono limiti di 2.000 cc a benzina e 2.800 cc diesel.':'';
+        if(okv){
+          var extra=dis==='mot'?' Serve che l’<b>adattamento</b> risulti dalla carta di circolazione (per i minori con 104 grave non serve).':'';
+          show('bl-ok','<b>Probabilmente sei esente</b> per disabilità.<p style="margin:8px 0 0">L’esenzione <b>non è automatica</b>: va chiesta alla Regione Lazio, per <b>un solo veicolo</b>, intestato alla persona con disabilità o al familiare che l’ha fiscalmente a carico.'+extra+' Se presenti la domanda entro 90 giorni dalla scadenza del pagamento, vale già per il bollo in corso.'+ccn+'</p><p style="margin:8px 0 0">Requisiti e documenti: <a href="/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda" style="color:#5B3DF5;font-weight:800">guida all’esenzione per disabili</a>.</p>'+cta);return;
+        }
+        note.push('Per l’esenzione per disabilità la cilindrata supera il limite di '+lim+': il bollo si paga.');
+      }
+      if(al==='elettrica'&&eta!==null&&eta<5){show('bl-ok','<b>Non paghi:</b> le auto e moto elettriche sono esenti per 5 anni dalla prima immatricolazione. Dal '+(an+5)+' paghi un quarto della tassa.'+cta);return}
+      if(eta!==null&&eta>=30){show('bl-ok','<b>Non paghi il bollo ordinario:</b> i veicoli sono esenti dal 30° anno dalla costruzione (conta l’anno di costruzione, che può essere prima dell’immatricolazione). Se il veicolo <b>circola</b>, paghi una tassa fissa di <b>'+(tipo==='auto'?'28,40':'11,36')+' €</b> l’anno. Non vale per i veicoli a uso professionale.'+cta);return}
+      if($('bl-27').checked&&pf){
+        var e27=false,why='';
+        if(tipo==='auto'&&(al==='benzina'||al==='gasolio'||al==='ibrida')&&kw<=80){e27=true;why='auto a benzina o gasolio (anche ibrida) fino a 80 kW'}
+        else if(tipo==='moto'&&(al==='benzina'||al==='ibrida')){e27=true;why='moto a benzina, <b>solo se non hai nessuna auto fino a 80 kW</b> (di qualsiasi alimentazione)'}
+        if(e27){show('bl-ok','<b>Nel 2027 probabilmente non paghi:</b> '+why+', intestata a una persona e assicurata (legge 209/2026).<p style="margin:8px 0 0"><b>Attenzione:</b> l’esenzione vale per <b>un solo veicolo</b> a persona. Se hai più veicoli che ne hanno diritto, è esente quello con la <b>potenza più bassa</b>. Conta la data di scadenza del pagamento, non il periodo coperto. Le istruzioni pratiche della Regione e dell’ACI sono in corso di definizione. Leggi <a href="/blog/bollo-auto-2027-esenzione-80-kw-legge-209-2026" style="color:#5B3DF5;font-weight:800">chi non paga nel 2027</a>.</p>'+cta);return}
+        if(tipo==='auto'&&al==='gpl') note.push('Esenzione 2027: per le auto benzina-GPL o benzina-metano le istruzioni sono in corso di definizione; le auto solo a GPL o metano non rientrano.');
+        else if(tipo==='auto'&&kw>80) note.push('Esenzione 2027: non spetta perché la potenza supera gli 80 kW.');
+      }
+      if(!pf&&$('bl-27').checked) note.push('Esenzione 2027: spetta solo ai veicoli intestati a persone, non a società.');
+
+      // 2. Importo
+      var righe=[],tot=0;
+      if(tipo==='auto'){
+        if(al==='gpl'||al==='elettrica'){
+          var b=r2(kw*2.84);righe.push([kw+' kW × 2,84 € (GPL, metano o elettrica)',b]);tot=b;
+          if(al==='elettrica'){tot=r2(b/4);righe.push(['Elettrica dopo 5 anni: un quarto',tot]);}
+          else note.push('Per le auto <b>solo</b> a GPL o metano conformi alle direttive 91/441 o 91/542 CEE la Regione prevede la riduzione a un quarto: verifica con noi.');
+        } else {
+          var t=R[eu],a=Math.min(kw,100),o=Math.max(kw-100,0);
+          var b1=r2(a*t[0]);righe.push([a+' kW × '+String(t[0].toFixed(2)).replace('.',',')+' €',b1]);
+          var b2=0;if(o>0){b2=r2(o*t[1]);righe.push([o+' kW oltre 100 × '+String(t[1].toFixed(2)).replace('.',',')+' €',b2]);}
+          tot=r2(b1+b2);
+          if(al==='ibrida') note.push('Per le ibride la Regione prevede 2,84 € per kW per l’alimentazione «doppia elettrica»: con un’ibrida Euro 6 oltre 100 kW l’importo potrebbe essere più basso di questo. Verifica con l\u2019ACI.');
+        }
+      } else {
+        var m=M[eu],ex=Math.max(kw-11,0),mb=m[0],mx=r2(ex*m[1]);
+        if(al==='elettrica'){mb=r2(kw*2.84/4);righe.push(['Moto elettrica dopo 5 anni (stima)',mb]);tot=mb;note.push('Per le moto elettriche dopo i 5 anni verifica l’importo con l’ACI.')}
+        else {righe.push(['Quota fissa fino a 11 kW',mb]);if(ex>0)righe.push([ex+' kW oltre 11 × '+String(m[1].toFixed(2)).replace('.',',')+' €',mx]);tot=r2(mb+mx);}
+      }
+      if($('bl-st').checked&&eta!==null&&eta>=20&&eta<30){tot=r2(tot/2);righe.push(['Veicolo storico con certificato: -50%',tot]);}
+      else if($('bl-st').checked) note.push('La riduzione del 50% per i veicoli storici vale tra i 20 e i 29 anni dall’immatricolazione: controlla l’anno inserito.');
+      if(tot<21.02){tot=21.02;righe.push(['Importo minimo',21.02]);}
+      if($('bl-dom').checked){var d=r2(tot*0.9);righe.push(['Domiciliazione bancaria: -10%',d]);tot=d;}
+      var sb='';
+      if(tipo==='auto'&&kw>185&&al!=='elettrica'){
+        var pc=eta===null?1:(eta>=20?0:eta>15?0.15:eta>10?0.30:eta>5?0.60:1);
+        var s=r2((kw-185)*20*pc);
+        sb='<p style="margin:10px 0 0"><b>Superbollo:</b> '+(pc?eur(s)+' in più ('+(kw-185)+' kW oltre 185 × 20 €'+(pc<1?' × '+Math.round(pc*100)+'% per l’età':'')+'), da pagare con F24 codice 3364.':'non dovuto dopo 20 anni dalla costruzione.')+' Conta l’anno di <b>costruzione</b>: l’età è stimata dall’anno di immatricolazione.</p>';
+      }
+      var tab='<table>'+righe.map(function(x){return '<tr><td>'+x[0]+'</td><td style="text-align:right"><b>'+eur(x[1])+'</b></td></tr>'}).join('')+'</table>';
+      var nn=note.length?'<ul style="margin:10px 0 0;padding-left:20px">'+note.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'';
+      show('bl-pay','Il bollo da pagare è circa:<b class="big">'+eur(tot)+' l’anno</b>'+tab+sb+nn+'<p style="margin:10px 0 0;font-size:14px">Stima con le tariffe Regione Lazio 2026, per un bollo di 12 mesi. L’importo esatto è quello dell’ACI.</p>'+cta);
+    });
+  })();
+  </script>
+</BaseLayout>
