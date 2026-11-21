@@ -40,6 +40,8 @@ E i tempi contano: chi la presenta in ritardo perde un anno di bollo.
 | **Termine** | entro **90 giorni** dalla scadenza del pagamento, per avere l'esenzione dall'anno in corso |
 | **Dopo** | vale anche negli anni successivi, finché restano i requisiti |
 
+> **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
+
 ## Chi può chiederla
 
 - La **persona con disabilità** intestataria del veicolo (anche locataria o usufruttuaria).
@@ -150,6 +152,7 @@ No, sono due agevolazioni diverse con requisiti diversi.
 
 ## Articoli correlati
 
+- [Calcolo bollo auto Lazio: importo ed esenzioni](/calcolo-bollo-auto)
 - [Invalidità civile a Roma: con la riforma basta il certificato del medico](/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia)
 - [RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli](/blog/red-icric-iclav-accas-ps-2026-guida)
 - [Legge sul caregiver familiare: cosa prevede](/blog/legge-caregiver-familiare-ddl-senato-contributo)

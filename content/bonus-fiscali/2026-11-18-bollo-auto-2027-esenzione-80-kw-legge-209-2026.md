@@ -37,6 +37,8 @@ Nel 2027 molte persone non pagheranno il **bollo auto** su un veicolo. Lo preved
 | **Fonte** | art. 2 D.L. 162/2026, convertito dalla legge n. 209 del 13/11/2026 |
 | **Istruzioni pratiche** | le modalità operative di Regione Lazio e ACI sono **in corso di definizione** |
 
+> **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
+
 ## Chi ha diritto all'esenzione
 
 L'esenzione spetta a chi, nel 2027, è **soggetto passivo** del bollo, cioè chi è tenuto a pagarlo, ed è una **persona fisica**. Le auto intestate a società non rientrano. Il veicolo deve essere **regolarmente assicurato**.
@@ -128,6 +130,7 @@ La legge non prevede una domanda del cittadino. Le modalità con cui l'esenzione
 
 ## Articoli correlati
 
+- [Calcolo bollo auto Lazio: importo ed esenzioni](/calcolo-bollo-auto)
 - [Esenzione bollo auto per disabili nel Lazio: requisiti e domanda](/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda)
 - [Legge di bilancio 2027: novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)
 - [Canone RAI 2027: esenzione over 75 e non detenzione](/blog/canone-rai-2027-esenzione-over-75-non-detenzione)
