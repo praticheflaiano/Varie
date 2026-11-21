@@ -40,7 +40,7 @@ E i tempi contano: chi la presenta in ritardo perde un anno di bollo.
 | **Termine** | entro **90 giorni** dalla scadenza del pagamento, per avere l'esenzione dall'anno in corso |
 | **Dopo** | vale anche negli anni successivi, finché restano i requisiti |
 
-> **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
+> [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
 
 ## Chi può chiederla
 

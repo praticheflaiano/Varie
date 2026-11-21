@@ -37,7 +37,7 @@ Nel 2027 molte persone non pagheranno il **bollo auto** su un veicolo. Lo preved
 | **Fonte** | art. 2 D.L. 162/2026, convertito dalla legge n. 209 del 13/11/2026 |
 | **Istruzioni pratiche** | le modalità operative di Regione Lazio e ACI sono **in corso di definizione** |
 
-> **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
+> [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
 
 ## Chi ha diritto all'esenzione
 

@@ -119,7 +119,7 @@ Per l'erede con **disabilità riconosciuta ai sensi dell'art. 3, comma 3, della 
 
 **Esempio:** il fratello del Sig. Rossi eredita 160.000 euro. Sui primi 100.000 euro non paga nulla. Sui 60.000 euro restanti paga il 6%: **3.600 euro**.
 
-Puoi fare una prima simulazione con il nostro [calcolo delle imposte di successione](/calcolo-imposte-successione).
+> [calcolatore delle imposte di successione](/calcolo-imposte-successione): fai una prima simulazione di quanto paga ogni erede, gratis.
 
 ## Imposte ipotecaria e catastale: quanto si paga per la casa
 
