@@ -15,7 +15,7 @@ import { BOOKING, CONTACT, GHL } from "~/consts";
       <a class="btn btn-lg" style="background:#fff;color:#14142B" href={BOOKING.arcanisRemote} target="_blank" rel="noopener">Prenota una videochiamata</a>
       <div class="grid grid-cols-2 gap-3 mt-1">
         <a class="btn btn-sm" style="border-color:#33334D;color:#fff" href={`tel:${CONTACT.phone.landlineRaw}`}>Chiama</a>
-        <a class="btn btn-sm" style="background:#25D366;color:#14142B" href={CONTACT.whatsapp.link} target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn btn-sm" style="background:#25D366;color:#14142B" href={`${CONTACT.whatsapp.link}?text=${encodeURIComponent("Ciao, vorrei informazioni su...")}`} target="_blank" rel="noopener">WhatsApp</a>
       </div>
       <a href={GHL.richiesta} style="color:#D4FF4F;font-weight:700;text-align:center" class="mt-1">Oppure manda una richiesta online →</a>
     </div>
