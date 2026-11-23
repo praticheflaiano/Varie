@@ -1,12 +1,12 @@
 ---
 title: "ISEE 2027: quando farlo, a che anno si riferisce e quali documenti servono a Roma"
 slug: "isee-2027-documenti-quando-rinnovare-roma"
-seo_title: "ISEE 2027: quando farlo, anni di riferimento e documenti"
+seo_title: "ISEE 2027: a che anno si riferisce, quando farlo e documenti"
 date: 2026-11-08
-last_updated: 2026-11-15
+last_updated: 2026-11-23
 category: "isee-dsu"
 tags: ["isee", "inps", "famiglie", "assegno-unico", "guida"]
-meta_description: "ISEE 2027 a Roma: si rinnova da gennaio con redditi 2025 e patrimoni al 31/12/2025. Quando farlo e documenti da portare. Gratis al CAF di Vigne Nuove."
+meta_description: "ISEE 2027: si riferisce ai redditi 2025 e ai patrimoni al 31/12/2025. Si fa dal 1° gennaio, entro febbraio per l'Assegno Unico pieno. ISEE gratis a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "DPCM 5 dicembre 2013, n. 159 (regolamento ISEE), come modificato dal DPCM 14 gennaio 2025, n. 13 (in vigore dal 5 marzo 2025) - INPS, notizia del 2 aprile 2025 (validità della DSU fino al 31 dicembre dell'anno di presentazione; esclusione di titoli di Stato e risparmio postale fino a 50.000 euro): https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.04.isee-e-dsu-nuove-regole-dal-3-aprile-2025.html"
@@ -42,6 +42,8 @@ In questa guida trovi **quando fare l'ISEE 2027**, **a che anno si riferiscono r
 > **Entro quando rinnovarlo per l'Assegno Unico?** Gennaio e febbraio sono pagati con l'ISEE precedente. Da marzo, senza ISEE valido, l'importo è il minimo. Con la regola applicata nel 2026 (circolare INPS n. 7/2026), se presenti la DSU **entro il 30 giugno** l'INPS ricalcola da marzo e paga gli arretrati. Le istruzioni INPS per il 2027 sono **in corso di definizione**. Per non restare al minimo nemmeno per qualche mese, conviene presentarla **entro febbraio**. Dettagli nella [guida all'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
 >
 > **Quali documenti servono?** Documenti d'identità e codici fiscali del nucleo, **730 o Redditi 2026 e CU 2026** (redditi 2025), **saldi e giacenza media 2025** di conti e carte con IBAN, valori di titoli e polizze al 31/12/2025, dati degli immobili e del mutuo, contratto di affitto. Elenco completo più sotto, o su [cosa portare](/cosa-portare).
+
+> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): scegli adesso il giorno, a gennaio gli uffici si riempiono.
 
 ## A che anno si riferisce l'ISEE 2027
 

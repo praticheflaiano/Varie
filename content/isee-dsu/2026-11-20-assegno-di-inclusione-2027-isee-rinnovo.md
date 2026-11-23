@@ -3,7 +3,7 @@ title: "Assegno di inclusione 2027: rinnovo dell'ISEE, rinnovo senza mese di sto
 seo_title: "Assegno di inclusione 2027: ISEE e rinnovo senza stop"
 slug: "assegno-di-inclusione-2027-isee-rinnovo"
 date: 2026-11-20
-last_updated: 2026-11-20
+last_updated: 2026-11-23
 category: "isee-dsu"
 tags: ["assegno-di-inclusione", "isee", "inps", "famiglie", "scadenza"]
 meta_description: "Assegno di inclusione 2027: l'ISEE 2026 scade il 31 dicembre, il rinnovo non ha più il mese di stop e la prima rata è al 50%. Requisiti e cosa fare a Roma."
@@ -47,6 +47,8 @@ La scheda INPS dell'ADI chiede un'attestazione ISEE **valida per tutta la durata
 > Da noi l'ISEE è **gratis**. A gennaio gli uffici si riempiono: [prenota adesso](/isee) il tuo appuntamento.
 
 Se nel frattempo **cambia la famiglia** (una nascita, qualcuno che va via di casa), la DSU aggiornata va presentata **entro un mese**, altrimenti si rischia di perdere l'assegno (scheda INPS).
+
+> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): l'ISEE 2026 scade il 31 dicembre, rinnovalo a inizio gennaio.
 
 ## Il rinnovo: niente più mese di stop
 

@@ -1,9 +1,9 @@
 ---
 title: "C2 storico nel Lazio: cos'è e come richiederlo online o al Centro per l'impiego"
-seo_title: "C2 storico Lazio: come richiederlo online e al CPI"
+seo_title: "C2 storico online Lazio: richiederlo dal Portale Lazio Lavoro"
 slug: "c2-storico-lazio-come-richiederlo-online"
 date: 2026-11-13
-last_updated: 2026-11-13
+last_updated: 2026-11-23
 category: "naspi-disoccupazione"
 tags: ["disoccupazione", "lavoro", "centro-impiego", "guida", "regione-lazio"]
 meta_description: "C2 storico nel Lazio: cosa attesta, come richiederlo online sul Portale Lazio Lavoro dal 2026 o al Centro per l'impiego, documenti e limiti. Aiuto a Roma."

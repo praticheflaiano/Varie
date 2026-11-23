@@ -1,9 +1,9 @@
 ---
 title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute e come leggerlo"
-seo_title: "Cedolino pensione dicembre 2026: data, tredicesima, trattenute"
+seo_title: "Cedolino pensione dicembre 2026: data, tredicesima e trattenute"
 slug: "cedolino-pensione-novembre-dicembre-2026-come-leggerlo"
 date: 2026-11-10
-last_updated: 2026-11-20
+last_updated: 2026-11-23
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "guida"]
 meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre, tredicesima, niente addizionali, rimborsi 730 e dove vederlo. CAF a Roma, Vigne Nuove."
@@ -42,6 +42,8 @@ Qui trovi tutto sul **cedolino di dicembre 2026**: quando arriva la pensione, la
 - **Quando si vede il cedolino:** la notizia INPS sul cedolino esce a fine mese precedente (quella di novembre è uscita il 29 ottobre 2026). Quella di dicembre non c'è ancora.
 - **Trattenute di dicembre:** niente più **addizionali regionale e comunale** (finiscono a novembre). Può restare un rimborso o una trattenuta del **730**, se non si è chiuso a novembre.
 - **Dove vederlo:** sito INPS, servizio "Cedolino della pensione", con SPID, CIE o CNS.
+
+> [Prenota un controllo del cedolino](/prenota): ti spieghiamo voce per voce trattenute, conguagli e tredicesima.
 
 ## Quando viene pagata la pensione
 

@@ -3,7 +3,7 @@ title: "Assegno unico 2027: rinnovo dell'ISEE, scadenze e cosa fare per non pren
 seo_title: "Assegno unico 2027: rinnovo ISEE e scadenze"
 slug: "assegno-unico-2027-rinnovo-isee-scadenze"
 date: 2026-11-08
-last_updated: 2026-11-08
+last_updated: 2026-11-23
 category: "assegno-unico"
 tags: ["assegno-unico", "isee", "famiglie", "inps", "scadenza"]
 meta_description: "Assegno unico 2027: la domanda continua da sola, ma l'ISEE va rinnovato entro febbraio. Scadenze, arretrati entro il 30 giugno e novità per Roma."
@@ -39,6 +39,8 @@ Qui trovi le date da segnare, cosa succede se arrivi in ritardo e le novità del
 | **Entro il 30 giugno 2027** | Ultimo giorno per avere gli arretrati da marzo |
 
 Le regole sono quelle che l'INPS applica ogni anno (per il 2024 messaggio n. 15/2024). Per il 2027 l'INPS pubblica le istruzioni e il calendario dei pagamenti a inizio anno: se cambia qualcosa, aggiorniamo questa guida.
+
+> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): presentalo entro febbraio per non scendere all'importo minimo da marzo.
 
 ## La domanda continua da sola
 

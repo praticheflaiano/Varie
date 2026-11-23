@@ -3,7 +3,7 @@ title: "Bonus 154,94 euro sulla pensione di dicembre 2026: a chi spetta e limiti
 seo_title: "Bonus 154,94 € pensione dicembre 2026: a chi spetta"
 slug: "importo-aggiuntivo-154-euro-pensione-dicembre-2026"
 date: 2026-11-17
-last_updated: 2026-11-17
+last_updated: 2026-11-23
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "tredicesima"]
 meta_description: "Bonus di 154,94 € con la pensione del 1° dicembre 2026: spetta a chi ha pensioni basse e reddito sotto 11.931,08 € (23.862,15 € in coppia). Info a Roma."
@@ -32,6 +32,8 @@ Molti lo chiamano "bonus di Natale" dei pensionati. Il nome ufficiale è **impor
 - **A chi spetta:** ai pensionati con pensione annua **non superiore a 8.108,99 euro** (trattamento minimo più 154,94 €).
 - **Limiti di reddito 2026:** **11.931,08 euro** se si è soli; se si è sposati (o uniti civilmente) **11.931,08 euro** di reddito personale e **23.862,15 euro** sommando i redditi della coppia (valori provvisori INPS).
 - **Come si chiede:** di solito non serve domanda, l'INPS lo paga d'ufficio a chi risulta averne diritto. Se pensi che ti spetti e non lo trovi sul cedolino, si può chiedere la verifica.
+
+> [Prenota un controllo della pensione](/prenota): verifichiamo se ti spettano il bonus di dicembre, la quattordicesima e le maggiorazioni.
 
 ## Cos'è l'importo aggiuntivo di 154,94 euro?
 
