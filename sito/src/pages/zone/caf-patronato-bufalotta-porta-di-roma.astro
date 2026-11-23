@@ -1,0 +1,56 @@
+---
+import ZonaPage from "~/components/zone/ZonaPage.astro";
+
+const transport = [
+  {
+    title: "Linea 38: da Porta di Roma a Vigne Nuove",
+    html: `La <strong>38</strong> ha il capolinea a <strong>Porta di Roma</strong> e va verso Termini passando da Via delle Vigne Nuove. Tra le fermate della zona ci sono <strong>Bene/Maggio</strong>, <strong>Bene/Celi</strong> e <strong>Bragaglia/Amendola</strong>. Scendi a <strong>Vigne Nuove/Lumiere</strong>: da lì sono circa 6 minuti a piedi. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+  },
+  {
+    title: "In auto o a piedi",
+    html: `Il Centro Acquisti Flaiano è in Via Filoteo Alberini 25. Per il percorso più veloce dalla tua via usa la <a href="https://maps.app.goo.gl/HBKDcNoEWpPyy9x69" rel="noopener">nostra posizione su Google Maps</a>.`,
+  },
+];
+
+const offices = [
+  {
+    title: "INPS: filiale Roma Nomentano-Montesacro",
+    html: `Via Nizza 152-156. Dal 2025 la filiale ha competenza sui CAP 00137, 00138, 00139, 00141, 00197, 00198 e 00199: controlla il tuo CAP nell'elenco. Fonte: <a href="https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.inps-inaugurazione-filiale-roma-nomentano-montesacro.html" rel="noopener">INPS, inaugurazione della filiale</a>.`,
+  },
+  {
+    title: "Municipio III",
+    html: `Bufalotta e Porta di Roma sono nell'area del Municipio III, nord-est di Roma. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+  },
+  {
+    title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
+    html: `Via Lampedusa 23-27 (Distretto 3, Municipio III). Sportello polifunzionale (scelta e revoca del medico, esenzioni, tessera sanitaria) e Punto Unico di Accesso (tel. 06 6010 5752). Prenotazioni CUP: 06 9939. Fonte: <a href="https://www.aslroma1.it/uploads/files/30_23_impaginato_cdc_MONTESACRO_rev18mar.pdf" rel="noopener">Carta dei servizi ASL Roma 1</a>. Per la domanda di invalidità civile vedi <a href="/invalidita-104">la nostra pagina</a>.`,
+  },
+  {
+    title: "Centro per l'impiego",
+    html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la nostra pagina</a>.`,
+  },
+];
+---
+
+<ZonaPage
+  title="CAF e patronato Bufalotta e Porta di Roma"
+  description="CAF e patronato per Bufalotta e Porta di Roma: con la linea 38 arrivi a Vigne Nuove, Via Filoteo Alberini 25. Uffici INPS, Municipio III e ASL. ISEE e 730."
+  slug="caf-patronato-bufalotta-porta-di-roma"
+  breadcrumbName="Bufalotta e Porta di Roma"
+  eyebrow="Zone servite · Bufalotta, Porta di Roma"
+  h1="CAF e patronato per Bufalotta e Porta di Roma"
+  intro="Se abiti a Bufalotta o a Porta di Roma siamo vicini: il Centro Pratiche Flaiano è a Vigne Nuove, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano), nello stesso Municipio III. Qui trovi come arrivare e gli uffici pubblici di riferimento."
+  transportTitle="Come arrivare da Bufalotta e Porta di Roma"
+  transportIntro="La linea che collega Porta di Roma a Via delle Vigne Nuove, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
+  transport={transport}
+  transportNote="Dati verificati il 23/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  officesTitle="Uffici pubblici per chi abita qui"
+  officesIntro="Gli uffici che servono più spesso a chi abita a Bufalotta e Porta di Roma."
+  offices={offices}
+  officesNote="Orari e sportelli degli enti pubblici cambiano: prima di andare controlla sempre il sito ufficiale."
+  otherZones={[
+    { name: "Vigne Nuove", href: "/zone/caf-patronato-vigne-nuove" },
+    { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
+    { name: "Tufello, Conca d'Oro, Val Melaina", href: "/zone/caf-patronato-tufello-conca-oro" },
+  ]}
+/>

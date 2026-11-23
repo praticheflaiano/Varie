@@ -1,0 +1,61 @@
+---
+import ZonaPage from "~/components/zone/ZonaPage.astro";
+
+const transport = [
+  {
+    title: "Linea 38: fermata Vigne Nuove/Lumiere",
+    html: `La <strong>38</strong> (Termini - Porta di Roma) passa da Via delle Vigne Nuove. Dalla fermata <strong>Vigne Nuove/Lumiere</strong> all'ingresso del Centro Acquisti Flaiano sono circa 6 minuti a piedi. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+  },
+  {
+    title: "Linee 86 e 336 dalla metro Conca d'Oro",
+    html: `Se arrivi con la metro B1, alla stazione <strong>Conca d'Oro</strong> prendi la <strong>38</strong>, la <strong>86</strong> o la <strong>336</strong>, che arrivano a Vigne Nuove. Fonti: <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+  },
+  {
+    title: "Linee 339 e 349 dentro il quartiere",
+    html: `Le circolari <strong>339</strong> e <strong>349</strong> passano da Jonio (metro B1) e girano nel quartiere Vigne Nuove, su vie interne come Isole Curzolane e Monte Massico. Fonti: <a href="https://moovitapp.com/index/it/mezzi_pubblici-Vigne_Nuove-Roma_e_Lazio-site_14810963-61" rel="noopener">Moovit Vigne Nuove</a>, <a href="https://it.busti.me/rome/rome-bus-339/" rel="noopener">Bustime linea 339</a>.`,
+  },
+];
+
+const offices = [
+  {
+    title: "INPS: filiale Roma Nomentano-Montesacro",
+    html: `Via Nizza 152-156. Dal 2025 la filiale ha competenza sui CAP 00137, 00138, 00139, 00141, 00197, 00198 e 00199: controlla il tuo CAP nell'elenco. Fonte: <a href="https://www.inps.it/content/inps-site/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.inps-inaugurazione-filiale-roma-nomentano-montesacro.html" rel="noopener">INPS, inaugurazione della filiale</a>.`,
+  },
+  {
+    title: "Municipio III",
+    html: `Vigne Nuove è nel Municipio III, nord-est di Roma. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+  },
+  {
+    title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
+    html: `Via Lampedusa 23-27 (Distretto 3, Municipio III). Sportello polifunzionale (scelta e revoca del medico, esenzioni, tessera sanitaria) e Punto Unico di Accesso (tel. 06 6010 5752). Prenotazioni CUP: 06 9939. Fonte: <a href="https://www.aslroma1.it/uploads/files/30_23_impaginato_cdc_MONTESACRO_rev18mar.pdf" rel="noopener">Carta dei servizi ASL Roma 1</a>. Per la domanda di invalidità civile vedi <a href="/invalidita-104">la nostra pagina</a>.`,
+  },
+  {
+    title: "Centro per l'impiego",
+    html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la nostra pagina</a>.`,
+  },
+];
+---
+
+<ZonaPage
+  title="CAF e patronato a Vigne Nuove, Roma"
+  description="CAF UNSIC e patronato ENASC a Vigne Nuove: Via Filoteo Alberini 25, Centro Acquisti Flaiano. Come arrivare con 38, 86, 336, 339, 349. ISEE, 730, pensioni."
+  slug="caf-patronato-vigne-nuove"
+  breadcrumbName="Vigne Nuove"
+  eyebrow="Zone servite · Vigne Nuove"
+  h1="CAF e patronato a Vigne Nuove"
+  intro="Siamo a Vigne Nuove: il Centro Pratiche Flaiano è in Via Filoteo Alberini 25 int. 10, dentro il Centro Acquisti Flaiano (Municipio III). Qui trovi come arrivare con i mezzi e gli uffici pubblici di riferimento per chi abita nel quartiere."
+  transportTitle="Come arrivare a Via Filoteo Alberini"
+  transportIntro="Le linee che servono Via delle Vigne Nuove, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
+  transport={transport}
+  transportNote="Dati verificati il 23/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  officesTitle="Uffici pubblici per chi abita qui"
+  officesIntro="Gli uffici che servono più spesso a chi abita a Vigne Nuove."
+  offices={offices}
+  officesNote="Orari e sportelli degli enti pubblici cambiano: prima di andare controlla sempre il sito ufficiale."
+  otherZones={[
+    { name: "Bufalotta e Porta di Roma", href: "/zone/caf-patronato-bufalotta-porta-di-roma" },
+    { name: "Tufello, Conca d'Oro, Val Melaina", href: "/zone/caf-patronato-tufello-conca-oro" },
+    { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
+    { name: "Fidene, Serpentara, Nuovo Salario", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
+  ]}
+/>

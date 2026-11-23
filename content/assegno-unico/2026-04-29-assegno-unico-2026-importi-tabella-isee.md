@@ -3,7 +3,7 @@ title: "Assegno Unico 2026: tabella importi per fascia ISEE"
 slug: "assegno-unico-2026-importi-tabella-isee"
 seo_title: "Assegno unico 2026: da 58,30 a 203,80 € per figlio minore"
 date: 2026-04-29
-last_updated: 2026-04-29
+last_updated: 2026-11-23
 category: "assegno-unico"
 tags: ["assegno-unico", "guida", "famiglie", "inps", "isee", "disabilita"]
 meta_description: "Assegno unico 2026: da 58,30 a 203,80 € al mese per figlio minorenne in base all'ISEE, maggiorazioni e disabilità. Ti aiutiamo a Vigne Nuove, Roma."
@@ -25,7 +25,7 @@ image_alt: "Illustrazione editoriale: pattern bar-chart astratto in toni di blu 
 
 # Assegno Unico 2026: tabella importi per fascia ISEE, maggiorazioni e disabilita
 
-**Ultimo aggiornamento: 29 aprile 2026**
+**Ultimo aggiornamento: 23 novembre 2026** (importi verificati sull'Allegato 1 della circolare INPS n. 7/2026)
 
 **Nota (13 novembre 2026):** la scadenza del 30 giugno 2026 per avere gli arretrati da marzo è passata. Per il rinnovo dell'ISEE e le date del 2027 leggi la [guida all'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze).
 
@@ -43,16 +43,19 @@ L'importo dell'AUU per ogni figlio **minorenne** dipende dall'**ISEE 2026** del 
 
 L'importo e calcolato **per ogni figlio** del nucleo. Una famiglia con due figli minorenni e ISEE 17.000 € percepisce 203,80 × 2 = **407,60 €/mese**.
 
+> [calcolatore dell'Assegno Unico 2026](/calcolo-assegno-unico): inserisci ISEE e figli e vedi quanto ti spetta, maggiorazioni comprese.
+
 **Esempio decrescenza** (figlio minorenne):
-- ISEE 18.000 € → ~199 €/mese
-- ISEE 25.000 € → ~140 €/mese
-- ISEE 35.000 € → ~88 €/mese
-- ISEE 45.000 € → ~62 €/mese
+- ISEE 18.000 € → 201,00 €/mese
+- ISEE 20.000 € → 191,00 €/mese
+- ISEE 25.000 € → 165,90 €/mese
+- ISEE 35.000 € → 115,90 €/mese
+- ISEE 45.000 € → 65,80 €/mese
 - ISEE 47.000 € → 58,30 € (importo minimo)
 
-L'INPS rende disponibile un **simulatore ufficiale** sul proprio portale per calcolare l'importo esatto con tutti i parametri.
+Valori presi dalla tabella ufficiale INPS (Allegato 1 alla circolare n. 7/2026).
 
-## Importi per figli maggiorenni a carico (18-21 anni)
+## Importi per figli maggiorenni a carico (da 18 a 20 anni)
 
 L'AUU spetta anche per i **figli maggiorenni a carico fino a 21 anni**, a condizione che siano:
 
@@ -62,24 +65,27 @@ L'AUU spetta anche per i **figli maggiorenni a carico fino a 21 anni**, a condiz
 - impegnati in **servizio civile universale**
 - lavoratori con **reddito complessivo** sotto 8.000 € annui
 
-| ISEE 2026 | Importo per figlio maggiorenne 18-21 anni |
+| ISEE 2026 | Importo per figlio da 18 a 20 anni |
 |---|---|
-| **Fino a 17.468,51 €** | **85 €/mese** (massimo) |
+| **Fino a 17.468,51 €** | **99,10 €/mese** (massimo) |
 | Tra 17.468,51 € e 46.582,71 € | Importo decrescente |
-| **Oltre 46.582,71 €** o ISEE assente | **25 €/mese** (minimo) |
+| **Oltre 46.582,71 €** o ISEE assente | **29,10 €/mese** (minimo) |
 
 L'AUU per maggiorenni si **estingue al compimento dei 21 anni**, salvo casi di disabilita.
 
 ## Figli con disabilita: nessun limite di eta
 
-Per i **figli con disabilita** (a qualsiasi eta) **non ci sono limiti** ne ISEE ne anagrafici. Sull'importo base spettano **maggiorazioni differenziate per grado di disabilita** (non autosufficiente, grave, media), tutte rivalutate del +1,4% nel 2026.
+Per i **figli con disabilita** l'assegno spetta **a qualsiasi eta**, anche dopo i 21 anni. L'importo base e lo stesso dei figli minorenni: da **203,80 €** (ISEE fino a 17.468,51 €) a **58,30 €** (ISEE oltre 46.582,71 € o assente).
 
-I valori esatti delle maggiorazioni 2026 sono pubblicati nella **Circolare INPS n. 7 del 30 gennaio 2026** (allegato tabelle, sezione "Figli con disabilita"). Per il calcolo personale sul tuo nucleo familiare ti consigliamo di:
+Per i figli con disabilita **sotto i 21 anni** si aggiunge una maggiorazione mensile fissa (non dipende dall'ISEE):
 
-- consultare il **simulatore INPS** ufficiale, oppure
-- chiedere al **Patronato del Centro Pratiche Flaiano** che ha le tabelle aggiornate e applica le maggiorazioni corrette in fase di domanda
+| Grado di disabilita | Maggiorazione 2026 |
+|---|---|
+| Non autosufficienza | **122,30 €/mese** |
+| Disabilita grave | **110,60 €/mese** |
+| Disabilita media | **99,10 €/mese** |
 
-Le famiglie con figli disabili **mantengono l'assegno anche dopo i 21 anni** (non si interrompe), con un importo specifico previsto per gli over 21 con disabilita.
+Fonte: Allegato 1 alla circolare INPS n. 7 del 30 gennaio 2026.
 
 ## Maggiorazioni che si aggiungono all'importo base
 
@@ -89,7 +95,7 @@ L'AUU prevede diverse **maggiorazioni cumulabili** (entro i limiti previsti dall
 
 **+50% sull'importo base** dalla nascita al compimento del 1° anno di eta. Si applica automaticamente dopo la registrazione anagrafica del figlio in INPS.
 
-### 2. Maggiorazione per famiglie numerose (3+ figli)
+### 2. Figli da 1 a 3 anni nelle famiglie con almeno 3 figli
 
 Se hai **almeno 3 figli a carico** e **ISEE fino a 46.582,71 €**: **+50%** sull'importo base per ogni figlio in eta tra 1 e 3 anni. Decade per ISEE superiori.
 
@@ -99,17 +105,15 @@ Per famiglie con **almeno 4 figli a carico**: **maggiorazione fissa di 150 €/m
 
 ### 4. Madre under 21
 
-**+22,80 €/mese per ogni figlio** se la madre ha meno di 21 anni al momento della domanda.
+**+23,30 €/mese per ogni figlio** se la madre ha meno di 21 anni.
 
 ### 5. Entrambi i genitori lavoratori
 
-Fino a **+34,10 €/mese per figlio** se entrambi i genitori percepiscono reddito da lavoro (dipendente o autonomo). E **decrescente con l'ISEE**: si **azzera oltre 46.582,71 €**.
+Fino a **+34,90 €/mese per ogni figlio minorenne** se entrambi i genitori hanno un reddito da lavoro (dipendente o autonomo). **Scende con l'ISEE** e arriva a **zero** vicino a 46.582,71 €.
 
-Si calcola anche per il **genitore single** che lavora se percepisce un reddito.
+### 6. Figli dal terzo in poi
 
-### 6. Maggiorazione transitoria (in via di esaurimento)
-
-Per le famiglie che percepivano **assegni familiari + ANF** prima del 2022 e che hanno subito un calo con l'introduzione dell'AUU, e prevista una **maggiorazione transitoria decrescente**. **Esaurita per molti nuclei nel 2025**, ancora applicabile in casi residuali.
+Per ogni figlio **successivo al secondo** spetta una maggiorazione da **99,10 €** (ISEE fino a 17.468,51 €) a **17,40 €** (ISEE oltre 46.582,71 € o assente).
 
 ## Decorrenza, durata e pagamenti
 
@@ -188,7 +192,7 @@ Il Patronato presta **assistenza gratuita** per tutte le pratiche INPS (Legge 15
 
 ### Quanto prendo di Assegno Unico 2026 con ISEE 20.000 e due figli minorenni?
 
-Indicativamente **circa 175-180 €/mese per figlio**, quindi totale ~350-360 €/mese per la famiglia (tra 17.468,51 e 46.582,71 € l'importo decresce in modo lineare). Il calcolo esatto richiede l'ISEE preciso e va fatto con il simulatore INPS.
+Con ISEE 20.000 € la tabella INPS 2026 da **191,00 €/mese per figlio**, quindi **382,00 €/mese** per due figli, piu le eventuali maggiorazioni (ad esempio fino a 34,90 € per figlio se entrambi i genitori lavorano). Puoi fare il conto con il [calcolatore dell'Assegno Unico](/calcolo-assegno-unico).
 
 ### Cosa succede se non rinnovo l'ISEE entro il 30 giugno?
 

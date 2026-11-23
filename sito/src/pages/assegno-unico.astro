@@ -13,6 +13,8 @@ const SOSTITUZIONI: [string, string][] = [
   ['<a href="/richiesta" class="c20">Fai tutto online</a>', '<a href="#da-casa" class="c20">Fai tutto online</a>'],
   ['<a href="/richiesta" class="c15">', '<a href="#da-casa" class="c15">'],
   ["Foto dei documenti, due minuti di modulo, al resto pensiamo noi.", "Foto dei documenti dal telefono, al resto pensiamo noi. Paghi dopo il nostro controllo."],
+  // Pulsante grande verso il calcolatore (regola di Antonio del 21/11/2026)
+  ['<p style="margin:0;font-size:15px;color:#3F3F5A">Importi e regole del 2026, fonte INPS. Aggiornato il 13 novembre 2026.</p>', '<a href="/calcolo-assegno-unico" class="pdf-btn"><span class="pdf-btn-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8"/></svg></span><span class="pdf-btn-txt"><span class="pdf-btn-t">Calcola quanto ti spetta</span><span class="pdf-btn-s">Calcolatore gratuito con la tabella INPS 2026 e tutte le maggiorazioni</span></span></a><p style="margin:0;font-size:15px;color:#3F3F5A">Importi e regole del 2026, fonte INPS. Aggiornato il 23 novembre 2026.</p>'],
 ];
 let body = rawBody;
 for (const [da, a] of SOSTITUZIONI) {
