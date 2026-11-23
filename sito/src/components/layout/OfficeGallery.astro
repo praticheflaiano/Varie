@@ -1,0 +1,24 @@
+---
+// Foto reali dell'ufficio (dalla scheda Google, caricate dal titolare; ritocco luce e nitidezza il 23/11/2026).
+interface Props { title?: string; compact?: boolean }
+const { title = "Il nostro ufficio a Vigne Nuove", compact = false } = Astro.props;
+const FOTO = [
+  { f: "postazioni-vetrata", alt: "Sala con le postazioni di consulenza e la vetrata, Centro Pratiche Flaiano, Vigne Nuove Roma" },
+  { f: "reception-ingresso", alt: "Ingresso e bancone accoglienza del CAF e Patronato Centro Pratiche Flaiano" },
+  { f: "scrivania-consulenza", alt: "Scrivania per le pratiche CAF e Patronato al Centro Pratiche Flaiano" },
+  { f: "sala-consulenze", alt: "Sala consulenze del Centro Pratiche Flaiano in Via Filoteo Alberini 25, Roma" },
+];
+const list = compact ? FOTO.slice(0, 2) : FOTO;
+---
+<div>
+  <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">{title}</h2>
+  <p class="mt-2 text-[var(--color-ink-soft,#4B4B63)]">Via Filoteo Alberini 25 int. 10, nel Centro Acquisti Flaiano, quartiere Vigne Nuove.</p>
+  <div class:list={["mt-4 grid gap-3", compact ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2"]}>
+    {list.map((p) => (
+      <picture>
+        <source srcset={`/img/ufficio/${p.f}.webp`} type="image/webp" />
+        <img src={`/img/ufficio/${p.f}.jpg`} alt={p.alt} width="1200" height="675" loading="lazy" decoding="async" style="width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:20px" />
+      </picture>
+    ))}
+  </div>
+</div>

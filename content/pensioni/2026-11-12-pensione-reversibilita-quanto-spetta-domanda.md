@@ -3,7 +3,7 @@ title: "Pensione di reversibilità: quanto spetta, a chi e come fare domanda"
 seo_title: "Pensione di reversibilità: quanto spetta e come fare domanda"
 slug: "pensione-reversibilita-quanto-spetta-domanda"
 date: 2026-11-12
-last_updated: 2026-11-12
+last_updated: 2026-11-23
 category: "pensioni"
 tags: ["pensione-reversibilita", "pensione-indiretta", "superstiti", "inps", "patronato", "successione", "pensioni", "roma"]
 meta_description: "Pensione di reversibilità 2026: chi ne ha diritto, quanto spetta (60% al coniuge), tagli per reddito e come fare domanda. Patronato a Roma, Vigne Nuove."
@@ -207,6 +207,9 @@ Vuoi sapere prima quanto ti spetterà? Con il servizio **[Stima e Calcolo della 
 - **Telefono:** 06 9784 5429 · **WhatsApp:** 371 623 0690
 
 ## Domande frequenti
+
+**Serve lo stato di famiglia per la reversibilità?**
+La domanda online all'INPS chiede la composizione del nucleo familiare, oltre ai redditi degli ultimi due anni del defunto e del coniuge (manuale della procedura INPS di domanda di pensione online). Quando la prepariamo in ufficio, questi dati li raccogliamo insieme.
 
 **Quanto spetta al coniuge con la pensione di reversibilità?**
 Il 60% della pensione del defunto. Sale all'80% con un figlio e al 100% con due o più figli con diritto.

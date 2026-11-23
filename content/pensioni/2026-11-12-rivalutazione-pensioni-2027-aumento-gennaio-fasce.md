@@ -36,6 +36,8 @@ Ogni gennaio le pensioni aumentano per recuperare l'inflazione dell'anno prima. 
 | **Conguaglio** | le differenze dovute alle nuove regole verranno sistemate più avanti |
 | **Domanda** | non serve: l'INPS fa tutto in automatico |
 
+> [Prenota un controllo della pensione](/prenota): ti spieghiamo il cedolino di gennaio e l'aumento.
+
 ## Cosa ha detto l'INPS l'11 novembre
 
 Nei giorni scorsi, in audizione in Parlamento sulla manovra, l'INPS aveva parlato di una rivalutazione in due tempi: da gennaio solo per le pensioni fino a quattro volte il minimo e dopo per le altre. L'11 novembre l'Istituto ha corretto la rotta con una notizia pubblicata sul proprio sito.
@@ -129,6 +131,7 @@ No. Sono nel disegno di legge di bilancio 2027, all'esame del Parlamento.
 
 ## Articoli correlati
 
+- [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
 - [Pensione minima 2027: quanto aumenta](/blog/pensione-minima-2027-quanto-aumenta)
 - [Cedolino pensione novembre e dicembre 2026: come leggerlo](/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
 - [Requisiti pensione 2027: vecchiaia e anticipata](/blog/requisiti-pensione-2027-vecchiaia-anticipata)

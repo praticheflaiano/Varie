@@ -1,4 +1,5 @@
 ---
+import OfficeGallery from "~/components/layout/OfficeGallery.astro";
 /**
  * Struttura comune delle pagine "zona servita". Il contenuto (trasporti, uffici, note)
  * arriva dalle singole pagine e contiene solo fatti con fonte. Nessun JSON-LD proprio:
@@ -105,6 +106,10 @@ const mapsDir = "https://www.google.com/maps/dir/?api=1&destination=Centro+Prati
             WhatsApp <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener">{CONTACT.phone.mobile}</a><br />
             Orari e indicazioni: <a href="/contatti">pagina contatti</a>
           </p>
+        </div>
+
+        <div class="rounded-[28px] bg-white p-1">
+          <OfficeGallery title="Il nostro ufficio" compact />
         </div>
 
         <div class="rounded-[28px] bg-[#F7F7FB] p-6">

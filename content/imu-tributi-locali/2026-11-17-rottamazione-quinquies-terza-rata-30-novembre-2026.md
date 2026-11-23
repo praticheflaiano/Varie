@@ -32,6 +32,8 @@ Se hai aderito alla **rottamazione-quinquies** delle cartelle e paghi a rate, **
 - **Quanto:** l'importo è quello scritto nella **Comunicazione delle somme dovute** dell'Agenzia delle entrate-Riscossione; ogni rata è di almeno **100 euro** e comprende interessi al **3% annuo** dal 1° agosto 2026.
 - **Come si paga:** con i moduli precompilati della Comunicazione, con la domiciliazione sul conto corrente o agli sportelli dell'Agenzia delle entrate-Riscossione (comma 93).
 
+> [Prenota per la rottamazione](/prenota): controlliamo il piano di rate e prepariamo i pagamenti.
+
 ## Chi deve pagare il 30 novembre 2026?
 
 Chi ha presentato la dichiarazione di adesione alla rottamazione-quinquies e ha scelto il **pagamento a rate**. La legge prevede fino a **54 rate bimestrali** di pari importo:

@@ -42,6 +42,8 @@ Finché la legge non è approvata e pubblicata in Gazzetta Ufficiale **non c'è 
 
 *(Fonte: Camera dei deputati, scheda sul DDL A.S. 2163)*
 
+> [Prenota una consulenza per il caregiver](/prenota): verifichiamo 104, congedi e permessi che puoi già chiedere oggi.
+
 ## Chi è il caregiver familiare per la nuova legge
 
 È la persona **maggiorenne** che assiste un familiare, gratis e non per mestiere. Può essere caregiver di:

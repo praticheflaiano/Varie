@@ -36,6 +36,8 @@ Nel Lazio, dal **15 giugno 2026**, si può chiedere anche **online**.
 | **Documenti** | documento d'identità e codice fiscale |
 | **Per la pubblica amministrazione** | basta l'**autocertificazione** |
 
+> [Prenota per il C2 storico](/prenota): ti aiutiamo a richiederlo sul Portale Lazio Lavoro.
+
 ## A cosa serve
 
 Secondo la scheda della Regione Lazio, il C2 storico **attesta lo stato di disoccupazione**. Riporta anche i dati utili a ricostruirlo: iscrizioni, presentazioni allo sportello, rapporti di lavoro e comunicazioni obbligatorie, **DID** (la dichiarazione di immediata disponibilità).
