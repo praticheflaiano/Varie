@@ -37,6 +37,8 @@ Spesso conviene farla anche quando non è obbligatoria: se il defunto aveva **sp
 | **Rimborso** | spetta agli **eredi** |
 | **Dove** | online con la precompilata "come erede", oppure al **CAF** |
 
+> [Prenota per il 730 del defunto](/prenota): prepariamo la dichiarazione con gli eredi.
+
 ## Quale modello si usa
 
 Per i **redditi del 2025** (la dichiarazione che si fa nel 2026), secondo la guida dell'Agenzia delle Entrate:

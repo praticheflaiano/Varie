@@ -33,6 +33,8 @@ Nel 2026 la **pensione minima** (trattamento minimo INPS) è di **611,85 euro** 
 | **Aumento extra per le minime** | **+1,3%**, fino a **7,95 €** in più: massimo **619,80 €** | la legge in vigore lo prevede **solo fino al 2026** |
 | **Da quando** | gennaio 2026 | dalla **rata di gennaio 2027** (INPS, 11 novembre 2026) |
 
+> [Prenota un controllo della pensione](/prenota): verifichiamo integrazione al minimo, maggiorazioni e RED.
+
 ## Cos'è il trattamento minimo
 
 È l'importo sotto cui la pensione non scende per chi ha pochi contributi e redditi bassi: l'INPS **integra** la pensione fino al minimo. Ogni anno anche il minimo si **rivaluta** con l'inflazione, come le altre pensioni.
@@ -85,6 +87,7 @@ Dalla rata di gennaio 2027, per tutti i pensionati (INPS, notizia dell'11 novemb
 
 ## Articoli correlati
 
+- [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
 - [Perequazione pensioni 2027: aumento di gennaio e nuove fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [Cedolino pensione novembre e dicembre 2026: come leggerlo](/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
 - [Requisiti pensione 2027: vecchiaia e anticipata](/blog/requisiti-pensione-2027-vecchiaia-anticipata)

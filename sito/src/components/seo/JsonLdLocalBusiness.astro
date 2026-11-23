@@ -10,7 +10,7 @@ const data = {
   description: SITE.defaultDescription,
   url: SITE.url,
   logo: `${SITE.url}/apple-touch-icon.png`,
-  image: `${SITE.url}${SITE.ogImage}`,
+  image: [`${SITE.url}${SITE.ogImage}`, ...["postazioni-vetrata", "reception-ingresso", "scrivania-consulenza", "sala-consulenze"].map((f) => `${SITE.url}/img/ufficio/${f}.jpg`)],
   slogan: SITE.claim,
   telephone: CONTACT.phone.landline,
   email: CONTACT.email,

@@ -166,6 +166,7 @@ Serve un'identità digitale (SPID, CIE o CNS). In ufficio ti aiutiamo a leggerlo
 
 ## Articoli correlati
 
+- [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
 - [Bonus 154,94 euro sulla pensione di dicembre 2026: a chi spetta](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026)
 - [Rivalutazione pensioni 2027: aumento da gennaio e fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)

@@ -123,6 +123,10 @@ Al **Centro Pratiche Flaiano** di Vigne Nuove (Municipio III), vicino a Tufello,
 - [Calendario dei pagamenti INPS](/pagamenti-inps)
 - [Rivalutazione pensioni 2027: aumento da gennaio](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 
+## Articoli correlati
+
+- [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
+
 ---
 
 *Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche; si invita a verificare sempre l'attualità delle informazioni presso le fonti ufficiali (inps.it, gazzettaufficiale.it). Per una valutazione personalizzata della propria situazione, prenota un appuntamento presso il nostro Centro.*

@@ -36,6 +36,8 @@ Dal 2025 la detrazione ha **due aliquote**, e la più alta è riservata a chi è
 
 La detrazione si divide in **10 rate annuali** uguali nel 730 o nel modello Redditi.
 
+> [Prenota per le detrazioni casa](/prenota): verifichiamo se puoi detrarre le spese nel 730.
+
 ## Perché il convivente ha il 36% e non il 50%
 
 La maggiorazione al **50%** nel 2026 spetta solo se ci sono **entrambe** queste condizioni:

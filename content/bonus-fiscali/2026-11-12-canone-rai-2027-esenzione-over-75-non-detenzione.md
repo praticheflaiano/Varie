@@ -43,6 +43,8 @@ Vediamo le scadenze del **canone RAI 2027**, chi può non pagarlo e come fare, a
 | **Esenzione over 75** per tutto il 2027 | chi ha già 75 anni o li compie entro il 31 gennaio 2027 e ha i requisiti di reddito | **30 aprile 2027** |
 | **Esenzione over 75** per luglio-dicembre 2027 | chi compie 75 anni dal 1 febbraio al 31 luglio 2027 | **31 luglio 2027** |
 
+> [Prenota per l'esenzione canone RAI](/prenota): ti aiutiamo a preparare e inviare la dichiarazione.
+
 ## Quanto costa il canone RAI nel 2027
 
 Oggi il canone per uso privato è di **90 euro all'anno**. Questa cifra è stata introdotta dalla legge di bilancio 2017 (art. 1, comma 40, L. 232/2016), come spiega la **Circolare dell'Agenzia delle Entrate n. 45/E del 30 dicembre 2016**, ed è quella pagata anche nel 2026.

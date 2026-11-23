@@ -134,6 +134,7 @@ Solo se avevi i requisiti entro il 31 dicembre 2025.
 
 ## Articoli correlati
 
+- [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
 - [Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
 - [Legge di bilancio 2027: le novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)

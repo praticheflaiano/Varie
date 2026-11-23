@@ -49,6 +49,8 @@ Qui sotto trovi chi paga, le aliquote di Roma Capitale, come si calcola il congu
 | **Quando** | Entro mercoledì 16 dicembre 2026 |
 | **Come** | Modello F24 (banca, posta, home banking, F24 web dell'Agenzia delle Entrate) |
 
+> [Prenota il calcolo IMU](/prenota): calcoliamo il saldo e prepariamo l'F24.
+
 ## Chi deve pagare il saldo IMU
 
 Pagano l'IMU (legge 160/2019, commi 740-743):
