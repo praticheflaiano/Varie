@@ -11,6 +11,9 @@ author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Roma Mobilità, 'Presentazione domande lista d'attesa 2027 - trasporto individuale disabili' - https://romamobilita.it/infomobilita/presentazione-domande-lista-attesa-2027-trasportoindividualedisabili/"
   - "Deliberazione dell'Assemblea Capitolina n. 129 del 4 dicembre 2018 - Regolamento per i servizi di mobilità delle persone con disabilità, artt. 2-7 e Allegato A - https://romamobilita.it/sites/default/files/pdf/permessi_disabili/DAC_129-2018.pdf"
+  - "Roma Mobilità, 'Servizi di trasporto individuale e autogestito' - https://romamobilita.it/servizi-al-pubblico/servizi-di-trasporto-individuale-e-autogestito/"
+  - "Roma Mobilità, informativa privacy per gli autisti del servizio di mobilità individuale (app di gestione delle corse e budget chilometrico) - https://romamobilita.it/sites/default/files/Inform_AUTISTI_mob_individ_disabili.pdf"
+  - "Vita Indipendente Roma, scheda 'Servizi di trasporto per le persone con disabilità' (modalità di prenotazione presso gli operatori) - https://www.vitaindipendenteroma.it/schede/servizi-di-trasporto-per-le-persone-con-disabilita/"
   - "Deliberazione dell'Assemblea Capitolina n. 47/2019 (modifiche al regolamento) - https://romamobilita.it/sites/default/files/pdf/permessi_disabili/DAC_47-2019.pdf"
 status: published
 type: scadenza
@@ -63,6 +66,15 @@ Nella domanda si sceglie **un solo motivo**. Ognuno ha il suo limite di corse e 
 
 Il regolamento è stato modificato nel 2019 (delibera n. 47/2019): gli importi esatti per il 2027 sono quelli del modulo di domanda di Roma Mobilità. Te li confermiamo noi quando prepariamo la pratica.
 
+## Si può avere un accompagnatore?
+
+Sì. Il regolamento (art. 9, comma 4) permette di farsi **accompagnare da una persona di fiducia**:
+
+- in **taxi** possono salire anche più accompagnatori, fino ai posti disponibili nel mezzo e nel rispetto della sua assicurazione;
+- sul **trasporto collettivo** (pulmino) è ammesso **un solo accompagnatore**, salvo un certificato medico che ne giustifichi di più;
+- l'accompagnamento è **a carico dell'utente**: il Comune non paga l'accompagnatore;
+- non serve indicarlo nella domanda.
+
 ## Come funzionano graduatoria e lista d'attesa
 
 Il servizio va a chi è più in alto in una **graduatoria unica a punti**, fino a quando ci sono soldi (art. 5 e 6). Il punteggio massimo è **100**:
@@ -93,6 +105,21 @@ Chi ha i requisiti ma non rientra nella graduatoria va nella **lista d'attesa**,
 - **Online**, dal 1° ottobre 2026 al **15 gennaio 2027**, sui servizi online di Roma Mobilità (servizionline.romamobilita.it) con **SPID o CIE**. Si compila il modulo, si caricano i documenti e si segue lo stato della domanda.
 - **Allo sportello** di Roma Mobilità in **via Silvio D'Amico 38**, solo il **mercoledì dalle 9:00 alle 15:30**, fino al **13 gennaio 2027**. Serve la **prenotazione** con l'app SolariQ o al Contact Center **06 57003**.
 
+## Una volta ammessi: come si usa il servizio
+
+1. **Codice utente.** Lo trovi sui servizi online di Roma Mobilità (servizionline.romamobilita.it), entrando con SPID o CIE. Va comunicato a ogni prenotazione.
+2. **Scegli l'operatore.** Puoi scegliere liberamente tra gli operatori iscritti all'elenco di Roma Capitale (radiotaxi e cooperative, per esempio Pronto Taxi 6645 e Samarcanda). L'elenco aggiornato con i contatti è sulla pagina di Roma Mobilità dei [servizi di trasporto individuale](https://romamobilita.it/servizi-al-pubblico/servizi-di-trasporto-individuale-e-autogestito/).
+3. **Prenota la corsa** per telefono o app, dicendo il **codice utente** e le tue esigenze: carrozzina, pedana, accompagnatore. Le auto con **pedana** sono poche: meglio prenotare **almeno 24 ore prima**.
+4. **Viaggia.** Il tassista registra la corsa su un'app di Roma Capitale, che calcola i chilometri e li **scala dal tuo budget mensile**. Finito il budget, le corse in più le paghi tu.
+
+Il servizio dal 2026 passa quasi tutto dai taxi: nelle zone periferiche i mezzi con pedana possono essere difficili da trovare. Prenota in anticipo e segnala ogni corsa saltata.
+
+**Se qualcosa non va** (il taxi non arriva, problemi con il budget o con l'operatore):
+
+- Contact Center Roma Mobilità **06 57003**, dal lunedì al venerdì 8:00-18:00;
+- Numero verde per i titolari di CUDE **800 154 451**;
+- per reclami scritti, il modulo **Roma Mobilità Risponde** sul sito romamobilita.it.
+
 ## Perché rivolgerti al Centro Pratiche Flaiano
 
 Siamo **CAF UNSIC** e **Patronato ENASC** a **Vigne Nuove**, Roma (Municipio III). Controlliamo verbale, 104 e CUDE, facciamo l'**ISEE gratis** e presentiamo con te la domanda online, così non rischi di perdere punti per un documento mancante.
@@ -116,6 +143,12 @@ Non è obbligatorio, ma senza ISEE prendi solo 1 punto su 10 nella voce economic
 
 **Quanto si paga?**
 Il servizio è pagato da Roma Capitale fino al budget mensile del tuo motivo. Se lo superi, la differenza è a tuo carico.
+
+**Posso portare un accompagnatore?**
+Sì, una persona di fiducia può viaggiare con te: in taxi fino ai posti disponibili, sul pulmino una sola salvo certificato medico. L'accompagnamento è a carico dell'utente.
+
+**Come prenoto le corse una volta ammesso?**
+Scegli un operatore dall'elenco di Roma Mobilità e prenoti per telefono o app indicando il tuo codice utente. Per le auto con pedana conviene prenotare almeno 24 ore prima.
 
 ## Articoli correlati
 
