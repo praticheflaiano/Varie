@@ -28,7 +28,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
       </div>
 
       <div class="lg:col-span-2">
-        <h4>Servizi</h4>
+        <h2 class="footer-title">Servizi</h2>
         <ul class="space-y-2 text-sm">
           {LANDING.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
           <li><a href="/servizi">Tutti i servizi</a></li>
@@ -46,7 +46,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
       </div>
 
       <div class="lg:col-span-3">
-        <h4>Dal blog</h4>
+        <h2 class="footer-title">Dal blog</h2>
         <ul class="space-y-2 text-sm">
           {CATEGORY_LIST.slice(0, 7).map((c) => <li><a href={`/blog/categoria/${c.slug}`}>{c.label}</a></li>)}
           <li><a href="/blog" style="color:#D4FF4F;font-weight:700">Tutti gli articoli →</a></li>
@@ -54,7 +54,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
       </div>
 
       <div class="lg:col-span-3">
-        <h4>Dove e quando</h4>
+        <h2 class="footer-title">Dove e quando</h2>
         <address class="not-italic text-sm space-y-3">
           <p>
             <b style="color:#fff">{CONTACT.address.street}</b><br />
@@ -90,7 +90,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
         <li><a href="/contatti">Contatti</a></li>
       </ul>
     </div>
-    <p class="mt-4 text-xs" style="color:#6B6B85">
+    <p class="mt-4 text-xs" style="color:#A3A3BD">
       {ORG_CREDENTIALS.caf.fullName} · {ORG_CREDENTIALS.patronato.fullName}. Riferimenti: {ORG_CREDENTIALS.legalReferences.join("; ")}.
     </p>
   </div>

@@ -26,7 +26,8 @@ image_alt: "Saldo IMU 16 dicembre 2026 a Roma"
 
 **Ultimo aggiornamento: 15 novembre 2026**
 
-> ### In breve
+> **In breve**
+>
 > - **Scadenza:** il saldo IMU 2026 va pagato entro **mercoledì 16 dicembre 2026**.
 > - **Chi paga:** chi possiede seconde case, case affittate o in comodato, negozi, uffici, terreni, aree edificabili e case di lusso (A/1, A/8, A/9). **Chi non paga:** chi ha solo l'abitazione principale non di lusso, con le sue pertinenze.
 > - **Come si calcola:** imposta annua 2026 con le aliquote deliberate da Roma Capitale, meno l'acconto di giugno. Prima di pagare controlla il prospetto 2026 di Roma sul sito del [Dipartimento delle Finanze](https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/sceltaregione.htm).

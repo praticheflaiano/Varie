@@ -61,7 +61,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Bonus ristrutturazione, ecobonus, bonus mobili, agevolazioni edilizie e detrazioni.",
     icon: "heroicons:gift",
-    color: "#C2410C",
+    color: "#B03A0A",
     area: "caf",
   },
   "assegno-unico": {
@@ -70,7 +70,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Assegno Unico Universale per i figli a carico: importi, ISEE, domanda INPS.",
     icon: "heroicons:user-group",
-    color: "#128C45",
+    color: "#0E7038",
     area: "patronato",
   },
   "naspi-disoccupazione": {
@@ -79,7 +79,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Indennita di disoccupazione NASpI, requisiti, durata, importi, dimissioni online.",
     icon: "heroicons:briefcase",
-    color: "#E0336B",
+    color: "#B81F56",
     area: "patronato",
   },
   pensioni: {
@@ -97,7 +97,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Invalidità civile, Legge 104, indennità di accompagnamento, riconoscimento handicap.",
     icon: "heroicons:heart",
-    color: "#E0336B",
+    color: "#B81F56",
     area: "patronato",
   },
   "successioni-volture": {
@@ -133,7 +133,7 @@ export const CATEGORIES: Record<CategorySlug, CategoryMeta> = {
     description:
       "Spese sanitarie, mutui, istruzione, sport, animali: tutte le detrazioni IRPEF.",
     icon: "heroicons:receipt-percent",
-    color: "#C2410C",
+    color: "#B03A0A",
     area: "caf",
   },
   "lavoro-domestico": {

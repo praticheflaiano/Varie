@@ -61,6 +61,16 @@ Regola di Antonio (21/11/2026): i rimandi a calcolatori e PDF devono essere ben 
 - Stesso sistema per le prenotazioni: `> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/...): sottotitolo` oppure `(/prenota)` diventa un pulsante con il calendario. Metterne uno subito dopo il riquadro "In breve" negli articoli più letti (strategia SEO del 23/11/2026).
 - Nelle pagine/fragment HTML: usare la classe `pdf-btn` (landing.css) come nella pagina ISEE.
 
+## Accessibilità: regole per ogni pagina e ogni articolo
+
+Regola di Antonio (24/11/2026): queste pratiche valgono su tutte le pagine, nuove e vecchie. Il 24/11/2026 il controllo axe (WCAG 2 A/AA) dava zero errori su tutte le 239 pagine: va mantenuto così.
+- **Contrasto**: testo piccolo almeno 4,5:1 sullo sfondo. Coppie già verificate: bianco su viola `#5B3DF5`; bianco su rosa `#DB2E6B` (mai bianco su `#FF5C8A`); sottotitoli `#F1EEFF` su viola (mai `#DCD5FF`); testo scuro `#14142B` sul verde WhatsApp `#25D366` (mai bianco); bianco su verde `#15803D`; grigio `#A3A3BD` su sfondo scuro `#14142B`. Colori di categoria in `sito/src/utils/categories.ts`: usare solo toni scuri (es. `#B81F56`, `#B03A0A`, `#0E7038`).
+- **Link nei testi**: sempre sottolineati (lo fa il CSS per i link senza classe dentro `main` e dentro `.lp`). Se un link ha una classe o sta fuori da p/li/td, aggiungere `text-decoration:underline`.
+- **Titoli in ordine**: dopo l'h1 viene un h2, mai saltare a h3/h4. Le card articolo e i titoli del piè di pagina sono h2. Negli articoli il riquadro iniziale usa `> **In breve**`, non `> ### In breve`.
+- **Campi dei moduli**: ogni input, select e textarea ha un'etichetta (`<label>` oppure `aria-label`).
+- **Articoli markdown**: caselle `- [ ]`, tabelle scorrevoli e intestazioni vuote sono sistemate da `sito/src/lib/rehype-a11y.mjs`. Dopo una modifica a quel file cancellare la cache (`rm -rf sito/node_modules/.astro`) prima della build.
+- **Prima di pubblicare** pagine o componenti nuovi: controllo con axe-core sulle pagine toccate (Playwright + `axe.run` con `wcag2a`, `wcag2aa`, `best-practice`) e correggere ogni errore.
+
 ## Flusso degli stati di un articolo
 
 ```
