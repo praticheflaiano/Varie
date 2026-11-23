@@ -183,7 +183,7 @@ const { compact = false } = Astro.props;
     var c = calc();
     var w = $('sc-quote-warn');
     if (Math.abs(c.qsum - 100) > 0.01) { w.hidden = false; w.textContent = 'Le quote degli eredi sommano ' + c.qsum.toLocaleString('it-IT') + '%: devono fare 100%.'; } else w.hidden = true;
-    var h = '<h3 class="sc-res-title">Tasse dello Stato: il tuo calcolo</h3>';
+    var h = '<h2 class="sc-res-title">Tasse dello Stato: il tuo calcolo</h2>';
     if (c.attivo <= 0 && c.bot <= 0) { $('sc-res').innerHTML = h + '<p class="sc-empty">Inserisci la rendita di una casa, un conto o un altro bene: il calcolo compare qui.</p>'; return; }
     if (c.esonero) {
       h += '<div class="sc-ok"><b>Probabilmente la dichiarazione non serve.</b> Eredi coniuge e parenti in linea retta, nessun immobile e attivo fino a 100.000 €: per la banca basta la dichiarazione di esonero, che prepariamo noi.</div>';

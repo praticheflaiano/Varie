@@ -49,7 +49,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
           <label class="bl-o"><input type="radio" name="tipo" value="auto" checked> Auto</label><label class="bl-o"><input type="radio" name="tipo" value="moto"> Moto oltre 50 cc</label></fieldset>
 
         <fieldset class="bl-f"><legend>2. Alimentazione</legend>
-          <select id="bl-al" class="bl-in">
+          <select id="bl-al" class="bl-in" aria-label="Alimentazione">
             <option value="benzina">Benzina</option><option value="gasolio">Gasolio (diesel)</option>
             <option value="ibrida">Ibrida benzina o gasolio + elettrico</option>
             <option value="gpl">Benzina + GPL o metano, oppure solo GPL o metano</option>
@@ -71,14 +71,14 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
           <label class="bl-o"><input type="radio" name="int" value="pf" checked> A una persona</label><label class="bl-o"><input type="radio" name="int" value="soc"> A una società o ditta</label></fieldset>
 
         <fieldset class="bl-f"><legend>7. Nel verbale di invalidità tuo o di un familiare a tuo carico c'è una di queste condizioni?</legend>
-          <select id="bl-dis" class="bl-in">
+          <select id="bl-dis" class="bl-in" aria-label="Condizione nel verbale di invalidità">
             <option value="no">No, nessuna</option>
             <option value="vs">Non vedente o sordo</option>
             <option value="psi">Handicap grave (104 art. 3 c. 3) di natura psichica o mentale, con accompagnamento</option>
             <option value="deamb">Handicap grave con grave limitazione della deambulazione, o pluriamputazioni</option>
             <option value="mot">Ridotte capacità motorie, con auto adattata (adattamento sulla carta di circolazione)</option>
           </select>
-          <small style="display:block;color:#5B5B72;margin-top:4px">La sola 104 o la sola invalidità non bastano. Leggi la <a href="/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda" style="color:#5B3DF5">guida all'esenzione per disabili</a>.</small>
+          <small style="display:block;color:#5B5B72;margin-top:4px">La sola 104 o la sola invalidità non bastano. Leggi la <a href="/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda" style="color:#5B3DF5;text-decoration:underline">guida all'esenzione per disabili</a>.</small>
           <label id="bl-cc-w" class="bl-l" style="margin-top:10px" hidden>Cilindrata in cc (voce P.1)
             <input id="bl-cc" type="number" min="1" step="1" inputmode="numeric" placeholder="es. 1242" class="bl-in" style="max-width:160px"></label></fieldset>
 

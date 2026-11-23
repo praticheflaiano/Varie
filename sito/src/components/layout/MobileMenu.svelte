@@ -188,7 +188,7 @@
             href={whatsappLink}
             target="_blank"
             rel="noopener"
-            class="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-white hover:bg-[#1ebe5a]"
+            class="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-semibold text-[#14142B] hover:bg-[#1ebe5a]"
           >
             WhatsApp
           </a>

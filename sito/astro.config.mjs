@@ -8,6 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 import fs from "node:fs";
 import remarkCta from "./src/lib/remark-cta.mjs";
+import rehypeA11y from "./src/lib/rehype-a11y.mjs";
 import path from "node:path";
 
 // Regola: categorie con meno di MIN_ARTICLES articoli = noindex (nella pagina) e fuori dalla sitemap.
@@ -45,7 +46,7 @@ const SITE_URL =
 
 export default defineConfig({
   site: SITE_URL,
-  markdown: { remarkPlugins: [remarkCta] },
+  markdown: { remarkPlugins: [remarkCta], rehypePlugins: [rehypeA11y] },
   output: "static",
   trailingSlash: "ignore",
   // Vecchi indirizzi di articoli che Google conosce ancora: portano all'articolo attuale.
