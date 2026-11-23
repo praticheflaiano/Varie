@@ -58,6 +58,7 @@ Regola di Antonio (21/11/2026): i rimandi a calcolatori e PDF devono essere ben 
 - Negli articoli (markdown): una citazione con un solo link allo strumento, es.
   `> [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi.`
   Il plugin `sito/src/lib/remark-cta.mjs` la trasforma in pulsante (vale per /calcolo-*, /assegno-vedovanza, /calcolatore*, file .pdf).
+- Stesso sistema per le prenotazioni: `> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/...): sottotitolo` oppure `(/prenota)` diventa un pulsante con il calendario. Metterne uno subito dopo il riquadro "In breve" negli articoli più letti (strategia SEO del 23/11/2026).
 - Nelle pagine/fragment HTML: usare la classe `pdf-btn` (landing.css) come nella pagina ISEE.
 
 ## Flusso degli stati di un articolo

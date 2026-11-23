@@ -1,9 +1,9 @@
 ---
 title: "NASpI e cassa integrazione: da novembre la somma esentasse con gli arretrati 2026"
-seo_title: "Somma non imponibile NASpI e CIG da novembre 2026"
+seo_title: "Somma non imponibile NASpI: quando arriva e quanto spetta"
 slug: "somma-non-imponibile-naspi-cassa-integrazione-2026"
 date: 2026-11-15
-last_updated: 2026-11-15
+last_updated: 2026-11-23
 category: "naspi-disoccupazione"
 tags: ["disoccupazione", "inps", "bonus", "novita", "lavoro"]
 meta_description: "Da novembre 2026 l'INPS paga la somma non imponibile su NASpI, disoccupazione agricola e cassa integrazione, con arretrati da gennaio. Chi la prende e chi no."
@@ -37,6 +37,8 @@ L'INPS ha spiegato come la paga con il **messaggio n. 3649 del 10 novembre 2026*
 | **Quando** | da **novembre 2026**, con gli **arretrati dal 1° gennaio 2026** |
 | **Domanda** | **non serve**: è automatica |
 | **Esclusi** | DIS-COLL, lavoratori autonomi, ISCRO |
+
+> [Prenota un controllo della NASpI](/prenota): verifichiamo se la somma ti spetta e se l'INPS l'ha pagata.
 
 ## Chi la riceve
 

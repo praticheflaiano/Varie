@@ -1,9 +1,9 @@
 ---
 title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (1° marzo 2027)"
-seo_title: "RED 2026: scadenza 1° marzo 2027, chi deve farlo"
+seo_title: "Modello RED: scadenza 1° marzo 2027, chi deve farlo"
 slug: "red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568"
 date: 2026-11-10
-last_updated: 2026-11-13
+last_updated: 2026-11-23
 category: "red-invciv-accas"
 tags: ["inps", "pensionati", "red", "assegno sociale", "caf", "novita"]
 meta_description: "Messaggi INPS 3568 e 3697 del 2026: RED sui redditi 2025 e ACC.AS/PS entro il 1° marzo 2027. Chi deve farli, documenti, ricoveri e rischi. Ti aiutiamo a Roma."
@@ -45,6 +45,8 @@ Con il **messaggio n. 3568 del 3 novembre 2026** l'INPS ha fissato le regole del
 Le prime due campagne sono partite il **1° settembre 2026**; la data di avvio dei solleciti la comunica l'INPS almeno 15 giorni prima.
 
 Le campagne dell'anno dopo (RED 2027 sui redditi 2026, ACC.AS/PS 2027 e solleciti 2026) vanno dal **1° settembre 2027 al 2 marzo 2028**.
+
+> [Prenota il modello RED](/prenota): lo prepariamo e lo inviamo noi all'INPS entro il 1° marzo 2027.
 
 ## Perché l'INPS ti chiede il RED
 
