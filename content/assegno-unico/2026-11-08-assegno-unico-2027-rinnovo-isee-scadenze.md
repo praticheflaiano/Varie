@@ -42,6 +42,8 @@ Le regole sono quelle che l'INPS applica ogni anno (per il 2024 messaggio n. 15/
 
 > [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): presentalo entro febbraio per non scendere all'importo minimo da marzo.
 
+> [calcolatore dell'Assegno Unico 2026](/calcolo-assegno-unico): scopri quanto ti spetta con il tuo ISEE.
+
 ## La domanda continua da sola
 
 La domanda di Assegno unico **non va ripresentata ogni anno**, purché non sia stata respinta, revocata, rinunciata o decaduta. L'INPS continua a pagarla in automatico.

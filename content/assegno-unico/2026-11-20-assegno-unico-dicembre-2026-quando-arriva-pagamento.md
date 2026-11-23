@@ -44,6 +44,8 @@ A dicembre il pagamento arriva **prima del solito**, prima delle feste di Natale
 
 > [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): serve per l'importo giusto dell'Assegno Unico da marzo 2027.
 
+> [calcolatore dell'Assegno Unico 2026](/calcolo-assegno-unico): scopri quanto ti spetta con il tuo ISEE.
+
 ## Prima domanda o variazioni: quando arriva
 
 La regola dell'INPS è questa:
