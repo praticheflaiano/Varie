@@ -32,7 +32,7 @@ image_alt: "Congedo parentale: quanti mesi spettano e quanto è pagato"
 
 Il **congedo parentale** sono i mesi in cui mamma e papà possono **stare a casa dal lavoro per stare con il figlio**. Non è obbligatorio: lo usi se vuoi, quando vuoi, anche un giorno alla volta.
 
-Viene **dopo** la maternità (i 5 mesi obbligatori della mamma) e non c'entra con i 10 giorni del papà alla nascita.
+**Attenzione a non confonderli:** la **maternità** dura **5 mesi** ed è obbligatoria. Il **congedo parentale** viene **dopo**, è facoltativo e per la mamma dura fino a **6 mesi**. Sono due cose diverse e si sommano. Della maternità parliamo nella [guida alla maternità obbligatoria](/blog/maternita-obbligatoria-5-mesi-gravidanza-a-rischio-lavori-pericolosi).
 
 ## In breve
 
@@ -46,6 +46,8 @@ Se sei un **lavoratore dipendente**, le cose da ricordare sono quattro:
 Se sei autonomo o in Gestione separata le regole sono diverse: le trovi più sotto.
 
 > [calcolatore del congedo parentale](/calcolo-congedo-parentale): scrivi la data di nascita di tuo figlio e scopri quanti mesi hai e quanto prendi.
+
+> [calcolatore di maternità e congedi](/calcolo-maternita-congedi): il calendario completo dalla maternità al congedo parentale, con date e importi.
 
 ## 1. Quanti mesi posso prendere?
 
