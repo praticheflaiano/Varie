@@ -1,0 +1,269 @@
+---
+/**
+ * Calcolo maternità e congedi: calendario completo (maternità all'80%, paternità al 100%, congedo parentale all'80% e al 30%).
+ * Regole SOLO da fonti ufficiali, verificate il 24/11/2026:
+ * - INPS, scheda "Indennità per congedo di maternità e di paternità alternativo per dipendenti" (agg. 30/05/2025): 2 mesi prima + 3 dopo,
+ *   flessibilità 1+4 e 5 mesi dopo il parto, parto prematuro (3 mesi + giorni non goduti), parto oltre la data presunta (giorni aggiunti),
+ *   il giorno del parto si aggiunge ai 5 mesi, interdizione anticipata (ASL / Ispettorato) e prorogata, 80% della retribuzione media giornaliera,
+ *   colf e badanti: 26 contributi settimanali nell'ultimo anno o 52 negli ultimi due; disoccupate: inizio entro 60 giorni dall'ultimo giorno di lavoro.
+ * - INPS, "Maternità e paternità da freelance" (09/2025): Gestione separata, 80% di 1/365 del reddito, 1 mese di contributi in 12 mesi,
+ *   nessun obbligo di astensione, interdizione fino a 7 mesi dopo la nascita, 3 mesi in più sotto la soglia di reddito (9.456,53 € nel 2025).
+ * - INPS, scheda maternità autonomi (agg. 27/06/2025): 2 mesi prima + 3 dopo, 80% della retribuzione giornaliera fissata per legge, senza obbligo di astensione.
+ * - Ispettorato del lavoro, opuscolo lavoratrici madri: interdizione fino a 7 mesi del bambino pagata all'80%; riposi per allattamento.
+ * - INPS, scheda "Congedo di paternità obbligatorio" (agg. 13/11/2025): 10 giorni lavorativi (20 parto plurimo), 100%, da 2 mesi prima a 5 mesi dopo.
+ * - Congedo parentale: stesse fonti di /calcolo-congedo-parentale.
+ * Il risultato è una stima: le date e gli importi ufficiali li stabilisce l'INPS.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+const faqs = [
+  { q: "Quanto dura la maternità obbligatoria?", a: "5 mesi: di solito 2 mesi prima della data presunta del parto e 3 mesi dopo. Se il medico lo consente si può fare 1 mese prima e 4 dopo, oppure tutti e 5 dopo il parto. Il giorno del parto si aggiunge ai 5 mesi." },
+  { q: "Quanto è pagata la maternità?", a: "L'INPS paga l'80% della retribuzione media giornaliera dell'ultimo mese di lavoro prima del congedo. Alcuni contratti collettivi prevedono un trattamento migliore." },
+  { q: "Che differenza c'è tra maternità e congedo parentale?", a: "La maternità è obbligatoria, dura 5 mesi ed è pagata all'80%. Il congedo parentale viene dopo, è facoltativo, dura fino a 6 mesi per la mamma ed è pagato all'80% per i primi 3 mesi (entro i 6 anni del figlio) e poi al 30%." },
+  { q: "Cosa succede con una gravidanza a rischio o un lavoro pericoloso?", a: "La mamma può restare a casa prima dei 2 mesi dal parto: per la gravidanza a rischio decide la ASL, per il lavoro pericoloso decide l'Ispettorato del lavoro. Se il lavoro resta pericoloso dopo il parto, l'astensione può arrivare fino a 7 mesi del bambino. Questi periodi sono pagati all'80%." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo maternità e congedi", url: "https://praticheflaiano.it/calcolo-maternita-congedi", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
+const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B";
+---
+
+<BaseLayout title="Calcolo maternità e congedi: date e importi" description="Calcola maternità, paternità e congedo parentale: le date di inizio e fine, i mesi all'80% e al 30% e quanto prendi. Anche gravidanza a rischio e lavori pericolosi.">
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <section style="background:#F1EEFF">
+    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · regole INPS 2026</span>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Maternità e congedi: le tue date e quanto prendi</h1>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Scrivi la data del parto: ti prepariamo il <b>calendario completo</b>, dalla maternità (<b>80%</b>) al congedo parentale (<b>80% e 30%</b>), con le date e gli importi.</p>
+
+      <form id="mc" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
+        <fieldset class="mc-f"><legend>1. Che lavoro fai?</legend>
+          <label class="mc-o mc-card"><input type="radio" name="cat" value="dip" checked> <span><b>Dipendente</b><br><small>Hai una busta paga, nel privato o nel pubblico</small></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="cat" value="gs"> <span><b>Gestione separata</b><br><small>Collaboratore o professionista senza una cassa</small></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="cat" value="aut"> <span><b>Autonomo</b><br><small>Artigiano, commerciante, agricolo</small></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="cat" value="colf"> <span><b>Colf o badante</b></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="cat" value="no"> <span><b>Non lavoro</b><br><small>Disoccupata o disoccupato</small></span></label>
+        </fieldset>
+
+        <fieldset class="mc-f"><legend>2. Sei la mamma o il papà?</legend>
+          <label class="mc-o"><input type="radio" name="ruolo" value="madre" checked> Mamma</label>
+          <label class="mc-o"><input type="radio" name="ruolo" value="padre"> Papà</label>
+        </fieldset>
+
+        <fieldset class="mc-f"><legend>3. Le date</legend>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <label class="mc-l" for="mc-dpp" style="flex:1 1 200px">Data presunta del parto<input id="mc-dpp" type="date" class="mc-in"></label>
+            <label class="mc-l" for="mc-nasc" style="flex:1 1 200px">Data di nascita <small style="font-weight:400">(solo se è già nato)</small><input id="mc-nasc" type="date" class="mc-in"></label>
+          </div>
+          <label class="mc-o" style="display:flex;margin-top:8px"><input type="checkbox" id="mc-gem"> Sono gemelli</label>
+        </fieldset>
+
+        <fieldset class="mc-f mc-mam"><legend>4. Come vuoi usare i 5 mesi di maternità?</legend>
+          <label class="mc-o mc-card"><input type="radio" name="flex" value="2" checked> <span><b>2 mesi prima e 3 dopo</b><br><small>La regola normale</small></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="flex" value="1"> <span><b>1 mese prima e 4 dopo</b><br><small>Serve il via libera del medico</small></span></label>
+          <label class="mc-o mc-card"><input type="radio" name="flex" value="0"> <span><b>Tutti e 5 dopo il parto</b><br><small>Serve il via libera del medico</small></span></label>
+        </fieldset>
+
+        <fieldset class="mc-f mc-risk"><legend>5. Gravidanza a rischio o lavoro pericoloso?</legend>
+          <label class="mc-o" style="display:flex"><input type="checkbox" id="mc-ant"> <span>Sto a casa <b>prima</b> dei 2 mesi dal parto <small>(gravidanza a rischio o lavoro pericoloso)</small></span></label>
+          <label class="mc-l" for="mc-antd" id="mc-antd-box" style="display:none;margin:0 0 8px">Da che giorno sei a casa?<input id="mc-antd" type="date" class="mc-in" style="max-width:220px"></label>
+          <label class="mc-o" style="display:flex"><input type="checkbox" id="mc-post"> <span>Il mio lavoro è pericoloso anche <b>dopo</b> il parto <small>(astensione fino a 7 mesi del bambino)</small></span></label>
+        </fieldset>
+
+        <label class="mc-l mc-ralbox" for="mc-ral"><span id="mc-ral-l">6. Quanto guadagni al mese, lordo?</span> <small style="font-weight:400">(facoltativo: serve per calcolare i soldi)</small>
+          <input id="mc-ral" type="number" min="0" step="1" inputmode="decimal" placeholder="es. 1800" class="mc-in" style="max-width:220px"></label>
+
+        <label class="mc-l mc-parbox" for="mc-par"><span id="mc-par-l">7. Dopo, quanti mesi di congedo parentale vuoi prendere?</span> <small style="font-weight:400">(facoltativo: sono i mesi in più, non obbligatori)</small>
+          <input id="mc-par" type="number" min="0" max="7" step="0.5" inputmode="decimal" placeholder="es. 3" class="mc-in" style="max-width:160px"></label>
+
+        <button id="mc-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola il mio calendario</button>
+        <div id="mc-out" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 24 novembre 2026.</b> Regole in vigore nel 2026 (schede INPS e Ispettorato del lavoro).</p>
+
+    <h2 style={H2.replace("24px 0 0", "0")}>Le tre cose da non confondere</h2>
+    <ul style="margin:0;padding-left:22px">
+      <li><b>Maternità</b>: 5 mesi, <b>obbligatoria</b>, pagata all'<b>80%</b>.</li>
+      <li><b>Paternità</b>: 10 giorni lavorativi per il papà dipendente, pagati al <b>100%</b>.</li>
+      <li><b>Congedo parentale</b>: viene dopo, è <b>facoltativo</b>. Fino a 6 mesi per la mamma e 6 per il papà: 3 mesi all'<b>80%</b>, poi al <b>30%</b>.</li>
+    </ul>
+
+    <a href="/blog/maternita-obbligatoria-5-mesi-gravidanza-a-rischio-lavori-pericolosi" class="cta-tool" style="margin-top:6px"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16l-8-4-8 4z"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Guida alla maternità obbligatoria</span><span class="cta-tool-s">I 5 mesi, la gravidanza a rischio e i lavori pericolosi</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="/blog/congedo-parentale-guida-mesi-80-per-cento-domanda" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16l-8-4-8 4z"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Guida al congedo parentale</span><span class="cta-tool-s">I mesi facoltativi di mamma e papà</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+    <h2 style={H2}>Vuoi che lo facciamo noi?</h2>
+    <p style="margin:0">Come patronato inviamo la domanda di maternità, di paternità e di congedo parentale all'INPS e controlliamo le date con te.</p>
+    <a href="/prenota" class="cta-tool" style="margin-top:6px"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Prenota un appuntamento</span><span class="cta-tool-s">In ufficio a Vigne Nuove o in videochiamata</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+    <h2 style={H2}>Domande frequenti</h2>
+    {faqs.map((f) => (
+      <details style="background:#F7F7FB;border-radius:18px;padding:16px 20px"><summary style="font-weight:800;cursor:pointer">{f.q}</summary><p style="margin:10px 0 0">{f.a}</p></details>
+    ))}
+    <p style="margin:12px 0 0;font-size:14px;color:#5B5B72">Fonti: INPS, <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50586.indennit-per-congedo-di-maternit-e-di-paternit-alternativo-per-lavoratrici-e-lavoratori-dipendenti.html" target="_blank" rel="noopener">scheda maternità dipendenti</a>, <a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.09.maternit-e-paternit-da-freelance.html" target="_blank" rel="noopener">maternità in Gestione separata</a>, <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.indennit-di-maternit-paternit-per-lavoratrici-e-lavoratori-autonomi-50585.indennit-di-maternit-paternit-per-lavoratrici-e-lavoratori-autonomi.html" target="_blank" rel="noopener">scheda maternità autonomi</a>, <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.congedo-di-paternit-obbligatorio-58988.congedo-di-paternit-obbligatorio.html" target="_blank" rel="noopener">scheda paternità obbligatoria</a>, <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50583.indennit-di-congedo-parentale-per-lavoratrici-e-lavoratori-dipendenti.html" target="_blank" rel="noopener">scheda congedo parentale</a>; Ispettorato nazionale del lavoro, <a href="https://ispettorato.gov.it/files/2023/01/Brochure-lavoratrici-madri-IIL-Venezia.pdf" target="_blank" rel="noopener">opuscolo lavoratrici madri</a>; D.Lgs. 151/2001. Il calcolatore dà una stima: date e importi ufficiali li stabilisce l'INPS.</p>
+  </section>
+
+  <style is:global>
+    #mc-out{scroll-margin-top:90px}
+    .mc-f{border:0;padding:0;margin:0}
+    .mc-f legend{font-weight:800;margin-bottom:8px}
+    .mc-l{display:flex;flex-direction:column;gap:6px;font-weight:800}
+    .mc-in{border:2px solid #14142B;border-radius:14px;padding:11px 12px;font-size:17px;background:#fff;width:100%;max-width:100%;font-weight:400}
+    .mc-o{display:inline-flex;align-items:flex-start;gap:8px;margin:0 16px 8px 0;font-size:16px;cursor:pointer;font-weight:400}
+    .mc-o input{width:20px;height:20px;accent-color:#5B3DF5;flex:none;margin-top:2px}
+    .mc-o small,.mc-l small{color:#5B5B72}
+    .mc-card{display:flex;border:2px solid #E4E0FF;border-radius:16px;padding:10px 12px;margin:0 0 8px}
+    .mc-card:has(input:checked){border-color:#5B3DF5;background:#F1EEFF}
+    .mc-res{border-radius:20px;padding:18px 20px;line-height:1.5;margin-top:4px}
+    .mc-ok{background:#F1EEFF;color:#14142B}
+    .mc-warn{background:#FFF4D6;color:#14142B}
+    .mc-res a{color:#14142B;font-weight:800;text-decoration:underline}
+    .mc-step{background:#fff;border-radius:16px;padding:14px 16px;margin-top:10px;border-left:8px solid #5B3DF5}
+    .mc-step.p100{border-left-color:#0E7038}.mc-step.p30{border-left-color:#B03A0A}.mc-step.p0{border-left-color:#8A8AA3}
+    .mc-step b.t{display:block;font-size:18px;line-height:1.25}
+    .mc-step .d{display:block;font-size:15px;color:#3F3F5A}
+    .mc-step .e{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;margin-top:4px}
+    .mc-tag{display:inline-block;background:#14142B;color:#fff;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800;margin-left:6px;vertical-align:middle}
+    .mc-tot{background:#D4FF4F;border-radius:16px;padding:14px 16px;margin-top:10px}
+    .mc-tot b{font-family:'Bricolage Grotesque',sans-serif;font-size:30px;display:block;line-height:1.1}
+  </style>
+  <script is:inline>
+  (function(){
+    var $=function(i){return document.getElementById(i)};
+    var radio=function(n){return document.querySelector('input[name='+n+']:checked').value};
+    var eur=function(n){var p=(Math.round(n*100)/100).toFixed(2).split('.');return p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+p[1]+' €'};
+    var mesi=function(n){n=Math.round(n*2)/2;var s=String(n).replace('.',',');return s+(n===1?' mese':' mesi')};
+    var num=function(i){var v=parseFloat(String($(i).value).replace(',','.'));return v>=0?v:0};
+    var G=864e5;
+    var data=function(i){return $(i).value?new Date($(i).value+'T12:00:00'):null};
+    var it=function(d){return d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})};
+    var gg=function(d,n){return new Date(d.getTime()+n*G)};
+    var mm=function(d,n){var x=new Date(d.getTime()),g=x.getDate();x.setDate(1);x.setMonth(x.getMonth()+n);var u=new Date(x.getFullYear(),x.getMonth()+1,0).getDate();x.setDate(Math.min(g,u));return x};
+    var giorni=function(a,b){return Math.round((b.getTime()-a.getTime())/G)+1};
+    function vista(){
+      var c=radio('cat'),mam=radio('ruolo')==='madre';
+      [].forEach.call(document.querySelectorAll('.mc-mam'),function(e){e.style.display=mam&&c!=='no'&&c!=='aut'?'':'none'});
+      [].forEach.call(document.querySelectorAll('.mc-risk'),function(e){e.style.display=mam&&(c==='dip'||c==='gs')?'':'none'});
+      [].forEach.call(document.querySelectorAll('.mc-ralbox'),function(e){e.style.display=c==='dip'||c==='gs'?'':'none'});
+      [].forEach.call(document.querySelectorAll('.mc-parbox'),function(e){e.style.display=c==='dip'||c==='gs'||c==='aut'?'':'none'});
+      $('mc-antd-box').style.display=$('mc-ant').checked?'':'none';
+      $('mc-ral-l').textContent=c==='gs'?'6. Quanto hai guadagnato negli ultimi 12 mesi?':'6. Quanto guadagni al mese, lordo?';
+      $('mc-ral').placeholder=c==='gs'?'es. 20000':'es. 1800';
+    }
+    $('mc').addEventListener('change',vista);vista();
+    var cta='<p style="margin:14px 0 0">Vuoi che controlliamo le date e inviamo le domande? <a href="/prenota">Prenota un appuntamento</a>.</p>';
+    function show(c,h){$('mc-out').innerHTML='<div class="mc-res '+c+'">'+h+'</div>';$('mc-out').scrollIntoView({behavior:'smooth',block:'nearest'})}
+    function lista(t,a){return a.length?'<p style="margin:14px 0 0;font-weight:800">'+t+'</p><ul style="margin:4px 0 0;padding-left:20px">'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':''}
+    function passo(cls,tit,tag,righe,euro){return '<div class="mc-step '+cls+'"><b class="t">'+tit+(tag?'<span class="mc-tag">'+tag+'</span>':'')+'</b>'+righe.map(function(r){return '<span class="d">'+r+'</span>'}).join('')+(euro?'<span class="e">'+euro+'</span>':'')+'</div>'}
+    $('mc-b').onclick=function(){
+      var cat=radio('cat'),mam=radio('ruolo')==='madre',gem=$('mc-gem').checked;
+      var dpp=data('mc-dpp'),nasc=data('mc-nasc');
+      if(!dpp&&nasc)dpp=nasc;
+      if(!dpp){show('mc-warn','Scrivi la data presunta del parto (o la data di nascita, se è già nato).');return}
+      var parto=nasc||dpp,R=num('mc-ral'),par=num('mc-par'),H='',tot=0,sapere=[],fare=[],haSoldi=false;
+      var giorno=cat==='gs'?R/365:R/30,mese=cat==='gs'?R/12:R;
+      var nato=!!nasc;
+
+      // ---- Mamma senza lavoro
+      if(cat==='no'){
+        if(mam) show('mc-warn','<b>Se non lavori, la maternità INPS spetta solo in alcuni casi.</b><ul style="margin:8px 0 0;padding-left:20px"><li>Hai smesso di lavorare da poco: la maternità deve iniziare <b>entro 60 giorni</b> dall’ultimo giorno di lavoro.</li><li>Prendi la <b>NASpI</b> (o altra indennità di disoccupazione): la maternità spetta anche oltre i 60 giorni.</li></ul><p style="margin:8px 0 0">Il periodo sarebbe dal <b>'+it(mm(dpp,-2))+'</b> al <b>'+it(mm(parto,3))+'</b>, pagato all’80% dell’ultima retribuzione.</p><p style="margin:8px 0 0">Se non rientri in questi casi ci sono altri aiuti: assegno di maternità del Comune, Assegno Unico, bonus nuovi nati.</p>'+cta);
+        else show('mc-warn','<b>Se non lavori, la paternità e il congedo parentale non spettano.</b> Possono spettare altri aiuti alla famiglia: Assegno Unico, bonus nuovi nati, bonus nido.'+cta);
+        return;
+      }
+
+      var fineMat=null;
+      if(mam){
+        // ---- Maternità
+        var prima=cat==='aut'?2:parseInt(radio('flex'),10),dopo=5-prima;
+        var inizio=prima===0?parto:mm(dpp,-prima);
+        var fine=mm(parto,dopo);
+        if(prima>0&&parto<dpp){var da=parto>inizio?parto:inizio;var persi=Math.round((dpp.getTime()-da.getTime())/G);fine=gg(fine,persi);if(parto<inizio)inizio=parto;sapere.push('Parto prima della data presunta: i giorni non usati prima del parto si aggiungono dopo.')}
+        if(prima>0&&nato&&parto>dpp) sapere.push('Parto dopo la data presunta: i giorni in più si aggiungono alla maternità.');
+        if(!nato) sapere.push('Le date sono calcolate sulla data presunta. Quando nasce, la fine si sposta in base al giorno vero del parto.');
+        if(cat==='colf'){
+          H+=passo('','Maternità','80%',['Dal <b>'+it(inizio)+'</b> al <b>'+it(fine)+'</b>','La paga direttamente l’INPS.']);
+          sapere.push('Serve avere <b>26 contributi settimanali nell’ultimo anno</b> oppure <b>52 negli ultimi due anni</b>. Con questo requisito spetta anche se il rapporto di lavoro è finito.');
+          sapere.push('A colf e badanti il <b>congedo parentale non spetta</b>.');
+          fare.push('Fai la domanda all’INPS prima dell’inizio della maternità.');
+          show('mc-ok','<b style="font-size:20px">Il tuo calendario</b>'+H+lista('Da sapere',sapere)+lista('Cosa fare',fare)+cta);return;
+        }
+        if(cat==='aut'){
+          H+=passo('','Maternità','80%',['Dal <b>'+it(mm(dpp,-2))+'</b> al <b>'+it(mm(parto,3))+'</b> (2 mesi prima e 3 dopo)','80% di una retribuzione giornaliera fissata per legge per la tua categoria. <b>Puoi continuare a lavorare.</b>']);
+          fineMat=mm(parto,3);
+          sapere.push('Con gravi complicanze della gravidanza l’indennità può partire prima dei 2 mesi, con gli accertamenti medici.');
+          sapere.push('Devi essere in regola con i contributi dei mesi di maternità.');
+          fare.push('La domanda di maternità si fa all’INPS <b>dopo il parto</b>.');
+        } else {
+          var ant=$('mc-ant').checked,antd=data('mc-antd');
+          if(ant){
+            var a0=antd&&antd<inizio?antd:null;
+            if(a0){var ga=giorni(a0,gg(inizio,-1));var ea=giorno*0.8*ga;tot+=ea;H+=passo('','Maternità anticipata','80%',['Dal <b>'+it(a0)+'</b> al <b>'+it(gg(inizio,-1))+'</b> ('+ga+' giorni)','Gravidanza a rischio o lavoro pericoloso'],R?eur(ea):'')}
+            else H+=passo('','Maternità anticipata','80%',['Dal giorno deciso dalla ASL o dall’Ispettorato fino al <b>'+it(gg(inizio,-1))+'</b>','Scrivi il giorno in cui sei rimasta a casa per vedere l’importo']);
+            sapere.push('Gravidanza a rischio: decide la <b>ASL</b>, con il certificato del ginecologo. Lavoro pericoloso: decide l’<b>Ispettorato del lavoro</b>, se il datore non può darti un’altra mansione.');
+          }
+          var gm=giorni(inizio,fine),em=giorno*0.8*gm;tot+=em;
+          H+=passo('','Maternità obbligatoria','80%',['Dal <b>'+it(inizio)+'</b> al <b>'+it(fine)+'</b>',prima===2?'2 mesi prima e 3 mesi dopo il parto':prima===1?'1 mese prima e 4 mesi dopo il parto':'5 mesi dopo il parto'].concat(cat==='gs'?['In Gestione separata <b>puoi continuare a lavorare</b>.']:[]),R?eur(em)+(R?' <small style="font-size:14px;font-weight:400">(circa '+eur(mese*0.8)+' al mese)</small>':''):'');
+          fineMat=fine;
+          if($('mc-post').checked){
+            var f7=mm(parto,7);
+            if(f7>fine){var gp=giorni(gg(fine,1),f7),ep=giorno*0.8*gp;tot+=ep;H+=passo('','Astensione per lavoro pericoloso','80%',['Dal <b>'+it(gg(fine,1))+'</b> al <b>'+it(f7)+'</b> (7 mesi del bambino)','La decide l’Ispettorato del lavoro'],R?eur(ep):'');fineMat=f7}
+            sapere.push('L’astensione dopo il parto per lavoro pericoloso va chiesta all’Ispettorato del lavoro, da te o dal datore, entro la fine della maternità.');
+          }
+          if(prima<2) sapere.push('Per lavorare fino '+(prima===1?'a un mese prima del':'al')+' parto servono i certificati del ginecologo'+(cat==='dip'?' e del medico dell’azienda: si consegnano al datore di lavoro.':'.'));
+          if(cat==='dip'){sapere.push('L’80% è calcolato sull’ultimo mese di lavoro prima della maternità. Alcuni contratti prevedono un trattamento migliore: chiedi al datore di lavoro.');sapere.push('Nel primo anno del bambino hai anche i <b>riposi per allattamento</b>: 2 ore al giorno se lavori almeno 6 ore, 1 ora se lavori meno.')}
+          if(cat==='gs'){sapere.push('Serve almeno <b>1 mese di contributi</b> nei 12 mesi prima della maternità.');sapere.push('Con un reddito basso nell’anno prima puoi chiedere <b>altri 3 mesi</b> di indennità (nel 2025 la soglia era 9.456,53 €: cambia ogni anno).')}
+          fare.push('Il ginecologo invia all’INPS il <b>certificato di gravidanza</b>.');
+          fare.push('Fai la <b>domanda di maternità</b> all’INPS prima dei 2 mesi dal parto.');
+          fare.push('Entro <b>30 giorni</b> dalla nascita comunica all’INPS la data del parto.');
+        }
+        if(gem) sapere.push('Con i gemelli la maternità dura lo stesso; il congedo parentale invece spetta per ogni bambino.');
+      } else {
+        // ---- Papà
+        if(cat==='dip'){
+          var ng=gem?20:10;
+          H+=passo('p100','Paternità obbligatoria','100%',['<b>'+ng+' giorni lavorativi</b>, anche non di seguito','Da usare tra il <b>'+it(mm(dpp,-2))+'</b> e il <b>'+it(mm(parto,5))+'</b>'],R?'Stipendio pieno: non perdi nulla':'');
+          fare.push('Paternità: avvisa per iscritto il datore di lavoro almeno <b>5 giorni prima</b>. Nel privato non serve la domanda all’INPS.');
+          sapere.push('Puoi usare i giorni di paternità anche mentre la mamma è in maternità.');
+        } else if(cat==='colf'){
+          H+=passo('p100','Paternità obbligatoria','100%',['<b>'+(gem?20:10)+' giorni lavorativi</b>','Da usare tra il <b>'+it(mm(dpp,-2))+'</b> e il <b>'+it(mm(parto,5))+'</b>','La domanda si fa all’INPS, che paga direttamente']);
+          sapere.push('A colf e badanti il <b>congedo parentale non spetta</b>.');
+          show('mc-ok','<b style="font-size:20px">Il tuo calendario</b>'+H+lista('Da sapere',sapere)+cta);return;
+        } else {
+          sapere.push('I 10 giorni di paternità obbligatoria spettano solo ai papà <b>dipendenti</b>.');
+        }
+        sapere.push('Se la mamma non può usare la maternità (malattia grave, morte, abbandono, affidamento solo a te) puoi prenderla tu al suo posto.');
+      }
+
+      // ---- Congedo parentale
+      var maxInd=cat==='dip'?(mam?6:7):cat==='gs'?6:3,limite=cat==='dip'?14:cat==='gs'?12:1;
+      var daPar=mam?gg(fineMat||parto,1):parto;
+      var p=Math.min(par,maxInd);
+      if(par>maxInd) sapere.push('Hai chiesto '+mesi(par)+' di congedo parentale: per te il massimo è '+mesi(maxInd)+'.');
+      if(p>0){
+        if(cat==='dip'){
+          var m80=Math.min(3,p),m30=Math.min(p-m80,6-m80),m0=Math.max(0,p-m80-m30);
+          var e80=mese*0.8*m80;tot+=e80;H+=passo('','Congedo parentale: primi '+mesi(m80),'80%',['Dal <b>'+it(daPar)+'</b> in poi, quando vuoi','Da usare <b>entro il '+it(mm(parto,72))+'</b> (6 anni)'],R?eur(e80)+' <small style="font-size:14px;font-weight:400">('+eur(mese*0.8)+' al mese)</small>':'');
+          if(m30){var e30=mese*0.3*m30;tot+=e30;H+=passo('p30','Congedo parentale: poi '+mesi(m30),'30%',['Da usare <b>entro il '+it(mm(parto,168))+'</b> (14 anni)'],R?eur(e30)+' <small style="font-size:14px;font-weight:400">('+eur(mese*0.3)+' al mese)</small>':'')}
+          if(m0) H+=passo('p0','Congedo parentale: '+mesi(m0),'non pagato',['È un tuo diritto, ma senza indennità (salvo redditi sotto 19.885,13 € l’anno)']);
+          sapere.push('I 3 mesi all’80% sono <b>in tutto per la coppia</b>: qui li abbiamo contati tutti a te. Se una parte la usa l’altro genitore, a te restano al 30%.');
+          sapere.push('In due potete prendere al massimo 10 mesi di congedo parentale (11 se il papà ne prende almeno 3), di cui 9 pagati.');
+          fare.push('Congedo parentale: avvisa il datore almeno 5 giorni prima e fai la domanda all’INPS <b>prima</b> di iniziare.');
+        } else {
+          var ep30=cat==='gs'?mese*0.3*p:0;tot+=ep30;
+          H+=passo('p30','Congedo parentale: '+mesi(p),'30%',['Dal <b>'+it(daPar)+'</b> in poi','Da usare <b>entro il '+it(mm(parto,limite*12))+'</b> ('+(limite===1?'primo anno':limite+' anni')+')',cat==='gs'?'30% del reddito. Non puoi lavorare in quei giorni.':'30% di una retribuzione fissata per legge. Non puoi lavorare in quei giorni.'],cat==='gs'&&R?eur(ep30):'');
+          fare.push('Congedo parentale: fai la domanda all’INPS <b>prima</b> di iniziare.');
+        }
+      } else if(cat!=='colf'){
+        H+=passo('p0','Congedo parentale','facoltativo',[cat==='dip'?'Dal <b>'+it(daPar)+'</b> puoi prendere fino a <b>'+mesi(maxInd)+'</b>, entro i 14 anni: 3 mesi all’80% (entro i 6 anni), poi al 30%':cat==='gs'?'Dal <b>'+it(daPar)+'</b> puoi prendere fino a 3 mesi (più 3 a scelta tra i genitori), al 30%, entro i 12 anni':'Dal <b>'+it(daPar)+'</b> puoi prendere fino a 3 mesi al 30%, entro il primo anno','Scrivi quanti mesi vuoi prendere per vedere date e importi']);
+      }
+      haSoldi=R>0&&tot>0;
+      var totale=haSoldi?'<div class="mc-tot">In tutto, circa<b>'+eur(tot)+' lordi</b></div>':'';
+      show('mc-ok','<b style="font-size:20px">Il tuo calendario</b>'+H+totale+lista('Da sapere',sapere)+lista('Cosa fare',fare)+(haSoldi?'<p style="margin:10px 0 0;font-size:14px">Importi lordi stimati su quello che hai scritto. Date e importi ufficiali li stabilisce l’INPS.</p>':'')+'<p style="margin:10px 0 0">Avete già usato dei mesi di congedo parentale? Usa il <a href="/calcolo-congedo-parentale">calcolatore del congedo parentale</a>.</p>'+cta);
+    };
+  })();
+  </script>
+</BaseLayout>
