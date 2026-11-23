@@ -30,223 +30,191 @@ image_alt: "Congedo parentale: quanti mesi spettano e quanto è pagato"
 
 **Ultimo aggiornamento: 24 novembre 2026**
 
-Il **congedo parentale** è il periodo in cui mamma e papà possono **restare a casa dal lavoro** per stare con il figlio, **dopo** la maternità e la paternità obbligatorie. È facoltativo: decidi tu se, quando e quanto usarlo. È anche l'argomento su cui riceviamo più domande, perché le regole cambiano secondo il lavoro che fai, l'età del bambino e quanti mesi ha già usato l'altro genitore. Qui lo spieghiamo un pezzo alla volta.
+Il **congedo parentale** sono i mesi in cui mamma e papà possono **stare a casa dal lavoro per stare con il figlio**. Non è obbligatorio: lo usi se vuoi, quando vuoi, anche un giorno alla volta.
+
+Viene **dopo** la maternità (i 5 mesi obbligatori della mamma) e non c'entra con i 10 giorni del papà alla nascita.
 
 ## In breve
 
-| | |
-|---|---|
-| **Chi** | lavoratori dipendenti, iscritti alla Gestione separata, autonomi (con regole diverse) |
-| **Quanti mesi (dipendenti)** | madre fino a 6, padre fino a 6 (7 se ne prende almeno 3), **10 in due** (11 se il padre ne prende almeno 3). Genitore solo: 11 |
-| **Fino a quando** | dipendenti: **14 anni** del figlio. Gestione separata: 12 anni. Autonomi: 1 anno |
-| **Quanto è pagato (dipendenti)** | **9 mesi** pagati in due: fino a **3 mesi all'80%** entro i 6 anni del figlio, gli altri **al 30%** |
-| **Domanda** | all'INPS, **prima** di iniziare il congedo |
+Se sei un **lavoratore dipendente**, le cose da ricordare sono quattro:
 
-> [calcolatore del congedo parentale](/calcolo-congedo-parentale): scopri quanti mesi ti restano, quanti all'80% e quanto prendi.
+- **Quanti mesi**: fino a **6 mesi la mamma** e **6 mesi il papà**, ma **non più di 10 in due**.
+- **Quanto ti pagano**: **3 mesi all'80%** dello stipendio, altri **6 mesi al 30%**. Il resto non è pagato.
+- **Fino a quando**: entro i **14 anni** del figlio. I mesi all'80% però vanno usati **entro i 6 anni**.
+- **Come si chiede**: domanda all'**INPS prima di iniziare**.
 
-## Prima cosa: non confondere i quattro congedi
+Se sei autonomo o in Gestione separata le regole sono diverse: le trovi più sotto.
 
-Molti dubbi nascono perché si chiamano tutti "congedo". Sono quattro cose diverse.
+> [calcolatore del congedo parentale](/calcolo-congedo-parentale): scrivi la data di nascita di tuo figlio e scopri quanti mesi hai e quanto prendi.
 
-| Congedo | Cos'è | Quanto dura | Quanto è pagato |
-|---|---|---|---|
-| **Maternità obbligatoria** | la mamma deve stare a casa prima e dopo il parto | 5 mesi | indennità INPS di maternità |
-| **Paternità obbligatoria** | giorni del papà alla nascita | **10 giorni lavorativi** (20 con i gemelli), da 2 mesi prima a 5 mesi dopo il parto | **100%** |
-| **Congedo parentale** | mesi facoltativi per mamma e papà: è l'argomento di questa guida | fino a 10 o 11 mesi in due | 80% o 30%, non tutti i mesi |
-| **Malattia del figlio** | assenza quando il bambino è malato | senza limite fino a 3 anni; **10 giorni l'anno** per genitore da 3 a 14 anni | di regola senza retribuzione: controlla il tuo contratto |
+## 1. Quanti mesi posso prendere?
 
-La paternità obbligatoria spetta ai padri **dipendenti** e si chiede al datore di lavoro almeno 5 giorni prima. I 10 giorni l'anno per la malattia del figlio fino a 14 anni sono una novità del 2026 (legge 199/2025, art. 1, comma 220): prima erano 5 giorni l'anno fino agli 8 anni.
+Parliamo dei lavoratori **dipendenti**. I mesi valgono **per ogni figlio**.
 
-## Lavoratori dipendenti: quanti mesi spettano
+- **La mamma**: al massimo **6 mesi**.
+- **Il papà**: al massimo **6 mesi**.
+- **Insieme**: al massimo **10 mesi**.
 
-Qui bisogna tenere a mente **tre limiti**, che valgono per **ogni figlio**.
+Quindi se la mamma prende 6 mesi, al papà ne restano 4. Se ne prendono 5 a testa, sono a posto.
 
-1. **La madre** può prendere al massimo **6 mesi**.
-2. **Il padre** può prendere al massimo **6 mesi**, che diventano **7** se ne prende almeno 3.
-3. **In due** non si possono superare **10 mesi**, che diventano **11** se il padre ne prende almeno 3.
+**Un premio per i papà.** Se il papà prende almeno **3 mesi**, può arrivare a **7 mesi** e il totale della coppia sale a **11 mesi**.
 
-Il **genitore solo** ha diritto a **11 mesi**. È genitore solo anche chi ha l'**affidamento esclusivo** del figlio deciso dal giudice.
+**Se sei un genitore solo** hai **11 mesi** tutti per te. Vale anche se hai l'affidamento esclusivo deciso dal giudice.
 
-Altre cose da sapere:
+**Con i gemelli** i mesi spettano per ciascun bambino.
 
-- I mesi si possono usare **tutti insieme o a pezzi**, anche a giorni.
-- Mamma e papà possono usarli **anche nello stesso periodo**.
-- Il padre può iniziare **dal giorno dopo il parto**, anche mentre la madre è in maternità e anche se la madre non lavora.
-- Serve un **rapporto di lavoro in corso**: se il lavoro finisce, il congedo finisce quel giorno.
-- Con i **gemelli** i mesi spettano **per ciascun bambino**.
+## 2. Quanto mi pagano?
 
-### Fino a che età del figlio
+Qui si fa confusione, perché **non tutti i mesi sono pagati**.
 
-Dal **1° gennaio 2026** i dipendenti possono usare il congedo parentale fino ai **14 anni** del figlio (prima erano 12). Lo ha deciso la legge di bilancio 2026 (legge 199/2025, art. 1, comma 219) e l'INPS lo ha confermato con il messaggio n. 251 del 26 gennaio 2026.
+Pensa a una fila di mesi. In tutto, tra mamma e papà:
 
-Per **adozione o affidamento** i 14 anni si contano dall'**ingresso del minore in famiglia**, ma non oltre i 18 anni del ragazzo.
+1. **I primi 3 mesi sono pagati all'80%** dello stipendio.
+2. **I 6 mesi dopo sono pagati al 30%**.
+3. **Gli ultimi 1 o 2 mesi non sono pagati** (salvo redditi bassi, vedi sotto).
 
-Attenzione: i 14 anni valgono **solo per i dipendenti**.
+In totale i mesi pagati sono **9**.
 
-## Lavoratori dipendenti: quanto è pagato
+### Un esempio
 
-Questa è la parte che crea più confusione. Avere diritto a un mese di congedo **non vuol dire** che quel mese sia pagato.
+Giulia guadagna **1.800 euro lordi** al mese. Sua figlia è nata nel 2025.
 
-### I 9 mesi pagati
+- Prende 3 mesi: sono all'80%, cioè circa **1.440 euro lordi al mese**.
+- Prende un quarto mese: è al 30%, cioè circa **540 euro lordi**.
 
-Tra mamma e papà sono pagati al massimo **9 mesi**, divisi così:
+### Tre cose da sapere sui mesi all'80%
 
-| A chi | Mesi pagati | Si possono cedere all'altro genitore? |
-|---|---|---|
-| **Madre** | 3 | No |
-| **Padre** | 3 | No |
-| **A scelta tra i due** | 3 | Sì: li usa chi vuole, o metà per uno |
+- Sono **3 in tutto per la famiglia**, non 3 a testa. Potete dividerli (2 la mamma e 1 il papà) oppure li usa uno solo.
+- Valgono solo **fino ai 6 anni** del bambino. Dopo, anche quei mesi sono pagati al 30%.
+- Sono 3 solo per i **bambini nati dal 2025**. Per i nati nel 2024 sono 2, per i nati nel 2023 è 1, per i nati prima non ci sono.
 
-Se un genitore **non usa** i suoi 3 mesi, quei mesi **si perdono**: l'altro non può prenderli al suo posto.
+Per essere precisi, non conta l'anno di nascita ma **quando è finita la maternità o la paternità obbligatoria**: 3 mesi se è finita dopo il 31 dicembre 2024, 2 mesi dopo il 31 dicembre 2023, 1 mese dopo il 31 dicembre 2022. Nel dubbio usa il calcolatore o chiedi a noi.
 
-Il **genitore solo** ha 9 mesi pagati tutti per sé.
+### Chi può usare i mesi pagati
 
-### 80% o 30%?
+I 9 mesi pagati sono divisi così:
 
-- La regola base è il **30% della retribuzione**.
-- **Fino a 3 mesi** sono pagati all'**80%**, ma solo se usati **entro i 6 anni** del figlio (o entro 6 anni dall'ingresso in famiglia). Dopo i 6 anni anche quei mesi sono pagati al 30%.
-- I 3 mesi all'80% sono **3 in tutto per la coppia**, non 3 a testa. Possono dividerli (per esempio 2 la madre e 1 il padre) o può usarli uno solo.
-- I mesi all'80% **non sono mesi in più**: sono alcuni dei 9 mesi pagati, con una percentuale più alta.
+- **3 mesi sono solo della mamma**;
+- **3 mesi sono solo del papà**;
+- **3 mesi sono a scelta**: li usa chi vuole.
 
-### Quanti mesi all'80% ti spettano
+Attenzione: i 3 mesi "solo della mamma" e i 3 "solo del papà" **non si possono regalare** all'altro. Se il papà non usa i suoi, **si perdono**.
 
-Dipende da **quando è finita la maternità o la paternità obbligatoria** (conta l'ultima, della madre o del padre):
+### I mesi non pagati
 
-| Maternità o paternità finita | Mesi all'80% |
-|---|---|
-| **dopo il 31 dicembre 2024** (in pratica, bambini nati dal 2025) | **3** |
-| dopo il 31 dicembre 2023 | 2 |
-| dopo il 31 dicembre 2022 | 1 |
-| prima | nessuno: tutto al 30% |
+Dopo i 9 mesi pagati puoi stare a casa ancora 1 o 2 mesi, ma **senza soldi**.
 
-Fonte: schema INPS 2026 dei mesi indennizzabili all'80%.
+C'è un'eccezione: se **il tuo reddito personale** è sotto **19.885,13 euro** l'anno (valore 2026), anche quei mesi sono pagati al 30%. Conta il tuo reddito, non l'ISEE della famiglia.
 
-### Oltre i 9 mesi
+### Chi mi paga
 
-In due si può arrivare a 10 o 11 mesi di congedo, ma solo 9 sono pagati. I mesi in più sono **senza indennità**, con un'eccezione: spetta il 30% se il **reddito personale** di chi chiede è sotto **19.885,13 euro** l'anno (valore 2026, circolare INPS n. 47 del 21 aprile 2026). Conta il reddito di chi chiede, non l'ISEE della famiglia.
+Di solito i soldi arrivano **in busta paga**: li anticipa il datore di lavoro per conto dell'INPS. L'importo si calcola sullo stipendio del **mese prima** del congedo.
 
-### Su quale stipendio si calcola
+## 3. Fino a quando posso usarlo?
 
-L'INPS usa la **retribuzione del mese prima** dell'inizio del congedo. L'importo è lordo.
+- Fino ai **14 anni** del figlio. È una novità del **2026**: prima erano 12.
+- I mesi **all'80%** solo fino ai **6 anni**.
+- Per **adozione o affidamento** gli anni si contano da quando il bambino è entrato in famiglia, ma non oltre i suoi 18 anni.
 
-**Esempio.** Giulia guadagna 1.800 euro lordi al mese e prende 3 mesi di congedo per la figlia nata nel 2025, che ha 1 anno. Se sono i primi mesi usati in famiglia, sono tutti all'80%: circa **1.440 euro lordi al mese**. Se poi prende un quarto mese, quello è al 30%: circa **540 euro lordi**.
+Devi avere un **lavoro in corso**: se il lavoro finisce, finisce anche il congedo.
 
-### Chi paga
+## 4. Come lo uso?
 
-Per quasi tutti i dipendenti l'indennità arriva **in busta paga**: la anticipa il datore di lavoro per conto dell'INPS. L'INPS paga direttamente gli operai agricoli e i lavoratori dello spettacolo a tempo determinato.
+Puoi prenderlo come ti serve:
 
-## Come si usa: mesi, giorni, ore
+- **tutto insieme** o **a pezzi**;
+- a **mesi**, a **giorni** e anche a **ore** (di solito mezze giornate: dipende dal tuo contratto);
+- anche **nello stesso periodo** dell'altro genitore.
 
-Il congedo si può prendere:
+Il papà può iniziare **dal giorno dopo la nascita**, anche mentre la mamma è in maternità e anche se la mamma non lavora.
 
-- a **mesi** o a **giorni**, anche non di seguito;
-- a **ore**, come prevede il contratto collettivo. Se il contratto non dice nulla, puoi prenderlo a **mezze giornate** (metà del tuo orario medio giornaliero).
+Se lo prendi a giorni, **ogni 30 giorni contano come un mese**.
 
-**Come si contano i mesi** (FAQ INPS): un mese intero conta un mese; i periodi più corti si sommano e **ogni 30 giorni fanno un mese**.
+## 5. Come lo chiedo?
 
-**Preavviso al datore di lavoro**: almeno **5 giorni** prima, **2 giorni** se lo usi a ore, salvo regole diverse del tuo contratto.
+Sono due passaggi:
 
-In alternativa al congedo si può chiedere il **part-time**: l'orario si riduce al massimo del 50% e il datore di lavoro deve accettare entro 15 giorni (fonte: Ministero del Lavoro).
+1. **Avvisa il datore di lavoro** almeno **5 giorni prima** (2 giorni se lo prendi a ore).
+2. **Fai la domanda all'INPS prima di iniziare.** Se la fai dopo, l'INPS paga **solo i giorni successivi** alla domanda.
 
-## Gestione separata: collaboratori e professionisti senza cassa
+La domanda si fa sul sito INPS con SPID o CIE, al telefono (803 164 da fisso, 06 164 164 da cellulare) oppure con un **patronato**.
 
-Le regole sono diverse da quelle dei dipendenti.
+Come patronato controlliamo quanti mesi ti restano e inviamo la domanda per te.
 
-| | |
-|---|---|
-| **Mesi** | 3 per ciascun genitore (non cedibili) + 3 da dividere: **9 in tutto** |
-| **Fino a quando** | **12 anni** del figlio, o 12 anni dall'ingresso in famiglia |
-| **Quanto** | **30%** del reddito: per ogni giorno, il 30% di 1/365 del reddito dei 12 mesi considerati |
-| **80%** | **non spetta** |
-| **Come si usa** | a mesi o a giorni, **non a ore** |
+> [Prenota un appuntamento](/prenota): controlliamo i tuoi mesi e inviamo la domanda all'INPS.
 
-Requisiti:
+## Se non sei dipendente
 
-- non essere pensionato e non essere iscritto a un'altra cassa obbligatoria;
-- avere almeno **1 mese di contributi** con aliquota piena nei 12 mesi prima del congedo;
-- avere il rapporto di lavoro in corso e **non lavorare davvero** nei giorni di congedo.
+### Gestione separata (collaboratori e professionisti senza cassa)
 
-L'INPS paga direttamente. Il diritto all'indennità si perde dopo **1 anno** dalla fine del periodo, se non la chiedi.
+- **Mesi**: 3 la mamma, 3 il papà, più 3 a scelta. In tutto **9 mesi**.
+- **Quanto**: **30%** del reddito. L'80% non c'è.
+- **Fino a quando**: entro i **12 anni** del figlio.
+- **Come**: a mesi o a giorni, non a ore.
+- **Cosa serve**: almeno 1 mese di contributi negli ultimi 12 mesi e non lavorare davvero nei giorni di congedo.
 
-## Autonomi: artigiani, commercianti, agricoli
+### Autonomi (artigiani, commercianti, agricoli)
 
-| | |
-|---|---|
-| **Mesi** | **3 per ciascun genitore**, per ogni figlio |
-| **Fino a quando** | entro il **primo anno** di vita del bambino (o dall'ingresso in famiglia) |
-| **Quanto** | **30%** della retribuzione convenzionale giornaliera della propria categoria |
+- **Mesi**: **3 mesi** per ciascun genitore.
+- **Quanto**: **30%** di una retribuzione fissata per legge per la tua categoria.
+- **Fino a quando**: solo entro il **primo anno** di vita del bambino.
+- **Cosa serve**: aver pagato i contributi del mese prima e non lavorare in quei giorni.
 
-Bisogna aver versato i contributi del **mese prima** del congedo e **non lavorare** in quei giorni. Dal 13 agosto 2022 il congedo spetta anche ai **padri autonomi**.
+### Chi non ne ha diritto
 
-## Chi non ha diritto
+Il congedo parentale **non spetta** a **colf e badanti**, a chi lavora **a domicilio** e a chi **non ha un lavoro in corso**. Per queste famiglie ci sono altri aiuti: Assegno Unico, bonus nido, bonus nuovi nati.
 
-Il congedo parentale **non spetta**:
+### Uno è dipendente e l'altro no
 
-- a **colf e badanti**;
-- a chi lavora **a domicilio**;
-- a chi ha il rapporto di lavoro **finito o sospeso** (per esempio chi è disoccupato).
+Ognuno segue le regole del proprio lavoro. I mesi all'80% li può usare **solo il genitore dipendente**. Se l'altro genitore non lavora, tu hai comunque diritto ai tuoi mesi.
 
-Per queste famiglie possono esserci altri aiuti: maternità, Assegno Unico, bonus nido, bonus nuovi nati.
+## Altri tre esempi
 
-## Se un genitore è dipendente e l'altro no
+**Bimbo nato a marzo 2026, mamma e papà dipendenti.** La mamma prende 2 mesi e il papà 1: tutti e tre all'80%. Poi hanno ancora 6 mesi al 30%, da usare entro marzo 2040.
 
-- I mesi **all'80%** li può usare **solo il genitore dipendente**.
-- I mesi usati dai due genitori si sommano comunque, anche se sono iscritti a gestioni diverse.
-- Se l'altro genitore **non lavora**, tu hai lo stesso diritto ai tuoi mesi.
+**Figlia di 9 anni, nata nel 2017, congedo mai usato.** Si può ancora usare, fino ai 14 anni. È pagato al 30%: l'80% non c'è perché la bambina ha più di 6 anni.
 
-## Come si fa la domanda
+**Mamma dipendente, papà artigiano.** La mamma può usare i mesi all'80% entro i 6 anni del figlio. Il papà ha 3 mesi al 30%, ma solo nel primo anno del bambino.
 
-1. **Avvisa il datore di lavoro** con il preavviso previsto (almeno 5 giorni).
-2. **Fai la domanda all'INPS prima di iniziare**. Se la presenti dopo, l'INPS paga **solo i giorni successivi** alla domanda.
-3. La domanda si fa online sul sito INPS (servizio "Domande di maternità e paternità", con SPID o CIE), al Contact center INPS (803 164 da fisso, 06 164 164 da cellulare) oppure tramite un **patronato**.
+## Da non confondere con
 
-Nello stesso servizio INPS trovi i **contatori**: i mesi già usati da te e dall'altro genitore.
-
-Come patronato possiamo controllare i contatori e inviare la domanda per te.
-
-> [Prenota un appuntamento](/prenota): controlliamo i mesi che ti restano e inviamo la domanda all'INPS.
-
-## Tre esempi
-
-**1. Bimbo nato a marzo 2026, mamma e papà dipendenti.** Hanno 3 mesi all'80% in tutto, da usare entro marzo 2032. La mamma ne prende 2 e il papà 1: tutti e tre all'80%. Restano 6 mesi pagati al 30% (1 solo della mamma, 2 solo del papà, 3 a scelta), da usare entro marzo 2040.
-
-**2. Figlia di 9 anni, nata nel 2017, mai usato il congedo.** Si può ancora usare fino ai 14 anni. Niente 80%: la maternità è finita prima del 2023 e la bambina ha più di 6 anni. I mesi pagati sono al 30%.
-
-**3. Mamma dipendente, papà artigiano.** La mamma può usare i mesi all'80% entro i 6 anni del figlio. Il papà ha 3 mesi al 30% della sua retribuzione convenzionale, ma solo entro il primo anno del bambino.
+- **Maternità obbligatoria**: i 5 mesi in cui la mamma deve stare a casa, prima e dopo il parto.
+- **Paternità obbligatoria**: **10 giorni lavorativi** per il papà dipendente (20 con i gemelli), pagati al **100%**. Si usano da 2 mesi prima a 5 mesi dopo il parto e si chiedono al datore di lavoro.
+- **Malattia del figlio**: giorni di assenza quando il bambino è malato. Senza limite fino a 3 anni; **10 giorni l'anno** per ciascun genitore da 3 a 14 anni (dal 2026: prima erano 5 giorni fino agli 8 anni). Di regola non sono pagati: controlla il tuo contratto.
 
 ## Cosa può cambiare nel 2027
 
-La legge di bilancio 2027, ancora **all'esame del Parlamento**, propone di aumentare i mesi all'80% e un aiuto per i genitori autonomi. **Non è ancora legge**: ne parliamo nella guida alla [legge di bilancio 2027](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati). Aggiorneremo questa pagina quando il testo sarà approvato.
+La legge di bilancio 2027 propone di aumentare i mesi all'80%. **Non è ancora legge**: ne parliamo nella guida alla [legge di bilancio 2027](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati). Aggiorneremo questa pagina quando sarà approvata.
 
 ## Domande frequenti
 
 ### Il congedo parentale è obbligatorio?
 
-No. È un diritto: puoi usarlo tutto, in parte o per niente.
-
-### Posso prenderlo se l'altro genitore è a casa?
-
-Sì. Il tuo diritto non dipende dal lavoro dell'altro genitore. Il padre può usarlo anche mentre la madre è in maternità.
+No. Puoi usarlo tutto, in parte o per niente.
 
 ### I mesi all'80% sono tre per la mamma e tre per il papà?
 
-No. Sono **tre in tutto**: la coppia li divide come vuole, oppure li usa uno solo.
+No. Sono **tre in tutto**: li dividete voi.
 
 ### Se non uso i miei mesi, li può usare l'altro genitore?
 
-Solo i 3 mesi "a scelta". I 3 mesi riservati a ciascun genitore non si possono cedere.
+Solo i 3 mesi "a scelta". I 3 mesi riservati a te non si possono cedere.
 
 ### Mio figlio ha 13 anni: posso ancora prenderlo?
 
-Sì, se sei dipendente e ti restano mesi: dal 2026 il limite è 14 anni. Sarà pagato al 30% se rientra nei 9 mesi pagati.
+Sì, se sei dipendente e ti restano mesi. Dal 2026 il limite è 14 anni.
 
 ### Ho due figli: i mesi raddoppiano?
 
-Sì. Tutti i limiti valgono per ogni figlio.
+Sì. Le regole valgono per ogni figlio.
+
+### Posso prenderlo se l'altro genitore è a casa?
+
+Sì. Il tuo diritto non dipende dal lavoro dell'altro genitore.
 
 ### Il datore di lavoro può dirmi di no?
 
-Il congedo è un diritto e non puoi essere licenziato o discriminato per averlo chiesto. Devi però rispettare il preavviso.
+No, è un tuo diritto. Devi solo avvisarlo in tempo. Non puoi essere licenziato per averlo chiesto.
 
 ### Sono colf: mi spetta?
 
