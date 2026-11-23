@@ -36,51 +36,51 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Congedo parentale: quanti mesi e quanti soldi?</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Rispondi a poche domande: ti diciamo <b>quanti mesi ti restano</b>, quanti sono pagati all'<b>80%</b> e quanti al <b>30%</b>, <b>fino a quando</b> puoi usarli e <b>quanto prendi</b>.</p>
 
-      <form id="cp" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
-        <label class="cp-l" for="cp-cat">1. Che lavoro fai?
-          <select id="cp-cat" class="cp-in">
-            <option value="dip">Dipendente (privato o pubblico)</option>
-            <option value="gs">Gestione separata (collaboratore o professionista senza cassa)</option>
-            <option value="aut">Autonomo (artigiano, commerciante, agricolo)</option>
-            <option value="no">Colf o badante, lavoro a domicilio, oppure non lavoro</option>
-          </select></label>
-
-        <fieldset class="cp-f"><legend>2. Chi sei?</legend>
-          <label class="cp-o"><input type="radio" name="ruolo" value="madre" checked> Madre</label>
-          <label class="cp-o"><input type="radio" name="ruolo" value="padre"> Padre</label>
-          <label class="cp-o" style="display:flex"><input type="checkbox" id="cp-solo"> Sono genitore solo (l'altro genitore non c'è, non ha riconosciuto il figlio, oppure ho l'affidamento esclusivo)</label>
+      <form id="cp" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
+        <fieldset class="cp-f"><legend>1. Che lavoro fai?</legend>
+          <label class="cp-o cp-card"><input type="radio" name="cat" value="dip" checked> <span><b>Dipendente</b><br><small>Hai una busta paga, nel privato o nel pubblico</small></span></label>
+          <label class="cp-o cp-card"><input type="radio" name="cat" value="gs"> <span><b>Gestione separata</b><br><small>Collaboratore o professionista senza una cassa</small></span></label>
+          <label class="cp-o cp-card"><input type="radio" name="cat" value="aut"> <span><b>Autonomo</b><br><small>Artigiano, commerciante, agricolo</small></span></label>
+          <label class="cp-o cp-card"><input type="radio" name="cat" value="no"> <span><b>Altro</b><br><small>Colf o badante, lavoro a domicilio, oppure non lavoro</small></span></label>
         </fieldset>
 
-        <label class="cp-l" for="cp-nasc"><span id="cp-nasc-l">3. Data di nascita del figlio</span>
+        <fieldset class="cp-f"><legend>2. Sei la mamma o il papà?</legend>
+          <label class="cp-o"><input type="radio" name="ruolo" value="madre" checked> Mamma</label>
+          <label class="cp-o"><input type="radio" name="ruolo" value="padre"> Papà</label>
+          <label class="cp-o" style="display:flex"><input type="checkbox" id="cp-solo"> <span>Sono un genitore solo <small>(l'altro genitore non c'è, oppure ho l'affidamento esclusivo)</small></span></label>
+        </fieldset>
+
+        <label class="cp-l" for="cp-nasc"><span id="cp-nasc-l">3. Quando è nato tuo figlio?</span>
           <input id="cp-nasc" type="date" class="cp-in" style="max-width:220px">
-          <span class="cp-o" style="margin-top:4px"><input type="checkbox" id="cp-adoz"> È un'adozione o un affidamento (metti la data di ingresso in famiglia)</span></label>
+          <span class="cp-o" style="margin-top:4px"><input type="checkbox" id="cp-adoz"> <span>È un'adozione o un affidamento <small>(metti il giorno in cui è entrato in famiglia)</small></span></span></label>
 
-        <label class="cp-l cp-dip" for="cp-fine">4. Quando è finita l'ultima maternità o paternità obbligatoria (tua o dell'altro genitore)?
-          <select id="cp-fine" class="cp-in">
-            <option value="3">Dopo il 31 dicembre 2024</option>
-            <option value="2">Nel 2024</option>
-            <option value="1">Nel 2023</option>
-            <option value="0">Prima del 2023</option>
-            <option value="-1">Non lo so</option>
-          </select></label>
+        <fieldset class="cp-f" id="cp-fine-box" style="display:none"><legend id="cp-fine-l">La maternità (o la paternità obbligatoria) è finita dopo il 31 dicembre?</legend>
+          <label class="cp-o"><input type="radio" name="fine" value="si"> Sì</label>
+          <label class="cp-o"><input type="radio" name="fine" value="no" checked> No</label>
+          <label class="cp-o"><input type="radio" name="fine" value="boh"> Non lo so</label>
+          <small style="display:block;color:#5B5B72">Serve per capire quanti mesi all'80% ti spettano.</small>
+        </fieldset>
 
-        <fieldset class="cp-f"><legend>5. Mesi di congedo parentale già usati per questo figlio</legend>
-          <div style="display:flex;flex-wrap:wrap;gap:12px">
-            <label class="cp-l" for="cp-io" style="flex:1 1 150px">Da te<input id="cp-io" type="number" min="0" max="11" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
-            <label class="cp-l cp-coppia" for="cp-altro" style="flex:1 1 150px">Dall'altro genitore<input id="cp-altro" type="number" min="0" max="11" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
-            <label class="cp-l cp-dip" for="cp-u80" style="flex:1 1 150px">Di cui pagati all'80% (in due)<input id="cp-u80" type="number" min="0" max="3" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
+        <fieldset class="cp-f"><legend>4. Avete già usato il congedo parentale per questo figlio?</legend>
+          <label class="cp-o"><input type="radio" name="usato" value="no" checked> No, mai</label>
+          <label class="cp-o"><input type="radio" name="usato" value="si"> Sì</label>
+          <div id="cp-usati" style="display:none;flex-wrap:wrap;gap:12px;margin-top:6px">
+            <label class="cp-l" for="cp-io" style="flex:1 1 150px">Mesi usati da te<input id="cp-io" type="number" min="0" max="11" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
+            <label class="cp-l cp-coppia" for="cp-altro" style="flex:1 1 150px">Mesi usati dall'altro genitore<input id="cp-altro" type="number" min="0" max="11" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
+            <label class="cp-l cp-dip" for="cp-u80" style="flex:1 1 150px">Quanti di questi pagati all'80%?<input id="cp-u80" type="number" min="0" max="3" step="0.5" value="0" inputmode="decimal" class="cp-in"></label>
+            <small style="flex:1 1 100%;color:#5B5B72">Mezzo mese si scrive 0,5. Se hai usato dei giorni, 30 giorni sono 1 mese.</small>
           </div>
         </fieldset>
 
-        <label class="cp-l" for="cp-voglio">6. Quanti mesi vuoi prendere adesso?
-          <input id="cp-voglio" type="number" min="0.5" max="11" step="0.5" value="1" inputmode="decimal" class="cp-in" style="max-width:160px"></label>
-
-        <label class="cp-l cp-dip" for="cp-ral">7. Retribuzione lorda mensile (in euro)
+        <label class="cp-l cp-dip" for="cp-ral">5. Quanto guadagni al mese, lordo? <small style="font-weight:400">(facoltativo: serve per calcolare i soldi)</small>
           <input id="cp-ral" type="number" min="0" step="1" inputmode="decimal" placeholder="es. 1800" class="cp-in" style="max-width:220px">
-          <span class="cp-o" style="margin-top:4px"><input type="checkbox" id="cp-basso"> Il mio reddito personale di quest'anno è sotto {LIMITE_REDDITO} €</span></label>
+          <span class="cp-o" style="margin-top:4px"><input type="checkbox" id="cp-basso"> <span>In un anno guadagno meno di {LIMITE_REDDITO} € lordi</span></span></label>
 
-        <label class="cp-l cp-gs" for="cp-red" style="display:none">7. Reddito da lavoro degli ultimi 12 mesi in Gestione separata (in euro)
+        <label class="cp-l cp-gs" for="cp-red" style="display:none">5. Quanto hai guadagnato negli ultimi 12 mesi? <small style="font-weight:400">(reddito in Gestione separata, facoltativo)</small>
           <input id="cp-red" type="number" min="0" step="1" inputmode="decimal" placeholder="es. 20000" class="cp-in" style="max-width:220px"></label>
+
+        <label class="cp-l cp-conta" for="cp-voglio"><span id="cp-voglio-l">6. Quanti mesi vuoi prendere adesso?</span> <small style="font-weight:400">(facoltativo: se lo lasci vuoto ti mostriamo tutti i mesi che hai)</small>
+          <input id="cp-voglio" type="number" min="0.5" max="11" step="0.5" inputmode="decimal" placeholder="es. 2" class="cp-in" style="max-width:160px"></label>
 
         <button id="cp-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola</button>
         <div id="cp-out" aria-live="polite"></div>
@@ -122,6 +122,9 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     .cp-in{border:2px solid #14142B;border-radius:14px;padding:11px 12px;font-size:17px;background:#fff;width:100%;max-width:100%;font-weight:400}
     .cp-o{display:inline-flex;align-items:flex-start;gap:8px;margin:0 16px 8px 0;font-size:16px;cursor:pointer;font-weight:400}
     .cp-o input{width:20px;height:20px;accent-color:#5B3DF5;flex:none;margin-top:2px}
+    .cp-card{display:flex;border:2px solid #E4E0FF;border-radius:16px;padding:10px 12px;margin:0 0 8px}
+    .cp-card:has(input:checked){border-color:#5B3DF5;background:#F1EEFF}
+    .cp-o small,.cp-l small{color:#5B5B72}
     .cp-res{border-radius:20px;padding:18px 20px;line-height:1.5;margin-top:4px}
     .cp-ok{background:#D4FF4F;color:#14142B}
     .cp-warn{background:#FFF4D6;color:#14142B}
@@ -133,83 +136,107 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
   <script is:inline define:vars={{ LIMITE_REDDITO }}>
   (function(){
     var $=function(i){return document.getElementById(i)};
+    var radio=function(n){return document.querySelector('input[name='+n+']:checked').value};
     var eur=function(n){var p=(Math.round(n*100)/100).toFixed(2).split('.');return p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+','+p[1]+' €'};
     var mesi=function(n){n=Math.round(n*2)/2;var s=String(n).replace('.',',');return s+(n===1?' mese':' mesi')};
     var num=function(i){var v=parseFloat(String($(i).value).replace(',','.'));return v>=0?v:0};
     var dataIt=function(d){return d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'})};
     var piu=function(d,anni){var x=new Date(d.getTime());x.setFullYear(x.getFullYear()+anni);return x};
+    var nascita=function(){return $('cp-nasc').value?new Date($('cp-nasc').value+'T00:00:00'):null};
     function vista(){
-      var c=$('cp-cat').value,solo=$('cp-solo').checked;
+      var c=radio('cat'),solo=$('cp-solo').checked,n=nascita(),y=n?n.getFullYear():0;
       [].forEach.call(document.querySelectorAll('.cp-dip'),function(e){e.style.display=c==='dip'?'':'none'});
       [].forEach.call(document.querySelectorAll('.cp-gs'),function(e){e.style.display=c==='gs'?'':'none'});
       [].forEach.call(document.querySelectorAll('.cp-coppia'),function(e){e.style.display=solo?'none':''});
-      $('cp-nasc-l').textContent=$('cp-adoz').checked?'3. Data di ingresso in famiglia':'3. Data di nascita del figlio';
+      [].forEach.call(document.querySelectorAll('.cp-conta'),function(e){e.style.display=c==='no'?'none':''});
+      $('cp-usati').style.display=radio('usato')==='si'?'flex':'none';
+      $('cp-nasc-l').textContent=$('cp-adoz').checked?'3. Quando è entrato in famiglia?':'3. Quando è nato tuo figlio?';
+      var serve=c==='dip'&&y>=2022&&y<=2024;
+      $('cp-fine-box').style.display=serve?'':'none';
+      if(serve)$('cp-fine-l').textContent='La maternità (o la paternità obbligatoria) è finita dopo il 31 dicembre '+y+'?';
+      $('cp-voglio-l').textContent=(c==='dip'||c==='gs'?'6':'5')+'. Quanti mesi vuoi prendere adesso?';
     }
-    ['cp-cat','cp-solo','cp-adoz'].forEach(function(i){$(i).addEventListener('change',vista)});vista();
+    $('cp').addEventListener('change',vista);vista();
     var cta='<p style="margin:10px 0 0">Vuoi il conteggio esatto e la domanda fatta da noi? <a href="/prenota">Prenota un appuntamento</a>.</p>';
     function show(c,h){$('cp-out').innerHTML='<div class="cp-res '+c+'">'+h+'</div>';$('cp-out').scrollIntoView({behavior:'smooth',block:'nearest'})}
-    function lista(a){return a.length?'<ul style="margin:10px 0 0;padding-left:20px">'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':''}
+    function lista(t,a){return a.length?'<p style="margin:12px 0 0;font-weight:800">'+t+'</p><ul style="margin:4px 0 0;padding-left:20px">'+a.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':''}
+    function riga(a,b,c){return '<tr><td>'+a+'</td><td style="text-align:right;white-space:nowrap"><b>'+b+'</b></td>'+(c!==undefined?'<td style="text-align:right;white-space:nowrap">'+c+'</td>':'')+'</tr>'}
     $('cp-b').onclick=function(){
-      var cat=$('cp-cat').value,padre=document.querySelector('input[name=ruolo]:checked').value==='padre',solo=$('cp-solo').checked,adoz=$('cp-adoz').checked;
-      if(cat==='no'){show('cp-warn','<b>Il congedo parentale non spetta</b> a colf e badanti, a chi lavora a domicilio e a chi ha il rapporto di lavoro finito o sospeso. Possono spettare altri aiuti: maternità, Assegno Unico, bonus nido.'+cta);return}
-      if(!$('cp-nasc').value){show('cp-warn','Inserisci la data '+(adoz?'di ingresso in famiglia.':'di nascita del figlio.'));return}
-      var nasc=new Date($('cp-nasc').value+'T00:00:00'),oggi=new Date();oggi.setHours(0,0,0,0);
-      if(nasc>oggi){show('cp-warn','La data è nel futuro: il congedo parentale parte dopo la nascita (per la madre, dopo la maternità obbligatoria).');return}
-      var io=num('cp-io'),altro=solo?0:num('cp-altro'),voglio=num('cp-voglio')||1,note=[];
+      var cat=radio('cat'),padre=radio('ruolo')==='padre',solo=$('cp-solo').checked,adoz=$('cp-adoz').checked;
+      if(cat==='no'){show('cp-warn','<b>Il congedo parentale non ti spetta.</b> Non è previsto per colf e badanti, per chi lavora a domicilio e per chi non ha un lavoro in corso.<br>Possono spettarti altri aiuti: Assegno Unico, bonus nido, bonus nuovi nati.'+cta);return}
+      var nasc=nascita();
+      if(!nasc){show('cp-warn','Scrivi la data '+(adoz?'in cui è entrato in famiglia.':'di nascita di tuo figlio.'));return}
+      var oggi=new Date();oggi.setHours(0,0,0,0);
+      if(nasc>oggi){show('cp-warn','La data è nel futuro. Il congedo parentale parte dopo la nascita: per la mamma, dopo la maternità obbligatoria.');return}
+      var usato=radio('usato')==='si',io=usato?num('cp-io'):0,altro=usato&&!solo?num('cp-altro'):0,voglio=num('cp-voglio'),sapere=[],fare=[];
       var anni=cat==='dip'?14:cat==='gs'?12:1,fine=piu(nasc,anni);
-      var cosa=adoz?"dall'ingresso in famiglia":'del figlio';
-      if(oggi>=fine){show('cp-warn','<b>Il tempo è scaduto.</b> Per la tua categoria il congedo parentale si può usare entro '+(anni===1?'il primo anno':'i '+anni+' anni')+' '+cosa+': il termine era il '+dataIt(fine)+'.'+cta);return}
-      if(adoz) note.push('Adozione o affidamento: il congedo non può comunque andare oltre i 18 anni del minore.');
+      var cosa=adoz?"dall'ingresso in famiglia":'di tuo figlio';
+      if(oggi>=fine){show('cp-warn','<b>Il tempo è scaduto.</b> Con il tuo lavoro il congedo parentale si può usare entro '+(anni===1?'il primo anno':'i '+anni+' anni')+' '+cosa+': il termine era il '+dataIt(fine)+'.'+cta);return}
+      if(adoz) sapere.push('Con adozione o affidamento il congedo non può andare oltre i 18 anni del ragazzo.');
+      if(!padre&&!adoz&&oggi<new Date(nasc.getTime()+91*864e5)) sapere.push('Per la mamma il congedo parentale inizia <b>dopo</b> la maternità obbligatoria.');
+      fare.push('Fai la domanda all\u2019INPS <b>prima</b> di iniziare: se arriva dopo, vengono pagati solo i giorni successivi.');
 
       if(cat==='aut'){
-        var resta=Math.max(0,3-io),prendo=Math.min(voglio,resta);
-        if(!resta){show('cp-warn','Hai già usato i <b>3 mesi</b> che spettano a ogni genitore lavoratore autonomo.'+cta);return}
-        note.push('Devi avere versato i contributi del mese prima del congedo e non lavorare davvero in quei giorni.');
-        note.push('Fai la domanda <b>prima</b> di iniziare: se arriva dopo, l’INPS paga solo i giorni successivi.');
-        show('cp-ok','Puoi prendere ancora<b class="big">'+mesi(resta)+'</b>entro il <b>'+dataIt(fine)+'</b> (primo anno '+cosa+').<table><tr><td>Mesi che vuoi prendere ora</td><td style="text-align:right"><b>'+mesi(prendo)+'</b></td></tr><tr><td>Quanto spetta</td><td style="text-align:right"><b>30%</b> della retribuzione convenzionale della tua categoria</td></tr></table>'+lista(note)+cta);return;
+        var rA=Math.max(0,3-io);
+        if(!rA){show('cp-warn','<b>Hai già usato i tuoi 3 mesi.</b> A ogni genitore autonomo spettano 3 mesi per figlio.'+cta);return}
+        var pA=voglio?Math.min(voglio,rA):rA;
+        sapere.push('Sei pagato il <b>30%</b> di una retribuzione fissata per legge per la tua categoria (non del tuo guadagno reale).');
+        sapere.push('Devi aver pagato i contributi del mese prima e non lavorare davvero in quei giorni.');
+        if(!solo) sapere.push('Anche l\u2019altro genitore ha i suoi mesi, con le regole del suo lavoro.');
+        show('cp-ok','Ti restano<b class="big">'+mesi(rA)+'</b>da usare entro il <b>'+dataIt(fine)+'</b> (primo anno '+cosa+').<table>'+(voglio?riga('Mesi che vuoi prendere ora',mesi(pA)):'')+riga('Pagati al 30%',mesi(pA))+'</table>'+lista('Da sapere',sapere)+lista('Cosa fare',fare)+cta);return;
       }
 
       var maxPag=solo&&cat==='dip'?9:6-Math.max(0,Math.min(altro,6)-3);
       if(cat==='gs'){
-        var restaG=Math.max(0,maxPag-io),prendoG=Math.min(voglio,restaG),red=num('cp-red');
-        if(!restaG){show('cp-warn','Non ti restano mesi: in Gestione separata spettano <b>3 mesi a testa più 3 da dividere</b>, 9 in tutto tra i due genitori.'+cta);return}
-        if(solo) note.push('Per il genitore solo iscritto alla Gestione separata chiedi a noi una verifica: qui abbiamo contato i mesi di un genitore in coppia.');
-        note.push('Serve almeno 1 mese di contributi con aliquota piena nei 12 mesi prima del congedo, il rapporto di lavoro in corso e l’astensione reale dal lavoro.');
-        note.push('Si usa a mesi o a giorni, non a ore. La domanda va fatta <b>prima</b> di iniziare.');
-        var soldi=red?'<tr><td>Indennità stimata (30% del reddito)</td><td style="text-align:right;white-space:nowrap"><b>'+eur(red*0.3/12*prendoG)+'</b></td></tr><tr><td>Al mese, circa</td><td style="text-align:right;white-space:nowrap"><b>'+eur(red*0.3/12)+'</b></td></tr>':'';
-        show('cp-ok','Puoi prendere ancora<b class="big">'+mesi(restaG)+'</b>entro il <b>'+dataIt(fine)+'</b> (12 anni '+cosa+').<table><tr><td>Mesi che vuoi prendere ora</td><td style="text-align:right"><b>'+mesi(prendoG)+'</b></td></tr>'+soldi+'</table>'+lista(note)+'<p style="margin:10px 0 0;font-size:14px">Stima al lordo. L’INPS calcola il 30% di 1/365 del reddito per ogni giorno di congedo.</p>'+cta);return;
+        var rG=Math.max(0,maxPag-io),red=num('cp-red');
+        if(!rG){show('cp-warn','<b>Non ti restano mesi.</b> In Gestione separata spettano 3 mesi a testa più 3 a scelta: 9 in tutto tra i due genitori.'+cta);return}
+        var pG=voglio?Math.min(voglio,rG):rG;
+        if(voglio>rG) sapere.push('Hai chiesto '+mesi(voglio)+', ma te ne restano '+mesi(rG)+'.');
+        if(solo) sapere.push('Sei un genitore solo: per te i mesi potrebbero essere di più. Chiedici una verifica.');
+        sapere.push('L\u201980% non è previsto in Gestione separata: tutti i mesi sono al 30%.');
+        sapere.push('Serve almeno 1 mese di contributi negli ultimi 12 mesi, un lavoro in corso e non lavorare davvero in quei giorni.');
+        sapere.push('Si prende a mesi o a giorni, non a ore.');
+        var tG='<table>'+(voglio?riga('Mesi che vuoi prendere ora',mesi(pG)):'')+riga('Pagati al 30%',mesi(pG),red?eur(red*0.3/12)+' al mese':undefined)+(red?riga('In tutto, circa','',eur(red*0.3/12*pG)):'')+'</table>';
+        show('cp-ok','Ti restano<b class="big">'+mesi(rG)+'</b>da usare entro il <b>'+dataIt(fine)+'</b> (12 anni '+cosa+').'+tG+lista('Da sapere',sapere)+lista('Cosa fare',fare)+(red?'<p style="margin:10px 0 0;font-size:14px">Importi lordi stimati.</p>':'')+cta);return;
       }
 
       // Dipendenti
-      var padreTot=padre?io+voglio:altro;
-      var indiv=solo?11:(padre?(padreTot>=3?7:6):6),coppia=solo?11:(padreTot>=3?11:10);
+      var indiv=6,coppia=10;
+      if(solo){indiv=11;coppia=11}
+      else if(padre){if(Math.min(7-io,11-io-altro)+io>=3){indiv=7;coppia=11}}
+      else if(altro>=3){coppia=11}
       var resta=Math.max(0,Math.min(indiv-io,coppia-io-altro));
-      if(!resta){show('cp-warn','<b>Non ti restano mesi di congedo parentale</b> per questo figlio: il limite è '+(solo?'11 mesi per il genitore solo':'6 mesi per la madre, 6 per il padre (7 se ne prende almeno 3) e 10 in due (11 se il padre ne prende almeno 3)')+'.'+cta);return}
-      var prendo=Math.min(voglio,resta);
-      if(prendo<voglio) note.push('Hai chiesto '+mesi(voglio)+', ma te ne restano '+mesi(resta)+'.');
-      var perNascita=nasc>=new Date('2025-01-01T00:00:00')?3:nasc>=new Date('2024-01-01T00:00:00')?2:nasc>=new Date('2023-01-01T00:00:00')?1:0;
-      var sel=parseInt($('cp-fine').value,10),quota=Math.max(perNascita,sel);
-      if(sel<0&&perNascita<3) note.push('Non sai quando è finita la maternità o paternità obbligatoria: abbiamo contato i mesi all’80% solo in base alla data di nascita. Potrebbero essere di più.');
-      var sei=piu(nasc,6),entro6=oggi<sei,u80=Math.min(num('cp-u80'),quota);
+      if(!resta){show('cp-warn','<b>Non ti restano mesi di congedo parentale</b> per questo figlio. Il limite è '+(solo?'11 mesi per il genitore solo':'6 mesi per la mamma, 6 per il papà (7 se ne prende almeno 3) e 10 in due (11 se il papà ne prende almeno 3)')+'.'+cta);return}
+      var prendo=voglio?Math.min(voglio,resta):resta;
+      if(voglio>resta) sapere.push('Hai chiesto '+mesi(voglio)+', ma te ne restano '+mesi(resta)+'.');
+      var y=nasc.getFullYear(),quota=y>=2025?3:y===2024?2:y===2023?1:0,f=radio('fine');
+      if(y>=2022&&y<=2024){if(f==='si')quota+=1;if(f==='boh')sapere.push('Non sai quando è finita la maternità: i mesi all\u201980% potrebbero essere uno in più. Possiamo controllarlo noi.')}
+      var sei=piu(nasc,6),entro6=oggi<sei,u80=usato?Math.min(num('cp-u80'),quota):0;
       var m80=entro6?Math.max(0,Math.min(quota-u80,Math.max(0,3-io),prendo)):0;
       var pagRest=Math.max(0,maxPag-io);
       var m30=Math.max(0,Math.min(prendo-m80,pagRest-m80));
-      var extra=Math.max(0,prendo-m80-m30),basso=$('cp-basso').checked,R=num('cp-ral');
-      var righe=[];
-      if(m80) righe.push(['Pagati all’80%',m80,0.8]);
-      if(m30) righe.push(['Pagati al 30%',m30,0.3]);
-      if(extra) righe.push([basso?'Oltre i mesi pagati: 30% perché il reddito è sotto '+LIMITE_REDDITO+' €':'Oltre i mesi pagati: senza indennità',extra,basso?0.3:0]);
-      var tot=0,tab='<table>'+righe.map(function(x){var e=R*x[2]*x[1];tot+=e;return '<tr><td>'+x[0]+'</td><td style="text-align:right;white-space:nowrap"><b>'+mesi(x[1])+'</b></td>'+(R?'<td style="text-align:right;white-space:nowrap">'+(x[2]?eur(e):'0 €')+'</td>':'')+'</tr>'}).join('')+'</table>';
-      if(quota>0&&entro6&&quota-u80-m80>0) note.push('Mesi all’80% ancora disponibili dopo questi: '+mesi(quota-u80-m80)+' (in due), da usare <b>entro il '+dataIt(sei)+'</b>. Dopo i 6 anni sono pagati al 30%.');
-      if(quota>0&&!entro6) note.push('Il figlio ha già compiuto 6 anni: i mesi all’80% non valgono più, il congedo è pagato al 30%.');
-      if(quota===0) note.push('Per questo figlio non ci sono mesi all’80%: servono una maternità o paternità obbligatoria finita dopo il 31 dicembre 2022.');
-      if(entro6&&quota-u80>0&&io>=3) note.push('Hai già usato i tuoi 3 mesi «non cedibili»: i mesi all’80% rimasti può usarli l’altro genitore.');
-      if(extra&&!basso) note.push('I mesi oltre quelli pagati restano un tuo diritto, ma senza indennità. Il 30% spetta solo se il tuo reddito personale è sotto '+LIMITE_REDDITO+' € (limite 2026).');
-      if(padre&&!solo&&padreTot>=3) note.push('Come padre prendi almeno 3 mesi: il tuo limite sale a 7 mesi e quello di coppia a 11.');
-      note.push('Mesi che ti restano dopo questi: <b>'+mesi(resta-prendo)+'</b>. Hai tempo fino al <b>'+dataIt(fine)+'</b> (14 anni '+cosa+').');
-      note.push('Avvisa il datore di lavoro almeno 5 giorni prima (2 giorni se lo usi a ore) e fai la domanda all’INPS <b>prima</b> di iniziare.');
-      var testa=R?'Per '+mesi(prendo)+' di congedo prendi circa<b class="big">'+eur(tot)+' lordi</b>':'Puoi prendere<b class="big">'+mesi(prendo)+'</b>';
-      show('cp-ok',testa+tab+lista(note)+'<p style="margin:10px 0 0;font-size:14px">Stima al lordo, calcolata sulla retribuzione mensile che hai inserito. L’INPS usa la retribuzione media giornaliera del mese prima del congedo.</p>'+cta);
+      var extra=Math.max(0,prendo-m80-m30),basso=$('cp-basso').checked,R=num('cp-ral'),tot=0,tab='<table>';
+      if(voglio) tab+=riga('Mesi che vuoi prendere ora',mesi(prendo),R?'':undefined);
+      if(m80){tot+=R*0.8*m80;tab+=riga('Pagati all\u201980%',mesi(m80),R?eur(R*0.8)+' al mese':undefined)}
+      if(m30){tot+=R*0.3*m30;tab+=riga('Pagati al 30%',mesi(m30),R?eur(R*0.3)+' al mese':undefined)}
+      if(extra){if(basso)tot+=R*0.3*extra;tab+=riga(basso?'Pagati al 30% perché guadagni meno di '+LIMITE_REDDITO+' €':'Non pagati',mesi(extra),R?(basso?eur(R*0.3)+' al mese':'0 €'):undefined)}
+      if(R) tab+=riga('<b>In tutto, circa</b>','','<b>'+eur(tot)+'</b>');
+      tab+='</table>';
+      if(m80) sapere.push('I mesi all\u201980% vanno usati <b>entro il '+dataIt(sei)+'</b> (6 anni). Dopo sono pagati al 30%.');
+      if(quota-u80-m80>0&&entro6&&!solo) sapere.push('Restano '+mesi(quota-u80-m80)+' all\u201980% che può usare l\u2019altro genitore, se è dipendente.');
+      if(quota>0&&!entro6) sapere.push('Tuo figlio ha già compiuto 6 anni: l\u201980% non vale più, i mesi sono pagati al 30%.');
+      if(quota===0) sapere.push('Per questo figlio non ci sono mesi all\u201980%: serve una maternità o paternità obbligatoria finita dopo il 31 dicembre 2022.');
+      else if(quota-u80<=0&&entro6) sapere.push('I mesi all\u201980% sono già stati usati tutti.');
+      if(extra&&!basso) sapere.push('I mesi non pagati restano un tuo diritto. Sono pagati al 30% solo a chi guadagna meno di '+LIMITE_REDDITO+' € l\u2019anno.');
+      if(!solo){
+        if(padre&&indiv===7) sapere.push('Se prendi almeno 3 mesi, come papà puoi arrivare a 7 mesi e in due a 11.');
+        if(!padre&&altro<3) sapere.push('Se il papà prende almeno 3 mesi, in due potete arrivare a 11 mesi invece di 10.');
+        var restoAltro;if(padre){var cp2=io+prendo>=3?11:10;restoAltro=Math.min(6-altro,cp2-io-prendo-altro)}else{restoAltro=Math.min(7-altro,11-io-prendo-altro);if(altro+restoAltro<3)restoAltro=Math.min(6-altro,10-io-prendo-altro)}restoAltro=Math.max(0,restoAltro);
+        sapere.push('Se tu prendi '+mesi(prendo)+', all\u2019altro genitore ne restano fino a <b>'+mesi(restoAltro)+'</b>.');
+      }
+      if(voglio&&resta-prendo>0) sapere.push('Dopo questi ti restano ancora <b>'+mesi(resta-prendo)+'</b>.');
+      fare.unshift('Avvisa il datore di lavoro almeno 5 giorni prima (2 giorni se lo prendi a ore).');
+      show('cp-ok','Ti restano<b class="big">'+mesi(resta)+'</b>da usare entro il <b>'+dataIt(fine)+'</b> (14 anni '+cosa+').'+tab+lista('Da sapere',sapere)+lista('Cosa fare',fare)+(R?'<p style="margin:10px 0 0;font-size:14px">Importi lordi stimati sullo stipendio che hai scritto. L\u2019INPS usa lo stipendio del mese prima del congedo.</p>':'')+cta);
     };
   })();
   </script>
