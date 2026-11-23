@@ -30,7 +30,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
       <div class="lg:col-span-2">
         <h2 class="footer-title">Servizi</h2>
         <ul class="space-y-2 text-sm">
-          {LANDING.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          {LANDING.map((l) => <li><a href={l.href} aria-label={`${l.label}: il servizio`}>{l.label}</a></li>)}
           <li><a href="/servizi">Tutti i servizi</a></li>
           <li><a href="/tesseramento">Tessera</a></li>
           <li><a href="/pagamenti-inps">Pagamenti INPS: le date</a></li>
@@ -49,7 +49,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
       <div class="lg:col-span-3">
         <h2 class="footer-title">Dal blog</h2>
         <ul class="space-y-2 text-sm">
-          {CATEGORY_LIST.slice(0, 7).map((c) => <li><a href={`/blog/categoria/${c.slug}`}>{c.label}</a></li>)}
+          {CATEGORY_LIST.slice(0, 7).map((c) => <li><a href={`/blog/categoria/${c.slug}`} aria-label={`${c.label}: articoli del blog`}>{c.label}</a></li>)}
           <li><a href="/blog" style="color:#D4FF4F;font-weight:700">Tutti gli articoli →</a></li>
         </ul>
       </div>
@@ -67,12 +67,12 @@ const fmt = (h: (typeof HOURS)[number]) =>
             )}
           </p>
           <p>
-            <a href={`tel:${CONTACT.phone.landlineRaw}`} style="color:#fff;font-weight:700">{CONTACT.phone.landline}</a><br />
-            <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="color:#fff;font-weight:700">WhatsApp {CONTACT.phone.mobile}</a><br />
-            <a href={`mailto:${CONTACT.email}`} class="break-all">{CONTACT.email}</a>
+            <a href={`tel:${CONTACT.phone.landlineRaw}`} style="color:#fff;font-weight:700;display:inline-block;padding:4px 0">{CONTACT.phone.landline}</a><br />
+            <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="color:#fff;font-weight:700;display:inline-block;padding:4px 0">WhatsApp {CONTACT.phone.mobile}</a><br />
+            <a href={`mailto:${CONTACT.email}`} class="break-all" style="display:inline-block;padding:4px 0">{CONTACT.email}</a>
           </p>
         </address>
-        <a href="/prenota" class="btn btn-lime btn-sm mt-5" style="box-shadow:none;color:#14142B">Prenota appuntamento</a>
+        <a href="/prenota" class="btn btn-lime btn-sm mt-5" style="box-shadow:none;color:#14142B">Vai alle prenotazioni</a>
       </div>
     </div>
 
