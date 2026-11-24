@@ -9,7 +9,7 @@ import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import { BOOKING, CONTACT } from "~/consts";
 
 const MESE = "dicembre 2026";
-const AGGIORNATO = "14 novembre 2026";
+const AGGIORNATO = "24 novembre 2026";
 const SEO_TITLE = "Pagamenti INPS dicembre 2026: tutte le date";
 const SEO_DESC = "Quando arrivano a dicembre 2026 pensioni, tredicesima, Assegno Unico, ADI e bonus mamme: date INPS, come controllare il pagamento e cosa fare se non arriva";
 
@@ -23,7 +23,10 @@ const SRC = {
   adiMsg: { label: "INPS, messaggio n. 214 del 22 gennaio 2026", href: "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15143/Allegati/16533_Messaggio-numero-214-del-22-01-2026.pdf" },
   sfl: { label: "INPS, scheda SFL", href: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.supporto-per-la-formazione-e-il-lavoro-sfl-.html" },
   mamme: { label: "INPS, Nuovo Bonus mamme 2026: aggiornamenti (circolare n. 106/2026 e messaggio n. 3343/2026)", href: INPS + "2026.10.nuovo-bonus-mamme-2026-aggiornamenti.html" },
+  mammeCs: { label: "INPS, comunicato stampa del 20 ottobre 2026 sul nuovo Bonus mamme", href: "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/10/Allegati/4197_CS-nuovo-Bonus-mamme-al-via-le-domande.pdf" },
   carta: { label: "INPS, Carta Dedicata a te 2026-2027", href: INPS + "2026.09.carta-dedicata-a-te-modalit-operative-per-il-2026-2027.html" },
+  impAgg: { label: "INPS, Importo aggiuntivo delle pensioni", href: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.53721.importo-aggiuntivo-delle-pensioni.html" },
+  pereq: { label: "INPS, comunicato dell'11 novembre 2026 sulla perequazione", href: "https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/11/11/Comunicato_52671/Allegati/62003_cs-perequazioni-pensioni.pdf" },
   stato: { label: "INPS, Stato di un pagamento", href: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.stato-di-un-pagamento.html" },
   fascicolo: { label: "INPS, Fascicolo previdenziale del cittadino", href: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.fascicolo-previdenziale-del-cittadino-50865.fascicolo-previdenziale-del-cittadino.html" },
   mobile: { label: "INPS Mobile", href: "https://www.inps.it/it/it/dettaglio-app-mobile.app-mobile.inps-mobile.html" },
@@ -34,31 +37,32 @@ const ISEE27 = { label: "Prenota l'ISEE 2027 gratis", href: "https://link.arcani
 const CEDOLINO = { label: "Fai controllare il cedolino", href: "/prenota" };
 
 const ROWS: Row[] = [
-  { date: "Martedì 1° dicembre", what: "Pensioni INPS: pagamento di dicembre", who: "Tutti i pensionati INPS", note: "L'INPS paga il primo giorno bancabile del mese (solo a gennaio il secondo). La tredicesima arriva di norma con la pensione di dicembre: il dettaglio lo spiega l'INPS nella notizia sul cedolino di dicembre, non ancora uscita.", src: [SRC.pensNov, SRC.pensCs], cta: CEDOLINO },
+  { date: "Martedì 1° dicembre", what: "Pensioni INPS: pagamento di dicembre", who: "Tutti i pensionati INPS", note: "L'INPS paga il primo giorno bancabile del mese (solo a gennaio il secondo). La tredicesima arriva di norma con la pensione di dicembre: il dettaglio lo spiega l'INPS nella notizia sul cedolino di dicembre, non ancora uscita al 24 novembre. A chi ha pensione e redditi bassi l'INPS paga d'ufficio a dicembre anche l'importo aggiuntivo di 154,94 €.", src: [SRC.pensNov, SRC.pensCs, SRC.impAgg], cta: CEDOLINO },
   { date: "Martedì 15 dicembre", what: "Assegno di Inclusione (ADI): primi pagamenti ed eventuali arretrati", who: "Chi ha appena avuto l'ADI accolto", src: [SRC.adiMsg, SRC.adiNews], cta: ISEE27 },
   { date: "Mercoledì 16 e giovedì 17 dicembre", what: "Assegno Unico: rata ordinaria di dicembre (con eventuali conguagli)", who: "Famiglie che già ricevono l'Assegno Unico e non hanno avuto variazioni", note: "L'INPS indica due giorni: la data esatta sul conto dipende da banca o Poste.", src: [SRC.auuMsg, SRC.auuNews], cta: ISEE27 },
   { date: "Mercoledì 16 dicembre", what: "Carta Dedicata a te: ultimo giorno per il primo utilizzo", who: "Chi ha ricevuto la carta nel 2026 (500 €)", note: "Non è un pagamento: se non usi la carta entro questa data, perdi la quota 2026.", src: [SRC.carta] },
   { date: "Mercoledì 23 dicembre", what: "ADI: ricariche mensili sulla carta di inclusione", who: "Chi già riceve l'ADI e ha ancora i requisiti", src: [SRC.adiMsg, SRC.adiNews], cta: ISEE27 },
   { date: "Ultima settimana di dicembre", what: "Assegno Unico: prima rata per le domande presentate a novembre", who: "Chi ha fatto domanda a novembre 2026", note: "Regola INPS: la prima rata arriva di norma nell'ultima settimana del mese dopo la domanda. Non è indicato un giorno preciso.", src: [SRC.auuMsg] },
-  { date: "Dicembre 2026 (giorno non indicato)", what: "Nuovo bonus mamme 2026: pagamento in un'unica soluzione", who: "Lavoratrici con due figli (il più piccolo sotto i 10 anni) o con tre o più figli (il più piccolo sotto i 18) che hanno fatto domanda", note: "Pagamento a dicembre solo se la domanda è già stata lavorata; altrimenti da gennaio 2027. Domanda entro il 31 dicembre 2026 (31 gennaio 2027 se i requisiti maturano a dicembre, messaggio INPS 3343/2026). L'INPS non ha indicato il giorno.", src: [SRC.mamme] },
+  { date: "Dicembre 2026 (giorno non indicato)", what: "Nuovo bonus mamme 2026: pagamento in un'unica soluzione", who: "Lavoratrici con due figli (il più piccolo sotto i 10 anni) o con tre o più figli (il più piccolo sotto i 18) che hanno fatto domanda", note: "Pagamento a dicembre solo se la domanda è già stata lavorata; altrimenti da gennaio 2027. Domanda entro il 31 dicembre 2026 (31 gennaio 2027 se i requisiti maturano a dicembre, messaggio INPS 3343/2026). L'INPS non ha indicato il giorno.", src: [SRC.mamme, SRC.mammeCs] },
   { date: "Ogni mese (giorno non fissato)", what: "Supporto per la Formazione e il Lavoro (SFL): 500 € al mese con bonifico", who: "Chi partecipa ai corsi o alle attività del percorso", note: "L'INPS non indica un giorno fisso: il pagamento dipende dalla partecipazione effettiva.", src: [SRC.sfl] },
 ];
 
 const NOV_ROWS: Row[] = [
-  { date: "Giovedì 19 e venerdì 20 novembre", what: "Assegno Unico: rata ordinaria di novembre (con eventuali conguagli)", who: "Famiglie che già ricevono l'Assegno Unico", src: [SRC.auuMsg] },
   { date: "Venerdì 27 novembre", what: "ADI: ricariche mensili sulla carta di inclusione", who: "Chi già riceve l'ADI e ha ancora i requisiti", src: [SRC.adiMsg] },
   { date: "Ultima settimana di novembre", what: "Assegno Unico: prima rata per le domande presentate a ottobre", who: "Chi ha fatto domanda a ottobre 2026", src: [SRC.auuMsg] },
 ];
 
 const NEXT_ROWS = [
-  "Pensioni: a gennaio l'INPS paga il secondo giorno bancabile del mese, non il primo. Il giorno esatto di gennaio 2027 lo conferma l'INPS con la notizia sul cedolino di gennaio: lo aggiungiamo qui appena esce.",
-  "Assegno Unico e ADI: i calendari ufficiali visti finora arrivano fino a dicembre 2026. Quelli del 2027 non sono ancora stati pubblicati: non scriviamo date che non esistono.",
+  "Pensioni: a gennaio l'INPS paga il secondo giorno bancabile del mese, non il primo. Nel 2027 il 1° gennaio è festivo e il 2 è sabato: il giorno esatto non è ancora stato comunicato dall'INPS. Lo aggiungiamo qui appena esce.",
+  "Pensioni: l'INPS ha annunciato che la rivalutazione (perequazione) sarà applicata già dalla rata di gennaio 2027 (comunicato dell'11 novembre 2026).",
+  "Assegno Unico e ADI: i calendari ufficiali arrivano fino a dicembre 2026. Al 24 novembre l'INPS non ha ancora pubblicato quelli del 2027: non scriviamo date che non esistono.",
   "ISEE: quello del 2026 scade il 31 dicembre. Per l'Assegno di Inclusione serve un ISEE valido; per l'Assegno Unico, senza ISEE aggiornato l'importo scende al minimo. Se vuoi arrivare pronto, prenota ora.",
 ];
 
 const FAQS = [
   { q: "Quando arriva la pensione di dicembre 2026?", a: "L'INPS paga le pensioni il primo giorno bancabile del mese, con l'eccezione di gennaio. A dicembre 2026 è martedì 1° dicembre. Se riscuoti allo sportello, controlla l'orario dell'ufficio postale." },
   { q: "Quando arriva la tredicesima?", a: "Di norma con la pensione di dicembre. L'INPS spiega il dettaglio nella notizia sul cedolino di dicembre: aggiorniamo questa pagina appena esce." },
+  { q: "Chi riceve i 154,94 euro con la pensione di dicembre?", a: "È l'importo aggiuntivo previsto dall'art. 70 della legge 388/2000: l'INPS lo paga d'ufficio a dicembre a chi ha una pensione bassa e redditi entro i limiti di legge. Per il 2026 i limiti sono 11.931,08 euro per chi è solo e 23.862,15 euro con il coniuge (scheda INPS sull'importo aggiuntivo)." },
   { q: "Quando arriva l'Assegno Unico di dicembre 2026?", a: "Secondo il calendario INPS, la rata ordinaria di dicembre è pagata il 16 e il 17 dicembre. Il giorno preciso sul conto dipende da banca o Poste." },
   { q: "Ho fatto domanda di Assegno Unico a novembre: quando arriva la prima rata?", a: "Di norma nell'ultima settimana del mese dopo la domanda, quindi nell'ultima settimana di dicembre. L'INPS non indica un giorno preciso." },
   { q: "Quando arriva la ricarica dell'ADI a dicembre?", a: "I primi pagamenti con eventuali arretrati sono il 15 dicembre. Le ricariche mensili sulla carta, per chi riceve già l'ADI, sono il 23 dicembre (messaggio INPS n. 214/2026)." },
@@ -136,7 +140,7 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
           </div>
         ))}
       </div>
-      <p class="c4">Le pensioni di novembre sono già state pagate (valuta lunedì 2 novembre). Il primo pagamento ADI di novembre era venerdì 13 novembre.</p>
+      <p class="c4">Le pensioni di novembre sono già state pagate (valuta lunedì 2 novembre). Il primo pagamento ADI di novembre era venerdì 13 novembre. La rata ordinaria dell'Assegno Unico di novembre è stata pagata il 19 e 20 novembre.</p>
     </section>
 
     <section class="c32" style="padding-top:8px">
@@ -187,7 +191,7 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
       <h2 class="c55">Fonti ufficiali</h2>
       <p class="c4"><b>Aggiornato il {AGGIORNATO}.</b> Le date sono quelle pubblicate dall'INPS. Possono cambiare: se l'INPS le modifica, aggiorniamo questa pagina. Le testate giornalistiche le usiamo solo come riscontro.</p>
       <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
-        {[SRC.pensNov, SRC.pensCs, SRC.auuNews, SRC.auuMsg, SRC.adiNews, SRC.adiMsg, SRC.sfl, SRC.mamme, SRC.carta, SRC.stato, SRC.fascicolo].map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
+        {[SRC.pensNov, SRC.pensCs, SRC.impAgg, SRC.pereq, SRC.auuNews, SRC.auuMsg, SRC.adiNews, SRC.adiMsg, SRC.sfl, SRC.mamme, SRC.mammeCs, SRC.carta, SRC.stato, SRC.fascicolo].map((s) => <li><a href={s.href} target="_blank" rel="noopener">{s.label}</a></li>)}
       </ul>
       <p class="c4">Hai un dubbio sul tuo caso? <a href={BOOKING.arcanisGroup} style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>. Centro Pratiche Flaiano, CAF UNSIC e Patronato ENASC, Via Filoteo Alberini 25 int. 10, Roma Vigne Nuove.</p>
     </section>
