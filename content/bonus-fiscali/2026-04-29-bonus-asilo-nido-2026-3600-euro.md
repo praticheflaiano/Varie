@@ -41,6 +41,8 @@ image_alt: "Bonus nido 2026: domanda INPS entro il 31 dicembre e importi fino a 
 
 Il **bonus nido** dell'INPS rimborsa la retta dell'asilo nido per i bambini sotto i 3 anni. Dal 2026 la domanda vale fino ai 3 anni del bambino e l'INPS usa un nuovo tipo di ISEE (sempre senza l'Assegno unico). Ecco cosa fare entro fine anno, con le regole della [Circolare INPS n. 29 del 27 marzo 2026](https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15207/Allegati/16651_Circolare-numero-29-del-27-03-2026.pdf).
 
+> [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
+
 ## Quanto vale il bonus nido nel 2026?
 
 L'importo dipende dalla **data di nascita** del bambino e dall'**ISEE**. Si paga in **11 rate** al massimo, una per ogni mese di nido.

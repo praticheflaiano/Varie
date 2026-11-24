@@ -44,6 +44,8 @@ Qui separiamo le due cose che contano davvero:
 | **Fondo "Valore nuovi nati"** | 100 € l'anno fino ai 18 anni | proposta 2027 |
 | **Voucher per genitori autonomi** | fino a 500 € al mese per 3 mesi | proposta 2027 |
 
+> [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
+
 ## Gli aiuti già in vigore
 
 ### Assegno Unico

@@ -37,6 +37,8 @@ Il punto delicato è il tempo: la domanda va presentata **entro 120 giorni** dal
 | **Scadenza** | **120 giorni** dalla nascita o dall'ingresso in famiglia |
 | **Domanda** | all'INPS, online o tramite **patronato** |
 
+> [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
+
 ## Chi ne ha diritto
 
 Il bonus spetta al genitore che:

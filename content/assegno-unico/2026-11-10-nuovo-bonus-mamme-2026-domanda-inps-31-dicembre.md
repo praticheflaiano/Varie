@@ -41,6 +41,8 @@ Il bonus **non arriva da solo**: l'INPS lo riconosce solo a chi presenta la doma
 
 Rispetto al 2025 l'importo è salito da 40 a 60 euro al mese.
 
+> [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
+
 ## Chi ne ha diritto
 
 Servono **tutti e tre** questi requisiti.
