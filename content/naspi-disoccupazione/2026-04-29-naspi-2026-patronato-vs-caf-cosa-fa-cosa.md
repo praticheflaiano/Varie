@@ -3,7 +3,7 @@ title: "NASpI 2026: cosa fa il Patronato gratis e cosa fa il CAF"
 seo_title: "NASpI 2026: cosa fa il patronato gratis e cosa il CAF"
 slug: "naspi-2026-patronato-vs-caf-cosa-fa-cosa"
 date: 2026-04-29
-last_updated: 2026-04-29
+last_updated: 2026-11-24
 category: "naspi-disoccupazione"
 tags: ["naspi", "guida", "patronato", "caf", "convenzione", "lavoro"]
 meta_description: "NASpI 2026: cosa fa il Patronato gratis (Legge 152/2001) e cosa fa il CAF UNSIC. Domande, ISEE, 730: chi cosa, dove e quanto costa. Roma Vigne Nuove."
@@ -29,7 +29,7 @@ fact_check_result: "PUBBLICABILE - articolo procedurale su convenzioni INPS-CAF 
 
 C'e un'enorme confusione tra **Patronato** e **CAF**. Se hai perso il lavoro e vai a un "ufficio Centro Pratiche Flaiano" pensi che dovrai pagare qualcosa. La realta e che **il Patronato e gratis per legge** (Legge 152/2001) e che anche **la prima presentazione ISEE al CAF e gratuita** (convenzione INPS-CAF). Pago solo i servizi che vanno oltre. Questo articolo chiarisce esattamente chi fa cosa al Centro Pratiche Flaiano (Roma Vigne Nuove), per il caso NASpI 2026.
 
-Per il dettaglio operativo (calcolatore importi, anticipo NASpI in unica soluzione, OCR documenti INPS) vai al nostro portale dedicato: [domandedisoccupazione.it](https://domandedisoccupazione.it).
+Per il dettaglio operativo (calcolatore importi, anticipo NASpI in due rate, OCR documenti INPS) vai al nostro portale dedicato: [domandedisoccupazione.it](https://domandedisoccupazione.it).
 
 ## La regola in due righe
 
@@ -49,9 +49,11 @@ Verifica del **codice cessazione UNILAV**, calcolo **settimane di contributi** a
 
 Stessa cosa per i collaboratori coordinati e continuativi cessati. La DIS-COLL ha regole leggermente diverse (durata massima 6 mesi, soglia contributiva diversa) ma il workflow al Patronato e analogo.
 
-### 3. Anticipo NASpI in unica soluzione
+### 3. Anticipo NASpI in due rate
 
-Per chi vuole avviare un'**attivita autonoma**, INPS puo erogare la NASpI residua in **unica soluzione** (anticipo). Il Patronato segue la domanda, le verifiche di compatibilita, e l'eventuale **pagamento in 2 rate (70% + 30%)** introdotto dal Messaggio INPS 1215/2026. Vedi [scheda anticipo dedicata sul portale](https://domandedisoccupazione.it/anticipo).
+Per chi vuole avviare un'**attivita autonoma**, un'impresa o entrare in una cooperativa, l'INPS puo pagare in anticipo la NASpI che resta. Per le domande dal 1° gennaio 2026 arriva in **due rate: 70% subito e 30% alla fine del periodo teorico della NASpI**, al massimo 6 mesi dopo la domanda (Messaggio INPS 1215/2026). La domanda va fatta **entro 30 giorni** dall'inizio dell'attivita. Il Patronato segue la domanda e le verifiche di compatibilita.
+
+> [Anticipo NASpI: calcola le due rate](https://domandedisoccupazione.it/anticipo): quanto ricevi e quando, sul nostro portale NASpI
 
 ### 4. Iscrizione SIISL e firma PAD
 
@@ -142,7 +144,7 @@ In alternativa, **consulenza da remoto** (video o telefonica) per chi non puo ra
 - **WhatsApp:** 371 6230 690
 - **Sede:** Via Filoteo Alberini 25 int 10, 00139 Roma
 
-Per i contenuti tecnici del portale NASpI (calcolatore importi, anticipo unica soluzione, OCR documenti INPS, 30+ guide su dimissioni e obblighi): [domandedisoccupazione.it](https://domandedisoccupazione.it).
+Per i contenuti tecnici del portale NASpI (calcolatore importi, anticipo NASpI in due rate, OCR documenti INPS, 30+ guide su dimissioni e obblighi): [domandedisoccupazione.it](https://domandedisoccupazione.it).
 
 ## Domande frequenti
 

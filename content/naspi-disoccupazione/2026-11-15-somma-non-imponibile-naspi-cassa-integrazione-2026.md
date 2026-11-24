@@ -59,7 +59,7 @@ Il messaggio INPS esclude:
 - le prestazioni dei **lavoratori autonomi**, comprese maternità e malattia di autonomi e Gestione separata;
 - l'**ISCRO**;
 - il **TFR** a tassazione separata;
-- l'**anticipo della NASpI in un'unica soluzione** per avviare un'attività: su quella somma il beneficio non si applica.
+- l'**anticipo della NASpI** per avviare un'attività (dal 2026 pagato in due rate): su quella somma il beneficio non si applica.
 
 ## Quanto spetta
 

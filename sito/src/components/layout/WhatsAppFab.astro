@@ -2,6 +2,7 @@
 import { CONTACT } from "~/consts";
 ---
 
+<aside aria-label="WhatsApp">
 <a
   href={`${CONTACT.whatsapp.link}?text=${encodeURIComponent("Salve, vorrei informazioni su...")}`}
   target="_blank"
@@ -14,6 +15,7 @@ import { CONTACT } from "~/consts";
   </svg>
   <span class="hidden sm:inline">WhatsApp</span>
 </a>
+</aside>
 
 <style>
   .whatsapp-fab {
@@ -25,7 +27,8 @@ import { CONTACT } from "~/consts";
     align-items: center;
     gap: 0.5rem;
     background: #25D366;
-    color: white;
+    /* testo scuro sul verde WhatsApp: il bianco non ha contrasto sufficiente */
+    color: #14142B;
     padding: 0.875rem 1.25rem;
     border-radius: 999px;
     font-weight: 600;
@@ -36,7 +39,7 @@ import { CONTACT } from "~/consts";
   .whatsapp-fab:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
-    color: white;
+    color: #14142B;
   }
   .whatsapp-fab:focus-visible {
     outline: 3px solid var(--color-accent-400);

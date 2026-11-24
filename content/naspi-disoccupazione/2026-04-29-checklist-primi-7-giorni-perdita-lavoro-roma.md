@@ -3,7 +3,7 @@ title: "Hai perso il lavoro? La checklist dei primi 7 giorni"
 seo_title: "Hai perso il lavoro? Cosa fare nei primi 7 giorni"
 slug: "checklist-primi-7-giorni-perdita-lavoro-roma"
 date: 2026-04-29
-last_updated: 2026-04-29
+last_updated: 2026-11-24
 category: "naspi-disoccupazione"
 tags: ["naspi", "guida", "patronato", "lavoro", "isee", "famiglie"]
 meta_description: "Hai perso il lavoro a Roma? Cosa fare nei primi 7 giorni: NASpI, ISEE corrente, AUU, SIISL. Checklist Patronato + CAF UNSIC del Centro Pratiche Flaiano Vigne Nuove."
@@ -84,7 +84,7 @@ Il Patronato e gratuito per tutti per legge (Legge 152/2001) e ti segue per:
 - Calcolo delle **settimane di contributi** ammissibili
 - Compilazione e invio della **domanda NASpI online** all'INPS
 - Eventuale **contestazione codice cessazione** errato
-- Domanda di **anticipo NASpI** in unica soluzione (per chi vuole avviare attivita autonoma)
+- Domanda di **anticipo NASpI** per chi vuole avviare un'attivita autonoma: dal 2026 in due rate, 70% subito e 30% dopo
 - Domanda **DIS-COLL** se eri co.co.co.
 - Iscrizione e firma **PAD su SIISL** (entro 15 giorni dall'accoglimento NASpI)
 
