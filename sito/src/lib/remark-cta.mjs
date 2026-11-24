@@ -2,7 +2,8 @@
 // Uso negli articoli (markdown): una citazione con UN solo link a uno strumento, es.
 //   > **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente.
 // Diventa: pulsante viola con il testo del link come titolo e il resto come sottotitolo.
-const TOOL = /^(\/calcolo-[a-z0-9-]+|\/assegno-vedovanza|\/calcolatore[a-z0-9-]*|\/guide\/[^\s]+\.pdf|\/[^\s]+\.pdf)(#.*)?$/i;
+// Comprende anche i due strumenti del portale NASpI (calcolatore e anticipo).
+const TOOL = /^(\/calcolo-[a-z0-9-]+|\/assegno-vedovanza|\/calcolatore[a-z0-9-]*|\/guide\/[^\s]+\.pdf|\/[^\s]+\.pdf|https:\/\/domandedisoccupazione\.it\/(calcolatore|anticipo))(#.*)?$/i;
 
 const BOOK = /^(\/prenota|https:\/\/link\.arcanis\.it\/widget\/(booking|group)\/[A-Za-z0-9]+)(#.*)?$/i;
 
