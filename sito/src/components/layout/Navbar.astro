@@ -1,5 +1,5 @@
 ---
-import { NAV, CONTACT, EXTERNAL_PORTALS } from "~/consts";
+import { NAV, CONTACT } from "~/consts";
 import Logo from "~/components/illustrations/Logo.astro";
 import MobileMenu from "./MobileMenu.svelte";
 
@@ -28,9 +28,7 @@ const serviziActive = serviziPaths.some((p) => path === p || path.startsWith(p +
       <a href="/faq" class:list={[{ active: isActive("/faq") }]}>FAQ</a>
       <a href="/chi-siamo" class:list={[{ active: isActive("/chi-siamo") }]}>Chi siamo</a>
       <a href="/contatti" class:list={[{ active: isActive("/contatti") }]}>Contatti</a>
-      <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" title={EXTERNAL_PORTALS.naspi.description}>
-        Disoccupazione ↗
-      </a>
+      <a href="/naspi" class:list={[{ active: isActive("/naspi") || isActive("/calcolo-naspi") || isActive("/anticipo-naspi") }]}>Disoccupazione</a>
     </nav>
 
     <div class="header-cta">
