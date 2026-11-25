@@ -3,6 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import LandingArticles from "~/components/blog/LandingArticles.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
+import { calcola, eur, DEDUZIONE_MAX } from "~/lib/costo-colf";
 
 /*
  * Contenuti del servizio (Unsicolf), documenti e voci del contratto: indicati dal titolare il 9/11/2026.
@@ -33,6 +34,22 @@ const contratto = [
   "le condizioni di vitto e alloggio",
 ];
 
+// Esempi di costo 2026 calcolati con la stessa logica del calcolatore (minimi Ministero del Lavoro + contributi INPS circ. 9/2026)
+const esempi = [
+  { t: "Badante convivente", d: "persona non autosufficiente, livello C super, 54 ore", r: calcola({ tipo: "convivente", livello: "CS", ore: 54 }) },
+  { t: "Badante convivente", d: "persona autosufficiente, livello B super, 54 ore", r: calcola({ tipo: "convivente", livello: "BS", ore: 54 }) },
+  { t: "Colf a ore", d: "livello B, 10 ore a settimana, paga minima", r: calcola({ tipo: "orario", livello: "B", ore: 10 }) },
+];
+const tondo = (n: number) => "circa " + eur(Math.round(n / 10) * 10).replace(",00", "");
+
+const guide = [
+  { t: "Assumere una colf o una badante", d: "Livelli, contratto, comunicazione INPS, documenti e prova.", href: "/blog/assumere-colf-badante-roma-2026-come-fare" },
+  { t: "Badante convivente: orari e riposi", d: "54 ore, riposi, festivi, notte, vitto e alloggio.", href: "/blog/badante-convivente-2026-orari-riposi-ferie-vitto-alloggio" },
+  { t: "Contributi INPS 2026 e scadenze", d: "Quanto si paga ogni tre mesi e quando.", href: "/blog/colf-badanti-roma-contributi-inps-2026-scadenze" },
+  { t: "Ferie, tredicesima, malattia e TFR", d: "Come si calcolano, con esempi.", href: "/blog/ferie-tredicesima-malattia-tfr-colf-badanti-2026" },
+  { t: "Licenziamento e dimissioni", d: "Preavviso, ultime spettanze e cessazione INPS.", href: "/blog/licenziamento-dimissioni-colf-badante-preavviso-tfr" },
+];
+
 const faqs = [
   { q: "Quanto costa il servizio?", a: "Un unico prezzo all'anno, tutto compreso, in base al tipo di rapporto. <a href='" + waPrezzo + "' target='_blank' rel='noopener'>Scrivici su WhatsApp</a> e ti mandiamo il preventivo." },
   { q: "Entro quando va comunicata l'assunzione?", a: "Entro le ore 24 del giorno prima dell'inizio del lavoro, anche se il rapporto inizia di domenica o in un giorno festivo." },
@@ -41,7 +58,13 @@ const faqs = [
   { q: "La lavoratrice è extracomunitaria: cosa serve?", a: "Un permesso o una carta di soggiorno valido. Se serve, prepariamo anche il contratto di soggiorno." },
   { q: "Ogni quanto si pagano i contributi?", a: "Ogni tre mesi, con il pagamento PagoPA dell'INPS. Ti prepariamo il prospetto con l'importo e la scadenza." },
   { q: "E se il rapporto finisce?", a: "La cessazione va comunicata all'INPS entro 5 giorni. Ti aiutiamo anche con il calcolo di TFR e ultime spettanze." },
-  { q: "Posso detrarre i contributi nel 730?", a: "I contributi pagati per colf e badanti si possono dedurre nel 730, nei limiti previsti. Con il riepilogo annuale li inseriamo noi nel tuo 730." },
+  { q: "Posso detrarre i contributi nel 730?", a: "Sì. I contributi INPS che restano a tuo carico si deducono dal reddito fino a 1.549,37 € l'anno. In più, se la badante assiste una persona non autosufficiente e il tuo reddito non supera 40.000 €, puoi detrarre il 19% delle spese fino a 2.100 €. Con il riepilogo annuale li inseriamo noi nel tuo 730." },
+  { q: "Quanto costa una badante convivente nel 2026?", a: "Con la paga minima 2026, una badante convivente che assiste una persona non autosufficiente (livello C super, 54 ore) costa " + tondo(esempi[0].r.costoAnno) + " l'anno tra stipendio, tredicesima, contributi e TFR, cioè " + tondo(esempi[0].r.costoMese) + " al mese in media. Per il tuo caso usa il <a href='/calcolo-costo-colf-badante'>calcolo del costo di colf e badanti</a>." },
+  { q: "Qual è la paga minima di una colf nel 2026?", a: "Per una colf a ore di livello B (pulizie, cucina, lavanderia) il minimo 2026 è 7,01 € lordi l'ora. Per una badante convivente di persona non autosufficiente (C super) è 1.193,84 € al mese, più vitto e alloggio." },
+  { q: "Che livello devo dare alla badante?", a: "B super se la persona assistita è autosufficiente; C super se non è autosufficiente; D super se la badante ha un diploma o un corso di almeno 500 ore. Se fa più cose conta la mansione principale: lo decidiamo insieme prima dell'assunzione." },
+  { q: "Quanto preavviso serve per licenziare la colf o la badante?", a: "Per 25 ore o più a settimana: 15 giorni fino a 5 anni di anzianità, 30 oltre. Sotto le 25 ore: 8 giorni fino a 2 anni, 15 oltre. Durante la prova non serve preavviso." },
+  { q: "Per qualche ora ogni tanto posso usare il Libretto Famiglia?", a: "Per piccoli lavori occasionali sì: il Libretto Famiglia dell'INPS ha un limite di 2.500 € l'anno con la stessa persona. Per un aiuto stabile in casa serve l'assunzione." },
+  { q: "Seguite solo famiglie del Municipio III?", a: "No. L'ufficio è a Vigne Nuove, nel Municipio III, ma seguiamo famiglie di tutta Roma: molte pratiche si fanno su WhatsApp, al telefono o in videochiamata." },
 ];
 
 const props = {
@@ -81,10 +104,12 @@ const props = {
   },
   faqs,
   related: [
+    { label: "Calcolo costo colf e badante", href: "/calcolo-costo-colf-badante" },
     { label: "Modello 730", href: "/730" },
     { label: "Invalidità e 104", href: "/invalidita-104" },
     { label: "Pensioni", href: "/pensioni" },
     { label: "ISEE", href: "/isee" },
+    { label: "NASpI", href: "/calcolo-naspi" },
   ],
 };
 
@@ -96,7 +121,7 @@ const faqLd = JSON.stringify({
 const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:22px;line-height:1.15";
 ---
 
-<BaseLayout title="Colf e badanti: contratto, INPS e buste paga" description="Servizio annuale per colf e badanti a Roma: contratto, assunzione INPS, buste paga, contributi, ferie, malattia e assistenza. Chiedi il prezzo su WhatsApp.">
+<BaseLayout title="Colf e badanti a Roma: contratto, INPS e buste paga" description="Colf e badanti a Roma: contratto, assunzione INPS, buste paga e contributi con un servizio annuale. Calcola il costo 2026 e chiedi il prezzo su WhatsApp.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="colf-badanti" name="Lavoro domestico: colf e badanti (Unsicolf)" description="Servizio annuale per datori di lavoro domestico: contratto, comunicazioni INPS, contratto di soggiorno, prospetti paga, contributi trimestrali, ferie, malattia, riepilogo annuale e assistenza." serviceType="Assistenza - lavoro domestico" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
@@ -116,6 +141,25 @@ const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:22px
           </li>
         ))}
       </ol>
+    </section>
+
+    <!-- QUANTO COSTA -->
+    <section class="c46" id="quanto-costa">
+      <span style="align-self:flex-start;background:#F1EEFF;color:#5B3DF5;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Costi 2026</span>
+      <h2 class="c1">Quanto costa una colf o una badante nel 2026</h2>
+      <p class="c4" style="font-size:18px;max-width:760px">Esempi con la paga minima del contratto nazionale e i contributi INPS 2026: stipendio, tredicesima, contributi a tuo carico e TFR. Vitto e alloggio dati in natura esclusi.</p>
+      <ul style="margin:0;padding:0;list-style:none;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))">
+        {esempi.map((e) => (
+          <li style="border-radius:24px;padding:22px;background:#F7F7FB;display:flex;flex-direction:column;gap:6px">
+            <b style="font-size:19px;line-height:1.2">{e.t}</b>
+            <span style="font-size:15px;color:#3F3F5A">{e.d}</span>
+            <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;color:#5B3DF5;margin-top:6px">{eur(e.r.costoMese)} <small style="font-size:15px;color:#3F3F5A">al mese</small></span>
+            <span style="font-size:15px;color:#3F3F5A">{eur(e.r.costoAnno)} l'anno · stipendio lordo {eur(e.r.mensileLorda)} al mese</span>
+          </li>
+        ))}
+      </ul>
+      <p class="cta-tool-wrap" style="margin:0"><a class="cta-tool" href="/calcolo-costo-colf-badante"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h2M14 18h2"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Calcola il costo della tua colf o badante</span><span class="cta-tool-s">Stipendio, contributi INPS, tredicesima e TFR 2026, con il preventivo del servizio su WhatsApp</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      <p class="c4" style="font-size:15px;margin:0">I contributi a tuo carico si deducono nel 730 fino a {eur(DEDUZIONE_MAX)} l'anno. Fonti: tabella dei minimi 2026 del Ministero del Lavoro e circolare INPS n. 9 del 3 febbraio 2026.</p>
     </section>
 
     <!-- CONTRATTO -->
@@ -143,6 +187,28 @@ const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:22px
         <div class="c9"><h3 style={h3}>Niente errori, niente sorprese</h3><p class="c4">Paga, ferie, malattia, tredicesima e TFR calcolati secondo il contratto nazionale. Sai sempre quanto spendi.</p></div>
         <div class="c9"><h3 style={h3}>Risparmi nel 730</h3><p class="c4">I contributi pagati si possono dedurre nel 730, nei limiti previsti. Con il riepilogo annuale li inseriamo noi.</p></div>
         <div class="c21"><h3 style={`${h3};color:#fff`}>Un solo riferimento</h3><p class="c71">Un prezzo all'anno e una persona a cui chiedere, anche al telefono. Niente code, niente moduli da capire da solo.</p></div>
+      </div>
+    </section>
+    <!-- GUIDE -->
+    <section class="c46" id="guide">
+      <h2 class="c1">Le guide per le famiglie che assumono</h2>
+      <p class="c4" style="font-size:18px;max-width:760px">Tutto quello che serve sapere sul lavoro domestico, spiegato semplice e aggiornato al contratto nazionale del 2025.</p>
+      <ul style="margin:0;padding:0;list-style:none;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))">
+        {guide.map((g) => (
+          <li style="border-radius:24px;padding:22px;background:#F7F7FB;display:flex;flex-direction:column;gap:6px">
+            <a href={g.href} style="font-weight:800;font-size:18px;line-height:1.25;color:#14142B;text-decoration:underline">{g.t}</a>
+            <span style="font-size:15px;color:#3F3F5A">{g.d}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ROMA -->
+    <section style="background:#F1EEFF">
+      <div class="c46">
+        <h2 class="c1">Colf e badanti a Roma Nord, vicino a te</h2>
+        <p class="c4" style="font-size:18px;max-width:820px">Siamo un <b>CAF UNSIC e Patronato ENASC</b> nel Centro Acquisti Flaiano, in via Filoteo Alberini 25 a <b>Vigne Nuove</b> (Municipio III). Seguiamo famiglie di Tufello, Conca d'Oro, Bufalotta, Porta di Roma, Montesacro e di tutta Roma. Se non puoi venire in ufficio, facciamo tutto su WhatsApp, al telefono o in videochiamata.</p>
+        <p class="c4" style="font-size:18px;max-width:820px;margin:0">Quando il rapporto finisce, il nostro patronato aiuta anche la lavoratrice con la domanda di <a href="/calcolo-naspi">NASpI</a>.</p>
       </div>
     </section>
   </ServiceLanding>
