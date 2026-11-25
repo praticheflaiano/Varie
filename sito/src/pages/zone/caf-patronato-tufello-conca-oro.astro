@@ -3,8 +3,8 @@ import ZonaPage from "~/components/zone/ZonaPage.astro";
 
 const transport = [
   {
-    title: "Da Conca d'Oro: linee 38, 336 e 86",
-    html: `Alla stazione <strong>Conca d'Oro</strong> della metro B1 si prendono la <strong>38</strong> (Termini - Porta di Roma) e la <strong>336</strong>, che arrivano a Vigne Nuove. Anche la <strong>86</strong> collega Conca d'Oro a Vigne Nuove. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+    title: "Da Conca d'Oro: linee 38, 336 e 338",
+    html: `Alla stazione <strong>Conca d'Oro</strong> della metro B1 si prendono la <strong>38</strong> (Termini - Porta di Roma), la <strong>336</strong> e la <strong>338</strong>: tutte e tre hanno la fermata <strong>Vigne Nuove/Lumiere</strong>. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://it.busti.me/rome/rome-bus-338/" rel="noopener">Bustime linea 338</a>.`,
   },
   {
     title: "Da Tufello e Val Melaina: linee 339 e 349",
@@ -13,6 +13,14 @@ const transport = [
   {
     title: "Dalla fermata all'ufficio",
     html: `La fermata <strong>Vigne Nuove/Lumiere</strong> (linea 38) è a circa 6 minuti a piedi dall'ingresso del Centro Acquisti Flaiano.`,
+  },
+  {
+    title: "Quanto siete lontani da Tufello, Conca d'Oro e Val Melaina?",
+    html: `Siamo nello stesso <strong>Municipio III</strong>: l'ufficio è a Vigne Nuove, in Via Filoteo Alberini 25 int. 10. Il tempo per arrivare dipende da dove parti: il pulsante &laquo;Calcola il percorso da casa tua&raquo; qui sotto ti mostra il percorso aggiornato, a piedi, in auto o con i mezzi.`,
+  },
+  {
+    title: "Orari: siete aperti oggi? E il sabato?",
+    html: `Siamo aperti <strong>dal lunedì al giovedì 9:30-13:00 e 15:30-18:00</strong> e il <strong>venerdì 9:30-14:00</strong>. Il <strong>sabato e la domenica siamo chiusi</strong>, come il venerdì pomeriggio. Riceviamo su appuntamento: <a href="/prenota">prenota online</a>, chiama lo <a href="tel:+390697845429">06 9784 5429</a> o scrivi su WhatsApp al <a href="https://wa.me/393716230690">371 623 0690</a>. Le chiusure per le feste sono nella <a href="/contatti">pagina contatti</a>.`,
   },
 ];
 
@@ -23,7 +31,7 @@ const offices = [
   },
   {
     title: "Municipio III",
-    html: `Tufello, Conca d'Oro e Val Melaina sono nell'area del Municipio III, nord-est di Roma. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+    html: `Tufello, Conca d'Oro e Val Melaina sono quartieri del Municipio III, nel nord-est di Roma, come Vigne Nuove dove si trova il nostro ufficio (fonte: <a href="https://www.comune.roma.it/web/it/i-quartieri-di-roma-mun3.page" rel="noopener">Roma Capitale, quartieri del Municipio III</a>). Per orari e servizi del Municipio: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
   },
   {
     title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
@@ -37,17 +45,17 @@ const offices = [
 ---
 
 <ZonaPage
-  title="CAF e patronato Tufello e Conca d'Oro"
-  description="CAF e patronato per Tufello, Conca d'Oro e Val Melaina: come arrivare in Via Filoteo Alberini a Vigne Nuove, uffici INPS, Municipio III e ASL. ISEE e 730."
+  title="CAF Conca d'Oro, Tufello e Val Melaina: patronato a Roma"
+  description="CAF e patronato per Conca d'Oro, Tufello e Val Melaina (Roma): Via Filoteo Alberini 25, Vigne Nuove. Linee 38, 336, 338 dalla metro. Sabato chiuso."
   slug="caf-patronato-tufello-conca-oro"
   breadcrumbName="Tufello, Conca d'Oro, Val Melaina"
   eyebrow="Zone servite · Tufello, Conca d'Oro, Val Melaina"
-  h1="CAF e patronato per Tufello, Conca d'Oro e Val Melaina"
-  intro="Se abiti a Tufello, Conca d'Oro o Val Melaina siamo vicini: il Centro Pratiche Flaiano è a Vigne Nuove, in Via Filoteo Alberini 25 (Centro Acquisti Flaiano), nello stesso Municipio III. Qui trovi come arrivare e gli uffici pubblici di riferimento."
-  transportTitle="Come arrivare da Tufello, Conca d'Oro e Val Melaina"
+  h1="CAF e patronato per Conca d'Oro, Tufello e Val Melaina"
+  intro="Il CAF e patronato per chi abita a Conca d'Oro, Tufello o Val Melaina è nel tuo stesso Municipio III di Roma: Via Filoteo Alberini 25 int. 10, Vigne Nuove (Centro Acquisti Flaiano). Aperti dal lunedì al venerdì, sabato chiuso. Qui trovi orari, come arrivare e uffici pubblici."
+  transportTitle="Come arrivare da Conca d'Oro, Tufello e Val Melaina"
   transportIntro="Le linee che servono Via delle Vigne Nuove e le zone di partenza, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
   transport={transport}
-  transportNote="Dati verificati il 13/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  transportNote="Dati presi da Bustime e Moovit il 13/11/2026; percorsi delle linee 38, 336 e 338 ricontrollati su Bustime il 26/11/2026. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
   officesTitle="Uffici pubblici per chi abita qui"
   officesIntro="Gli uffici che servono più spesso a chi abita a Tufello, Conca d'Oro e Val Melaina."
   offices={offices}
@@ -56,6 +64,6 @@ const offices = [
     { name: "Vigne Nuove", href: "/zone/caf-patronato-vigne-nuove" },
     { name: "Bufalotta e Porta di Roma", href: "/zone/caf-patronato-bufalotta-porta-di-roma" },
     { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
-    { name: "Fidene, Serpentara, Nuovo Salario", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
+    { name: "Fidene, Nuovo Salario, Colle Salario, Serpentara", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
   ]}
 />

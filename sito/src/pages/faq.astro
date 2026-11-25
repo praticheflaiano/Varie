@@ -12,11 +12,27 @@ const groups = [
     items: [
       {
         question: "Dove si trova il Centro Pratiche Flaiano?",
-        answer: "Siamo a Roma, in <strong>Via Filoteo Alberini 25, interno 10</strong>, dentro il Centro Acquisti Flaiano (quartiere Vigne Nuove, Municipio III). Serviamo Vigne Nuove, Tufello, Conca d'Oro, Bufalotta, Porta di Roma e tutta la zona nord di Roma.",
+        answer: "Siamo a Roma, in <strong>Via Filoteo Alberini 25, interno 10</strong>, dentro il Centro Acquisti Flaiano (quartiere Vigne Nuove, Municipio III). Vengono da noi soprattutto da Vigne Nuove, Tufello, Val Melaina, Conca d'Oro, Talenti, Montesacro, Bufalotta, Porta di Roma, Fidene, Serpentara, Nuovo Salario e Colle Salario: come arrivare dalla tua zona è nelle pagine delle <a href='/zone'>zone servite</a>.",
       },
       {
-        question: "Quali sono gli orari di apertura?",
-        answer: "Lunedì-Giovedì 9:30-13:00 e 15:30-18:00. Venerdì 9:30-14:00 (orario continuato). Sabato e domenica chiusi.",
+        question: "Quali sono gli orari del CAF? A che ora aprite e chiudete?",
+        answer: "<strong>Dal lunedì al giovedì 9:30-13:00 e 15:30-18:00, il venerdì 9:30-14:00.</strong> Sabato e domenica chiusi. Le chiusure straordinarie, per esempio per le feste, sono nella <a href='/contatti'>pagina contatti</a>.",
+      },
+      {
+        question: "Siete aperti il sabato?",
+        answer: "<strong>No, il sabato e la domenica siamo chiusi.</strong> L'ultimo giorno utile della settimana è il venerdì, dalle 9:30 alle 14:00. Puoi comunque prenotare online o scriverci su WhatsApp al 371 623 0690: ti rispondiamo al rientro.",
+      },
+      {
+        question: "Siete aperti oggi?",
+        answer: "Dal lunedì al giovedì sì, la mattina (9:30-13:00) e il pomeriggio (15:30-18:00); il venerdì solo la mattina (9:30-14:00); sabato e domenica no. Riceviamo su appuntamento: prima di venire <a href='/prenota'>prenota</a> o chiama lo 06 9784 5429.",
+      },
+      {
+        question: "Qual è il numero di telefono del CAF e patronato?",
+        answer: "Telefono <strong>06 9784 5429</strong>, WhatsApp <strong>371 623 0690</strong>, email info@praticheflaiano.it. Su WhatsApp puoi mandarci anche le foto dei documenti.",
+      },
+      {
+        question: "Quanto costano le pratiche? C'è un listino prezzi?",
+        answer: "Molte pratiche sono gratuite: la <strong>prima ISEE dell'anno</strong>, la <strong>domanda di pensione</strong> e la <strong>domanda NASpI</strong>. Prezzi già fissati: <a href='/730'>730</a> da 30 € in ufficio (da 35 € da casa), <a href='/successioni'>successione</a> 600 € tutto compreso (imposte e bolli dello Stato a parte), <a href='/dimissioni-online'>dimissioni online</a> da 15 € (in ufficio con il tuo SPID e la tessera), <a href='/tesseramento'>tessera</a> 30 € all'anno per tutta la famiglia. Per le altre pratiche chiedi il preventivo su WhatsApp al 371 623 0690.",
       },
       {
         question: "Come prenoto un appuntamento?",
@@ -50,7 +66,7 @@ const groups = [
     items: [
       {
         question: "Quanto costa fare il 730?",
-        answer: "Da 30 €, in base alla tua situazione: te lo diciamo prima di iniziare. Se l'anno dopo torni da noi, il prezzo resta quello. <a href='/730'>Tutto sul 730</a>.",
+        answer: "In ufficio da 30 €, da casa a partire da 35 €, in base alla tua situazione: te lo diciamo prima di iniziare. Se l'anno dopo torni da noi, il prezzo resta quello. <a href='/730'>Tutto sul 730</a>.",
       },
       {
         question: "Quali documenti servono per il 730?",
@@ -91,6 +107,10 @@ const groups = [
         answer: "<strong>68 giorni</strong> dalla cessazione del rapporto di lavoro. Oltre questo termine il diritto decade.",
       },
       {
+        question: "Cos'è il mandato al Patronato ENASC?",
+        answer: "È il modulo con cui autorizzi il Patronato ENASC ad assisterti e a presentare le pratiche all'INPS per tuo conto. Puoi compilarlo online nella pagina del <a href='/mandato'>mandato di patronato</a>.",
+      },
+      {
         question: "Quanto tempo dura la pratica di invalidità civile?",
         answer: "Dipende dai tempi di convocazione della visita, che cambiano da zona a zona. Il primo passo è il certificato medico introduttivo: da noi il medico certificatore è nello stesso ufficio. <a href='/invalidita-104'>Come funziona</a>.",
       },
@@ -102,8 +122,8 @@ const allFaq = groups.flatMap((g) => g.items);
 ---
 
 <BaseLayout
-  title="Domande frequenti su CAF e patronato"
-  description="Domande frequenti al Centro Pratiche Flaiano CAF UNSIC e Patronato ENASC a Roma. Tesseramento, 730, ISEE, pensioni, NASpI: tutte le risposte in un'unica pagina."
+  title="CAF e patronato Roma: orari, prezzi e domande frequenti"
+  description="CAF e patronato a Roma Vigne Nuove: orari (sabato chiuso), telefono, prezzi di 730, ISEE, successioni, pensioni e NASpI. Tutte le risposte."
 >
   <JsonLdFaq slot="head" items={allFaq} />
 
