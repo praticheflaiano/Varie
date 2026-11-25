@@ -9,3 +9,5 @@ Per cambiare un rimando: modificare `vercel.json` qui, poi fare un deploy di pro
 
 Ultimo aggiornamento: 14/11/2026, aggiunto /luce-e-gas → /luce-gas (deploy dpl_9SCTMqVj66XznGESi4bcgbG3nd3G).
 Aggiornamento 18/11/2026: aggiunto il rimando esplicito della radice di info.praticheflaiano.it (rispondeva 200 con la home invece di 308; le altre pagine di info. rimandavano già).
+Aggiornamento 25/11/2026: aggiunti il rimando dell'articolo sul Fondo di garanzia verso /naspi/fondo-garanzia-tfr e la sezione `rewrites` (la lettura dei documenti del calcolo NASpI, /api/naspi/analyze-document, viene girata alla funzione di domandedisoccupazione.it). Il file ora è su una riga sola (stesso contenuto, più corto da caricare).
+Attenzione: un deploy da git (gitSource) fallisce, perché il progetto non ha la cartella `sito` come radice: usare sempre i due file.
