@@ -23,6 +23,8 @@ export async function GET(context: APIContext) {
         author: `${SITE.name} <info@praticheflaiano.it> (${a.data.author})`,
       };
     }),
+    // senza barra finale: è la forma degli indirizzi del sito (con la barra c'è un rimando)
+    trailingSlash: false,
     customData: `<language>it-IT</language>`,
     stylesheet: "/rss-style.xsl",
   });

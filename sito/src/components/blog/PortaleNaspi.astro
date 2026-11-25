@@ -1,0 +1,46 @@
+---
+/**
+ * Collegamenti alle guide e agli strumenti del portale NASpI (domandedisoccupazione.it).
+ * Usato nelle pagine e negli articoli su NASpI, dimissioni e lavoro: ogni pagina del sito
+ * che parla di disoccupazione rimanda alle guide precise del portale, non solo alla home.
+ * Regola: quando sul portale nasce una guida o uno strumento importante, aggiungerlo qui.
+ */
+import { NASPI_URL } from "~/consts";
+interface Props { heading?: string; }
+const { heading = "Guide e strumenti sul nostro portale NASpI" } = Astro.props;
+const LINKS = [
+  { href: "/calcolatore", t: "Calcolo NASpI 2026", s: "Importo e durata con i valori INPS" },
+  { href: "/guida/presentare-domanda", t: "Domanda NASpI: scadenze e passi", s: "I 68 giorni, da quando parte, errori da evitare" },
+  { href: "/anticipo", t: "Anticipo NASpI in due rate", s: "70% e 30% per chi apre partita IVA o impresa" },
+  { href: "/guida/fondo-garanzia-tfr", t: "Fondo di garanzia INPS", s: "TFR e stipendi se l'azienda fallisce o non paga" },
+  { href: "/guida/dimissioni-giusta-causa", t: "Dimissioni per giusta causa", s: "Quando danno diritto alla NASpI" },
+  { href: "/guida/pagamenti-accredito", t: "Quando arriva la NASpI", s: "Date di pagamento e come controllarle" },
+  { href: "/obblighi/siisl", t: "SIISL e patto di attivazione", s: "Cosa fare entro 15 giorni" },
+  { href: "/guida/nuovo-lavoro-durante-naspi", t: "Nuovo lavoro durante la NASpI", s: "Cosa comunicare per non perderla" },
+];
+---
+<section class="pn" aria-labelledby="pn-title">
+  <h2 id="pn-title">{heading}</h2>
+  <p class="pn-sub">Su domandedisoccupazione.it trovi calcolatori e guide passo passo, sempre gratis.</p>
+  <ul>
+    {LINKS.map((l) => (
+      <li>
+        <a href={`${NASPI_URL}${l.href}`}>
+          <span class="pn-t">{l.t}</span>
+          <span class="pn-s">{l.s}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+<style>
+  .pn { margin-block: 32px; padding: 24px 20px; background: #F1EEFF; border-radius: 28px; }
+  .pn h2 { margin: 0 0 6px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(22px, 4vw, 28px); line-height: 1.15; color: #14142B; }
+  .pn-sub { margin: 0 0 16px; font-size: 16px; line-height: 1.5; color: #34344A; }
+  .pn ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .pn li { margin: 0; padding: 0; }
+  .pn a { display: flex; flex-direction: column; gap: 4px; height: 100%; background: #fff; border: 2px solid #14142B; border-radius: 18px; padding: 14px 16px; text-decoration: none; color: #14142B; }
+  .pn a:hover, .pn a:focus-visible { background: #D4FF4F; }
+  .pn-t { font-weight: 800; font-size: 17px; line-height: 1.25; text-decoration: underline; text-underline-offset: 3px; }
+  .pn-s { font-size: 14px; line-height: 1.4; color: #3F3F5A; }
+</style>
