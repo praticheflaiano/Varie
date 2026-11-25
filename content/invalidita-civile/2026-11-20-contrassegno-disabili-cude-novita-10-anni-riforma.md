@@ -40,6 +40,8 @@ Sui social gira una tabella "**Novità CUDE 2027**": contrassegno da 10 anni, gr
 | **Nuovo look giallo-blu** | **Non lo abbiamo trovato** nei testi ufficiali | - |
 | "**2027**" | **Data non ufficiale**: nessuna delle due norme ha ancora una data di entrata in vigore | - |
 
+> [Prenota per il contrassegno CUDE](/prenota): prima richiesta o rinnovo, ti aiutiamo con la domanda al Comune di Roma.
+
 ## Riforma 1: il contrassegno europeo di parcheggio (Atto del Governo n. 444)
 
 È lo schema di decreto legislativo che porta in Italia la **direttiva europea 2024/2841** sulla **Carta europea della disabilità** e sul **contrassegno europeo di parcheggio**. Il Consiglio dei ministri lo ha approvato in via preliminare il **4 agosto 2026**; ora è in Parlamento per i pareri. Il termine della delega scade il **5 febbraio 2027**.

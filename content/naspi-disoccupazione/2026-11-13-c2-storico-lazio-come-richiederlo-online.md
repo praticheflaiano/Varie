@@ -72,6 +72,8 @@ Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti F
 
 Ti aiutiamo a fare la richiesta sul portale e a scaricare l'**estratto contributivo INPS**. Se hai perso il lavoro seguiamo la [domanda di NASpI](/naspi) e la DID, e controlliamo le [dimissioni online](/dimissioni-online).
 
+> [calcolo NASpI 2026](/calcolo-naspi): se hai perso il lavoro, stima quanto prendi al mese e per quanti mesi.
+
 ## Ti serve il C2 o l'estratto INPS?
 
 - **Prenota:** [in ufficio o in videochiamata](/prenota)
