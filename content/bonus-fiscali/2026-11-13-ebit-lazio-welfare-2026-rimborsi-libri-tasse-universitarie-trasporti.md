@@ -43,7 +43,7 @@ Molti lavoratori non lo sanno e non lo chiedono. Qui trovi cosa prevede il **reg
 
 La domanda si fa **solo online** dall'area riservata del sito di EBIT Lazio. Al 26 novembre 2026 sul sito dell'ente c'è solo il regolamento 2026: quello del 2027 non è ancora uscito.
 
-> [Prenota l'ISEE gratis](/prenota): con l'ISEE più basso passi avanti quando i fondi EBIT non bastano.
+> [Prenota un appuntamento per l'ISEE](/prenota): con l'ISEE più basso passi avanti quando i fondi EBIT non bastano.
 
 ## Chi può chiederli
 
