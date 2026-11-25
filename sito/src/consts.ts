@@ -204,8 +204,7 @@ export const NAV = [
   { label: "Blog", href: "/blog" },
   {
     label: "Disoccupazione",
-    href: "https://domandedisoccupazione.it",
-    external: true,
+    href: "/naspi",
   },
   { label: "FAQ", href: "/faq" },
   { label: "Contatti", href: "/contatti" },

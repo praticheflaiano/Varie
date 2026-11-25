@@ -1,0 +1,24 @@
+---
+/**
+ * Anticipo NASpI (pagina arrivata dal portale domandedisoccupazione.it il 25/11/2026).
+ * Regole verificate il 24/11/2026 su: scheda INPS "NASpI anticipata" (agg. 12/6/2026), messaggio INPS n. 1215 del 7/4/2026,
+ * art. 8 del d.lgs. 22/2015 come modificato dall'art. 1, c. 176, legge 199/2025. Testo e calcolo in src/naspi/AnticipoNaspi.tsx.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
+import AnticipoNaspi from "~/naspi/AnticipoNaspi";
+
+const faq = [
+  { q: "Come viene pagato l'anticipo NASpI nel 2026?", a: "Per le domande presentate dal 1° gennaio 2026 l'anticipo è pagato in due rate: il 70% quando la domanda viene accolta e il 30% alla fine del periodo teorico della NASpI, comunque non oltre 6 mesi dalla domanda (art. 8, c. 3-bis, d.lgs. 22/2015; messaggio INPS 1215/2026)." },
+  { q: "Entro quando si presenta la domanda di anticipo NASpI?", a: "Entro 30 giorni dall'inizio dell'attività autonoma o dell'impresa individuale, o dalla sottoscrizione della quota di cooperativa. Se l'attività era iniziata prima della fine del lavoro dipendente, entro 30 giorni dalla domanda NASpI." },
+  { q: "Chi può chiedere l'anticipo NASpI?", a: "Chi ha diritto alla NASpI e vuole avviare un lavoro autonomo, un'impresa individuale, sottoscrivere una quota di una cooperativa in cui lavora come socio, oppure portare a tempo pieno un'attività autonoma iniziata prima della fine del lavoro dipendente." },
+  { q: "Cosa succede se trovo lavoro come dipendente dopo l'anticipo?", a: "Se il lavoro dipendente inizia prima della fine del periodo teorico della NASpI, il 30% non viene pagato e va restituito anche il 70% già ricevuto, salvo il lavoro con la cooperativa di cui si è soci." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+---
+
+<BaseLayout title="Anticipo NASpI 2026: due rate 70% e 30%, calcolo" description="Anticipo NASpI dal 2026: 70% subito e 30% dopo, domanda entro 30 giorni dall'avvio dell'attività. Chi può chiederlo e calcolo delle due rate.">
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+  <div class="nz"><AnticipoNaspi client:load /></div>
+  <div style="max-width:1120px;margin:0 auto;padding:0 16px 48px"><PortaleNaspi current="/anticipo-naspi" /></div>
+</BaseLayout>

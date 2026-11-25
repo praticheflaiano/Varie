@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
+import react from "@astrojs/react";
 import icon from "astro-icon";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -67,6 +68,8 @@ export default defineConfig({
   integrations: [
     mdx(),
     svelte(),
+    // React serve solo agli strumenti NASpI arrivati dal portale (src/naspi)
+    react({ include: ["**/naspi/**"] }),
     icon({
       include: {
         heroicons: ["*"],

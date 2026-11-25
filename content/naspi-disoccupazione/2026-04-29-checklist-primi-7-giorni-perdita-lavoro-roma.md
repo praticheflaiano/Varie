@@ -74,7 +74,7 @@ Verifica **subito**: una causale "1C" (dimissioni) in caso reale di licenziament
 
 > **Importante 2025-2026**: la Legge di Bilancio 2025 ha introdotto una stretta. Se nei **12 mesi precedenti** la cessazione hai dato dimissioni volontarie da un altro contratto a tempo indeterminato e poi sei stato licenziato dal nuovo, dovrai dimostrare di aver maturato le **13 settimane di contributi dopo le dimissioni precedenti**.
 
-Per il dettaglio tecnico delle 13 settimane e il calcolo importo, usa il [calcolatore NASpI ufficiale del nostro portale dedicato](https://domandedisoccupazione.it/calcolatore).
+Per il dettaglio tecnico delle 13 settimane e il calcolo importo, usa il nostro [calcolo NASpI](/calcolo-naspi).
 
 ## Giorno 4 - Prenota appuntamento al Patronato
 
@@ -146,7 +146,7 @@ Il Patronato del Centro Pratiche Flaiano puo seguirti anche per questo passaggio
 
 La NASpI dura **un mese ogni due settimane di contribuzione** versata negli ultimi 4 anni, fino a un massimo di **24 mesi** (104 settimane). L'importo viene **decurtato del 3% al mese** dopo il 6° mese di erogazione (dopo l'8° per chi ha 55+ anni al momento della domanda).
 
-Per il calcolo personale, usa il [calcolatore NASpI 2026](https://domandedisoccupazione.it/calcolatore) del nostro portale dedicato.
+Per il calcolo personale, usa il nostro [calcolatore NASpI 2026](/calcolo-naspi).
 
 ### Quanto vale la NASpI 2026 al massimo?
 
@@ -168,11 +168,11 @@ In caso di dubbio, prima di dare dimissioni rivolgiti al Patronato per inquadrar
 
 ### Quanto tempo ci vuole per ricevere la prima NASpI?
 
-In media **30-60 giorni** dalla domanda. La prima erogazione include gli arretrati dalla data di cessazione del rapporto. Per i pagamenti successivi, INPS accredita di norma intorno al **15 di ogni mese**. Vedi anche la [guida pagamenti NASpI](https://domandedisoccupazione.it/guida/pagamenti-accredito) sul nostro portale.
+I tempi dipendono dalla sede INPS: per legge il termine ordinario per decidere sulla domanda è di 30 giorni. Il primo pagamento comprende gli arretrati dal giorno in cui parte la NASpI: l'ottavo giorno dopo la fine del lavoro, oppure il giorno dopo la domanda se l'hai presentata più tardi (per questo conviene fare la [domanda NASpI](/naspi/domanda) subito). Vedi anche la [guida pagamenti NASpI](https://domandedisoccupazione.it/guida/pagamenti-accredito) sul nostro portale.
 
 ### Faccio meglio a fare la domanda da solo o con il Patronato?
 
-Il Patronato e **gratuito per legge**. Per chi non ha mai fatto domanda NASpI, ne ha mai gestito SIISL, o ha situazioni complesse (codici cessazione ambigui, dimissioni in periodo protetto, contributi figurativi, lavoro autonomo parallelo) il Patronato evita errori che possono portare al rigetto della domanda o alla decadenza per problemi SIISL. Per chi vuole calcolare gli importi prima di andare al Patronato, c'e il [calcolatore NASpI](https://domandedisoccupazione.it/calcolatore).
+Il Patronato e **gratuito per legge**. Per chi non ha mai fatto domanda NASpI, ne ha mai gestito SIISL, o ha situazioni complesse (codici cessazione ambigui, dimissioni in periodo protetto, contributi figurativi, lavoro autonomo parallelo) il Patronato evita errori che possono portare al rigetto della domanda o alla decadenza per problemi SIISL. Per chi vuole calcolare gli importi prima di andare al Patronato, c'e il [calcolatore NASpI](/calcolo-naspi).
 
 ## Articoli correlati
 

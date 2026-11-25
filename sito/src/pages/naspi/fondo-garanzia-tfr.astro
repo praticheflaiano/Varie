@@ -1,0 +1,156 @@
+---
+/**
+ * Guida arrivata dal portale domandedisoccupazione.it il 25/11/2026 (stesso testo, verificato quel giorno sulle fonti in fondo).
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+import FondoGaranziaCheck from "~/naspi/FondoGaranziaCheck";
+
+const faq = [
+    {
+        q: 'Cos\'è il Fondo di garanzia INPS?',
+        a: 'È un fondo dell\'INPS che paga al posto del datore di lavoro insolvente il TFR e gli stipendi degli ultimi tre mesi del rapporto. Vale per i dipendenti del settore privato il cui rapporto di lavoro è finito (legge 297/1982 e d.lgs. 80/1992).',
+    },
+    {
+        q: 'Il Fondo paga tutto il TFR?',
+        a: 'Sì: paga l\'intero TFR accertato nella procedura in tribunale o con il titolo esecutivo, con interessi e rivalutazione dalla fine del rapporto. Per gli stipendi degli ultimi tre mesi c\'è invece un tetto: tre volte l\'importo massimo mensile della cassa integrazione straordinaria, al netto dei contributi.',
+    },
+    {
+        q: 'Entro quando va fatta la domanda?',
+        a: 'Per il TFR vale la prescrizione ordinaria di 10 anni. Per gli stipendi degli ultimi tre mesi il diritto si prescrive in un anno. La domanda non si può fare prima del momento previsto per ogni caso: per il fallimento, dal 31° giorno dopo il deposito dello stato passivo esecutivo.',
+    },
+    {
+        q: 'In quanto tempo paga l\'INPS?',
+        a: 'L\'INPS deve pagare entro 60 giorni dalla domanda completa di tutti i documenti. Il pagamento arriva sul conto corrente intestato o cointestato al lavoratore: non sono ammesse carte prepagate e Postepay.',
+    },
+    {
+        q: 'Se l\'azienda è ancora aperta ma non mi paga, posso chiedere il Fondo?',
+        a: 'Non subito. Il Fondo interviene solo se il datore è insolvente: serve una procedura in tribunale (fallimento, liquidazione, concordato) oppure, per i datori che non possono fallire, un titolo esecutivo e un pignoramento andato a vuoto.',
+    },
+    {
+        q: 'Se la domanda viene respinta?',
+        a: 'Si può fare ricorso amministrativo al Comitato provinciale INPS entro 90 giorni dalla comunicazione, online o tramite patronato. Se dopo 90 giorni non arriva risposta, si può andare dal giudice entro un anno.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="Fondo di garanzia INPS: TFR e ultimi stipendi non pagati"
+    description="Il datore è fallito o non paga? Il Fondo di garanzia INPS paga TFR e ultime tre mensilità. Chi può chiederlo, quando, documenti e verifica gratuita."
+    path="/naspi/fondo-garanzia-tfr"
+    h1="Fondo di garanzia INPS: TFR e ultimi stipendi"
+    kicker="Datore fallito o che non paga"
+    crumb="Fondo di garanzia INPS"
+    updated="2026-11-25"
+    published="2026-11-25"
+    sources={[
+        'Scheda INPS "Fondo di garanzia del TFR e dei crediti di lavoro" (ultimo aggiornamento 19 dicembre 2025)',
+        'Circolare INPS 26 luglio 2023, n. 70',
+        'Legge 29 maggio 1982, n. 297, art. 2',
+        'D.Lgs. 27 gennaio 1992, n. 80, artt. 1 e 2',
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>Se il datore di lavoro <strong>fallisce o non può pagare</strong>, l'INPS ti paga il <strong>TFR</strong> e gli <strong>stipendi degli ultimi 3 mesi</strong>.</li>
+            <li>Vale per i <strong>dipendenti privati</strong> con il rapporto di lavoro <strong>finito</strong>.</li>
+            <li>Il TFR è pagato <strong>per intero</strong>. Gli stipendi hanno un <strong>tetto massimo</strong>.</li>
+            <li>La domanda si fa <strong>online</strong> sul sito INPS o tramite <strong>patronato</strong>. L'INPS paga entro <strong>60 giorni</strong> dalla domanda completa.</li>
+            <li>Attenzione: per gli stipendi il diritto <strong>scade dopo un anno</strong>.</li>
+        </ul>
+    </blockquote>
+
+    <FondoGaranziaCheck slot="tool" client:visible />
+
+    <h2>Chi può chiederlo</h2>
+    <p>Tutti i <strong>lavoratori dipendenti di datori privati</strong> che versano il contributo al Fondo, quando il rapporto di lavoro è finito. Sono compresi apprendisti, dirigenti di aziende industriali e, dal 1° luglio 2022, i giornalisti.</p>
+    <p>Possono fare domanda anche gli <strong>eredi</strong> del lavoratore (coniuge, figli e, se erano a carico, alcuni parenti e affini) e chi ha acquistato il credito del TFR.</p>
+    <p><strong>Non possono</strong> chiederlo:</p>
+    <ul>
+        <li>lavoratori autonomi e collaboratori (parasubordinati);</li>
+        <li>dipendenti di Stato, Regioni, Province, Comuni ed enti pubblici non economici;</li>
+        <li>impiegati e dirigenti di aziende agricole (il loro TFR è all'ENPAIA) e operai agricoli a tempo determinato;</li>
+        <li>iscritti al Fondo esattoriali e al Fondo dazieri.</li>
+    </ul>
+
+    <h2>Cosa paga</h2>
+    <ul>
+        <li><strong>Il TFR</strong>, per intero, come risulta dalla procedura in tribunale o dal titolo esecutivo. Con interessi e rivalutazione dalla fine del rapporto.</li>
+        <li><strong>Gli stipendi degli ultimi tre mesi</strong> del rapporto: stipendio vero e proprio, ratei di tredicesima e altre mensilità (al massimo tre), ferie non godute maturate in quei tre mesi, malattia e maternità che il datore doveva pagarti.</li>
+    </ul>
+    <p><strong>Non paga</strong>: l'indennità di preavviso, le ferie non godute maturate in altri periodi, l'indennità di malattia INPS che il datore doveva anticipare.</p>
+    <p>Per gli stipendi c'è un <strong>tetto</strong>: al massimo tre volte l'importo mensile più alto della cassa integrazione straordinaria, al netto dei contributi. L'importo esatto lo calcola l'INPS.</p>
+    <p>Le somme sono <strong>tassate</strong>: l'INPS trattiene l'IRPEF. Sul TFR la trattenuta è provvisoria, poi l'Agenzia delle Entrate ricalcola l'imposta.</p>
+
+    <h2>La regola dei 12 mesi per gli stipendi</h2>
+    <p>Gli ultimi tre mesi del rapporto devono cadere nei <strong>12 mesi prima</strong> di una di queste date:</p>
+    <ul>
+        <li>la <strong>domanda di apertura</strong> del fallimento o della procedura, se il lavoro è finito prima (se avevi già fatto causa, conta la data del tuo ricorso in tribunale);</li>
+        <li>il <strong>deposito del tuo ricorso</strong> in tribunale, se il datore non può fallire e si procede con il pignoramento;</li>
+        <li>la data della messa in liquidazione o della fine dell'esercizio provvisorio, se hai continuato a lavorare dopo l'apertura della procedura.</li>
+    </ul>
+    <p>Per questo <strong>non bisogna aspettare</strong>: se lasci passare troppo tempo prima di agire, gli stipendi possono restare fuori. Per il TFR invece questa regola non vale.</p>
+
+    <h2>I tre casi, passo per passo</h2>
+    <h3>1. Il datore è fallito o in liquidazione</h3>
+    <ol>
+        <li>Chiedi l'<strong>ammissione allo stato passivo</strong>: è la domanda al curatore per far riconoscere il tuo credito.</li>
+        <li>Aspetta il <strong>deposito dello stato passivo</strong> reso esecutivo dal giudice.</li>
+        <li>Dal <strong>31° giorno</strong> dopo il deposito presenta la domanda all'INPS.</li>
+    </ol>
+    <p>Vale per fallimento, liquidazione giudiziale, liquidazione coatta amministrativa e amministrazione straordinaria. Se il tribunale chiude la procedura senza verificare i crediti perché non c'è niente da dividere, si segue la strada del caso 3.</p>
+
+    <h3>2. Il datore è in concordato preventivo</h3>
+    <p>La domanda si presenta dal <strong>giorno dopo la pubblicazione</strong> del decreto o della sentenza di omologazione del concordato. Lo stesso vale per il concordato semplificato.</p>
+
+    <h3>3. Il datore non può fallire o non ha più niente</h3>
+    <p>Riguarda per esempio le piccole imprese sotto le soglie di legge, le imprese agricole, le imprese cancellate da oltre un anno.</p>
+    <ol>
+        <li>Ottieni un <strong>titolo esecutivo</strong>: decreto ingiuntivo esecutivo, sentenza definitiva, conciliazione resa esecutiva oppure diffida accertativa dell'Ispettorato del lavoro diventata esecutiva.</li>
+        <li>Fai il <strong>pignoramento</strong>. Se va a vuoto (anche perché il datore non si trova), hai il verbale negativo.</li>
+        <li>Dal <strong>giorno dopo</strong> il verbale di pignoramento negativo presenta la domanda all'INPS.</li>
+    </ol>
+    <p>Se chiedi in tutto <strong>meno di 5.000 € lordi</strong>, non devi dimostrare che il datore non ha case o terreni.</p>
+
+    <h2 id="documenti">Documenti da allegare</h2>
+    <p><strong>Fallimento e liquidazione</strong>:</p>
+    <ul>
+        <li>copia autentica dello stato passivo esecutivo, anche per estratto (per alcune grandi procedure i tribunali di Roma, Velletri e Civitavecchia lo mandano direttamente all'INPS);</li>
+        <li>modello <strong>SR52</strong> compilato e firmato dal curatore; se si rifiuta, i tuoi documenti e il modello SR54;</li>
+        <li>la dichiarazione che il credito non è stato contestato, che si rende direttamente nella domanda online.</li>
+    </ul>
+    <p><strong>Concordato preventivo</strong>:</p>
+    <ul>
+        <li>modello <strong>SR52</strong> (o <strong>SR196</strong> per i concordati del Codice della crisi) firmato dal commissario giudiziale;</li>
+        <li>copia autentica del decreto o della sentenza di omologazione;</li>
+        <li>buste paga dei mesi non pagati, se manca il modello SR52.</li>
+    </ul>
+    <p><strong>Pignoramento</strong> (datore che non può fallire):</p>
+    <ul>
+        <li>modello <strong>SR53</strong> compilato da te;</li>
+        <li>copia conforme del titolo esecutivo e verbale di pignoramento negativo;</li>
+        <li>decreto del tribunale che respinge il fallimento, salvo i casi in cui non serve;</li>
+        <li>dichiarazione sui beni immobili del datore, solo se chiedi 5.000 € lordi o più.</li>
+    </ul>
+    <p><strong>Eredi</strong>: in più il modello SR30, l'eventuale testamento e il modello SR22 per delegare un solo erede a riscuotere.</p>
+    <p>Serve sempre un <strong>IBAN di un conto intestato o cointestato a te</strong>. Non vanno bene carte prepagate e Postepay.</p>
+
+    <h2>Come si fa la domanda</h2>
+    <p>Solo online, con il servizio INPS <strong>"Fondi di garanzia – Domanda telematica"</strong>: puoi farla tu con SPID o CIE, oppure tramite un <strong>patronato</strong> o un avvocato. Le domande inviate in altri modi non vengono esaminate. I documenti si possono allegare subito o dopo, con la funzione "Invia documenti".</p>
+    <p>La domanda va alla sede INPS della tua residenza. L'INPS deve pagare entro <strong>60 giorni</strong> dalla domanda completa.</p>
+    <p>Se la domanda viene respinta in tutto o in parte, puoi fare <strong>ricorso al Comitato provinciale</strong> entro 90 giorni.</p>
+
+    <h2>E la NASpI?</h2>
+    <p>Il Fondo di garanzia e la NASpI sono due cose diverse e si possono avere entrambe. Se ti sei dimesso perché non ti pagavano, le dimissioni sono per giusta causa e la NASpI spetta: vedi come fare le <a href="/dimissioni-online">dimissioni online per giusta causa</a>. Se il lavoro è finito per il fallimento, ricorda che la domanda NASpI va fatta entro 68 giorni: <a href="/naspi/domanda">come presentare la domanda NASpI</a>.</p>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a Roma Vigne Nuove:</p>
+    <ul>
+        <li>controlliamo in che stato è l'azienda (visura e procedure aperte);</li>
+        <li>ti diciamo quali documenti servono e quali moduli far firmare al curatore o al commissario;</li>
+        <li>presentiamo la domanda e seguiamo la pratica fino al pagamento;</li>
+        <li>facciamo con te anche la <a href="/naspi">domanda NASpI</a>, gratis, se non l'hai già fatta.</li>
+    </ul>
+    <p>Per il decreto ingiuntivo e il pignoramento, quando l'azienda non può fallire, di solito serve un avvocato. La domanda all'INPS la presentiamo noi come patronato.</p>
+</NaspiGuideLayout>

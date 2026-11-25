@@ -135,8 +135,19 @@
       ]
     }
   ],
-  "redirects": [],
-  "rewrites": [],
+  "redirects": [
+    {
+      "source": "/blog/fondo-garanzia-inps-tfr-stipendi-non-pagati-roma",
+      "destination": "/naspi/fondo-garanzia-tfr",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/naspi/analyze-document",
+      "destination": "https://domandedisoccupazione.it/api/analyze-document"
+    }
+  ],
   "functions": {
     "api/stima/elabora.py": {
       "maxDuration": 300
