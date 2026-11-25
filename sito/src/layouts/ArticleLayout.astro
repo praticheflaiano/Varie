@@ -11,6 +11,7 @@ import Disclaimer from "~/components/blog/Disclaimer.astro";
 import RelatedArticles from "~/components/blog/RelatedArticles.astro";
 import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
 import AvvisamiWhatsApp from "~/components/blog/AvvisamiWhatsApp.astro";
+import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
 import ShareBar from "~/components/ui/ShareBar.astro";
 import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
@@ -139,6 +140,7 @@ const sourcesCount = article.data.sources?.length ?? 0;
     </div>
 
     <div class="mt-10">
+      {article.data.category === "naspi-disoccupazione" && <PortaleNaspi heading="Calcolatori e guide sul nostro portale NASpI" />}
       <AvvisamiWhatsApp />
     </div>
 

@@ -10,6 +10,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import ServiceLanding from "~/components/ui/ServiceLanding.astro";
 import JsonLdService from "~/components/seo/JsonLdService.astro";
 import { CONTACT } from "~/consts";
+import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
 
 const CAL_CAF = "https://link.arcanis.it/widget/booking/zHBu5s4PxMYtIC18QbIz";
 const CAL_PATRONATO = "https://link.arcanis.it/widget/booking/jQuQoR920Pc9umdvJnlI";
@@ -105,4 +106,5 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
       </div>
     </section>
   </ServiceLanding>
+  <div class="wrap"><PortaleNaspi heading="Dopo il SIISL: guide e strumenti sul portale NASpI" /></div>
 </BaseLayout>

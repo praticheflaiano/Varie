@@ -3,6 +3,7 @@
 import ArticleCard from "~/components/blog/ArticleCard.astro";
 import { getVisibleArticles } from "~/utils/articles";
 import { EXTERNAL_PORTALS } from "~/consts";
+import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
 interface Props { categories: string[]; }
 const { categories } = Astro.props;
 const all = await getVisibleArticles();
@@ -27,5 +28,6 @@ const naspi = categories.includes("naspi-disoccupazione");
         {list.map((a) => <ArticleCard article={a} />)}
       </div>
     )}
+    {naspi && <PortaleNaspi />}
   </section>
 )}
