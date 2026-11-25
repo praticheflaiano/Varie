@@ -67,7 +67,8 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
         </div>
 
         <label class="cc-l" for="cc-paga"><span id="cc-paga-t">4. Stipendio lordo al mese, se è più alto del minimo (facoltativo)</span>
-          <input id="cc-paga" class="cc-in" type="number" min="0" step="0.01" inputmode="decimal" placeholder="lascia vuoto per il minimo" style="max-width:260px">
+          <input id="cc-paga" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 1.300 oppure 9,50" aria-describedby="cc-paga-h" style="max-width:260px">
+          <small id="cc-paga-h" class="cc-h">Lascia vuoto per usare il minimo del contratto. Per i livelli D e D super scrivi lo stipendio compresa l'indennità di funzione.</small>
         </label>
 
         <fieldset class="cc-f"><legend>5. Altre situazioni</legend>
@@ -169,7 +170,7 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
     .cc-res a.cc-btn{display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;font-weight:800;text-decoration:none;margin:10px 10px 0 0}
   </style>
   <script>
-    import { calcola, eur, LIVELLI } from "~/lib/costo-colf";
+    import { calcola, eur, leggiImporto, LIVELLI } from "~/lib/costo-colf";
     const $ = (i: string) => document.getElementById(i) as HTMLInputElement;
     const tipo = () => (document.querySelector('input[name="cc-tipo"]:checked') as HTMLInputElement).value as "convivente" | "convivente30" | "orario";
     function aggiorna() {
@@ -189,13 +190,15 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
     $("cc-b").addEventListener("click", () => {
       const t = tipo();
       const liv = ($("cc-liv") as unknown as HTMLSelectElement).value as any;
-      const paga = parseFloat(String($("cc-paga").value).replace(",", "."));
-      const r = calcola({ tipo: t, livello: liv, ore: parseFloat($("cc-ore").value), giorni: parseFloat($("cc-gg").value), paga: paga > 0 ? paga : undefined, termine: $("cc-td").checked, babysitter: $("cc-bs").checked, piuAssistiti: $("cc-pa").checked });
+      const paga = leggiImporto($("cc-paga").value);
+      if (Number.isNaN(paga)) { show("cc-warn", "Non riesco a leggere la paga che hai scritto. Scrivi solo il numero, per esempio 1.300 per lo stipendio al mese o 9,50 per la paga oraria, oppure lascia vuoto."); return; }
+      const r = calcola({ tipo: t, livello: liv, ore: parseFloat($("cc-ore").value), giorni: parseFloat($("cc-gg").value), paga, termine: $("cc-td").checked, babysitter: $("cc-bs").checked, piuAssistiti: $("cc-pa").checked });
       if (!r.ok) { show("cc-warn", r.errore || "Controlla i dati."); return; }
       const nomeLiv = LIVELLI.find((l) => l.id === liv)!.nome;
       const desc = (t === "orario" ? "a ore" : "convivente") + ", livello " + nomeLiv + ", " + $("cc-ore").value + " ore a settimana";
       const riga = (a: string, b: number, x = "") => "<tr><td>" + a + "</td><td style=\"text-align:right;white-space:nowrap\"><b>" + eur(b) + "</b>" + x + "</td></tr>";
       const tab = "<table>" +
+        riga(t === "orario" ? "Paga oraria usata nel calcolo" : "Stipendio usato nel calcolo", r.pagaBase, r.pagaBase > r.minimo + 0.001 ? " (concordata)" : " (minimo 2026)") +
         riga("Stipendio lordo " + (t === "orario" ? "medio " : "") + "al mese", r.mensileLorda) +
         (r.vittoMese ? riga("Vitto e alloggio (valore, dati in casa)", r.vittoMese, " al mese") : "") +
         riga("Tredicesima (a dicembre)", r.tredicesima) +
@@ -209,7 +212,7 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
       const msg = "Ciao, ho usato il calcolatore colf e badanti: " + desc + ", costo stimato " + eur(r.costoAnno) + " l'anno. Vorrei il preventivo per gestire contratto, buste paga e contributi.";
       show("cc-ok", "Costo stimato per la famiglia:<b class=\"big\">" + eur(r.costoAnno) + " l'anno</b>circa " + eur(r.costoMese) + " al mese in media (" + desc + "). Contributo INPS: " + eur(r.contributoOrario) + " l'ora." + tab +
         '<p style="margin:10px 0 0">Nel 730 puoi dedurre dal reddito <b>' + eur(r.deducibile) + "</b> di contributi pagati da te (massimo 1.549,37 € l'anno).</p>" + av +
-        '<p style="margin:10px 0 0;font-size:14px">Stima con i valori 2026. Non comprende vitto e alloggio dati in natura, scatti di anzianità, straordinari e festività lavorate.</p>' +
+        '<p style="margin:10px 0 0;font-size:14px">Stima con i valori 2026, verificata sulle tabelle ufficiali. Non comprende: vitto e alloggio dati in natura (e il loro valore in denaro se la lavoratrice va in ferie fuori casa), scatti di anzianità, straordinari, festività lavorate; per chi lavora a ore, le festività pagate che cadono nei giorni in cui non lavora; per chi vive in casa, il giorno in più per le festività di domenica (nel 2026 il 4 ottobre e il 1° novembre).</p>' +
         '<p style="margin:0"><a class="cc-btn" style="background:#25D366;color:#14142B" target="_blank" rel="noopener" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '">Chiedi il preventivo su WhatsApp</a><a class="cc-btn" style="background:#14142B;color:#fff" href="/prenota">Prenota un appuntamento</a></p>');
     });
   </script>

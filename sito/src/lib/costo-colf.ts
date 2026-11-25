@@ -171,6 +171,19 @@ export function calcola(i: Input): Risultato {
   };
 }
 
+/**
+ * Legge un importo scritto all'italiana: "1300", "1.300", "1.300,50", "9,50", "9.50", "€ 1.300".
+ * Restituisce undefined se il campo è vuoto, NaN se non si capisce.
+ */
+export function leggiImporto(testo: string): number | undefined {
+  let s = String(testo ?? "").replace(/[€\s]/g, "");
+  if (!s) return undefined;
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+  const n = Number(s);
+  return Number.isFinite(n) && n > 0 ? n : NaN;
+}
+
 export function eur(n: number): string {
   const p = (Math.round(n * 100) / 100).toFixed(2).split(".");
   return p[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + p[1] + " €";
