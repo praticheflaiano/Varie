@@ -1,0 +1,139 @@
+---
+/**
+ * Ricorso contro un provvedimento INPS sulla NASpI (25/11/2026).
+ * Riscrive la guida /guida/ricorso del portale domandedisoccupazione.it, che conteneva errori
+ * (3 anni invece di 1 per il tribunale; ricorso per raccomandata, che il regolamento INPS dichiara inammissibile).
+ * Verificato il 25/11/2026 su:
+ * - INPS, circolare n. 48 del 17/5/2023 e Regolamento ricorsi amministrativi (delib. CdA n. 8 del 18/1/2023):
+ *   solo per via telematica, da soli o tramite patronato con mandato; 90 giorni dalla ricezione; se l'INPS non decide
+ *   la domanda, dal 121° giorno; il Comitato decide entro 90 giorni; il riesame in autotutela non sospende i termini;
+ *   il decorso di 90 giorni dal ricorso è condizione di procedibilità dell'azione giudiziaria (artt. 46 c. 6 e 47 c. 4 L. 88/1989).
+ * - Art. 7 L. 533/1973: la richiesta si intende respinta dopo 120 giorni senza risposta.
+ * - Art. 47 DPR 639/1970: decadenza dall'azione giudiziaria di 1 anno per le prestazioni temporanee (3 anni per le pensioni).
+ * - Scheda INPS NASpI (agg. 2/2/2026) per i motivi di rigetto e decadenza descritti.
+ * Il servizio offerto non indica prezzi: decisione di Antonio in sospeso (25/11/2026).
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+
+const faq = [
+    {
+        q: 'Entro quando si fa il ricorso contro il rigetto della NASpI?',
+        a: 'Entro 90 giorni dal giorno in cui hai ricevuto il provvedimento INPS. Se l\'INPS non ha mai risposto alla domanda, la richiesta si considera respinta dopo 120 giorni e il ricorso si può fare dal 121° giorno.',
+    },
+    {
+        q: 'Serve un avvocato per il ricorso all\'INPS?',
+        a: 'No. Il ricorso amministrativo al Comitato provinciale INPS si presenta online da soli, con SPID, CIE o CNS, oppure tramite un patronato. L\'avvocato serve se poi si va in tribunale.',
+    },
+    {
+        q: 'Posso fare ricorso se la domanda NASpI l\'ho fatta da solo o con un altro patronato?',
+        a: 'Sì. Il ricorso si può presentare da soli online oppure tramite un patronato a cui dai il mandato di assistenza, anche se la domanda l\'ha presentata qualcun altro.',
+    },
+    {
+        q: 'Posso fare ricorso con una raccomandata?',
+        a: 'No. Il regolamento INPS prevede solo la via telematica: un ricorso su carta è inammissibile. La PEC si usa solo se la procedura online non è disponibile, con la firma e la copia del documento.',
+    },
+    {
+        q: 'Chiedere all\'INPS di correggere l\'errore ferma i 90 giorni?',
+        a: 'No. La richiesta di riesame in autotutela non ferma e non sposta il termine per il ricorso. Se i 90 giorni stanno per scadere, presenta comunque il ricorso.',
+    },
+    {
+        q: 'Entro quando si va in tribunale per la NASpI?',
+        a: 'Per la NASpI, che è una prestazione temporanea, il termine è di 1 anno (art. 47 DPR 639/1970). I 3 anni valgono per le pensioni. Prima di andare dal giudice devono passare 90 giorni dal ricorso amministrativo, se il Comitato non ha già deciso.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="Ricorso NASpI: rigetto o decadenza, 90 giorni e come farlo"
+    description="NASpI respinta o revocata? Il ricorso al Comitato provinciale INPS si fa online entro 90 giorni. Cosa allegare, tempi, tribunale. Patronato a Roma."
+    path="/naspi/ricorso"
+    h1="Ricorso NASpI: cosa fare se l'INPS dice no"
+    kicker="Entro 90 giorni dal provvedimento"
+    crumb="Ricorso NASpI"
+    updated="2026-11-25"
+    published="2026-11-25"
+    image="/og/naspi-ricorso.jpg"
+    imageAlt="Ricorso NASpI: cosa fare se l'INPS dice no"
+    related={["checklist-primi-7-giorni-perdita-lavoro-roma", "naspi-2026-patronato-vs-caf-cosa-fa-cosa"]}
+    sources={[
+        { t: 'Scheda INPS "Ricorsi amministrativi" (ultimo aggiornamento 16 gennaio 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.ricorsi-amministrativi.html" },
+        { t: "Circolare INPS 17 maggio 2023, n. 48 (Regolamento in materia di ricorsi amministrativi)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2023.05.circolare-numero-48-del-17-05-2023_14161.html" },
+        { t: "Legge 9 marzo 1989, n. 88, artt. 46 e 47 (Comitati provinciali e ricorsi)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1989-03-09;88" },
+        { t: "D.P.R. 30 aprile 1970, n. 639, art. 47 (termini per l'azione giudiziaria)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1970-04-30;639" },
+        { t: "Legge 11 agosto 1973, n. 533, art. 7 (domanda respinta dopo 120 giorni senza risposta)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1973-08-11;533" },
+        { t: 'Scheda INPS "NASpI: indennità mensile di disoccupazione" (ultimo aggiornamento 2 febbraio 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" },
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>Contro un no dell'INPS sulla NASpI (domanda respinta, decadenza, somme da restituire, importo o durata sbagliati) si fa <strong>ricorso al Comitato provinciale INPS</strong>.</li>
+            <li>Il termine è di <strong>90 giorni</strong> da quando hai ricevuto il provvedimento.</li>
+            <li>Si presenta <strong>solo online</strong>: da solo con SPID, CIE o CNS, oppure tramite un <strong>patronato</strong>. La raccomandata non vale.</li>
+            <li>Il Comitato decide di regola <strong>entro 90 giorni</strong>. Se dice no o non risponde, puoi andare dal <strong>giudice del lavoro</strong> con un avvocato.</li>
+            <li>Per la NASpI il termine per andare in tribunale è di <strong>1 anno</strong>, non 3.</li>
+        </ul>
+    </blockquote>
+
+    <h2>Quando si può fare ricorso</h2>
+    <p>Il ricorso amministrativo serve a chiedere a un organo dell'INPS diverso dall'ufficio che ha deciso, il <strong>Comitato provinciale</strong>, di annullare o cambiare un provvedimento. Per la NASpI i casi più comuni sono:</p>
+    <ul>
+        <li><strong>domanda respinta</strong>, per esempio perché l'INPS ritiene che manchino i requisiti;</li>
+        <li><strong>decadenza</strong> dalla NASpI mentre la stai prendendo;</li>
+        <li><strong>richiesta di restituzione</strong> di somme (indebito);</li>
+        <li><strong>importo o durata</strong> più bassi di quelli che ti spettano.</li>
+    </ul>
+    <p>Se l'INPS <strong>non risponde</strong> alla domanda, dopo 120 giorni la domanda si considera respinta e dal 121° giorno puoi fare ricorso.</p>
+
+    <h2>Prima leggi bene il provvedimento</h2>
+    <p>Nella lettera dell'INPS c'è il <strong>motivo</strong> del no. Da lì si capisce se c'è margine:</p>
+    <ul>
+        <li><strong>Contributi insufficienti</strong>: controlla l'estratto conto contributivo. Servono almeno 13 settimane negli ultimi 4 anni; dal 2025, se nei 12 mesi prima ti eri dimesso da un lavoro a tempo indeterminato, servono anche 13 settimane dopo quelle dimissioni.</li>
+        <li><strong>Dimissioni</strong>: la NASpI spetta solo in casi precisi (giusta causa, periodo tutelato di maternità o paternità, risoluzione consensuale con la procedura prevista). Per la giusta causa servono prove: lettere, PEC, buste paga non pagate.</li>
+        <li><strong>Domanda oltre i 68 giorni</strong>: verifica se il termine partiva più tardi, per esempio per malattia, maternità o infortunio indennizzati, per il preavviso pagato o per una vertenza. Se il termine è davvero scaduto, il ricorso di solito non serve.</li>
+        <li><strong>Reddito non dichiarato</strong>: se avevi un'altra attività o un part-time, andava dichiarato il reddito previsto, anche zero, nella domanda o entro un mese con il modello NASpI-Com. Controlla cosa risulta inviato e quando.</li>
+        <li><strong>Obblighi con il centro per l'impiego</strong>: le sanzioni vanno da un taglio della NASpI fino alla decadenza. Servono le prove dei giustificati motivi (certificati, convocazioni, ricevute).</li>
+        <li><strong>Importo o durata</strong>: confronta settimane e retribuzioni dell'estratto conto con quelle usate dall'INPS. Puoi fare una stima con il calcolatore qui sotto.</li>
+    </ul>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/calcolo-naspi"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo NASpI 2026</span><span class="cta-tool-s">Confronta importo e durata con quelli della lettera INPS</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+    <p>Se l'errore è evidente (un dato sbagliato, un documento non considerato) puoi anche chiedere all'INPS di <strong>riesaminare</strong> il provvedimento. Attenzione: la richiesta di riesame <strong>non ferma i 90 giorni</strong> del ricorso.</p>
+
+    <h2>Come si presenta il ricorso</h2>
+    <ol>
+        <li><strong>Online da solo</strong>: sul sito INPS, servizio "Ricorsi amministrativi", con SPID, CIE o CNS. Inviato così, il ricorso è valido anche senza firma.</li>
+        <li><strong>Tramite patronato</strong>: il patronato lo presenta per te, con il mandato di assistenza che firmi e che viene allegato al ricorso.</li>
+    </ol>
+    <p>Il ricorso su carta, per esempio con raccomandata, è <strong>inammissibile</strong>. La PEC si può usare solo se la procedura online non è disponibile, con la tua firma e la copia del documento d'identità.</p>
+
+    <h2>Cosa scrivere e cosa allegare</h2>
+    <ul>
+        <li>il <strong>provvedimento</strong> che contesti (numero e data della lettera INPS);</li>
+        <li>un breve racconto di <strong>cosa è successo</strong>;</li>
+        <li>i <strong>motivi</strong> per cui la decisione è sbagliata;</li>
+        <li>i <strong>documenti</strong> che li provano: lettera di licenziamento o dimissioni, contratto, buste paga, estratto conto contributivo, certificati, ricevute di comunicazioni inviate.</li>
+    </ul>
+
+    <h2>Quanto tempo ci vuole</h2>
+    <p>Il Comitato provinciale deve decidere <strong>entro 90 giorni</strong> dalla ricezione del ricorso, ma può decidere anche dopo. Se accoglie il ricorso, l'INPS rifà il provvedimento e paga quello che spetta.</p>
+
+    <h2>Se il ricorso va male: il giudice del lavoro</h2>
+    <p>Se il Comitato respinge il ricorso, oppure se sono passati <strong>90 giorni</strong> dal ricorso senza decisione, puoi fare causa davanti al <strong>giudice del lavoro</strong>. Serve un <strong>avvocato</strong>; chi ha un reddito basso può chiedere il patrocinio a spese dello Stato.</p>
+    <p>Per la NASpI, che è una prestazione temporanea, il termine per andare in tribunale è di <strong>1 anno</strong> (art. 47 del DPR 639/1970). Il termine di 3 anni vale per le pensioni. Il giorno da cui contare dipende dalle date della domanda e del ricorso: fallo controllare per tempo.</p>
+
+    <h2>Cosa non fare</h2>
+    <ul>
+        <li><strong>Lasciar scadere i 90 giorni</strong> aspettando una risposta al riesame.</li>
+        <li><strong>Ignorare</strong> una richiesta di restituzione: leggi subito la lettera e i termini indicati.</li>
+        <li><strong>Mandare il ricorso per posta</strong>: non vale.</li>
+    </ul>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro e Bufalotta), anche a distanza:</p>
+    <ul>
+        <li>leggiamo con te il provvedimento e l'estratto conto e ti diciamo se c'è margine per il ricorso;</li>
+        <li>ti diciamo quali documenti raccogliere;</li>
+        <li>presentiamo il ricorso amministrativo come patronato, con il tuo mandato;</li>
+        <li>per la causa davanti al giudice ti indichiamo come procedere con un avvocato.</li>
+    </ul>
+</NaspiGuideLayout>
