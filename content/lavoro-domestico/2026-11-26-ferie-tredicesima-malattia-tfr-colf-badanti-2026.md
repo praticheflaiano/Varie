@@ -10,7 +10,7 @@ meta_description: "Colf e badanti: 26 giorni di ferie, tredicesima a dicembre, m
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "CCNL sulla disciplina del rapporto di lavoro domestico del 28 ottobre 2025 (in vigore dal 1° novembre 2025), artt. 16, 17, 25, 27, 37, 39, 41 e chiarimenti a verbale - https://associazionedomina.it/ccnl-lavoro-domestico/"
-  - "INPS, scheda Dimissioni, licenziamento e TFR dei lavoratori domestici - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50215.dimissioni-licenziamento-e-tfr-dei-lavoratori-domestici.html"
+  - "INPS, scheda Dimissioni, licenziamento e TFR dei lavoratori domestici (TFR annuale, anticipo, esempio di rivalutazione) - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50215.dimissioni-licenziamento-e-tfr-dei-lavoratori-domestici.html"
   - "Ministero del Lavoro, tabella dei minimi retributivi del lavoro domestico con decorrenza 1° gennaio 2026 - https://www.lavoro.gov.it/notizie/pagine/lavoro-domestico-accordo-sui-minimi-retributivi-2026"
 status: published
 type: guida
@@ -95,7 +95,17 @@ Alla fine del rapporto, per qualsiasi motivo, alla lavoratrice spetta il **tratt
 **Esempio – badante convivente C super per un anno, paga minima 2026:**
 (1.193,84 × 12) + 1.393,64 (tredicesima) + (199,80 × 12) = 18.117,32 € → ÷ 13,5 = **1.342,02 €** di TFR per il 2026.
 
-Il contratto prevede che, se la lavoratrice lo chiede, la famiglia **anticipi fino al 70%** del TFR maturato, non più di una volta l'anno.
+> [calcolo del TFR di colf e badanti](/calcolo-tfr-colf-badanti): TFR anno per anno, con le rivalutazioni ISTAT e gli anticipi già pagati.
+
+### Come si gestisce il TFR, anno per anno
+
+1. **Ogni anno si calcola la quota.** A fine dicembre si fa il conto della quota dell'anno e della rivalutazione del TFR già accumulato. La quota dell'anno in corso non si rivaluta.
+2. **Il TFR resta alla famiglia.** Non si versa all'INPS né a un fondo: è una somma che la famiglia deve alla lavoratrice e paga alla fine. Conviene metterla da parte ogni anno, così alla fine non arriva tutta insieme.
+3. **Ogni anno il TFR già accumulato cresce** dell'1,5% più il 75% dell'aumento dei prezzi misurato dall'ISTAT. Esempio dell'INPS: con 900 € al mese la quota annua è di 866,67 €; dopo 22 anni, con le rivalutazioni, il TFR arriva a **25.128,17 €**.
+4. **Si paga sempre alla fine del rapporto**: per dimissioni, licenziamento o morte, anche per poche ore a settimana. Secondo l'INPS spetta anche se il rapporto finisce durante la prova, purché sia durato almeno 15 giorni. Se muore la lavoratrice, il TFR va al coniuge e ai figli o, se erano a suo carico, ai parenti entro il 3° grado e agli affini entro il 2°.
+5. **Si può pagare ogni anno.** La legge lo consente se una delle due parti lo chiede e l'altra è d'accordo (liquidazione frazionata). Conviene scriverlo e farsi firmare la ricevuta.
+6. **Anticipo.** Su richiesta della lavoratrice si anticipa fino al **70%** del TFR maturato, non più di una volta l'anno. Il contratto nazionale lo prevede senza un minimo di anni; la legge generale chiede 8 anni di servizio.
+7. **Cosa tenere.** Ogni anno un prospetto del TFR maturato, firmato da tutte e due le parti, e le ricevute di anticipi e pagamenti. Con il servizio Unsicolf il conteggio lo teniamo noi.
 
 > [calcolo del costo di colf e badanti](/calcolo-costo-colf-badante): vedi tredicesima e TFR del tuo rapporto con i valori 2026.
 
@@ -130,7 +140,10 @@ Sempre 26 giorni lavorativi l'anno. Per ogni giorno di ferie si paga 1/6 delle o
 No. Per il lavoro domestico la malattia la paga la famiglia, fino a 8, 10 o 15 giorni l'anno secondo l'anzianità: al 50% i primi tre giorni e al 100% dal quarto.
 
 **Il TFR spetta anche a chi lavora poche ore?**
-Sì, sempre, anche per rapporti brevi o di poche ore a settimana.
+Sì, sempre, anche per rapporti brevi o di poche ore a settimana. Secondo l'INPS spetta anche se il rapporto finisce durante la prova, se è durata almeno 15 giorni.
+
+**Il TFR della colf si può pagare ogni anno?**
+Sì, se una delle due parti lo chiede e l'altra è d'accordo. Altrimenti si paga alla fine del rapporto, rivalutato.
 
 **La badante può chiedere un anticipo del TFR?**
 Sì. Il contratto prevede che la famiglia anticipi, su richiesta, fino al 70% del TFR maturato, non più di una volta l'anno.

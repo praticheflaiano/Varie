@@ -21,3 +21,12 @@ Pagine: /calcolo-costo-colf-badante, /colf-badanti (aggiornata), 4 guide nuove i
 ## Verifica tecnica
 - Build ok, axe (wcag2a/aa/21aa/22aa/best-practice) zero errori a 390 e 1366 px su 7 pagine.
 - Calcolatore: esempi verificati a mano (C super 54 h: 19.785,50 €/anno; colf B 10 h: 4.922,68 €/anno).
+
+## Aggiornamento 26/11/2026 (calcolatore TFR e correzioni)
+- Scheda INPS "Dimissioni, licenziamento e TFR dei lavoratori domestici" (agg. 3/11/2026) letta per intero:
+  - TFR annuale: la legge lo consente con l'accordo delle parti (liquidazione frazionata). Rimesso nella guida con questa fonte.
+  - Anticipo: INPS cita la regola di legge (8 anni, 70%, una volta l'anno); il CCNL art. 41 c. 2 lo prevede senza minimo di anni. Riportati entrambi.
+  - TFR anche se il rapporto finisce in prova durata almeno 15 giorni.
+  - Dimissioni: INPS applica il dimezzamento del preavviso a tutti i rapporti, anche sotto le 25 ore (4 e 7,5 giorni). Guida corretta.
+- Nuovo /calcolo-tfr-colf-badanti: coefficienti dicembre 1998-2018 dalla tabella INPS; 2019-2023 tabella ISTAT pubblicata dalla Camera di Commercio di Cremona; 2024 Webcolf e ANCE; 2025 ANCE e Assolombarda (2,311148); mensili 2025 Webcolf; mensili 2026 (gennaio-ottobre) FiscoeTasse, Webcolf, Rivaluta (ottobre 5,234939), coerenti tra loro con gli indici FOI.
+- Prova: l'esempio INPS 1997-2018 (900 €/mese) dà 25.128,19 € contro 25.128,17 € ufficiali (2 centesimi di arrotondamenti).
