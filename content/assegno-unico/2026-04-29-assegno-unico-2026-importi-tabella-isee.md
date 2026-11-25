@@ -1,7 +1,7 @@
 ---
 title: "Assegno Unico 2026: tabella importi per fascia ISEE"
 slug: "assegno-unico-2026-importi-tabella-isee"
-seo_title: "Assegno unico 2026: da 58,30 a 203,80 € per figlio minore"
+seo_title: "Tabella Assegno Unico 2026: da 58,30 a 203,80 € per figlio"
 date: 2026-04-29
 last_updated: 2026-11-23
 category: "assegno-unico"
@@ -32,6 +32,8 @@ image_alt: "Illustrazione editoriale: pattern bar-chart astratto in toni di blu 
 L'**Assegno Unico Universale (AUU)** e dal 2022 la principale prestazione INPS a sostegno delle famiglie con figli a carico. Nel **2026** gli importi sono stati **rivalutati del +1,4%** in base all'inflazione ISTAT 2025 (Circolare INPS n. 7 del 30 gennaio 2026). Questa guida completa del **Centro Pratiche Flaiano** (CAF UNSIC + Patronato ENASC con sede a Roma Vigne Nuove) ti spiega quanto spetta in base al tuo **ISEE 2026**, quali maggiorazioni hai diritto a chiedere e cosa cambia per figli maggiorenni e con disabilita.
 
 ## Importo base per figlio minorenne 2026
+
+La **tabella ufficiale completa** degli importi 2026, fascia per fascia di ISEE, è l'Allegato 1 della [circolare INPS n. 7 del 30 gennaio 2026 (PDF)](https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/01/Circolare_15152/Allegati/16548_Circolare-numero-7-del-30-01-2026.pdf). Qui sotto la trovi riassunta.
 
 L'importo dell'AUU per ogni figlio **minorenne** dipende dall'**ISEE 2026** del nucleo familiare. La regola e **decrescente lineare** tra due soglie ISEE:
 

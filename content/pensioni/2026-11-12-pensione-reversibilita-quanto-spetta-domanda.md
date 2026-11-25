@@ -11,7 +11,7 @@ author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, scheda Pensione ai superstiti indiretta e di reversibilità (aggiornata il 12 giugno 2026): https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.pensione-ai-superstiti-indiretta-e-di-reversibilit--50605.pensione-ai-superstiti-indiretta-e-di-reversibilit-.html"
   - "Legge 8 agosto 1995, n. 335, art. 1, comma 41 e Tabella F (aliquote e cumulo con i redditi del superstite): https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1995-08-08;335"
-  - "INPS, Circolare n. 153 del 19 dicembre 2025 - Rinnovo delle pensioni per il 2026 (trattamento minimo provvisorio 611,85 euro al mese, 7.954,05 euro all'anno): https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16484_Circolare-numero-153-del-19-12-2025.pdf"
+  - "INPS, Circolare n. 153 del 19 dicembre 2025 - Rinnovo delle pensioni per il 2026 (trattamento minimo provvisorio 611,85 euro al mese, 7.954,05 euro all'anno; par. 8.2.1: alla scadenza di un contitolare si paga solo la quota di chi resta e servono i redditi): https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16484_Circolare-numero-153-del-19-12-2025.pdf"
   - "INPS, Circolare n. 153/2025, Allegato n. 2 (Tabella F 2026: soglie 23.862,15 / 31.816,20 / 39.770,25 euro; limite reddito studenti 10.340,27 euro): https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16486_Circolare-numero-153-del-19-12-2025_Allegato-n-2.pdf"
   - "Corte costituzionale, sentenza n. 162 del 30 giugno 2022 (la riduzione non può superare i redditi del superstite): https://www.cortecostituzionale.it/scheda-pronuncia/2022/162"
   - "INPS, Circolare n. 108 del 22 dicembre 2023 (applicazione della sentenza 162/2022): https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2023.12.circolare-numero-108-del-22-12-2023_14390.html"
@@ -21,7 +21,6 @@ sources:
   - "Legge 7 agosto 1990, n. 241 (termine ordinario di 30 giorni per i procedimenti INPS)"
   - "D.P.R. 28 dicembre 2000, n. 445, art. 46, comma 1, lett. f) e cc) (stato di famiglia e vivenza a carico dichiarati con autocertificazione) - https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445"
   - "INPS, notizia del 27 dicembre 2023 Pensione ai superstiti e redditi aggiuntivi: nuovi limiti di cumulabilità - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2023.12.pensione-ai-superstiti-e-redditi-aggiuntivi-nuovi-limiti-cumulabilit-.html"
-  - "INPS, Pensioni: requisiti e domanda con il patronato (pagina servizio Centro Pratiche Flaiano: domanda di pensione gratuita) - https://praticheflaiano.it/pensioni"
 status: published
 type: guida
 image: "/og/pensione-reversibilita-quanto-spetta-domanda.jpg"
@@ -176,7 +175,7 @@ La reversibilità si perde quando il **coniuge si risposa** oppure, per i **figl
 - **Figli studenti:** finisce a **21 anni** (scuola superiore o corso professionale) o alla fine della durata legale del corso universitario, e comunque a **26 anni**; finisce anche se lavorano con un reddito oltre il limite (**10.340,27 euro** nel 2026, valore provvisorio).
 - **Figli inabili:** il diritto resta finché dura l'inabilità e la vivenza a carico.
 
-Quando un figlio perde il diritto, la percentuale degli altri superstiti viene ricalcolata (per esempio il coniuge torna al 60%). Il **lavoro** del coniuge **non fa perdere** la reversibilità: al massimo la riduce (vedi sopra).
+Quando un figlio perde il diritto, la sua quota non viene più pagata e resta solo quella degli altri: per esempio, se resta solo il coniuge, si torna al 60% e da quel momento contano i limiti di reddito (circolare INPS 153/2025, par. 8.2.1). Il **lavoro** del coniuge **non fa perdere** la reversibilità: al massimo la riduce (vedi sopra).
 
 ### Cosa succede se ti risposi
 
@@ -253,7 +252,7 @@ Vuoi sapere prima quanto ti spetterà? Con il servizio **[Stima e Calcolo della 
 Niente: la domanda di pensione con il nostro patronato è gratuita, anche per la reversibilità. A Roma ci trovi a Vigne Nuove, oppure in videochiamata.
 
 **Il coniuge separato ha diritto alla reversibilità?**
-Sì. Il coniuge separato ha diritto come il coniuge non separato (scheda INPS).
+Sì: la scheda INPS indica anche il coniuge separato tra chi ha diritto alla pensione ai superstiti.
 
 **La pensione di reversibilità spetta anche al convivente?**
 No, se non c'è un'unione civile. La legge prevede il coniuge e la persona unita civilmente.
