@@ -8,7 +8,6 @@ import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { Icon } from "astro-icon/components";
 import ServiceBlock from "~/components/ui/ServiceBlock.astro";
 import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
-import { EXTERNAL_PORTALS } from "~/consts";
 
 const services = [
   {
@@ -154,7 +153,7 @@ const faq = [
     </div>
   </section>
 
-  {/* Portale NASpI dedicato - cross-link al sito esterno del Centro */}
+  {/* NASpI e disoccupazione: strumenti e guide interne (dal 25/11/2026) */}
   <section class="section-tight">
     <div class="container-wide">
       <div class="relative overflow-hidden p-7 md:p-10" style="background:#D4FF4F;border-radius:36px">
@@ -162,33 +161,24 @@ const faq = [
           <div class="lg:col-span-8">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-[#14142B] px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
               <Icon name="heroicons:rocket-launch" class="size-3.5" />
-              Portale dedicato
+              Disoccupazione
             </span>
             <h2 class="mt-3 font-display text-[var(--color-brand-950)]">
-              NASpI? Abbiamo un portale dedicato.
+              NASpI: calcolo, anticipo e guide, tutto qui.
             </h2>
             <p class="mt-3 text-base text-[#14142B] leading-relaxed max-w-2xl">
-              <strong>{EXTERNAL_PORTALS.naspi.label}</strong>: calcolatore NASpI con simulazione importi e durata, anticipo NASpI (dal 2026 in due rate, 70% e 30%), OCR documenti INPS automatico, oltre 30 guide approfondite su dimissioni, DIS-COLL, obblighi del disoccupato. Sito autonomo del Centro Pratiche Flaiano.
+              Calcola importo e durata della NASpI, guarda quanto ricevi con l'anticipo in due rate (70% e 30%), controlla le scadenze della domanda e leggi la guida al Fondo di garanzia INPS per TFR e stipendi non pagati.
             </p>
             <ul class="mt-5 grid gap-2 sm:grid-cols-2 text-sm text-[#14142B] font-semibold">
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />Calcolatore NASpI online</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />Anticipo NASpI in due rate (70% e 30%)</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />OCR automatico documenti INPS</li>
-              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" />30+ guide su dimissioni e obblighi</li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" /><a href="/calcolo-naspi" class="underline">Calcolo NASpI online</a></li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" /><a href="/anticipo-naspi" class="underline">Anticipo NASpI in due rate</a></li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" /><a href="/naspi/domanda" class="underline">Domanda NASpI: tempi e scadenze</a></li>
+              <li class="flex items-start gap-2"><Icon name="heroicons:check-circle-20-solid" class="size-5 shrink-0 text-[#5B3DF5]" /><a href="/naspi/fondo-garanzia-tfr" class="underline">Fondo di garanzia: TFR e stipendi</a></li>
             </ul>
           </div>
           <div class="lg:col-span-4 flex lg:justify-end">
-            <a
-              href={EXTERNAL_PORTALS.naspi.url}
-              target="_blank"
-              rel="noopener"
-              class="btn btn-primary btn-lg"
-            >
-              Vai al portale NASpI
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M7 17L17 7"/>
-                <polyline points="7 7 17 7 17 17"/>
-              </svg>
+            <a href="/naspi" class="btn btn-primary btn-lg">
+              Vai alla pagina NASpI
             </a>
           </div>
         </div>

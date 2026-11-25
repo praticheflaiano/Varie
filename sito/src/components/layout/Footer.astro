@@ -1,5 +1,5 @@
 ---
-import { SITE, CONTACT, HOURS, SOCIAL, ORG_CREDENTIALS, EXTERNAL_PORTALS, LANDING } from "~/consts";
+import { SITE, CONTACT, HOURS, SOCIAL, ORG_CREDENTIALS, LANDING } from "~/consts";
 import { CATEGORY_LIST } from "~/utils/categories";
 import Logo from "~/components/illustrations/Logo.astro";
 
@@ -45,7 +45,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
           <li><a href="/calcolo-maternita-congedi">Calcolo maternità e congedi</a></li>
           <li><a href="/calcolo-naspi">Calcolo NASpI</a></li>
           <li><a href="/anticipo-naspi">Anticipo NASpI</a></li>
-          <li><a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" style="color:#D4FF4F;font-weight:700">Portale NASpI ↗</a></li>
+          <li><a href="/naspi/fondo-garanzia-tfr">Fondo di garanzia TFR</a></li>
         </ul>
       </div>
 
