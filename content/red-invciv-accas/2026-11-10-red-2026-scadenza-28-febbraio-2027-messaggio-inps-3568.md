@@ -1,14 +1,16 @@
 ---
-title: "Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (1° marzo 2027)"
-seo_title: "Modello RED: scadenza 1° marzo 2027, chi deve farlo"
+title: "Modello RED 2026: scadenza 1° marzo 2027, chi deve farlo e quando si fa il RED 2027"
+seo_title: "Modello RED 2026 scadenza 1° marzo 2027: chi deve farlo"
 slug: "red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568"
 date: 2026-11-10
-last_updated: 2026-11-23
+last_updated: 2026-11-26
 category: "red-invciv-accas"
 tags: ["inps", "pensionati", "red", "assegno sociale", "caf", "novita"]
-meta_description: "Messaggi INPS 3568 e 3697 del 2026: RED sui redditi 2025 e ACC.AS/PS entro il 1° marzo 2027. Chi deve farli, documenti, ricoveri e rischi. Ti aiutiamo a Roma."
+meta_description: "Modello RED 2026 (redditi 2025) e ACC.AS/PS: scadenza 1° marzo 2027. Il RED 2027 si fa da settembre 2027. Chi deve farlo e documenti. CAF a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, notizia del 13 novembre 2026 Avvio Campagna RED ordinaria 2026 e dichiarazioni di responsabilità (termine 1° marzo 2027) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.11.avvio-campagna-red-ordinaria-2026-e-dichiarazioni-di-responsabilit.html"
+  - "INPS, Guida Campagna RED 2026 (anno reddito 2025), versione 2.0 del 29 ottobre 2026 (obbligo sotto i 76 anni e casi degli ultrasettantacinquenni) - https://www.inps.it/content/dam/inps-site/software/2026/10/allegatisoftware/Guida_Campagna_Red_2026_Vers_2.0.pdf"
   - "INPS, Messaggio 12 novembre 2026, n. 3697 (campagna RED ordinaria 2026 sui redditi 2025 e dichiarazioni di responsabilita 2026, scadenza 1 marzo 2027) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3697-del-12-11-2026_16418.html"
   - "INPS, Messaggio 3 novembre 2026, n. 3568 - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3568-del-03-11-2026_16406.html"
   - "INPS, Allegato 1 al messaggio 3568/2026: schema di convenzione con i soggetti abilitati all'assistenza fiscale (deliberazione CdA n. 116 del 15 luglio 2026), artt. 3, 4, 5, 13"
@@ -26,11 +28,11 @@ image: "/og/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568.jpg"
 image_alt: "Modello RED 2026: scadenza 1 marzo 2027"
 ---
 
-# Modello RED 2026 e dichiarazione ACC.AS/PS: chi deve farli, come ed entro quando (1° marzo 2027)
+# Modello RED 2026: scadenza 1° marzo 2027, chi deve farlo e quando si fa il RED 2027
 
-**Ultimo aggiornamento: 13 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
-**Aggiornamento del 13 novembre 2026:** con il **messaggio INPS n. 3697 del 12 novembre 2026** l'INPS ha indicato come termine della campagna RED ordinaria 2026 (redditi 2025) e delle dichiarazioni di responsabilità 2026 (ACC.AS/PS) il **1° marzo 2027**. Nella prima versione di questo articolo, basata sul messaggio 3568 del 3 novembre, avevamo scritto 28 febbraio 2027: il 28 febbraio 2027 cade di domenica e il nuovo messaggio indica lunedì 1° marzo 2027. Il resto dell'articolo resta valido.
+Il **modello RED 2026** dichiara i **redditi del 2025** e va presentato entro **lunedì 1° marzo 2027** (messaggio INPS n. 3697 del 12 novembre 2026). Lo stesso termine vale per la dichiarazione **ACC.AS/PS** di chi prende l'assegno sociale. Il **RED 2027**, sui redditi del 2026, si farà invece **da settembre 2027**.
 
 Con il **messaggio n. 3568 del 3 novembre 2026** l'INPS ha fissato le regole delle prossime campagne di verifica: il **modello RED** sui redditi del 2025 e del 2026 e la **dichiarazione di responsabilità ACC.AS/PS** per chi prende l'assegno sociale. Il messaggio riguarda soprattutto i CAF, che possono firmare la convenzione con l'INPS. Dentro però ci sono le date e le regole che servono a te, se prendi una pensione o una prestazione legata al reddito.
 
@@ -48,13 +50,35 @@ Le campagne dell'anno dopo (RED 2027 sui redditi 2026, ACC.AS/PS 2027 e sollecit
 
 > [Prenota il modello RED](/prenota): lo prepariamo e lo inviamo noi all'INPS entro il 1° marzo 2027.
 
+## Qual è la scadenza del modello RED 2026?
+
+La scadenza del **modello RED 2026** è **lunedì 1° marzo 2027**: la campagna sui redditi 2025 è partita il 1° settembre 2026 (messaggio INPS n. 3697 del 12 novembre 2026).
+
+Lo stesso termine vale per l'**ACC.AS/PS 2026**. Nella prima versione di questo articolo, basata sul messaggio 3568, avevamo scritto 28 febbraio 2027: il 28 febbraio 2027 è domenica e il messaggio 3697 indica il 1° marzo. Il **28 febbraio 2027** resta indicato, nel messaggio 3568, solo per i **solleciti** della campagna 2025: controlla la data sulla tua lettera.
+
+## Modello RED 2027: quando si fa e quando scade?
+
+Il **RED 2027** riguarda i **redditi del 2026** e si fa dal **1° settembre 2027 al 2 marzo 2028**, secondo il messaggio INPS n. 3568 del 3 novembre 2026.
+
+Attenzione ai nomi: chi cerca "RED 2027" spesso intende il RED da presentare **nei primi mesi del 2027**. Quello è il **RED 2026** (redditi 2025), con scadenza **1° marzo 2027**. In pratica:
+
+| Campagna | Redditi dichiarati | Quando si presenta |
+|---|---|---|
+| **RED 2026** | 2025 | dal 1° settembre 2026 al **1° marzo 2027** |
+| **RED 2027** | 2026 | dal 1° settembre 2027 al **2 marzo 2028** |
+
+L'INPS avvisa chi deve presentarlo con una **comunicazione** e nell'area **MyINPS**.
+
 ## Perché l'INPS ti chiede il RED
 
 Alcune prestazioni dell'INPS cambiano in base al reddito tuo e, a volte, della tua famiglia: l'integrazione al minimo, le maggiorazioni sociali, la quattordicesima, l'assegno sociale, alcune pensioni ai superstiti. Per legge l'INPS deve controllare ogni anno quei redditi e recuperare quello che ha pagato in più (legge 412/1991, art. 13).
 
 Gran parte dei redditi l'INPS li riceve già dall'Agenzia delle Entrate, attraverso il 730 o il modello Redditi. Il RED serve per tutto quello che al Fisco non arriva, o arriva in un modo che all'INPS non basta.
 
-## Chi deve presentare il RED
+## Chi deve fare il RED 2026?
+
+Deve fare il RED 2026 chi ha una **prestazione INPS legata al reddito** (integrazione al minimo, maggiorazioni, quattordicesima, assegno sociale, alcune reversibilità) e ha **meno di 76 anni**, se ha redditi che l'INPS non conosce già. Dai 76 anni in su serve solo in alcuni casi (guida INPS alla campagna RED 2026, vedi sotto).
+
 
 Secondo la convenzione allegata al messaggio (art. 3), devi dichiarare i redditi all'INPS se ti trovi in uno di questi casi, per te o per i familiari il cui reddito conta per la tua prestazione:
 
@@ -65,6 +89,8 @@ Secondo la convenzione allegata al messaggio (art. 3), devi dichiarare i redditi
 5. **"NO RED"**: per un familiare (non il titolare della pensione) che ha già dichiarato tutto al Fisco con il 730 o il modello Redditi.
 
 **Non devi dichiarare** le pensioni e le altre prestazioni che l'INPS già conosce, perché sono nel Casellario dei pensionati.
+
+**Se hai 76 anni o più**, la guida INPS alla campagna RED 2026 chiede la dichiarazione solo se nell'ultima dichiarazione avevi almeno un reddito oltre la pensione, oppure se nel tuo nucleo c'è una persona sotto i 76 anni.
 
 Se anche una sola persona del nucleo deve fare il RED, vanno dichiarati insieme i redditi di **tutti** i familiari che contano per la prestazione.
 
@@ -184,7 +210,16 @@ Siamo **CAF convenzionato con l'INPS** per il RED e l'ACC.AS/PS. Guardiamo insie
 ## Domande frequenti
 
 **Entro quando va presentato il RED 2026?**
-La campagna ordinaria sui redditi 2025 va dal 1° settembre 2026 al 1° marzo 2027 (messaggio INPS 3697/2026). Meglio non aspettare l'ultimo giorno: il CAF ha poi fino a 30 giorni per trasmetterlo.
+Entro il 1° marzo 2027: la campagna ordinaria sui redditi 2025 va dal 1° settembre 2026 al 1° marzo 2027 (messaggio INPS 3697/2026). Meglio non aspettare l'ultimo giorno: il CAF ha poi fino a 30 giorni per trasmetterlo.
+
+**Quando inizia la campagna RED 2027?**
+Il 1° settembre 2027 e finisce il 2 marzo 2028 (messaggio INPS 3568/2026). Riguarda i redditi del 2026.
+
+**Quando si fa il RED 2027?**
+Dal 1° settembre 2027. Se invece ti serve il RED da fare adesso, nei primi mesi del 2027, è il RED 2026 sui redditi 2025: scade il 1° marzo 2027.
+
+**Qual è la scadenza dell'ACC.AS/PS 2026?**
+Il 1° marzo 2027, come il RED (messaggio INPS 3697/2026). Riguarda chi prende pensione sociale, assegno sociale o assegno sociale sostitutivo dell'invalidità civile.
 
 **Ho fatto il 730: devo fare anche il RED?**
 No, se tu e i familiari che contano avete dichiarato nel 730 tutti i redditi che servono all'INPS. Se però hai interessi su conti, titoli o buoni postali, redditi esteri o redditi esenti non presenti nel 730, il RED serve.

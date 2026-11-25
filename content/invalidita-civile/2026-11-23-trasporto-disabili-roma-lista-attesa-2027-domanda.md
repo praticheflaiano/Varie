@@ -6,7 +6,7 @@ date: 2026-11-23
 last_updated: 2026-11-23
 category: "invalidita-civile"
 tags: ["disabilita", "legge-104", "cude", "roma", "trasporto", "scadenza"]
-meta_description: "Trasporto individuale disabili di Roma Capitale: domanda per la lista d'attesa 2027 entro il 15 gennaio 2027. Chi può farla, punteggi, documenti e come si presenta."
+meta_description: "Trasporto disabili Roma Capitale: domanda per la lista d'attesa 2027 entro il 15 gennaio 2027. Chi può farla, punteggi, documenti e come si presenta."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Roma Mobilità, 'Presentazione domande lista d'attesa 2027 - trasporto individuale disabili' - https://romamobilita.it/infomobilita/presentazione-domande-lista-attesa-2027-trasportoindividualedisabili/"
@@ -38,7 +38,9 @@ Roma Capitale paga gli spostamenti, soprattutto in **taxi**, alle persone con **
 | **Sportello** | via Silvio D'Amico 38, solo il mercoledì 9:00-15:30, fino al **13 gennaio 2027**, su prenotazione |
 | **Attenzione** | entrare in lista d'attesa **non dà subito il servizio** |
 
-## Chi può fare domanda
+> [Prenota per la domanda di trasporto disabili](/prenota): controlliamo 104, CUDE e ISEE e la presentiamo con te online.
+
+## Chi può fare domanda per il trasporto disabili di Roma?
 
 Secondo il regolamento di Roma Capitale (delibera dell'Assemblea Capitolina n. 129/2018, art. 3) possono chiedere il servizio i cittadini **maggiorenni** e **residenti a Roma** con almeno una di queste condizioni:
 
@@ -49,7 +51,7 @@ La disabilità non deve essere dovuta al naturale invecchiamento. Non può fare 
 
 Non hai ancora il CUDE? Leggi la nostra pagina sul [contrassegno CUDE](/cude).
 
-## Cosa offre il servizio
+## Cosa offre il trasporto disabili di Roma Capitale?
 
 Nella domanda si sceglie **un solo motivo**. Ognuno ha il suo limite di corse e di spesa mensile (delibera 129/2018, Allegato A):
 
@@ -75,7 +77,7 @@ Sì. Il regolamento (art. 9, comma 4) permette di farsi **accompagnare da una pe
 - l'accompagnamento è **a carico dell'utente**: il Comune non paga l'accompagnatore;
 - non serve indicarlo nella domanda.
 
-## Come funzionano graduatoria e lista d'attesa
+## Come funzionano graduatoria e lista d'attesa?
 
 Il servizio va a chi è più in alto in una **graduatoria unica a punti**, fino a quando ci sono soldi (art. 5 e 6). Il punteggio massimo è **100**:
 
@@ -90,7 +92,7 @@ Chi ha i requisiti ma non rientra nella graduatoria va nella **lista d'attesa**,
 
 > **Non dimenticare l'ISEE.** Senza ISEE prendi solo 1 punto su 10. L'ISEE 2026 scade il 31 dicembre: per la domanda di gennaio conviene fare subito l'ISEE 2027. Da noi è **gratis**: [prenota l'ISEE](/isee).
 
-## Documenti da preparare
+## Quali documenti servono?
 
 - **modulo di domanda** di Roma Mobilità;
 - **documento d'identità** e codice fiscale;
@@ -100,12 +102,12 @@ Chi ha i requisiti ma non rientra nella graduatoria va nella **lista d'attesa**,
 - per **lavoro o studio**: dichiarazione del datore di lavoro o dell'università;
 - per **terapia**: dichiarazione del centro con il **piano terapeutico**.
 
-## Come si presenta la domanda
+## Come si presenta la domanda per la lista d'attesa 2027?
 
 - **Online**, dal 1° ottobre 2026 al **15 gennaio 2027**, sui servizi online di Roma Mobilità (servizionline.romamobilita.it) con **SPID o CIE**. Si compila il modulo, si caricano i documenti e si segue lo stato della domanda.
 - **Allo sportello** di Roma Mobilità in **via Silvio D'Amico 38**, solo il **mercoledì dalle 9:00 alle 15:30**, fino al **13 gennaio 2027**. Serve la **prenotazione** con l'app SolariQ o al Contact Center **06 57003**.
 
-## Una volta ammessi: come si usa il servizio
+## Una volta ammessi, come si prenotano le corse?
 
 1. **Codice utente.** Lo trovi sui servizi online di Roma Mobilità (servizionline.romamobilita.it), entrando con SPID o CIE. Va comunicato a ogni prenotazione.
 2. **Scegli l'operatore.** Puoi scegliere liberamente tra gli operatori iscritti all'elenco di Roma Capitale (radiotaxi e cooperative, per esempio Pronto Taxi 6645 e Samarcanda). L'elenco aggiornato con i contatti è sulla pagina di Roma Mobilità dei [servizi di trasporto individuale](https://romamobilita.it/servizi-al-pubblico/servizi-di-trasporto-individuale-e-autogestito/).

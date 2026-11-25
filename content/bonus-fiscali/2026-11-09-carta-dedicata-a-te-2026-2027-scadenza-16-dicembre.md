@@ -3,7 +3,7 @@ title: "Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dice
 seo_title: "Carta Dedicata a te 2026: 500 €, primo acquisto entro 16/12"
 slug: "carta-dedicata-a-te-2026-2027-scadenza-16-dicembre"
 date: 2026-11-09
-last_updated: 2026-11-20
+last_updated: 2026-11-26
 category: "bonus-fiscali"
 tags: ["bonus", "famiglie", "isee", "inps", "scadenza"]
 meta_description: "Carta Dedicata a te 2026-2027: 500 euro per la spesa con ISEE fino a 15.000 €. Primo acquisto entro il 16 dicembre o perdi la quota. Chi la riceve a Roma."
@@ -24,7 +24,7 @@ image_alt: "Carta Dedicata a te 2026-2027: primo acquisto entro il 16 dicembre"
 
 # Carta Dedicata a te 2026-2027: 500 euro, primo acquisto entro il 16 dicembre
 
-**Ultimo aggiornamento: 20 novembre 2026** (aggiunti saldo, numeri utili e dove si usa)
+**Ultimo aggiornamento: 26 novembre 2026**
 
 La **Carta Dedicata a te** è tornata: è una carta prepagata di Poste Italiane con **500 euro per la spesa alimentare**, per le famiglie con **ISEE fino a 15.000 euro**. Vale per **due anni**: 500 euro nel 2026 e altri 500 euro nel 2027.
 
@@ -40,7 +40,9 @@ Non si fa domanda: le liste le prepara il **Comune**. Ma c'è una scadenza che n
 | **Carta attiva** | dal **4 novembre 2026** |
 | **Primo acquisto** | entro il **16 dicembre 2026** |
 | **Seconda ricarica** | da **aprile 2027** |
-| **Cosa compri** | solo **alimentari di prima necessità** |
+| **Cosa compri** | solo **alimentari di prima necessità**: niente farmaci né carburante |
+
+> [Prenota l'ISEE gratis](/prenota): senza un ISEE valido non si entra nelle liste del Comune.
 
 ## Chi la riceve
 
@@ -63,7 +65,9 @@ Non devi fare domanda. Il **Comune di residenza** (a Roma, Roma Capitale) ha pre
 - Se avevi già la carta negli anni passati e sei di nuovo in lista, **la ricarica arriva sulla stessa carta**.
 - Se è la prima volta, la ritiri all'**ufficio postale** indicato nella comunicazione del Comune.
 
-## Le date da segnare
+## Carta Dedicata a te: quando fare il primo acquisto?
+
+Il primo acquisto con la Carta Dedicata a te 2026 va fatto **entro il 16 dicembre 2026**: basta una spesa anche piccola. La carta è attiva dal **4 novembre 2026**.
 
 | Quando | Cosa succede |
 |---|---|
@@ -73,7 +77,9 @@ Non devi fare domanda. Il **Comune di residenza** (a Roma, Roma Capitale) ha pre
 
 > **Attenzione:** se non usi la carta entro il **16 dicembre 2026** perdi i 500 euro del 2026. Resti però nella lista per la quota del 2027.
 
-## Cosa puoi comprare
+## Cosa si può comprare con la Carta Dedicata a te 2026? Anche i farmaci?
+
+Con la Carta Dedicata a te 2026 si comprano **solo alimentari di prima necessità**: i **farmaci non sono ammessi**, e nemmeno carburante e abbonamenti dei mezzi.
 
 Solo **generi alimentari di prima necessità**, nei negozi che vendono alimentari. Sono esclusi gli **alcolici**. Non puoi usarla per carburante, abbonamenti dei mezzi, farmaci o prodotti non alimentari.
 
@@ -116,17 +122,14 @@ Controlliamo che il tuo **ISEE** sia corretto e aggiornato, ti diciamo a quali a
 **Devo fare domanda per la Carta Dedicata a te?**
 No. Le liste le fa il Comune con i dati INPS. Se ti spetta, il Comune ti avvisa.
 
-**Entro quando devo usarla?**
-Il primo acquisto va fatto entro il 16 dicembre 2026, altrimenti perdi i 500 euro del 2026.
+**Cosa succede se non faccio il primo acquisto entro il 16 dicembre?**
+Perdi i 500 euro del 2026, ma resti nella lista per la quota del 2027.
 
 **Ho già la carta degli anni scorsi: devo ritirarne una nuova?**
 No. Se sei di nuovo in lista, la ricarica arriva sulla carta che hai già.
 
 **Prendo la NASpI: posso averla?**
 No. Se un componente della famiglia prende NASpI, DIS-COLL, cassa integrazione o l'Assegno di inclusione, la carta non spetta.
-
-**Cosa posso comprare?**
-Solo alimentari di prima necessità. Niente alcolici, carburante, abbonamenti dei mezzi o prodotti non alimentari.
 
 **Come vedo quanti soldi ci sono sulla carta?**
 A un ATM Postamat di Poste Italiane: lì vedi saldo e movimenti.

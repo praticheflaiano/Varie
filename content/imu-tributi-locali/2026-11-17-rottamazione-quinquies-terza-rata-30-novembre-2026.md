@@ -1,17 +1,20 @@
 ---
 title: "Rottamazione quinquies: terza rata entro il 30 novembre 2026, cosa succede se non paghi"
-seo_title: "Rottamazione quinquies 30 novembre 2026: terza rata"
+seo_title: "Terza rata rottamazione quinquies: scade il 30 novembre 2026"
 slug: "rottamazione-quinquies-terza-rata-30-novembre-2026"
 date: 2026-11-17
-last_updated: 2026-11-17
+last_updated: 2026-11-26
 category: "imu-tributi-locali"
 tags: ["rottamazione-quinquies", "cartelle", "scadenza", "agenzia-entrate-riscossione"]
-meta_description: "Rottamazione quinquies: la terza rata va pagata entro lunedì 30 novembre 2026, senza 5 giorni di tolleranza. Rate, interessi e decadenza. Aiuto a Roma."
+meta_description: "Terza rata rottamazione quinquies entro lunedì 30 novembre 2026, senza tolleranza. Quater: rata di novembre pagabile fino al 7 dicembre. Aiuto a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 30 dicembre 2025, n. 199 (Legge di Bilancio 2026), art. 1, commi 82-100 - https://www.normattiva.it/eli/stato/LEGGE/2025/12/30/199/ORIGINAL"
   - "Legge 22 maggio 2026, n. 88 (conversione del D.L. 27 marzo 2026, n. 38), art. 10, comma 2-bis - GU n. 117 del 22/05/2026"
   - "Agenzia delle entrate-Riscossione, Definizione agevolata (Rottamazione-quinquies) - https://www.agenziaentrateriscossione.gov.it/it/Per-saperne-di-piu/definizione-agevolata-rottamazione-quinquies/"
+  - "Legge 29 dicembre 2022, n. 197, art. 1, commi 231-252 (rottamazione-quater: rate, tolleranza di cinque giorni e decadenza)"
+  - "Edotto, Rottamazione cartelle, scadenza 30 novembre: quater e quinquies a confronto (calendario AdER; quater 14ª rata e 6ª per i riammessi, pagamento valido fino al 7 dicembre 2026) - https://edotto.com/articolo/rottamazione-cartelle-scadenza-30-novembre-quater-e-quinquies-a-confronto"
+  - "Informazione Fiscale, Rottamazione cartelle, scadenza 30 novembre 2026 (quinquies e quater) - https://www.informazionefiscale.it/rottamazione-cartelle-scadenza-30-novembre-2026-quinquies-quater"
 status: published
 type: scadenza
 image: "/og/rottamazione-quinquies-terza-rata-30-novembre-2026.jpg"
@@ -20,7 +23,7 @@ image_alt: "Rottamazione quinquies: terza rata in scadenza il 30 novembre 2026"
 
 # Rottamazione quinquies: terza rata entro il 30 novembre 2026
 
-**Ultimo aggiornamento: 17 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Se hai aderito alla **rottamazione-quinquies** delle cartelle e paghi a rate, **lunedì 30 novembre 2026** scade la **terza rata**. È una scadenza da non sbagliare: per le rate intermedie della rottamazione-quinquies non ci sono i 5 giorni di tolleranza che molti ricordano dalla rottamazione-quater.
 
@@ -31,10 +34,15 @@ Se hai aderito alla **rottamazione-quinquies** delle cartelle e paghi a rate, **
 - **Se non paghi:** perdi i benefici se non paghi (o paghi meno del dovuto) **due rate, anche non di seguito**, oppure l'ultima rata (per l'ultima, anche con un ritardo oltre 5 giorni; comma 95). Una sola rata saltata, quindi, non fa decadere subito, ma ti lascia senza margine.
 - **Quanto:** l'importo è quello scritto nella **Comunicazione delle somme dovute** dell'Agenzia delle entrate-Riscossione; ogni rata è di almeno **100 euro** e comprende interessi al **3% annuo** dal 1° agosto 2026.
 - **Come si paga:** con i moduli precompilati della Comunicazione, con la domiciliazione sul conto corrente o agli sportelli dell'Agenzia delle entrate-Riscossione (comma 93).
+- **Rottamazione-quater:** il 30 novembre 2026 scade anche la **14ª rata** (la **6ª** per i riammessi). Qui i 5 giorni di tolleranza ci sono: il pagamento vale fino a **lunedì 7 dicembre 2026**, perché il 5 dicembre è sabato.
 
 > [Prenota per la rottamazione](/prenota): controlliamo il piano di rate e prepariamo i pagamenti.
 
-## Chi deve pagare il 30 novembre 2026?
+## Quando scade la terza rata della rottamazione quinquies?
+
+La terza rata della rottamazione-quinquies scade **lunedì 30 novembre 2026**, ed è l'ultimo giorno utile: per questa rata non ci sono giorni di tolleranza.
+
+### Chi deve pagare il 30 novembre 2026?
 
 Chi ha presentato la dichiarazione di adesione alla rottamazione-quinquies e ha scelto il **pagamento a rate**. La legge prevede fino a **54 rate bimestrali** di pari importo:
 
@@ -90,14 +98,23 @@ La legge (comma 93) prevede tre strade:
 
 Se non trovi più la Comunicazione, puoi chiederne copia all'Agenzia delle entrate-Riscossione. Se non sai come fare, ti aiutiamo noi in ufficio.
 
-## Ho anche la rottamazione-quater: vale la stessa regola?
+## Rata della rottamazione quater di novembre 2026: entro quando?
 
-No, le due definizioni hanno **regole diverse** su scadenze, tolleranza e decadenza. Se hai ancora un piano della rottamazione-quater, controlla le date sulla sua comunicazione e non confonderle con quelle della quinquies. Se hai dubbi, portaci entrambe le comunicazioni.
+La rata di novembre della rottamazione-quater scade il **30 novembre 2026**, ma con i 5 giorni di tolleranza il pagamento è valido fino a **lunedì 7 dicembre 2026**.
+
+È la **14ª rata** del piano ordinario, oppure la **6ª** per chi è stato riammesso alla quater. La tolleranza (legge 197/2022) porterebbe il termine al 5 dicembre, che nel 2026 è **sabato**: per questo si arriva al lunedì successivo, secondo il calendario dell'Agenzia delle entrate-Riscossione riportato dalla stampa specializzata.
+
+Attenzione però alla decadenza, che nella quater è più severa: si perde il beneficio anche con **una sola rata** non pagata, pagata in parte o pagata oltre i 5 giorni di tolleranza. In quel caso i versamenti fatti valgono come acconto e il debito residuo torna con sanzioni e interessi.
+
+Le due rottamazioni hanno quindi **regole diverse**. Se hai sia la quater sia la quinquies, controlla le date su ciascuna comunicazione e non confonderle. Se hai dubbi, portaci entrambe le comunicazioni.
 
 ## Domande frequenti
 
 ### Entro quando si paga la terza rata della rottamazione quinquies?
 Entro lunedì 30 novembre 2026. La prossima rata scade il 31 gennaio 2027.
+
+### Quando scade la rata di novembre 2026 della rottamazione quater?
+Il 30 novembre 2026, con tolleranza fino a lunedì 7 dicembre 2026. È la 14ª rata (6ª per i riammessi). Nella quater basta una rata saltata o pagata oltre la tolleranza per decadere.
 
 ### Posso pagare la rata della rottamazione quinquies il 5 dicembre?
 Meglio di no. La tolleranza di 5 giorni vale solo per l'unica soluzione e per l'ultima rata del piano, non per la terza rata: il termine da rispettare è il 30 novembre.
@@ -115,7 +132,7 @@ L'importo è scritto sul modulo della terza rata nella Comunicazione delle somme
 Puoi chiederne copia all'Agenzia delle entrate-Riscossione. Se non sai come fare, vieni in ufficio e ti aiutiamo.
 
 ### Posso ancora aderire alla rottamazione quinquies?
-No: la dichiarazione di adesione andava presentata entro il 30 aprile 2026. Per le cartelle non incluse resta la [rateizzazione ordinaria](/cartelle-rateizzazione).
+Per le cartelle dello Stato no: la dichiarazione di adesione andava presentata entro il 30 aprile 2026. Per le cartelle di Roma Capitale affidate all'Agenzia delle entrate-Riscossione dal 2000 al 2023 la domanda si presenta dal 16 ottobre al 15 dicembre 2026 (ne parliamo nella guida sulla [definizione agevolata di Roma Capitale](/blog/definizione-agevolata-roma-capitale-imu-tari-30-novembre-2026)). Per le altre cartelle resta la [rateizzazione ordinaria](/cartelle-rateizzazione).
 
 ## Ti aiutiamo a Roma
 

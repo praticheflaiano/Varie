@@ -58,16 +58,18 @@ const props = {
   ],
   docsNote: "Non hai ancora il verbale della 104 o l'accompagnamento? Si parte da lì: seguiamo noi la domanda di invalidità.",
   faqs: [
-    { q: "Il caregiver riceve uno stipendio dallo Stato?", a: "Oggi no. Esistono permessi e congedi retribuiti per chi lavora, la pensione anticipata in alcuni casi e, per le disabilità gravissime, contributi dei Comuni. Una legge nazionale con un contributo economico è stata approvata dalla Camera il 14 ottobre 2026, ma deve ancora passare al Senato: finché non è legge non c'è nessuna domanda da presentare." },
+    { q: "Il caregiver riceve uno stipendio dallo Stato?", a: "Oggi no. Esistono permessi e congedi retribuiti per chi lavora, la pensione anticipata in alcuni casi e, per le disabilità gravissime, contributi dei Comuni." },
+    { q: "La legge sul caregiver 2027 è stata approvata?", a: "No. Il disegno di legge è stato approvato dalla Camera il 14 ottobre 2026 e al 26 novembre 2026 è all'esame della commissione Affari sociali del Senato: il termine per gli emendamenti è scaduto il 12 novembre e non c'è ancora una data per il voto finale. Finché non è legge non c'è nessuna domanda da presentare. Cosa prevede il testo lo spieghiamo nell'articolo sulla legge caregiver del nostro blog." },
     { q: "Siamo più fratelli: chi prende i permessi della 104?", a: "Potete averli in più di uno e alternarvi, ma il totale resta di tre giorni al mese per la stessa persona assistita." },
     { q: "Faccio la colf o lavoro in proprio: ho diritto a permessi e congedo?", a: "No. Permessi della 104 e congedo straordinario sono per i lavoratori dipendenti. Sono esclusi i lavoratori domestici, a domicilio, autonomi e parasubordinati. I dipendenti pubblici fanno domanda al proprio ente." },
     { q: "Per il congedo di due anni devo vivere con la persona che assisto?", a: "Sì. La convivenza deve iniziare al più tardi insieme al congedo e durare per tutto il periodo. Conta anche un ordine di priorità: prima il coniuge o il convivente, poi i genitori, i figli, i fratelli e infine gli altri parenti conviventi fino al terzo grado." },
-    { q: "Come ottengo il riconoscimento di caregiver nel Lazio?", a: "Si chiede al Punto Unico di Accesso (PUA) del proprio distretto. Il riconoscimento avviene nella valutazione della persona assistita e dà diritto al tesserino \"Card Giver\". Di regola è riconosciuto un solo caregiver per assistito, salvo i genitori di figli minori e il giovane caregiver." },
+    { q: "Come si ottiene il riconoscimento di caregiver familiare a Roma?", a: "Si chiede al Punto Unico di Accesso (PUA) del proprio distretto. Il riconoscimento avviene nella valutazione della persona assistita e dà diritto al tesserino \"Card Giver\". Di regola è riconosciuto un solo caregiver per assistito, salvo i genitori di figli minori e il giovane caregiver." },
     { q: "Il contributo di cura di Roma si perde se c'è l'accompagnamento?", a: "No. Il Comune indica che assegno e contributo di cura sono compatibili con pensioni, indennità di accompagnamento e con l'assistenza domiciliare dei Municipi." },
     { q: "Quanto si aspetta per il contributo del Comune di Roma?", a: "I servizi sociali compilano la scheda di valutazione entro 90 giorni. Il contributo viene poi riconosciuto in ordine cronologico di domanda, finché ci sono risorse: per questo conviene presentarla presto." },
     { q: "Il contributo di Roma va rinnovato ogni anno?", a: "No, chi è già in carico continua a riceverlo senza ripresentare la domanda. Va avvisato il Segretariato sociale se cambiano l'ISEE, il caregiver, i servizi attivi o le condizioni di salute." },
   ],
   related: [
+    { label: "Legge caregiver: a che punto è", href: "/blog/legge-caregiver-familiare-ddl-senato-contributo" },
     { label: "APE sociale: scadenza 30 novembre", href: "/blog/ape-sociale-2026-ultima-scadenza-30-novembre" },
     { label: "Invalidità e 104", href: "/invalidita-104" },
     { label: "Pensioni", href: "/pensioni" },
@@ -137,7 +139,7 @@ const livelli = [
   },
 ];
 ---
-<BaseLayout title="Caregiver familiare a Roma: permessi, pensione e contributi" description="Assisti un familiare non autosufficiente? Permessi 104, congedo di due anni, APE sociale, detrazioni, Card Giver della Regione Lazio e contributo di cura del Comune di Roma, con le fonti.">
+<BaseLayout title="Caregiver familiare a Roma: permessi, pensione e contributi" description="Caregiver familiare a Roma: permessi 104, congedo, APE sociale, Card Giver del Lazio e contributo di cura del Comune. Legge nazionale: ancora al Senato.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="caregiver" name="Assistenza al caregiver familiare" description="Verifica degli aiuti per chi assiste un familiare non autosufficiente e presentazione delle domande: permessi legge 104, congedo straordinario, APE sociale, ISEE sociosanitario." serviceType="Patronato - caregiver familiare" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
@@ -167,9 +169,9 @@ const livelli = [
       </div>
       <div style="background:#14142B;color:#fff;border-radius:28px;padding:24px 28px;display:flex;flex-direction:column;gap:8px">
         <b style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#D4FF4F">La legge nazionale sul caregiver non c'è ancora</b>
-        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Il 14 ottobre 2026 la Camera ha approvato un disegno di legge che riconosce il caregiver familiare tramite l'INPS e prevede un contributo fino a 1.200 € a trimestre per chi convive con la persona assistita, la segue per almeno 91 ore a settimana e ha redditi bassi. Il testo è ora al Senato e può cambiare. Finché non diventa legge non esiste nessuna domanda: appena ci saranno regole certe aggiorniamo questa pagina.</p>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#E4DEFF">Il 14 ottobre 2026 la Camera ha approvato un disegno di legge che riconosce il caregiver familiare tramite l'INPS e prevede un contributo fino a 1.200 € a trimestre per chi convive con la persona assistita, la segue per almeno 91 ore a settimana e ha redditi bassi. Al 26 novembre 2026 il testo è all'esame della commissione Affari sociali del Senato e può ancora cambiare. Finché non diventa legge non esiste nessuna domanda: appena ci saranno regole certe aggiorniamo questa pagina. <a href="/blog/legge-caregiver-familiare-ddl-senato-contributo" style="color:#D4FF4F;text-decoration:underline">Leggi cosa prevede la legge</a>.</p>
       </div>
-      <p style="margin:0;font-size:14px;line-height:1.5;color:#4A4A63">Fonti, controllate il 10 novembre 2026: legge 205/2017, articolo 1, comma 255; INPS, schede "Permessi legge 104/1992" e "Congedi straordinari" (aggiornate al 21 ottobre 2026) e messaggio n. 128 del 14 gennaio 2026 sull'APE sociale; Regione Lazio, pagina "Caregiver familiare" e legge regionale 5/2024; Roma Capitale, schede "Assegno di cura e contributo caregiver familiare per disabilità gravissima" e "Caregiver familiare"; Testo unico delle imposte sui redditi, articoli 10 e 15. Importi e requisiti possono cambiare: prima di decidere li ricontrolliamo con te.</p>
+      <p style="margin:0;font-size:14px;line-height:1.5;color:#4A4A63">Fonti, controllate il 10 novembre 2026: legge 205/2017, articolo 1, comma 255; INPS, schede "Permessi legge 104/1992" e "Congedi straordinari" (aggiornate al 21 ottobre 2026) e messaggio n. 128 del 14 gennaio 2026 sull'APE sociale; Regione Lazio, pagina "Caregiver familiare" e legge regionale 5/2024; Roma Capitale, schede "Assegno di cura e contributo caregiver familiare per disabilità gravissima" e "Caregiver familiare"; Testo unico delle imposte sui redditi, articoli 10 e 15; per il disegno di legge sul caregiver, scheda della Camera dei deputati e lavori della commissione del Senato, controllati il 26 novembre 2026. Importi e requisiti possono cambiare: prima di decidere li ricontrolliamo con te.</p>
     </section>
   </ServiceLanding>
 </BaseLayout>

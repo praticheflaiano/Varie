@@ -1,16 +1,19 @@
 ---
-title: "Rottamazione Quinquies 2026: come aderire entro il 30 aprile"
-seo_title: "Rottamazione quinquies 2026: come funziona"
+title: "Rottamazione quinquies 2026: come funziona, rate, scadenze e decadenza"
+seo_title: "Rottamazione quinquies 2026: rate, scadenze e decadenza"
 slug: "rottamazione-quinquies-2026"
 date: 2026-04-14
-last_updated: 2026-04-14
+last_updated: 2026-11-26
 category: "imu-tributi-locali"
 tags: ["guida", "scadenza", "agenzia-entrate", "proprietari", "dipendenti", "pensionati", "faq", "inps"]
-meta_description: "Rottamazione Quinquies 2026: domanda entro 30 aprile. Cartelle ammesse, rate, documenti, procedura completa. Guida CAF UNSIC Roma - Centro Pratiche Flaiano."
+meta_description: "Rottamazione quinquies 2026: adesioni chiuse il 30 aprile, terza rata entro il 30 novembre 2026, poi 31 gennaio 2027. Rate e decadenza. CAF a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 30 dicembre 2025, n. 199, art. 1, commi 82-101 (Legge di Bilancio 2026)"
   - "Agenzia delle Entrate-Riscossione - Sezione Definizione agevolata Rottamazione-quinquies (agenziaentrateriscossione.gov.it)"
+  - "Edotto, Rottamazione-quinquies enti locali, nuovo calendario: domande dal 16 ottobre al 15 dicembre 2026 - https://edotto.com/articolo/rottamazione-quinquies-enti-locali-nuovo-calendario-domande-dal-16-ottobre"
+  - "Roma Capitale, avviso del 3 agosto 2026 sui termini per la definizione agevolata e l'adesione alla rottamazione quinquies - https://www.comune.roma.it/web/it/informazione-di-servizio.page?contentId=IDS1610216"
+  - "Legge 22 maggio 2026, n. 88 (conversione del D.L. 27 marzo 2026, n. 38), art. 10, comma 2-bis (tolleranza di 5 giorni solo per l'unica soluzione e l'ultima rata) - GU n. 117 del 22/05/2026"
   - "Art. 36-bis e 36-ter DPR n. 600/1973 (controlli automatici e formali dichiarazioni dei redditi)"
   - "Art. 54-bis e 54-ter DPR n. 633/1972 (controlli automatici IVA)"
 status: published
@@ -233,11 +236,23 @@ URL slug consigliato per il CMS: /rottamazione-quinquies-2026
 ========================================
 -->
 
-# Rottamazione Quinquies 2026: come aderire entro il 30 aprile
+# Rottamazione quinquies 2026: come funziona, rate, scadenze e decadenza
 
-**Ultimo aggiornamento: 14 aprile 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
-**Nota (13 novembre 2026):** la scadenza del 30 aprile 2026 per presentare la domanda di adesione è passata. Per capire a che punto è la tua posizione, [vai alla pagina cartelle e rateizzazioni](/cartelle-rateizzazione) o contattaci.
+> **In breve**
+>
+> - **Adesioni chiuse:** per le cartelle dello Stato la domanda andava presentata entro il **30 aprile 2026**. Per le cartelle di Roma Capitale e degli altri enti locali aderenti, affidate all'Agenzia delle Entrate-Riscossione dal 2000 al 2023, la domanda si presenta **dal 16 ottobre al 15 dicembre 2026**.
+> - **Prossima scadenza:** la **terza rata** va pagata entro **lunedì 30 novembre 2026**, senza giorni di tolleranza. Poi si paga il **31 gennaio 2027**.
+> - **Calendario:** rate bimestrali il 31 gennaio, 31 marzo, 31 maggio, 31 luglio, 30 settembre e 30 novembre di ogni anno, fino a maggio 2035 (54 rate al massimo).
+> - **Decadenza:** si perde la rottamazione con **due rate** non pagate (anche non di seguito) o con l'ultima rata non pagata. La tolleranza di 5 giorni vale solo per l'unica soluzione e per l'ultima rata (legge 88/2026).
+> - **Quanto pagare:** l'importo è scritto nella Comunicazione delle somme dovute dell'Agenzia delle Entrate-Riscossione.
+
+> [Prenota per la rottamazione](/prenota): controlliamo il tuo piano di rate e prepariamo i pagamenti.
+
+Tutti i dettagli sulla rata di novembre sono nella guida [terza rata della rottamazione quinquies entro il 30 novembre 2026](/blog/rottamazione-quinquies-terza-rata-30-novembre-2026). Per le cartelle che non sono nella rottamazione, vedi la pagina [cartelle e rateizzazioni](/cartelle-rateizzazione).
+
+*Il testo qui sotto è la guida scritta ad aprile 2026, prima della scadenza delle adesioni: resta valida per capire come funziona la rottamazione.*
 
 Ha cartelle esattoriali pendenti e vorrebbe chiudere i conti con il Fisco pagando meno di quanto dovuto? La **Rottamazione Quinquies**, introdotta dalla Legge di Bilancio 2026 (Legge n. 199/2025, art. 1, commi 82-101), offre la possibilita di estinguere i debiti iscritti a ruolo **senza pagare sanzioni, interessi di mora e aggio**. In questa guida Le spieghiamo tutto quello che serve sapere per aderire entro la scadenza del **30 aprile 2026**.
 
@@ -359,11 +374,17 @@ In caso di pagamento rateale, si applicano **interessi del 3% annuo** a decorrer
 
 2. **Dimenticare di selezionare tutte le cartelle desiderate**: la domanda riguarda solo i carichi espressamente selezionati. Se ha piu cartelle, verifichi di aver incluso tutte quelle che intende definire.
 
-3. **Sottovalutare la puntualita nei pagamenti**: la Rottamazione Quinquies prevede la decadenza in caso di omesso o insufficiente versamento di due rate, anche non consecutive, oppure dell'ultima rata. Al momento, la legge non prevede la tolleranza di 5 giorni che era stata riconosciuta per la Rottamazione quater; tuttavia, il D.L. n. 38/2026 (Decreto Fiscale), attualmente in fase di conversione parlamentare, potrebbe reintrodurla. Si consiglia di rispettare rigorosamente le scadenze originarie.
+3. **Sottovalutare la puntualita nei pagamenti**: la Rottamazione Quinquies prevede la decadenza in caso di omesso o insufficiente versamento di due rate, anche non consecutive, oppure dell'ultima rata. La legge 88/2026 (conversione del D.L. n. 38/2026) ha introdotto la tolleranza di 5 giorni **solo** per il pagamento in unica soluzione e per l'ultima rata: per le rate intermedie, come quella del 30 novembre 2026, il termine resta quello indicato.
 
 4. **Inserire carichi non ammissibili**: non tutte le cartelle rientrano nella Rottamazione Quinquies. I tributi locali (IMU, TARI), le multe della Polizia Locale e i carichi da accertamento sono esclusi.
 
 ## Domande frequenti
+
+**Si puo ancora aderire alla rottamazione quinquies?**
+Per le cartelle dello Stato no: la domanda andava presentata entro il 30 aprile 2026. C'e pero una finestra separata per le cartelle di Comuni e Regioni che hanno aderito (come Roma Capitale) affidate all'Agenzia delle Entrate-Riscossione dal 2000 al 2023: domanda dal 16 ottobre al 15 dicembre 2026. Per il resto resta la rateizzazione ordinaria.
+
+**Quando scade la prossima rata della rottamazione quinquies?**
+La terza rata scade lunedi 30 novembre 2026, senza giorni di tolleranza. La rata successiva scade il 31 gennaio 2027.
 
 **Posso aderire se sono gia decaduto dalla Rottamazione quater?**
 Si, a condizione che alla data del 30 settembre 2025 risultasse gia decaduto dal precedente piano di pagamento. In tal caso puo reinserire gli stessi carichi nella Rottamazione Quinquies.
@@ -385,18 +406,19 @@ Possiamo aiutarLa a:
 
 - **Verificare** quali delle Sue cartelle rientrano nella Rottamazione Quinquies
 - **Valutare la convenienza** dell'adesione rispetto alla Sua situazione specifica
-- **Compilare e inviare la domanda** nei tempi previsti
-- **Pianificare il pagamento** scegliendo la soluzione piu sostenibile
+- **Controllare la Comunicazione delle somme dovute** e quali rate risultano pagate
+- **Recuperare i moduli di pagamento** delle rate e organizzare le prossime scadenze
 
-**Prenoti un appuntamento prima della scadenza del 30 aprile:**
+**Prenota un appuntamento:** [in ufficio o in videochiamata](/prenota)
 - Telefono: **0697845429**
 - WhatsApp: **3716230690**
 - Sede: Via Filoteo Alberini 25 int 10, 00139 Roma (Centro Acquisti Flaiano, zona Vigne Nuove)
 - Orari: Lun-Gio 9:30-13:00 / 15:30-18:00 | Ven 9:30-14:00
 
 **Articoli correlati:**
-- [Guida completa al 730/2026: documenti, scadenze e novita](/content/730-redditi/2026-04-13-guida-730-2026.md)
-- [Dichiarazione IVA 2026: guida alla scadenza del 30 aprile](/content/730-redditi/2026-04-16-dichiarazione-iva-2026.md)
+- [Rottamazione quinquies: terza rata entro il 30 novembre 2026](/blog/rottamazione-quinquies-terza-rata-30-novembre-2026)
+- [Definizione agevolata Roma Capitale: IMU, TASI e TARI senza sanzioni](/blog/definizione-agevolata-roma-capitale-imu-tari-30-novembre-2026)
+- [Cartelle e rateizzazioni: il servizio](/cartelle-rateizzazione)
 
 ---
 

@@ -33,7 +33,7 @@ Il 24 novembre 2026 l'INPS ha pubblicato il bando **"Assegni di frequenza e cont
 - **Domanda**: dalle **12:00 del 30 novembre** alle **12:00 del 30 dicembre 2026**, online sul sito INPS.
 - **Serve**: l'**ISEE 2026**. Senza ISEE si finisce in fondo alla graduatoria.
 
-## 1. Per chi è il bando
+## Per chi è il bando INPS assegni di frequenza 2026?
 
 Il bando è pagato dal **Fondo Assistenza Magistrale** (la vecchia ENAM). Ne fanno parte i **dipendenti e i pensionati della scuola**: insegnanti e personale ATA.
 
@@ -46,7 +46,7 @@ Sono considerati orfani anche i figli non riconosciuti da un genitore o che hann
 
 **Se in famiglia nessuno lavora o ha lavorato nella scuola, questo bando non vi riguarda.**
 
-## 2. Quali scuole contano
+## Quali scuole contano?
 
 Conta la scuola frequentata nell'**anno scolastico 2025/2026**:
 
@@ -56,7 +56,7 @@ Conta la scuola frequentata nell'**anno scolastico 2025/2026**:
 
 Il ragazzo deve essere **a carico fiscale** di chi fa la domanda.
 
-## 3. Quanto si prende
+## Quanto si prende con il bando?
 
 L'importo dipende dall'ISEE della famiglia.
 
@@ -71,7 +71,7 @@ Alcune regole:
 - il contributo **non si somma** con il bando INPS "Supermedia 2026";
 - non spetta se un altro ente ha già dato un aiuto simile, pari almeno alla metà dell'importo.
 
-## 4. Chi presenta la domanda
+## Chi presenta la domanda?
 
 La domanda la presenta:
 
@@ -81,7 +81,9 @@ La domanda la presenta:
 
 Serve **una domanda per ogni figlio**.
 
-## 5. Come si fa la domanda
+## Come si fa la domanda ed entro quando?
+
+Online sul sito INPS, dalle **12:00 del 30 novembre** alle **12:00 del 30 dicembre 2026**, una domanda per ogni figlio.
 
 1. Fai prima l'**ISEE 2026**, se non ce l'hai già. Da noi è gratis.
 2. Dalle **12:00 del 30 novembre 2026** entra nel sito INPS con **SPID o CIE**.
@@ -93,7 +95,7 @@ I dati, compreso l'ISEE, si possono correggere **fino al 5 gennaio 2027**.
 
 > [Prenota l'ISEE gratis](/prenota): prepariamo l'ISEE e ti aiutiamo con la domanda.
 
-## 6. La graduatoria
+## Come funziona la graduatoria?
 
 - Vince chi ha l'**ISEE più basso**. A parità di ISEE passa il ragazzo più giovane.
 - Chi non ha l'ISEE va **in fondo**.

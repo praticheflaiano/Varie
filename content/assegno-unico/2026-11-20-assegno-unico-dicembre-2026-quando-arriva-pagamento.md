@@ -1,12 +1,12 @@
 ---
 title: "Assegno Unico dicembre 2026: date di pagamento, prime domande e ISEE 2027"
-seo_title: "Assegno Unico dicembre 2026: date di pagamento 16 e 17"
+seo_title: "Assegno Unico dicembre 2026: pagamento il 16 e 17 dicembre"
 slug: "assegno-unico-dicembre-2026-quando-arriva-pagamento"
 date: 2026-11-20
-last_updated: 2026-11-24
+last_updated: 2026-11-26
 category: "assegno-unico"
 tags: ["assegno-unico", "inps", "famiglie", "scadenza", "isee"]
-meta_description: "Assegno Unico dicembre 2026: l'INPS paga il 16 e 17 dicembre, prima di Natale. Prime domande e variazioni a fine mese. ISEE 2027 gratis a Roma."
+meta_description: "Assegno Unico dicembre 2026: le date di pagamento INPS sono il 16 e 17 dicembre. Prime domande e conguagli a fine mese. ISEE 2027 gratis a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Messaggio n. 3931 del 24 dicembre 2025 - calendario dei pagamenti dell'Assegno unico 2026 - https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15121/Allegati/16503_Messaggio-numero-3931-del-24-12-2025.pdf"
@@ -22,16 +22,16 @@ image_alt: "Assegno Unico dicembre 2026: pagamento il 16 e 17 dicembre"
 
 # Assegno Unico dicembre 2026: date di pagamento, prime domande e ISEE 2027
 
-**Ultimo aggiornamento: 24 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
-L'**Assegno Unico di dicembre 2026** viene pagato dall'INPS **mercoledì 16 e giovedì 17 dicembre**, quindi prima di Natale. Lo dice il calendario ufficiale dei pagamenti 2026 (messaggio INPS n. 3931 del 24 dicembre 2025). Il giorno preciso in cui vedi i soldi sul conto dipende dalla tua banca o da Poste.
+L'**Assegno Unico di dicembre 2026** viene pagato dall'INPS **mercoledì 16 e giovedì 17 dicembre 2026**, prima di Natale. Sono le date del calendario ufficiale dei pagamenti 2026 ([messaggio INPS n. 3931 del 24 dicembre 2025](https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15121/Allegati/16503_Messaggio-numero-3931-del-24-12-2025.pdf)). Il giorno preciso dell'accredito sul conto dipende dalla tua banca o da Poste.
 
 ## In breve
 
-- **Quando arriva:** **16 e 17 dicembre 2026** per chi prende già l'Assegno Unico e non ha avuto cambiamenti.
+- **Date di pagamento di dicembre 2026:** **16 e 17 dicembre** per chi prende già l'Assegno Unico e non ha avuto cambiamenti.
 - **Prima domanda:** chi ha fatto domanda a novembre riceve la prima rata, di norma, **nell'ultima settimana di dicembre**.
 - **Variazioni e conguagli** (per esempio un figlio nato o un nuovo ISEE): il pagamento non segue il calendario e arriva di norma **nell'ultima settimana del mese**.
-- **Gennaio 2027:** il calendario 2027 l'INPS **non l'ha ancora pubblicato**.
+- **Gennaio 2027:** il calendario dei pagamenti 2027 l'INPS **non l'ha ancora pubblicato** (verificato il 26 novembre 2026).
 - **Cosa fare ora:** l'ISEE 2026 scade il **31 dicembre 2026**. Dal 1° gennaio 2027 serve la nuova DSU per non scendere all'importo minimo da marzo.
 
 | Chi | Quando arriva |
@@ -40,20 +40,24 @@ L'**Assegno Unico di dicembre 2026** viene pagato dall'INPS **mercoledì 16 e gi
 | Chi ha fatto la **prima domanda a novembre** | di norma **ultima settimana di dicembre** |
 | Chi ha avuto una **variazione** con conguaglio (per esempio un figlio nato o un nuovo ISEE) | di norma **ultima settimana del mese** |
 
-## Quali sono le date di pagamento rimaste nel 2026?
+> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): serve per l'importo giusto dell'Assegno Unico da marzo 2027.
+
+## Quando pagano l'Assegno Unico a dicembre 2026?
+
+L'INPS paga l'Assegno Unico di dicembre 2026 **mercoledì 16 e giovedì 17 dicembre**: sono le date più anticipate di tutto il 2026.
 
 | Mese | Date INPS |
 |---|---|
 | Novembre 2026 | 19 e 20 novembre |
 | **Dicembre 2026** | **16 e 17 dicembre** |
 
-A dicembre il pagamento arriva **prima del solito**: negli altri mesi del 2026 le date vanno dal 18 al 22 del mese.
-
-> [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): serve per l'importo giusto dell'Assegno Unico da marzo 2027.
+A dicembre il pagamento arriva **prima del solito**: negli altri mesi del 2026 le date vanno dal 18 al 22 del mese. Le due date valgono per chi prende già l'Assegno e non ha avuto variazioni: il pagamento può arrivare il 16 oppure il 17 dicembre.
 
 > [calcolatore dell'Assegno Unico 2026](/calcolo-assegno-unico): scopri quanto ti spetta con il tuo ISEE.
 
 ## Prima domanda o variazioni: quando arriva l'Assegno Unico?
+
+Per la **prima domanda** e per le **variazioni con conguaglio** il pagamento arriva di norma **nell'ultima settimana del mese**, non il 16 e 17 dicembre.
 
 Le date del calendario valgono solo per chi prende già l'Assegno e **non ha avuto variazioni**. Per gli altri casi il messaggio INPS dice:
 
@@ -62,9 +66,11 @@ Le date del calendario valgono solo per chi prende già l'Assegno e **non ha avu
 
 L'INPS non indica un giorno preciso per questi pagamenti.
 
-## Quando arriva l'Assegno Unico a gennaio 2027?
+## Assegno Unico gennaio 2027: quando arriva il pagamento?
 
-Il **calendario dei pagamenti 2027** l'INPS non l'ha ancora pubblicato: non scriviamo date che non esistono. Aggiorneremo questa pagina quando uscirà.
+Le **date di gennaio 2027 non sono ancora ufficiali**: al 26 novembre 2026 l'INPS non ha pubblicato il calendario dei pagamenti 2027. Non scriviamo date inventate: aggiorneremo questa pagina appena esce il messaggio INPS.
+
+Per fare un confronto, il calendario 2026 è stato pubblicato dall'INPS il 24 dicembre 2025 e a gennaio 2026 l'Assegno è stato pagato il 21 e 22 gennaio. Non è detto che le date del 2027 siano le stesse.
 
 Quello che sappiamo: ogni anno gli importi dell'Assegno Unico e le soglie ISEE vengono **adeguati all'inflazione** (articolo 4, comma 11, del decreto legislativo n. 230 del 2021). Per il 2026 l'aumento è stato dell'1,4% (circolare INPS n. 7 del 2026). Le nuove tabelle 2027 le pubblica l'INPS: finché non escono, non scriviamo cifre.
 
@@ -88,9 +94,9 @@ Siamo **CAF UNSIC** e **Patronato ENASC** a **Vigne Nuove**, Roma (Municipio III
 
 ## Domande frequenti
 
-### Quando arriva l'Assegno Unico di dicembre 2026?
+### Quando arriva l'accredito dell'Assegno Unico di dicembre sul conto?
 
-Il 16 e il 17 dicembre 2026, secondo il calendario INPS. Il giorno esatto sul conto dipende dalla banca o da Poste.
+L'INPS paga il 16 e il 17 dicembre 2026. Il giorno esatto in cui vedi l'accredito dipende dalla banca o da Poste: se il 17 sera non lo vedi, controlla su MyINPS lo stato del pagamento.
 
 ### Perché a dicembre l'Assegno Unico arriva prima?
 
@@ -104,9 +110,9 @@ Di norma nell'ultima settimana di dicembre. L'INPS non indica un giorno preciso.
 
 Quando c'è una variazione, il pagamento arriva nell'ultima settimana del mese, non nei giorni del calendario ordinario.
 
-### Quando pagano l'Assegno Unico a gennaio 2027?
+### Esiste già il calendario dell'Assegno Unico 2027?
 
-L'INPS non ha ancora pubblicato il calendario 2027. Aggiorneremo questa pagina appena esce.
+No. Al 26 novembre 2026 l'INPS non ha ancora pubblicato il calendario dei pagamenti 2027. Quello del 2026 era uscito il 24 dicembre 2025: aggiorneremo questa pagina appena esce.
 
 ### Devo rifare l'ISEE per l'Assegno Unico?
 

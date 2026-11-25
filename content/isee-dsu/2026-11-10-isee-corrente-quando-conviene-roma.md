@@ -1,9 +1,9 @@
 ---
 title: "ISEE corrente: quando conviene se hai perso il lavoro o guadagni meno"
-seo_title: "ISEE corrente 2026: quando conviene e quanto dura"
+seo_title: "ISEE corrente: quanto dura, quando si può fare e se conviene"
 slug: "isee-corrente-quando-conviene-roma"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-26
 category: "isee-dsu"
 tags: ["isee", "inps", "famiglie", "lavoro", "bonus"]
 meta_description: "ISEE corrente: si chiede se hai perso il lavoro o il reddito è sceso di oltre il 25%. Quanto dura, documenti e quando conviene. Gratis al CAF a Roma Nord."
@@ -21,7 +21,7 @@ image_alt: "ISEE corrente: quando conviene e quanto dura"
 
 # ISEE corrente: quando conviene se hai perso il lavoro o guadagni meno
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 L'ISEE ordinario guarda ai **redditi di due anni prima**. Se nel frattempo hai **perso il lavoro**, ti hanno ridotto l'orario o il reddito della famiglia è sceso molto, quell'ISEE ti fa sembrare più ricco di quanto sei oggi. E rischi di perdere bonus o di prendere meno Assegno unico.
 
@@ -37,9 +37,13 @@ Per questo esiste l'**ISEE corrente**: un aggiornamento dell'ISEE con i redditi 
 | **Redditi considerati** | ultimi **12 mesi** (in alcuni casi gli ultimi **2 mesi** moltiplicati per 6) |
 | **Quanto dura** | **6 mesi** se cambi i redditi; fino al **31 dicembre** se cambi il patrimonio |
 
-## Quando puoi chiederlo
+> [Prenota l'ISEE corrente gratis](/prenota): facciamo prima i conti e ti diciamo se conviene, a Vigne Nuove o in videochiamata.
 
-Puoi chiedere l'ISEE corrente se hai già un ISEE ordinario valido e nella tua famiglia c'è almeno una di queste situazioni:
+## Quando si può fare l'ISEE corrente?
+
+L'ISEE corrente si può fare **quando hai già un ISEE ordinario valido** e il lavoro o il reddito della famiglia sono cambiati in peggio: lavoro perso o ridotto, reddito giù di oltre il **25%**, patrimonio giù di oltre il **20%**.
+
+In dettaglio, basta che nella tua famiglia ci sia almeno una di queste situazioni:
 
 1. **Lavoro dipendente a tempo indeterminato:** il rapporto è finito, sospeso o ridotto, oppure è iniziato o finito un trattamento non tassato (ad esempio un'indennità).
 2. **Lavoro a tempo determinato, flessibile o autonomo:** oggi non lavori, oppure hai cambiato occupazione.
@@ -54,17 +58,31 @@ Di regola si guardano i redditi degli **ultimi 12 mesi**. Se sei un dipendente a
 
 **Esempio:** hai perso il lavoro a settembre. L'ISEE ordinario 2026 contiene ancora lo stipendio pieno del 2024. Con l'ISEE corrente contano i redditi recenti, più bassi, e il valore dell'ISEE scende.
 
-## Quanto dura e quando va aggiornato
+## Quanto dura l'ISEE corrente?
+
+L'ISEE corrente dura **6 mesi** se aggiorni solo i redditi, e **fino al 31 dicembre** se aggiorni il patrimonio.
 
 - Se aggiorni **solo i redditi**, l'ISEE corrente vale **6 mesi** dalla presentazione.
 - Se aggiorni **il patrimonio**, da solo o con i redditi, vale **fino al 31 dicembre** dell'anno in cui lo presenti.
 - Se durante la validità **trovi un nuovo lavoro** o cambia un trattamento, l'ISEE corrente va **aggiornato entro 2 mesi** dalla variazione.
 
-## Quando conviene davvero
+## Quando conviene l'ISEE corrente, e quando non conviene farlo?
+
+L'ISEE corrente conviene **solo se il nuovo valore è più basso** e ti fa avere un aiuto in più o un importo più alto; altrimenti non serve farlo.
 
 Conviene quando un ISEE più basso ti fa avere di più: ad esempio un **Assegno unico** più alto, l'accesso a **bonus e agevolazioni** legati all'ISEE, riduzioni per mense, nidi e tasse universitarie.
 
-Non sempre però il guadagno c'è: dipende dalla tua situazione e dalla soglia dell'aiuto che ti interessa. Prima di presentarlo facciamo i conti e ti diciamo se ne vale la pena.
+Non sempre però il guadagno c'è. Di solito **non conviene** quando:
+
+- non hai perso o ridotto il lavoro e il reddito della famiglia non è sceso di oltre il 25%: in quel caso non si può nemmeno chiedere;
+- l'ISEE ordinario è già sotto la soglia dell'aiuto che ti interessa: un valore più basso non cambia nulla;
+- l'aiuto che ti serve non dipende dall'ISEE, come la NASpI.
+
+Prima di presentarlo facciamo i conti e ti diciamo se ne vale la pena.
+
+### ISEE corrente nel 2027
+
+L'ISEE corrente aggiorna sempre un ISEE ordinario valido. Dal 1° gennaio 2027 l'ISEE 2026 non vale più: per chiedere l'ISEE corrente nel 2027 serve prima l'**ISEE 2027 ordinario**. Leggi [ISEE 2027: quando farlo e documenti](/blog/isee-2027-documenti-quando-rinnovare-roma).
 
 > **Attenzione:** la NASpI non dipende dall'ISEE. Se hai perso il lavoro, la domanda di disoccupazione va fatta **a parte**, entro 68 giorni. Leggi [cosa fare nei primi 7 giorni dopo la perdita del lavoro](/blog/checklist-primi-7-giorni-perdita-lavoro-roma).
 
@@ -94,11 +112,11 @@ In un solo appuntamento facciamo **ISEE ordinario e corrente gratis**, ti diciam
 **Cos'è l'ISEE corrente?**
 È un aggiornamento dell'ISEE ordinario con i redditi o il patrimonio più recenti. Si usa quando la situazione della famiglia è peggiorata rispetto a quella di due anni prima.
 
-**Quando posso chiedere l'ISEE corrente?**
-Se hai perso, sospeso o ridotto il lavoro, se il reddito familiare è sceso di oltre il 25% o se il patrimonio è sceso di oltre il 20%. Serve sempre un ISEE ordinario valido.
+**Se trovo un nuovo lavoro devo aggiornare l'ISEE corrente?**
+Sì, entro due mesi dalla variazione, se nel frattempo trovi lavoro o inizia o finisce un trattamento.
 
-**Quanto dura l'ISEE corrente?**
-Sei mesi se aggiorni solo i redditi. Fino al 31 dicembre se aggiorni anche il patrimonio. Se trovi lavoro va aggiornato entro due mesi.
+**Posso fare l'ISEE corrente senza l'ISEE ordinario?**
+No. Serve prima un ISEE ordinario valido: se non ce l'hai, lo facciamo nello stesso appuntamento.
 
 **L'ISEE corrente costa?**
 Al nostro CAF è gratis, come l'ISEE ordinario.

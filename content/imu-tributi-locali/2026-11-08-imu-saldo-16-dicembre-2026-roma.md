@@ -1,17 +1,20 @@
 ---
 title: "Scadenza IMU dicembre 2026 a Roma: saldo entro il 16, chi paga e F24"
-seo_title: "Scadenza IMU dicembre 2026: saldo entro il 16, come pagare"
+seo_title: "Scadenza IMU dicembre 2026: saldo mercoledì 16, Roma"
 slug: "imu-saldo-16-dicembre-2026-roma"
 date: 2026-11-08
-last_updated: 2026-11-15
+last_updated: 2026-11-26
 category: "imu-tributi-locali"
 tags: ["imu", "scadenza", "f24", "proprietari", "tributi-locali"]
-meta_description: "Scadenza IMU dicembre 2026: saldo entro mercoledì 16 dicembre. Chi paga, come si calcola, F24 con codice H501. CAF a Roma, Vigne Nuove."
+meta_description: "Scadenza IMU dicembre 2026: saldo entro mercoledì 16 dicembre. A Roma si usano le aliquote 2025 (nessun prospetto 2026). Calcolo e F24 H501 al CAF."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 27 dicembre 2019, n. 160, art. 1, commi 738-783 (disciplina IMU: soggetti, base imponibile, riduzioni, scadenze)"
   - "MEF - Dipartimento delle Finanze, Prospetto aliquote IMU Comune di Roma (ID 384), delibera n. 182 del 19/12/2024 - https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/download_lib.php?key=0900f230807636ca&nome=384_DIMUNIC-07rm25h501d.pdf"
   - "MEF - Dipartimento delle Finanze, portale del federalismo fiscale, ricerca dei prospetti aliquote IMU dei Comuni (verifica del prospetto 2026 di Roma) - https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/sceltaregione.htm"
+  - "MEF - Dipartimento delle Finanze, IMU Roma (H501) anno 2026: \"Non ci sono prospetti delle aliquote relativi all'anno selezionato\" (consultato il 26/11/2026) - https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/risultato.htm?anno=2026&cc=H501"
+  - "MEF - Dipartimento delle Finanze, IMU Roma (H501) anno 2025: delibera n. 182 del 19/12/2024, pubblicata il 24/01/2025 - https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/risultato.htm?anno=2025&cc=H501"
+  - "Legge 27 dicembre 2019, n. 160, art. 1, comma 767 (efficacia delle delibere pubblicate entro il 28 ottobre; in mancanza si applicano le aliquote dell'anno precedente)"
   - "Agenzia delle Entrate - Codici tributo IMU per F24 (3912, 3914, 3916, 3918, 3925, 3930) - https://www1.agenziaentrate.gov.it/servizi/codici/ricerca/Ricorrenti.php"
   - "Risoluzione Agenzia delle Entrate n. 35/E del 12 aprile 2012 e successive (codici tributo IMU per F24)"
   - "D.Lgs. 14 giugno 2024, n. 87 (revisione del sistema sanzionatorio tributario)"
@@ -24,15 +27,18 @@ image_alt: "Saldo IMU 16 dicembre 2026 a Roma"
 
 # Scadenza IMU dicembre 2026 a Roma: saldo entro il 16, chi paga e F24
 
-**Ultimo aggiornamento: 15 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 > **In breve**
 >
 > - **Scadenza:** il saldo IMU 2026 va pagato entro **mercoledì 16 dicembre 2026**.
 > - **Chi paga:** chi possiede seconde case, case affittate o in comodato, negozi, uffici, terreni, aree edificabili e case di lusso (A/1, A/8, A/9). **Chi non paga:** chi ha solo l'abitazione principale non di lusso, con le sue pertinenze.
-> - **Come si calcola:** imposta annua 2026 con le aliquote deliberate da Roma Capitale, meno l'acconto di giugno. Prima di pagare controlla il prospetto 2026 di Roma sul sito del [Dipartimento delle Finanze](https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/sceltaregione.htm).
+> - **Aliquote a Roma:** al 26 novembre 2026 il Dipartimento delle Finanze **non ha un prospetto IMU 2026 di Roma**, quindi per legge valgono le **aliquote 2025** (seconde case **1,14%**).
+> - **Come si calcola:** imposta annua 2026 meno l'acconto di giugno. Se a giugno hai pagato il 50% con le stesse aliquote e nulla è cambiato, il saldo è uguale all'acconto.
 > - **F24:** sezione "IMU e altri tributi locali", **codice ente H501** (Roma), anno 2026, casella "Saldo". Codici tributo: 3912, 3914, 3916, 3918, 3925, 3930 (tabella sotto).
 > - **In ritardo?** Puoi usare il [ravvedimento operoso](#cosa-succede-se-paghi-in-ritardo): paghi imposta, sanzione ridotta e interessi.
+
+> [Prenota il calcolo IMU](/prenota): calcoliamo il saldo con le aliquote di Roma e prepariamo l'F24.
 
 **SCADENZA: mercoledì 16 dicembre 2026 - saldo IMU 2026**
 *(Fonte: Legge 160/2019, art. 1, comma 762)*
@@ -41,7 +47,13 @@ La **scadenza IMU di dicembre 2026** riguarda il **saldo**, che si paga entro **
 
 Qui sotto trovi chi paga, le aliquote di Roma Capitale, come si calcola il conguaglio e come si compila l'F24.
 
-## La scadenza in breve
+## Quando scade il saldo IMU 2026?
+
+Il saldo IMU 2026 scade **mercoledì 16 dicembre 2026**. È un giorno feriale, quindi **non c'è nessuno slittamento**: il pagamento fatto il 17 dicembre è già in ritardo. Vale per Roma e per tutti i Comuni (legge 160/2019, art. 1, comma 762).
+
+Le date dell'IMU sono sempre due: l'**acconto** entro il 16 giugno e il **saldo** entro il 16 dicembre. Puoi anche pagare tutto in un'unica soluzione entro il 16 giugno. Quando il 16 cade di sabato o in un giorno festivo, il termine passa al primo giorno lavorativo successivo (D.L. 70/2011, art. 7, comma 2, lettera l): nel 2026 non succede.
+
+### La scadenza in sintesi
 
 | | |
 |---|---|
@@ -49,8 +61,6 @@ Qui sotto trovi chi paga, le aliquote di Roma Capitale, come si calcola il congu
 | **Chi** | Proprietari e titolari di diritti reali su immobili diversi dall'abitazione principale non di lusso |
 | **Quando** | Entro mercoledì 16 dicembre 2026 |
 | **Come** | Modello F24 (banca, posta, home banking, F24 web dell'Agenzia delle Entrate) |
-
-> [Prenota il calcolo IMU](/prenota): calcoliamo il saldo e prepariamo l'F24.
 
 ## Chi deve pagare il saldo IMU
 
@@ -67,9 +77,11 @@ Pagano l'IMU (legge 160/2019, commi 740-743):
 
 Se hai **ereditato** un immobile nel 2026, paghi dalla data del decesso, ciascun erede per la sua quota. Se hai **comprato o venduto** casa, paghi per i mesi di possesso: il mese del passaggio conta per chi ha posseduto l'immobile per più della metà dei giorni (comma 761).
 
-## Le aliquote IMU 2026 a Roma
+## Quali aliquote IMU si usano a Roma per il saldo 2026?
 
-Il saldo si calcola con le aliquote deliberate dal Comune per il 2026. L'ultimo prospetto di Roma Capitale che abbiamo potuto verificare sul portale del Dipartimento delle Finanze è quello riferito all'anno 2025, approvato con **delibera n. 182 del 19 dicembre 2024**. **Prima di pagare controlla sul [portale del Dipartimento delle Finanze](https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/sceltaregione.htm) se Roma ha pubblicato un prospetto per il 2026**: se sì, valgono quelle aliquote. Quelle del prospetto 2025 sono:
+A Roma il saldo 2026 si calcola con le **aliquote del prospetto 2025** (delibera n. 182 del 19 dicembre 2024), perché un prospetto 2026 di Roma **non risulta pubblicato**.
+
+Il saldo usa le aliquote del 2026 solo se il Comune le ha pubblicate sul sito del Dipartimento delle Finanze **entro il 28 ottobre**; altrimenti valgono quelle dell'anno prima (legge 160/2019, art. 1, comma 767). Il 26 novembre 2026 la scheda di Roma sul [portale del Dipartimento delle Finanze](https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_imu/risultato.htm?anno=2026&cc=H501) dice: "Non ci sono prospetti delle aliquote relativi all'anno selezionato". Le aliquote del prospetto 2025 sono:
 
 | Tipo di immobile | Aliquota Roma |
 |---|---|
@@ -111,7 +123,7 @@ Seconda casa a Roma, categoria A/3, rendita catastale 850 €, posseduta tutto l
 - acconto già pagato a giugno (50%): **813,96 €**
 - **saldo da pagare entro il 16 dicembre: 813,96 €**
 
-L'esempio usa l'aliquota del prospetto 2025: se per il 2026 Roma conferma la stessa aliquota, il saldo è uguale all'acconto. Se però a giugno hai pagato di meno, o la tua situazione è cambiata durante l'anno, a dicembre paghi anche la differenza.
+L'esempio usa l'aliquota del prospetto 2025, la stessa dell'acconto: per questo il saldo è uguale all'acconto. Se però a giugno hai pagato di meno, o la tua situazione è cambiata durante l'anno (casa comprata, venduta o ereditata, affitto iniziato), a dicembre paghi anche la differenza.
 
 > **Attenzione:** se a giugno non hai versato l'acconto, a dicembre devi pagare l'imposta di tutto l'anno e regolarizzare il ritardo con il ravvedimento operoso.
 
@@ -167,7 +179,13 @@ Controlliamo le visure, applichiamo le aliquote giuste di Roma, verifichiamo se 
 ## Domande frequenti
 
 ### Quando scade l'IMU a dicembre 2026?
-Il saldo IMU 2026 scade **mercoledì 16 dicembre 2026**.
+Il saldo IMU 2026 scade **mercoledì 16 dicembre 2026**. È un giorno feriale, quindi non slitta.
+
+### Quali aliquote IMU 2026 valgono a Roma?
+Per il saldo 2026 valgono le aliquote del prospetto 2025 di Roma Capitale (seconde case 1,14%), perché al 26 novembre 2026 non risulta pubblicato un prospetto 2026. È la regola del comma 767 della legge 160/2019.
+
+### Posso pagare l'IMU in ritardo di qualche giorno?
+Sì, con il ravvedimento operoso: aggiungi una sanzione ridotta e gli interessi legali. Prima paghi, meno spendi. Il calcolo lo facciamo noi.
 
 ### Chi non paga l'IMU?
 Non paga chi ha solo l'abitazione principale, se non è di lusso (A/1, A/8, A/9). Sono esenti anche le pertinenze: una per ciascuna categoria C/2, C/6 e C/7.
@@ -177,9 +195,6 @@ Si calcola l'imposta di tutto il 2026 con le aliquote 2026 del Comune e si sottr
 
 ### Qual è il codice catastale di Roma per l'F24?
 Il codice ente è **H501**. Va nella sezione "IMU e altri tributi locali", con anno 2026 e casella "Saldo". I codici tributo più usati sono 3918 (altri fabbricati) e 3912 (abitazione principale di lusso).
-
-### Cosa succede se pago l'IMU in ritardo?
-Puoi regolarizzare con il ravvedimento operoso: versi imposta, sanzione ridotta e interessi legali. Prima paghi, più bassa è la sanzione.
 
 ### Devo pagare l'IMU se la casa è in comodato o affittata?
 Sì, paga il proprietario. Ci sono riduzioni di legge: 75% dell'imposta per l'affitto a canone concordato e base imponibile al 50% per il comodato a figli o genitori, se rispetti i requisiti.
@@ -193,6 +208,7 @@ Sì. Se non hai partita IVA puoi pagare in banca, alla posta, con l'home banking
 - [Successioni: cosa fare e quali scadenze](/successioni)
 - [IMU e TARI a Roma: tutti i servizi del Centro](/imu-tari)
 - [Scadenze 30 novembre 2026 a Roma: acconto IRPEF e TARI](/blog/scadenze-30-novembre-2026-roma-acconto-irpef-tari)
+- [Definizione agevolata Roma Capitale: avvisi IMU e TARI senza sanzioni](/blog/definizione-agevolata-roma-capitale-imu-tari-30-novembre-2026)
 - [Servizi CAF del Centro Pratiche Flaiano](/servizi/caf)
 
 ---

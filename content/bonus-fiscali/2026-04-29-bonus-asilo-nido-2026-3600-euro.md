@@ -1,12 +1,12 @@
 ---
 title: "Bonus nido 2026: domanda entro il 31 dicembre, importi fino a 3.600 € e ricevute"
-seo_title: "Bonus nido 2026: domanda entro 31 dicembre e importi"
+seo_title: "Bonus nido 2026 INPS: importi, quando pagano e domanda"
 slug: "bonus-asilo-nido-2026-3600-euro-domanda-inps"
 date: 2026-04-29
-last_updated: 2026-11-19
+last_updated: 2026-11-26
 category: "bonus-fiscali"
 tags: ["bonus", "guida", "famiglie", "inps", "asilo-nido", "isee"]
-meta_description: "Bonus nido INPS 2026: fino a 3.600 € l'anno. Domanda entro il 31 dicembre 2026, ricevute entro il 30 aprile 2027. Ti aiutiamo a Vigne Nuove, Roma."
+meta_description: "Bonus nido 2026 INPS: fino a 3.600 € l'anno, pagato dopo il controllo di ogni ricevuta. Domanda entro il 31 dicembre 2026. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Circolare n. 29 del 27 marzo 2026 (bonus asilo nido dal 2026: domanda valida fino ai 3 anni, ISEE per prestazioni familiari, importi, documenti di spesa) - https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15207/Allegati/16651_Circolare-numero-29-del-27-03-2026.pdf"
@@ -18,6 +18,7 @@ sources:
   - "Legge 11 dicembre 2016, n. 232, art. 1, comma 355 (istituzione del bonus asilo nido)"
   - "Legge 30 dicembre 2024, n. 207, art. 1, comma 209, e legge 30 dicembre 2025, n. 199, art. 1, comma 208 (ISEE senza l'Assegno unico)"
   - "INPS, Circolare n. 93 del 9 settembre 2026 (banca dati nazionale delle strutture) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.bonus-nido-una-mappa-per-geolocalizzare-le-strutture-convenzionate.html"
+  - "INPS, notizia del 7 novembre 2025 'Bonus nido: ampliati i servizi disponibili sull'app' (consultazione dei pagamenti e delle contestazioni) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.11.bonus-nido-ampliati-i-servizi-disponibili-sull-app.html"
   - "INPS, scheda Bonus asilo nido e forme di supporto presso la propria abitazione - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-asilo-nido-e-forme-di-supporto-presso-la-propria-abitazione-51105.bonus-asilo-nido-e-forme-di-supporto-presso-la-propria-abitazione.html"
 status: published
 fact_check_date: 2026-11-19
@@ -29,21 +30,26 @@ image_alt: "Bonus nido 2026: domanda INPS entro il 31 dicembre e importi fino a 
 
 # Bonus nido 2026: domanda entro il 31 dicembre, importi e ricevute
 
-**Ultimo aggiornamento: 19 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 ## In breve
 
 - **Entro quando si fa la domanda:** per il 2026 entro il **31 dicembre 2026**, sul sito INPS o tramite patronato.
+- **Quando pagano:** non c'è una data fissa: l'INPS paga **ogni mese dopo aver controllato la ricevuta** caricata. I pagamenti si vedono nel servizio INPS e nell'app INPS Mobile.
 - **Quanto vale:** fino a **3.600 € l'anno** per i nati dal 1° gennaio 2024 con ISEE fino a 40.000 €; fino a **3.000 €** per i nati prima. Senza ISEE: **1.500 €**.
 - **A chi spetta:** al genitore che paga la retta di un nido pubblico o privato autorizzato, per un figlio sotto i 3 anni.
 - **Ricevute:** le fatture e le prove di pagamento dei mesi 2026 vanno caricate **entro il 30 aprile 2027**, altrimenti si perde il rimborso.
 - **Nel 2027:** chi ha già la domanda accolta **non la rifà**: entra nella domanda e sceglie i mesi del 2027.
+
+> [Prenota la domanda del bonus nido](/prenota): ISEE gratis e domanda INPS entro il 31 dicembre, a Vigne Nuove o in videochiamata.
 
 Il **bonus nido** dell'INPS rimborsa la retta dell'asilo nido per i bambini sotto i 3 anni. Dal 2026 la domanda vale fino ai 3 anni del bambino e l'INPS usa un nuovo tipo di ISEE (sempre senza l'Assegno unico). Ecco cosa fare entro fine anno, con le regole della [Circolare INPS n. 29 del 27 marzo 2026](https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/03/Circolare_15207/Allegati/16651_Circolare-numero-29-del-27-03-2026.pdf).
 
 > [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
 
 ## Quanto vale il bonus nido nel 2026?
+
+Il bonus nido 2026 vale fino a **3.600 € l'anno** (nati dal 2024, ISEE fino a 40.000 €) e almeno **1.500 €** anche senza ISEE: è un rimborso della retta pagata.
 
 L'importo dipende dalla **data di nascita** del bambino e dall'**ISEE**. Si paga in **11 rate** al massimo, una per ogni mese di nido.
 
@@ -121,17 +127,28 @@ La **scadenza** per i mesi del 2026 è il **30 aprile 2027**. Dopo quella data i
 
 Se ha pagato un'altra persona (per esempio un nonno), serve una sua dichiarazione con il documento d'identità.
 
-## Quando arriva il pagamento del bonus nido?
+## Quando pagano il bonus nido 2026?
 
-L'INPS paga **dopo aver controllato** la ricevuta di ogni mese, sull'IBAN indicato. Non c'è una data fissa uguale per tutti: l'esito si vede nel servizio INPS della domanda.
+Il bonus nido **non ha una data di pagamento fissa**: l'INPS paga ogni mese **dopo aver controllato la ricevuta** caricata, sull'IBAN indicato nella domanda.
+
+Quindi anche il **pagamento di novembre 2026** non ha un giorno uguale per tutti: arriva dopo che hai caricato fattura e prova di pagamento del mese e l'INPS le ha controllate. Più presto le carichi, prima arriva il rimborso.
+
+Per sapere se e quando ti hanno pagato:
+
+- entra nel servizio INPS della domanda (con SPID, CIE o CNS) e guarda lo stato di ogni mese;
+- oppure usa l'app **INPS Mobile**, che dal novembre 2025 mostra anche i **pagamenti** e le eventuali **contestazioni** (notizia INPS del 7 novembre 2025).
+
+Se un mese risulta contestato, controlla che la ricevuta abbia intestazione, mese, nome del bambino e prova di pagamento tracciabile (vedi sopra). Se vuoi, la controlliamo noi in ufficio.
 
 Dal **1° luglio 2026** i Comuni devono comunicare all'INPS i dati dei nidi autorizzati (Decreto lavoro, art. 6 comma 5-bis del D.L. 62/2026), la prima volta entro il 1° settembre 2026. Secondo l'INPS, così i controlli diventano automatici e i **pagamenti più veloci**. Con la [Circolare INPS n. 93 del 9 settembre 2026](https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.09.bonus-nido-una-mappa-per-geolocalizzare-le-strutture-convenzionate.html) è partita la banca dati nazionale delle strutture: finché la mappa INPS non è completa, per sapere se un nido è autorizzato conviene controllare gli elenchi del Comune.
 
-## Cosa cambia nel 2027?
+## Bonus nido 2027: quando fare domanda?
+
+Per il 2027 **la data di apertura del servizio INPS non è ancora ufficiale**. Chi ha già una domanda accolta dal 2026 non ne fa una nuova: aggiunge i mesi del 2027.
 
 La domanda presentata dal 2026 **vale fino ad agosto dell'anno in cui il bambino compie 3 anni**. Nel 2027 non serve una domanda nuova: quando l'INPS apre il servizio, entri nella domanda, **scegli i mesi del 2027** e alleghi la prima ricevuta.
 
-La data di apertura del servizio 2027 **l'INPS non l'ha ancora comunicata**. La legge di bilancio 2027 è ancora in discussione in Parlamento: aggiorneremo questa pagina appena ci sono novità ufficiali sul bonus nido.
+Chi invece iscrive il bambino al nido per la prima volta nel 2027 dovrà fare una domanda nuova quando l'INPS apre il servizio: nel 2026 è stato aperto il **31 marzo** (messaggio INPS n. 1136/2026), ma la data del 2027 **l'INPS non l'ha ancora comunicata**. Anche gli importi 2027 non sono stati ancora pubblicati: la legge di bilancio 2027 è in discussione in Parlamento e aggiorneremo questa pagina appena ci sono novità ufficiali sul bonus nido.
 
 ## Bonus nido, Assegno unico e 730: si possono avere insieme?
 
@@ -164,13 +181,9 @@ Entro il **31 dicembre 2026**, sul sito INPS o tramite patronato. Chi l'ha già 
 
 Entro il **30 aprile 2027**, per tutti i mesi del 2026. Dopo questa data il rimborso di quei mesi si perde.
 
-### Il bonus nido va richiesto ogni anno?
+### Il rimborso dell'asilo nido 2026 copre tutta la retta?
 
-No. Dal 2026 la domanda vale **fino ad agosto dell'anno in cui il bambino compie 3 anni**. Ogni anno basta entrare nella domanda, scegliere i mesi e allegare le ricevute.
-
-### Quando pagano il bonus nido?
-
-Dopo il controllo della ricevuta di ogni mese, sull'IBAN indicato. Non c'è una data fissa: lo stato dei pagamenti si vede nel servizio INPS della domanda.
+No, rimborsa la retta fino all'importo mensile che ti spetta e mai più di quanto hai pagato. Sono comprese retta, pasti, bollo e IVA agevolata; restano fuori iscrizione, pre e post scuola.
 
 ### Il bonus nido vale per il nido privato?
 
@@ -179,6 +192,10 @@ Sì, se il nido privato ha la **regolare autorizzazione** per i bambini da 0 a 3
 ### Si può avere il bonus nido e la detrazione nel 730?
 
 No, il bonus nido non si cumula con la detrazione del 19% per le rette del nido. L'INPS comunica all'Agenzia delle Entrate le somme pagate.
+
+### Quanto costa la domanda del bonus nido al patronato?
+
+Niente: come indicato nella pagina [bonus famiglia](/bonus-famiglia), le domande all'INPS presentate dal nostro patronato sono gratuite, e anche l'ISEE è gratis.
 
 ---
 
