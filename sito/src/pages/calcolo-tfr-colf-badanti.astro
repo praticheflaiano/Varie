@@ -1,0 +1,211 @@
+---
+/**
+ * Calcolatore del TFR di colf, badanti e baby sitter (26/11/2026).
+ * Regole, coefficienti e fonti in src/lib/tfr-colf.ts. Esempi della pagina calcolati con la stessa funzione.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import { calcolaTfr, COEFF_DICEMBRE, COEFF_MESI, ANNO_MESI, AGGIORNATO_TFR } from "~/lib/tfr-colf";
+import { eur } from "~/lib/costo-colf";
+
+const WA = "393716230690";
+const es1 = calcolaTfr({ tipo: "convivente", mensile: 1193.84, inizio: "2026-01-01", fine: "2026-12-31" });
+const es2 = calcolaTfr({ tipo: "orario", oraria: 8, ore: 10, inizio: "2026-01-01", fine: "2026-12-31" });
+const es3 = calcolaTfr({ tipo: "orario", oraria: 1, ore: 1, inizio: "1997-01-01", fine: "2018-12-31", righe: Array.from({ length: 22 }, (_, k) => ({ anno: 1997 + k, retribuzione: 11700 })) });
+const anniTab = Object.keys(COEFF_DICEMBRE).map(Number).filter((y) => y >= 2014).sort((a, b) => b - a);
+const MESI = ["gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"];
+const pct = (n: number) => n.toFixed(6).replace(".", ",") + "%";
+
+const faqs = [
+  { q: "Come si calcola il TFR di una colf o di una badante?", a: "Ogni anno si sommano le paghe dell'anno, la tredicesima e, per chi vive in casa, il valore di vitto e alloggio; il totale si divide per 13,5. Il TFR già accumulato si rivaluta ogni anno dell'1,5% più il 75% dell'aumento dei prezzi ISTAT." },
+  { q: `Quanto TFR matura in un anno una badante convivente?`, a: `Con la paga minima 2026 del livello C super (1.193,84 € al mese) e vitto e alloggio dati in casa, il TFR di un anno intero è di ${eur(es1.totale)}.` },
+  { q: "Il TFR spetta anche alla colf che lavora poche ore?", a: "Sì, sempre: anche per pochi mesi o poche ore a settimana. Secondo l'INPS spetta anche se il rapporto finisce durante la prova, se è durata almeno 15 giorni." },
+  { q: "Il TFR si può pagare ogni anno?", a: "Sì. La legge lo consente se una delle due parti lo chiede e l'altra è d'accordo (liquidazione frazionata). Conviene metterlo per iscritto e far firmare la ricevuta." },
+  { q: "La badante può chiedere un anticipo del TFR?", a: "Sì. Il contratto nazionale prevede, su richiesta, un anticipo fino al 70% del TFR maturato, non più di una volta l'anno. Gli anticipi si scalano dal TFR finale." },
+  { q: "Il TFR va versato all'INPS o a un fondo?", a: "No. Nel lavoro domestico il TFR resta alla famiglia, che lo paga alla lavoratrice quando il rapporto finisce. Conviene metterlo da parte ogni anno." },
+  { q: "Se muore la persona assistita, chi paga il TFR?", a: "Gli eredi. Il contratto nazionale prevede che i familiari che vivevano con il datore di lavoro rispondano insieme dei crediti della lavoratrice, nei limiti del periodo di convivenza." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo TFR colf e badanti", url: "https://praticheflaiano.it/calcolo-tfr-colf-badanti", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
+const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B";
+const TD = "padding:10px;border-top:1px solid #E4E0FF;vertical-align:top";
+const TDR = TD + ";text-align:right;white-space:nowrap";
+const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
+const A = "color:#4B2FE0;text-decoration:underline";
+const oggi = new Date().toISOString().slice(0, 10);
+---
+
+<BaseLayout title="Calcolo TFR colf e badanti: quanto spetta e come si gestisce" ogImage="/og/calcolo-tfr-colf-badanti.jpg" description="Calcola il TFR di colf, badanti e baby sitter anno per anno, con le rivalutazioni ISTAT e gli anticipi già pagati. Calcolatore gratuito del CAF di Roma.">
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <section style="background:#F1EEFF">
+    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · rivalutazioni ISTAT aggiornate</span>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Quanto TFR spetta alla colf o alla badante?</h1>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Scrivi paga e date del rapporto: vedi il <b>TFR anno per anno</b>, con le <b>rivalutazioni ISTAT</b> e gli <b>anticipi</b> già pagati, secondo il contratto nazionale del lavoro domestico.</p>
+
+      <form id="tf" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
+        <fieldset class="cc-f"><legend>1. Dove vive la lavoratrice?</legend>
+          <label class="cc-o"><input type="radio" name="tf-tipo" value="convivente" checked> Vive in casa con voi (stipendio al mese)</label>
+          <label class="cc-o"><input type="radio" name="tf-tipo" value="orario"> Non vive in casa: lavora a ore</label>
+        </fieldset>
+
+        <div id="tf-conv" style="display:flex;flex-wrap:wrap;gap:16px">
+          <label class="cc-l" for="tf-mens" style="flex:1 1 220px">2. Stipendio lordo al mese
+            <input id="tf-mens" class="cc-in" type="text" inputmode="decimal" autocomplete="off" value="1.193,84" aria-describedby="tf-mens-h">
+            <small id="tf-mens-h" class="cc-h">Senza vitto e alloggio: il loro valore lo aggiungiamo noi. 1.193,84 € è il minimo 2026 della badante di persona non autosufficiente.</small>
+          </label>
+        </div>
+        <div id="tf-ore-w" style="display:none;flex-wrap:wrap;gap:16px">
+          <label class="cc-l" for="tf-oraria" style="flex:1 1 200px">2. Paga oraria lorda
+            <input id="tf-oraria" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 8,50">
+          </label>
+          <label class="cc-l" for="tf-ore" style="flex:1 1 200px">Ore a settimana
+            <input id="tf-ore" class="cc-in" type="number" min="1" max="54" step="0.5" inputmode="decimal" placeholder="es. 10">
+          </label>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <label class="cc-l" for="tf-ini" style="flex:1 1 200px">3. Inizio del rapporto
+            <input id="tf-ini" class="cc-in" type="date" min="1997-01-01" max={`${ANNO_MESI}-12-31`} value={`${ANNO_MESI}-01-01`}>
+          </label>
+          <label class="cc-l" for="tf-fin" style="flex:1 1 200px">Fine del rapporto (o oggi)
+            <input id="tf-fin" class="cc-in" type="date" min="1997-01-01" max={`${ANNO_MESI}-12-31`} value={oggi}>
+          </label>
+        </div>
+
+        <button id="tf-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola il TFR</button>
+        <div id="tf-out" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: {AGGIORNATO_TFR}.</b> Regole del contratto nazionale del lavoro domestico (art. 41) e della scheda INPS sul TFR dei lavoratori domestici; coefficienti ISTAT di rivalutazione fino a ottobre {ANNO_MESI}. Ogni mese aggiungiamo il nuovo coefficiente.</p>
+
+    <h2 style={H2.replace("24px 0 0", "0")}>Come si calcola il TFR di colf e badanti</h2>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px">
+      <li><b>La quota dell'anno.</b> Si sommano le paghe dell'anno, la <b>tredicesima</b> e, per chi vive in casa, il <b>valore di vitto e alloggio</b> (nel 2026 6,66 € al giorno, 199,80 € al mese). Il totale si divide per <b>13,5</b>. Nei mesi lavorati solo in parte, conta come mese intero quello lavorato per almeno 15 giorni.</li>
+      <li><b>La rivalutazione.</b> A fine anno il TFR accumulato fino all'anno prima cresce dell'<b>1,5%</b> più il <b>75% dell'aumento dei prezzi</b> misurato dall'ISTAT. La quota dell'anno in corso non si rivaluta.</li>
+      <li><b>L'anno in cui il rapporto finisce.</b> Si usa il coefficiente del mese: vale per chi finisce dal 15 di quel mese al 14 del mese dopo.</li>
+      <li><b>Anticipi e somme già pagate</b> si tolgono dal totale.</li>
+    </ol>
+
+    <h3 style="margin:8px 0 0;font-size:20px">Tre esempi</h3>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Esempi di TFR"><table style="width:100%;border-collapse:collapse;font-size:16px">
+      <thead><tr><th style={TH}>Rapporto</th><th style={TH}>TFR</th></tr></thead>
+      <tbody>
+        <tr><td style={TD}>Badante convivente C super, paga minima 2026, un anno intero (2026)</td><td style={TDR}><b>{eur(es1.totale)}</b></td></tr>
+        <tr><td style={TD}>Colf a ore, 10 ore a settimana a 8 € l'ora, un anno intero (2026)</td><td style={TDR}><b>{eur(es2.totale)}</b></td></tr>
+        <tr><td style={TD}>Esempio INPS: 900 € al mese senza aumenti, dal 1997 al 2018 (22 anni, con le rivalutazioni)</td><td style={TDR}><b>{eur(es3.totale)}</b></td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin:0;font-size:15px;color:#3F3F5A">Nell'esempio dell'INPS il totale ufficiale è 25.128,17 €: la differenza di pochi centesimi dipende dagli arrotondamenti anno per anno.</p>
+
+    <p class="cta-tool-wrap" style="margin:8px 0 0"><a class="cta-tool" href="/calcolo-costo-colf-badante"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h2M14 18h2"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Calcola anche il costo totale</span><span class="cta-tool-s">Stipendio, contributi INPS, tredicesima e TFR 2026 di colf e badanti</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+    <h2 style={H2}>Come si gestisce il TFR, anno per anno</h2>
+    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px">
+      <li><b>Ogni anno si calcola la quota.</b> A fine dicembre si fa il conto della quota dell'anno e della rivalutazione.</li>
+      <li><b>Il TFR resta alla famiglia.</b> Non si versa all'INPS né a un fondo: è una somma che la famiglia deve alla lavoratrice e paga alla fine. Conviene metterla da parte ogni anno, così alla fine non arriva tutta insieme.</li>
+      <li><b>Si paga sempre alla fine del rapporto</b>: per dimissioni, licenziamento o morte, anche per poche ore a settimana. Secondo l'INPS spetta anche se il rapporto finisce durante la prova, purché sia durato almeno 15 giorni. Se muore la lavoratrice, il TFR va al coniuge e ai figli o, se erano a suo carico, ai parenti entro il 3° grado e agli affini entro il 2°.</li>
+      <li><b>Si può pagare ogni anno.</b> La legge lo consente se una delle due parti lo chiede e l'altra è d'accordo. Conviene scriverlo e farsi firmare la ricevuta.</li>
+      <li><b>Anticipo.</b> Su richiesta della lavoratrice si anticipa fino al <b>70%</b> del TFR maturato, non più di una volta l'anno. Il contratto nazionale lo prevede senza un minimo di anni; la legge generale chiede 8 anni di servizio.</li>
+      <li><b>Cosa tenere.</b> Ogni anno un prospetto del TFR maturato, firmato da tutte e due le parti, e le ricevute di anticipi e pagamenti.</li>
+    </ol>
+
+    <h2 style={H2}>Coefficienti di rivalutazione del TFR</h2>
+    <p style="margin:0">Percentuali ISTAT usate dal calcolatore. Il coefficiente di dicembre è quello di tutto l'anno.</p>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Coefficienti di rivalutazione del TFR"><table style="width:100%;border-collapse:collapse;font-size:16px">
+      <thead><tr><th style={TH}>Periodo</th><th style={TH}>Coefficiente</th></tr></thead>
+      <tbody>
+        {COEFF_MESI.map((c, m) => ({ c, m })).reverse().map(({ c, m }) => <tr><td style={TD}>{MESI[m]} {ANNO_MESI} (fine rapporto dal 15 {MESI[m]} al 14 {MESI[(m + 1) % 12]})</td><td style={TDR}>{pct(c)}</td></tr>)}
+        {anniTab.map((y) => <tr><td style={TD}>anno {y} (dicembre)</td><td style={TDR}>{pct(COEFF_DICEMBRE[y])}</td></tr>)}
+      </tbody>
+    </table></div>
+    <p style="margin:0;font-size:15px;color:#3F3F5A">Il calcolatore contiene i coefficienti annui dal 1998: quelli fino al 2018 sono gli stessi della tabella dell'INPS.</p>
+
+    <h2 style={H2}>Domande frequenti</h2>
+    {faqs.map((f) => (<><h3 style="margin:12px 0 0;font-size:19px">{f.q}</h3><p style="margin:0">{f.a}</p></>))}
+
+    <h2 style={H2}>Il TFR lo teniamo noi</h2>
+    <p style="margin:0">Al Centro Pratiche Flaiano, CAF UNSIC a <b>Roma Vigne Nuove</b> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), con il servizio <b>Unsicolf</b> teniamo ogni anno il conto del TFR, prepariamo gli anticipi e, a fine rapporto, l'ultima busta paga e la comunicazione all'INPS. Un prezzo all'anno, tutto compreso.</p>
+    <p style="margin:0;display:flex;flex-wrap:wrap;gap:10px">
+      <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Ciao, vorrei un aiuto con il TFR della colf/badante.")}`} target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:12px 20px;border-radius:999px;background:#25D366;color:#14142B;font-weight:800;text-decoration:none">Scrivici su WhatsApp</a>
+      <a href="/prenota" style="display:inline-flex;align-items:center;padding:12px 20px;border-radius:999px;background:#14142B;color:#fff;font-weight:800;text-decoration:none">Prenota un appuntamento</a>
+    </p>
+    <p style="margin:0">Leggi anche: <a href="/blog/ferie-tredicesima-malattia-tfr-colf-badanti-2026" style={A}>ferie, tredicesima, malattia e TFR</a> · <a href="/blog/licenziamento-dimissioni-colf-badante-preavviso-tfr" style={A}>licenziamento e dimissioni</a> · <a href="/colf-badanti" style={A}>il servizio colf e badanti</a>.</p>
+
+    <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:#3F3F5A">Fonti: <a href="https://associazionedomina.it/ccnl-lavoro-domestico/" target="_blank" rel="noopener" style={A}>CCNL lavoro domestico del 28 ottobre 2025</a> (artt. 39, 41, 42); <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50215.dimissioni-licenziamento-e-tfr-dei-lavoratori-domestici.html" target="_blank" rel="noopener" style={A}>INPS, dimissioni, licenziamento e TFR dei lavoratori domestici</a>; codice civile, art. 2120; coefficienti ISTAT di rivalutazione del TFR (tabelle pubblicate da Camere di Commercio, ANCE e Assolombarda). Il calcolatore dà una stima lorda: per il tuo caso contano le buste paga effettive.</p>
+  </section>
+
+  <style is:global>
+    #tf-out{scroll-margin-top:90px}
+    .cc-f{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+    .cc-f legend{font-weight:800;margin-bottom:8px}
+    .cc-l{display:flex;flex-direction:column;gap:6px;font-weight:800}
+    .cc-h{font-weight:400;color:#5B5B72;font-size:14px}
+    .cc-in{border:2px solid #14142B;border-radius:14px;padding:11px 12px;font-size:17px;background:#fff;width:100%;max-width:100%;font-weight:400;color:#14142B}
+    .cc-o{display:flex;align-items:center;gap:10px;font-size:16px;cursor:pointer;font-weight:400;min-height:28px}
+    .cc-o input{width:20px;height:20px;accent-color:#5B3DF5;flex:none}
+    .cc-res{border-radius:20px;padding:18px 20px;line-height:1.5;margin-top:4px}
+    .cc-ok{background:#D4FF4F;color:#14142B}
+    .cc-warn{background:#FFF4D6;color:#14142B}
+    .cc-res b.big{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:40px;line-height:1.05;margin:4px 0}
+    .tf-tab{border-collapse:collapse;margin-top:10px;font-size:14px;width:100%;min-width:560px}
+    .tf-tab th{text-align:left;padding:6px 6px 6px 0;border-bottom:2px solid #14142B}
+    .tf-tab td{padding:4px 6px 4px 0;vertical-align:middle;border-top:1px solid rgba(20,20,43,.15);white-space:nowrap}
+    .tf-tab input{width:110px;border:2px solid #14142B;border-radius:10px;padding:6px 8px;font-size:15px;background:#fff;color:#14142B}
+    .cc-res a.cc-btn,.cc-res button.cc-btn{display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;font-weight:800;text-decoration:none;margin:10px 10px 0 0;border:0;font-size:15px;cursor:pointer}
+  </style>
+
+  <script>
+    import { calcolaTfr, type RigaInput } from "~/lib/tfr-colf";
+    import { eur, leggiImporto } from "~/lib/costo-colf";
+    const $ = (i: string) => document.getElementById(i) as HTMLInputElement;
+    const tipo = () => (document.querySelector('input[name="tf-tipo"]:checked') as HTMLInputElement).value as "convivente" | "orario";
+    function aggiorna() {
+      const o = tipo() === "orario";
+      ($("tf-conv") as unknown as HTMLElement).style.display = o ? "none" : "flex";
+      ($("tf-ore-w") as unknown as HTMLElement).style.display = o ? "flex" : "none";
+    }
+    document.querySelectorAll('input[name="tf-tipo"]').forEach((r) => r.addEventListener("change", aggiorna));
+    aggiorna();
+    { const f = $("tf-fin"); const d = new Date(); const oggi = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); f.value = oggi > f.max ? f.max : oggi; }
+    const num = (n: number) => n.toFixed(2).replace(".", ",");
+    function show(c: string, h: string, scroll = true) { const o = $("tf-out"); o.innerHTML = '<div class="cc-res ' + c + '">' + h + "</div>"; if (scroll) o.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+    function leggiRighe(): RigaInput[] {
+      const out: RigaInput[] = [];
+      document.querySelectorAll<HTMLInputElement>("#tf-out input[data-anno]").forEach((el) => {
+        const anno = +el.dataset.anno!; const v = leggiImporto(el.value);
+        let r = out.find((x) => x.anno === anno); if (!r) { r = { anno }; out.push(r); }
+        if (el.dataset.k === "r" && v !== undefined && !Number.isNaN(v)) r.retribuzione = v;
+        if (el.dataset.k === "p" && v !== undefined && !Number.isNaN(v)) r.pagato = v;
+      });
+      return out;
+    }
+    function calcola(righe?: RigaInput[]) {
+      const t = tipo();
+      const mensile = leggiImporto($("tf-mens").value), oraria = leggiImporto($("tf-oraria").value);
+      if ((t === "convivente" && Number.isNaN(mensile)) || (t === "orario" && Number.isNaN(oraria))) { show("cc-warn", "Non riesco a leggere la paga: scrivi solo il numero, per esempio 1.193,84 o 8,50."); return; }
+      const r = calcolaTfr({ tipo: t, mensile, oraria, ore: parseFloat($("tf-ore").value), inizio: $("tf-ini").value, fine: $("tf-fin").value, righe });
+      if (!r.ok) { show("cc-warn", r.errore || "Controlla i dati."); return; }
+      const rows = r.righe.map((x) => "<tr><td>" + x.anno + "</td><td>" + x.mesi + "</td>" +
+        '<td><input type="text" inputmode="decimal" data-anno="' + x.anno + '" data-k="r" value="' + num(x.retribuzione) + '" aria-label="Retribuzione utile ' + x.anno + '"></td>' +
+        "<td>" + eur(x.quota) + "</td><td>" + (x.coeff ? x.coeff.toFixed(3).replace(".", ",") + "%" : "-") + "</td><td>" + eur(x.rivalutazione) + "</td>" +
+        '<td><input type="text" inputmode="decimal" data-anno="' + x.anno + '" data-k="p" value="' + (x.pagato ? num(x.pagato) : "") + '" placeholder="0" aria-label="Anticipi o TFR pagati nel ' + x.anno + '"></td>' +
+        "<td><b>" + eur(x.totale) + "</b></td></tr>").join("");
+      const av = r.avvisi.length ? '<ul style="margin:10px 0 0;padding-left:20px">' + r.avvisi.map((x) => "<li>" + x + "</li>").join("") + "</ul>" : "";
+      const msg = "Ciao, ho usato il calcolatore del TFR colf e badanti: rapporto dal " + $("tf-ini").value + " al " + $("tf-fin").value + ", TFR stimato " + eur(r.totale) + ". Vorrei un aiuto per il conteggio e la busta paga finale.";
+      show("cc-ok", "TFR lordo maturato:<b class=\"big\">" + eur(r.totale) + "</b>" +
+        "Quote accantonate " + eur(r.quote) + " + rivalutazioni " + eur(r.rivalutazioni) + (r.pagato ? " − già pagato " + eur(r.pagato) : "") + "." +
+        '<div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: TFR anno per anno"><table class="tf-tab"><thead><tr><th>Anno</th><th>Mesi</th><th>Retribuzione utile</th><th>Quota</th><th>Coeff. ISTAT</th><th>Rivalutazione</th><th>Anticipi pagati</th><th>TFR a fine anno</th></tr></thead><tbody>' + rows + "</tbody></table></div>" +
+        '<p style="margin:8px 0 0;font-size:14px">Puoi correggere la retribuzione di ogni anno (paghe + tredicesima + vitto e alloggio) e scrivere gli anticipi già pagati, poi premi Ricalcola.</p>' +
+        '<p style="margin:0"><button type="button" id="tf-r" class="cc-btn" style="background:#5B3DF5;color:#fff">Ricalcola con le correzioni</button></p>' + av +
+        '<p style="margin:10px 0 0;font-size:14px">Stima lorda secondo il contratto nazionale. Non comprende la paga dell\'ultimo mese, ferie non godute, tredicesima e preavviso, che vanno nell\'ultima busta paga.</p>' +
+        '<p style="margin:0"><a class="cc-btn" style="background:#25D366;color:#14142B" target="_blank" rel="noopener" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '">Chiedi aiuto su WhatsApp</a><a class="cc-btn" style="background:#14142B;color:#fff" href="/prenota">Prenota un appuntamento</a></p>', !righe);
+      $("tf-r").addEventListener("click", () => calcola(leggiRighe()));
+    }
+    $("tf-b").addEventListener("click", () => calcola());
+  </script>
+</BaseLayout>

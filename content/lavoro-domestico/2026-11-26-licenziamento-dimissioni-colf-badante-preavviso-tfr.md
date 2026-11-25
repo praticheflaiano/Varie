@@ -31,7 +31,7 @@ Il rapporto con la colf o la badante può finire per tante ragioni: la persona a
 |---|---|
 | **Preavviso (25 ore o più)** | **15 giorni** fino a 5 anni di anzianità, **30 giorni** oltre |
 | **Preavviso (meno di 25 ore)** | **8 giorni** fino a 2 anni, **15 giorni** oltre |
-| **Se si dimette la lavoratrice** | preavviso **dimezzato** (per 25 ore o più) |
+| **Se si dimette la lavoratrice** | preavviso **dimezzato** |
 | **Senza preavviso** | si paga l'**indennità** per i giorni mancanti |
 | **Alla fine si paga** | ultima paga, ratei di tredicesima e ferie, **TFR** |
 | **Comunicazione INPS** | entro **5 giorni** dalla fine del rapporto |
@@ -59,10 +59,10 @@ Il preavviso si conta in **giorni di calendario** e dipende dall'orario e dall'a
 |---|---|---|---|
 | 25 ore o più | fino a 5 anni | **15 giorni** | **7,5 giorni** |
 | 25 ore o più | oltre 5 anni | **30 giorni** | **15 giorni** |
-| meno di 25 ore | fino a 2 anni | **8 giorni** | **8 giorni** |
-| meno di 25 ore | oltre 2 anni | **15 giorni** | **15 giorni** |
+| meno di 25 ore | fino a 2 anni | **8 giorni** | **4 giorni** |
+| meno di 25 ore | oltre 2 anni | **15 giorni** | **7,5 giorni** |
 
-Il contratto dimezza il preavviso delle dimissioni solo nel paragrafo dedicato ai rapporti da 25 ore in su. Per portieri e custodi che vivono con la famiglia in un alloggio del datore di lavoro il preavviso è di **30 giorni** fino a un anno di anzianità e **60 giorni** oltre.
+Per le dimissioni i termini sono **ridotti della metà**: lo chiarisce l'INPS per tutti i rapporti. Per portieri e custodi che vivono con la famiglia in un alloggio del datore di lavoro il preavviso è di **30 giorni** fino a un anno di anzianità e **60 giorni** oltre.
 
 **Durante il periodo di prova** (30 giorni di lavoro per chi vive in casa e per i livelli D e D super, 8 giorni per gli altri) ciascuno può interrompere il rapporto **senza preavviso**, pagando il lavoro fatto.
 
@@ -101,7 +101,7 @@ Nell'ultima busta paga vanno:
 
 Con l'ultima busta paga va consegnata alla lavoratrice la **dichiarazione dei compensi** dell'anno, che le serve per la dichiarazione dei redditi.
 
-> [calcolo del costo di colf e badanti](/calcolo-costo-colf-badante): vedi la quota annua di TFR e tredicesima del tuo rapporto.
+> [calcolo del TFR di colf e badanti](/calcolo-tfr-colf-badanti): TFR anno per anno con le rivalutazioni ISTAT e gli anticipi già pagati.
 
 ## La comunicazione all'INPS
 
@@ -136,7 +136,7 @@ Sì, nel lavoro domestico non serve un motivo, ma bisogna dare il preavviso o pa
 Per 25 ore o più a settimana: 15 giorni fino a 5 anni di anzianità, 30 oltre. Sotto le 25 ore: 8 giorni fino a 2 anni, 15 oltre.
 
 **Quanti giorni di preavviso deve dare la badante che si dimette?**
-Per i rapporti da 25 ore in su, metà di quelli del licenziamento: 7,5 giorni fino a 5 anni di anzianità e 15 giorni oltre.
+La metà di quelli del licenziamento. Da 25 ore in su: 7,5 giorni fino a 5 anni di anzianità e 15 giorni oltre. Sotto le 25 ore: 4 giorni fino a 2 anni e 7,5 giorni oltre.
 
 **Le dimissioni della colf si fanno online?**
 No. Per il lavoro domestico la procedura online non si applica: basta una lettera firmata con la data.
