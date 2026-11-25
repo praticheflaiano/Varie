@@ -661,3 +661,32 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
 .cta-tool-t{font-weight:800;font-size:19px;color:#fff}
 .cta-tool-s{font-size:15px;color:#F1EEFF;font-weight:400}
 .cta-tool-go{flex:none;color:#D4FF4F}
+
+/* =========================================================================
+   ZONA NASpI (.nz) - strumenti React arrivati dal portale domandedisoccupazione.it
+   I componenti usano le classi Tailwind del portale (slate, blue, teal...): qui quei
+   colori e i raggi prendono i valori della grafica del sito, come faceva la
+   configurazione Tailwind del portale. Coppie di colori già controllate con axe.
+   ========================================================================= */
+.nz {
+  --color-slate-50: #F7F7FB; --color-slate-100: #F1F1F7; --color-slate-200: #E4E4EE; --color-slate-300: #C9C9DA; --color-slate-400: #A3A3BD;
+  --color-slate-500: #6B6B85; --color-slate-600: #4E4E6A; --color-slate-700: #3F3F5A; --color-slate-800: #26263F; --color-slate-900: #14142B; --color-slate-950: #0B0B1A;
+  --color-gray-50: #F7F7FB; --color-gray-100: #F1F1F7; --color-gray-200: #E4E4EE; --color-gray-300: #C9C9DA; --color-gray-400: #A3A3BD;
+  --color-gray-500: #6B6B85; --color-gray-600: #4E4E6A; --color-gray-700: #3F3F5A; --color-gray-800: #26263F; --color-gray-900: #14142B; --color-gray-950: #0B0B1A;
+  --color-blue-50: #F1EEFF; --color-blue-100: #E4DEFF; --color-blue-200: #CFC5FF; --color-blue-300: #B0A1FF; --color-blue-400: #8B73FF;
+  --color-blue-500: #6E52F8; --color-blue-600: #5B3DF5; --color-blue-700: #4B2FE0; --color-blue-800: #3A20C0; --color-blue-900: #2A1A8F; --color-blue-950: #14142B;
+  --color-indigo-50: #F1EEFF; --color-indigo-100: #E4DEFF; --color-indigo-200: #CFC5FF; --color-indigo-300: #B0A1FF; --color-indigo-400: #8B73FF;
+  --color-indigo-500: #6E52F8; --color-indigo-600: #5B3DF5; --color-indigo-700: #4B2FE0; --color-indigo-800: #3A20C0; --color-indigo-900: #2A1A8F; --color-indigo-950: #14142B;
+  --color-teal-50: #FFF0F4; --color-teal-100: #FFE3EC; --color-teal-200: #FFC2D3; --color-teal-300: #FF9AB5; --color-teal-400: #FF7AA0;
+  --color-teal-500: #FF5C8A; --color-teal-600: #E0336B; --color-teal-700: #C21F55; --color-teal-800: #9E1844; --color-teal-900: #7A1235; --color-teal-950: #4A0A20;
+  --radius-lg: 14px; --radius-xl: 20px; --radius-2xl: 28px; --radius-3xl: 36px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #14142B;
+}
+@layer base {
+  /* nel portale (Tailwind 3) il bordo senza colore era grigio chiaro, non il colore del testo */
+  .nz *, .nz ::before, .nz ::after { border-color: #E4E4EE; }
+  .nz h1, .nz h2, .nz h3, .nz h4 { letter-spacing: -0.01em; text-wrap: pretty; }
+  .nz button { cursor: pointer; }
+}

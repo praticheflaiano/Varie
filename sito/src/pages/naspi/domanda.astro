@@ -1,0 +1,127 @@
+---
+/**
+ * Guida arrivata dal portale domandedisoccupazione.it il 25/11/2026 (stesso testo, verificato quel giorno sulle fonti in fondo).
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+import ScadenzeNaspi from "~/naspi/ScadenzeNaspi";
+
+const faq = [
+    {
+        q: 'Entro quanti giorni devo presentare la domanda NASpI?',
+        a: 'Entro 68 giorni dalla fine del rapporto di lavoro, a pena di decadenza. In alcuni casi i 68 giorni partono più tardi: dalla fine della maternità, della malattia o dell\'infortunio indennizzati, dalla fine del preavviso pagato, dalla chiusura di una vertenza o, per il licenziamento per giusta causa, dal 30° giorno dopo la cessazione.',
+    },
+    {
+        q: 'Da quando parte la NASpI?',
+        a: 'Dall\'8° giorno dopo la fine del lavoro, se presenti la domanda entro quel giorno. Se la presenti dopo, parte dal giorno successivo alla domanda e i giorni di ritardo non vengono pagati. Per il licenziamento per giusta causa il giorno di riferimento è il 38°.',
+    },
+    {
+        q: 'Mi sono dimesso: ho diritto alla NASpI?',
+        a: 'Di regola no. Spetta però se le dimissioni sono per giusta causa, se sono avvenute durante il periodo tutelato di maternità o paternità, o in caso di risoluzione consensuale fatta all\'Ispettorato del lavoro o per rifiuto di un trasferimento a più di 50 km (o 80 minuti con i mezzi pubblici).',
+    },
+    {
+        q: 'Quanti contributi servono?',
+        a: 'Almeno 13 settimane di contributi contro la disoccupazione negli ultimi 4 anni. Dal 2025, se nei 12 mesi prima ti sei dimesso volontariamente da un lavoro a tempo indeterminato, servono almeno 13 settimane tra quelle dimissioni e la fine dell\'ultimo lavoro (circolare INPS 98/2025).',
+    },
+    {
+        q: 'Serve lo SPID?',
+        a: 'Per farla da solo online serve SPID, CIE o CNS. Si può fare anche al Contact center INPS (803 164 da fisso gratuito, 06 164 164 da cellulare) o tramite un patronato, che la presenta per te.',
+    },
+    {
+        q: 'Ho un\'attività con partita IVA o un altro part-time: cosa devo fare?',
+        a: 'Devi dichiararlo nella domanda e indicare il reddito che prevedi di guadagnare nell\'anno, anche se è zero. Se non lo fai nella domanda, hai un mese per farlo con il modello NASpI-Com. Se non lo comunichi, perdi la NASpI. Vale anche per chi è iscritto alla Gestione Separata.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="Domanda NASpI 2026: requisiti, 68 giorni e come farla"
+    description="Come fare la domanda NASpI nel 2026: chi ha diritto, 13 settimane di contributi, entro 68 giorni, da quando parte il pagamento, errori da evitare. Con calcolo delle scadenze."
+    path="/naspi/domanda"
+    h1="Domanda NASpI 2026: come farla passo per passo"
+    kicker="Entro 68 giorni dalla fine del lavoro"
+    crumb="Domanda NASpI"
+    updated="2026-11-25"
+    published="2026-11-25"
+    sources={[
+        'Scheda INPS "NASpI: indennità mensile di disoccupazione" (ultimo aggiornamento 2 febbraio 2026)',
+        'D.Lgs. 4 marzo 2015, n. 22, artt. 1-6 (requisiti, termine di 68 giorni e decorrenza)',
+        'Circolare INPS 12 maggio 2015, n. 94 (istruzioni operative)',
+        'Circolare INPS 5 giugno 2025, n. 98 (nuovo requisito dopo dimissioni volontarie, legge di bilancio 2025)',
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>La NASpI spetta a chi <strong>perde il lavoro senza volerlo</strong> e ha almeno <strong>13 settimane di contributi</strong> negli ultimi 4 anni.</li>
+            <li>La domanda va fatta <strong>entro 68 giorni</strong> dalla fine del lavoro, solo in modo telematico.</li>
+            <li>Falla <strong>entro 8 giorni</strong>: la NASpI parte dall'8° giorno. Se aspetti, parte dal giorno dopo la domanda e perdi i giorni di ritardo.</li>
+            <li>Tre strade: online con SPID/CIE, Contact center INPS, oppure un <strong>patronato</strong>.</li>
+            <li>Dopo la domanda: entro 15 giorni c'è il <strong>patto di servizio</strong> con il centro per l'impiego.</li>
+        </ul>
+    </blockquote>
+
+    <ScadenzeNaspi slot="tool" client:visible />
+
+    <h2>Chi ha diritto</h2>
+    <p>I <strong>lavoratori dipendenti</strong> che hanno perso il lavoro <strong>involontariamente</strong>: licenziamento (anche disciplinare), fine di un contratto a termine. Sono compresi apprendisti, soci lavoratori di cooperative con rapporto subordinato, personale artistico con rapporto subordinato e dipendenti a tempo determinato della pubblica amministrazione.</p>
+    <p>Chi si dimette di solito <strong>non ha diritto</strong>, tranne in questi casi:</p>
+    <ul>
+        <li><strong>dimissioni per giusta causa</strong> (per esempio stipendi non pagati, mobbing, demansionamento): vedi le <a href="/dimissioni-online">dimissioni per giusta causa</a>;</li>
+        <li>dimissioni durante il <strong>periodo tutelato di maternità</strong> (da 300 giorni prima del parto fino al primo anno del bambino) o di paternità: vedi le <a href="https://domandedisoccupazione.it/guida/dimissioni-maternita">dimissioni nel primo anno del figlio</a>;</li>
+        <li><strong>risoluzione consensuale</strong> fatta con la procedura all'Ispettorato del lavoro, oppure per rifiuto di un trasferimento a più di 50 km da casa o a 80 minuti o più con i mezzi pubblici;</li>
+        <li>dimissioni durante la liquidazione giudiziale (ex fallimento) del datore di lavoro.</li>
+    </ul>
+    <p><strong>Non hanno diritto</strong>: i dipendenti pubblici a tempo indeterminato, gli operai agricoli a tempo determinato, chi ha già i requisiti per la pensione di vecchiaia o anticipata, chi ha l'assegno ordinario di invalidità e non sceglie la NASpI.</p>
+
+    <h2>Quanti contributi servono</h2>
+    <p>Servono almeno <strong>13 settimane di contributi</strong> contro la disoccupazione nei <strong>4 anni</strong> prima della fine del lavoro. Contano anche i contributi dovuti ma non versati dal datore, la maternità obbligatoria e il congedo parentale indennizzato durante il rapporto.</p>
+    <p><strong>Novità dal 2025.</strong> Se nei 12 mesi prima ti sei <strong>dimesso volontariamente</strong> da un lavoro a tempo indeterminato, servono almeno <strong>13 settimane di contributi</strong> tra quelle dimissioni e la fine dell'ultimo lavoro. La regola vale per le disoccupazioni iniziate dal 1° gennaio 2025 e non cambia importo e durata della NASpI.</p>
+
+    <h2>Entro quando e da quando</h2>
+    <p>La domanda va presentata <strong>entro 68 giorni</strong>, a pena di decadenza. I 68 giorni partono:</p>
+    <ul>
+        <li>dalla <strong>fine del rapporto di lavoro</strong> (caso normale);</li>
+        <li>dalla fine della <strong>maternità</strong>, della <strong>malattia</strong> o dell'<strong>infortunio</strong> indennizzati, se sono iniziati durante il lavoro;</li>
+        <li>dalla fine del periodo coperto dall'<strong>indennità di mancato preavviso</strong>;</li>
+        <li>dalla chiusura della <strong>vertenza sindacale</strong> o dalla notifica della sentenza;</li>
+        <li>dal <strong>30° giorno</strong> dopo la cessazione, per il <strong>licenziamento per giusta causa</strong>.</li>
+    </ul>
+    <p>Il termine si <strong>ferma</strong> se nei 68 giorni arriva una maternità indennizzabile, oppure se nei primi 60 giorni dopo la fine di un lavoro a tempo indeterminato arriva una malattia o un infortunio indennizzabili: riprende quando finiscono.</p>
+    <p>La NASpI <strong>parte</strong> dall'<strong>8° giorno</strong> dopo la fine del lavoro, se la domanda è fatta entro quel giorno. Se la fai dopo, parte dal <strong>giorno successivo alla domanda</strong>. Per il licenziamento per giusta causa il giorno di riferimento è il <strong>38°</strong>.</p>
+
+    <h2>Cosa serve</h2>
+    <ul>
+        <li><strong>SPID, CIE o CNS</strong> se la fai da solo online.</li>
+        <li>I dati del lavoro finito: datore di lavoro, data di fine, motivo. Tieni a portata di mano la lettera di licenziamento o la ricevuta delle dimissioni telematiche.</li>
+        <li>Il modo di pagamento: <strong>conto corrente bancario o postale intestato o cointestato a te</strong>, libretto postale, oppure bonifico all'ufficio postale.</li>
+        <li>Se hai un'<strong>attività autonoma</strong>, un <strong>altro part-time</strong> o sei iscritto alla <strong>Gestione Separata</strong>: il reddito che prevedi per l'anno, anche se è zero.</li>
+    </ul>
+
+    <h2>Come si fa la domanda</h2>
+    <ol>
+        <li><strong>Online da solo</strong>: sul sito INPS, servizio "NASpI – invio domanda, comunicazioni e consultazione", con SPID, CIE o CNS. Sulla pagina INPS c'è anche il tutorial "NASpI: invio domanda".</li>
+        <li><strong>Contact center INPS</strong>: 803 164, gratuito da telefono fisso, oppure 06 164 164 da cellulare.</li>
+        <li><strong>Patronato</strong>: la presenta per te. Al Centro Pratiche Flaiano è <strong>gratis</strong> e si può fare <strong>anche a distanza da tutta Italia</strong>: mandi i documenti e firmi il mandato di assistenza.</li>
+    </ol>
+
+    <h2>Dopo la domanda</h2>
+    <ul>
+        <li>La domanda NASpI vale anche come <strong>dichiarazione di immediata disponibilità al lavoro</strong> (DID): non devi farla a parte. Vedi la guida sulla <a href="https://domandedisoccupazione.it/guida/did">DID online</a>.</li>
+        <li>Nei <strong>15 giorni</strong> dopo la domanda devi andare al <strong>centro per l'impiego</strong> per il patto di servizio. Se non vai, ti convocano. Leggi anche gli obblighi sulla <a href="/siisl">piattaforma SIISL</a>.</li>
+        <li>Lo stato della domanda si controlla nello stesso servizio INPS, nella sezione di consultazione.</li>
+        <li>Se trovi un lavoro, apri una partita IVA o fai lavori occasionali mentre prendi la NASpI, devi comunicarlo: leggi la guida sul <a href="https://domandedisoccupazione.it/guida/nuovo-lavoro-durante-naspi">nuovo lavoro durante la NASpI</a>.</li>
+        <li>Se la domanda viene respinta puoi fare <a href="https://domandedisoccupazione.it/guida/ricorso">ricorso</a>.</li>
+    </ul>
+
+    <h2>Gli errori che fanno perdere la NASpI</h2>
+    <ul>
+        <li><strong>Superare i 68 giorni</strong>: la NASpI è persa, salvo i casi in cui il termine parte dopo o si ferma.</li>
+        <li><strong>Aspettare oltre l'8° giorno</strong>: non si perde la NASpI, ma si perdono i giorni di ritardo.</li>
+        <li><strong>Dimissioni volontarie</strong> presentate come se fossero per giusta causa, senza le prove.</li>
+        <li><strong>Non dichiarare</strong> un'attività autonoma, un part-time rimasto o l'iscrizione alla Gestione Separata, con il reddito previsto anche se zero: entro un mese dalla domanda, altrimenti si perde la NASpI.</li>
+        <li>Indicare un conto <strong>non intestato o cointestato</strong> a te.</li>
+        <li>Non presentarsi al <strong>centro per l'impiego</strong> senza un giustificato motivo: si rischiano tagli fino alla perdita della NASpI.</li>
+    </ul>
+    <p>Prima di fare domanda puoi stimare importo e durata con il <a href="/calcolo-naspi">calcolatore NASpI 2026</a>.</p>
+</NaspiGuideLayout>

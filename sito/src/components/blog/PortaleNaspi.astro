@@ -1,31 +1,31 @@
 ---
 /**
- * Collegamenti alle guide e agli strumenti del portale NASpI (domandedisoccupazione.it).
- * Usato nelle pagine e negli articoli su NASpI, dimissioni e lavoro: ogni pagina del sito
- * che parla di disoccupazione rimanda alle guide precise del portale, non solo alla home.
- * Regola: quando sul portale nasce una guida o uno strumento importante, aggiungerlo qui.
+ * Guide e strumenti su NASpI e disoccupazione.
+ * Le pagine già portate dentro praticheflaiano.it hanno un indirizzo interno; quelle ancora
+ * sul vecchio portale domandedisoccupazione.it tengono per ora l'indirizzo esterno.
+ * Regola: quando una guida viene trasferita, cambiare qui il suo indirizzo.
  */
 import { NASPI_URL } from "~/consts";
-interface Props { heading?: string; }
-const { heading = "Guide e strumenti sul nostro portale NASpI" } = Astro.props;
+interface Props { heading?: string; current?: string; }
+const { heading = "Guide e strumenti su NASpI e disoccupazione", current } = Astro.props;
 const LINKS = [
-  { href: "/calcolatore", t: "Calcolo NASpI 2026", s: "Importo e durata con i valori INPS" },
-  { href: "/guida/presentare-domanda", t: "Domanda NASpI: scadenze e passi", s: "I 68 giorni, da quando parte, errori da evitare" },
-  { href: "/anticipo", t: "Anticipo NASpI in due rate", s: "70% e 30% per chi apre partita IVA o impresa" },
-  { href: "/guida/fondo-garanzia-tfr", t: "Fondo di garanzia INPS", s: "TFR e stipendi se l'azienda fallisce o non paga" },
-  { href: "/guida/dimissioni-giusta-causa", t: "Dimissioni per giusta causa", s: "Quando danno diritto alla NASpI" },
-  { href: "/guida/pagamenti-accredito", t: "Quando arriva la NASpI", s: "Date di pagamento e come controllarle" },
-  { href: "/obblighi/siisl", t: "SIISL e patto di attivazione", s: "Cosa fare entro 15 giorni" },
-  { href: "/guida/nuovo-lavoro-durante-naspi", t: "Nuovo lavoro durante la NASpI", s: "Cosa comunicare per non perderla" },
-];
+  { href: "/calcolo-naspi", t: "Calcolo NASpI 2026", s: "Importo e durata con i valori INPS" },
+  { href: "/naspi/domanda", t: "Domanda NASpI: scadenze e passi", s: "I 68 giorni, da quando parte, errori da evitare" },
+  { href: "/anticipo-naspi", t: "Anticipo NASpI in due rate", s: "70% e 30% per chi apre partita IVA o impresa" },
+  { href: "/naspi/fondo-garanzia-tfr", t: "Fondo di garanzia INPS", s: "TFR e stipendi se l'azienda fallisce o non paga" },
+  { href: "/dimissioni-online", t: "Dimissioni online", s: "Volontarie e per giusta causa, anche senza SPID" },
+  { href: "/siisl", t: "SIISL e patto di attivazione", s: "Cosa fare entro 15 giorni" },
+  { href: `${NASPI_URL}/guida/pagamenti-accredito`, t: "Quando arriva la NASpI", s: "Date di pagamento e come controllarle" },
+  { href: `${NASPI_URL}/guida/nuovo-lavoro-durante-naspi`, t: "Nuovo lavoro durante la NASpI", s: "Cosa comunicare per non perderla" },
+].filter((l) => l.href !== current);
 ---
 <section class="pn" aria-labelledby="pn-title">
   <h2 id="pn-title">{heading}</h2>
-  <p class="pn-sub">Su domandedisoccupazione.it trovi calcolatori e guide passo passo, sempre gratis.</p>
+  <p class="pn-sub">Calcolatori e guide passo passo, sempre gratis.</p>
   <ul>
     {LINKS.map((l) => (
       <li>
-        <a href={`${NASPI_URL}${l.href}`}>
+        <a href={l.href}>
           <span class="pn-t">{l.t}</span>
           <span class="pn-s">{l.s}</span>
         </a>

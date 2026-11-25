@@ -73,6 +73,16 @@ Regola di Antonio (24/11/2026): queste pratiche valgono su tutte le pagine, nuov
 - **Articoli markdown**: caselle `- [ ]`, tabelle scorrevoli e intestazioni vuote sono sistemate da `sito/src/lib/rehype-a11y.mjs`. Dopo una modifica a quel file cancellare la cache (`rm -rf sito/node_modules/.astro`) prima della build.
 - **Prima di pubblicare** pagine o componenti nuovi: controllo con axe-core sulle pagine toccate (Playwright + `axe.run` con `wcag2a`, `wcag2aa`, `best-practice`) e correggere ogni errore.
 
+## Sezione NASpI e disoccupazione (dal 25/11/2026)
+
+Decisione di Antonio (25/11/2026): guide, calcolatori e strumenti su NASpI e disoccupazione vivono su praticheflaiano.it; il vecchio portale domandedisoccupazione.it rimanda qui pagina per pagina.
+- Pagine: `/calcolo-naspi`, `/anticipo-naspi`, `/naspi/domanda`, `/naspi/fondo-garanzia-tfr` (le altre guide del portale arrivano una alla volta, solo dopo la verifica sulle fonti ufficiali).
+- Strumenti React in `sito/src/naspi/` (unico punto del sito con React). Vanno sempre dentro un contenitore con classe `nz` (colori e raggi in fondo a `global.css`).
+- Guide: layout `sito/src/layouts/NaspiGuideLayout.astro` (slot `intro`, `tool`, testo; fonti e data obbligatorie).
+- Elenco delle guide: `sito/src/components/blog/PortaleNaspi.astro`. Quando una guida viene trasferita: cambiare lì il suo indirizzo e aggiungere il rimando nel `vercel.json` del portale.
+- Importi NASpI in `sito/src/naspi/constants.ts`: ogni gennaio aggiornarli con la circolare INPS sugli importi massimi e cambiare `LAST_UPDATED`.
+- La lettura dei documenti del calcolatore passa da `/api/naspi/analyze-document`, girato alla funzione del portale (rewrite in `sito/vercel.json`).
+
 ## Flusso degli stati di un articolo
 
 ```

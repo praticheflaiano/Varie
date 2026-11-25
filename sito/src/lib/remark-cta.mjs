@@ -2,8 +2,8 @@
 // Uso negli articoli (markdown): una citazione con UN solo link a uno strumento, es.
 //   > **Calcola subito:** con il nostro [calcolatore del bollo auto](/calcolo-bollo-auto) scopri se sei esente.
 // Diventa: pulsante viola con il testo del link come titolo e il resto come sottotitolo.
-// Comprende anche gli strumenti del portale NASpI (calcolatore, anticipo, verifica Fondo di garanzia).
-const TOOL = /^(\/calcolo-[a-z0-9-]+|\/assegno-vedovanza|\/calcolatore[a-z0-9-]*|\/guide\/[^\s]+\.pdf|\/[^\s]+\.pdf|https:\/\/domandedisoccupazione\.it\/(calcolatore|anticipo|guida\/fondo-garanzia-tfr))(#.*)?$/i;
+// Comprende gli strumenti NASpI del sito: /calcolo-naspi (già coperto da /calcolo-*), anticipo, scadenze della domanda, verifica Fondo di garanzia.
+const TOOL = /^(\/calcolo-[a-z0-9-]+|\/assegno-vedovanza|\/calcolatore[a-z0-9-]*|\/guide\/[^\s]+\.pdf|\/[^\s]+\.pdf|\/anticipo-naspi|\/naspi\/(domanda|fondo-garanzia-tfr))(#.*)?$/i;
 
 const BOOK = /^(\/prenota|https:\/\/link\.arcanis\.it\/widget\/(booking|group)\/[A-Za-z0-9]+)(#.*)?$/i;
 

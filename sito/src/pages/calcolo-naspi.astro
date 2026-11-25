@@ -1,0 +1,78 @@
+---
+/**
+ * Calcolo NASpI (strumento arrivato dal portale domandedisoccupazione.it il 25/11/2026).
+ * Regole da fonti ufficiali, verificate il 24-25/11/2026:
+ * - INPS, scheda "NASpI: indennità mensile di disoccupazione" (agg. 2/2/2026): 75% della retribuzione media mensile fino
+ *   all'importo di riferimento + 25% della parte che lo supera, tetto massimo, riduzione del 3% al mese dal 6° mese
+ *   (dall'8° per chi ha 55 anni alla data della domanda), durata pari a metà delle settimane di contributi degli ultimi
+ *   4 anni, retribuzione media = retribuzione imponibile degli ultimi 4 anni / settimane di contributi x 4,33.
+ * - Circolare INPS 28 gennaio 2026, n. 4: importo di riferimento 1.456,72 € e massimo mensile 1.584,70 € per il 2026.
+ * I numeri stanno in src/naspi/constants.ts: vanno aggiornati ogni gennaio con la nuova circolare.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
+import NaspiCalculator from "~/naspi/NaspiCalculator";
+import { NASPI_CONSTANTS } from "~/naspi/constants";
+
+// separatore delle migliaia sempre presente (in italiano 1456,72 verrebbe scritto senza punto)
+const eur = (n: number) => { const [i, d] = n.toFixed(2).split("."); return i.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + d; };
+const SOGLIA = NASPI_CONSTANTS.THRESHOLD_AMOUNT, MAX = NASPI_CONSTANTS.MAX_MONTHLY_CAP;
+const naspi = (r: number) => Math.min(MAX, r <= SOGLIA ? r * 0.75 : SOGLIA * 0.75 + (r - SOGLIA) * 0.25);
+const ESEMPI = [1200, 1800, 3000, 3500].map((r) => ({ r, n: naspi(r), max: naspi(r) >= MAX }));
+
+const faqs = [
+  { q: "Come si calcola la NASpI?", a: `Si prende la retribuzione media mensile degli ultimi 4 anni. Fino a ${eur(SOGLIA)} € la NASpI è il 75%. Sulla parte che supera questa cifra si aggiunge il 25%. Nel 2026 non si possono superare ${eur(MAX)} € lordi al mese.` },
+  { q: "Quanto dura la NASpI?", a: "Dura la metà delle settimane di contributi degli ultimi 4 anni. Non contano le settimane che hanno già dato una precedente indennità di disoccupazione." },
+  { q: "La NASpI resta uguale per tutti i mesi?", a: "No. Dal sesto mese scende del 3% ogni mese. Se alla data della domanda hai già 55 anni, la riduzione parte dall'ottavo mese." },
+  { q: "Il risultato del calcolatore è quello ufficiale?", a: "No, è una stima. L'importo esatto lo calcola l'INPS e lo scrive nella lettera di accoglimento della domanda." },
+];
+const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo NASpI 2026", url: "https://praticheflaiano.it/calcolo-naspi", applicationCategory: "FinanceApplication", operatingSystem: "Web", inLanguage: "it-IT", offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" }, description: `Stima dell'importo e della durata della NASpI con i valori INPS 2026 (riferimento ${eur(SOGLIA)} €, massimo ${eur(MAX)} € al mese).` });
+const H2 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(26px,5vw,36px);line-height:1.08;color:#14142B";
+const P = "margin:0;font-size:17px;line-height:1.6;color:#34344A";
+---
+
+<BaseLayout title="Calcolo NASpI 2026: importo e durata" description={`Calcola quanto prendi di NASpI e per quanti mesi, con i valori INPS 2026: massimo ${eur(MAX)} € al mese, riduzione del 3% dal sesto mese. Gratis.`}>
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+  <script slot="head" type="application/ld+json" set:html={faqLd} />
+
+  <div class="nz"><NaspiCalculator client:load /></div>
+
+  <section style="max-width:860px;margin:0 auto;padding:24px 16px 8px;display:flex;flex-direction:column;gap:16px">
+    <h2 style={H2}>Come si calcola la NASpI nel 2026</h2>
+    <p style={P}>La base è la tua <b>retribuzione media mensile</b> degli ultimi 4 anni: la retribuzione su cui hai versato i contributi, divisa per le settimane di contributi e moltiplicata per 4,33.</p>
+    <ul style="margin:0;padding-left:1.2em;font-size:17px;line-height:1.6;color:#34344A;display:flex;flex-direction:column;gap:6px">
+      <li>Fino a <b>{eur(SOGLIA)} €</b>: la NASpI è il <b>75%</b> della retribuzione media.</li>
+      <li>Sopra questa cifra: 75% di {eur(SOGLIA)} € più il <b>25%</b> della parte che la supera.</li>
+      <li>In ogni caso non più di <b>{eur(MAX)} € lordi al mese</b>.</li>
+      <li>Dal <b>sesto mese</b> scende del <b>3% ogni mese</b> (dall'ottavo se alla domanda hai già 55 anni).</li>
+      <li>La durata è la <b>metà delle settimane di contributi</b> degli ultimi 4 anni.</li>
+    </ul>
+
+    <h2 style={H2}>Quattro esempi</h2>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Esempi di calcolo NASpI">
+      <table style="border-collapse:collapse;width:100%;font-size:16px;color:#14142B">
+        <thead><tr style="background:#F1EEFF;text-align:left"><th style="padding:10px 12px">Retribuzione media mensile</th><th style="padding:10px 12px">NASpI lorda nei primi 5 mesi</th></tr></thead>
+        <tbody>
+          {ESEMPI.map((e) => (
+            <tr style="border-top:1px solid #E4E4EE"><td style="padding:10px 12px">{eur(e.r)} €</td><td style="padding:10px 12px"><b>{eur(e.n)} €</b>{e.max && " (è il massimo)"}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="margin:0;font-size:15px;line-height:1.5;color:#3F3F5A">Sono importi lordi: l'INPS trattiene l'IRPEF. L'importo esatto è quello della lettera INPS.</p>
+
+    <a href="/naspi#richiesta-online" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Fai la domanda NASpI con noi, è gratis</span><span class="cta-tool-s">Patronato ENASC: a Roma Vigne Nuove o a distanza da tutta Italia</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+    <h2 style={H2}>Domande frequenti</h2>
+    {faqs.map((f) => (
+      <div style="background:#F7F7FB;border-radius:22px;padding:16px 18px">
+        <h3 style="margin:0 0 6px;font-family:'Bricolage Grotesque',sans-serif;font-size:20px;line-height:1.2;color:#14142B">{f.q}</h3>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#34344A">{f.a}</p>
+      </div>
+    ))}
+
+    <p style="margin:0;font-size:14px;line-height:1.5;color:#3F3F5A">Fonti: scheda INPS "NASpI: indennità mensile di disoccupazione" (aggiornata al 2 febbraio 2026); circolare INPS 28 gennaio 2026, n. 4 (importi 2026); decreto legislativo 4 marzo 2015, n. 22, artt. 4 e 5.</p>
+  </section>
+  <div style="max-width:860px;margin:0 auto;padding:0 16px 48px"><PortaleNaspi current="/calcolo-naspi" /></div>
+</BaseLayout>

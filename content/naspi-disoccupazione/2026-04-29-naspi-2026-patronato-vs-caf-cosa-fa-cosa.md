@@ -53,7 +53,7 @@ Stessa cosa per i collaboratori coordinati e continuativi cessati. La DIS-COLL h
 
 Per chi vuole avviare un'**attivita autonoma**, un'impresa o entrare in una cooperativa, l'INPS puo pagare in anticipo la NASpI che resta. Per le domande dal 1° gennaio 2026 arriva in **due rate: 70% subito e 30% alla fine del periodo teorico della NASpI**, al massimo 6 mesi dopo la domanda (Messaggio INPS 1215/2026). La domanda va fatta **entro 30 giorni** dall'inizio dell'attivita. Il Patronato segue la domanda e le verifiche di compatibilita.
 
-> [Anticipo NASpI: calcola le due rate](https://domandedisoccupazione.it/anticipo): quanto ricevi e quando, sul nostro portale NASpI
+> [Anticipo NASpI: calcola le due rate](/anticipo-naspi): quanto ricevi e quando
 
 ### 4. Iscrizione SIISL e firma PAD
 
@@ -106,7 +106,7 @@ Bonus ristrutturazione, ecobonus, bonus mobili, IMU, TARI, contratti di affitto,
 | Step | Chi se ne occupa | Costo |
 |---|---|---|
 | 1. Verifica codice cessazione UNILAV | Patronato | Gratis |
-| 2. Calcolo settimane contributi e importo NASpI | Patronato (per il calcolo veloce: [calcolatore](https://domandedisoccupazione.it/calcolatore)) | Gratis |
+| 2. Calcolo settimane contributi e importo NASpI | Patronato (per il calcolo veloce: [calcolatore](/calcolo-naspi)) | Gratis |
 | 3. Domanda NASpI online a INPS | Patronato | Gratis |
 | 4. Iscrizione SIISL + firma PAD entro 15 giorni | Patronato | Gratis |
 | 5. ISEE corrente per ricalibrare AUU/bonus | CAF | **Gratis** prima presentazione |

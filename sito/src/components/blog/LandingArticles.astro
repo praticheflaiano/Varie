@@ -2,7 +2,6 @@
 /** Articoli del blog collegati a una pagina servizio (per categoria). Se non ce ne sono, non mostra nulla. */
 import ArticleCard from "~/components/blog/ArticleCard.astro";
 import { getVisibleArticles } from "~/utils/articles";
-import { EXTERNAL_PORTALS } from "~/consts";
 import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
 interface Props { categories: string[]; }
 const { categories } = Astro.props;
@@ -17,10 +16,10 @@ const naspi = categories.includes("naspi-disoccupazione");
       <a href="/blog" style="font-weight:800">Tutto il blog →</a>
     </div>
     {naspi && (
-      <a href={EXTERNAL_PORTALS.naspi.url} target="_blank" rel="noopener" class="mini mb-5" style="background:#D4FF4F">
-        <span style="font-size:13px;font-weight:700;color:#14142B">PORTALE DEDICATO ↗</span>
-        <span style="font-size:20px;font-weight:800">Calcola la tua NASpI su domandedisoccupazione.it</span>
-        <span style="font-size:15px;color:#14142B">Calcolatore, anticipo NASpI in due rate e 30+ guide su dimissioni e disoccupazione.</span>
+      <a href="/calcolo-naspi" class="mini mb-5" style="background:#D4FF4F">
+        <span style="font-size:13px;font-weight:700;color:#14142B">CALCOLATORE GRATUITO</span>
+        <span style="font-size:20px;font-weight:800">Calcola la tua NASpI: importo e durata</span>
+        <span style="font-size:15px;color:#14142B">Con i valori INPS 2026. Puoi anche caricare l'estratto conto contributivo.</span>
       </a>
     )}
     {list.length > 0 && (
