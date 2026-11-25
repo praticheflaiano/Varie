@@ -79,9 +79,9 @@ Decisione di Antonio (25/11/2026): guide, calcolatori e strumenti su NASpI e dis
 - Pagine: `/calcolo-naspi`, `/anticipo-naspi`, `/naspi/domanda`, `/naspi/fondo-garanzia-tfr` (le altre guide del portale arrivano una alla volta, solo dopo la verifica sulle fonti ufficiali).
 - Strumenti React in `sito/src/naspi/` (unico punto del sito con React). Vanno sempre dentro un contenitore con classe `nz` (colori e raggi in fondo a `global.css`).
 - Guide: layout `sito/src/layouts/NaspiGuideLayout.astro` (slot `intro`, `tool`, testo; fonti e data obbligatorie).
-- Elenco delle guide: `sito/src/components/blog/PortaleNaspi.astro`. Quando una guida viene trasferita: cambiare lì il suo indirizzo e aggiungere il rimando nel `vercel.json` del portale.
+- Elenco delle guide: `sito/src/components/blog/PortaleNaspi.astro`. Quando una guida viene trasferita: cambiare lì il suo indirizzo e aggiungere il rimando nel `vercel.json` del portale. I rimandi di praticheflaiano.it invece stanno in `vault/riferimenti/vercel-produzione/vercel.json` e valgono solo dopo un deploy con i due file (vedi il LEGGIMI in quella cartella): un semplice redeploy non li legge.
 - Importi NASpI in `sito/src/naspi/constants.ts`: ogni gennaio aggiornarli con la circolare INPS sugli importi massimi e cambiare `LAST_UPDATED`.
-- La lettura dei documenti del calcolatore passa da `/api/naspi/analyze-document`, girato alla funzione del portale (rewrite in `sito/vercel.json`).
+- La lettura dei documenti del calcolatore passa da `/api/naspi/analyze-document`, girato alla funzione del portale (rewrite nel `vercel.json` di produzione: `vault/riferimenti/vercel-produzione/`, non in `sito/vercel.json`).
 
 ## Flusso degli stati di un articolo
 
