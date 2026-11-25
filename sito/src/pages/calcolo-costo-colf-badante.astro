@@ -3,7 +3,7 @@
  * Calcolatore del costo di colf, badanti e baby sitter 2026 (25/11/2026).
  * Dati e regole in src/lib/costo-colf.ts (con le fonti). Gli esempi della pagina sono calcolati con la stessa funzione.
  */
-import BaseLayout from "~/layouts/BaseLayout.astro";
+import ToolGuideLayout from "~/layouts/ToolGuideLayout.astro";
 import { calcola, eur, LIVELLI, MENSILE_CONVIVENTI, MENSILE_CONVIVENTI_30, ORARIA, VITTO_ALLOGGIO_GIORNO, IND_BABYSITTER, IND_PIU_ASSISTITI, INDENNITA_FUNZIONE, AGGIORNATO, DEDUZIONE_MAX } from "~/lib/costo-colf";
 
 const WA = "393716230690";
@@ -22,9 +22,7 @@ const faqs = [
   { q: "Cosa si può scaricare nel 730?", a: `I contributi INPS a carico tuo si deducono dal reddito fino a ${eur(DEDUZIONE_MAX)} l'anno. Per la badante di una persona non autosufficiente c'è anche la detrazione del 19% su massimo 2.100 € di spesa, se il tuo reddito è sotto i 40.000 €.` },
   { q: "I valori cambiano nel 2027?", a: "Sì. Il contratto nazionale prevede un aumento dal 1° gennaio 2027 più l'adeguamento ISTAT, e l'INPS aggiorna i contributi ogni anno. Le nuove tabelle escono di solito tra gennaio e febbraio: aggiorneremo il calcolatore appena pubblicate." },
 ];
-const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
 const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo costo colf e badante 2026", url: "https://praticheflaiano.it/calcolo-costo-colf-badante", applicationCategory: "FinanceApplication", operatingSystem: "Web", isAccessibleForFree: true, inLanguage: "it", offers: { "@type": "Offer", price: 0, priceCurrency: "EUR" } });
-const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(28px,5vw,40px);line-height:1.05;color:#14142B";
 const TD = "padding:10px;border-top:1px solid #E4E0FF;vertical-align:top";
 const TDR = TD + ";text-align:right;white-space:nowrap";
 const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
@@ -32,17 +30,43 @@ const A = "color:#4B2FE0;text-decoration:underline";
 const num = (n: number) => n.toFixed(2).replace(".", ",");
 ---
 
-<BaseLayout title="Calcolo costo colf e badante 2026: stipendio e contributi" ogImage="/og/calcolo-costo-colf-badante.jpg" description="Quanto costa una colf, una badante o una baby sitter nel 2026: stipendio minimo, tredicesima, contributi INPS e TFR. Calcolatore gratuito del CAF di Roma.">
+<ToolGuideLayout
+  title="Calcolo costo colf e badante 2026: stipendio e contributi"
+  description="Quanto costa una colf, una badante o una baby sitter nel 2026: stipendio minimo, tredicesima, contributi INPS e TFR. Calcolatore gratuito del CAF di Roma."
+  path="/calcolo-costo-colf-badante"
+  h1="Quanto costa una colf o una badante nel 2026: il calcolatore"
+  kicker="Calcolatore gratuito · valori 2026"
+  crumbs={[{ name: "Colf e badanti", href: "/colf-badanti" }, { name: "Calcolo costo", href: "/calcolo-costo-colf-badante" }]}
+  category="lavoro-domestico"
+  prenota={{ t: "Prenota: assunzione e buste paga le facciamo noi", s: "Servizio colf e badanti a Roma Vigne Nuove o in videochiamata" }}
+  updated="2026-11-25"
+  published="2026-11-25"
+  image="/og/calcolo-costo-colf-badante.jpg"
+  imageAlt="Calcolo del costo di colf e badanti 2026"
+  related={["assumere-colf-badante-roma-2026-come-fare", "badante-convivente-2026-orari-riposi-ferie-vitto-alloggio", "colf-badanti-roma-contributi-inps-2026-scadenze"]}
+  sources={[
+    { t: "Ministero del Lavoro, accordo sui minimi retributivi 2026 del lavoro domestico e tabella", url: "https://www.lavoro.gov.it/notizie/pagine/lavoro-domestico-accordo-sui-minimi-retributivi-2026" },
+    { t: "CCNL lavoro domestico del 28 ottobre 2025 (artt. 9, 14, 34, 36, 37, 39, 41, 54)", url: "https://associazionedomina.it/ccnl-lavoro-domestico/" },
+    { t: "INPS, circolare n. 9 del 3 febbraio 2026 (contributi 2026)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.02.circolare-numero-9-del-03-02-2026_15154.html" },
+    { t: "INPS, contributi e agevolazioni fiscali per chi assume un lavoratore domestico", url: "https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.49828.contributi-e-agevolazioni-fiscali-per-chi-assume-un-lavoratore-domestico.html" },
+  ]}
+  faq={faqs}
+>
   <script slot="head" type="application/ld+json" set:html={appLd} />
-  <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <section style="background:#F1EEFF">
-    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
-      <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · valori 2026</span>
-      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Quanto costa una colf o una badante?</h1>
-      <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Scegli il tipo di rapporto, il livello e le ore: vedi <b>stipendio</b>, <b>tredicesima</b>, <b>contributi INPS</b>, <b>TFR</b> e il <b>costo totale per la famiglia</b>, con i minimi del contratto nazionale e i contributi INPS del 2026.</p>
+  <blockquote slot="intro">
+    <p><strong>In breve</strong></p>
+    <ul>
+      <li>Badante convivente di persona non autosufficiente, paga minima: circa <strong>{eur(esempi[0].r.costoMese)} al mese</strong> per la famiglia.</li>
+      <li>Colf a ore, 10 ore a settimana: circa <strong>{eur(esempi[2].r.costoMese)} al mese</strong>.</li>
+      <li>Nel costo: stipendio, tredicesima, contributi INPS e Cassa Colf, TFR.</li>
+      <li>I contributi a tuo carico si deducono nel 730 fino a <strong>{eur(DEDUZIONE_MAX)}</strong> l'anno.</li>
+    </ul>
+  </blockquote>
 
-      <form id="cc" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
+  <div slot="tool">
+      <form id="cc" onsubmit="return false" novalidate style="background:#F1EEFF;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B">
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:28px;line-height:1.1;color:#14142B">Calcola il costo</h2>
         <fieldset class="cc-f"><legend>1. Dove vive la lavoratrice?</legend>
           <label class="cc-o"><input type="radio" name="cc-tipo" value="convivente" checked> Vive in casa con voi (convivente)</label>
           <label class="cc-o"><input type="radio" name="cc-tipo" value="convivente30"> Vive in casa, ma lavora fino a 30 ore a settimana</label>
@@ -80,22 +104,18 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
         <button id="cc-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola il costo</button>
         <div id="cc-out" aria-live="polite"></div>
       </form>
-    </div>
-  </section>
+  </div>
 
-  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
-    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: {AGGIORNATO}.</b> Minimi 2026 della tabella del Ministero del Lavoro (decorrenza 1° gennaio 2026), contratto nazionale del lavoro domestico del 28 ottobre 2025 e contributi della circolare INPS n. 9 del 3 febbraio 2026. I valori 2027 escono tra gennaio e febbraio: aggiorneremo il calcolatore.</p>
-
-    <h2 style={H2.replace("24px 0 0", "0")}>Quattro esempi con la paga minima 2026</h2>
-    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Esempi di costo 2026"><table style="width:100%;border-collapse:collapse;font-size:16px">
+    <h2>Quattro esempi con la paga minima 2026</h2>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Esempi di costo 2026"><table style="width:100%;border-collapse:collapse;font-size:16px;display:table">
       <thead><tr><th style={TH}>Rapporto</th><th style={TH}>Stipendio lordo al mese</th><th style={TH}>Costo per la famiglia all'anno</th><th style={TH}>Media al mese</th></tr></thead>
       <tbody>
         {esempi.map((e) => <tr><td style={TD}>{e.t}</td><td style={TDR}>{eur(e.r.mensileLorda)}</td><td style={TDR}><b>{eur(e.r.costoAnno)}</b></td><td style={TDR}>{eur(e.r.costoMese)}</td></tr>)}
       </tbody>
     </table></div>
-    <p style="margin:0;font-size:15px;color:#3F3F5A">Il costo per la famiglia comprende 12 stipendi, tredicesima, contributi INPS e Cassa Colf a carico del datore di lavoro e TFR. Non comprende vitto e alloggio dati in natura, scatti di anzianità, straordinari e festività lavorate.</p>
+    <p style="font-size:15px;color:#3F3F5A">Il costo per la famiglia comprende 12 stipendi, tredicesima, contributi INPS e Cassa Colf a carico del datore di lavoro e TFR. Non comprende vitto e alloggio dati in natura, scatti di anzianità, straordinari e festività lavorate.</p>
 
-    <h2 style={H2}>Come si calcola</h2>
+    <h2>Come si calcola</h2>
     <ul style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px">
       <li><b>Stipendio</b>: il minimo dipende dal <b>livello</b> e dal fatto che la lavoratrice <b>viva in casa</b> o lavori <b>a ore</b>. Si può pagare di più, mai di meno.</li>
       <li><b>Vitto e alloggio</b>: per chi vive in casa si danno in natura. Il loro valore ({eur(VITTO_ALLOGGIO_GIORNO)} al giorno, {eur(VITTO_ALLOGGIO_GIORNO * 30)} al mese) entra in tredicesima, TFR e contributi.</li>
@@ -105,11 +125,11 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
       <li><b>TFR</b>: ogni anno si accantona la somma delle retribuzioni, compresi tredicesima e vitto e alloggio, divisa per 13,5. Si paga quando il rapporto finisce.</li>
     </ul>
 
-    <p class="cta-tool-wrap" style="margin:8px 0 0"><a class="cta-tool" href="/colf-badanti"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Buste paga e contributi li facciamo noi</span><span class="cta-tool-s">Servizio colf e badanti a Roma: un prezzo all'anno, tutto compreso</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/colf-badanti"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Buste paga e contributi li facciamo noi</span><span class="cta-tool-s">Servizio colf e badanti a Roma: un prezzo all'anno, tutto compreso</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
 
-    <h2 style={H2}>Stipendi minimi 2026 di colf, badanti e baby sitter</h2>
-    <p style="margin:0">Valori lordi in vigore dal 1° gennaio 2026. Per i livelli D e D super, chi vive in casa riceve anche l'indennità di funzione di {eur(INDENNITA_FUNZIONE)} al mese (già sommata nel calcolatore).</p>
-    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Stipendi minimi 2026"><table style="width:100%;border-collapse:collapse;font-size:16px">
+    <h2>Stipendi minimi 2026 di colf, badanti e baby sitter</h2>
+    <p>Valori lordi in vigore dal 1° gennaio 2026. Per i livelli D e D super, chi vive in casa riceve anche l'indennità di funzione di {eur(INDENNITA_FUNZIONE)} al mese (già sommata nel calcolatore).</p>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Stipendi minimi 2026"><table style="width:100%;border-collapse:collapse;font-size:16px;display:table">
       <thead><tr><th style={TH}>Livello</th><th style={TH}>Chi è</th><th style={TH}>Vive in casa (al mese)</th><th style={TH}>Vive in casa, fino a 30 ore</th><th style={TH}>A ore (all'ora)</th></tr></thead>
       <tbody>
         {LIVELLI.map((l) => <tr>
@@ -127,8 +147,8 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
       <li><b>Scatti di anzianità</b>: +4% del minimo ogni due anni con lo stesso datore di lavoro, fino a 7 scatti.</li>
     </ul>
 
-    <h2 style={H2}>Contributi INPS 2026</h2>
-    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Contributi INPS 2026"><table style="width:100%;border-collapse:collapse;font-size:16px">
+    <h2>Contributi INPS 2026</h2>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: Contributi INPS 2026"><table style="width:100%;border-collapse:collapse;font-size:16px;display:table">
       <thead><tr><th style={TH}>Paga oraria effettiva</th><th style={TH}>Contributo all'ora</th><th style={TH}>Di cui a carico della lavoratrice</th></tr></thead>
       <tbody>
         <tr><td style={TD}>fino a 9,61 €</td><td style={TDR}>1,70 €</td><td style={TDR}>0,43 €</td></tr>
@@ -137,20 +157,18 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
         <tr><td style={TD}>più di 24 ore a settimana</td><td style={TDR}>1,24 €</td><td style={TDR}>0,31 €</td></tr>
       </tbody>
     </table></div>
-    <p style="margin:0;font-size:15px;color:#3F3F5A">Importi con la quota CUAF, per i contratti a tempo indeterminato. Per quelli a termine c'è un contributo in più (1,82, 2,05, 2,50 e 1,32 € l'ora), salvo sostituzione di una lavoratrice assente. Le scadenze sono ogni tre mesi: leggi la <a href="/blog/colf-badanti-roma-contributi-inps-2026-scadenze" style={A}>guida ai contributi e alle scadenze 2026</a>.</p>
+    <p style="font-size:15px;color:#3F3F5A">Importi con la quota CUAF, per i contratti a tempo indeterminato. Per quelli a termine c'è un contributo in più (1,82, 2,05, 2,50 e 1,32 € l'ora), salvo sostituzione di una lavoratrice assente. Le scadenze sono ogni tre mesi: leggi la <a href="/blog/colf-badanti-roma-contributi-inps-2026-scadenze" style={A}>guida ai contributi e alle scadenze 2026</a>.</p>
 
-    <h2 style={H2}>Domande frequenti</h2>
-    {faqs.map((f) => (<><h3 style="margin:12px 0 0;font-size:19px">{f.q}</h3><p style="margin:0">{f.a}</p></>))}
 
-    <h2 style={H2}>Vuoi un preventivo per gestire tutto?</h2>
-    <p style="margin:0">Al Centro Pratiche Flaiano, CAF UNSIC a <b>Roma Vigne Nuove</b> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), con il servizio <b>Unsicolf</b> facciamo contratto, assunzione all'INPS, buste paga, contributi ogni tre mesi, ferie, malattia e riepilogo annuale. Un prezzo all'anno, tutto compreso: scrivici e te lo mandiamo.</p>
+    <h2>Vuoi un preventivo per gestire tutto?</h2>
+    <p>Al Centro Pratiche Flaiano, CAF UNSIC a <b>Roma Vigne Nuove</b> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), con il servizio <b>Unsicolf</b> facciamo contratto, assunzione all'INPS, buste paga, contributi ogni tre mesi, ferie, malattia e riepilogo annuale. Un prezzo all'anno, tutto compreso: scrivici e te lo mandiamo.</p>
     <p style="margin:0;display:flex;flex-wrap:wrap;gap:10px">
       <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Ciao, vorrei il preventivo annuale del servizio colf e badanti.")}`} target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:12px 20px;border-radius:999px;background:#25D366;color:#14142B;font-weight:800;text-decoration:none">Preventivo su WhatsApp</a>
       <a href="/prenota" style="display:inline-flex;align-items:center;padding:12px 20px;border-radius:999px;background:#14142B;color:#fff;font-weight:800;text-decoration:none">Prenota un appuntamento</a>
     </p>
 
-    <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:#3F3F5A">Fonti: <a href="https://www.lavoro.gov.it/notizie/pagine/lavoro-domestico-accordo-sui-minimi-retributivi-2026" target="_blank" rel="noopener" style={A}>Ministero del Lavoro, accordo sui minimi retributivi 2026 e tabella</a>; <a href="https://associazionedomina.it/ccnl-lavoro-domestico/" target="_blank" rel="noopener" style={A}>CCNL lavoro domestico del 28 ottobre 2025</a> (artt. 9, 14, 34, 36, 37, 39, 41, 54); <a href="https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.02.circolare-numero-9-del-03-02-2026_15154.html" target="_blank" rel="noopener" style={A}>INPS, circolare n. 9 del 3 febbraio 2026</a>; <a href="https://www.inps.it/it/it/dettaglio-approfondimento.schede-informative.49828.contributi-e-agevolazioni-fiscali-per-chi-assume-un-lavoratore-domestico.html" target="_blank" rel="noopener" style={A}>INPS, contributi e agevolazioni fiscali per chi assume un lavoratore domestico</a>. Il calcolatore dà una stima: per il tuo caso conta il contratto firmato con la lavoratrice.</p>
-  </section>
+
+</ToolGuideLayout>
 
   <style is:global>
     #cc-out{scroll-margin-top:90px}
@@ -213,7 +231,7 @@ const num = (n: number) => n.toFixed(2).replace(".", ",");
       show("cc-ok", "Costo stimato per la famiglia:<b class=\"big\">" + eur(r.costoAnno) + " l'anno</b>circa " + eur(r.costoMese) + " al mese in media (" + desc + "). Contributo INPS: " + eur(r.contributoOrario) + " l'ora." + tab +
         '<p style="margin:10px 0 0">Nel 730 puoi dedurre dal reddito <b>' + eur(r.deducibile) + "</b> di contributi pagati da te (massimo 1.549,37 € l'anno).</p>" + av +
         '<p style="margin:10px 0 0;font-size:14px">Stima con i valori 2026, verificata sulle tabelle ufficiali. Non comprende: vitto e alloggio dati in natura (e il loro valore in denaro se la lavoratrice va in ferie fuori casa), scatti di anzianità, straordinari, festività lavorate; per chi lavora a ore, le festività pagate che cadono nei giorni in cui non lavora; per chi vive in casa, il giorno in più per le festività di domenica (nel 2026 il 4 ottobre e il 1° novembre).</p>' +
-        '<p style="margin:0"><a class="cc-btn" style="background:#25D366;color:#14142B" target="_blank" rel="noopener" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '">Chiedi il preventivo su WhatsApp</a><a class="cc-btn" style="background:#14142B;color:#fff" href="/prenota">Prenota un appuntamento</a></p>');
+        '<p><a class="cc-btn" style="background:#25D366;color:#14142B" target="_blank" rel="noopener" href="https://wa.me/393716230690?text=' + encodeURIComponent(msg) + '">Chiedi il preventivo su WhatsApp</a><a class="cc-btn" style="background:#14142B;color:#fff" href="/prenota">Prenota un appuntamento</a></p>');
     });
   </script>
-</BaseLayout>
+
