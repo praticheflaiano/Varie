@@ -92,3 +92,5 @@ Lancia automaticamente il fact-check (`/review-article [path]`). NESSUN articolo
 ## Struttura obbligatoria (dal 15/11/2026)
 
 Ogni articolo segue `docs/regole-contenuto.md`, sezione 4-bis: riquadro "## In breve" sotto il titolo, titoli a domanda, "## Domande frequenti" in fondo con domande nel formato `### Domanda?`, dati non ufficiali dichiarati come tali.
+
+Dal 26/11/2026 vale anche la sezione 4-ter (domande reali da Search Console, risposta in una riga sotto ogni titoletto-domanda, titolo che inizia con la ricerca più cercata).
