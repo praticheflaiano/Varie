@@ -6,7 +6,7 @@ date: 2026-11-10
 last_updated: 2026-11-26
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "guida", "tredicesima", "cedolino"]
-meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre con tredicesima, bonus 154,94 € a chi spetta, niente addizionali. Quando si vede. CAF a Roma."
+meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre con tredicesima, bonus 154,94 € a chi spetta, niente addizionali. Quando si vede. CAF Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Pensionati: il cedolino di pensione di dicembre 2025 (26 novembre 2025; regole di dicembre: pagamento, importo aggiuntivo, quattordicesima, addizionali, conguagli 730) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.11.pensionati-il-cedolino-di-pensione-di-dicembre-2025.html"

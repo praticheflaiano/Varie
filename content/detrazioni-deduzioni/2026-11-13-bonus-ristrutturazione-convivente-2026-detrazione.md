@@ -1,17 +1,18 @@
 ---
 title: "Bonus ristrutturazione 2026 per il convivente: quanto spetta e a quali condizioni"
-seo_title: "Bonus ristrutturazione convivente 2026: 36% o 50%?"
+seo_title: "Familiare convivente: detrazione ristrutturazione 50 o 36%?"
 slug: "bonus-ristrutturazione-convivente-2026-detrazione"
 date: 2026-11-13
-last_updated: 2026-11-13
+last_updated: 2026-11-26
 category: "detrazioni-deduzioni"
 tags: ["detrazioni", "bonus-casa", "730", "famiglie", "guida"]
-meta_description: "Bonus ristrutturazione 2026: il 50% spetta al proprietario sulla prima casa, il convivente o il familiare convivente detrae il 36%. Condizioni, pagamenti e 2027."
+meta_description: "Familiare convivente o coniuge non proprietario: detrazione ristrutturazione al 36% nel 2026, il 50% solo al proprietario. Condizioni e bonifici. CAF Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "D.P.R. 917/1986 (TUIR), art. 16-bis, e successive modifiche delle leggi di bilancio 2025 e 2026"
   - "Agenzia delle Entrate, guida Ristrutturazioni edilizie: le agevolazioni fiscali (aggiornamento del 13 febbraio 2026)"
   - "Legge 20 maggio 2016, n. 76 (conviventi di fatto)"
+  - "Agenzia delle Entrate, Istruzioni modello 730/2026: detrazione al 36%, elevata al 50% per gli interventi realizzati dai titolari di diritto di proprietà o di diritto reale di godimento sull'abitazione principale; detrazione al familiare convivente che ha sostenuto le spese - https://infoprecompilata.agenziaentrate.gov.it/portale/documents/d/guest/730_istruzioni_2026.pdf"
 status: published
 type: guida
 image: "/og/bonus-ristrutturazione-convivente-2026-detrazione.jpg"
@@ -20,7 +21,7 @@ image_alt: "Bonus ristrutturazione 2026 per il convivente"
 
 # Bonus ristrutturazione 2026 per il convivente: quanto spetta e a quali condizioni
 
-**Ultimo aggiornamento: 13 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Vivi nella casa del tuo compagno o della tua compagna, o in quella dei tuoi genitori, e paghi tu i lavori? Puoi avere anche tu il **bonus ristrutturazione**, ma con una percentuale diversa da quella del proprietario.
 
@@ -38,7 +39,11 @@ La detrazione si divide in **10 rate annuali** uguali nel 730 o nel modello Redd
 
 > [Prenota per le detrazioni casa](/prenota): verifichiamo se puoi detrarre le spese nel 730.
 
-## Perché il convivente ha il 36% e non il 50%
+## Familiare convivente: detrazione 50 o 36?
+
+Nel 2026 il **familiare convivente** che paga i lavori detrae il **36%**, non il 50%: la percentuale più alta spetta solo a chi è **proprietario** (o ha un diritto reale) e ci abita.
+
+### Perché il convivente ha il 36% e non il 50%
 
 La maggiorazione al **50%** nel 2026 spetta solo se ci sono **entrambe** queste condizioni:
 
@@ -46,6 +51,12 @@ La maggiorazione al **50%** nel 2026 spetta solo se ci sono **entrambe** queste 
 2. la casa è la sua **abitazione principale**. Secondo l'Agenzia basta che lo sia **alla fine dei lavori**.
 
 Il **convivente di fatto** e il **familiare convivente** non sono proprietari: possono detrarre, ma con l'aliquota ordinaria del **36%** nel 2026.
+
+## Coniuge non proprietario: che detrazione ha nel 2026?
+
+Il **coniuge non proprietario** che vive nella casa e paga i lavori detrae il **36%** nel 2026, come gli altri familiari conviventi. Se invece è **comproprietario**, anche per una piccola quota, e la casa è la sua abitazione principale, ha diritto al **50%**.
+
+Lo stesso vale per la parte di un'**unione civile**. Se paga il coniuge proprietario, detrae lui il 50%: per questo, prima di pagare, conviene decidere chi intesta bonifici e fatture.
 
 ## Chi conta come convivente
 
@@ -86,8 +97,8 @@ Siamo **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti Flaiano di **Vigne Nuov
 **Il convivente può avere il bonus ristrutturazione?**
 Sì, se convive con il proprietario dall'inizio dei lavori e paga lui le spese. Nel 2026 la detrazione è del 36%.
 
-**Perché non il 50%?**
-Il 50% nel 2026 spetta solo a chi è proprietario o titolare di un diritto reale e usa la casa come abitazione principale.
+**Il coniuge non proprietario può detrarre la ristrutturazione nel 2026?**
+Sì, se convive dall'inizio dei lavori e paga lui. La detrazione è del 36%; il 50% spetta solo se è anche proprietario (o ha un diritto reale) e la casa è la sua abitazione principale.
 
 **E il figlio che vive con i genitori proprietari?**
 È un familiare convivente: se paga i lavori detrae il 36% nel 2026.
@@ -105,7 +116,7 @@ Bonifico per ristrutturazioni con causale, codice fiscale di chi detrae e partit
 
 - [Detrazioni spese mediche nel 730 2026](/blog/detrazioni-spese-mediche-730-2026-guida-completa)
 - [Guida al 730/2026: documenti e scadenze](/blog/guida-730-2026-documenti-scadenze)
-- [IMU saldo 16 dicembre 2026 a Roma](/blog/imu-saldo-16-dicembre-2026-roma)
+- [Spese detraibili da fare entro il 31 dicembre 2026 per il 730/2027](/blog/spese-detraibili-entro-31-dicembre-2026-730-2027)
 
 ---
 

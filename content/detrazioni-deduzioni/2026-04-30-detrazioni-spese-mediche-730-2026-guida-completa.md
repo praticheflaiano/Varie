@@ -1,9 +1,9 @@
 ---
 title: "Detrazioni spese mediche 730/2026: cosa scaricare e come"
 slug: "detrazioni-spese-mediche-730-2026-guida-completa"
-seo_title: "Spese mediche 730/2026: detrazione 19% e franchigia 129,11 €"
+seo_title: "Detrazioni spese mediche 2026: 19% oltre 129,11 € nel 730"
 date: 2026-04-30
-last_updated: 2026-04-30
+last_updated: 2026-11-26
 category: "detrazioni-deduzioni"
 tags: ["guida", "730", "spese mediche", "detrazioni", "IRPEF", "tessera sanitaria"]
 meta_description: "Spese mediche nel 730/2026: detrazione del 19% sopra la franchigia di 129,11 €, scontrino parlante e pagamento tracciabile. Ti aiutiamo a Vigne Nuove."
@@ -23,13 +23,19 @@ image_alt: "Illustrazione editoriale: scontrini farmacia, croce sanitaria stiliz
 
 # Detrazioni spese mediche 730/2026: cosa scaricare e come
 
-**Ultimo aggiornamento: 30 aprile 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 **Nota (13 novembre 2026):** le scadenze per presentare il 730/2026 (30 settembre 2026) e il modello Redditi PF (2 novembre 2026) sono passate. Se non hai ancora dichiarato le spese mediche del 2025, [contattaci](/730): vediamo insieme come regolarizzare.
 
 Ogni primavera in CAF arrivano famiglie del Municipio III con la **busta delle ricevute mediche** dell'anno: scontrini della farmacia, fatture del dentista, ricevute della fisioterapia. La domanda e sempre la stessa: "Cosa posso scaricare?". In questa guida mettiamo in fila le regole pratiche per il **modello 730/2026 (redditi 2025)**: la franchigia, l'obbligo di pagamento tracciabile, lo scontrino parlante, dove si indicano le spese e quando conviene rateizzare.
 
-## Panoramica
+## Detrazioni spese mediche 2026: quanto si recupera?
+
+Le spese mediche si detraggono al **19%** sulla parte che supera **129,11 euro** l'anno. Quelle pagate nel **2025** vanno nel 730/2026; quelle pagate nel **2026** si detraggono nel **730/2027**, la prossima primavera: le regole su cosa conservare sono nella guida alle [spese detraibili entro il 31 dicembre 2026](/blog/spese-detraibili-entro-31-dicembre-2026-730-2027).
+
+> [Prenota il tuo 730](/prenota): controlliamo tutte le spese mediche, anche quelle che mancano nella precompilata.
+
+### Panoramica
 
 Le spese sanitarie godono di una **detrazione IRPEF del 19%** prevista dall'**art. 15 comma 1 lett. c) del TUIR (DPR 917/1986)**. La detrazione si applica solo sulla parte di spesa che supera una **franchigia annua di 129,11 euro**.
 
