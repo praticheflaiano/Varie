@@ -105,7 +105,7 @@ Queste riduzioni sono nazionali e si applicano anche a Roma:
 
 ## Come si calcola il saldo
 
-A giugno l'acconto si paga con le aliquote dell'anno prima. A dicembre si calcola l'imposta di tutto il 2026 con le aliquote 2026 e si versa **la differenza** rispetto a quanto già pagato.
+A giugno l'acconto si paga con le aliquote dell'anno prima. A dicembre si calcola l'imposta di tutto il 2026 con le aliquote valide per il 2026 (a Roma, come visto sopra, quelle del prospetto 2025) e si versa **la differenza** rispetto a quanto già pagato.
 
 1. Prendi la **rendita catastale** (la trovi nella visura) e aumentala del **5%**.
 2. Moltiplica per il **coefficiente** della categoria: **160** per le abitazioni e i box, **80** per gli uffici A/10, **55** per i negozi C/1.
@@ -189,9 +189,6 @@ Sì, con il ravvedimento operoso: aggiungi una sanzione ridotta e gli interessi 
 
 ### Chi non paga l'IMU?
 Non paga chi ha solo l'abitazione principale, se non è di lusso (A/1, A/8, A/9). Sono esenti anche le pertinenze: una per ciascuna categoria C/2, C/6 e C/7.
-
-### Come si calcola il saldo IMU di dicembre?
-Si calcola l'imposta di tutto il 2026 con le aliquote 2026 del Comune e si sottrae quanto versato con l'acconto di giugno. Trovi i passaggi nella sezione "Come si calcola il saldo".
 
 ### Qual è il codice catastale di Roma per l'F24?
 Il codice ente è **H501**. Va nella sezione "IMU e altri tributi locali", con anno 2026 e casella "Saldo". I codici tributo più usati sono 3918 (altri fabbricati) e 3912 (abitazione principale di lusso).
