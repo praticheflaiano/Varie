@@ -1,14 +1,16 @@
 ---
-title: "Rivalutazione pensioni 2027: aumento da gennaio per tutti e nuove fasce in manovra"
-seo_title: "Perequazione pensioni 2027: aumento di gennaio e fasce"
+title: "Rivalutazione pensioni 2027: aumento del 3,2% da gennaio e nuove fasce in manovra"
+seo_title: "Rivalutazione pensioni 2027: +3,2% da gennaio e fasce"
 slug: "rivalutazione-pensioni-2027-aumento-gennaio-fasce"
 date: 2026-11-12
-last_updated: 2026-11-20
+last_updated: 2026-11-26
 category: "pensioni"
 tags: ["pensione", "rivalutazione", "perequazione", "inps", "legge-di-bilancio-2027", "cedolino"]
-meta_description: "Rivalutazione pensioni 2027: l'aumento arriva dalla rata di gennaio per tutti. Scopri le nuove fasce della manovra e fatti aiutare a Roma, a Vigne Nuove."
+meta_description: "Rivalutazione (perequazione) pensioni 2027: +3,2% provvisorio da gennaio, decreto MEF del 13 novembre 2026. Fasce, esempi e aiuto a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "Decreto MEF 13 novembre 2026, Perequazione delle pensioni con decorrenza dal 1° gennaio 2027 (GU Serie Generale n. 274 del 24 novembre 2026): aumento provvisorio 3,2% - https://www.gazzettaufficiale.it/eli/id/2026/11/24/26A06133/sg"
+  - "Riscontro sul contenuto del decreto (3,2% provvisorio; 1,4% confermato per il 2026): Informazione Fiscale, 25 novembre 2026 - https://www.informazionefiscale.it/rivalutazione-pensioni-2027-decreto-mef-aumento-ufficiale; Portale Normativo, 25 novembre 2026 - https://portalenormativo.it/notizie/2026-11-25/perequazione-pensioni-2027-decreto-mef-13-novembre"
   - "INPS, notizia dell'11 novembre 2026 'Pensioni: perequazione da gennaio, aumento subito nel cedolino' - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.11.pensioni-perequazione-da-gennaio-aumento-subito-nel-cedolino.html"
   - "Disegno di legge di bilancio 2027, A.C. 3174 (ora A.C. 3174-bis dopo lo stralcio), art. 55 (Modifiche alla disciplina in materia di rivalutazione automatica dei trattamenti pensionistici) - https://www.camera.it/leg19/126?idDocumento=3174"
   - "INPS, Circolare n. 153 del 19 dicembre 2025 - Rinnovo delle pensioni per l'anno 2026"
@@ -19,19 +21,21 @@ image: "/og/rivalutazione-pensioni-2027-aumento-gennaio-fasce.jpg"
 image_alt: "Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce"
 ---
 
-# Rivalutazione pensioni 2027: aumento da gennaio per tutti e nuove fasce in manovra
+# Rivalutazione pensioni 2027: aumento del 3,2% da gennaio e nuove fasce in manovra
 
-**Ultimo aggiornamento: 20 novembre 2026.** Al 20 novembre il decreto del Ministero dell'Economia con la percentuale ufficiale per il 2027 non risulta ancora pubblicato: appena esce aggiorniamo la tabella con gli aumenti veri.
+**Ultimo aggiornamento: 26 novembre 2026**
 
-Ogni gennaio le pensioni aumentano per recuperare l'inflazione dell'anno prima. Si chiama **rivalutazione** o **perequazione automatica**: sono la stessa cosa. Sulla **rivalutazione pensioni 2027** ci sono due novità: l'INPS ha confermato che **l'aumento arriverà dalla rata di gennaio per tutti**, e la legge di bilancio 2027, ancora in discussione, **cambia il modo di calcolarlo** per chi prende più di quattro volte il minimo.
+**Ultime notizie:** il **decreto del Ministero dell'Economia del 13 novembre 2026**, pubblicato nella **Gazzetta Ufficiale n. 274 del 24 novembre 2026**, fissa la **rivalutazione provvisoria delle pensioni 2027 al 3,2%**, dal 1° gennaio 2027.
+
+Ogni gennaio le pensioni aumentano per recuperare l'inflazione dell'anno prima. Si chiama **rivalutazione** o **perequazione automatica**: sono la stessa cosa. Sulla **rivalutazione pensioni 2027** ci sono tre novità: la **percentuale del 3,2%**, la conferma dell'INPS che **l'aumento arriverà dalla rata di gennaio per tutti**, e la legge di bilancio 2027, ancora in discussione, che **cambia il modo di calcolarlo** per chi prende più di quattro volte il minimo.
 
 ## In breve
 
 | | |
 |---|---|
 | **Da quando** | dalla **rata di gennaio 2027**, per tutti i pensionati |
-| **Percentuale** | **in corso di definizione** (decreto di fine anno) |
-| **Pensioni fino a 2.447,40 € lordi** | aumento pieno, al 100% |
+| **Percentuale** | **+3,2%** provvisorio (decreto MEF del 13 novembre 2026) |
+| **Pensioni fino a 2.447,40 € lordi** | aumento pieno: **+3,2%** (es. 1.000 € lordi → +32 €) |
 | **Pensioni più alte** | percentuale ridotta, con le nuove fasce **se la manovra viene approvata così** |
 | **Conguaglio** | le differenze dovute alle nuove regole verranno sistemate più avanti |
 | **Domanda** | non serve: l'INPS fa tutto in automatico |
@@ -50,11 +54,24 @@ In sintesi l'INPS ha spiegato che:
 
 Quindi nessuna pensione resterà ferma a inizio anno. Chi ha un assegno medio-alto deve però sapere che, se la manovra passa così com'è, nei mesi successivi potrebbe vedere un **piccolo recupero** in negativo.
 
-## Quanto aumentano le pensioni nel 2027
+## Di quanto aumentano le pensioni nel 2027?
 
-La percentuale si basa sull'inflazione del 2026 ed è fissata da un decreto del Ministero dell'Economia, di solito a fine novembre. **Ad oggi il dato ufficiale non c'è**: è in corso di definizione. Le cifre che circolano sui giornali sono stime e non vanno prese come definitive.
+Nel 2027 le pensioni aumentano del **3,2%** (valore provvisorio) dalla rata di gennaio: aumento pieno fino a **2.447,40 euro lordi** al mese, ridotto sopra questa cifra.
 
-Per avere un ordine di grandezza basta un conto semplice: **ogni punto di rivalutazione al 100% vale l'1% della pensione lorda**. Su 1.000 euro lordi al mese, ogni punto vale 10 euro lordi in più al mese.
+| Pensione lorda mensile 2026 | Aumento lordo al mese dal 2027 |
+|---|---|
+| 600 € | +19,20 € |
+| 1.000 € | +32,00 € |
+| 1.500 € | +48,00 € |
+| 2.000 € | +64,00 € |
+
+Sono importi **lordi**: il netto dipende dalle tasse di ciascuno. Per le pensioni più alte l'aumento dipende dalle fasce: vedi sotto.
+
+## Decreto perequazione pensioni 2027: cosa dice
+
+Il decreto del **13 novembre 2026** del Ministero dell'Economia, con il Ministero del Lavoro (**Gazzetta Ufficiale n. 274 del 24 novembre 2026**), fissa la variazione **provvisoria** per il 2027 al **3,2%**, calcolata sull'inflazione del 2026.
+
+È **provvisoria**: il dato definitivo arriverà con il decreto del prossimo anno e, se cambia, l'INPS farà un **conguaglio**. Secondo i primi resoconti sul decreto, l'aumento del **2026** resta all'**1,4%**: quindi non dovrebbe esserci conguaglio sul 2026. Lo confermerà l'INPS con la circolare di dicembre sul rinnovo delle pensioni 2027.
 
 ## Rivalutazione pensioni 2027: le nuove fasce della manovra
 
@@ -75,17 +92,17 @@ Le soglie in euro sono calcolate sul trattamento minimo 2026 di **611,85 euro** 
 
 **Attenzione**: questa è una **proposta**. Il testo può ancora cambiare durante l'esame in Parlamento.
 
-## Un esempio per capire la differenza
+## Un esempio con il 3,2%: scaglioni attuali o fasce della manovra?
 
-Prendiamo, solo come esempio, **un punto di inflazione (1%)**, che non è la percentuale ufficiale 2027.
+Calcolo nostro con l'aumento provvisorio del **3,2%**, aumento lordo al mese:
 
 | Pensione lorda | Con gli scaglioni attuali (100/90/75%) | Con le fasce della manovra |
 |---|---|---|
-| 2.000 € | +20,00 € | +20,00 € |
-| 2.800 € | +27,65 € | +23,80 € |
-| 4.000 € | +37,04 € | +18,80 € |
+| 2.000 € | +64,00 € | +64,00 € |
+| 2.800 € | +88,47 € | +76,16 € |
+| 4.000 € | +118,52 € | +60,16 € |
 
-Nella colonna degli scaglioni attuali usiamo le soglie aggiornate al minimo 2026 (2.447,40 e 3.059,25 euro), cioè quelle che varrebbero nel 2027 senza la manovra. Per chi prende meno di 2.447,40 euro lordi non cambia nulla. Sopra questa soglia l'aumento si riduce, tanto più quanto la pensione è alta. Con l'indice vero le cifre vanno moltiplicate per la percentuale ufficiale.
+Nella colonna degli scaglioni attuali usiamo le soglie aggiornate al minimo 2026 (2.447,40 e 3.059,25 euro), cioè quelle che varrebbero nel 2027 senza la manovra. Per chi prende meno di 2.447,40 euro lordi non cambia nulla. Sopra questa soglia l'aumento si riduce, tanto più quanto la pensione è alta. Sono stime: le cifre ufficiali le vedrai nel cedolino di gennaio 2027.
 
 ## Cosa conta per stabilire la fascia
 
@@ -115,7 +132,10 @@ Se sei già in pensione e vivi a Roma nord (Vigne Nuove, Tufello, Montesacro), t
 No. L'INPS applica la rivalutazione in automatico dalla rata di gennaio.
 
 **Di quanto aumenta la pensione nel 2027?**
-La percentuale ufficiale è in corso di definizione: la fissa un decreto di fine anno sull'inflazione 2026.
+Del 3,2% (valore provvisorio, decreto MEF del 13 novembre 2026), pieno fino a 2.447,40 euro lordi al mese. Su 1.000 euro lordi sono 32 euro lordi in più al mese.
+
+**Il 3,2% è definitivo?**
+No, è provvisorio. Il dato definitivo arriva con il decreto del prossimo anno; se cambia, l'INPS fa un conguaglio.
 
 **La mia pensione è di 1.800 euro lordi: cambia qualcosa con la manovra?**
 No. Fino a 2.447,40 euro lordi al mese la rivalutazione resta al 100%.
@@ -133,7 +153,7 @@ No. Sono nel disegno di legge di bilancio 2027, all'esame del Parlamento.
 
 - [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
 - [Pensione minima 2027: quanto aumenta](/blog/pensione-minima-2027-quanto-aumenta)
-- [Cedolino pensione novembre e dicembre 2026: come leggerlo](/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
+- [Cedolino pensione dicembre 2026: data, tredicesima e trattenute](/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
 - [Requisiti pensione 2027: vecchiaia e anticipata](/blog/requisiti-pensione-2027-vecchiaia-anticipata)
 - [Legge di bilancio 2027: le novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)
 

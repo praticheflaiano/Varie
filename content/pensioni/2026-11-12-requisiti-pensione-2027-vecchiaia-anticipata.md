@@ -1,9 +1,9 @@
 ---
 title: "Requisiti pensione 2027: vecchiaia a 67 anni e 1 mese, anticipata e precoci"
-seo_title: "Requisiti pensione 2027: vecchiaia e anticipata"
+seo_title: "Requisiti pensione 2027: a che età e con quanti contributi"
 slug: "requisiti-pensione-2027-vecchiaia-anticipata"
 date: 2026-11-12
-last_updated: 2026-11-12
+last_updated: 2026-11-26
 category: "pensioni"
 tags: ["pensione", "requisiti", "vecchiaia", "pensione-anticipata", "precoci", "inps"]
 meta_description: "Requisiti pensione 2027: vecchiaia a 67 anni e 1 mese, anticipata con 42 anni e 11 mesi (41 e 11 le donne). Tabelle INPS e consulenza a Roma, Vigne Nuove."
@@ -24,7 +24,7 @@ image_alt: "Requisiti pensione 2027: vecchiaia, anticipata e precoci"
 
 # Requisiti pensione 2027: vecchiaia a 67 anni e 1 mese, anticipata e precoci
 
-**Ultimo aggiornamento: 12 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 I **requisiti pensione 2027** cambiano: dal **1° gennaio 2027** per andare in pensione serve **un mese in più**, sia di età sia di contributi. È l'adeguamento alla speranza di vita. Nel 2028 l'aumento sale a tre mesi. Le tabelle ufficiali sono nella **Circolare INPS n. 28 del 16 marzo 2026**.
 
@@ -40,6 +40,18 @@ Qui trovi tutti i requisiti del 2027, spiegati in modo semplice.
 | **Precoci** | 41 anni e 1 mese di contributi | 41 anni e 3 mesi |
 | **Anticipata contributiva** | 64 anni e 1 mese + 20 anni e 1 mese | 64 anni e 3 mesi + 20 anni e 3 mesi |
 | **Vecchiaia contributiva** | 71 anni e 1 mese + 5 anni effettivi | 71 anni e 3 mesi |
+
+> [Prenota il controllo dei requisiti](/prenota): leggiamo il tuo estratto contributivo e ti diciamo quando puoi uscire.
+
+## Con quanti anni si va in pensione nel 2027?
+
+Nel 2027 si va in pensione di vecchiaia a **67 anni e 1 mese** con almeno **20 anni di contributi**; prima dei 67 anni si esce solo con la pensione anticipata, che guarda agli anni di contributi.
+
+## Quante settimane di contributi servono per andare in pensione?
+
+Per la pensione di vecchiaia servono **20 anni di contributi**, cioè **1.040 settimane** (52 settimane per 20 anni). Per l'anticipata nel 2027 servono **42 anni e 11 mesi** (uomini) o **41 anni e 11 mesi** (donne), a qualsiasi età.
+
+Nell'estratto contributivo INPS i contributi possono essere indicati in settimane, mesi o giorni, secondo la gestione: per sapere se ci arrivi conviene farlo leggere a noi.
 
 ## Pensione di vecchiaia 2027: requisiti
 
@@ -114,9 +126,6 @@ Con il servizio **[Stima e Calcolo della pensione](/stima-pensione)** carichi il
 
 ## Domande frequenti
 
-**A che età si va in pensione nel 2027?**
-A 67 anni e 1 mese, con almeno 20 anni di contributi, per la pensione di vecchiaia.
-
 **Quanti anni di contributi servono per la pensione anticipata nel 2027?**
 42 anni e 11 mesi per gli uomini e 41 anni e 11 mesi per le donne, a qualsiasi età.
 
@@ -132,10 +141,13 @@ Sì, di tre mesi rispetto al 2026: vecchiaia a 67 anni e 3 mesi, anticipata a 43
 **Posso ancora andare con Quota 103?**
 Solo se avevi i requisiti entro il 31 dicembre 2025.
 
+**Quanto costa il controllo dei requisiti al patronato?**
+Se stai per andare in pensione, il controllo dei requisiti e la domanda di pensione con il nostro patronato sono gratuiti. Si pagano solo il calcolo approfondito con tutte le possibilità di uscita e la stima per chi andrà in pensione più avanti (online da 60 €): vedi [Stima e Calcolo della pensione](/stima-pensione).
+
 ## Articoli correlati
 
 - [Pensione di reversibilità: quanto spetta e come fare domanda](/blog/pensione-reversibilita-quanto-spetta-domanda)
-- [Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
+- [Rivalutazione pensioni 2027: +3,2% da gennaio e nuove fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
 - [Legge di bilancio 2027: le novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)
 

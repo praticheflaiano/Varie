@@ -1,17 +1,19 @@
 ---
 title: "Dichiarazione dei redditi del defunto: 730 o Redditi, termini e rimborsi per gli eredi"
-seo_title: "730 per eredi: dichiarazione del defunto 2026 | CAF Roma"
+seo_title: "Dichiarazione redditi defunto 2026: scadenza e 730 eredi"
 slug: "dichiarazione-redditi-defunto-730-eredi-2026"
 date: 2026-11-13
-last_updated: 2026-11-13
+last_updated: 2026-11-26
 category: "730-redditi"
 tags: ["730", "successioni", "eredi", "scadenza", "guida"]
-meta_description: "Dichiarazione dei redditi del defunto 2026: quando l'erede usa il 730 o il Redditi, proroga di sei mesi e rimborsi. Ti seguiamo a Vigne Nuove, Roma."
+meta_description: "Dichiarazione dei redditi del defunto 2026: scadenza fino al 30 aprile 2027 per decessi da luglio a ottobre 2026, 730 o Redditi, rimborsi. CAF a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "D.P.R. 29 settembre 1973, n. 600, art. 65 (eredi del contribuente)"
   - "Agenzia delle Entrate, guida La dichiarazione precompilata 2026 (maggio 2026), parte su eredi e accesso in qualità di erede"
   - "Agenzia delle Entrate, istruzioni modello 730/2026 e Redditi Persone fisiche 2026"
+  - "Agenzia delle Entrate, Istruzioni Redditi Persone fisiche 2026, Fascicolo 1, paragrafi \"Termini di presentazione della dichiarazione da parte degli eredi\" e \"Termini di versamento da parte degli eredi\" (art. 65, comma 3, D.P.R. 600/1973) - copia del PDF ufficiale: https://www.informazionefiscale.it/IMG/pdf/pf1_istruzioni_2026.pdf"
+  - "Agenzia delle Entrate, Istruzioni modello 730/2026, paragrafo \"Dichiarazione presentata dagli eredi\" - https://infoprecompilata.agenziaentrate.gov.it/portale/documents/d/guest/730_istruzioni_2026.pdf"
 status: published
 type: guida
 image: "/og/dichiarazione-redditi-defunto-730-eredi-2026.jpg"
@@ -20,7 +22,7 @@ image_alt: "Dichiarazione dei redditi del defunto: 730 o Redditi per gli eredi"
 
 # Dichiarazione dei redditi del defunto: 730 o Redditi, termini e rimborsi per gli eredi
 
-**Ultimo aggiornamento: 13 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Quando muore un familiare, tra le tante pratiche c'è anche la sua **ultima dichiarazione dei redditi**. La presenta **un erede**, a nome della persona scomparsa.
 
@@ -33,7 +35,8 @@ Spesso conviene farla anche quando non è obbligatoria: se il defunto aveva **sp
 | **Chi la presenta** | **un solo erede**, a nome del defunto |
 | **Decesso nel 2025 o entro il 30 settembre 2026** | **730/2026** (se ci sono i requisiti) oppure **Redditi** |
 | **Decesso dopo il 30 settembre 2026** | per i redditi 2025 **solo il modello Redditi** |
-| **Proroga** | **sei mesi** per i termini che scadono entro quattro mesi dal decesso |
+| **Scadenza (invio online)** | decesso fino al 30 giugno 2026: **2 novembre 2026** (termine ordinario); decesso dal 1° luglio al 31 ottobre 2026: **30 aprile 2027** |
+| **Imposte da pagare** | decesso dal 1° marzo 2026: termini prorogati al **31 dicembre 2026** |
 | **Rimborso** | spetta agli **eredi** |
 | **Dove** | online con la precompilata "come erede", oppure al **CAF** |
 
@@ -52,7 +55,24 @@ Il 730 dell'erede **non si consegna al datore di lavoro o all'ente pensionistico
 
 I redditi guadagnati dal 1° gennaio fino al giorno del decesso vanno dichiarati **l'anno dopo**. Per chi è mancato nel 2026, quindi, ci sarà anche una dichiarazione nel **2027** per i redditi 2026. Le regole del 730/2027 usciranno nei prossimi mesi: **aggiorneremo questa guida**.
 
-## I termini: la proroga di sei mesi per gli eredi
+## Qual è la scadenza della dichiarazione dei redditi del defunto nel 2026?
+
+Se il decesso è avvenuto **dal 1° luglio al 31 ottobre 2026**, l'erede può inviare online la dichiarazione dei redditi 2025 del defunto fino al **30 aprile 2027**. Per i decessi precedenti valeva il termine ordinario.
+
+Ecco la tabella delle istruzioni del modello Redditi Persone fisiche 2026 per l'**invio telematico** (online, da soli o tramite CAF):
+
+| Data del decesso | Entro quando presentare la dichiarazione dei redditi 2025 |
+|---|---|
+| dal 1° gennaio 2025 al 30 giugno 2026 | termine ordinario: 31 ottobre 2026, slittato a **lunedì 2 novembre 2026** |
+| dal 1° luglio al 31 ottobre 2026 | **30 aprile 2027** (proroga di sei mesi) |
+
+Attenzione: per i decessi **dopo il 30 settembre 2026** si usa **solo il modello Redditi**, non il 730.
+
+Anche i **pagamenti** hanno una proroga: per i decessi **dal 1° marzo 2026** le imposte dovute dal defunto si versano entro il **31 dicembre 2026**; per i decessi nel 2025 o entro il 28 febbraio 2026 valevano i termini ordinari.
+
+Se il decesso è avvenuto **da novembre 2026 in poi**, verifichiamo insieme se la dichiarazione dei redditi 2025 era già stata presentata e cosa resta da fare.
+
+### Da dove viene la proroga di sei mesi
 
 I termini ordinari del 2026 erano:
 
@@ -61,9 +81,7 @@ I termini ordinari del 2026 erano:
 
 L'**articolo 65 del D.P.R. 600/1973** protegge gli eredi: **tutti i termini pendenti alla data della morte** o che **scadono entro quattro mesi** dal decesso, compreso quello per presentare la dichiarazione, sono **prorogati di sei mesi**.
 
-**Esempio:** se il decesso è avvenuto a **settembre 2026**, il termine del modello Redditi (2 novembre 2026) cade entro i quattro mesi. Per gli eredi slitta quindi di **sei mesi**.
-
-Se la dichiarazione la trasmette un CAF o un professionista incaricato dagli eredi, l'invio telematico va fatto **entro gennaio dell'anno successivo** alla scadenza prorogata.
+**Esempio:** se il decesso è avvenuto a **settembre 2026**, il termine del modello Redditi cade entro i quattro mesi. Per gli eredi slitta quindi di **sei mesi**, fino al **30 aprile 2027** (tabella delle istruzioni Redditi PF 2026).
 
 Ogni caso ha la sua data: portaci il **certificato di morte** e controlliamo noi il termine esatto.
 
@@ -126,6 +144,9 @@ Un solo erede, a nome del defunto, indicando il proprio codice fiscale e quello 
 
 **L'erede può usare il 730?**
 Sì, per i redditi 2025, se il decesso è avvenuto nel 2025 o entro il 30 settembre 2026 e il defunto aveva i requisiti (lavoro dipendente, pensione o redditi assimilati). Dopo il 30 settembre 2026 serve il modello Redditi.
+
+**Qual è la scadenza della dichiarazione dei redditi del defunto 2026?**
+Per i decessi dal 1° luglio al 31 ottobre 2026 l'invio online va fatto entro il 30 aprile 2027. Per i decessi precedenti valeva il termine ordinario del 2 novembre 2026.
 
 **C'è più tempo per gli eredi?**
 Sì. I termini in corso alla data della morte o che scadono entro quattro mesi sono prorogati di sei mesi (art. 65 del D.P.R. 600/1973).
