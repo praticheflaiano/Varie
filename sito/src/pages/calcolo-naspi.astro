@@ -32,13 +32,14 @@ const H2 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clam
 const P = "margin:0;font-size:17px;line-height:1.6;color:#34344A";
 ---
 
-<BaseLayout title="Calcolo NASpI 2026: importo e durata" description={`Calcola quanto prendi di NASpI e per quanti mesi, con i valori INPS 2026: massimo ${eur(MAX)} € al mese, riduzione del 3% dal sesto mese. Gratis.`}>
+<BaseLayout title="Calcolo NASpI 2026: importo e durata" ogImage="/og/calcolo-naspi.jpg" description={`Calcola quanto prendi di NASpI e per quanti mesi con i valori INPS 2026: massimo ${eur(MAX)} € al mese, -3% dal sesto mese. Gratis, dal patronato di Roma.`}>
   <script slot="head" type="application/ld+json" set:html={appLd} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
   <div class="nz"><NaspiCalculator client:load /></div>
 
   <section style="max-width:860px;margin:0 auto;padding:24px 16px 8px;display:flex;flex-direction:column;gap:16px">
+    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 25 novembre 2026.</b> Valori 2026 della circolare INPS n. 4 del 28 gennaio 2026. Gli importi 2027 escono di solito a fine gennaio: aggiorneremo il calcolatore appena pubblicati.</p>
     <h2 style={H2}>Come si calcola la NASpI nel 2026</h2>
     <p style={P}>La base è la tua <b>retribuzione media mensile</b> degli ultimi 4 anni: la retribuzione su cui hai versato i contributi, divisa per le settimane di contributi e moltiplicata per 4,33.</p>
     <ul style="margin:0;padding-left:1.2em;font-size:17px;line-height:1.6;color:#34344A;display:flex;flex-direction:column;gap:6px">
@@ -72,7 +73,10 @@ const P = "margin:0;font-size:17px;line-height:1.6;color:#34344A";
       </div>
     ))}
 
-    <p style="margin:0;font-size:14px;line-height:1.5;color:#3F3F5A">Fonti: scheda INPS "NASpI: indennità mensile di disoccupazione" (aggiornata al 2 febbraio 2026); circolare INPS 28 gennaio 2026, n. 4 (importi 2026); decreto legislativo 4 marzo 2015, n. 22, artt. 4 e 5.</p>
+    <h2 style={H2}>Vuoi che controlliamo noi?</h2>
+    <p style={P}>Al Centro Pratiche Flaiano, patronato ENASC a <b>Roma Vigne Nuove</b> (Municipio III), controlliamo il tuo estratto conto contributivo e facciamo la domanda NASpI <b>gratis</b>, anche a distanza da tutta Italia. <a href="/prenota" style="color:#4B2FE0;font-weight:800;text-decoration:underline">Prenota un appuntamento</a> o leggi la <a href="/naspi/domanda" style="color:#4B2FE0;font-weight:800;text-decoration:underline">guida alla domanda NASpI</a>.</p>
+
+    <p style="margin:0;font-size:14px;line-height:1.6;color:#3F3F5A">Fonti: <a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" target="_blank" rel="noopener" style="color:#4B2FE0;text-decoration:underline">scheda INPS "NASpI: indennità mensile di disoccupazione"</a> (aggiornata al 2 febbraio 2026); <a href="https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.01.circolare-numero-4-del-28-01-2026_15147.html" target="_blank" rel="noopener" style="color:#4B2FE0;text-decoration:underline">circolare INPS 28 gennaio 2026, n. 4</a> (importi 2026); <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-03-04;22" target="_blank" rel="noopener" style="color:#4B2FE0;text-decoration:underline">decreto legislativo 4 marzo 2015, n. 22</a>, artt. 4 e 5. Il calcolatore dà una stima: l'importo esatto lo decide l'INPS.</p>
   </section>
   <div style="max-width:860px;margin:0 auto;padding:0 16px 48px"><PortaleNaspi current="/calcolo-naspi" /></div>
 </BaseLayout>
