@@ -98,6 +98,10 @@ Il minimo cambia in base al **livello** (colf, badante di persona autosufficient
 
 Calcolare il livello giusto evita il rischio più comune: una vertenza a fine rapporto per differenze di stipendio.
 
+> [calcolo del costo di colf e badanti](/calcolo-costo-colf-badante): stipendio minimo 2026, contributi INPS, tredicesima e TFR del tuo rapporto.
+
+Tutti i minimi e le regole su orari e riposi sono nella guida sulla [badante convivente](/blog/badante-convivente-2026-orari-riposi-ferie-vitto-alloggio).
+
 ## 5. Cosa recuperi nel 730
 
 - **Deduzione dei contributi:** la parte dei contributi pagata dalla famiglia (non quella trattenuta al lavoratore) si deduce dal reddito fino a **1.549,37 €** l'anno.
@@ -142,6 +146,8 @@ Un prezzo all'anno tutto compreso, che dipende dal tipo di rapporto. Scrivici su
 
 ## Articoli correlati
 
+- [Assumere una colf o una badante nel 2026](/blog/assumere-colf-badante-roma-2026-come-fare)
+- [Licenziamento e dimissioni di colf e badanti](/blog/licenziamento-dimissioni-colf-badante-preavviso-tfr)
 - [ISEE 2027: quando rinnovarlo e quali documenti servono](/blog/isee-2027-documenti-quando-rinnovare-roma)
 - [Detrazioni spese mediche nel 730](/blog/detrazioni-spese-mediche-730-2026-guida-completa)
 - [RED, ICRIC, ICLAV e ACCAS/PS 2026](/blog/red-icric-iclav-accas-ps-2026-guida)
