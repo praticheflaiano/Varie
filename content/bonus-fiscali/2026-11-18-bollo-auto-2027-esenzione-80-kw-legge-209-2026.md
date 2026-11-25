@@ -39,6 +39,8 @@ Nel 2027 molte persone non pagheranno il **bollo auto** su un veicolo. Lo preved
 
 > [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
 
+> [Prenota un controllo del bollo](/prenota): verifichiamo se il tuo veicolo rientra e, per disabilità, facciamo la domanda di esenzione.
+
 ## Chi ha diritto all'esenzione
 
 L'esenzione spetta a chi, nel 2027, è **soggetto passivo** del bollo, cioè chi è tenuto a pagarlo, ed è una **persona fisica**. Le auto intestate a società non rientrano. Il veicolo deve essere **regolarmente assicurato**.

@@ -122,6 +122,8 @@ Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti F
 - Seguiamo la [domanda di NASpI](/naspi) e i passaggi dopo, come il [SIISL](/siisl).
 - Nel 2027 inseriamo la CU nel [730](/730) e controlliamo il conguaglio.
 
+> [calcolo NASpI 2026](/calcolo-naspi): quanto prendi al mese e per quanti mesi, con i valori INPS 2026.
+
 ## Hai preso NASpI o cassa integrazione nel 2026?
 
 - **Prenota:** [in ufficio o in videochiamata](/prenota)
