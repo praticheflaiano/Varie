@@ -58,6 +58,7 @@ const props = {
     cta: { label: "Scopri la tessera", href: "/tesseramento" },
   },
   faqs: [
+    { q: "Come si fa il Patto di attivazione digitale sul SIISL?", a: "Entri su siisl.lavoro.gov.it con SPID o CIE e confermi email e cellulare con il codice. Poi compili il curriculum, dichiari la disponibilità al lavoro (DID), scegli se mandare il curriculum alle agenzie per il lavoro e firmi il Patto di attivazione digitale. Dopo, il Centro per l'impiego completa con te il Patto di servizio." },
     { q: "Devo iscrivermi io al SIISL?", a: "No. Dal 24 novembre 2024 l'INPS iscrive d'ufficio chi chiede NASpI o DIS-COLL (messaggio INPS n. 4011 del 28 novembre 2024). A te resta da entrare e completare i passaggi." },
     { q: "Entro quando devo farlo?", a: "Entro 15 giorni dall'inizio della prestazione: accesso al SIISL, curriculum e firma del Patto di attivazione digitale. Prima della scadenza la piattaforma manda un promemoria, ma l'obbligo vale anche se non lo ricevi." },
     { q: "Cosa succede se non lo faccio?", a: "Ricevi un invito a contattare il Centro per l'impiego per il Patto di servizio personalizzato. Se non ti presenti senza un motivo giustificato, si applicano le sanzioni dell'art. 21, comma 7, lettera a) del d.lgs. 150/2015: riduzione dell'indennità e, se le assenze si ripetono, decadenza." },
@@ -76,7 +77,7 @@ const props = {
 };
 const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: props.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
 ---
-<BaseLayout title="SIISL e NASpI: cosa fare entro 15 giorni | Pratiche Flaiano" description="Prendi la NASpI? L'INPS ti iscrive al SIISL: entro 15 giorni curriculum e Patto di attivazione digitale. Da solo è gratis, in ufficio a Vigne Nuove lo compiliamo noi a 25 € (20 € con la tessera).">
+<BaseLayout title="SIISL NASpI: Patto di attivazione digitale, come si fa" description="SIISL e NASpI: entro 15 giorni curriculum e Patto di attivazione digitale. Da solo è gratis; a Roma Vigne Nuove lo facciamo noi a 25 € (20 € con tessera).">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="siisl" name="Compilazione SIISL per NASpI e DIS-COLL" description="Assistenza in ufficio per curriculum e Patto di attivazione digitale sulla piattaforma SIISL, per chi percepisce NASpI o DIS-COLL." serviceType="Assistenza SIISL" offers={[{ name: "Compilazione SIISL in ufficio", price: 25 }, { name: "Compilazione SIISL in ufficio, con tessera", price: 20 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />

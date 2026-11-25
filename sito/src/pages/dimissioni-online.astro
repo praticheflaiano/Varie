@@ -8,6 +8,9 @@ import { CONTACT } from "~/consts";
 import DaCasa from "~/components/ui/DaCasa.astro";
 
 /*
+ * 26/11/2026: FAQ da Search Console (senza SPID, costo patronato/CAF, effetto immediato, "licenziamento online").
+ *   Verificati: pagina Ministero del Lavoro "Dimissioni volontarie" (SPID/CIE, intermediari, revoca 7 gg, esclusi),
+ *   circolare Ministero del Lavoro 12/2016 (periodo di prova, preavviso nella data di decorrenza), avviso INL 01/2026 (convalida).
  * Fonti verificate (9/11/2026):
  * - D.Lgs. 151/2015 art. 26 (dimissioni telematiche, revoca entro 7 giorni, esclusioni)
  * - Codice civile art. 2118 (preavviso e indennità sostitutiva) e art. 2119 (giusta causa: niente preavviso, l'indennità spetta al lavoratore)
@@ -21,7 +24,10 @@ import DaCasa from "~/components/ui/DaCasa.astro";
 const MANDATO = "https://link.arcanis.it/widget/survey/14zIQoTpe0cUJhwRPT6t";
 
 const faqs = [
-  { q: "Posso dimettermi senza SPID?", a: "Sì. Le dimissioni le inviamo noi come patronato, anche se non hai SPID o CIE." },
+  { q: "Come si danno le dimissioni online senza SPID?", a: "Tramite un intermediario abilitato, per esempio un patronato: entra nel sistema del Ministero del Lavoro con le sue credenziali e invia il modulo per te. Noi le inviamo come Patronato ENASC, in ufficio a Roma o online da tutta Italia. <a href='/blog/dimissioni-online-senza-spid-come-fare'>La guida passo per passo</a>." },
+  { q: "Quanto costa dare le dimissioni al patronato o al CAF?", a: "Da noi senza SPID (o con il modulo online) 20 € con la tessera e 25 € senza; in ufficio con il tuo SPID 15 € con la tessera e 20 € senza; la revoca 5 €. Nell'elenco degli intermediari del Ministero ci sono i patronati, non i CAF: da noi le invia il Patronato ENASC, nella stessa sede del CAF." },
+  { q: "Posso dare le dimissioni con effetto immediato?", a: "Senza preavviso solo con le dimissioni per giusta causa. Negli altri casi, se te ne vai prima, l'azienda può trattenerti lo stipendio dei giorni di preavviso mancanti, a meno che non rinunci al preavviso per iscritto." },
+  { q: "Si può fare il licenziamento online senza SPID?", a: "Se sei tu a lasciare il lavoro non è un licenziamento ma sono dimissioni: si fanno solo online e, senza SPID, le invia il patronato. Il licenziamento lo decide e lo comunica l'azienda." },
   { q: "Quanti giorni di preavviso devo dare?", a: "Lo decide il tuo contratto collettivo (CCNL), in base a livello e anzianità. Noi leggiamo il tuo CCNL e ti diciamo i giorni esatti e la data giusta da mettere nel modulo." },
   { q: "Cosa succede se non rispetto il preavviso?", a: "L'azienda può trattenere dalle ultime spettanze (busta paga e TFR) un'indennità pari allo stipendio dei giorni di preavviso che mancano (art. 2118 del codice civile)." },
   { q: "Con le dimissioni prendo la NASpI?", a: "Con le dimissioni volontarie no. Con le dimissioni per giusta causa sì, se hai i requisiti. Valutiamo con te se la giusta causa c'è e come documentarla. <a href='/naspi'>Tutto sulla NASpI</a>." },
@@ -85,6 +91,7 @@ const props = {
   related: [
     { label: "NASpI", href: "/naspi" },
     { label: "Calcolo NASpI", href: "/calcolo-naspi" },
+    { label: "Guida: dimissioni senza SPID", href: "/blog/dimissioni-online-senza-spid-come-fare" },
     { label: "Checklist primi 7 giorni", href: "/blog/checklist-primi-7-giorni-perdita-lavoro-roma" },
     { label: "ADI e SFL", href: "/adi-sfl" },
   ],
@@ -101,7 +108,7 @@ const h3 = "margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:24px
 const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
 ---
 
-<BaseLayout title="Dimissioni online senza SPID a Roma: preavviso e giusta causa" description="Dimissioni online in 10 minuti, anche senza SPID, da 15 €. Patronato ENASC a Roma: calcoliamo il preavviso, valutiamo la giusta causa e la NASpI.">
+<BaseLayout title="Dimissioni online senza SPID a Roma: preavviso e giusta causa" description="Dimissioni online anche senza SPID tramite il Patronato ENASC a Roma, da 15 €: calcoliamo il preavviso e valutiamo giusta causa e NASpI. Anche da tutta Italia.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="dimissioni-online" name="Dimissioni telematiche con consulenza" description="Consulenza su preavviso e giusta causa, invio delle dimissioni telematiche e della revoca tramite patronato, domanda NASpI." serviceType="Patronato - lavoro" offers={[{ name: "Dimissioni con SPID, tesserati", price: 15 }, { name: "Dimissioni con SPID, non tesserati", price: 20 }, { name: "Dimissioni senza SPID, tesserati", price: 20 }, { name: "Dimissioni senza SPID, non tesserati", price: 25 }, { name: "Revoca delle dimissioni", price: 5 }]} onlineUrl="#da-casa" />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
@@ -217,10 +224,11 @@ const p = "margin:0;font-size:16px;line-height:1.55;color:#3F3F5A";
 
   <div class="lp"><section class="c47" id="fonti">
     <h2 class="c55">Fonti ufficiali</h2>
-    <p class="c4"><b>Aggiornato il 13 novembre 2026.</b> Preavviso e giusta causa seguono il codice civile (artt. 2118 e 2119) e il contratto collettivo; i prezzi sono quelli pubblicati in questa pagina.</p>
+    <p class="c4"><b>Aggiornato il 26 novembre 2026.</b> Preavviso e giusta causa seguono il codice civile (artt. 2118 e 2119) e il contratto collettivo; i prezzi sono quelli pubblicati in questa pagina.</p>
     <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
       <li><a href="https://www.lavoro.gov.it/strumenti-e-servizi/Dimissioni-volontarie/Pagine/default" target="_blank" rel="noopener">Ministero del Lavoro - Dimissioni volontarie</a> · procedura telematica, intermediari abilitati, revoca entro 7 giorni, casi esclusi</li>
       <li><a href="https://www.lavoro.gov.it/documenti-e-norme/normative/Documents/2015/Decreto_Legislativo_14_settembre_2015_n.151.pdf" target="_blank" rel="noopener">D.Lgs. 14 settembre 2015, n. 151, art. 26 (testo sul sito del Ministero del Lavoro)</a></li>
+      <li><a href="https://www.ispettorato.gov.it/files/2026/01/ITL-PD-RO-Avviso-allutenza-Convalida-dimissioni-lavoratrici-madri-dimissioni-volontarie.pdf" target="_blank" rel="noopener">Ispettorato del Lavoro - Convalida delle dimissioni in gravidanza e nei primi tre anni del bambino</a></li>
       <li><a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.12.naspi-chiarimenti-sulla-gestione-delle-assenze-ingiustificate.html" target="_blank" rel="noopener">INPS - Circolare n. 154 del 22 dicembre 2025: assenze ingiustificate e dimissioni per fatti concludenti</a></li>
       <li><a href="https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.06.naspi-nuovo-requisito-contributivo.html" target="_blank" rel="noopener">INPS - Circolare n. 98 del 5 giugno 2025: nuovo requisito contributivo NASpI</a></li>
       <li><a href="https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" target="_blank" rel="noopener">INPS - NASpI: indennità mensile di disoccupazione</a> · termine di 68 giorni</li>
