@@ -130,3 +130,6 @@ Prima di eseguire questi task, leggere la procedura corrispondente:
 - **GitHub**: repo `praticheflaiano/Varie`, branch attivo `claude/identify-project-ULhhV`, PR draft #1 aperta
 - **Articoli published**: 4 (Precompilata 2026, Guida 730/2026, IVA 2026, Rottamazione Quinquies 2026)
 - **Token Vercel temporanei usati e da revocare**: vedi `vault/riferimenti/credenziali-deploy.md`
+
+## Pagine calcolatore impaginate come articoli (dal 26/11/2026)
+Regola di Antonio: anche le pagine con un calcolatore seguono l'impaginazione degli articoli. Usare `sito/src/layouts/ToolGuideLayout.astro` (props: title, description, path, h1, kicker, crumbs, category, prenota, updated, published, image, imageAlt, sources, faq, related; slot intro = "In breve", tool = calcolatore, testo nel slot predefinito). Esempi: `/calcolo-tfr-colf-badanti`, `/calcolo-costo-colf-badante`.
