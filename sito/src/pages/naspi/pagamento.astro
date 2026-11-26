@@ -1,0 +1,182 @@
+---
+/**
+ * Quando arriva la NASpI e come controllare il pagamento (26/11/2026).
+ * Riscrive la guida /guida/pagamenti-accredito del portale domandedisoccupazione.it, che conteneva dati non verificabili:
+ * un "calendario 2026" con giorni di accredito per ogni mese (l'INPS non pubblica date fisse per la NASpI), il pagamento
+ * di novembre "anticipato al 5 dicembre", il primo pagamento "entro 45-60 giorni", l'IRPEF "23% base", stati della domanda
+ * inesistenti ("Respinta per ricorso pendente") e percentuali composte del decalage non tratte da fonti INPS.
+ * Verificato il 26/11/2026 su:
+ * - Scheda INPS NASpI (agg. 2/2/2026): pagamento mensile; accredito su conto bancario o postale, libretto postale o bonifico
+ *   all'ufficio postale; conto intestato o cointestato al richiedente; niente contanti oltre 1.000 euro netti; riduzione del 3%
+ *   ogni mese dal primo giorno del 6° mese, dall'8° mese per chi ha 55 anni compiuti alla data della domanda.
+ * - Circolare INPS n. 2 del 4/1/2022 (art. 4 c. 3 D.Lgs. 22/2015 come modificato dall'art. 1 c. 221 lett. c L. 234/2021):
+ *   riduzione dal 6° mese (151° giorno) o dall'8° (211° giorno) per gli over 55, per le cessazioni dal 1/1/2022.
+ * - Circolare INPS n. 48 del 29/3/2020: dal 10/4/2020 il modello SR163 non si compila più; verifica telematica con banche e
+ *   Poste che lo strumento (conto, libretto con IBAN, carta prepagata con IBAN) sia intestato o cointestato al beneficiario;
+ *   vale anche per la NASpI.
+ * - FAQ INPS sulla NASpI: niente accredito su IBAN non intestati/cointestati; variazione IBAN con "NASpI-Com: invio
+ *   comunicazione"; SR163 non più previsto; la NASpI è reddito imponibile e rileva ai fini ISEE.
+ * - Dossier INPS "Come verificare l'esito della domanda e gli importi spettanti" e tutorial "NASpI/Dis-coll: Consultazione
+ *   domande": stati, pulsante € "Dettaglio pagamento" solo con stato "Accolta in pagamento", lettera + SMS + Cassetta postale.
+ * - Scheda INPS "Stato di un pagamento" (agg. 13/11/2026): MyINPS "ultimi pagamenti", non mostra pagamenti oltre i due mesi precedenti.
+ * - Scheda INPS "Fascicolo previdenziale del cittadino" (agg. 3/7/2025): pagamenti ricevuti, domande, corrispondenza, CU.
+ * - Pagina INPS Mobile: servizi "Esiti Domande NASpI" (con notifiche) e "Stato Pagamenti e Cedolini"; accesso SPID o CIE.
+ * - Scheda INPS detrazioni (agg. 25/3/2025): IRPEF a scaglioni e detrazioni da lavoro d'ufficio; carichi di famiglia su richiesta
+ *   con il servizio "Detrazioni fiscali - Domanda e gestione".
+ * - Scheda INPS ANF dipendenti privati (agg. 9/7/2026): dal 1/3/2022 ANF abrogato per i nuclei con figli e orfanili.
+ * Somma non imponibile da novembre 2026: vedi l'articolo collegato (messaggio INPS 3649/2026).
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+
+const faq = [
+    {
+        q: 'Che giorno arriva la NASpI ogni mese?',
+        a: 'Non c\'è un giorno fisso: l\'INPS paga la NASpI una volta al mese ma non pubblica un calendario con le date, come fa per pensioni e Assegno Unico. La data del tuo pagamento la vedi in MyINPS ("ultimi pagamenti") o nell\'app INPS Mobile.',
+    },
+    {
+        q: 'Quando arriva il primo pagamento della NASpI?',
+        a: 'Dopo che l\'INPS ha accolto la domanda: non c\'è un numero di giorni fissato. Il primo pagamento di solito comprende tutti i giorni maturati dalla data di inizio della NASpI.',
+    },
+    {
+        q: 'Dove vedo i pagamenti della NASpI?',
+        a: 'Con SPID, CIE o CNS nel servizio "NASpI: consultazione domande" (pulsante con il simbolo dell\'euro), nel Fascicolo previdenziale del cittadino, in MyINPS alla voce "ultimi pagamenti" o nell\'app INPS Mobile.',
+    },
+    {
+        q: 'Posso ricevere la NASpI sul conto di un familiare?',
+        a: 'No. Il conto, il libretto o la carta con IBAN devono essere intestati o cointestati a te: l\'INPS non può pagare su un IBAN di un\'altra persona.',
+    },
+    {
+        q: 'Per la NASpI serve ancora il modulo SR163?',
+        a: 'No. Dal 10 aprile 2020 il modulo SR163 non si compila più: l\'INPS controlla da sé con banche e Poste che il conto sia tuo (circolare INPS 48/2020). Per cambiare IBAN si usa il servizio NASpI-Com.',
+    },
+    {
+        q: 'Da quando la NASpI si riduce del 3%?',
+        a: 'Dal primo giorno del 6° mese di NASpI l\'importo scende del 3% ogni mese. Se avevi già 55 anni quando hai fatto domanda, la riduzione parte dall\'8° mese.',
+    },
+    {
+        q: 'Sulla NASpI si pagano le tasse?',
+        a: 'Sì. La NASpI è reddito imponibile: l\'INPS trattiene l\'IRPEF ogni mese e applica le detrazioni da lavoro. Le detrazioni per i familiari a carico invece vanno chieste all\'INPS.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="Quando arriva la NASpI: pagamento mensile e come controllarlo"
+    description="La NASpI si paga ogni mese, ma l'INPS non fissa un giorno. Come controllare il pagamento, IBAN, tasse e riduzione del 3%. Patronato a Roma."
+    path="/naspi/pagamento"
+    h1="Quando arriva la NASpI e come controllare il pagamento"
+    kicker="Pagamento mensile, controlli e trattenute"
+    crumb="Quando arriva la NASpI"
+    updated="2026-11-26"
+    published="2026-11-26"
+    image="/og/naspi-pagamento.jpg"
+    imageAlt="Quando arriva la NASpI e come controllare il pagamento"
+    related={["somma-non-imponibile-naspi-cassa-integrazione-2026", "naspi-2026-patronato-vs-caf-cosa-fa-cosa"]}
+    sources={[
+        { t: 'Scheda INPS "NASpI: indennità mensile di disoccupazione" (ultimo aggiornamento 2 febbraio 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" },
+        { t: "INPS, FAQ - Domande frequenti sulla NASpI (IBAN, modello SR163, tassazione)", url: "https://inps.it/it/it/inps-comunica/dossier/la-naspi/faq---domande-frequenti-sulla-naspi.html" },
+        { t: "Circolare INPS 29 marzo 2020, n. 48 (verifica telematica dell'IBAN e soppressione del modello SR163)", url: "https://servizi2.inps.it/CircolariZIP/Circolare%20numero%2048%20del%2029-03-2020.pdf" },
+        { t: "Circolare INPS 4 gennaio 2022, n. 2 (riduzione del 3% dal sesto mese, dall'ottavo per chi ha 55 anni)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2022.01.circolare-numero-2-del-04-01-2022_13665.html" },
+        { t: 'INPS, "Come verificare l\'esito della domanda e gli importi spettanti"', url: "https://inps.it/it/it/inps-comunica/dossier/la-naspi/come-verificare-l-esito-della-domanda-e-gli-importi-spettanti.html" },
+        { t: 'INPS, tutorial del servizio "NASpI/Dis-coll: Consultazione domande" (PDF)', url: "https://www.inps.it/content/dam/inps-site/pdf/allegati/INPS_Template_Tutorial%20del%20servizio_NASpI_Dis-coll_Consultazione_domande.pdf" },
+        { t: 'Scheda INPS "Stato di un pagamento" (ultimo aggiornamento 13 novembre 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.stato-di-un-pagamento.html" },
+        { t: 'Scheda INPS "Fascicolo previdenziale del cittadino"', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.fascicolo-previdenziale-del-cittadino-50865.fascicolo-previdenziale-del-cittadino.html" },
+        { t: "INPS, app INPS Mobile", url: "https://www.inps.it/it/it/dettaglio-app-mobile.app-mobile.inps-mobile.html" },
+        { t: 'Scheda INPS "Dichiarazione per il diritto alle detrazioni d\'imposta per reddito e per carichi di famiglia"', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.dichiarazione-per-il-diritto-alle-detrazioni-d-imposta-per-reddito-e-per-carichi-di-famiglia.html" },
+        { t: 'Scheda INPS "Assegno per il nucleo familiare - ANF (dipendenti privati)"', url: "https://www.inps.it/it/it/dettaglio-scheda.schede-servizio-strumento.schede-servizi.assegno-per-il-nucleo-familiare---anf-(dipendenti-privati).html" },
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>La NASpI si paga <strong>una volta al mese</strong>, su un conto, un libretto o una carta con IBAN <strong>intestati o cointestati a te</strong>.</li>
+            <li>L'INPS <strong>non pubblica un calendario</strong> con i giorni di pagamento della NASpI: il giorno può cambiare da un mese all'altro.</li>
+            <li>Il pagamento si controlla online con SPID, CIE o CNS: <strong>"NASpI: consultazione domande"</strong>, <strong>Fascicolo previdenziale</strong>, MyINPS o app <strong>INPS Mobile</strong>.</li>
+            <li>Dal <strong>6° mese</strong> l'importo scende del <strong>3% ogni mese</strong> (dall'<strong>8° mese</strong> se avevi 55 anni quando hai fatto domanda).</li>
+            <li>La NASpI è <strong>tassata</strong>: l'INPS trattiene l'IRPEF; le detrazioni per i familiari a carico vanno chieste.</li>
+        </ul>
+    </blockquote>
+
+    <h2>Quando arriva la NASpI ogni mese?</h2>
+    <p>La NASpI arriva <strong>una volta al mese</strong>, ma <strong>non in un giorno fisso</strong>: l'INPS non pubblica un calendario dei pagamenti NASpI, come fa invece per le pensioni o per l'Assegno Unico.</p>
+    <p>Ogni pagamento riguarda giorni di NASpI già trascorsi. Il giorno preciso può cambiare da un mese all'altro e dipende anche dai tempi della tua banca o di Poste.</p>
+    <p>Su internet girano tabelle con le "date NASpI" di ogni mese: sono <strong>stime</strong>, non date ufficiali. La data giusta per te è quella che trovi nei servizi online dell'INPS, spiegati più sotto. Le date ufficiali degli altri pagamenti INPS le raccogliamo nella pagina <a href="/pagamenti-inps">pagamenti INPS del mese</a>.</p>
+
+    <h2>Quando arriva il primo pagamento della NASpI?</h2>
+    <p>Il primo pagamento arriva <strong>dopo che l'INPS ha accolto la domanda</strong>: non c'è un numero di giorni fissato. Di solito comprende tutti i giorni maturati dalla data di inizio della NASpI, quindi può essere più alto delle rate successive.</p>
+    <p>La NASpI parte dall'8° giorno dopo la fine del lavoro, oppure dal giorno dopo la domanda se l'hai presentata più tardi: lo spieghiamo nella guida alla <a href="/naspi/domanda">domanda NASpI</a>.</p>
+    <p>Quando la domanda è decisa, l'INPS ti manda una <strong>lettera</strong> (accolta, respinta o richiesta di documenti) e un <strong>SMS</strong> che ti invita a leggerla in MyINPS. La lettera resta sempre nella <strong>Cassetta postale online</strong> dell'INPS.</p>
+
+    <h2>Come controllare il pagamento della NASpI?</h2>
+    <p>Il pagamento si controlla <strong>online con SPID, CIE o CNS</strong>, in quattro punti diversi del sito o dell'app INPS.</p>
+
+    <h3>Il servizio "NASpI: consultazione domande"</h3>
+    <p>Lo trovi nella scheda NASpI del sito INPS (pulsante "Utilizza il servizio") o in MyINPS. C'è l'elenco delle tue domande con lo <strong>stato</strong>: in lavorazione, <strong>Accolta in pagamento</strong> o Respinta.</p>
+    <ul>
+        <li>Il pulsante con il <strong>simbolo dell'euro</strong> apre il <strong>dettaglio pagamento</strong>, con la durata della NASpI, i contributi e le retribuzioni usati per il calcolo e l'importo. Compare solo quando la domanda è "Accolta in pagamento".</li>
+        <li>Il pulsante degli <strong>allegati</strong> ti permette di mandare i documenti che l'INPS ti chiede.</li>
+    </ul>
+
+    <h3>MyINPS: ultimi pagamenti</h3>
+    <p>Nella tua area MyINPS il servizio "ultimi pagamenti" mostra il <strong>dettaglio di ogni pagamento</strong>. Attenzione: fa vedere solo i pagamenti degli <strong>ultimi due mesi</strong>.</p>
+
+    <h3>Fascicolo previdenziale del cittadino</h3>
+    <p>Nella sezione delle prestazioni trovi i <strong>pagamenti ricevuti</strong> e le domande presentate. Qui ci sono anche le lettere dell'INPS e la <strong>Certificazione Unica</strong> della NASpI, che serve per il 730.</p>
+
+    <h3>App INPS Mobile</h3>
+    <p>Nell'app, dopo l'accesso con SPID o CIE, ci sono i servizi <strong>"Esiti Domande NASpI"</strong>, con le notifiche, e <strong>"Stato Pagamenti e Cedolini"</strong>.</p>
+
+    <p>Se non hai SPID, CIE o CNS puoi chiamare il <strong>Contact center INPS</strong> (803 164 da rete fissa, gratuito; 06 164 164 da cellulare) oppure farti aiutare da un patronato.</p>
+
+    <h2>La NASpI non è arrivata: cosa controllare</h2>
+    <p>Prima di tutto guarda lo <strong>stato della domanda</strong>: se non è "Accolta in pagamento", il pagamento non può partire. Poi controlla questi punti:</p>
+    <ul>
+        <li><strong>Domanda ancora in lavorazione</strong>: guarda la Cassetta postale online e le notifiche di MyINPS. Se l'INPS ha chiesto documenti, mandali dagli allegati della domanda.</li>
+        <li><strong>IBAN sbagliato o non tuo</strong>: l'INPS non può pagare su un conto che non sia intestato o cointestato a te. Per correggerlo usa il servizio <strong>NASpI-Com</strong>.</li>
+        <li><strong>Nuovo lavoro o attività</strong>: se lavori di nuovo o hai una partita IVA, devi comunicarlo all'INPS con NASpI-Com. Se non lo fai, rischi di perdere la NASpI.</li>
+        <li><strong>Obblighi con il centro per l'impiego</strong>: se salti una convocazione senza un giustificato motivo, possono scattare tagli fino alla perdita della NASpI. Controlla anche la tua posizione sulla piattaforma <a href="/siisl">SIISL</a>.</li>
+        <li><strong>Lettera di sospensione o decadenza</strong>: se non sei d'accordo, hai <strong>90 giorni</strong> per il <a href="/naspi/ricorso">ricorso NASpI</a>.</li>
+    </ul>
+    <p>Se è tutto in ordine e il pagamento non arriva, chiama il Contact center INPS o passa da un patronato con la ricevuta della domanda: a Roma ci trovi a Vigne Nuove, nel Municipio III.</p>
+
+    <h2>Su quale conto arriva la NASpI?</h2>
+    <p>La NASpI arriva su un <strong>conto corrente bancario o postale</strong>, su un <strong>libretto postale</strong> o su una <strong>carta prepagata con IBAN</strong>, purché siano <strong>intestati o cointestati a te</strong>.</p>
+    <ul>
+        <li>Non puoi farla arrivare sul conto di un familiare, nemmeno del coniuge, se tu non sei cointestatario.</li>
+        <li>In alternativa puoi chiedere il <strong>pagamento all'ufficio postale</strong> del tuo CAP di residenza o domicilio. Ma l'INPS non può pagare in contanti importi netti <strong>oltre 1.000 euro</strong>: in quel caso serve un conto, un libretto o una carta.</li>
+        <li>Se cambi conto, comunica il <strong>nuovo IBAN</strong> con il servizio NASpI-Com.</li>
+    </ul>
+
+    <h2>Serve ancora il modulo SR163?</h2>
+    <p><strong>No.</strong> Dal <strong>10 aprile 2020</strong> il modulo SR163 non si compila più: l'INPS controlla da sé, con banche e Poste, che il conto, il libretto o la carta siano intestati o cointestati a te (circolare INPS 48/2020). Se qualcuno te lo chiede, ricordagli che è stato abolito.</p>
+
+    <h2>Perché la NASpI è più bassa del previsto? Tasse e detrazioni</h2>
+    <p>La NASpI è <strong>reddito imponibile</strong>: ogni mese l'INPS trattiene l'<strong>IRPEF</strong>, come su uno stipendio. La NASpI conta anche per l'ISEE.</p>
+    <ul>
+        <li><strong>Detrazioni da lavoro</strong>: l'INPS le applica da sé, in base all'importo e ai giorni di NASpI. Se non le vuoi, o vuoi trattenute più alte, devi dirlo all'INPS.</li>
+        <li><strong>Detrazioni per familiari a carico</strong>: <strong>non sono automatiche</strong>. Vanno chieste all'INPS con il servizio "Detrazioni fiscali - Domanda e gestione" e aggiornate se cambia qualcosa in famiglia.</li>
+        <li><strong>Altri redditi nello stesso anno</strong>: se hai avuto anche uno stipendio, con il <strong>730</strong> si fa il conto finale delle tasse. Puoi avere un rimborso o qualcosa da pagare. La Certificazione Unica della NASpI la trovi nel Fascicolo previdenziale.</li>
+        <li><strong>Somma non imponibile</strong>: da novembre 2026 l'INPS paga a chi ha redditi bassi una somma in più senza tasse, con gli arretrati del 2026. La spieghiamo nell'articolo sulla <a href="/blog/somma-non-imponibile-naspi-cassa-integrazione-2026">somma non imponibile NASpI</a>.</li>
+    </ul>
+
+    <h2>Quando scatta la riduzione del 3% della NASpI?</h2>
+    <p>Dal <strong>primo giorno del 6° mese</strong> di NASpI l'importo scende del <strong>3% ogni mese</strong>. Se avevi già <strong>55 anni</strong> quando hai fatto domanda, la riduzione parte dall'<strong>8° mese</strong>.</p>
+    <p>Queste regole valgono per chi ha perso il lavoro dal 1° gennaio 2022 (legge di bilancio 2022 e circolare INPS 2/2022). Per sapere quanto prenderai mese per mese puoi fare una stima.</p>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/calcolo-naspi"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo NASpI 2026</span><span class="cta-tool-s">Importo, durata e riduzione del 3% mese per mese</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+    <h2>Con la NASpI spettano gli assegni familiari?</h2>
+    <p>Per i <strong>figli</strong> c'è l'<strong>Assegno Unico</strong>, che si chiede a parte e arriva con un pagamento separato dalla NASpI. Dal 1° marzo 2022 l'assegno al nucleo familiare (ANF) per le famiglie con figli non esiste più.</p>
+    <p>L'ANF resta solo per alcune famiglie <strong>senza figli</strong> e con redditi entro certi limiti: si chiede all'INPS con una domanda apposita, anche tramite patronato. Per i figli, leggi la nostra pagina sull'<a href="/assegno-unico">Assegno Unico</a>.</p>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), anche a distanza:</p>
+    <ul>
+        <li>controlliamo con te lo stato della domanda e i pagamenti NASpI già fatti;</li>
+        <li>se il pagamento è fermo, cerchiamo il motivo e ti diciamo cosa fare;</li>
+        <li>inviamo per te le comunicazioni NASpI-Com, anche per il cambio di IBAN;</li>
+        <li>ti aiutiamo a chiedere le detrazioni per i familiari a carico e l'Assegno Unico;</li>
+        <li>se l'INPS sospende o toglie la NASpI, valutiamo con te il ricorso.</li>
+    </ul>
+    <p>Siamo a Roma nord, in via Filoteo Alberini: chi abita nel Municipio III può passare in sede, gli altri possono prenotare una videochiamata.</p>
+</NaspiGuideLayout>

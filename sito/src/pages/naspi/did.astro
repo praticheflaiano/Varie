@@ -1,0 +1,168 @@
+---
+/**
+ * DID online e NASpI (26/11/2026).
+ * Riscrive la guida /guida/did del portale domandedisoccupazione.it, che conteneva errori:
+ * diceva che chi fa la domanda NASpI deve fare "anche" la DID (invece la domanda vale già come DID, art. 21 c. 1);
+ * che dopo un sollecito l'INPS sospende la NASpI (invece le sanzioni le decide il centro per l'impiego, art. 21 c. 7 e 10);
+ * che lo stato di disoccupazione si perde dopo due assenze (invece: 1/4 di mensilità, poi una mensilità, poi decadenza);
+ * che i 15 giorni partono dall'accoglimento e che il mancato SIISL porta da solo a sospensione e decadenza (msg INPS 4011/2024).
+ * Tolti perché non verificabili: la "spunta DID contestuale" nella domanda INPS, la sezione "Il mio profilo" del SIISL,
+ * il riferimento al DL 4/2019 e la perdita dello stato di disoccupazione per attività autonoma "sopra soglia".
+ * Verificato il 26/11/2026 su:
+ * - D.Lgs. 150/2015 testo vigente su Normattiva: art. 19 (DID telematica; sospensione con lavoro dipendente fino a 6 mesi;
+ *   DID già dalla comunicazione di licenziamento) e art. 21 (domanda NASpI = DID trasmessa dall'INPS; contatto con il CPI
+ *   entro 15 giorni dalla domanda, altrimenti convocazione, per il patto di servizio; convocazioni con preavviso 24-72 ore;
+ *   sanzioni c. 7: 1/4 di mensilità, una mensilità, decadenza; offerta congrua rifiutata = decadenza; c. 9: nuova
+ *   registrazione non prima di 2 mesi; c. 10: le sanzioni le adotta il CPI e l'INPS emette i provvedimenti).
+ * - Messaggio INPS n. 4011 del 28/11/2024 (art. 25 DL 60/2024): iscrizione d'ufficio al SIISL per le domande dal 24/11/2024;
+ *   entro 15 giorni dall'inizio della fruizione accesso e firma del Patto di attivazione digitale; il ritardo non comporta
+ *   da solo le sanzioni dell'art. 21 c. 7 lett. a): arriva l'invito a contattare il CPI; se non ci si presenta senza
+ *   giustificato motivo, si applicano le sanzioni.
+ * - Ministero del Lavoro, indicazioni operative SIISL per NASpI e DIS-COLL (17/12/2024): SMS di iscrizione; curriculum,
+ *   compilazione della DID, scelta sulle agenzie per il lavoro, firma del PAD; poi il Patto di servizio personalizzato.
+ * - Ministero del Lavoro, pagina "Dichiarazione di immediata disponibilità al lavoro": Did online sul Portale per le
+ *   politiche attive, portali regionali o centro per l'impiego; conferma con documento al primo contatto.
+ * - Regione Lazio, scheda servizi CpI "DID" (luglio 2025): SPID, CNS o CIE; chi ha una prestazione di sostegno al reddito
+ *   non deve presentarla; per la NASpI SIISL entro 15 giorni, poi il CpI convalida la DID e fa firmare il Patto di servizio.
+ * - Regione Lazio, recapiti CPI area centro (20/10/2026): sette CPI a Roma città. La competenza territoriale per il
+ *   Municipio III NON risulta dai documenti della Regione: nel testo si rimanda al CPI del domicilio.
+ * Coerente con /siisl (15 giorni dall'inizio della NASpI, PAD, sanzioni art. 21 c. 7 lett. a).
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+
+const faq = [
+    {
+        q: 'Se ho fatto la domanda NASpI devo fare anche la DID?',
+        a: 'No. Per legge la domanda NASpI vale già come dichiarazione di immediata disponibilità (art. 21 del D.Lgs. 150/2015) e l\'INPS la trasmette al sistema delle politiche del lavoro. Restano da fare il SIISL entro 15 giorni e il patto di servizio con il centro per l\'impiego.',
+    },
+    {
+        q: 'Come si fa la DID online?',
+        a: 'Sul Portale per le politiche attive del lavoro del Ministero del Lavoro, servizio "Did online", con SPID, CIE o CNS. Si può fare anche al centro per l\'impiego. Al primo contatto con il centro la confermi con un documento d\'identità.',
+    },
+    {
+        q: 'Cosa succede se non mi presento al centro per l\'impiego?',
+        a: 'Se non hai un giustificato motivo, la prima volta ti tolgono un quarto di una mensilità di NASpI, la seconda volta una mensilità intera, la terza perdi la NASpI e lo stato di disoccupazione.',
+    },
+    {
+        q: 'La DID scade?',
+        a: 'Non ha una scadenza fissa. Se lavori come dipendente fino a 6 mesi lo stato di disoccupazione resta sospeso. Se lo perdi per una sanzione, non puoi registrarti di nuovo prima di 2 mesi.',
+    },
+    {
+        q: 'Posso fare la DID prima che finisca il lavoro?',
+        a: 'Sì, se hai ricevuto la lettera di licenziamento: puoi farla anche durante il preavviso. In questo caso sei considerato "a rischio di disoccupazione".',
+    },
+    {
+        q: 'A quale centro per l\'impiego di Roma devo andare?',
+        a: 'A quello competente per il tuo domicilio. A Roma i centri per l\'impiego sono della Regione Lazio: se non sai qual è il tuo, chiedilo alla Regione o al centro più vicino prima di andare.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="DID online: dichiarazione di immediata disponibilità e NASpI"
+    description="DID online: con la domanda NASpI è già fatta. Entro 15 giorni il SIISL, poi il patto al centro per l'impiego. Cosa rischi se non vai. Aiuto a Roma."
+    path="/naspi/did"
+    h1="DID online: la dichiarazione di immediata disponibilità al lavoro"
+    kicker="Con la NASpI la fa già la domanda"
+    crumb="DID online"
+    updated="2026-11-26"
+    published="2026-11-26"
+    image="/og/naspi-did.jpg"
+    imageAlt="DID online: la dichiarazione di immediata disponibilità al lavoro"
+    related={["checklist-primi-7-giorni-perdita-lavoro-roma", "c2-storico-lazio-come-richiederlo-online", "naspi-2026-patronato-vs-caf-cosa-fa-cosa"]}
+    sources={[
+        { t: "D.Lgs. 14 settembre 2015, n. 150, art. 19 (stato di disoccupazione e DID), testo vigente", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-09-14;150~art19" },
+        { t: "D.Lgs. 14 settembre 2015, n. 150, art. 21 (domanda NASpI come DID, patto di servizio e sanzioni), testo vigente", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-09-14;150~art21" },
+        { t: "Messaggio INPS 28 novembre 2024, n. 4011 (iscrizione al SIISL dei percettori NASpI e DIS-COLL, art. 25 D.L. 60/2024)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2024.11.messaggio-numero-4011-del-28-11-2024_14713.html" },
+        { t: "Ministero del Lavoro, indicazioni operative SIISL per i beneficiari NASpI e DIS-COLL (17 dicembre 2024)", url: "https://lavoro.gov.it/notizie/pagine/indicazioni-operative-siisl-beneficiari-naspi-discoll" },
+        { t: "Ministero del Lavoro, Dichiarazione di immediata disponibilità al lavoro (Did online)", url: "https://www.lavoro.gov.it/strumenti-e-servizi/pagine/dichiarazione-di-immediata-disponibilita-al-lavoro" },
+        { t: "Regione Lazio, scheda servizi dei Centri per l'impiego: DID (luglio 2025)", url: "https://regione.lazio.it/sites/default/files/2025-07/Scheda-servizi-CpI-Did.pdf" },
+        { t: "Regione Lazio, recapiti dei Centri per l'impiego dell'area centro (20 ottobre 2026)", url: "https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" },
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>La <strong>DID</strong> (dichiarazione di immediata disponibilità) è l'atto con cui dici di essere senza lavoro e pronto a lavorare: da lì parte lo <strong>stato di disoccupazione</strong>.</li>
+            <li>Se chiedi la <strong>NASpI</strong>, la domanda <strong>vale già come DID</strong>: non devi farne un'altra.</li>
+            <li>Dopo la domanda l'INPS ti iscrive al <strong>SIISL</strong>: entro <strong>15 giorni</strong> dall'inizio della NASpI compili il curriculum e firmi il Patto di attivazione digitale.</li>
+            <li>Poi il <strong>centro per l'impiego</strong> ti chiama per il <strong>patto di servizio personalizzato</strong>.</li>
+            <li>Se non ti presenti senza un giustificato motivo: <strong>un quarto</strong> di mensilità in meno, poi <strong>una mensilità</strong>, poi perdi la NASpI.</li>
+        </ul>
+    </blockquote>
+
+    <h2>Cos'è la DID?</h2>
+    <p>La DID è la <strong>dichiarazione telematica</strong> con cui dici di essere <strong>senza lavoro</strong> e <strong>subito disponibile</strong> a lavorare e a partecipare alle attività concordate con il centro per l'impiego. È regolata dall'art. 19 del D.Lgs. 150/2015.</p>
+    <p>Con la DID diventi ufficialmente <strong>disoccupato</strong>. Ti serve per i servizi del centro per l'impiego e per i documenti che lo attestano, come il <a href="/blog/c2-storico-lazio-come-richiederlo-online">C2 storico del Lazio</a>.</p>
+
+    <h2>Se chiedo la NASpI devo fare anche la DID?</h2>
+    <p><strong>No: la domanda NASpI vale già come DID.</strong> Lo dice l'art. 21, comma 1, del D.Lgs. 150/2015: l'INPS la trasmette al sistema informativo delle politiche del lavoro.</p>
+    <p>Quindi, se hai perso il lavoro e fai la <a href="/naspi/domanda">domanda NASpI</a>, non serve una DID separata. Anche la scheda della Regione Lazio lo conferma: chi riceve una prestazione di sostegno al reddito non deve presentarla.</p>
+    <p>Restano però due passaggi che non puoi saltare: il <strong>SIISL</strong> e il <strong>patto di servizio</strong> con il centro per l'impiego.</p>
+
+    <h2>Cosa devo fare sul SIISL entro 15 giorni?</h2>
+    <p><strong>Entro 15 giorni dall'inizio della NASpI</strong> devi entrare sul SIISL, compilare il curriculum e firmare il <strong>Patto di attivazione digitale</strong>. Dal 24 novembre 2024 l'INPS ti iscrive alla piattaforma in automatico e ti manda un SMS.</p>
+    <p>I passaggi, secondo le indicazioni del Ministero del Lavoro:</p>
+    <ol>
+        <li>entri su siisl.lavoro.gov.it con SPID o CIE;</li>
+        <li>compili o aggiorni il <strong>curriculum</strong>;</li>
+        <li>compili la parte sulla <strong>DID</strong>, cioè la tua disponibilità al lavoro;</li>
+        <li>scegli se mandare il curriculum alle agenzie per il lavoro;</li>
+        <li>firmi il <strong>Patto di attivazione digitale</strong>.</li>
+    </ol>
+    <p>Se salti i 15 giorni, la NASpI non viene tagliata subito: ricevi un <strong>invito a contattare il centro per l'impiego</strong>. Se poi non ti presenti senza un giustificato motivo, scattano le sanzioni (messaggio INPS n. 4011 del 2024). Tutti i dettagli sono nella guida alla <a href="/siisl">piattaforma SIISL</a>.</p>
+    <p>Se la piattaforma ti segnala un problema con la DID o non riesci a firmare il patto, non aspettare: rivolgiti al centro per l'impiego.</p>
+
+    <h2>Come si fa la DID online se non chiedo la NASpI?</h2>
+    <p><strong>Sul Portale per le politiche attive del lavoro del Ministero del Lavoro, servizio "Did online", con SPID, CIE o CNS.</strong> In alternativa la fai di persona al centro per l'impiego.</p>
+    <ul>
+        <li>La DID online viene registrata <strong>con riserva</strong>. Al primo contatto con il centro per l'impiego confermi lo stato di disoccupazione e mostri un <strong>documento d'identità</strong>.</li>
+        <li>Dopo la conferma, lo stato di disoccupazione vale <strong>dalla data in cui hai fatto la DID online</strong>.</li>
+        <li>Se hai ricevuto la <strong>lettera di licenziamento</strong>, puoi farla subito, anche durante il preavviso.</li>
+    </ul>
+
+    <h2>Dove si fa la DID a Roma?</h2>
+    <p><strong>Online da casa oppure al centro per l'impiego del tuo domicilio.</strong> A Roma i centri per l'impiego sono della Regione Lazio: Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela.</p>
+    <p>I documenti della Regione non indicano quale centro segue ogni quartiere. Se abiti nel Municipio III, per esempio a Vigne Nuove, Tufello o Conca d'Oro, prima di andare chiedi conferma alla Regione o al centro più vicino. Meglio prendere appuntamento.</p>
+
+    <h2>Cos'è il patto di servizio personalizzato?</h2>
+    <p><strong>È l'accordo che firmi con il centro per l'impiego: dice cosa devi fare per cercare lavoro e in che tempi.</strong> Chi prende la NASpI deve rispettarlo.</p>
+    <p>Per legge chi chiede la NASpI deve contattare il centro per l'impiego entro <strong>15 giorni dalla domanda</strong>; se non lo fa, viene <strong>convocato</strong>. Con il SIISL i dati che inserisci servono al centro per preparare il patto, che poi completi con un operatore.</p>
+    <p>Oltre agli appuntamenti del patto, il centro può convocarti nei giorni feriali con un preavviso <strong>da 24 a 72 ore</strong>, nei modi concordati nel patto. Controlla spesso email, SMS e telefono.</p>
+
+    <h2>Cosa succede se non mi presento al centro per l'impiego?</h2>
+    <p><strong>Senza un giustificato motivo perdi una parte della NASpI, e alla terza assenza la perdi tutta.</strong> Le sanzioni sono nell'art. 21, comma 7, del D.Lgs. 150/2015:</p>
+    <table tabindex="0">
+        <thead>
+            <tr><th>Cosa succede</th><th>Prima volta</th><th>Seconda volta</th><th>Volta successiva</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Non ti presenti a una convocazione o a un appuntamento</td><td>Un quarto di una mensilità in meno</td><td>Una mensilità in meno</td><td>Perdi NASpI e stato di disoccupazione</td></tr>
+            <tr><td>Non partecipi alle attività di orientamento</td><td>Un quarto di una mensilità in meno</td><td>Una mensilità in meno</td><td>Perdi NASpI e stato di disoccupazione</td></tr>
+            <tr><td>Non partecipi a corsi o altre iniziative di attivazione previste</td><td>Una mensilità in meno</td><td colspan="2">Perdi NASpI e stato di disoccupazione</td></tr>
+            <tr><td>Rifiuti un'offerta di lavoro congrua</td><td colspan="3">Perdi subito NASpI e stato di disoccupazione</td></tr>
+        </tbody>
+    </table>
+    <p>Le sanzioni le decide il <strong>centro per l'impiego</strong>, che le comunica all'INPS; l'INPS poi taglia la NASpI e chiede indietro le somme pagate in più.</p>
+    <p>Se non puoi andare, avvisa prima e conserva le <strong>prove del motivo</strong> (certificati, ricevute). Se l'INPS ti manda un provvedimento che ritieni sbagliato, leggi la guida al <a href="/naspi/ricorso">ricorso NASpI</a>.</p>
+    <p>Per capire quanto vale una mensilità della tua NASpI:</p>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/calcolo-naspi"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo NASpI 2026</span><span class="cta-tool-s">Quanto prendi al mese e per quanti mesi</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+    <h2>La DID scade?</h2>
+    <p><strong>No, la DID non ha una scadenza fissa, ma lo stato di disoccupazione si può sospendere o perdere.</strong></p>
+    <ul>
+        <li><strong>Lavoro dipendente fino a 6 mesi</strong>: lo stato di disoccupazione resta <strong>sospeso</strong> e riprende quando il lavoro finisce.</li>
+        <li><strong>Decadenza per sanzione</strong>: perdi lo stato di disoccupazione e non puoi registrarti di nuovo prima di <strong>2 mesi</strong>.</li>
+    </ul>
+    <p>Se hai perso il lavoro di nuovo e devi chiedere la NASpI, la nuova domanda vale come nuova DID. Se non chiedi la NASpI e non sai se la tua DID è ancora valida, chiedilo al centro per l'impiego.</p>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), anche a distanza:</p>
+    <ul>
+        <li>presentiamo la <strong>domanda NASpI</strong> come patronato, con il tuo mandato: vale già come DID;</li>
+        <li>ti aiutiamo con il <strong>SIISL</strong>, il curriculum e il Patto di attivazione digitale;</li>
+        <li>leggiamo con te convocazioni e lettere del centro per l'impiego o dell'INPS e ti diciamo cosa fare;</li>
+        <li>se arriva una sanzione o un provvedimento sbagliato, valutiamo il ricorso.</li>
+    </ul>
+</NaspiGuideLayout>

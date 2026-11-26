@@ -1,0 +1,185 @@
+---
+/**
+ * Nuovo lavoro durante la NASpI (26/11/2026).
+ * Riscrive la guida /guida/nuovo-lavoro-durante-naspi del portale domandedisoccupazione.it, che conteneva errori:
+ * - eccezione "licenziamento in prova entro 30 giorni" per il tempo indeterminato: non esiste. Le FAQ INPS dicono
+ *   che se il lavoro oltre 6 mesi finisce presto (anche per prova non superata) si fa una nuova domanda, senza ripristino;
+ * - limiti "indipendenti e sommabili": falso. Con più attività conta il reddito complessivo (circ. 94/2015, par. 2.11);
+ * - tirocini con soglia 8.500 euro: falso. Tirocini, stage e borse lavoro sono cumulabili per intero senza
+ *   comunicazione (circ. 174/2017, par. 1);
+ * - ripresa "solo se non sono passati più di 2 mesi": non trovata in nessuna fonte, tolta;
+ * - la "circ. INPS 4/2026 sulle soglie" non è stata trovata: tolta.
+ * Verificato il 26/11/2026 su:
+ * - D.Lgs. 22/2015 art. 9 (lavoro subordinato: decadenza oltre il limite salvo rapporti fino a 6 mesi, sospesi d'ufficio;
+ *   sotto il limite NASpI ridotta se comunichi entro 30 giorni; nuovo datore non collegato al precedente; part-time
+ *   rimasti: comunicazione entro 30 giorni dalla domanda) e art. 10 (autonomo: comunicazione entro un mese, riduzione
+ *   80% del reddito previsto rapportata al periodo, ricalcolo con la dichiarazione dei redditi, autodichiarazione
+ *   entro il 31 marzo per chi è esonerato, contributi IVS riversati senza accrediti).
+ * - Circolare INPS 94/2015 par. 2.10 e 2.11 (sospensione e ripresa d'ufficio, durata di calendario, dimissioni
+ *   anticipate ininfluenti, contributi utili per una nuova NASpI; senza comunicazione: sospensione fino a 6 mesi,
+ *   decadenza oltre; NASpI-Com entro il 31 gennaio di ogni anno successivo, se manca: sospensione; più attività:
+ *   reddito complessivo).
+ * - Circolare INPS 174/2017 (prestazioni occasionali art. 54-bis entro 5.000 euro: cumulo pieno senza comunicazione;
+ *   tirocini e borse lavoro cumulabili; partita IVA aperta ma attività non svolta: verifica della sede).
+ * - Messaggio INPS 1414 del 9/4/2024 (limiti: 8.500 euro dipendente/parasubordinato, 5.500 euro autonomo, dal 2024,
+ *   dopo il D.Lgs. 216/2023). L'art. 13 TUIR vigente (modificato dalla L. 207/2024) mantiene la detrazione di 1.955 euro
+ *   che corrisponde agli 8.500 euro. ATTENZIONE: la scheda INPS NASpI (agg. 2/2/2026) riporta ancora 8.174 euro e le
+ *   FAQ INPS (agg. 31/7/2025) 8.145 e 4.800 euro, cifre degli anni precedenti.
+ * - Scheda INPS NASpI (agg. 2/2/2026) e FAQ INPS NASpI (agg. 31/7/2025): cumulo o sospensione per contratti fino a
+ *   6 mesi, decadenza, NASpI-Com entro un mese, prestazioni occasionali, partita IVA anche con reddito zero.
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+
+const faq = [
+    {
+        q: 'Se trovo lavoro durante la NASpI, cosa devo fare?',
+        a: 'Devi comunicare all\'INPS il reddito annuo che prevedi di guadagnare, con il modello NASpI-Com, entro un mese dall\'inizio del lavoro. Se non lo fai, con un contratto fino a 6 mesi la NASpI viene sospesa; con un contratto più lungo o a tempo indeterminato la perdi.',
+    },
+    {
+        q: 'Quanto posso guadagnare senza perdere la NASpI?',
+        a: 'Fino a 8.500 euro l\'anno con un lavoro dipendente o parasubordinato e fino a 5.500 euro l\'anno con un lavoro autonomo (messaggio INPS 1414/2024). Sotto questi limiti la NASpI resta, ridotta dell\'80% del reddito previsto.',
+    },
+    {
+        q: 'Con un contratto a termine di pochi mesi perdo la NASpI?',
+        a: 'No. Se il contratto dura fino a 6 mesi la NASpI viene sospesa e poi riprende d\'ufficio per i giorni che restavano. Se il reddito annuo resta sotto 8.500 euro, comunicandolo con la NASpI-Com puoi invece continuare a prenderla ridotta.',
+    },
+    {
+        q: 'Se mi assumono a tempo indeterminato e il lavoro finisce subito?',
+        a: 'Con un contratto oltre 6 mesi e un reddito sopra il limite la NASpI decade. Se poi il lavoro finisce presto, per esempio perché non superi la prova, l\'INPS indica di fare una nuova domanda: la vecchia NASpI non si riattiva.',
+    },
+    {
+        q: 'Le prestazioni occasionali vanno comunicate?',
+        a: 'Se sei pagato con Libretto Famiglia o Contratto di prestazione occasionale, fino a 5.000 euro l\'anno la NASpI resta intera e non devi comunicare nulla all\'INPS. Oltre quel limite, o per altri tipi di lavoro, la comunicazione serve.',
+    },
+    {
+        q: 'Se apro la partita IVA durante la NASpI?',
+        a: 'Entro un mese dall\'inizio devi comunicare all\'INPS il reddito annuo previsto, anche se è zero. Sotto i 5.500 euro la NASpI resta ridotta; se non comunichi la perdi.',
+    },
+    {
+        q: 'Un tirocinio fa perdere la NASpI?',
+        a: 'No. Secondo la circolare INPS 174/2017 le indennità di tirocinio, stage e borse lavoro si sommano per intero alla NASpI e non vanno comunicate all\'INPS.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="Lavorare durante la NASpI: limiti di reddito e NASpI-Com"
+    description="Nuovo lavoro durante la NASpI? Comunicalo entro un mese: fino a 8.500 euro da dipendente e 5.500 da autonomo la tieni ridotta. Patronato a Roma."
+    path="/naspi/nuovo-lavoro"
+    h1="Nuovo lavoro durante la NASpI: cosa fare per non perderla"
+    kicker="Da comunicare entro un mese"
+    crumb="Nuovo lavoro durante la NASpI"
+    updated="2026-11-26"
+    published="2026-11-26"
+    image="/og/naspi-nuovo-lavoro.jpg"
+    imageAlt="Nuovo lavoro durante la NASpI: cosa fare per non perderla"
+    related={["checklist-primi-7-giorni-perdita-lavoro-roma", "naspi-2026-patronato-vs-caf-cosa-fa-cosa"]}
+    sources={[
+        { t: "D.Lgs. 4 marzo 2015, n. 22, artt. 9 e 10 (NASpI e nuovo lavoro dipendente o autonomo)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-03-04;22" },
+        { t: "Circolare INPS 12 maggio 2015, n. 94 (par. 2.10 e 2.11: sospensione, riduzione, più attività)", url: "https://servizi2.inps.it/CircolariZIP/Circolare%20numero%2094%20del%2012-05-2015.pdf" },
+        { t: "Circolare INPS 23 novembre 2017, n. 174 (prestazioni occasionali, tirocini, partita IVA)", url: "https://servizi2.inps.it/CircolariZIP/Circolare%20numero%20174%20del%2023-11-2017.pdf" },
+        { t: "Messaggio INPS 9 aprile 2024, n. 1414 (limiti di reddito: 8.500 e 5.500 euro)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2024.04.messaggio-numero-1414-del-09-04-2024_14545.html" },
+        { t: "D.L. 24 aprile 2017, n. 50, art. 54-bis (prestazioni occasionali)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:2017-04-24;50" },
+        { t: 'Scheda INPS "NASpI: indennità mensile di disoccupazione" (ultimo aggiornamento 2 febbraio 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" },
+        { t: "FAQ INPS sulla NASpI (ultimo aggiornamento 31 luglio 2025)", url: "https://www.inps.it/it/it/inps-comunica/dossier/la-naspi/faq---domande-frequenti-sulla-naspi.html" },
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li>Puoi lavorare mentre prendi la NASpI, ma devi <strong>comunicarlo all'INPS entro un mese</strong> con il modello <strong>NASpI-Com</strong>, indicando il reddito annuo previsto.</li>
+            <li>Lavoro dipendente fino a <strong>6 mesi</strong>: la NASpI si <strong>sospende</strong> e poi riprende per i giorni rimasti.</li>
+            <li>Sotto <strong>8.500 euro</strong> l'anno da dipendente o <strong>5.500 euro</strong> da autonomo la NASpI resta, <strong>ridotta dell'80%</strong> del reddito previsto.</li>
+            <li>Contratto oltre 6 mesi o a tempo indeterminato con reddito più alto, oppure lavoro non comunicato: la NASpI <strong>decade</strong>.</li>
+            <li>Prestazioni occasionali con Libretto Famiglia o Contratto di prestazione occasionale fino a <strong>5.000 euro</strong> l'anno: NASpI intera, senza comunicazione.</li>
+        </ul>
+    </blockquote>
+
+    <h2>Posso lavorare mentre prendo la NASpI?</h2>
+    <p>Sì, ma cosa succede alla NASpI dipende da <strong>tre cose</strong>: il tipo di lavoro (dipendente, autonomo, occasionale), la <strong>durata</strong> del contratto e il <strong>reddito annuo</strong> che prevedi di guadagnare. Le regole sono negli articoli 9 e 10 del decreto legislativo 22/2015.</p>
+    <p>In quasi tutti i casi c'è un obbligo da rispettare: <strong>comunicare all'INPS il reddito previsto entro un mese</strong> dall'inizio del lavoro, con il modello NASpI-Com. Se salti questo passaggio, rischi di perdere la NASpI anche quando il lavoro sarebbe compatibile.</p>
+
+    <h2>Quanto posso guadagnare senza perdere la NASpI?</h2>
+    <p>Il reddito massimo compatibile è quello che, in pratica, non paga IRPEF grazie alle detrazioni. L'INPS, con il messaggio 1414 del 9 aprile 2024, ha fissato questi limiti dal 2024:</p>
+    <ul>
+        <li><strong>lavoro dipendente o parasubordinato</strong> (per esempio una collaborazione): <strong>8.500 euro</strong> l'anno;</li>
+        <li><strong>lavoro autonomo</strong> (partita IVA, impresa individuale): <strong>5.500 euro</strong> l'anno;</li>
+        <li><strong>prestazioni occasionali</strong> con Libretto Famiglia o Contratto di prestazione occasionale: <strong>5.000 euro</strong> l'anno, con regole a parte (vedi sotto).</li>
+    </ul>
+    <p>Gli 8.500 euro dipendono dalle detrazioni dell'articolo 13 del Testo unico delle imposte sui redditi (TUIR), alzate dal decreto legislativo 216/2023 e confermate dalla legge di bilancio 2025. Alcune pagine del sito INPS riportano ancora le cifre degli anni precedenti (8.174 o 8.145 euro, 4.800 euro): prima di accettare un lavoro vicino al limite, fai controllare il tuo caso.</p>
+
+    <h2>Contratto a termine fino a 6 mesi: sospensione o cumulo</h2>
+    <p>Con un contratto da dipendente che dura <strong>al massimo 6 mesi</strong> la NASpI non si perde. Ci sono due strade:</p>
+    <ul>
+        <li><strong>Sospensione</strong>: è quello che succede in automatico. L'INPS vede l'assunzione dalle comunicazioni del datore di lavoro e ferma la NASpI per tutta la durata del contratto. Alla fine la NASpI <strong>riprende d'ufficio</strong> per il periodo che restava. Conta la durata scritta sul contratto, non i giorni lavorati: se ti dimetti prima, la NASpI riprende comunque.</li>
+        <li><strong>Cumulo</strong>: se il reddito annuo previsto resta <strong>sotto 8.500 euro</strong> e lo comunichi con la NASpI-Com entro un mese, continui a prendere la NASpI <strong>ridotta</strong> mentre lavori.</li>
+    </ul>
+    <p>Con la sospensione i mesi di NASpI restano da parte per dopo; con il cumulo prendi subito un importo più basso e i mesi di NASpI continuano a scorrere. In entrambi i casi i contributi del nuovo lavoro valgono per una futura NASpI. Come funziona lo stop e quando riparte il pagamento lo spieghiamo nella guida sulla <a href="/naspi/sospensione">sospensione della NASpI</a>.</p>
+    <p>Per il cumulo il nuovo datore di lavoro deve essere <strong>diverso</strong> da quello che ti ha licenziato e non collegato a lui (stessa proprietà o società controllate).</p>
+
+    <h2>Contratto oltre 6 mesi o a tempo indeterminato: quando si decade</h2>
+    <p>Con un contratto da dipendente di <strong>più di 6 mesi</strong> o a <strong>tempo indeterminato</strong> la NASpI <strong>decade</strong> se:</p>
+    <ul>
+        <li>il reddito annuo previsto supera <strong>8.500 euro</strong>, oppure</li>
+        <li>non comunichi il reddito previsto all'INPS <strong>entro un mese</strong> dall'inizio del lavoro.</li>
+    </ul>
+    <p>Se invece il reddito resta sotto il limite (per esempio un part-time con poche ore) e lo comunichi in tempo, tieni la NASpI ridotta anche con un contratto lungo.</p>
+    <p>Se la NASpI è decaduta e il nuovo lavoro finisce presto, per esempio perché <strong>non superi il periodo di prova</strong>, la vecchia NASpI non si riattiva. Secondo le FAQ dell'INPS puoi presentare una <a href="/naspi/domanda">nuova domanda NASpI</a>, se hai i requisiti.</p>
+
+    <h2>Part-time e NASpI</h2>
+    <p>Un nuovo part-time segue le regole viste sopra: conta il reddito annuo previsto, non le ore. Sotto 8.500 euro, con la comunicazione entro un mese, tieni la NASpI ridotta.</p>
+    <p>Se invece avevi <strong>due o più part-time</strong> e ne perdi uno (licenziamento, dimissioni per giusta causa o risoluzione consensuale nella procedura prevista), puoi avere la NASpI anche se continui l'altro lavoro. Il reddito dei part-time rimasti deve restare sotto 8.500 euro e va dichiarato nella domanda o <strong>entro un mese dalla domanda</strong>, anche se è zero.</p>
+
+    <h2>Partita IVA durante la NASpI</h2>
+    <p>Se apri la partita IVA o inizi un'attività autonoma, devi comunicare all'INPS il reddito annuo previsto <strong>entro un mese dall'inizio</strong>, anche se pensi di guadagnare zero. Se non lo fai, la NASpI decade.</p>
+    <ul>
+        <li>Con un reddito previsto <strong>fino a 5.500 euro</strong> l'anno la NASpI resta, ridotta dell'80% di quel reddito.</li>
+        <li>L'INPS ricalcola la riduzione con la <strong>dichiarazione dei redditi</strong>. Se sei esonerato dalla dichiarazione, devi mandare all'INPS un'autodichiarazione <strong>entro il 31 marzo</strong> dell'anno dopo, altrimenti dovrai restituire la NASpI presa dall'inizio dell'attività.</li>
+        <li>I contributi per la pensione versati per l'attività autonoma in questo periodo <strong>non ti vengono accreditati</strong>: per legge vanno alla gestione INPS che paga la NASpI.</li>
+        <li>Aprire la partita IVA da sola non basta a perdere la NASpI: l'INPS controlla se l'attività è svolta davvero. Ma va comunque comunicata.</li>
+    </ul>
+    <p>Se l'attività autonoma è il tuo nuovo lavoro, puoi anche chiedere la NASpI che ti resta come <strong>anticipo</strong>, per avviarla. Fai una stima qui:</p>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/anticipo-naspi"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo dell'anticipo NASpI</span><span class="cta-tool-s">Quanto ricevi se chiedi la NASpI per aprire partita IVA o impresa</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+    <h2>Prestazioni occasionali e tirocini</h2>
+    <p>Le prestazioni occasionali pagate con <strong>Libretto Famiglia</strong> o con il <strong>Contratto di prestazione occasionale</strong> (articolo 54-bis del decreto-legge 50/2017) si sommano per intero alla NASpI fino a <strong>5.000 euro</strong> per anno civile, contando tutti i committenti insieme. Entro questo limite non devi comunicare nulla all'INPS.</p>
+    <p>Attenzione: il limite dei 5.000 euro vale solo per questi due strumenti. Altri lavori "occasionali", per esempio pagati con ricevuta e ritenuta d'acconto, sono lavoro autonomo: segui le regole della partita IVA e comunica il reddito previsto. Nel dubbio, chiedi prima di iniziare.</p>
+    <p>Indennità di <strong>tirocinio</strong>, stage e borse lavoro, secondo la circolare INPS 174/2017, si sommano per intero alla NASpI e non vanno comunicate. Le borse di studio e gli assegni di ricerca invece seguono le regole del lavoro dipendente.</p>
+
+    <h2>Quanto si riduce la NASpI: il conto dell'80%</h2>
+    <p>La NASpI si riduce dell'<strong>80% del reddito previsto</strong>, distribuito sul periodo che va dall'inizio del lavoro alla fine della NASpI, o alla fine dell'anno se arriva prima.</p>
+    <p><strong>Esempio semplice</strong>: prevedi di guadagnare 6.000 euro in un anno intero di NASpI. L'80% è 4.800 euro, cioè circa <strong>400 euro in meno al mese</strong>. L'INPS fa il conto esatto sui giorni e poi lo corregge con il reddito vero. Se il reddito cambia durante l'anno, manda una nuova NASpI-Com.</p>
+
+    <h2>Se hai più lavori insieme</h2>
+    <p>I limiti <strong>non si sommano</strong>. Se fai insieme, per esempio, un part-time e un'attività con partita IVA, l'INPS guarda il <strong>reddito complessivo previsto</strong> e riduce la NASpI dell'80% del totale. Se il totale supera il limite consentito, la NASpI decade (circolare INPS 94/2015). Ogni attività va comunicata.</p>
+
+    <h2>Come si compila la NASpI-Com</h2>
+    <p>La NASpI-Com si invia online dal sito INPS, servizio "NASpI-Com: invio comunicazione", con SPID, CIE o CNS, oppure tramite un patronato: a Roma, per esempio, la inviamo noi a Vigne Nuove.</p>
+    <ol>
+        <li>controlla i dati anagrafici e l'indirizzo;</li>
+        <li>scegli il tipo di comunicazione (nuovo lavoro, attività autonoma, variazione);</li>
+        <li>inserisci tipo di contratto, data di inizio e, se c'è, data di fine;</li>
+        <li>indica il <strong>reddito annuo previsto</strong>, anche se è zero;</li>
+        <li>allega i documenti se servono, invia e salva la ricevuta con il protocollo.</li>
+    </ol>
+    <p>Con la NASpI-Com si comunicano anche il cambio di <strong>IBAN</strong> e di residenza. Se lavori a cavallo di due anni, il reddito previsto va comunicato di nuovo <strong>entro il 31 gennaio</strong> di ogni anno: se manca, la NASpI viene sospesa finché non lo invii.</p>
+
+    <h2>Errori da evitare</h2>
+    <ul>
+        <li><strong>Iniziare a lavorare senza comunicarlo</strong>: oltre i 6 mesi, o con un'attività autonoma, si perde la NASpI.</li>
+        <li><strong>Pensare che i limiti si sommino</strong>: conta il reddito totale.</li>
+        <li><strong>Confondere la ritenuta d'acconto con il Libretto Famiglia</strong>: solo il secondo ha i 5.000 euro senza comunicazione.</li>
+        <li><strong>Dimenticare il 31 gennaio</strong> se la NASpI continua nell'anno nuovo.</li>
+    </ul>
+    <p>Se l'INPS ti ha già tolto la NASpI o chiede indietro dei soldi, hai 90 giorni per il <a href="/naspi/ricorso">ricorso contro la decisione INPS</a>.</p>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), anche a distanza:</p>
+    <ul>
+        <li>prima che tu firmi il contratto, ti diciamo cosa succede alla tua NASpI: sospensione, riduzione o decadenza;</li>
+        <li>calcoliamo il reddito previsto e quanto ti resta di NASpI ogni mese;</li>
+        <li>inviamo per te la NASpI-Com nei tempi giusti, compresa quella del 31 gennaio;</li>
+        <li>se apri la partita IVA, valutiamo con te se conviene tenere la NASpI ridotta o chiedere l'anticipo.</li>
+    </ul>
+</NaspiGuideLayout>
