@@ -1,8 +1,9 @@
 ---
 /**
  * Pagina fissa "Pagamenti INPS": l'URL resta /pagamenti-inps, cambia solo il mese.
- * AGGIORNAMENTO MENSILE: modificare le costanti qui sotto (AGGIORNATO, SEO_TITLE, SEO_DESC, ROWS, NOV_ROWS, NEXT_ROWS, FAQS)
- * e il file ~/data/pagamenti.ts (mese e date del banner in home e negli articoli).
+ * AGGIORNAMENTO MENSILE: modificare le costanti qui sotto (AGGIORNATO, SEO_TITLE, SEO_DESC, le righe dei mesi, MESI, MESE_PRINCIPALE, FAQS)
+ * e il file ~/data/pagamenti.ts (mese principale e date del banner "Prossimi pagamenti" in home e negli articoli).
+ * MESI = i mesi che si sfogliano con le frecce (di solito mese scorso, mese in corso, mese prossimo): la pagina apre da sola il mese di oggi.
  * Regola: solo date confermate da INPS/MEF (notizia, messaggio o circolare citati). Se non c'è la fonte, non si pubblica.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
@@ -50,8 +51,11 @@ const ROWS: Row[] = [
 ];
 
 const NOV_ROWS: Row[] = [
+  { date: "Lunedì 2 novembre", what: "Pensioni INPS: pagamento di novembre", who: "Tutti i pensionati INPS", note: "Il 1° novembre era domenica: l'INPS ha pagato il primo giorno bancabile.", src: [SRC.pensNov, SRC.pensCs] },
+  { date: "Venerdì 13 novembre", what: "Assegno di Inclusione (ADI): primi pagamenti ed eventuali arretrati", who: "Chi ha appena avuto l'ADI accolto", src: [SRC.adiMsg, SRC.adiNews] },
+  { date: "Giovedì 19 e venerdì 20 novembre", what: "Assegno Unico: rata ordinaria di novembre", who: "Famiglie che già ricevono l'Assegno Unico e non hanno avuto variazioni", src: [SRC.auuMsg, SRC.auuNews] },
   { date: "Venerdì 27 novembre", what: "ADI: ricariche mensili sulla carta di inclusione", who: "Chi già riceve l'ADI e ha ancora i requisiti", src: [SRC.adiMsg] },
-  { date: "Ultima settimana di novembre", what: "Assegno Unico: prima rata per le domande presentate a ottobre", who: "Chi ha fatto domanda a ottobre 2026", src: [SRC.auuMsg] },
+  { date: "Ultima settimana di novembre", what: "Assegno Unico: prima rata per le domande presentate a ottobre", who: "Chi ha fatto domanda a ottobre 2026", note: "Regola INPS: la prima rata arriva di norma nell'ultima settimana del mese dopo la domanda. Non è indicato un giorno preciso.", src: [SRC.auuMsg] },
 ];
 
 const NEXT_ROWS = [
@@ -60,6 +64,16 @@ const NEXT_ROWS = [
   "Assegno Unico e ADI: i calendari ufficiali arrivano fino a dicembre 2026. Al 24 novembre l'INPS non ha ancora pubblicato quelli del 2027: non scriviamo date che non esistono.",
   "ISEE: quello del 2026 scade il 31 dicembre. Per l'Assegno di Inclusione serve un ISEE valido; per l'Assegno Unico, senza ISEE aggiornato l'importo scende al minimo. Se vuoi arrivare pronto, prenota ora.",
 ];
+
+/** Mesi che si possono sfogliare nella pagina (frecce avanti e indietro). Si apre da solo il mese di oggi. */
+const MESI = [
+  { key: "2026-11", label: "novembre 2026", rows: NOV_ROWS, notes: [] as string[] },
+  { key: "2026-12", label: "dicembre 2026", rows: ROWS, notes: [] as string[] },
+  { key: "2027-01", label: "gennaio 2027", rows: [] as Row[], notes: NEXT_ROWS },
+];
+const MESE_PRINCIPALE = "2026-12";
+
+
 
 const FAQS = [
   { q: "Quando arriva la pensione di dicembre 2026?", a: "L'INPS paga le pensioni il primo giorno bancabile del mese, con l'eccezione di gennaio. A dicembre 2026 è martedì 1° dicembre. Se riscuoti allo sportello, controlla l'orario dell'ufficio postale." },
@@ -88,13 +102,25 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
     .pg-src{margin:8px 0 0;font-size:13px;line-height:1.5;color:#5B5B72}
     .pg-src a{color:#4B2FE0}
     @media (max-width:640px){.pg-row{grid-template-columns:1fr}}
+    .pg-mese{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+    .pg-mese-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;line-height:1.2;color:#14142B;margin:12px 0 0}
+    .pg-nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0 8px}
+    .pg-nav[hidden]{display:none}
+    .pg-tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .pg-tab{min-height:44px;padding:10px 18px;border-radius:999px;border:2px solid #14142B;background:#fff;color:#14142B;font-weight:800;font-size:16px;cursor:pointer}
+    .pg-tab[aria-pressed="true"]{background:#14142B;color:#fff}
+    .pg-arrow{width:44px;height:44px;border-radius:999px;border:2px solid #14142B;background:#D4FF4F;color:#14142B;font-weight:800;font-size:20px;cursor:pointer}
+    .pg-arrow:disabled{background:#EDEDF3;color:#5B5B72;border-color:#9A9AB0;cursor:default}
+    .pg-tab:focus-visible,.pg-arrow:focus-visible{outline:3px solid #5B3DF5;outline-offset:2px}
+    .pg-cur{display:none;flex:1;text-align:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;color:#14142B}
+    @media (max-width:640px){.pg-nav{flex-wrap:nowrap}.pg-tabs{display:none}.pg-cur{display:block}}
   </style>
   <div class="lp"><div class="c36">
     <section class="c28">
       <div class="c61">
         <Breadcrumb items={[{ name: "Pagamenti INPS", href: "/pagamenti-inps" }]} />
         <span class="c26">Calendario INPS · aggiornato ogni mese</span>
-        <h1 class="c34">Pagamenti INPS di {MESE}: <span class="c57">tutte le date</span></h1>
+        <h1 class="c34">Pagamenti INPS di {MESE}: <span class="c57">tutte le date, mese per mese</span></h1>
         <p class="c63">Pensioni, Assegno Unico, Assegno di Inclusione, bonus mamme. Per ogni pagamento trovi la data, chi riguarda e il documento INPS da cui arriva. Aggiornato il {AGGIORNATO}.</p>
         <div class="c60">
           <a href="/prenota" class="c18">Prenota un appuntamento</a>
@@ -104,23 +130,43 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
     </section>
 
     <section class="c46" id="date">
-      <h2 class="c1" style="font-size:40px">Le date di {MESE}</h2>
-      <p class="c4">Sono solo date confermate dall'INPS. Quando l'INPS non indica il giorno, lo scriviamo.</p>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        {ROWS.map((r) => (
-          <div class="pg-row">
-            <div class="pg-date">{r.date}</div>
-            <div>
-              <p class="pg-what">{r.what}</p>
-              <p class="pg-who"><b>Chi riguarda:</b> {r.who}</p>
-              {r.note && <p class="pg-note">{r.note}</p>}
-              <p class="pg-src"><b>Fonte:</b> {r.src.map((s, i) => <>{i > 0 && " · "}<a href={s.href} target="_blank" rel="noopener">{s.label}</a></>)}</p>
-              {r.cta && <a href={r.cta.href} style="display:inline-flex;margin-top:10px;padding:10px 18px;border-radius:999px;background:#5B3DF5;color:#fff;font-weight:800;text-decoration:none">{r.cta.label} →</a>}
-            </div>
-          </div>
-        ))}
+      <h2 class="c1" style="font-size:40px">Le date mese per mese</h2>
+      <p class="c4">Sono solo date confermate dall'INPS. Quando l'INPS non indica il giorno, lo scriviamo. Usa le frecce per vedere il mese prima e il mese dopo.</p>
+      <div class="pg-nav" id="pg-nav" hidden>
+        <button type="button" class="pg-arrow" id="pg-prev" aria-label="Mese precedente">←</button>
+        <div class="pg-tabs" role="group" aria-label="Scegli il mese">
+          {MESI.map((m) => <button type="button" class="pg-tab" data-mese={m.key} aria-pressed="false">{m.label}</button>)}
+        </div>
+        <span class="pg-cur" id="pg-cur" aria-live="polite"></span>
+        <button type="button" class="pg-arrow" id="pg-next" aria-label="Mese successivo">→</button>
       </div>
-      <p class="c4">Più dettagli: <a href="/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo" style="font-weight:700">come leggere il cedolino della pensione</a> · <a href="/pensioni" style="font-weight:700">pensioni</a> · <a href="/assegno-unico" style="font-weight:700">Assegno Unico</a> · <a href="/adi-sfl" style="font-weight:700">ADI e SFL</a> · <a href="/naspi" style="font-weight:700">NASpI</a></p>
+      {MESI.map((m) => (
+        <div class="pg-mese" id={`mese-${m.key}`} data-mese={m.key} data-principale={m.key === MESE_PRINCIPALE ? "1" : undefined}>
+          <h3 class="pg-mese-t">Pagamenti INPS di {m.label}</h3>
+          {m.rows.length > 0 && (
+            <div style="display:flex;flex-direction:column;gap:14px">
+              {m.rows.map((r) => (
+                <div class="pg-row">
+                  <div class="pg-date">{r.date}</div>
+                  <div>
+                    <p class="pg-what">{r.what}</p>
+                    <p class="pg-who"><b>Chi riguarda:</b> {r.who}</p>
+                    {r.note && <p class="pg-note">{r.note}</p>}
+                    <p class="pg-src"><b>Fonte:</b> {r.src.map((s, i) => <>{i > 0 && " · "}<a href={s.href} target="_blank" rel="noopener">{s.label}</a></>)}</p>
+                    {r.cta && <a href={r.cta.href} style="display:inline-flex;margin-top:10px;padding:10px 18px;border-radius:999px;background:#5B3DF5;color:#fff;font-weight:800;text-decoration:none">{r.cta.label} →</a>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {m.notes.length > 0 && (
+            <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
+              {m.notes.map((t) => <li>{t}</li>)}
+            </ul>
+          )}
+        </div>
+      ))}
+      <p class="c4">Più dettagli: <a href="/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo" style="font-weight:700">come leggere il cedolino della pensione</a> · <a href="/pensioni" style="font-weight:700">pensioni</a> · <a href="/assegno-unico" style="font-weight:700">Assegno Unico</a> · <a href="/adi-sfl" style="font-weight:700">ADI e SFL</a> · <a href="/naspi" style="font-weight:700">NASpI</a> · <a href="/isee" style="font-weight:700">ISEE gratuito in ufficio</a></p>
     </section>
 
     <section class="c46" style="padding-top:0">
@@ -128,23 +174,6 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
         <h2 class="c55">NASpI: come si sa la data</h2>
         <p class="c4">Non abbiamo trovato un calendario INPS uguale per tutti. La data dipende dalla tua domanda. La vedi nel <a href={SRC.fascicolo.href} target="_blank" rel="noopener" style="font-weight:700">Fascicolo previdenziale</a> o nel servizio <a href={SRC.stato.href} target="_blank" rel="noopener" style="font-weight:700">Stato di un pagamento</a>. Se hai fatto la domanda con noi, scrivici su WhatsApp e controlliamo. Se devi ancora farla: <a href="/naspi" style="font-weight:700">domanda NASpI</a>.</p>
       </div>
-    </section>
-
-    <section class="c46" style="padding-top:0" id="novembre">
-      <h2 class="c55">Novembre 2026: le date ancora utili</h2>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        {NOV_ROWS.map((r) => (
-          <div class="pg-row">
-            <div class="pg-date">{r.date}</div>
-            <div>
-              <p class="pg-what">{r.what}</p>
-              <p class="pg-who"><b>Chi riguarda:</b> {r.who}</p>
-              <p class="pg-src"><b>Fonte:</b> {r.src.map((s, i) => <>{i > 0 && " · "}<a href={s.href} target="_blank" rel="noopener">{s.label}</a></>)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p class="c4">Le pensioni di novembre sono già state pagate (valuta lunedì 2 novembre). Il primo pagamento ADI di novembre era venerdì 13 novembre. La rata ordinaria dell'Assegno Unico di novembre è stata pagata il 19 e 20 novembre.</p>
     </section>
 
     <section class="c32" style="padding-top:8px">
@@ -171,14 +200,6 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
       </div>
     </section>
 
-    <section class="c46" style="padding-top:0" id="prossimo-mese">
-      <h2 class="c55">Il mese prossimo: gennaio 2027</h2>
-      <ul class="c4" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
-        {NEXT_ROWS.map((t) => <li>{t}</li>)}
-      </ul>
-      <p class="c4">Vuoi prepararti al rinnovo? <a href="/isee" style="font-weight:700">ISEE gratuito in ufficio</a>.</p>
-    </section>
-
     <section class="c46" style="padding-top:0" id="faq">
       <h2 class="c1" style="font-size:36px">Domande frequenti</h2>
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -200,4 +221,32 @@ const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPa
       <p class="c4">Hai un dubbio sul tuo caso? <a href={BOOKING.arcanisGroup} style="font-weight:700">Prenota un appuntamento</a> o <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" style="font-weight:700">scrivici su WhatsApp</a>. Centro Pratiche Flaiano, CAF UNSIC e Patronato ENASC, Via Filoteo Alberini 25 int. 10, Roma Vigne Nuove.</p>
     </section>
   </div></div>
+  <script is:inline>
+    (function () {
+      var nav = document.getElementById("pg-nav");
+      var panels = Array.prototype.slice.call(document.querySelectorAll(".pg-mese"));
+      if (!nav || !panels.length) return;
+      var keys = panels.map(function (p) { return p.getAttribute("data-mese"); });
+      var tabs = Array.prototype.slice.call(nav.querySelectorAll(".pg-tab"));
+      var prev = document.getElementById("pg-prev"), next = document.getElementById("pg-next");
+      var d = new Date();
+      var oggi = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+      var h = (location.hash || "").replace("#mese-", "");
+      var start = keys.indexOf(h) >= 0 ? h : keys.indexOf(oggi) >= 0 ? oggi : (oggi < keys[0] ? keys[0] : keys[keys.length - 1]);
+      var i = keys.indexOf(start);
+      function show(n, focus) {
+        i = Math.max(0, Math.min(keys.length - 1, n));
+        panels.forEach(function (p, k) { p.hidden = k !== i; });
+        tabs.forEach(function (t, k) { t.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+        prev.disabled = i === 0; next.disabled = i === keys.length - 1;
+        var cur = document.getElementById("pg-cur"); if (cur) cur.textContent = tabs[i] ? tabs[i].textContent : "";
+        if (focus) history.replaceState(null, "", "#mese-" + keys[i]);
+      }
+      tabs.forEach(function (t, k) { t.addEventListener("click", function () { show(k, true); }); });
+      prev.addEventListener("click", function () { show(i - 1, true); });
+      next.addEventListener("click", function () { show(i + 1, true); });
+      nav.hidden = false;
+      show(i, false);
+    })();
+  </script>
 </BaseLayout>
