@@ -12,6 +12,8 @@ import RelatedArticles from "~/components/blog/RelatedArticles.astro";
 import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
 import AvvisamiWhatsApp from "~/components/blog/AvvisamiWhatsApp.astro";
 import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
+import BannerPagamenti from "~/components/ui/BannerPagamenti.astro";
+import { PAG_CATEGORIE } from "~/data/pagamenti";
 import ShareBar from "~/components/ui/ShareBar.astro";
 import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
@@ -133,6 +135,10 @@ const sourcesCount = article.data.sources?.length ?? 0;
         <b>Attenzione: la scadenza di questo articolo è passata</b> ({formatDateIt(article.data.deadline)}).
         Le regole possono essere cambiate: per la tua situazione di oggi <a href="/prenota" style="font-weight:800">chiedi a noi</a>.
       </div>
+    )}
+
+    {PAG_CATEGORIE.includes(article.data.category) && (
+      <div class="mt-8"><BannerPagamenti variant="compatto" /></div>
     )}
 
     <div class="prose-article mt-10">
