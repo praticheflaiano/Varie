@@ -124,6 +124,7 @@ Prima di eseguire questi task, leggere la procedura corrispondente:
 | Modificare design system del sito | `vault/procedure/03-redesign-frontend.md` |
 | Mantenere il vault stesso | `vault/procedure/05-knowledge-base-vault.md` |
 | Ottimizzare con i dati di Search Console (domande reali) | `vault/procedure/08-ottimizzazione-search-console.md` + `docs/regole-contenuto.md` 4-ter |
+| Radar novità: bonus che tornano ogni anno, misure non ancora coperte, fonti in più | `docs/radar-bonus-ricorrenti.md` |
 
 ## Stato infrastruttura (2026-04-28)
 
