@@ -1,10 +1,12 @@
 ---
 /**
- * Anticipo NASpI (pagina arrivata dal portale domandedisoccupazione.it il 25/11/2026).
- * Regole verificate il 24/11/2026 su: scheda INPS "NASpI anticipata" (agg. 12/6/2026), messaggio INPS n. 1215 del 7/4/2026,
- * art. 8 del d.lgs. 22/2015 come modificato dall'art. 1, c. 176, legge 199/2025. Testo e calcolo in src/naspi/AnticipoNaspi.tsx.
+ * Anticipo NASpI (pagina arrivata dal portale domandedisoccupazione.it il 25/11/2026; dal 26/11/2026 impaginata come gli
+ * articoli con ToolGuideLayout, calcolo ricontrollato).
+ * Regole verificate il 24-26/11/2026 su: scheda INPS "NASpI anticipata" (agg. 12/6/2026), messaggio INPS n. 1215 del 7/4/2026,
+ * art. 8 del d.lgs. 22/2015 come modificato dall'art. 1, c. 176, legge 199/2025, messaggio INPS n. 3649 del 10/11/2026
+ * (tassazione separata). Calcolo in src/naspi/calculations.ts (calculateAnticipo), strumento in src/naspi/AnticipoNaspi.tsx.
  */
-import BaseLayout from "~/layouts/BaseLayout.astro";
+import ToolGuideLayout from "~/layouts/ToolGuideLayout.astro";
 import PortaleNaspi from "~/components/blog/PortaleNaspi.astro";
 import AnticipoNaspi from "~/naspi/AnticipoNaspi";
 
@@ -13,18 +15,90 @@ const faq = [
   { q: "Entro quando si presenta la domanda di anticipo NASpI?", a: "Entro 30 giorni dall'inizio dell'attività autonoma o dell'impresa individuale, o dalla sottoscrizione della quota di cooperativa. Se l'attività era iniziata prima della fine del lavoro dipendente, entro 30 giorni dalla domanda NASpI." },
   { q: "Chi può chiedere l'anticipo NASpI?", a: "Chi ha diritto alla NASpI e vuole avviare un lavoro autonomo, un'impresa individuale, sottoscrivere una quota di una cooperativa in cui lavora come socio, oppure portare a tempo pieno un'attività autonoma iniziata prima della fine del lavoro dipendente." },
   { q: "Cosa succede se trovo lavoro come dipendente dopo l'anticipo?", a: "Se il lavoro dipendente inizia prima della fine del periodo teorico della NASpI, il 30% non viene pagato e va restituito anche il 70% già ricevuto, salvo il lavoro con la cooperativa di cui si è soci." },
+  { q: "L'anticipo NASpI è tassato?", a: "Sì: ha la tassazione separata (messaggio INPS 3649/2026). Non è tassato solo se tutta la somma va nel capitale della cooperativa in cui lavori come socio." },
 ];
-const faqLd = JSON.stringify({ "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) });
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo anticipo NASpI 2026", url: "https://praticheflaiano.it/anticipo-naspi", applicationCategory: "FinanceApplication", operatingSystem: "Web", inLanguage: "it-IT", offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" } });
 ---
 
-<BaseLayout title="Anticipo NASpI 2026: due rate 70% e 30%, calcolo" ogImage="/og/anticipo-naspi.jpg" description="Anticipo NASpI dal 2026: 70% subito e 30% dopo, domanda entro 30 giorni dall'avvio dell'attività. Calcolo delle due rate. Patronato a Roma.">
-  <script slot="head" type="application/ld+json" set:html={faqLd} />
-  <div class="nz"><AnticipoNaspi client:load /></div>
-  <section style="max-width:860px;margin:0 auto;padding:8px 16px 0;display:flex;flex-direction:column;gap:14px">
-    <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 25 novembre 2026.</b> Regole controllate sulla scheda INPS "NASpI anticipata" e sul messaggio INPS n. 1215 del 7 aprile 2026 (le fonti con i link sono qui sopra).</p>
-    <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(26px,5vw,36px);line-height:1.08;color:#14142B">Vuoi aprire la partita IVA con l'anticipo?</h2>
-    <p style="margin:0;font-size:17px;line-height:1.6;color:#34344A">Al Centro Pratiche Flaiano, patronato ENASC a <b>Roma Vigne Nuove</b> (Municipio III), controlliamo con te date e requisiti e presentiamo la domanda di anticipo entro i 30 giorni, anche a distanza da tutta Italia.</p>
-    <a href="/prenota" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Prenota: la domanda la facciamo noi</span><span class="cta-tool-s">A Roma Vigne Nuove o in videochiamata da tutta Italia</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </section>
-  <div style="max-width:1120px;margin:0 auto;padding:0 16px 48px"><PortaleNaspi current="/anticipo-naspi" /></div>
-</BaseLayout>
+<ToolGuideLayout
+  title="Anticipo NASpI 2026: due rate 70% e 30%, calcolo"
+  description="Anticipo NASpI dal 2026: 70% subito e 30% dopo, domanda entro 30 giorni dall'avvio dell'attività. Calcolo delle due rate. Patronato a Roma."
+  path="/anticipo-naspi"
+  h1="Anticipo NASpI 2026: come funziona e quanto ricevi"
+  kicker="Calcolatore gratuito · disoccupazione"
+  crumbs={[{ name: "NASpI", href: "/naspi" }, { name: "Anticipo NASpI", href: "/anticipo-naspi" }]}
+  category="naspi-disoccupazione"
+  prenota={{ t: "Prenota: la domanda di anticipo la facciamo noi", s: "Patronato ENASC a Roma Vigne Nuove o in videochiamata da tutta Italia" }}
+  updated="2026-11-26"
+  published="2026-11-25"
+  image="/og/anticipo-naspi.jpg"
+  imageAlt="Anticipo NASpI 2026: le due rate del 70% e del 30%"
+  related={["checklist-primi-7-giorni-perdita-lavoro-roma", "naspi-2026-patronato-vs-caf-cosa-fa-cosa", "somma-non-imponibile-naspi-cassa-integrazione-2026"]}
+  sources={[
+    "Decreto legislativo 4 marzo 2015, n. 22, articolo 8, come modificato dalla legge 30 dicembre 2025, n. 199, articolo 1, comma 176",
+    "INPS, messaggio n. 1215 del 7 aprile 2026 (due rate dal 1° gennaio 2026)",
+    "INPS, messaggio n. 3649 del 10 novembre 2026 (tassazione separata dell'anticipo)",
+    { t: "INPS, scheda \"NASpI anticipata\" (aggiornata al 12 giugno 2026)", url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.naspi-anticipata-indennit-di-disoccupazione-erogata-in-50589.naspi-anticipata-indennit-di-disoccupazione-erogata-in-unica-soluzione-lavoratori-licenziati-dal-1-maggio-2015-.html" },
+  ]}
+  faq={faq}
+>
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+
+  <blockquote slot="intro">
+    <p><strong>In breve</strong></p>
+    <ul>
+      <li><strong>Prima rata: 70%</strong> della NASpI che ti resta, quando l'INPS accoglie la domanda.</li>
+      <li><strong>Seconda rata: 30%</strong>, alla fine del periodo in cui avresti preso la NASpI, e comunque <strong>non oltre 6 mesi</strong> dalla domanda.</li>
+      <li><strong>Domanda entro 30 giorni</strong> dall'inizio dell'attività.</li>
+      <li>Se nel frattempo <strong>trovi lavoro come dipendente</strong>, il 30% non arriva e devi restituire anche il 70%.</li>
+      <li>Vale per le domande presentate <strong>dal 1° gennaio 2026</strong>. Prima l'anticipo era pagato tutto insieme.</li>
+    </ul>
+  </blockquote>
+
+  <div slot="tool" class="nz"><AnticipoNaspi client:load /></div>
+
+  <p><strong>Ultimo aggiornamento: 26 novembre 2026.</strong></p>
+
+  <h2>Chi può chiedere l'anticipo NASpI?</h2>
+  <p>Chi ha diritto alla NASpI e vuole:</p>
+  <ul>
+    <li><strong>lavoro autonomo</strong>: aprire una partita IVA come professionista o lavoratore autonomo;</li>
+    <li><strong>impresa individuale</strong>: avviare una ditta individuale (commercio, artigianato, servizi);</li>
+    <li><strong>cooperativa</strong>: sottoscrivere una quota di una cooperativa in cui lavori come socio;</li>
+    <li><strong>attività già avviata</strong>: portare a tempo pieno un'attività autonoma iniziata prima della fine del lavoro dipendente.</li>
+  </ul>
+  <p>Vuoi entrare in una società diversa da una cooperativa? Il caso va valutato: scrivici prima di aprire.</p>
+
+  <h2>Entro quando fare la domanda?</h2>
+  <p>Entro <strong>30 giorni</strong> dall'inizio dell'attività autonoma o dell'impresa, oppure dalla sottoscrizione della quota della cooperativa. Se l'attività era già iniziata <strong>prima della fine del lavoro dipendente</strong>, entro 30 giorni dalla domanda NASpI. Prima serve la NASpI: l'anticipo si chiede solo se hai diritto all'indennità.</p>
+
+  <h2>Quanto ricevi e quando?</h2>
+  <p>L'INPS ti paga la NASpI <strong>che non hai ancora preso</strong>, calcolata come se continuassi a riceverla ogni mese, compresa la riduzione del 3% al mese che scatta dal 6° mese (dall'8° se alla domanda NASpI avevi almeno 55 anni).</p>
+  <ul>
+    <li><strong>70% subito</strong>, quando la domanda viene accolta.</li>
+    <li><strong>30% dopo</strong>: alla fine del periodo teorico della NASpI, al massimo 6 mesi dopo la domanda.</li>
+    <li><strong>Niente assegno al nucleo familiare</strong> e <strong>niente contributi figurativi</strong> per la pensione sul periodo anticipato.</li>
+    <li><strong>Si pagano le tasse</strong>, con la tassazione separata. Se la somma va tutta nella quota di una cooperativa in cui lavori, invece, non è tassata.</li>
+  </ul>
+
+  <h2>Quando il 30% non arriva o devi restituire?</h2>
+  <ul>
+    <li><strong>Trovi lavoro come dipendente</strong> prima della fine del periodo teorico della NASpI (o dei 6 mesi): non ricevi il 30% e devi <strong>restituire anche il 70%</strong>. Non vale se il lavoro è con la cooperativa di cui sei socio.</li>
+    <li><strong>Vai in pensione</strong> (pensione diretta) dopo aver preso il 70%: il 30% non ti viene pagato.</li>
+    <li><strong>Hai l'assegno ordinario di invalidità</strong>: devi scegliere. Se tieni l'assegno, perdi il 30%. Se scegli l'anticipo, l'assegno resta sospeso per il periodo teorico della NASpI e poi può ripartire.</li>
+  </ul>
+
+  <h2>Cosa serve per la domanda?</h2>
+  <ul>
+    <li>Documenti che provano l'avvio dell'attività, per esempio l'apertura della partita IVA o l'iscrizione alla Camera di commercio.</li>
+    <li>Estremi di autorizzazioni o iscrizione all'albo, se l'attività li richiede.</li>
+    <li>Per la cooperativa: iscrizione al Registro delle imprese e all'Albo delle cooperative e data di sottoscrizione della quota. Per non pagare le tasse servono anche l'estratto dell'elenco soci con la dichiarazione del presidente e la tua dichiarazione che verserai tutta la somma nel capitale.</li>
+  </ul>
+  <p>La domanda si presenta online sul sito INPS, al Contact center (803 164 da fisso, 06 164 164 da cellulare) oppure tramite un patronato. Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong>, controlliamo con te date e requisiti e presentiamo la domanda entro i 30 giorni, anche a distanza.</p>
+
+  <h2>Non hai ancora la NASpI?</h2>
+  <p>Prima calcola quanto ti spetta e per quanto tempo.</p>
+  <p class="cta-tool-wrap"><a href="/calcolo-naspi" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo NASpI 2026</span><span class="cta-tool-s">Importo, durata e pagamenti mese per mese</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+  <div slot="after"><PortaleNaspi current="/anticipo-naspi" /></div>
+</ToolGuideLayout>

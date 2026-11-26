@@ -1,55 +1,45 @@
 import React, { useState, useRef, useId } from 'react';
-import { Calculator, FileText, Upload, CheckCircle, Info, ArrowRight, HelpCircle, AlertTriangle, TrendingDown, Calendar, Briefcase } from 'lucide-react';
+import { Calculator, FileText, Upload, ArrowRight, AlertTriangle, TrendingDown, Calendar, Info } from 'lucide-react';
 import { analyzeContributionDocument } from './geminiService';
-import { calculateNaspiEligibility, calculateNaspiFromDecree } from './calculations';
+import { calculateNaspiEligibility, calculateNaspiFromDecree, parseItNumber } from './calculations';
 import { TerminationReason, VoluntaryException } from './types';
 import type { NaspiResult, UserInputData, CalculatorMode } from './types';
 import LegalDisclaimer from './LegalDisclaimer';
 import ConversionCTA from './ConversionCTA';
 
-const InfoCard = ({ title, desc }: { title: string, desc: string }) => (
-    <div className="bg-blue-50 border border-blue-100 p-4 rounded-xl mb-4 text-sm">
-        <h4 className="font-bold text-blue-900 flex items-center gap-2 mb-1"><Info className="w-4 h-4" /> {title}</h4>
-        <p className="text-blue-800 opacity-90">{desc}</p>
-    </div>
-);
+/**
+ * Calcolatore NASpI (grafica rifatta il 26/11/2026 per la pagina impaginata come gli articoli: ToolGuideLayout).
+ * Logica e fonti in calculations.ts. Il testo che spiega le regole sta nella pagina /calcolo-naspi, non qui.
+ */
 
-const StepIndicator = ({ step, current }: { step: number, current: number }) => {
-    const isCompleted = current > step;
-    const isActive = current === step;
-    return (
-        <div className={`flex items-center gap-2 ${isActive ? 'text-blue-600 font-bold' : isCompleted ? 'text-green-600' : 'text-slate-300'}`}>
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${isActive ? 'border-blue-600 bg-blue-50' : isCompleted ? 'border-green-600 bg-green-50' : 'border-slate-300'}`}>
-                {isCompleted ? <CheckCircle className="w-5 h-5" /> : step + 1}
-            </div>
-            <div className="hidden md:block text-sm text-slate-600">Fase {step + 1}</div>
-        </div>
-    );
-};
-
+const PASSI = ['Scegli', 'Documento', 'Dati', 'Risultato'];
 const MAX_FILE_BYTES = 3 * 1024 * 1024;
+// separatore delle migliaia sempre presente (toLocaleString in italiano non lo mette sotto 10.000)
+const eur = (n: number) => { const [i, d] = (Math.round(n * 100) / 100).toFixed(2).split('.'); return i.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + d; };
+const dal = (d: string) => (/^(8|11)\b/.test(d) ? "dall'" : 'dal ') + d;
+const oggi = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+
+const campo = "w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-900 focus:border-blue-600 outline-none";
+const etichetta = "block text-sm font-bold text-slate-900 mb-1";
+const aiuto = "text-xs text-slate-600 mt-1";
 
 const NaspiCalculator: React.FC = () => {
     const [mode, setMode] = useState<CalculatorMode | null>(null);
     const [step, setStep] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(false);
-    const [inputData, setInputData] = useState<UserInputData>({ age: 30, weeksWorkedLast4Years: 0, totalGrossWagesLast4Years: 0, terminationReason: TerminationReason.INVOLUNTARY, voluntaryException: VoluntaryException.NONE, hasWorked30DaysLastYear: true, terminationDate: new Date().toISOString().split('T')[0], approvedStartDate: '', approvedDaysDuration: 0, approvedMonthlyAmount: 0 });
+    const [inputData, setInputData] = useState<UserInputData>({ age: 30, weeksWorkedLast4Years: 0, totalGrossWagesLast4Years: 0, terminationReason: TerminationReason.INVOLUNTARY, voluntaryException: VoluntaryException.NONE, hasWorked30DaysLastYear: true, terminationDate: oggi(), approvedStartDate: '', approvedDaysDuration: 0, approvedMonthlyAmount: 0 });
+    const [wagesRaw, setWagesRaw] = useState<string>('');
+    const [monthlyRaw, setMonthlyRaw] = useState<string>('');
     const [result, setResult] = useState<NaspiResult | null>(null);
     const [avvisi, setAvvisi] = useState<string[]>([]);
     const [erroreLettura, setErroreLettura] = useState<string>('');
+    const [erroreCampi, setErroreCampi] = useState<string>('');
     const [letto, setLetto] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const ageId = useId();
-    const termDateId = useId();
-    const weeksId = useId();
-    const weeksHintId = useId();
-    const wagesId = useId();
-    const wagesHintId = useId();
-    const reasonId = useId();
-    const daysApprovedId = useId();
-    const monthlyApprovedId = useId();
-    const startApprovedId = useId();
-    const termDateUploadId = useId();
+    const id = useId();
+    const ids = (s: string) => `${id}-${s}`;
+
+    const set = (p: Partial<UserInputData>) => setInputData(prev => ({ ...prev, ...p }));
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -71,8 +61,13 @@ const NaspiCalculator: React.FC = () => {
                 setLoading(false);
                 return;
             }
-            if (mode === 'forecast') setInputData(prev => ({ ...prev, weeksWorkedLast4Years: data.weeks || 0, totalGrossWagesLast4Years: data.wages || 0 }));
-            else setInputData(prev => ({ ...prev, approvedStartDate: data.startDate || '', approvedDaysDuration: data.days || 0, approvedMonthlyAmount: data.monthlyAmount || 0 }));
+            if (mode === 'forecast') {
+                set({ weeksWorkedLast4Years: data.weeks || 0, totalGrossWagesLast4Years: data.wages || 0 });
+                setWagesRaw(data.wages ? eur(data.wages) : '');
+            } else {
+                set({ approvedStartDate: data.startDate || '', approvedDaysDuration: data.days || 0, approvedMonthlyAmount: data.monthlyAmount || 0 });
+                setMonthlyRaw(data.monthlyAmount ? eur(data.monthlyAmount) : '');
+            }
             setAvvisi(data.avvisi || []);
             setLetto(true);
             setLoading(false);
@@ -82,271 +77,289 @@ const NaspiCalculator: React.FC = () => {
     };
 
     const handleCalculate = () => {
-        setResult(mode === 'forecast' ? calculateNaspiEligibility(inputData) : calculateNaspiFromDecree(inputData));
+        setErroreCampi('');
+        const dati = { ...inputData };
+        if (mode === 'forecast') {
+            const w = wagesRaw.trim() ? parseItNumber(wagesRaw) : 0;
+            if (isNaN(w)) { setErroreCampi("Scrivi l'imponibile solo con numeri, per esempio 45000 oppure 45.000,00."); return; }
+            dati.totalGrossWagesLast4Years = w;
+        } else {
+            const m = monthlyRaw.trim() ? parseItNumber(monthlyRaw) : 0;
+            if (isNaN(m)) { setErroreCampi("Scrivi l'importo mensile solo con numeri, per esempio 1200 oppure 1.200,50."); return; }
+            dati.approvedMonthlyAmount = m;
+        }
+        setInputData(dati);
+        setResult(mode === 'forecast' ? calculateNaspiEligibility(dati) : calculateNaspiFromDecree(dati));
         setStep(3);
     };
 
-    const reset = () => { setStep(0); setResult(null); setMode(null); setAvvisi([]); setErroreLettura(''); setLetto(false); };
+    const reset = () => { setStep(0); setResult(null); setMode(null); setAvvisi([]); setErroreLettura(''); setErroreCampi(''); setLetto(false); };
 
     return (
-        <div className="max-w-7xl mx-auto p-4 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-
-            {/* HEADER & PROGRESS */}
-            <div className="mb-12 text-center">
-                <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Calcolatore NASpI 2026</h1>
-                <p className="text-slate-500 max-w-2xl mx-auto mb-6">Stima dell'importo e della durata della tua indennità di disoccupazione in base ai parametri INPS 2026.</p>
-                <LegalDisclaimer variant="calculator" className="max-w-3xl mx-auto mb-8 text-left" />
-                <div className="flex justify-center gap-4 md:gap-12">
-                    {[0, 1, 2, 3].map(i => <StepIndicator key={i} step={i} current={step} />)}
-                </div>
+        <div className="bg-white rounded-3xl border-2 border-slate-900 overflow-hidden relative" style={{ boxShadow: '0 6px 0 #14142B' }}>
+            {/* intestazione dello strumento */}
+            <div className="bg-slate-900 text-white px-5 py-4 md:px-7 flex flex-wrap items-center justify-between gap-3">
+                <h2 className="text-xl md:text-2xl font-extrabold m-0 flex items-center gap-2"><Calculator className="w-6 h-6" aria-hidden="true" /> Calcola la tua NASpI 2026</h2>
+                <ol className="flex gap-2 m-0 p-0 list-none text-sm" aria-label="Passi del calcolo">
+                    {PASSI.map((p, i) => (
+                        <li key={p} aria-current={i === step ? 'step' : undefined} className={`px-3 py-1 rounded-full font-bold ${i === step ? 'bg-white text-slate-900' : i < step ? 'bg-white/20 text-white' : 'text-slate-300'}`}>
+                            {i + 1}<span className="hidden sm:inline">. {p}</span>
+                        </li>
+                    ))}
+                </ol>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 items-start">
-
-                {/* MAIN INTERFACE */}
-                <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden relative min-h-[500px]">
-                    {loading && (
-                        <div className="absolute inset-0 bg-white/90 z-50 flex flex-col items-center justify-center p-8 text-center">
-                            <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-                            <h3 className="text-xl font-bold mb-2">Analisi documento in corso...</h3>
-                            <p className="text-slate-500">L'Intelligenza Artificiale sta estraendo i dati previdenziali.</p>
-                        </div>
-                    )}
-
-                    {step === 0 && (
-                        <div className="p-8 md:p-12">
-                            <h2 className="text-2xl font-bold mb-8 text-center">Cosa vuoi fare oggi?</h2>
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <button onClick={() => { setMode('forecast'); setStep(1) }} className="group p-8 rounded-2xl border-2 border-slate-100 hover:border-blue-500 hover:bg-blue-50/50 transition-all text-left">
-                                    <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><Calculator className="w-7 h-7" /></div>
-                                    <h3 className="font-bold text-lg mb-2 text-slate-900">Nuova Previsione</h3>
-                                    <p className="text-sm text-slate-500">Non ho ancora la NASpI. Voglio stimare quanto mi spetta in base ai contributi.</p>
-                                </button>
-                                <button onClick={() => { setMode('analysis'); setStep(1) }} className="group p-8 rounded-2xl border-2 border-slate-100 hover:border-purple-500 hover:bg-purple-50/50 transition-all text-left">
-                                    <div className="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><FileText className="w-7 h-7" /></div>
-                                    <h3 className="font-bold text-lg mb-2 text-slate-900">Analisi Lettera INPS</h3>
-                                    <p className="text-sm text-slate-500">Ho già la lettera di accoglimento. Voglio analizzare il piano dei pagamenti.</p>
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {step === 1 && (
-                        <div className="p-8 md:p-12 text-center">
-                            <h2 className="text-2xl font-bold mb-4">Carica Documento</h2>
-                            <p className="text-slate-500 mb-8">{mode === 'forecast' ? "Carica l'Estratto Conto Contributivo INPS: leggiamo le righe e calcoliamo settimane e retribuzioni degli ultimi 4 anni." : 'Carica la lettera INPS di accoglimento della NASpI per compilare i dati automaticamente.'}</p>
-                            {mode === 'forecast' && (
-                                <div className="max-w-xs mx-auto mb-6 text-left">
-                                    <label htmlFor={termDateUploadId} className="block text-sm font-bold text-slate-700 mb-2">Ultimo giorno di lavoro</label>
-                                    <input id={termDateUploadId} type="date" value={inputData.terminationDate} onChange={e => setInputData({ ...inputData, terminationDate: e.target.value })} className="w-full p-3 rounded-xl border border-slate-300" />
-                                    <p className="text-xs text-slate-500 mt-1">Serve per contare i 4 anni precedenti.</p>
-                                </div>
-                            )}
-                            {erroreLettura && <div role="alert" className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm text-left">{erroreLettura}</div>}
-
-                            <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                className="w-full border-2 border-dashed border-slate-200 rounded-2xl p-12 cursor-pointer hover:border-blue-400 hover:bg-slate-50 transition-colors mb-6 group text-center"
-                            >
-                                <Upload className="w-12 h-12 text-slate-400 mx-auto mb-4 group-hover:text-blue-500 transition-colors" aria-hidden="true" />
-                                <span className="font-bold text-slate-700 block">Clicca per caricare</span>
-                                <span className="text-sm text-slate-600 mt-2 block">PDF o foto (massimo 3 MB)</span>
-                            </button>
-                            <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*,application/pdf" aria-label="Carica documento contributivo" />
-                            <p className="text-sm text-slate-600 mb-2">Il documento viene inviato a un servizio di lettura automatica solo per estrarre i dati del calcolo. Noi non lo conserviamo. Se preferisci, inserisci i dati a mano.</p>
-
-                            <div className="relative py-4">
-                                <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200"></div></div>
-                                <div className="relative flex justify-center"><span className="bg-white px-3 text-sm text-slate-600">oppure</span></div>
-                            </div>
-
-                            <button onClick={() => { setLetto(false); setAvvisi([]); setStep(2); }} className="text-blue-600 font-bold hover:underline mt-2">Inserisci dati manualmente</button>
-                        </div>
-                    )}
-
-                    {step === 2 && (
-                        <div className="p-8 md:p-12">
-                            <h2 className="text-2xl font-bold mb-6">Dati per il calcolo</h2>
-                            {letto && (
-                                <div className="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900">
-                                    <p className="font-bold mb-1">Dati letti dal documento: controllali prima di calcolare.</p>
-                                    {avvisi.length > 0 && <ul className="list-disc pl-5 space-y-1">{avvisi.map((a, i) => <li key={i}>{a}</li>)}</ul>}
-                                </div>
-                            )}
-                            <div className="space-y-6">
-                                <div className="grid md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label htmlFor={ageId} className="block text-sm font-bold text-slate-700 mb-2">La tua Età</label>
-                                        <input id={ageId} type="number" min={14} max={99} value={inputData.age} onChange={e => setInputData({ ...inputData, age: +e.target.value })} className="w-full p-4 rounded-xl border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-slate-300" />
-                                    </div>
-                                    <div>
-                                        <label htmlFor={termDateId} className="block text-sm font-bold text-slate-700 mb-2">Data Licenziamento</label>
-                                        <input id={termDateId} type="date" value={inputData.terminationDate} onChange={e => setInputData({ ...inputData, terminationDate: e.target.value })} className="w-full p-4 rounded-xl border border-slate-300 focus:border-blue-500 outline-none transition-all" />
-                                    </div>
-                                </div>
-
-                                {mode === 'forecast' ? (
-                                    <>
-                                        <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                            <h3 className="font-bold text-slate-900 mb-4 flex gap-2"><Briefcase className="w-5 h-5 text-slate-500" aria-hidden="true" /> Dati Contributivi (4 Anni)</h3>
-                                            <div className="grid md:grid-cols-2 gap-6">
-                                                <div>
-                                                    <label htmlFor={weeksId} className="flex items-center gap-1 text-sm font-medium text-slate-600 mb-1">
-                                                        Settimane Lavorate
-                                                        <HelpCircle className="w-4 h-4 inline text-slate-400" aria-hidden="true" />
-                                                    </label>
-                                                    <input id={weeksId} aria-describedby={weeksHintId} type="number" min={0} max={208} value={inputData.weeksWorkedLast4Years} onChange={e => setInputData({ ...inputData, weeksWorkedLast4Years: +e.target.value })} className="w-full p-3 rounded-lg border" />
-                                                    <p id={weeksHintId} className="text-xs text-slate-500 mt-1">Numero totale di settimane contributive negli ultimi 4 anni.</p>
-                                                </div>
-                                                <div>
-                                                    <label htmlFor={wagesId} className="flex items-center gap-1 text-sm font-medium text-slate-600 mb-1">
-                                                        Totale Imponibile Lordo
-                                                        <HelpCircle className="w-4 h-4 inline text-slate-400" aria-hidden="true" />
-                                                    </label>
-                                                    <input id={wagesId} aria-describedby={wagesHintId} type="number" min={0} value={inputData.totalGrossWagesLast4Years} onChange={e => setInputData({ ...inputData, totalGrossWagesLast4Years: +e.target.value })} className="w-full p-3 rounded-lg border" />
-                                                    <p id={wagesHintId} className="text-xs text-slate-500 mt-1">Somma delle retribuzioni imponibili ai fini previdenziali.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor={reasonId} className="block text-sm font-bold text-slate-700 mb-2">Motivo Cessazione</label>
-                                            <select id={reasonId} value={inputData.terminationReason} onChange={e => setInputData({ ...inputData, terminationReason: e.target.value as TerminationReason })} className="w-full p-4 rounded-xl border border-slate-300 bg-white">
-                                                {Object.values(TerminationReason).map(r => <option key={r} value={r}>{r}</option>)}
-                                            </select>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                        <h3 className="font-bold text-slate-900 mb-4">Dati da Lettera INPS</h3>
-                                        <div className="grid md:grid-cols-3 gap-6">
-                                            <div>
-                                                <label htmlFor={startApprovedId} className="block text-sm">Data di decorrenza</label>
-                                                <input id={startApprovedId} type="date" value={inputData.approvedStartDate} onChange={e => setInputData({ ...inputData, approvedStartDate: e.target.value })} className="w-full p-3 rounded-lg border" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor={daysApprovedId} className="block text-sm">Giorni Spettanti</label>
-                                                <input id={daysApprovedId} type="number" min={0} value={inputData.approvedDaysDuration} onChange={e => setInputData({ ...inputData, approvedDaysDuration: +e.target.value })} className="w-full p-3 rounded-lg border" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor={monthlyApprovedId} className="block text-sm">Importo Mensile Lordo</label>
-                                                <input id={monthlyApprovedId} type="number" min={0} value={inputData.approvedMonthlyAmount} onChange={e => setInputData({ ...inputData, approvedMonthlyAmount: +e.target.value })} className="w-full p-3 rounded-lg border" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-
-                                <button onClick={handleCalculate} className="w-full bg-blue-600 hover:bg-blue-500 text-white p-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
-                                    Calcola la mia NASpI <ArrowRight className="w-5 h-5" />
-                                </button>
-                            </div>
-                        </div>
-                    )}
-
-                    {step === 3 && result && (
-                        <div className="bg-slate-50 min-h-[500px]">
-                            <div className="bg-white p-8 border-b shadow-sm">
-                                <div className="flex justify-between items-start mb-6">
-                                    <h2 className="text-3xl font-bold text-slate-900">Il tuo Risultato</h2>
-                                    <button onClick={reset} className="text-sm font-bold text-slate-500 hover:text-blue-600">Ricalcola</button>
-                                </div>
-
-                                {!result.isEligible ? (
-                                    <div className="bg-red-50 border border-red-200 p-6 rounded-2xl text-red-800 flex gap-4">
-                                        <AlertTriangle className="w-8 h-8 shrink-0" />
-                                        <div><h3 className="font-bold text-lg mb-2">Domanda Probabilmente Respinta</h3><p>{result.ineligibilityReason}</p></div>
-                                    </div>
-                                ) : (
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
-                                            <div className="relative z-10">
-                                                <div className="text-blue-100 mb-1 text-sm font-medium uppercase tracking-wide">Importo Mensile Lordo</div>
-                                                <div className="text-4xl font-extrabold mb-4">€ {result.grossMonthlyAmount.toLocaleString('it-IT')}</div>
-                                                <div className="flex gap-2 text-sm bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-                                                    <TrendingDown className="w-4 h-4" />
-                                                    <span>-3% dal {inputData.age >= 55 ? '8°' : '6°'} mese</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
-                                            <div className="text-slate-500 mb-1 text-sm font-medium uppercase tracking-wide">Durata Totale</div>
-                                            <div className="text-4xl font-extrabold text-slate-900 mb-4">{result.totalDaysDuration} <span className="text-xl text-slate-500 font-normal">giorni</span></div>
-                                            <div className="text-sm text-slate-600 flex gap-4">
-                                                <div className="flex items-center gap-1"><Calendar className="w-4 h-4" /> Dal {result.startDate}</div>
-                                                <div className="flex items-center gap-1"><ArrowRight className="w-4 h-4" /> Al {result.endDate}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {result.isEligible && (
-                                <div className="p-8 space-y-8">
-                                    <ConversionCTA
-                                        headline={`Puoi ottenere fino a € ${result.grossMonthlyAmount.toLocaleString('it-IT')} al mese`}
-                                        subline={`La tua stima NASpI copre ${result.totalDaysDuration} giorni, dal ${result.startDate} al ${result.endDate}. Presenta la domanda entro 68 giorni dalla fine del lavoro: possiamo farla noi per te, gratis.`}
-                                    />
-
-                                    <div>
-                                        <h3 className="font-bold text-slate-900 mb-4">Piano dei Pagamenti Stimato</h3>
-                                        <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-                                            <table tabIndex={0} className="w-full text-sm text-left">
-                                                <thead className="bg-slate-50 text-slate-500 font-medium border-b">
-                                                    <tr>
-                                                        <th className="p-4">Periodo</th>
-                                                        <th className="p-4">Lordo</th>
-                                                        <th className="p-4 hidden md:table-cell">Netto Stimato*</th>
-                                                        <th className="p-4 hidden md:table-cell">Note</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody className="divide-y">
-                                                    {result.schedule.map((row, i) => (
-                                                        <tr key={i} className="hover:bg-slate-50">
-                                                            <td className="p-4 font-bold text-slate-700">{row.monthYear}</td>
-                                                            <td className="p-4">€ {row.grossAmount.toFixed(2).replace('.', ',')}</td>
-                                                            <td className="p-4 hidden md:table-cell text-emerald-800 font-medium">€ {row.netAmount.toFixed(2).replace('.', ',')}</td>
-                                                            <td className="p-4 hidden md:table-cell text-xs text-slate-400">
-                                                                {row.reductionApplied && <span className="bg-orange-100 text-orange-700 px-2 py-1 rounded">Ridotto {row.reductionPercentage}%</span>}
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                            <div className="p-4 bg-slate-50 text-xs text-slate-600 text-center">* Il netto è puramente indicativo e dipende dalle detrazioni personali.</div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
-                                        <h3 className="font-bold text-slate-900 text-lg mb-2">Dopo la domanda: il SIISL</h3>
-                                        <p className="text-slate-700 mb-3">Quando la NASpI viene accolta, entro 15 giorni devi entrare nella piattaforma SIISL, compilare il curriculum e firmare il patto di attivazione digitale.</p>
-                                        <a href="/siisl" className="font-bold text-blue-700 underline">Leggi cosa fare sul SIISL</a>
-                                    </div>
-                                    <ConversionCTA
-                                        variant="inline"
-                                        headline="Non perdere la scadenza di 68 giorni"
-                                        subline="Dopo quella data non puoi più presentare la domanda. Affida la pratica al nostro patronato: la presentiamo noi all'INPS, gratis."
-                                    />
-                                </div>
-                            )}
-                        </div>
-                    )}
+            {loading && (
+                <div className="absolute inset-0 bg-white/95 z-50 flex flex-col items-center justify-center p-8 text-center" role="status">
+                    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p className="text-xl font-bold mb-2">Lettura del documento in corso...</p>
+                    <p className="text-slate-600">Estraiamo settimane e importi: ci vuole qualche secondo.</p>
                 </div>
+            )}
 
-                {/* SIDEBAR */}
-                <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-lg">
-                        <h3 className="font-bold text-lg mb-4 flex items-center gap-2"><HelpCircle className="w-5 h-5" /> Come funziona?</h3>
-                        <div className="space-y-4 text-sm text-indigo-100">
-                            <p><strong>1. Retribuzione Media:</strong> Calcoliamo la media dei tuoi stipendi degli ultimi 4 anni.</p>
-                            <p><strong>2. Coefficiente 75%:</strong> Se la media è fino a €1.456,72, prendi il 75%. Se sopra, si aggiunge il 25% dell'eccedenza.</p>
-                            <p><strong>3. Durata:</strong> Spetta per la metà delle settimane lavorate (max 2 anni).</p>
+            <div className="p-5 md:p-7">
+                {step === 0 && (
+                    <div>
+                        <p className="text-lg font-bold text-slate-900 mb-4">Cosa vuoi fare?</p>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            <button type="button" onClick={() => { setMode('forecast'); setStep(1); }} className="p-5 rounded-2xl border-2 border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-left transition-colors">
+                                <span className="w-12 h-12 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center mb-3"><Calculator className="w-6 h-6" aria-hidden="true" /></span>
+                                <span className="block font-bold text-lg text-slate-900 mb-1">Stimare la NASpI</span>
+                                <span className="block text-sm text-slate-700">Ho perso o sto per perdere il lavoro: quanto prendo e per quanto tempo?</span>
+                            </button>
+                            <button type="button" onClick={() => { setMode('analysis'); setStep(1); }} className="p-5 rounded-2xl border-2 border-slate-200 hover:border-blue-600 hover:bg-blue-50 text-left transition-colors">
+                                <span className="w-12 h-12 bg-teal-100 text-teal-800 rounded-xl flex items-center justify-center mb-3"><FileText className="w-6 h-6" aria-hidden="true" /></span>
+                                <span className="block font-bold text-lg text-slate-900 mb-1">Leggere la lettera INPS</span>
+                                <span className="block text-sm text-slate-700">Ho già la NASpI accolta: voglio il piano dei pagamenti mese per mese.</span>
+                            </button>
                         </div>
                     </div>
+                )}
 
-                    <InfoCard title="Settimane Utili" desc="Sono le settimane in cui hai versato contributi negli ultimi 4 anni. Un anno pieno sono 52 settimane. Il minimo per accedere è 13." />
-                    <InfoCard title="Imponibile Previdenziale" desc="È la cifra lorda su cui si calcolano i contributi. La trovi nella busta paga sotto 'Imponibile INPS' o nell'estratto conto contributivo." />
-                </div>
+                {step === 1 && (
+                    <div>
+                        <p className="text-lg font-bold text-slate-900 mb-2">{mode === 'forecast' ? "Carica l'estratto conto contributivo INPS" : 'Carica la lettera INPS di accoglimento'}</p>
+                        <p className="text-slate-700 mb-5">{mode === 'forecast' ? 'Leggiamo le righe degli ultimi 4 anni e contiamo settimane e retribuzioni.' : 'Leggiamo data di inizio, giorni spettanti e importo mensile.'}</p>
+                        {mode === 'forecast' && (
+                            <div className="max-w-xs mb-5">
+                                <label htmlFor={ids('fine0')} className={etichetta}>Ultimo giorno di lavoro</label>
+                                <input id={ids('fine0')} type="date" value={inputData.terminationDate} onChange={e => set({ terminationDate: e.target.value })} className={campo} />
+                                <p className={aiuto}>Serve per contare i 4 anni precedenti.</p>
+                            </div>
+                        )}
+                        {erroreLettura && <div role="alert" className="mb-5 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">{erroreLettura}</div>}
+                        <button type="button" onClick={() => fileInputRef.current?.click()} className="w-full border-2 border-dashed border-slate-300 rounded-2xl p-8 hover:border-blue-600 hover:bg-blue-50 transition-colors mb-4 text-center">
+                            <Upload className="w-10 h-10 text-slate-500 mx-auto mb-3" aria-hidden="true" />
+                            <span className="font-bold text-slate-900 block">Scegli il file</span>
+                            <span className="text-sm text-slate-700 mt-1 block">PDF o foto, massimo 3 MB</span>
+                        </button>
+                        <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*,application/pdf" aria-label="Carica il documento" />
+                        <p className="text-sm text-slate-700 mb-4">Il documento viene inviato a un servizio di lettura automatica solo per estrarre i dati del calcolo. Noi non lo conserviamo.</p>
+                        <div className="flex flex-wrap gap-3">
+                            <button type="button" onClick={() => { setLetto(false); setAvvisi([]); setStep(2); }} className="px-5 py-3 rounded-full bg-slate-900 text-white font-bold">Scrivo i dati a mano</button>
+                            <button type="button" onClick={reset} className="px-5 py-3 rounded-full border-2 border-slate-900 text-slate-900 font-bold">Indietro</button>
+                        </div>
+                    </div>
+                )}
 
+                {step === 2 && (
+                    <div className="space-y-5">
+                        {letto && (
+                            <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900">
+                                <p className="font-bold mb-1">Dati letti dal documento: controllali prima di calcolare.</p>
+                                {avvisi.length > 0 && <ul className="list-disc pl-5 space-y-1">{avvisi.map((a, i) => <li key={i}>{a}</li>)}</ul>}
+                            </div>
+                        )}
+                        <div className="grid sm:grid-cols-2 gap-5">
+                            <div>
+                                <label htmlFor={ids('eta')} className={etichetta}>Età alla data della domanda NASpI</label>
+                                <input id={ids('eta')} type="number" inputMode="numeric" min={14} max={99} value={inputData.age} onChange={e => set({ age: +e.target.value })} className={campo} aria-describedby={ids('eta-h')} />
+                                <p id={ids('eta-h')} className={aiuto}>Da 55 anni la riduzione del 3% parte più tardi.</p>
+                            </div>
+                            {mode === 'forecast' && (
+                                <div>
+                                    <label htmlFor={ids('fine')} className={etichetta}>Ultimo giorno di lavoro</label>
+                                    <input id={ids('fine')} type="date" value={inputData.terminationDate} onChange={e => set({ terminationDate: e.target.value })} className={campo} />
+                                </div>
+                            )}
+                        </div>
+
+                        {mode === 'forecast' ? (
+                            <>
+                                <fieldset className="bg-slate-50 p-4 md:p-5 rounded-2xl border border-slate-200">
+                                    <legend className="font-bold text-slate-900 px-1">Contributi degli ultimi 4 anni</legend>
+                                    <div className="grid sm:grid-cols-2 gap-5">
+                                        <div>
+                                            <label htmlFor={ids('sett')} className={etichetta}>Settimane di contributi</label>
+                                            <input id={ids('sett')} aria-describedby={ids('sett-h')} type="number" inputMode="numeric" min={0} max={208} value={inputData.weeksWorkedLast4Years || ''} onChange={e => set({ weeksWorkedLast4Years: +e.target.value })} className={campo} placeholder="es. 156" />
+                                            <p id={ids('sett-h')} className={aiuto}>Un anno pieno sono 52 settimane; al massimo 208 in 4 anni. Ne servono almeno 13.</p>
+                                        </div>
+                                        <div>
+                                            <label htmlFor={ids('imp')} className={etichetta}>Imponibile previdenziale totale (€)</label>
+                                            <input id={ids('imp')} aria-describedby={ids('imp-h')} type="text" inputMode="decimal" value={wagesRaw} onChange={e => setWagesRaw(e.target.value)} className={campo} placeholder="es. 72.000" />
+                                            <p id={ids('imp-h')} className={aiuto}>La somma delle retribuzioni lorde su cui hai pagato i contributi in quei 4 anni (estratto conto INPS o buste paga, voce "imponibile INPS").</p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <div>
+                                    <label htmlFor={ids('motivo')} className={etichetta}>Come è finito il lavoro</label>
+                                    <select id={ids('motivo')} value={inputData.terminationReason} onChange={e => set({ terminationReason: e.target.value as TerminationReason, voluntaryException: VoluntaryException.NONE })} className={campo}>
+                                        <option value={TerminationReason.INVOLUNTARY}>Licenziamento o fine del contratto a termine</option>
+                                        <option value={TerminationReason.VOLUNTARY}>Dimissioni</option>
+                                        <option value={TerminationReason.CONSENSUAL}>Risoluzione consensuale (accordo con l'azienda)</option>
+                                    </select>
+                                </div>
+                                {inputData.terminationReason === TerminationReason.VOLUNTARY && (
+                                    <div>
+                                        <label htmlFor={ids('dim')} className={etichetta}>Che tipo di dimissioni?</label>
+                                        <select id={ids('dim')} value={inputData.voluntaryException} onChange={e => set({ voluntaryException: e.target.value as VoluntaryException })} className={campo} aria-describedby={ids('dim-h')}>
+                                            <option value={VoluntaryException.NONE}>Dimissioni normali</option>
+                                            <option value={VoluntaryException.JUST_CAUSE}>Per giusta causa (es. stipendi non pagati)</option>
+                                            <option value={VoluntaryException.PROTECTED_PERIOD}>Nel periodo tutelato di maternità o paternità</option>
+                                        </select>
+                                        <p id={ids('dim-h')} className={aiuto}>Con le dimissioni normali la NASpI non spetta.</p>
+                                    </div>
+                                )}
+
+                                <details className="bg-slate-50 rounded-2xl border border-slate-200 p-4">
+                                    <summary className="font-bold text-slate-900 cursor-pointer">Altri dati (facoltativi, per un calcolo più preciso)</summary>
+                                    <div className="mt-4 space-y-4">
+                                        <div>
+                                            <label htmlFor={ids('usate')} className={etichetta}>Settimane già usate per una NASpI precedente negli ultimi 4 anni</label>
+                                            <input id={ids('usate')} type="number" inputMode="numeric" min={0} max={208} value={inputData.weeksAlreadyUsed ?? ''} onChange={e => set({ weeksAlreadyUsed: e.target.value === '' ? undefined : +e.target.value })} className={campo} placeholder="0" />
+                                            <p className={aiuto}>Non contano per la durata della nuova NASpI.</p>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <input id={ids('dim12')} type="checkbox" className="mt-1 w-5 h-5" checked={!!inputData.resignedPermanentJobLast12Months} onChange={e => set({ resignedPermanentJobLast12Months: e.target.checked })} />
+                                            <label htmlFor={ids('dim12')} className="text-sm text-slate-900">Nei 12 mesi prima mi ero dimesso (o avevo firmato una risoluzione consensuale) da un altro lavoro a tempo indeterminato</label>
+                                        </div>
+                                        {inputData.resignedPermanentJobLast12Months && (
+                                            <div>
+                                                <label htmlFor={ids('dopo')} className={etichetta}>Settimane di contributi da quelle dimissioni a oggi</label>
+                                                <input id={ids('dopo')} type="number" inputMode="numeric" min={0} max={60} value={inputData.weeksSinceResignation ?? ''} onChange={e => set({ weeksSinceResignation: e.target.value === '' ? undefined : +e.target.value })} className={campo} />
+                                                <p className={aiuto}>Dal 2025 ne servono almeno 13.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </details>
+                            </>
+                        ) : (
+                            <fieldset className="bg-slate-50 p-4 md:p-5 rounded-2xl border border-slate-200">
+                                <legend className="font-bold text-slate-900 px-1">Dati della lettera INPS</legend>
+                                <div className="grid sm:grid-cols-3 gap-5">
+                                    <div>
+                                        <label htmlFor={ids('dec')} className={etichetta}>Data di inizio (decorrenza)</label>
+                                        <input id={ids('dec')} type="date" value={inputData.approvedStartDate} onChange={e => set({ approvedStartDate: e.target.value })} className={campo} />
+                                    </div>
+                                    <div>
+                                        <label htmlFor={ids('gg')} className={etichetta}>Giorni spettanti</label>
+                                        <input id={ids('gg')} type="number" inputMode="numeric" min={0} max={728} value={inputData.approvedDaysDuration || ''} onChange={e => set({ approvedDaysDuration: +e.target.value })} className={campo} placeholder="es. 540" />
+                                    </div>
+                                    <div>
+                                        <label htmlFor={ids('mese')} className={etichetta}>Importo mensile lordo (€)</label>
+                                        <input id={ids('mese')} type="text" inputMode="decimal" value={monthlyRaw} onChange={e => setMonthlyRaw(e.target.value)} className={campo} placeholder="es. 1.250,40" />
+                                    </div>
+                                </div>
+                            </fieldset>
+                        )}
+
+                        {erroreCampi && <div role="alert" className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">{erroreCampi}</div>}
+                        <div className="flex flex-wrap gap-3">
+                            <button type="button" onClick={handleCalculate} className="flex-1 min-w-[220px] bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full font-bold text-lg flex items-center justify-center gap-2">
+                                Calcola la mia NASpI <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                            </button>
+                            <button type="button" onClick={reset} className="px-5 py-3 rounded-full border-2 border-slate-900 text-slate-900 font-bold">Ricomincia</button>
+                        </div>
+                    </div>
+                )}
+
+                {step === 3 && result && (
+                    <div className="space-y-6" aria-live="polite">
+                        <div className="flex flex-wrap justify-between items-center gap-3">
+                            <p className="text-2xl font-extrabold text-slate-900 m-0">Il tuo risultato</p>
+                            <div className="flex gap-2">
+                                <button type="button" onClick={() => setStep(2)} className="px-4 py-2 rounded-full border-2 border-slate-900 text-slate-900 font-bold text-sm">Modifica i dati</button>
+                                <button type="button" onClick={reset} className="px-4 py-2 rounded-full bg-slate-900 text-white font-bold text-sm">Nuovo calcolo</button>
+                            </div>
+                        </div>
+
+                        {!result.isEligible ? (
+                            <div className={`${result.missingData ? 'bg-amber-50 border-amber-200 text-amber-900' : 'bg-red-50 border-red-200 text-red-800'} border p-5 rounded-2xl flex gap-4`}>
+                                <AlertTriangle className="w-7 h-7 shrink-0" aria-hidden="true" />
+                                <div><p className="font-bold text-lg mb-1">{result.missingData ? 'Mancano alcuni dati' : 'La NASpI probabilmente non spetta'}</p><p>{result.ineligibilityReason}</p></div>
+                            </div>
+                        ) : (
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <div className="bg-blue-600 text-white p-5 rounded-2xl">
+                                    <p className="text-sm font-bold uppercase tracking-wide m-0 text-blue-50">Importo mensile lordo</p>
+                                    <p className="text-4xl font-extrabold my-2">{eur(result.grossMonthlyAmount)} €</p>
+                                    <p className="flex gap-2 items-center text-sm bg-white/15 p-2 rounded-lg m-0">
+                                        <TrendingDown className="w-4 h-4 shrink-0" aria-hidden="true" />
+                                        {result.firstReductionDate ? <span>{dal(result.firstReductionDate).replace(/^d/, 'D')} scende del 3% ogni mese</span> : <span>Finisce prima della riduzione del 3%</span>}
+                                    </p>
+                                </div>
+                                <div className="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
+                                    <p className="text-sm font-bold uppercase tracking-wide m-0 text-slate-700">Durata</p>
+                                    <p className="text-4xl font-extrabold text-slate-900 my-2">{result.totalDaysDuration} <span className="text-xl font-normal text-slate-700">giorni</span></p>
+                                    <p className="text-sm text-slate-700 flex flex-wrap gap-x-4 gap-y-1 m-0">
+                                        <span className="flex items-center gap-1"><Calendar className="w-4 h-4" aria-hidden="true" /> {dal(result.startDate).replace(/^d/, 'D')}</span>
+                                        <span>al {result.endDate}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+
+                        {result.warnings && result.warnings.length > 0 && (
+                            <div className="bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl p-5">
+                                <p className="font-bold flex items-center gap-2 mb-2"><Info className="w-5 h-5" aria-hidden="true" /> Da sapere sul tuo caso</p>
+                                <ul className="list-disc pl-5 space-y-1 text-sm m-0">{result.warnings.map((w, i) => <li key={i}>{w}</li>)}</ul>
+                            </div>
+                        )}
+
+                        {result.isEligible && (
+                            <>
+                                <ConversionCTA
+                                    headline={`Ti spettano circa ${eur(result.grossMonthlyAmount)} € lordi al mese`}
+                                    subline={`Per ${result.totalDaysDuration} giorni, ${dal(result.startDate)} al ${result.endDate}. La domanda va presentata entro 68 giorni dalla fine del lavoro${result.applicationDeadline ? ` (entro il ${result.applicationDeadline})` : ''}: la facciamo noi, gratis.`}
+                                />
+                                <div>
+                                    <p className="font-bold text-slate-900 mb-3 text-lg">Pagamenti stimati mese per mese</p>
+                                    <div className="rounded-2xl border border-slate-200 overflow-x-auto" tabIndex={0} role="region" aria-label="Pagamenti stimati mese per mese">
+                                        <table className="w-full text-sm text-left">
+                                            <thead className="bg-slate-100 text-slate-900">
+                                                <tr>
+                                                    <th scope="col" className="p-3">Mese</th>
+                                                    <th scope="col" className="p-3">Lordo</th>
+                                                    <th scope="col" className="p-3">Netto stimato*</th>
+                                                    <th scope="col" className="p-3">Note</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {result.schedule.map((row, i) => (
+                                                    <tr key={i} className="border-t border-slate-200">
+                                                        <td className="p-3 font-bold text-slate-900">{row.monthYear}</td>
+                                                        <td className="p-3">{eur(row.grossAmount)} €</td>
+                                                        <td className="p-3">{eur(row.netAmount)} €</td>
+                                                        <td className="p-3 text-xs">{row.reductionApplied ? `ridotto del ${row.reductionPercentage}%` : ''}{row.daysPaid < 28 ? `${row.reductionApplied ? ' · ' : ''}${row.daysPaid} giorni` : ''}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <p className="text-xs text-slate-700 mt-2">* Il netto è indicativo: dipende dalle detrazioni e non comprende la somma non imponibile che l'INPS aggiunge per redditi fino a 20.000 € (messaggio INPS 3649/2026).</p>
+                                </div>
+                                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                                    <p className="font-bold text-slate-900 text-lg mb-1">Dopo la domanda: il SIISL</p>
+                                    <p className="text-slate-800 mb-2">Quando la NASpI parte, entro 15 giorni devi entrare nella piattaforma SIISL, compilare il curriculum e firmare il patto di attivazione digitale.</p>
+                                    <a href="/siisl" className="font-bold text-blue-700 underline">Cosa fare sul SIISL</a>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
+
+                <LegalDisclaimer variant="compact" className="mt-6" />
             </div>
         </div>
     );
