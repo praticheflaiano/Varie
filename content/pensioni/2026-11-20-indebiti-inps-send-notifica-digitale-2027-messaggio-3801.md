@@ -3,13 +3,16 @@ title: "Indebiti INPS dal 2027 con SEND: le lettere di restituzione arrivano in 
 seo_title: "Indebiti INPS con SEND dal 2027: cosa cambia"
 slug: "indebiti-inps-send-notifica-digitale-2027-messaggio-3801"
 date: 2026-11-20
-last_updated: 2026-11-20
+last_updated: 2026-11-26
 category: "pensioni"
 tags: ["pensionati", "inps", "indebito", "send", "assegno-sociale", "invalidita-civile", "roma", "novita"]
 meta_description: "Dal 2027 l'INPS manda con SEND le lettere di indebito su pensioni e assegno sociale: app IO, PEC o raccomandata con ritiro. Chi è escluso e cosa fare a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Messaggio n. 3801 del 19 novembre 2026 \"Estensione delle notifiche digitali tramite piattaforma SEND agli indebiti derivanti da prestazioni previdenziali, Assegno Sociale e Invalidità Civile\" - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3801-del-19-11-2026_16422.html"
+  - "INPS, Notifiche INPS sulla piattaforma SEND (atti già notificati con SEND dal 2024-2025) - https://www.inps.it/it/it/inps-comunica/inps--inclusione-e-innovazione/trasformazione-digitale-e-innovazione-tecnologica/notifiche-inps-sulla-piattaforma-send.html"
+  - "SEND - Servizio Notifiche Digitali (PagoPA), Perfezionamento: quando la notifica assume valore di legge - https://notifichedigitali.it/perfezionamento"
+  - "SEND, Domande frequenti (notifica ignorata, nessun recapito digitale) - https://notifichedigitali.it/faq"
   - "INPS, Messaggio n. 3801 del 19/11/2026, Allegato 1 (vademecum \"Hai ricevuto una comunicazione da INPS tramite SEND?\") e Allegato 2 (elenco delle comunicazioni RIWeb inviate con SEND)"
 status: published
 type: novita
@@ -19,7 +22,7 @@ image_alt: "Indebiti INPS dal 2027 con SEND: cosa cambia per i pensionati"
 
 # Indebiti INPS dal 2027 con SEND: le lettere di restituzione arrivano in digitale
 
-**Ultimo aggiornamento: 20 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Quando l'INPS ha pagato una somma che non spettava (un **indebito**), manda una lettera per chiederne la restituzione. Con il **messaggio n. 3801 del 19 novembre 2026** l'INPS ha annunciato che **da gennaio 2027**, dopo una campagna informativa, queste lettere arriveranno **progressivamente tramite SEND**, il Servizio Notifiche Digitali della Pubblica Amministrazione. Riguarda gli indebiti su **pensioni e altre prestazioni previdenziali** e su **assegno o pensione sociale**. Per le **prestazioni di invalidità civile** il passaggio è previsto in una seconda fase, sempre nel 2027.
 
@@ -79,6 +82,35 @@ Dipende dagli strumenti che hai.
 
 **Conserva sempre l'avviso**: contiene le indicazioni per vedere i documenti o ritirarli su carta.
 
+## Da quando la lettera su SEND conta? I tempi della notifica
+
+Una notifica SEND **vale per legge** (si dice che "si perfeziona") dal momento in cui **apri l'atto** su SEND o nell'app IO. Se non lo apri, vale lo stesso dopo un certo tempo, che dipende da come ti è arrivato l'avviso:
+
+| Come ti arriva | Quando vale per legge, se non lo apri prima |
+|---|---|
+| **PEC o domicilio digitale** | **7 giorni** dopo la consegna (se arriva dopo le 21, dal giorno dopo) |
+| **PEC piena, non valida o non attiva** | **15 giorni** dopo l'avviso di mancato recapito |
+| **Raccomandata ricevuta** | **10 giorni** dopo la data in cui la ricevi |
+| **Avviso di giacenza, ritiri entro 10 giorni** | **10 giorni** dopo il ritiro |
+| **Avviso di giacenza, non ritiri** | **20 giorni** dopo la data dell'avviso di giacenza |
+
+*(Fonte: notifichedigitali.it, pagina "Perfezionamento")*
+
+È importante perché **da quella data partono le scadenze** scritte nella lettera: per pagare, per chiedere le rate o per contestare. Secondo SEND, **la notifica produce i suoi effetti anche se la ignori**.
+
+## Come prepararsi adesso, prima di gennaio 2027
+
+Se hai una pensione o l'assegno sociale e meno di 75 anni, conviene preparare ora gli strumenti per leggere le comunicazioni:
+
+1. **Attiva SPID o la CIE** con il PIN: servono per entrare su notifichedigitali.it e nell'app IO. Se hai ancora la carta d'identità di carta, leggi [cosa cambia dal 2027](/blog/carta-identita-cartacea-31-gennaio-2027-cie-open-day-roma).
+2. **Nell'app IO attiva il servizio "SEND - Notifiche digitali"**: così l'avviso ti arriva sul telefono.
+3. **Su notifichedigitali.it inserisci email e cellulare**: ricevi gli avvisi di cortesia.
+4. **Se non usi il digitale**, puoi **delegare un familiare** (vedi sotto) oppure aspettare la raccomandata e ritirare l'atto in un Punto di Ritiro.
+
+**Attenzione alle truffe**: SEND e l'INPS **non chiedono mai** i codici di SPID o della carta di pagamento con un SMS o una email. Entra sempre dall'app IO o scrivendo tu l'indirizzo notifichedigitali.it. Leggi anche [la truffa del falso aggiornamento dell'app IO](/blog/falso-sito-agenzia-entrate-app-io-truffa-novembre-2026).
+
+L'INPS usa SEND già **dal dicembre 2024** per altre comunicazioni, per esempio la revoca dell'Assegno di Inclusione e, **da gennaio 2025**, gli indebiti di NASpI, malattia, maternità e Reddito di Cittadinanza. Con il messaggio 3801 si aggiungono pensioni e assegno sociale.
+
 ## Posso far ritirare la lettera a un familiare?
 
 Sì, in due modi (allegato 1 del messaggio):
@@ -133,6 +165,10 @@ Ti arriva a casa una raccomandata A/R o 890 con l'Avviso di Avvenuta Ricezione. 
 
 No. Le comunicazioni inviate con SEND hanno valore legale e il passaggio a SEND non cambia le regole sugli indebiti. Ritira subito l'atto per conoscere importo e scadenze.
 
+### Se non apro la notifica SEND, cosa succede?
+
+La notifica vale lo stesso: dopo 7 giorni se ti è arrivata via PEC, dopo 10 giorni dalla raccomandata ricevuta, dopo 20 giorni dall'avviso di giacenza se non la ritiri. Da quel momento partono le scadenze della lettera.
+
 ### Cambiano le regole per restituire le somme?
 
 No. Il messaggio 3801 dice che il passaggio a SEND riguarda solo il modo in cui la lettera viene inviata e consegnata, non le regole sulla gestione degli indebiti.
@@ -146,6 +182,7 @@ Sì. Puoi delegarlo online sul portale SEND oppure compilando e firmando la dele
 - [Cedolino pensione dicembre 2026: data, tredicesima, trattenute e come leggerlo](https://praticheflaiano.it/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo)
 - [Rivalutazione pensioni 2027: aumento da gennaio per fasce](https://praticheflaiano.it/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [Modello RED 2026 e dichiarazioni ACC.AS/PS](/red-invciv)
+- [Ti è arrivato un avviso SEND? Ritiro e stampa a Vigne Nuove](/raccomandata-send)
 
 ---
 
