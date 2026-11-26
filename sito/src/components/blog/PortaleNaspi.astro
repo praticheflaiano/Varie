@@ -5,7 +5,6 @@
  * sul vecchio portale domandedisoccupazione.it tengono per ora l'indirizzo esterno.
  * Regola: quando una guida viene trasferita, cambiare qui il suo indirizzo.
  */
-import { NASPI_URL } from "~/consts";
 interface Props { heading?: string; current?: string; }
 const { heading = "Guide e strumenti su NASpI e disoccupazione", current } = Astro.props;
 const LINKS = [
@@ -16,8 +15,10 @@ const LINKS = [
   { href: "/naspi/ricorso", t: "Ricorso NASpI", s: "Domanda respinta o NASpI tolta: 90 giorni" },
   { href: "/dimissioni-online", t: "Dimissioni online", s: "Volontarie e per giusta causa, anche senza SPID" },
   { href: "/siisl", t: "SIISL e patto di attivazione", s: "Cosa fare entro 15 giorni" },
-  { href: `${NASPI_URL}/guida/pagamenti-accredito`, t: "Quando arriva la NASpI", s: "Date di pagamento e come controllarle" },
-  { href: `${NASPI_URL}/guida/nuovo-lavoro-durante-naspi`, t: "Nuovo lavoro durante la NASpI", s: "Cosa comunicare per non perderla" },
+  { href: "/naspi/pagamento", t: "Quando arriva la NASpI", s: "Pagamenti, IBAN e come controllarli" },
+  { href: "/naspi/nuovo-lavoro", t: "Nuovo lavoro durante la NASpI", s: "Cosa comunicare per non perderla" },
+  { href: "/naspi/sospensione", t: "NASpI sospesa o revocata", s: "Perché succede e come riprenderla" },
+  { href: "/naspi/did", t: "DID online", s: "Disponibilità al lavoro, SIISL e centro per l'impiego" },
 ].filter((l) => l.href !== current);
 ---
 <section class="pn" aria-labelledby="pn-title">

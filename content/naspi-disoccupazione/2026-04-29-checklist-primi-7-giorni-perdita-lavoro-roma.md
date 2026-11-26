@@ -168,7 +168,7 @@ In caso di dubbio, prima di dare dimissioni rivolgiti al Patronato per inquadrar
 
 ### Quanto tempo ci vuole per ricevere la prima NASpI?
 
-I tempi dipendono dalla sede INPS: per legge il termine ordinario per decidere sulla domanda è di 30 giorni. Il primo pagamento comprende gli arretrati dal giorno in cui parte la NASpI: l'ottavo giorno dopo la fine del lavoro, oppure il giorno dopo la domanda se l'hai presentata più tardi (per questo conviene fare la [domanda NASpI](/naspi/domanda) subito). Vedi anche la [guida pagamenti NASpI](https://domandedisoccupazione.it/guida/pagamenti-accredito) sul nostro portale.
+I tempi dipendono dalla sede INPS: per legge il termine ordinario per decidere sulla domanda è di 30 giorni. Il primo pagamento comprende gli arretrati dal giorno in cui parte la NASpI: l'ottavo giorno dopo la fine del lavoro, oppure il giorno dopo la domanda se l'hai presentata più tardi (per questo conviene fare la [domanda NASpI](/naspi/domanda) subito). Vedi anche la [guida pagamenti NASpI](/naspi/pagamento) sul nostro portale.
 
 ### Dopo la NASpI cosa posso richiedere nel 2026?
 
