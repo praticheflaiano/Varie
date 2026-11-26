@@ -1,12 +1,12 @@
 ---
-title: "Legge di bilancio 2027: le novità per famiglie, lavoratori e pensionati"
-seo_title: "Legge di bilancio 2027: novità per famiglie e pensionati"
+title: "Legge di bilancio 2027: bonus in arrivo e novità per famiglie, lavoratori e pensionati"
+seo_title: "Legge di bilancio 2027: bonus in arrivo per famiglie e pensionati"
 slug: "legge-di-bilancio-2027-novita-famiglie-pensionati"
 date: 2026-11-12
-last_updated: 2026-11-12
+last_updated: 2026-11-26
 category: "bonus-fiscali"
-tags: ["legge-di-bilancio-2027", "irpef", "bonus-mamme", "pensione", "congedo-parentale", "cedolare-secca"]
-meta_description: "Legge di bilancio 2027: IRPEF, bonus mamme 100 euro, congedo, Carta 300 euro over 75, pensioni e affitti. Le proposte spiegate dal CAF a Vigne Nuove, Roma."
+tags: ["legge-di-bilancio-2027", "bonus-2027", "irpef", "bonus-mamme", "pensione", "congedo-parentale", "cedolare-secca"]
+meta_description: "Bonus 2027 in arrivo: carta 300 euro over 75, bonus mamme 100 euro, nuovi nati, congedo. Serve la domanda? Da quando? Il CAF di Vigne Nuove, Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Disegno di legge di bilancio 2027, A.C. 3174, presentato alla Camera il 30 ottobre 2026 (ora A.C. 3174-bis dopo lo stralcio): artt. 5, 9, 51, 53, 54, 55, 57, 58, 59, 60 - https://www.camera.it/leg19/126?idDocumento=3174"
@@ -14,19 +14,22 @@ sources:
   - "D.Lgs. 26 marzo 2001, n. 151, art. 34, comma 1 (testo vigente) e Circolare INPS n. 95 del 26 maggio 2025 (tre mesi di congedo parentale all'80%)"
   - "D.Lgs. 15 marzo 2024, n. 29, artt. 34-36 e scheda INPS Prestazione universale - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.decreto-anziani-prestazione-universale.html"
   - "Legge 30 dicembre 2025, n. 199, art. 1, comma 3 (aliquote IRPEF 2026)"
+  - "FiscoeTasse, Legge di bilancio 2027: le novità fiscali del DDL articolo per articolo (artt. 3, 4, 57-60) - https://www.fiscoetasse.com/normativa-prassi/13619-legge-di-bilancio-2027-le-novita-fiscali-del-ddl-articolo-per-articolo.html"
+  - "FiscoeTasse, Bonus 300 euro over 75: chi ha diritto e cosa si può pagare (art. 53, decreto entro 30 giorni) - https://www.fiscoetasse.com/domande-e-risposte/12895-bonus-300-euro-over-75-chi-ha-diritto-cosa-si-puo-pagare.html"
+  - "Informazione Fiscale, Manovra 2027: termine emendamenti 17 novembre 2026 - https://www.informazionefiscale.it/manovra-2027-novita-emendamenti-ultime-notizie"
 status: published
 type: novita
 image: "/og/legge-di-bilancio-2027-novita-famiglie-pensionati.jpg"
 image_alt: "Legge di bilancio 2027: novità per famiglie, lavoratori e pensionati"
 ---
 
-# Legge di bilancio 2027: le novità per famiglie, lavoratori e pensionati
+# Legge di bilancio 2027: bonus in arrivo e novità per famiglie, lavoratori e pensionati
 
-**Ultimo aggiornamento: 12 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
-Il disegno di **legge di bilancio 2027** (A.C. 3174) è stato presentato alla Camera il **30 ottobre 2026** e ora è all'esame del Parlamento. Dal 4 novembre l'esame prosegue sul testo A.C. 3174-bis, nato dallo stralcio di alcune norme. Gli articoli citati qui sotto sono quelli del testo presentato. Deve essere approvato entro fine anno per entrare in vigore il **1° gennaio 2027**.
+Il disegno di **legge di bilancio 2027** (A.C. 3174) è stato presentato alla Camera il **30 ottobre 2026** e ora è all'esame del Parlamento. Dal 4 novembre l'esame prosegue sul testo A.C. 3174-bis, nato dallo stralcio di alcune norme. Gli articoli citati qui sotto sono quelli del testo presentato. Il termine per presentare gli emendamenti era il **17 novembre 2026**: ora il Parlamento li esamina. Deve essere approvato entro fine anno per entrare in vigore il **1° gennaio 2027**.
 
-In questa pagina raccogliamo le misure che interessano di più le famiglie, i lavoratori e i pensionati. **Sono tutte proposte**: il testo può cambiare. Aggiorneremo l'articolo dopo l'approvazione.
+In questa pagina raccogliamo i **bonus in arrivo** e le misure che interessano di più le famiglie, i lavoratori e i pensionati. **Sono tutte proposte**: il testo può cambiare. Per ognuna ti diciamo se servirà una domanda e da quando. Aggiorneremo l'articolo dopo l'approvazione.
 
 ## In breve
 
@@ -39,6 +42,25 @@ In questa pagina raccogliamo le misure che interessano di più le famiglie, i la
 | **Rivalutazione pensioni** | nuove fasce sull'intero importo | pensioni oltre 2.447,40 € lordi |
 | **APE sociale** | prorogata a tutto il 2027, a 63 anni e 6 mesi | disoccupati, caregiver, invalidi, gravosi |
 | **Cedolare secca** | 5% (1% under 36) sui nuovi contratti concordati 2027 | proprietari che affittano |
+
+## Bonus 2027 in arrivo: serve la domanda? Da quando?
+
+**Oggi nessuno di questi bonus si può chiedere**: prima la legge va approvata, poi servono i decreti o le istruzioni dell'INPS. Ecco cosa dice il testo per ognuno.
+
+| Bonus in arrivo | Quanto | Serve la domanda? | Da quando |
+|---|---|---|---|
+| **Carta sanitaria over 75** (art. 53) | 300 € una volta, nel 2027 | il testo non lo dice: lo deciderà un **decreto** del Ministero del Lavoro, da fare entro 30 giorni dall'entrata in vigore della legge | nel 2027, dopo il decreto |
+| **Bonus lavoratrici madri** (art. 57) | 100 € al mese, pagati ogni tre mesi | **sì**, all'INPS | dal 2027, quando l'INPS darà le istruzioni |
+| **Valore nuovi nati** (art. 58) | 100 € l'anno fino ai 18 anni | la posizione la apre l'INPS; i dettagli li fisserà un decreto entro 180 giorni | per i nati dal 1° gennaio 2027 |
+| **Congedo parentale all'80%** (art. 59) | da 4 a 6 mesi all'80%, secondo il numero dei figli | sì, la solita domanda di congedo | per chi finisce maternità o paternità dopo il 31/12/2026 |
+| **Voucher per genitori autonomi** (art. 60) | fino a 500 € al mese per 3 mesi | sì, al posto del congedo parentale, nei limiti dei fondi | dal 2027 |
+| **Prestazione universale anziani** (art. 53) | proroga al 2027, soglia ISEE sociosanitario a 12.000 € | sì, all'INPS, come oggi | nel 2027 |
+| **Contributo auto per famiglie numerose** (art. 3) | fino a 385,71 € | modalità da definire | dal 2027 |
+| **Bonus elettrodomestici** (art. 4) | fondo rifinanziato con 50 milioni per il 2027 | le regole 2027 non ci sono ancora | da definire |
+
+Il **contributo auto per famiglie numerose** riguarda i nuclei con **più di tre figli**, di cui almeno uno minorenne, che hanno un'auto da **sei a nove posti** fino a **133 kW**.
+
+Il **bollo auto 2027** invece è **già legge**: niente bollo su un solo veicolo a benzina o gasolio fino a 80 kW (legge 209/2026). Il disegno di legge di bilancio lo renderebbe stabile anche per gli anni dopo. Trovi tutto in [Bollo auto 2027 gratis fino a 80 kW](/blog/bollo-auto-2027-esenzione-80-kw-legge-209-2026).
 
 ## IRPEF 2027 nella legge di bilancio
 
@@ -71,7 +93,7 @@ Per le partite IVA nel **regime forfettario** la soglia dei ricavi sale a **100.
 - ha compiuto **75 anni entro il 31 dicembre 2026**;
 - ha pensioni (anche sociali o di invalidità civile) che nel **2025** non superano in tutto **28.000 euro**.
 
-Non è tassata e non conta per l'ISEE. Le modalità, compresi i negozi e le strutture dove usarla, saranno fissate da un decreto.
+Non è tassata e non conta per l'ISEE. Per averla l'ISEE non serve: conta solo l'importo delle pensioni. Le modalità, compresi i negozi e le strutture dove usarla e se servirà una domanda, saranno fissate da un decreto del Ministero del Lavoro, da adottare entro 30 giorni dall'entrata in vigore della legge. In pratica le istruzioni arriveranno **non prima di gennaio-febbraio 2027**.
 
 **Prestazione universale per anziani non autosufficienti (art. 53).** Oggi è sperimentale fino al 31 dicembre 2026 ed è riservata a chi ha almeno 80 anni, un bisogno assistenziale gravissimo, l'indennità di accompagnamento e un ISEE sociosanitario fino a **6.000 euro**. Il testo la proroga al **31 dicembre 2027** e per il 2027 alza la soglia ISEE a **12.000 euro**.
 
@@ -112,6 +134,12 @@ Se il totale delle tue pensioni nel 2025 non ha superato 28.000 euro, il testo a
 **Devo fare domanda per la carta o per il bonus?**
 Il bonus lavoratrici madri è a domanda. Per la carta le modalità le stabilirà un decreto. Ti avviseremo quando sarà possibile.
 
+**Quando si potrà chiedere la carta da 300 euro per gli over 75?**
+Non ancora. Prima la legge va approvata entro il 31 dicembre 2026, poi il decreto (entro 30 giorni) dirà se la carta arriva in automatico dall'INPS o se serve una domanda. Ti avviseremo appena esce.
+
+**Quali bonus 2027 sono già legge?**
+L'esenzione dal bollo auto 2027 per un solo veicolo fino a 80 kW (legge 209/2026). Le altre misure di questa pagina sono ancora proposte.
+
 **Cambia qualcosa per l'Assegno Unico con la legge di bilancio 2027?**
 Il bonus madri, i voucher per autonomi e la carta non contano per l'ISEE. Per il rinnovo dell'[Assegno Unico](/assegno-unico) vale come sempre l'ISEE 2027.
 
@@ -120,6 +148,8 @@ Il bonus madri, i voucher per autonomi e la carta non contano per l'ISEE. Per il
 - [Rivalutazione pensioni 2027: aumento da gennaio e nuove fasce](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce)
 - [Assegno Unico 2027: rinnovo ISEE e scadenze](/blog/assegno-unico-2027-rinnovo-isee-scadenze)
 - [ISEE 2027: documenti e quando rinnovarlo a Roma](/blog/isee-2027-documenti-quando-rinnovare-roma)
+- [Bollo auto 2027 gratis fino a 80 kW](/blog/bollo-auto-2027-esenzione-80-kw-legge-209-2026)
+- [Congedo parentale: mesi all'80% e domanda](/blog/congedo-parentale-guida-mesi-80-per-cento-domanda)
 
 ---
 
