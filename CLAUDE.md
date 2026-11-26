@@ -122,6 +122,7 @@ Prima di eseguire questi task, leggere la procedura corrispondente:
 | Deploy o redeploy Vercel | `vault/procedure/02-deploy-vercel.md` |
 | Modificare design system del sito | `vault/procedure/03-redesign-frontend.md` |
 | Mantenere il vault stesso | `vault/procedure/05-knowledge-base-vault.md` |
+| Ottimizzare con i dati di Search Console (domande reali) | `vault/procedure/08-ottimizzazione-search-console.md` + `docs/regole-contenuto.md` 4-ter |
 
 ## Stato infrastruttura (2026-04-28)
 

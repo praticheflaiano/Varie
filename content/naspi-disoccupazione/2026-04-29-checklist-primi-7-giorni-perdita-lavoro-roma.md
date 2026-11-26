@@ -3,15 +3,15 @@ title: "Hai perso il lavoro? La checklist dei primi 7 giorni"
 seo_title: "Hai perso il lavoro? Cosa fare nei primi 7 giorni"
 slug: "checklist-primi-7-giorni-perdita-lavoro-roma"
 date: 2026-04-29
-last_updated: 2026-11-24
+last_updated: 2026-11-26
 category: "naspi-disoccupazione"
 tags: ["naspi", "guida", "patronato", "lavoro", "isee", "famiglie"]
-meta_description: "Hai perso il lavoro a Roma? Cosa fare nei primi 7 giorni: NASpI, ISEE corrente, AUU, SIISL. Checklist Patronato + CAF UNSIC del Centro Pratiche Flaiano Vigne Nuove."
+meta_description: "Hai perso il lavoro a Roma? Cosa fare nei primi 7 giorni: NASpI, ISEE corrente, AUU, SIISL. La checklist del Patronato ENASC a Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto Legislativo 4 marzo 2015, n. 22 (NASpI)"
   - "INPS - Scheda Indennita NASpI (inps.it)"
-  - "DL 48/2023 conv. L. 85/2023, art. 5 (SIISL)"
+  - "DL 48/2023 conv. L. 85/2023, art. 5 (SIISL), art. 1 (Assegno di inclusione) e art. 12 (Supporto per la formazione e il lavoro)"
   - "D.Lgs. 230/2021 art. 6 (AUU)"
   - "DPCM 159/2013 (ISEE corrente)"
 deadline: 2026-06-30
@@ -25,7 +25,7 @@ image_alt: "Illustrazione editoriale: checklist astratta con primi due check com
 
 # Hai perso il lavoro? La checklist dei primi 7 giorni - dal Patronato del Centro Pratiche Flaiano
 
-**Ultimo aggiornamento: 29 aprile 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 **SCADENZE CRITICHE: 68 giorni per la domanda NASpI, 15 giorni per la firma del PAD su SIISL, 30 giugno per la DSU 2026 (arretrati AUU).**
 
@@ -88,7 +88,7 @@ Il Patronato e gratuito per tutti per legge (Legge 152/2001) e ti segue per:
 - Domanda **DIS-COLL** se eri co.co.co.
 - Iscrizione e firma **PAD su SIISL** (entro 15 giorni dall'accoglimento NASpI)
 
-Al **Centro Pratiche Flaiano** prendi un appuntamento dal sito ([praticheflaiano-sito.vercel.app](https://praticheflaiano-sito.vercel.app)) o chiamaci al 06 9784 5429. **Tutto gratis**.
+Al **Centro Pratiche Flaiano** prendi un appuntamento dalla pagina [prenota](/prenota) o chiamaci al 06 9784 5429. La domanda NASpI è **gratis**.
 
 ## Giorni 5-6 - Aggiorna ISEE e ricalibra Assegno Unico
 
@@ -97,7 +97,7 @@ Quando il reddito cala bruscamente (perdita lavoro, cassa integrazione, fine con
 - Aggiornare l'**Assegno Unico Universale (AUU)** se hai figli (l'AUU si ricalcola automaticamente sull'ISEE corrente, vedi la [guida ISEE 2026](/blog/isee-2026-dsu-30-giugno-arretrati-assegno-unico) per le date e gli arretrati)
 - Accedere a **bonus** che prima erano fuori soglia (Bonus Asilo Nido, riduzioni utenze, riduzioni mensa scolastica)
 - Ridurre le **rette pubbliche** (asili nido comunali, RSA per genitori anziani a carico)
-- **Reddito di Cittadinanza/ADI** se hai i requisiti
+- **Assegno di inclusione (ADI)** o **Supporto formazione e lavoro (SFL)** se hai i requisiti (il Reddito di Cittadinanza non esiste più dal 2024)
 
 L'ISEE ordinario fotografa i redditi di **2 anni fa** (per il 2026: redditi 2024). Se nel 2024 lavoravi ma nel 2026 no, il tuo ISEE ordinario e fittiziamente alto. L'**ISEE corrente** ricalcola sui 12 mesi reali e spesso ti fa scattare in fasce piu favorevoli.
 
@@ -118,7 +118,7 @@ Il Patronato del Centro Pratiche Flaiano puo seguirti anche per questo passaggio
 
 ## Cosa NON fare nei primi 7 giorni
 
-- **NON dimettersi** per "evitare grane" se sei vicino a un licenziamento. Le dimissioni volontarie escludono dalla NASpI (salvo eccezioni come giusta causa o maternita).
+- **NON dimettersi** per "evitare grane" se sei vicino a un licenziamento. Le dimissioni volontarie escludono dalla NASpI (salvo eccezioni come giusta causa o maternita). Se devi dimetterti, leggi prima [come dare le dimissioni online, anche senza SPID](/blog/dimissioni-online-senza-spid-come-fare).
 - **NON firmare risoluzioni consensuali** senza farle vedere al Patronato. La risoluzione consensuale, salvo casi particolari, esclude dalla NASpI.
 - **NON aspettare oltre i 68 giorni**: oltre questo termine la NASpI **non spetta piu**, anche se avevi diritto.
 - **NON ignorare le comunicazioni INPS**: durante il periodo NASpI sei tenuto a rispondere a richieste di documentazione, convocazioni CPI, attivita formative GOL.
@@ -170,6 +170,14 @@ In caso di dubbio, prima di dare dimissioni rivolgiti al Patronato per inquadrar
 
 I tempi dipendono dalla sede INPS: per legge il termine ordinario per decidere sulla domanda è di 30 giorni. Il primo pagamento comprende gli arretrati dal giorno in cui parte la NASpI: l'ottavo giorno dopo la fine del lavoro, oppure il giorno dopo la domanda se l'hai presentata più tardi (per questo conviene fare la [domanda NASpI](/naspi/domanda) subito). Vedi anche la [guida pagamenti NASpI](https://domandedisoccupazione.it/guida/pagamenti-accredito) sul nostro portale.
 
+### Dopo la NASpI cosa posso richiedere nel 2026?
+
+**Dipende dalla tua famiglia e dal tuo ISEE.** Le strade principali sono l'**Assegno di inclusione (ADI)**, per i nuclei con minori, persone con disabilità, over 60 o persone in condizione di svantaggio, e il **Supporto formazione e lavoro (SFL)**, per chi ha tra 18 e 59 anni e partecipa a corsi o progetti per trovare lavoro. Per entrambi serve un ISEE sotto la soglia prevista: guarda la pagina [ADI e SFL](/adi-sfl). Se hai figli, aggiorna anche l'Assegno Unico con l'ISEE corrente.
+
+### C'è un patronato o un CAF per la NASpI vicino a me a Roma?
+
+Se vivi a **Roma Nord**, il Centro Pratiche Flaiano è **Patronato ENASC** e **CAF UNSIC** in Via Filoteo Alberini 25, nel Centro Acquisti Flaiano di **Vigne Nuove** (Municipio III), comodo da Tufello, Conca d'Oro, Bufalotta e Porta di Roma. La [domanda NASpI con il nostro patronato](/naspi) è gratuita, anche in videochiamata.
+
 ### Faccio meglio a fare la domanda da solo o con il Patronato?
 
 Il Patronato e **gratuito per legge**. Per chi non ha mai fatto domanda NASpI, ne ha mai gestito SIISL, o ha situazioni complesse (codici cessazione ambigui, dimissioni in periodo protetto, contributi figurativi, lavoro autonomo parallelo) il Patronato evita errori che possono portare al rigetto della domanda o alla decadenza per problemi SIISL. Per chi vuole calcolare gli importi prima di andare al Patronato, c'e il [calcolatore NASpI](/calcolo-naspi).
@@ -181,3 +189,9 @@ Il Patronato e **gratuito per legge**. Per chi non ha mai fatto domanda NASpI, n
 - [Bonus Asilo Nido 2026 fino a 3.600 euro](/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps)
 - [Categoria: NASpI e Disoccupazione](/blog/categoria/naspi-disoccupazione)
 - **Portale NASpI dedicato** (calcolatore, OCR, 30+ guide): [domandedisoccupazione.it](https://domandedisoccupazione.it)
+
+---
+
+*Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche; si invita a verificare sempre l'attualità delle informazioni presso le fonti ufficiali (inps.it, lavoro.gov.it). Per una valutazione personalizzata della propria situazione, prenota un appuntamento presso il nostro Centro.*
+
+*Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC - Via Filoteo Alberini 25 int. 10, 00139 Roma - Tel. 06 9784 5429 - WhatsApp 371 623 0690*

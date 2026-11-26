@@ -1,12 +1,12 @@
 ---
 title: "Invalidità civile a Roma: con la riforma basta il certificato del medico"
-seo_title: "Riforma disabilità a Roma: come si chiede l'invalidità"
+seo_title: "Invalidità civile a Roma: certificato medico e riforma 2026"
 slug: "riforma-disabilita-roma-certificato-introduttivo-cosa-cambia"
 date: 2026-11-11
-last_updated: 2026-11-11
+last_updated: 2026-11-26
 category: "invalidita-civile"
 tags: ["invalidita", "legge-104", "inps", "guida", "novita"]
-meta_description: "Riforma della disabilità: a Roma dal 1° marzo 2026 l'invalidità civile si avvia con il solo certificato medico introduttivo. Cosa cambia e cosa fare dopo."
+meta_description: "Invalidità civile a Roma: dal 1° marzo 2026 basta il certificato medico introduttivo inviato all'INPS. Chi lo fa, quanto costa con noi, cosa fare dopo."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto legislativo 3 maggio 2024, n. 62 (riforma della disabilità), artt. 12, 15 e 33"
@@ -16,6 +16,7 @@ sources:
   - "INPS, Messaggi n. 635, n. 637 e n. 639 del 23 febbraio 2026"
   - "INPS, brochure Riforma della disabilità, quarta edizione, maggio 2026 - https://www.inps.it/content/dam/inps-site/pdf/schede-servizio/documents/Brochure_Riforma_Disabilit%C3%A0.pdf"
   - "INPS, dossier Riforma della disabilità, fase sperimentale - https://www.inps.it/it/it/inps-comunica/dossier/riforma-della-disabilita/fase-sperimentale.html"
+  - "Legge 5 febbraio 1992, n. 104, art. 3, comma 3, nel testo modificato dal D.Lgs. 62/2024 - https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1992-02-05;104~art3"
 status: published
 type: guida
 image: "/og/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia.jpg"
@@ -24,7 +25,7 @@ image_alt: "Riforma della disabilità a Roma: basta il certificato del medico"
 
 # Invalidità civile a Roma: con la riforma basta il certificato del medico
 
-**Ultimo aggiornamento: 11 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Dal **1° marzo 2026** chi vive a **Roma** chiede l'invalidità civile e gli altri riconoscimenti legati alla disabilità con una procedura nuova: **basta il certificato medico introduttivo**. Non c'è più la domanda da presentare a parte.
 
@@ -39,10 +40,13 @@ Dal **1° marzo 2026** chi vive a **Roma** chiede l'invalidità civile e gli alt
 | **Chi valuta** | l'**INPS**, con l'Unità di valutazione di base |
 | **Cosa ricevi** | un **unico certificato finale** al posto del vecchio verbale |
 | **In tutta Italia** | dal **1° gennaio 2027** |
+| **Quanto costa con noi** | primo incontro **gratis**; costo del certificato e della pratica detto prima di iniziare |
 
-## Dove vale la nuova procedura
+> [Prenota il primo incontro gratuito](/prenota): il nostro medico certificatore fa il certificato e noi seguiamo la pratica.
 
-La riforma è partita per gradi:
+## Dove vale la nuova procedura di invalidità?
+
+Oggi in **60 province**, tra cui **Roma**; dal **1° gennaio 2027** è prevista in tutta Italia. La riforma è partita per gradi:
 
 - dal **1° gennaio 2025** in nove province;
 - dal **30 settembre 2025** in altre undici;
@@ -50,7 +54,9 @@ La riforma è partita per gradi:
 
 Conta dove sei **residente o domiciliato**. Nelle altre province resta la procedura di prima: certificato del medico e, entro 90 giorni, domanda all'INPS.
 
-## Cosa cambia per chi vive a Roma
+## Cosa cambia per chi chiede l'invalidità a Roma?
+
+Non serve più la domanda: il **certificato medico introduttivo** avvia la pratica e la visita la fa **solo l'INPS**.
 
 ### 1. Parte tutto dal certificato
 
@@ -76,7 +82,9 @@ Agli adulti con **diabete di tipo 2**, **disturbi dello spettro autistico** o **
 
 Alla fine ricevi un **unico certificato finale**, al posto del vecchio verbale.
 
-## Cosa fare dopo il riconoscimento
+## Cosa fare dopo il riconoscimento dell'invalidità?
+
+Per avere i pagamenti vanno inviati all'INPS i **dati socio-economici**: puoi farlo da solo o tramite patronato.
 
 - **Dati per i pagamenti.** Per avere le prestazioni economiche vanno inviati all'INPS i **dati socio-economici**. Si può fare dal sito INPS con SPID o CIE, oppure tramite un **patronato**.
 - **Progetto di vita.** Puoi chiedere il progetto di vita individuale direttamente dal servizio INPS dedicato. Lo costruiscono con te i servizi sociali del territorio.
@@ -85,6 +93,12 @@ Alla fine ricevi un **unico certificato finale**, al posto del vecchio verbale.
 ## Se avevi iniziato con la vecchia procedura
 
 Nelle 40 province entrate a marzo, i certificati fatti **fino al 28 febbraio 2026** con il vecchio sistema andavano completati con la domanda all'INPS **entro quella stessa data**.
+
+## Quanto costa il certificato medico per l'invalidità civile?
+
+Da noi il **primo incontro è gratuito**: il costo del **certificato** e della **pratica** te lo diciamo **prima di iniziare**, senza impegno.
+
+Il certificato lo fa il **medico certificatore in sede**, nello stesso ufficio in cui seguiamo la pratica di patronato. Per un preventivo puoi scriverci su **WhatsApp al 371 623 0690**. Trovi come lavoriamo nella pagina [invalidità civile e legge 104](/invalidita-104).
 
 ## Perché rivolgerti al Centro Pratiche Flaiano
 
@@ -112,13 +126,20 @@ Dipende dalla provincia. Oggi la riforma si applica in 60 province; dal 1° genn
 **Chi fa la visita?**
 L'Unità di valutazione di base dell'INPS.
 
-**Dopo il riconoscimento devo fare altro?**
-Sì: per ricevere i pagamenti vanno inviati all'INPS i dati socio-economici, da soli o tramite patronato.
+**Cosa si intende per disabilità grave?**
+È l'handicap grave della legge 104 (art. 3, comma 3): la condizione ha ridotto l'autonomia personale, rispetto all'età, al punto da richiedere un intervento assistenziale permanente, continuativo e globale. Con la riforma la legge parla di "sostegno intensivo".
+
+**Quanto costa la pratica di invalidità o 104 al patronato?**
+Da noi il primo incontro è gratuito e i costi del certificato e della pratica te li diciamo prima di iniziare. Chiedi il preventivo su WhatsApp al 371 623 0690.
+
+**Ci sono aumenti per l'invalidità civile nel 2027?**
+Gli importi 2027 di pensione di invalidità, assegno mensile e accompagnamento l'INPS non li ha ancora comunicati: arrivano con la circolare annuale sul rinnovo delle pensioni e delle prestazioni assistenziali, e aggiorneremo la pagina. Per le pensioni in generale leggi la guida sulla [rivalutazione delle pensioni 2027](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce).
 
 ## Articoli correlati
 
 - [RED, ICRIC, ICLAV e ACC.AS/PS: chi deve farli](/blog/red-icric-iclav-accas-ps-2026-guida)
-- [APE sociale 2026: ultima scadenza il 30 novembre](/blog/ape-sociale-2026-ultima-scadenza-30-novembre)
+- [Esenzione bollo auto per disabili nel Lazio](/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda)
+- [Legge sul caregiver familiare: a che punto è](/blog/legge-caregiver-familiare-ddl-senato-contributo)
 - [Tipi di ISEE: differenze e quale serve](/blog/tipi-di-isee-differenze-quale-serve)
 
 ---

@@ -1,16 +1,16 @@
 ---
 title: "Esenzione bollo auto per disabili nel Lazio: chi ne ha diritto e come fare domanda"
-seo_title: "Esenzione bollo auto disabili Lazio: requisiti e domanda"
+seo_title: "Esenzione bollo auto legge 104 Lazio: requisiti e domanda"
 slug: "esenzione-bollo-auto-disabili-lazio-requisiti-domanda"
 date: 2026-11-13
-last_updated: 2026-11-13
+last_updated: 2026-11-26
 category: "invalidita-civile"
 tags: ["invalidita", "legge-104", "bollo-auto", "guida", "regione-lazio"]
-meta_description: "Esenzione bollo auto per disabili nel Lazio: le 4 categorie ammesse, limiti di cilindrata, familiare a carico, domanda online entro 90 giorni. Aiuto a Roma."
+meta_description: "Esenzione bollo auto con legge 104 nel Lazio: 4 categorie, cilindrata, domanda solo online sul Portale del Contribuente entro 90 giorni. Aiuto a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Regione Lazio, Esenzione per disabilità dalla tassa automobilistica (pagina aggiornata al 16/12/2025) - https://www.regione.lazio.it/tributi-regionali/tassa-automobilistica/esenzione-disabilita"
-  - "Regione Lazio, Determinazione n. G00609 del 20/01/2025 (BUR n. 10 del 04/02/2025): Guida all'esenzione per disabilità"
+  - "Regione Lazio, Determinazione n. G00609 del 20/01/2025 (BUR n. 10 del 04/02/2025): Guida all'esenzione per disabilità - https://regione.lazio.it/sites/default/files/documentazione/2025/TRI-DD-G00609-20-01-2025-Allegato.pdf"
   - "Legge 27 dicembre 1997, n. 449, art. 8; Legge 23 dicembre 2000, n. 388, art. 30, comma 7; Legge 21 novembre 2000, n. 342, art. 50"
   - "Legge regionale Lazio n. 8/2019, art. 6"
   - "D.P.R. 917/1986 (TUIR), art. 12 (familiari a carico)"
@@ -22,7 +22,7 @@ image_alt: "Esenzione bollo auto per disabili nel Lazio"
 
 # Esenzione bollo auto per disabili nel Lazio: chi ne ha diritto e come fare domanda
 
-**Ultimo aggiornamento: 13 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Nel Lazio la persona con disabilità, o il familiare che l'ha **fiscalmente a carico**, può **non pagare il bollo auto** per un veicolo. L'esenzione però **non arriva da sola**: anche con il verbale di invalidità o di legge 104 in mano, bisogna **fare domanda alla Regione**.
 
@@ -40,9 +40,13 @@ E i tempi contano: chi la presenta in ritardo perde un anno di bollo.
 | **Termine** | entro **90 giorni** dalla scadenza del pagamento, per avere l'esenzione dall'anno in corso |
 | **Dopo** | vale anche negli anni successivi, finché restano i requisiti |
 
+> [Prenota la domanda di esenzione bollo](/prenota): leggiamo il verbale e la presentiamo con te sul portale della Regione.
+
 > [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
 
-## Chi può chiederla
+## Chi ha diritto all'esenzione bollo auto per disabili nel Lazio?
+
+La **persona con disabilità** che rientra in una delle **quattro categorie** della Regione, oppure il **familiare** che l'ha **fiscalmente a carico**, per **un solo veicolo**.
 
 - La **persona con disabilità** intestataria del veicolo (anche locataria o usufruttuaria).
 - Il **familiare** intestatario, se la persona con disabilità è **fiscalmente a suo carico**: reddito complessivo annuo non oltre **2.840,51 euro**, oppure **4.000 euro** per i figli fino a 24 anni.
@@ -51,7 +55,9 @@ Per provare il carico fiscale serve l'**ultima dichiarazione dei redditi** o l'*
 
 Se il disabile è a carico **al 50% di due familiari**, l'esenzione spetta comunque su **un solo veicolo**: l'altro familiare firma una rinuncia da allegare alla domanda.
 
-## Le quattro categorie di disabilità
+## Quali disabilità danno diritto all'esenzione?
+
+Quattro categorie: **non vedenti e sordi**, **disabilità psichica o mentale con accompagnamento**, **grave limitazione della deambulazione** e **capacità motorie ridotte con auto adattata**. La sola 104 non basta: conta cosa c'è scritto nel verbale.
 
 ### 1. Non vedenti e sordi
 
@@ -77,27 +83,33 @@ Qui il veicolo **deve essere adattato** alla disabilità, e l'adattamento deve r
 - Il **cambio automatico** vale come adattamento solo se prescritto dalla Commissione medica locale per la **patente speciale**.
 - Per i **minori** con handicap grave e capacità motorie ridotte l'adattamento **non serve**.
 
-## Quali veicoli
+## Per quali auto vale l'esenzione?
+
+Per **un solo veicolo** fino a **2.000 cc** benzina, **2.800 cc** diesel o **150 kW** elettrico, intestato al disabile o al familiare che lo ha a carico.
 
 - **Uno solo** per persona con disabilità, indicato con la targa nella domanda.
 - **Cilindrata massima:** **2.000 cc** benzina (anche ibrido), **2.800 cc** diesel (anche ibrido), **150 kW** se elettrico.
 - Per non vedenti e sordi: autovetture e autoveicoli per trasporto promiscuo o specifico. Per le altre categorie anche i **motoveicoli** equivalenti.
 - Sono esclusi i veicoli intestati a società, cooperative o enti.
 
-## Come si fa la domanda
+## Come si richiede l'esenzione bollo auto con la legge 104?
 
-Dal **1° marzo 2025** la domanda si presenta **solo online** sul **Portale del Contribuente** della Regione Lazio, con **SPID, CIE o CNS**, usando i moduli del portale. Domande inviate in altro modo sono **irricevibili**.
+Con una **domanda online** sul **Portale del Contribuente** della Regione Lazio: l'esenzione **non è automatica**, nemmeno con il verbale della 104.
+
+Dal **1° marzo 2025** la domanda si presenta **solo online**, entrando con **SPID, CIE, tessera sanitaria-CNS** o con l'utenza della Regione (IAM). I **moduli obbligatori** si trovano dentro il portale, durante la compilazione: non c'è un modulo da scaricare e spedire. Domande inviate in altro modo sono **irricevibili**.
 
 La Regione risponde di norma **entro 90 giorni**.
 
-## Entro quando: la regola dei 90 giorni
+## Entro quando va presentata la domanda?
+
+Entro **90 giorni dalla scadenza del pagamento** del bollo, per avere l'esenzione già **dall'anno in corso**.
 
 - Domanda **entro 90 giorni dalla scadenza del pagamento** del bollo: l'esenzione vale **dall'anno in corso**.
 - Domanda **oltre i 90 giorni**: l'esenzione parte **dall'anno successivo**. Il bollo dell'anno in corso va pagato.
 
 Il bollo si paga entro il mese successivo alla scadenza del periodo: se il periodo scade il 30 aprile, si paga entro il 31 maggio e i 90 giorni partono da lì.
 
-## Verbale rivedibile, cambio auto e fine dell'esenzione
+## Cosa succede se il verbale scade o cambi auto?
 
 - **Verbale con scadenza:** l'esenzione finisce con il verbale. Dopo la visita di revisione bisogna fare una **nuova domanda entro 90 giorni** dal nuovo verbale.
 - **Revisione INPS in ritardo:** si può chiedere una **proroga entro 30 giorni** dalla comunicazione INPS con la data della visita.
@@ -114,7 +126,9 @@ Il bollo si paga entro il mese successivo alla scadenza del periodo: se il perio
 - [ ] Se l'auto è del familiare: **ultima dichiarazione dei redditi o CU** del disabile
 - [ ] SPID o CIE dell'intestatario
 
-## Contrassegno parcheggio e bollo non sono la stessa cosa
+## Il contrassegno per il parcheggio dà l'esenzione dal bollo?
+
+**No**, sono due agevolazioni diverse.
 
 Il **contrassegno invalidi** per il parcheggio lo rilascia il Comune e **non dà diritto da solo** all'esenzione dal bollo. Per il bollo nel verbale deve risultare una delle quattro categorie. Se il verbale non riporta i requisiti per le agevolazioni auto, si può chiedere una **rettifica** alla commissione.
 
@@ -138,17 +152,20 @@ No. Nel Lazio serve sempre una domanda alla Regione sul Portale del Contribuente
 **Il familiare può avere l'esenzione sulla sua auto?**
 Sì, se la persona con disabilità è fiscalmente a suo carico: reddito annuo fino a 2.840,51 euro, o 4.000 euro per i figli fino a 24 anni.
 
-**Quali sono i limiti di cilindrata?**
-2.000 cc per benzina e ibrido benzina, 2.800 cc per diesel e ibrido diesel, 150 kW per l'elettrico.
-
-**Se presento la domanda in ritardo?**
-Oltre 90 giorni dalla scadenza del pagamento, l'esenzione parte dall'anno successivo.
-
 **Ogni anno devo rifare la domanda?**
 No. Vale anche negli anni successivi finché restano i requisiti, salvo verbale con scadenza o cambio auto.
 
-**Il contrassegno per il parcheggio basta per non pagare il bollo?**
-No, sono due agevolazioni diverse con requisiti diversi.
+**C'è un modulo per la richiesta di esenzione bollo auto della Regione Lazio nel 2026?**
+Non c'è un modulo da scaricare e spedire: i modelli obbligatori si compilano direttamente sul Portale del Contribuente, con SPID, CIE o CNS. Le domande inviate per posta, PEC o allo sportello non vengono accettate.
+
+**Nel Lazio chi ha più di 70 anni è esente dal bollo auto?**
+L'esenzione per disabilità non dipende dall'età: spetta solo se il verbale rientra in una delle quattro categorie previste dalla Regione Lazio. Avere più di 70 anni, da solo, non dà diritto a questa esenzione.
+
+**E il bollo 2027 gratis per le auto fino a 80 kW?**
+È una misura nazionale diversa e temporanea. Chi ha già l'esenzione per disabilità la mantiene finché restano i requisiti. Come si combinano le due esenzioni è in corso di definizione: leggi la guida al [bollo auto 2027 gratis fino a 80 kW](/blog/bollo-auto-2027-esenzione-80-kw-legge-209-2026).
+
+**Quanto costa fare la domanda di esenzione con voi?**
+Il costo del nostro servizio te lo diciamo prima di iniziare: chiedi il preventivo su WhatsApp al 371 623 0690.
 
 ## Articoli correlati
 

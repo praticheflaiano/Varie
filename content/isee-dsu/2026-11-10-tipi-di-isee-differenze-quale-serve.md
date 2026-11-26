@@ -1,12 +1,12 @@
 ---
 title: "Tipi di ISEE: ordinario, minorenni, università, sociosanitario, corrente. Quale ti serve"
-seo_title: "Tipi di ISEE 2026: differenze e quale ti serve"
+seo_title: "Tipi di ISEE: quanti sono, differenze e quale ti serve"
 slug: "tipi-di-isee-differenze-quale-serve"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-26
 category: "isee-dsu"
 tags: ["isee", "inps", "famiglie", "disabilita", "universita", "bonus"]
-meta_description: "ISEE ordinario, minorenni, università, sociosanitario, ristretto, residenze, corrente e il nuovo ISEE 2026 per le famiglie: differenze, chi entra nel nucleo, per cosa serve."
+meta_description: "Quanti tipi di ISEE ci sono: ordinario, minorenni, università, sociosanitario, residenze, corrente e ISEE famiglie. Quale ti serve, gratis al CAF a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "DPCM 5 dicembre 2013, n. 159 - Regolamento ISEE (artt. 3, 6, 7, 8, 9 e Allegato 1)"
@@ -27,7 +27,7 @@ image_alt: "Tipi di ISEE: differenze e quale ti serve"
 
 # Tipi di ISEE: ordinario, minorenni, università, sociosanitario, corrente. Quale ti serve
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 L'ISEE non è uno solo. Con la stessa dichiarazione (la **DSU**) l'INPS calcola valori diversi, perché ogni aiuto guarda una famiglia diversa: per un bonus per i figli può contare anche il genitore che non vive con loro, per l'università può contare la famiglia d'origine, per una RSA contano anche i figli che vivono altrove.
 
@@ -44,10 +44,14 @@ Non devi quindi fare una pratica per ogni tipo. Devi però **compilare la DSU gi
 **Tre regole che valgono per tutti:**
 
 - La DSU **vale fino al 31 dicembre** dell'anno in cui la presenti.
-- Si usano **redditi e patrimonio del secondo anno precedente**: nel 2026 i redditi 2024 e il patrimonio al 31 dicembre 2024.
+- Si usano **redditi e patrimonio del secondo anno precedente**: nel 2026 i redditi 2024 e il patrimonio al 31 dicembre 2024; nell'ISEE 2027 i redditi 2025 e il patrimonio al 31 dicembre 2025.
 - L'ISEE si fa **online sul sito INPS** con SPID o CIE, oppure **al CAF**. Da noi è **gratis**.
 
-## Tutti i tipi a colpo d'occhio
+## Quanti tipi di ISEE ci sono?
+
+I tipi di ISEE sono **sei**: ordinario, minorenni, università, sociosanitario (anche ristretto), sociosanitario per le residenze e corrente. Dal 2026 c'è in più il **calcolo per le prestazioni familiari e l'inclusione**.
+
+> [Prenota il tuo ISEE gratis](/prenota): scegliamo noi il tipo giusto, a Vigne Nuove o in videochiamata.
 
 | Tipo di ISEE | Per chi | Chi entra nel calcolo | Esempi di aiuti |
 |---|---|---|---|
@@ -210,8 +214,8 @@ Facciamo **tutti i tipi di ISEE gratis**. Prima di inviare la DSU controlliamo q
 
 ## Domande frequenti
 
-**Quanti tipi di ISEE esistono?**
-I principali sono ordinario, minorenni, università, sociosanitario (anche con nucleo ristretto), sociosanitario per le residenze e corrente. Dal 2026 c'è anche il calcolo per le prestazioni familiari e l'inclusione, usato per Assegno unico, ADI, SFL, bonus nido e bonus nuovi nati.
+**Quando non conviene fare l'ISEE?**
+L'ISEE non è obbligatorio: serve solo per chiedere aiuti e sconti legati all'ISEE. Senza ISEE l'Assegno unico si paga all'importo minimo e il bonus nido vale 1.500 €: se il tuo ISEE supererebbe comunque le soglie (per l'Assegno unico 2026 oltre 46.582,71 €, per il bonus nido oltre 40.000 €), il risultato non cambia. Nel dubbio facciamo i conti insieme, gratis.
 
 **Devo fare una DSU diversa per ogni tipo di ISEE?**
 No. Con una sola DSU l'INPS calcola più valori. Devi però compilare i quadri in più che servono, ad esempio quelli sul genitore non convivente o sui figli che vivono fuori casa.

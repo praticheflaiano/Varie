@@ -9,17 +9,17 @@ const zone = [
   {
     href: "/zone/caf-patronato-vigne-nuove",
     name: "Vigne Nuove",
-    text: "La nostra sede. Linee 38, 86, 336, 339 e 349. Uffici pubblici del Municipio III.",
+    text: "La nostra sede, in Via Filoteo Alberini 25 int. 10. Linee 38, 86, 336, 338, 339, 341 e 349. Uffici pubblici del Municipio III.",
   },
   {
     href: "/zone/caf-patronato-bufalotta-porta-di-roma",
     name: "Bufalotta e Porta di Roma",
-    text: "Linea 38 dal capolinea di Porta di Roma fino a Vigne Nuove. Uffici pubblici di riferimento.",
+    text: "Linea 38 dal capolinea di Porta di Roma, linee 86, 338 e 341 lungo Via della Bufalotta fino a Vigne Nuove. Uffici pubblici di riferimento.",
   },
   {
     href: "/zone/caf-patronato-talenti-montesacro",
     name: "Talenti e Montesacro",
-    text: "Metro B1 (Jonio, Conca d'Oro), linee 38, 336, 86, 339 e 349 verso Vigne Nuove. INPS, Municipio III e ASL Distretto 3.",
+    text: "Anche Nuova Talenti. Metro B1 (Jonio, Conca d'Oro), linee 38, 336, 338, 339 e 349 verso Vigne Nuove. INPS, Municipio III e ASL Distretto 3.",
   },
   {
     href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario",
@@ -29,14 +29,14 @@ const zone = [
   {
     href: "/zone/caf-patronato-tufello-conca-oro",
     name: "Tufello, Conca d'Oro e Val Melaina",
-    text: "Linee 38, 336 e 86 da Conca d'Oro, linee 339 e 349 da Tufello e Val Melaina. Uffici pubblici di riferimento.",
+    text: "Linee 38, 336 e 338 da Conca d'Oro, linee 339 e 349 da Tufello e Val Melaina. Uffici pubblici di riferimento.",
   },
 ];
 ---
 
 <BaseLayout
-  title="Zone servite a Roma Nord"
-  description="Il Centro Pratiche Flaiano è a Vigne Nuove, nel Municipio III di Roma. Scegli la tua zona: come arrivare e gli uffici pubblici di riferimento. CAF e patronato."
+  title="CAF e patronato Roma Nord: zone servite nel Municipio III"
+  description="CAF e patronato a Vigne Nuove, Municipio III di Roma: per Talenti, Conca d'Oro, Tufello, Val Melaina, Fidene, Colle Salario, Bufalotta. Sabato chiuso."
 >
   <section class="bg-mesh-brand">
     <div class="container-wide pt-10 pb-12">
@@ -45,7 +45,7 @@ const zone = [
         eyebrow="Zone servite"
         level="h1"
         title="CAF e patronato a Roma Nord: le zone che serviamo"
-        subtitle="La nostra sede è in Via Filoteo Alberini 25, dentro il Centro Acquisti Flaiano, a Vigne Nuove (Municipio III). Scegli la tua zona per vedere come arrivare e quali uffici pubblici ti riguardano."
+        subtitle="La nostra sede è in Via Filoteo Alberini 25 int. 10, dentro il Centro Acquisti Flaiano, a Vigne Nuove (Municipio III). Siamo aperti dal lunedì al giovedì 9:30-13:00 e 15:30-18:00, il venerdì 9:30-14:00; sabato e domenica chiusi. Scegli la tua zona per vedere come arrivare e quali uffici pubblici ti riguardano."
       />
     </div>
   </section>
@@ -67,7 +67,7 @@ const zone = [
       <div class="mt-10 rounded-[28px] bg-[var(--color-brand-50)] p-6">
         <h2 class="font-display text-xl font-bold text-[var(--color-brand-900)]">Vuoi venire in ufficio?</h2>
         <p class="mt-3 text-sm text-[var(--color-ink-soft)] leading-relaxed">
-          Sei già vicino: l'ufficio è in {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality}. Indicazioni e orari sono nella <a href="/contatti">pagina contatti</a>.
+          Tutte queste zone sono nel Municipio III, come il nostro ufficio: {CONTACT.address.street}, {CONTACT.address.postalCode} {CONTACT.address.locality}. Riceviamo su appuntamento, dal lunedì al venerdì (sabato chiuso). Indicazioni, orari e chiusure per le feste sono nella <a href="/contatti">pagina contatti</a>.
         </p>
         <div class="mt-5 flex flex-wrap gap-3">
           <Button variant="accent" href="/prenota" icon="heroicons:calendar-days" iconPosition="left">Prenota un appuntamento</Button>

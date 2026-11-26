@@ -1,12 +1,12 @@
 ---
 title: "Bollo auto 2027 gratis per un'auto a benzina o diesel fino a 80 kW: ora è legge. Chi non paga"
-seo_title: "Bollo auto 2027 gratis fino a 80 kW: chi non paga"
+seo_title: "Bollo auto 2027 gratis fino a 80 kW: chi non paga nel Lazio"
 slug: "bollo-auto-2027-esenzione-80-kw-legge-209-2026"
 date: 2026-11-18
-last_updated: 2026-11-18
+last_updated: 2026-11-26
 category: "bonus-fiscali"
 tags: ["bollo-auto", "tassa-automobilistica", "lazio", "roma", "novita", "famiglie", "pensionati"]
-meta_description: "Bollo auto 2027: esenzione per un'auto a benzina o diesel fino a 80 kW, o una moto. È legge (L. 209/2026). Requisiti, esempi e scadenze a Roma."
+meta_description: "Bollo auto 2027 gratis per un'auto a benzina o diesel fino a 80 kW, o una moto: è legge (L. 209/2026). Esenzione nel Lazio, requisiti ed esempi a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto-legge 17 settembre 2026, n. 162, art. 2 (Gazzetta Ufficiale n. 216 del 17 settembre 2026)"
@@ -21,7 +21,7 @@ image_alt: "Bollo auto 2027 gratis per auto fino a 80 kW: chi non paga"
 
 # Bollo auto 2027 gratis per un'auto a benzina o diesel fino a 80 kW: ora è legge. Chi non paga
 
-**Ultimo aggiornamento: 18 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Nel 2027 molte persone non pagheranno il **bollo auto** su un veicolo. Lo prevedeva il decreto-legge n. 162 del 17 settembre 2026. Ora il Parlamento lo ha convertito con la **legge 13 novembre 2026, n. 209**, pubblicata in Gazzetta Ufficiale il **16 novembre 2026** e in vigore dal **17 novembre 2026**. L'esenzione (articolo 2 del decreto) è quindi confermata. In sede di conversione i requisiti per i cittadini non sono cambiati: le modifiche riguardano la forma del testo, l'applicazione nelle Regioni a statuto speciale e nelle Province autonome e la ripartizione dei fondi tra le Regioni.
 
@@ -40,6 +40,10 @@ Nel 2027 molte persone non pagheranno il **bollo auto** su un veicolo. Lo preved
 > [calcolatore del bollo auto](/calcolo-bollo-auto): scopri se sei esente e quanto paghi, con le tariffe ufficiali della Regione Lazio.
 
 > [Prenota un controllo del bollo](/prenota): verifichiamo se il tuo veicolo rientra e, per disabilità, facciamo la domanda di esenzione.
+
+## Il bollo auto 2027 si paga o no?
+
+Nel 2027 **non paghi il bollo su un solo veicolo**: un'auto a benzina o gasolio (anche ibrida) **fino a 80 kW**, oppure, se non hai un'auto così, una moto o un motorino a benzina. Sugli altri veicoli il bollo si paga come sempre.
 
 ## Chi ha diritto all'esenzione
 
@@ -80,9 +84,11 @@ La legge dice esattamente come scegliere, non lo decidi tu:
 
 L'esenzione riguarda i bolli il cui **termine ordinario di pagamento** cade **nel 2027**. Non conta il periodo coperto dal bollo. Se il tuo bollo va pagato entro una data del 2026, quel pagamento **resta dovuto**, anche se copre mesi del 2027.
 
-Conta il termine fissato per legge, **non il giorno in cui paghi**: pagare in anticipo un bollo il cui termine cade nel 2027 non serve. Per i bolli a cavallo d'anno (scadenza a fine 2026, pagamento a inizio 2027) servono le istruzioni pratiche della Regione Lazio e dell'ACI, che al 18 novembre 2026 sono **in corso di definizione**. **Non anticipare il pagamento** e non saltarlo prima di aver controllato la data: aggiorneremo questo articolo appena escono le istruzioni.
+Conta il termine fissato per legge, **non il giorno in cui paghi**: pagare in anticipo un bollo il cui termine cade nel 2027 non serve. Per i bolli a cavallo d'anno (scadenza a fine 2026, pagamento a inizio 2027) servono le istruzioni pratiche della Regione Lazio e dell'ACI, che al 26 novembre 2026 sono **in corso di definizione**: la Regione Lazio non ha ancora pubblicato indicazioni operative. **Non anticipare il pagamento** e non saltarlo prima di aver controllato la data: aggiorneremo questo articolo appena escono le istruzioni.
 
-## Serve una domanda?
+## Esenzione bollo auto 2027 nella Regione Lazio: serve la domanda?
+
+Per la legge **non serve una domanda**: chi ha i requisiti "è esentato". Come la Regione Lazio applicherà l'esenzione in pratica non è ancora stato comunicato.
 
 L'articolo 2 non prevede una domanda da parte del cittadino: dice che le persone con i requisiti "sono esentate". Come verrà applicata in pratica (per esempio se gli archivi del bollo riconosceranno l'esenzione in automatico) **è in corso di definizione**. Lo Stato compenserà le Regioni con un trasferimento complessivo di 2.293,5 milioni di euro per il 2027; la quota di ciascuna Regione sarà fissata con decreto del Ministro dell'economia entro il 31 marzo 2027 (art. 2, comma 5).
 
@@ -126,13 +132,16 @@ No. Se paghi il bollo di un'auto fino a 80 kW, di qualsiasi alimentazione, la mo
 
 Conta il termine ordinario di pagamento, non il giorno in cui paghi. Se il termine cade entro il 31 dicembre 2026 il bollo è dovuto; se cade dal 1° gennaio 2027 rientra nell'esenzione (art. 2, comma 1). Per i bolli a cavallo d'anno le istruzioni di Regione Lazio e ACI sono in corso di definizione: non pagare in anticipo prima di aver controllato la data.
 
+### Il bollo 2027 si paga o no?
+
+Non si paga su un solo veicolo per persona: un'auto a benzina o gasolio, anche ibrida, fino a 80 kW; oppure, se non hai un'auto così, una moto o un motorino a benzina. Gli altri veicoli pagano.
+
 ### Devo fare domanda per l'esenzione?
 
 La legge non prevede una domanda del cittadino. Le modalità con cui l'esenzione sarà applicata sono in corso di definizione: aggiorneremo l'articolo appena escono le istruzioni ufficiali.
 
 ## Articoli correlati
 
-- [Calcolo bollo auto Lazio: importo ed esenzioni](/calcolo-bollo-auto)
 - [Esenzione bollo auto per disabili nel Lazio: requisiti e domanda](/blog/esenzione-bollo-auto-disabili-lazio-requisiti-domanda)
 - [Legge di bilancio 2027: novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati)
 - [Canone RAI 2027: esenzione over 75 e non detenzione](/blog/canone-rai-2027-esenzione-over-75-non-detenzione)

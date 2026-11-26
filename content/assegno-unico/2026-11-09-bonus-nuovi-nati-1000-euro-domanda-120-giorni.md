@@ -1,17 +1,19 @@
 ---
 title: "Bonus nuovi nati: 1.000 euro per ogni figlio, domanda entro 120 giorni"
-seo_title: "Bonus nuovi nati 1.000 €: domanda entro 120 giorni"
+seo_title: "Bonus nuovi nati 1.000 €: domanda entro 120 giorni e 2027"
 slug: "bonus-nuovi-nati-1000-euro-domanda-120-giorni"
 date: 2026-11-09
-last_updated: 2026-11-09
+last_updated: 2026-11-26
 category: "assegno-unico"
 tags: ["bonus", "famiglie", "isee", "inps", "patronato"]
-meta_description: "Bonus nuovi nati 2026: 1.000 euro per ogni figlio nato o adottato, con ISEE fino a 40.000 €. Domanda INPS entro 120 giorni, la presenta il patronato a Roma."
+meta_description: "Bonus nuovi nati: 1.000 euro per ogni figlio, ISEE fino a 40.000 €, domanda INPS entro 120 giorni. Cosa sappiamo del 2027. Patronato a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 30 dicembre 2024, n. 207 (legge di bilancio 2025), art. 1, commi 206-207"
   - "Legge 30 dicembre 2025, n. 199 (legge di bilancio 2026), art. 1, comma 208 (ISEE per le prestazioni familiari e per l'inclusione)"
   - "INPS, Circolare n. 45 del 10 aprile 2026 - Bonus nuovi nati, domande per l'anno 2026"
+  - "INPS, scheda Bonus nuovi nati (per ogni figlio nato o adottato dal 1° gennaio 2025), aggiornata al 27 aprile 2026 - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.bonus-nuovi-nati.html"
+  - "INPS, notizia del 28 aprile 2026 'Bonus nuovi nati 2026' (nati dal 1° gennaio al 31 dicembre 2026, 120 giorni, scadenza 12 agosto 2026 per i nati prima dell'apertura, messaggio n. 1268 del 14 aprile 2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.04.bonus-nuovi-nati-2026-al-via-le-domande.html"
   - "CGIL Roma e Lazio, Bonus nuovi nati 2026 - https://lazio.cgil.it/2026/03/bonus-nuovi-nati-2026/"
 status: published
 type: guida
@@ -21,7 +23,7 @@ image_alt: "Bonus nuovi nati: 1.000 euro per ogni figlio"
 
 # Bonus nuovi nati: 1.000 euro per ogni figlio, domanda entro 120 giorni
 
-**Ultimo aggiornamento: 9 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Se nel 2026 è nato tuo figlio, o lo hai adottato o preso in affido preadottivo, puoi avere il **bonus nuovi nati**: **1.000 euro una tantum** per ogni bambino, con **ISEE fino a 40.000 euro**.
 
@@ -36,6 +38,9 @@ Il punto delicato è il tempo: la domanda va presentata **entro 120 giorni** dal
 | **ISEE** | fino a **40.000 €**, senza contare l'Assegno unico |
 | **Scadenza** | **120 giorni** dalla nascita o dall'ingresso in famiglia |
 | **Domanda** | all'INPS, online o tramite **patronato** |
+| **Nati nel 2027** | istruzioni INPS **non ancora pubblicate** |
+
+> [Prenota la domanda del bonus nuovi nati](/prenota): ISEE minorenni gratis e domanda all'INPS, a Vigne Nuove o in videochiamata.
 
 > [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
 
@@ -55,12 +60,26 @@ Per questo bonus si usa l'**ISEE per le prestazioni familiari** (ISEE minorenni)
 
 Senza un **ISEE minorenni valido**, o almeno una DSU già presentata per il bambino, **la domanda non parte**. Per questo conviene fare l'ISEE subito dopo la nascita: al nostro CAF è **gratis**.
 
-## Entro quando fare domanda
+## Entro quando fare domanda del bonus nuovi nati?
+
+La domanda del bonus nuovi nati va fatta **entro 120 giorni** dalla nascita o dall'ingresso in famiglia: dopo, i 1.000 euro si perdono.
 
 - **Regola generale:** entro **120 giorni** dalla nascita, dall'ingresso in famiglia o, per le adozioni internazionali, dalla trascrizione del provvedimento.
 - **Nati tra gennaio e metà aprile 2026:** per loro il termine è partito dall'apertura del servizio INPS ed è scaduto il **12 agosto 2026**.
 
 Esempio: se tuo figlio è nato il **9 novembre 2026**, hai tempo fino all'inizio di **marzo 2027**. Non aspettare l'ultimo momento: senza ISEE la domanda resta bloccata.
+
+## Bonus nuovi nati 2027: quando fare domanda?
+
+Per i bambini nati nel 2027 **le istruzioni INPS non sono ancora uscite**: la data di apertura della domanda non è ancora ufficiale.
+
+Quello che sappiamo:
+
+- la scheda INPS descrive il bonus come un contributo di **1.000 euro per ogni figlio nato o adottato dal 1° gennaio 2025**;
+- finora l'INPS ha pubblicato istruzioni **anno per anno**: per i nati nel 2026 con la circolare n. 45 del 10 aprile 2026 e il messaggio n. 1268 del 14 aprile 2026;
+- nel 2026, per i bambini nati **prima dell'apertura del servizio**, i 120 giorni sono partiti dalla pubblicazione del messaggio INPS (scadenza 12 agosto 2026).
+
+Importo e soglia ISEE per il 2027 li confermerà l'INPS con le nuove istruzioni. Aggiorneremo questa guida appena escono. Nel frattempo, se il bambino nasce a inizio 2027, conviene fare subito l'**ISEE 2027** con il bambino nel nucleo: è il primo documento che serve. Le altre novità per le famiglie sono in [Bonus figli 2027](/blog/bonus-figli-2027-aiuti-nascita-cosa-spetta).
 
 ## Come si presenta
 
@@ -78,8 +97,6 @@ Il bonus nuovi nati si aggiunge agli altri aiuti per i figli:
 
 - l'**Assegno unico**, da chiedere (o aggiornare con il nuovo figlio) appena nasce il bambino: [tutto sull'Assegno unico 2027](/blog/assegno-unico-2027-rinnovo-isee-scadenze);
 - il **bonus asilo nido**, se il bambino andrà al nido: [guida al bonus nido](/blog/bonus-asilo-nido-2026-3600-euro-domanda-inps).
-
-Per i bambini che nasceranno nel **2027** l'INPS pubblicherà nuove istruzioni: aggiorneremo questa guida appena escono.
 
 ## Documenti da portare
 
@@ -107,8 +124,8 @@ In un solo appuntamento facciamo l'**ISEE minorenni**, presentiamo il **bonus nu
 **Quanto vale il bonus nuovi nati?**
 1.000 euro una tantum per ogni figlio nato, adottato o in affido preadottivo nel 2026. Con due gemelli, si fanno due domande.
 
-**Entro quando devo fare domanda?**
-Entro 120 giorni dalla nascita o dall'ingresso in famiglia. Dopo, il bonus si perde.
+**Mio figlio nasce a gennaio 2027: avrò il bonus da 1.000 euro?**
+La scheda INPS parla di figli nati o adottati dal 1° gennaio 2025, ma le istruzioni per i nati nel 2027 non sono ancora uscite. Prepara l'ISEE 2027 e segui questa pagina: la aggiorniamo appena l'INPS apre il servizio.
 
 **Che ISEE serve?**
 L'ISEE per le prestazioni familiari (ISEE minorenni) fino a 40.000 euro, senza contare l'Assegno unico ricevuto.

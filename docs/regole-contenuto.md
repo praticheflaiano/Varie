@@ -132,6 +132,19 @@ Decisa con Antonio il 15/11/2026 dopo i dati di Search Console: gli articoli con
 6. **Link interni**: pagina servizio, /prenota, articoli collegati; dalle pagine servizio (`related`) collegare l'articolo quando il tema è stagionale.
 7. **Pagine servizio**: le domande vanno nell'elenco `faqs` della pagina (già trasformate in FAQPage); la prima schermata deve rispondere alla domanda principale.
 
+## 4-ter. Domande reali e risposta in una riga (OBBLIGATORIA dal 26/11/2026)
+
+Decisa con Antonio il 26/11/2026 dopo l'analisi di Search Console (3 mesi, 1.000 query): le pagine sono quasi tutte in posizione 6-11 con CTR vicino a zero sulle ricerche-domanda, perché Google risponde da solo (riquadri e AI). Per salire e farsi citare:
+
+1. **Partire dai dati**: prima di scrivere o aggiornare, guardare in Search Console (Rendimento > Query, ultimi 3 mesi) le query della pagina o del tema. Le ricerche lunghe si trovano con il filtro regex `^(?:\S+\s+){5,}\S+$` (6 parole o più).
+2. **Titolo SEO**: `seo_title` comincia con le parole della ricerca con più impressioni (es. "Cedolino pensione dicembre 2026: ..."). Mai cambiare lo slug di un articolo che ha già impressioni.
+3. **Un titoletto per ogni intenzione**: le varianti della stessa domanda ("quando si fa / quando fare / da quando si può fare l'ISEE 2027") diventano UN H2 o H3 scritto come la variante più cercata, con il punto interrogativo.
+4. **Risposta in una riga**: la prima frase sotto ogni titoletto-domanda risponde da sola, in massimo ~30 parole, con il dato chiave in grassetto (data, importo, anno). Poi i dettagli. È la frase che Google e le AI citano.
+5. **Ricerche di servizio** ("quanto costa ... al caf/patronato", "... vicino a me", "aperti adesso"): rispondere nelle domande frequenti con il prezzo SOLO se pubblicato (altrimenti preventivo su WhatsApp) e collegare la pagina servizio. Sono le ricerche che portano clienti.
+6. **Ricerche stagionali ad alto volume** (es. "assegno unico dicembre 2026" 5.150 impressioni in 3 mesi, "inps cedolino pensione dicembre 2026" 4.212): aggiornare l'articolo appena esce il dato ufficiale del mese, con la data nel titolo e nella prima riga; preparare l'articolo del mese successivo prima che inizino le ricerche.
+7. **Un articolo per intenzione**: niente doppioni; se due articoli si sovrappongono si rafforza quello con più impressioni e si collega l'altro.
+8. **Controllo mensile**: vedi `vault/procedure/08-ottimizzazione-search-console.md`.
+
 ## 5. SEO
 
 ### Keyword

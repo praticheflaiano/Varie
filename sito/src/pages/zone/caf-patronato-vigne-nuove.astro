@@ -7,12 +7,20 @@ const transport = [
     html: `La <strong>38</strong> (Termini - Porta di Roma) passa da Via delle Vigne Nuove. Dalla fermata <strong>Vigne Nuove/Lumiere</strong> all'ingresso del Centro Acquisti Flaiano sono circa 6 minuti a piedi. Fonti: <a href="https://it.busti.me/rome/rome-bus-38/" rel="noopener">Bustime linea 38</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
   },
   {
-    title: "Linee 86 e 336 dalla metro Conca d'Oro",
-    html: `Se arrivi con la metro B1, alla stazione <strong>Conca d'Oro</strong> prendi la <strong>38</strong>, la <strong>86</strong> o la <strong>336</strong>, che arrivano a Vigne Nuove. Fonti: <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://moovitapp.com/index/it/mezzi_pubblici-Via_delle_Vigne_Nuove_Largo_Fratelli_Lumiere-Roma_e_Lazio-site_34161162-61" rel="noopener">Moovit Vigne Nuove/Lumiere</a>.`,
+    title: "Linee 336 e 338 dalla metro Conca d'Oro",
+    html: `Se arrivi con la metro B1, alla stazione <strong>Conca d'Oro</strong> prendi la <strong>38</strong>, la <strong>336</strong> o la <strong>338</strong>: tutte e tre hanno la fermata Vigne Nuove/Lumiere. Le linee <strong>86</strong> e <strong>341</strong> arrivano invece da Bufalotta. Fonti: <a href="https://it.busti.me/rome/rome-bus-336/" rel="noopener">Bustime linea 336</a>, <a href="https://it.busti.me/rome/rome-bus-338/" rel="noopener">Bustime linea 338</a>, <a href="https://it.busti.me/rome/rome-bus-86/" rel="noopener">Bustime linea 86</a>.`,
   },
   {
     title: "Linee 339 e 349 dentro il quartiere",
     html: `Le circolari <strong>339</strong> e <strong>349</strong> passano da Jonio (metro B1) e girano nel quartiere Vigne Nuove, su vie interne come Isole Curzolane e Monte Massico. Fonti: <a href="https://moovitapp.com/index/it/mezzi_pubblici-Vigne_Nuove-Roma_e_Lazio-site_14810963-61" rel="noopener">Moovit Vigne Nuove</a>, <a href="https://it.busti.me/rome/rome-bus-339/" rel="noopener">Bustime linea 339</a>.`,
+  },
+  {
+    title: "Siamo in Via delle Vigne Nuove?",
+    html: `No: l'ingresso è in <strong>Via Filoteo Alberini 25, interno 10</strong>, dentro il Centro Acquisti Flaiano. Se arrivi in autobus su Via delle Vigne Nuove, scendi alla fermata <strong>Vigne Nuove/Lumiere</strong>: da lì sono circa 6 minuti a piedi.`,
+  },
+  {
+    title: "Orari: siete aperti oggi? E il sabato?",
+    html: `Siamo aperti <strong>dal lunedì al giovedì 9:30-13:00 e 15:30-18:00</strong> e il <strong>venerdì 9:30-14:00</strong>. Il <strong>sabato e la domenica siamo chiusi</strong>, come il venerdì pomeriggio. Riceviamo su appuntamento: <a href="/prenota">prenota online</a>, chiama lo <a href="tel:+390697845429">06 9784 5429</a> o scrivi su WhatsApp al <a href="https://wa.me/393716230690">371 623 0690</a>. Le chiusure per le feste sono nella <a href="/contatti">pagina contatti</a>.`,
   },
 ];
 
@@ -23,7 +31,7 @@ const offices = [
   },
   {
     title: "Municipio III",
-    html: `Vigne Nuove è nel Municipio III, nord-est di Roma. Per orari e servizi: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
+    html: `Vigne Nuove è uno dei 21 quartieri del Municipio III, nel nord-est di Roma, insieme a Tufello, Val Melaina, Conca d'Oro, Monte Sacro, Talenti, Nuovo Salario, Colle Salario, Serpentara, Fidene, Porta di Roma e Bufalotta (fonte: <a href="https://www.comune.roma.it/web/it/i-quartieri-di-roma-mun3.page" rel="noopener">Roma Capitale, quartieri del Municipio III</a>). Per orari e servizi del Municipio: <a href="https://www.comune.roma.it/web/it/municipio-iii-urp.page" rel="noopener">URP Municipio III</a>.`,
   },
   {
     title: "ASL Roma 1, Distretto 3: Casa della Comunità Montesacro-Hub",
@@ -37,17 +45,17 @@ const offices = [
 ---
 
 <ZonaPage
-  title="CAF e patronato a Vigne Nuove, Roma"
-  description="CAF UNSIC e patronato ENASC a Vigne Nuove: Via Filoteo Alberini 25, Centro Acquisti Flaiano. Come arrivare con 38, 86, 336, 339, 349. ISEE, 730, pensioni."
+  title="CAF Vigne Nuove Roma e patronato: orari, telefono, indirizzo"
+  description="CAF e patronato a Vigne Nuove, Roma: Via Filoteo Alberini 25 int. 10. Lun-gio 9:30-13 e 15:30-18, ven 9:30-14, sabato chiuso. Tel 06 9784 5429."
   slug="caf-patronato-vigne-nuove"
   breadcrumbName="Vigne Nuove"
   eyebrow="Zone servite · Vigne Nuove"
-  h1="CAF e patronato a Vigne Nuove"
-  intro="Siamo a Vigne Nuove: il Centro Pratiche Flaiano è in Via Filoteo Alberini 25 int. 10, dentro il Centro Acquisti Flaiano (Municipio III). Qui trovi come arrivare con i mezzi e gli uffici pubblici di riferimento per chi abita nel quartiere."
-  transportTitle="Come arrivare a Via Filoteo Alberini"
+  h1="CAF e patronato a Vigne Nuove, Roma"
+  intro="Il CAF UNSIC e patronato ENASC di Vigne Nuove è in Via Filoteo Alberini 25 int. 10, dentro il Centro Acquisti Flaiano (Municipio III, Roma). Siamo aperti dal lunedì al venerdì, il sabato siamo chiusi. Qui trovi orari, telefono, come arrivare e gli uffici pubblici del quartiere."
+  transportTitle="Come arrivare a Via Filoteo Alberini 25 e quando siamo aperti"
   transportIntro="Le linee che servono Via delle Vigne Nuove, secondo gli orari pubblicati online. Gli itinerari possono cambiare: controlla sempre il percorso aggiornato."
   transport={transport}
-  transportNote="Dati verificati il 23/11/2026 su Bustime e Moovit. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
+  transportNote="Dati presi da Bustime e Moovit; percorsi delle linee 38, 86, 336, 338 e 341 ricontrollati su Bustime il 26/11/2026. ATAC e Roma Servizi per la Mobilità possono variare linee e fermate."
   officesTitle="Uffici pubblici per chi abita qui"
   officesIntro="Gli uffici che servono più spesso a chi abita a Vigne Nuove."
   offices={offices}
@@ -56,6 +64,6 @@ const offices = [
     { name: "Bufalotta e Porta di Roma", href: "/zone/caf-patronato-bufalotta-porta-di-roma" },
     { name: "Tufello, Conca d'Oro, Val Melaina", href: "/zone/caf-patronato-tufello-conca-oro" },
     { name: "Talenti e Montesacro", href: "/zone/caf-patronato-talenti-montesacro" },
-    { name: "Fidene, Serpentara, Nuovo Salario", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
+    { name: "Fidene, Nuovo Salario, Colle Salario, Serpentara", href: "/zone/caf-patronato-fidene-serpentara-nuovo-salario" },
   ]}
 />

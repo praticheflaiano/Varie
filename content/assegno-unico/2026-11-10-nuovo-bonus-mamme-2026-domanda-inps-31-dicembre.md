@@ -1,12 +1,12 @@
 ---
 title: "Nuovo bonus mamme 2026: fino a 720 euro, domanda INPS entro il 31 dicembre"
-seo_title: "Bonus mamme 2026: 720 €, domanda entro il 31 dicembre"
+seo_title: "Bonus mamme 2026: quando pagano, 720 € e domanda entro 31/12"
 slug: "nuovo-bonus-mamme-2026-domanda-inps-31-dicembre"
 date: 2026-11-10
-last_updated: 2026-11-10
+last_updated: 2026-11-26
 category: "assegno-unico"
 tags: ["bonus", "famiglie", "inps", "patronato", "lavoro"]
-meta_description: "Nuovo bonus mamme 2026: 60 € al mese fino a 720 € per le lavoratrici con almeno due figli e reddito fino a 40.000 €. Domanda INPS entro il 31 dicembre, a Roma."
+meta_description: "Bonus mamme 2026: fino a 720 €, pagati a dicembre 2026 in unica soluzione (o da gennaio 2027). Domanda INPS entro il 31 dicembre. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 30 dicembre 2025, n. 199 (legge di bilancio 2026), art. 1, commi 206-207"
@@ -22,7 +22,7 @@ image_alt: "Nuovo bonus mamme 2026: fino a 720 euro, domanda entro il 31 dicembr
 
 # Nuovo bonus mamme 2026: fino a 720 euro, domanda INPS entro il 31 dicembre
 
-**Ultimo aggiornamento: 10 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Se lavori e hai **almeno due figli**, per il 2026 puoi avere il **Nuovo bonus mamme**: **60 euro per ogni mese lavorato**, fino a **720 euro** in tutto. L'INPS lo paga **a dicembre, in un'unica volta**.
 
@@ -36,10 +36,12 @@ Il bonus **non arriva da solo**: l'INPS lo riconosce solo a chi presenta la doma
 | **Per chi** | lavoratrici dipendenti e autonome con **almeno due figli** |
 | **Reddito** | redditi da lavoro 2026 fino a **40.000 €** |
 | **Scadenza** | **31 dicembre 2026** (31 gennaio 2027 se il requisito matura a dicembre) |
-| **Pagamento** | in un'unica soluzione a **dicembre 2026** |
+| **Pagamento** | in un'unica soluzione a **dicembre 2026**, o da gennaio 2027 se la domanda è esaminata dopo |
 | **Domanda** | all'INPS: online, Contact Center o **patronato** |
 
 Rispetto al 2025 l'importo è salito da 40 a 60 euro al mese.
+
+> [Prenota la domanda del bonus mamme](/prenota): controlliamo i mesi che ti spettano e inviamo noi la domanda entro il 31 dicembre.
 
 > [calcolatore di maternità e congedi](/calcolo-maternita-congedi): le date della maternità e del congedo parentale e quanto prendi.
 
@@ -100,12 +102,18 @@ Gli esempi che seguono vengono dalla circolare INPS n. 106/2026.
 
 Ogni mese vale 60 euro, anche se lavorato solo in parte.
 
+## Quando viene erogato il bonus mamme 2026?
+
+Il bonus mamme 2026 viene pagato **a dicembre 2026, in un'unica soluzione**, se l'INPS ha concluso l'esame della domanda; altrimenti arriva **da gennaio 2027** (messaggio INPS n. 3343/2026).
+
+L'INPS non ha indicato un giorno preciso di dicembre. Le domande vengono esaminate **in ordine di presentazione**: chi la presenta prima ha più probabilità di essere pagata già a dicembre. L'esito e i pagamenti si vedono nel servizio online "Nuovo Bonus mamme 2026".
+
 ## Entro quando fare domanda
 
 - **Scadenza:** **31 dicembre 2026**.
 - **Eccezione:** se il requisito matura **a dicembre 2026** (ad esempio nasce il secondo figlio), puoi fare domanda fino al **31 gennaio 2027**.
 
-Non aspettare gli ultimi giorni: l'INPS lavora le domande **in ordine di presentazione**. Se la tua non viene chiusa in tempo per dicembre, i soldi arrivano **da gennaio 2027**.
+Non aspettare gli ultimi giorni: chi presenta la domanda a fine dicembre riceverà i soldi, se spettano, nel 2027.
 
 ## Come si presenta
 
@@ -119,9 +127,11 @@ Nella domanda dichiari i dati dei figli, il tipo di lavoro, il reddito entro i 4
 
 Sono **dichiarazioni sotto la tua responsabilità**: l'INPS le controlla, anche dopo il pagamento, e in caso di dati falsi recupera le somme.
 
-## Se la domanda viene respinta
+## Bonus mamme accolta parzialmente: cosa vuol dire?
 
-L'INPS può accogliere la domanda, accoglierla **solo per alcuni mesi** oppure respingerla. L'esito si legge nello stesso servizio online.
+**Accolta parzialmente** vuol dire che l'INPS ti riconosce il bonus **solo per alcuni mesi del 2026**, non per tutti quelli che hai chiesto (circolare INPS n. 106/2026).
+
+Può succedere, ad esempio, se in alcuni mesi non lavoravi, avevi un contratto che non dà diritto al bonus o il requisito dei figli è arrivato durante l'anno. L'INPS può quindi accogliere la domanda, accoglierla **solo per alcuni mesi** oppure respingerla. L'esito si legge nello stesso servizio online.
 
 Se non ti riconoscono tutti i mesi puoi chiedere il **riesame**, solo online, **entro il termine scritto nel provvedimento**, allegando i documenti che chiariscono la tua situazione.
 
@@ -163,8 +173,8 @@ Ricorda: dal **23 dicembre 2026 al 10 gennaio 2027** l'ufficio è chiuso. Per ri
 **Entro quando devo fare domanda?**
 Entro il 31 dicembre 2026. Solo se il requisito matura a dicembre 2026 c'è tempo fino al 31 gennaio 2027.
 
-**Quando arrivano i soldi?**
-In un'unica soluzione a dicembre 2026, se l'INPS chiude la domanda in tempo. Altrimenti da gennaio 2027.
+**Il bonus mamme ci sarà anche nel 2027?**
+Per il 2027 il disegno di legge di bilancio (art. 57) propone un nuovo bonus per le lavoratrici madri da 100 euro al mese, ma è ancora una proposta. I dettagli sono in [Legge di bilancio 2027: le novità](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati).
 
 **Lavoro come colf o badante: mi spetta?**
 No, il lavoro domestico è escluso.

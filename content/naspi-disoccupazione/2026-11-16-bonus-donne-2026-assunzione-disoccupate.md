@@ -1,12 +1,12 @@
 ---
 title: "Bonus Donne 2026: chi assume una disoccupata non paga i contributi"
-seo_title: "Bonus Donne 2026: fino a 650 € al mese, a chi spetta"
+seo_title: "Bonus donne disoccupate 2026: 650 € al mese, fino al 31 dicembre"
 slug: "bonus-donne-2026-assunzione-disoccupate"
 date: 2026-11-16
-last_updated: 2026-11-16
+last_updated: 2026-11-26
 category: "naspi-disoccupazione"
 tags: ["bonus-donne", "assunzioni", "disoccupazione", "lavoro", "novita"]
-meta_description: "Bonus Donne 2026: chi assume entro il 31 dicembre una donna disoccupata da 6, 12 o 24 mesi non paga i contributi fino a 650 € al mese. Requisiti e consigli a Roma."
+meta_description: "Bonus donne disoccupate 2026: chi assume entro il 31 dicembre 2026 una donna senza lavoro non paga i contributi fino a 650 € al mese: requisiti, a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto-legge 30 aprile 2026, n. 62, art. 1"
@@ -14,6 +14,7 @@ sources:
   - "INPS, Messaggio n. 1970 dell'11 giugno 2026"
   - "INPS, Bonus donne 2026: guida alle assunzioni con sgravio INPS 100%, 29 maggio 2026"
   - "Ministero del Lavoro, Bonus Donne 2026, 3 luglio 2026 - https://www.lavoro.gov.it/pn-giovani-donne-lavoro/progetti/bonus-donne-2026"
+  - "Camera dei deputati e Senato, Dossier 'Legge di bilancio 2027 - Profili di interesse della XI Commissione Lavoro', A.C. 3174-bis, 9 novembre 2026 (art. 42, comma 1, lett. a) del disegno di legge) - https://documenti.camera.it/leg19/dossier/Pdf/LA0244.pdf"
 status: published
 type: novita
 image: "/og/bonus-donne-2026-assunzione-disoccupate.jpg"
@@ -22,12 +23,14 @@ image_alt: "Bonus Donne 2026: esonero contributi per chi assume donne disoccupat
 
 # Bonus Donne 2026: chi assume una disoccupata non paga i contributi
 
-**Ultimo aggiornamento: 16 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 **Fonte:** D.L. 62/2026, art. 1 e Circolare INPS n. 57 del 14 maggio 2026
 **Vale per:** assunzioni dal 1° gennaio al **31 dicembre 2026**
 
 **In breve.** Il Bonus Donne 2026 è uno sconto per le **aziende private** che assumono a **tempo indeterminato** una donna senza lavoro da almeno 6, 12 o 24 mesi (a seconda dei casi). L'azienda non paga i contributi INPS a suo carico, **fino a 650 € al mese** per lavoratrice, per **12 o 24 mesi**. Vale solo per le assunzioni fatte **entro il 31 dicembre 2026**. I soldi non vanno alla lavoratrice, ma per chi cerca lavoro è un argomento in più da usare al colloquio.
+
+> [Prenota: NASpI, SIISL e cosa ti spetta mentre cerchi lavoro](/prenota): a Roma Vigne Nuove o in videochiamata.
 
 ## Cos'è il Bonus Donne 2026
 
@@ -59,7 +62,7 @@ Le condizioni di svantaggio richiamate dalla circolare sono quelle del regolamen
 - Nei **6 mesi dopo** non deve licenziare per giustificato motivo oggettivo la lavoratrice assunta (o un collega con la stessa qualifica): altrimenti perde il bonus e lo deve restituire.
 - Deve essere in regola con i contributi e applicare i contratti collettivi firmati dai sindacati più rappresentativi.
 
-## Come si chiede
+## Come si chiede: il Portale delle Agevolazioni (ex DiResCo)
 
 La domanda la presenta **l'azienda** (di solito tramite il suo consulente del lavoro), solo online, sul sito INPS nel **"Portale delle Agevolazioni (ex DiResCo) – Bonus donne 2026"**, aperto dall'11 giugno 2026. Si può chiedere anche prima di assumere: in quel caso l'INPS prenota i fondi e l'azienda ha **10 giorni** per fare l'assunzione e la comunicazione obbligatoria.
 
@@ -77,7 +80,7 @@ La lavoratrice non deve fare nessuna domanda.
 No. È uno sconto sui contributi per l'azienda che assume. Lo stipendio e i contributi della lavoratrice restano quelli normali.
 
 ### Fino a quando si può assumere con il bonus?
-Valgono le assunzioni a tempo indeterminato fatte dal 1° gennaio al 31 dicembre 2026.
+Oggi valgono le assunzioni a tempo indeterminato fatte dal 1° gennaio al **31 dicembre 2026**. Il disegno di legge di bilancio 2027 (A.C. 3174-bis, art. 42) propone di prorogarlo alle assunzioni fino al 31 dicembre 2027: non è ancora legge, aggiorneremo la pagina quando sarà approvato.
 
 ### Vale anche per il part-time?
 Sì, purché il contratto sia a tempo indeterminato.

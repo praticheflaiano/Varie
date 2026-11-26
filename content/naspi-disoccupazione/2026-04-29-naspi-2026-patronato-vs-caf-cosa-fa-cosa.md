@@ -175,7 +175,14 @@ Per i contenuti tecnici del portale NASpI (calcolatore importi, anticipo NASpI i
 ## Articoli correlati
 
 - [Hai perso il lavoro? La checklist dei primi 7 giorni](/blog/checklist-primi-7-giorni-perdita-lavoro-roma)
+- [Dimissioni online senza SPID: come darle tramite patronato](/blog/dimissioni-online-senza-spid-come-fare)
 - [ISEE 2026 e DSU 30 giugno per arretrati AUU](/blog/isee-2026-dsu-30-giugno-arretrati-assegno-unico)
 - [Assegno Unico 2026: importi e fasce ISEE](/blog/assegno-unico-2026-importi-tabella-isee)
 - [Categoria: NASpI e Disoccupazione](/blog/categoria/naspi-disoccupazione)
 - **Portale NASpI dedicato** (calcolatore, OCR, 30+ guide): [domandedisoccupazione.it](https://domandedisoccupazione.it)
+
+---
+
+*Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche; si invita a verificare sempre l'attualità delle informazioni presso le fonti ufficiali (inps.it, agenziaentrate.gov.it). Per una valutazione personalizzata della propria situazione, prenota un appuntamento presso il nostro Centro.*
+
+*Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC - Via Filoteo Alberini 25 int. 10, 00139 Roma - Tel. 06 9784 5429 - WhatsApp 371 623 0690*

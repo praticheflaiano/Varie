@@ -135,3 +135,7 @@ Gli articoli seguono questo flusso: `draft` → `fact-checked` → `seo-optimize
 ## Controllo struttura (dal 15/11/2026)
 
 Verifica che l articolo abbia il riquadro "## In breve", le "## Domande frequenti" in formato `### Domanda?` e un seo_title con le parole cercate (docs/regole-contenuto.md, sezione 4-bis).
+
+## Domande reali da Search Console (dal 26/11/2026)
+
+Applica anche `docs/regole-contenuto.md` sezione 4-ter: seo_title che inizia con la ricerca più cercata, un titoletto-domanda per ogni intenzione, risposta in una riga (max ~30 parole, dato chiave in grassetto) sotto ogni domanda, FAQ con le domande lunghe reali e le ricerche di servizio. Se hai accesso ai dati di Search Console usa la procedura `vault/procedure/08-ottimizzazione-search-console.md`.

@@ -1,12 +1,12 @@
 ---
 title: "EBIT Lazio 2026: rimborsi per libri, tasse universitarie, trasporti e sport"
-seo_title: "EBIT Lazio 2026: rimborsi libri, università e bus | CAF Roma"
+seo_title: "EBIT Lazio rimborsi 2026: libri, trasporti e università"
 slug: "ebit-lazio-welfare-2026-rimborsi-libri-tasse-universitarie-trasporti"
 date: 2026-11-13
-last_updated: 2026-11-13
+last_updated: 2026-11-26
 category: "bonus-fiscali"
 tags: ["bonus", "lavoro", "famiglie", "isee", "guida"]
-meta_description: "EBIT Lazio 2026: rimborsi per libri, tasse universitarie, trasporti e sport. Chi può chiedere e scadenze. Ti aiutiamo a Vigne Nuove, Roma: prenota."
+meta_description: "EBIT Lazio rimborsi 2026: libri fino a 300 €, abbonamento bus 150-250 €, tasse universitarie 500 €. Chi può chiederli e scadenze. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "EBIT Lazio, Regolamento welfare territoriale 2026 per lavoratrici e lavoratori - https://ebitlazio.it/media/template/ebitlazio/download/regolamento2026_LAVORATORI-LAVORATRICI.pdf"
@@ -19,7 +19,7 @@ image_alt: "EBIT Lazio 2026: rimborsi per libri, tasse universitarie e trasporti
 
 # EBIT Lazio 2026: rimborsi per libri, tasse universitarie, trasporti e sport
 
-**Ultimo aggiornamento: 13 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Se lavori nel **commercio, nel terziario o nei servizi nel Lazio**, il tuo datore di lavoro versa ogni mese un piccolo contributo all'**EBIT Lazio**, l'ente bilaterale del settore. Con quei soldi l'ente **rimborsa una parte delle spese della famiglia**: libri di scuola, tasse universitarie, abbonamento a bus e treni, sport dei figli, centri estivi.
 
@@ -41,7 +41,9 @@ Molti lavoratori non lo sanno e non lo chiedono. Qui trovi cosa prevede il **reg
 | **Spese funerarie** | **900 €** iscritto, **500 €** familiare |
 | **Malattia lunga** (aspettativa dopo il comporto) | fino a **1.000 €** |
 
-La domanda si fa **solo online** dall'area riservata del sito di EBIT Lazio.
+La domanda si fa **solo online** dall'area riservata del sito di EBIT Lazio. Al 26 novembre 2026 sul sito dell'ente c'è solo il regolamento 2026: quello del 2027 non è ancora uscito.
+
+> [Prenota un appuntamento per l'ISEE](/prenota): con l'ISEE più basso passi avanti quando i fondi EBIT non bastano.
 
 ## Chi può chiederli
 
@@ -65,7 +67,9 @@ Non sai quale contratto ti applicano? Guarda la **busta paga**: in alto c'è scr
 
 ## I rimborsi uno per uno
 
-### Libri di scuola e università
+### EBIT Lazio rimborso libri: quanto e entro quando?
+
+EBIT Lazio rimborsa i libri fino a **250 €** per le medie e **300 €** per superiori e università; la domanda va fatta entro 30 giorni dall'ultimo pagamento e **non oltre il 31 ottobre**.
 
 - **Medie:** fino a **250 €**. **Superiori:** fino a **300 €**.
 - **Università** (anche master e specializzazioni): fino a **300 €**, per te o per i figli **fino a 30 anni**.
@@ -81,7 +85,9 @@ Non sai quale contratto ti applicano? Guarda la **busta paga**: in alto c'è scr
 
 **Per l'anno accademico 2026/2027** le date dipendono dal regolamento 2027, che EBIT Lazio non ha ancora pubblicato: **aggiorneremo questa guida** appena esce.
 
-### Abbonamento a bus, metro e treni
+### EBIT Lazio rimborso trasporti: quanto vale per l'abbonamento?
+
+Per l'abbonamento annuale casa-lavoro EBIT Lazio rimborsa **150 €** (rete urbana) o **250 €** (extraurbana o integrata oltre 350 €), con domanda in due finestre all'anno.
 
 - Solo per **te lavoratore**, per l'**abbonamento annuale nominativo** casa-lavoro.
 - **150 €** per la rete urbana; **250 €** per la rete extraurbana o integrata, se l'abbonamento costa più di **350 €**.
@@ -167,14 +173,11 @@ I dipendenti che lavorano nel Lazio in aziende che applicano il CCNL Terziario, 
 **Quanto rimborsa EBIT Lazio per le tasse universitarie?**
 Fino a 500 euro per anno accademico, per il lavoratore o per i figli fino a 30 anni.
 
-**Quanto rimborsa per i libri di scuola?**
-Fino a 250 euro per le medie e 300 euro per le superiori e l'università.
+**In quanto tempo arrivano i rimborsi EBIT Lazio?**
+Di norma entro 40 giorni dalla scadenza della finestra di domanda (60 giorni per cultura, spese funerarie e malattia), secondo il regolamento 2026.
 
-**Entro quando si chiede il rimborso dei libri?**
-Entro 30 giorni dall'ultimo pagamento e comunque non oltre il 31 ottobre. Per il 2026 la finestra è chiusa.
-
-**Quanto rimborsa per l'abbonamento al bus?**
-150 euro per la rete urbana, 250 euro per la rete extraurbana o integrata se l'abbonamento costa più di 350 euro.
+**Il regolamento EBIT Lazio 2027 è già uscito?**
+Al 26 novembre 2026 no: sul sito dell'ente c'è solo il regolamento 2026. Aggiorneremo la guida appena viene pubblicato.
 
 **Serve l'ISEE?**
 Non è obbligatorio, ma se i fondi non bastano viene pagato prima chi ha l'ISEE più basso. Senza ISEE si passa in fondo.

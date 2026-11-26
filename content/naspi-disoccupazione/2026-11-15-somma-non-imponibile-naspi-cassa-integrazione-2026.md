@@ -1,15 +1,17 @@
 ---
-title: "NASpI e cassa integrazione: da novembre la somma esentasse con gli arretrati 2026"
-seo_title: "Somma non imponibile NASpI: quando arriva e quanto spetta"
+title: "Somma non imponibile NASpI 2026 (somma aggiuntiva): quando arriva, quanto è e arretrati"
+seo_title: "Somma non imponibile NASpI 2026 (somma aggiuntiva): quando arriva"
 slug: "somma-non-imponibile-naspi-cassa-integrazione-2026"
 date: 2026-11-15
-last_updated: 2026-11-23
+last_updated: 2026-11-26
 category: "naspi-disoccupazione"
 tags: ["disoccupazione", "inps", "bonus", "novita", "lavoro"]
-meta_description: "Da novembre 2026 l'INPS paga la somma non imponibile su NASpI, disoccupazione agricola e cassa integrazione, con arretrati da gennaio. Chi la prende e chi no."
+meta_description: "Somma non imponibile (somma aggiuntiva) NASpI: l'INPS la paga da novembre 2026 con gli arretrati da gennaio, il 7,1%, 5,3% o 4,8%. Controllo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Messaggio n. 3649 del 10 novembre 2026 - Modalità di applicazione della somma non imponibile sulle prestazioni non pensionistiche"
+  - "INPS, Somma non imponibile sulle prestazioni non pensionistiche: indicazioni (notizia del 10/11/2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.11.somma-non-imponibile-sulle-prestazioni-non-pensionistiche-indicazioni.html"
+  - "INPS, Fascicolo previdenziale del cittadino (sezione Prestazioni: domande e pagamenti ricevuti) - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.fascicolo-previdenziale-del-cittadino-50865.fascicolo-previdenziale-del-cittadino.html"
   - "Legge 30 dicembre 2024, n. 207 (legge di bilancio 2025), art. 1, commi da 4 a 9"
   - "Agenzia delle Entrate, Circolare n. 4/E del 16 maggio 2025 (reddito annuale teorico ed esempio di calcolo)"
 status: published
@@ -18,58 +20,54 @@ image: "/og/somma-non-imponibile-naspi-cassa-integrazione-2026.jpg"
 image_alt: "Somma non imponibile su NASpI e cassa integrazione dal novembre 2026"
 ---
 
-# NASpI e cassa integrazione: da novembre la somma esentasse con gli arretrati 2026
+# Somma non imponibile NASpI 2026 (somma aggiuntiva): quando arriva, quanto è e arretrati
 
-**Ultimo aggiornamento: 15 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
-Se nel 2026 hai preso la **NASpI**, la **disoccupazione agricola** o la **cassa integrazione** pagata dall'INPS, potresti ricevere da novembre una **somma in più, senza tasse**. È la "**somma non imponibile**" introdotta dalla legge di bilancio 2025 per i lavoratori dipendenti con redditi bassi.
+Se nel 2026 hai preso la **NASpI**, la **disoccupazione agricola** o la **cassa integrazione** pagata dall'INPS, da **novembre 2026** puoi ricevere una **somma in più, senza tasse**. Si chiama "**somma non imponibile**", ma molti la cercano come **somma aggiuntiva NASpI** o "bonus NASpI di novembre": è la stessa cosa.
 
-L'INPS ha spiegato come la paga con il **messaggio n. 3649 del 10 novembre 2026**.
+L'INPS ha spiegato come la paga con il **messaggio n. 3649 del 10 novembre 2026**. Qui trovi le risposte alle domande che ci fate più spesso allo sportello di Roma.
 
 ## In breve
 
 | | |
 |---|---|
-| **Cos'è** | una somma esentasse, aggiuntiva alla prestazione |
-| **Per chi** | NASpI, disoccupazione agricola, cassa integrazione e assegni dei fondi di solidarietà pagati dall'INPS |
-| **Reddito** | reddito complessivo dell'anno **non oltre 20.000 €** |
-| **Quanto** | **7,1%**, **5,3%** o **4,8%** in base al reddito |
-| **Quando** | da **novembre 2026**, con gli **arretrati dal 1° gennaio 2026** |
+| **Cos'è** | una somma esentasse in più rispetto alla NASpI o alla cassa integrazione (detta anche "somma aggiuntiva") |
+| **Quando arriva** | da **novembre 2026**, con gli **arretrati dal 1° gennaio 2026**; il giorno esatto l'INPS non l'ha comunicato |
+| **Quanto è** | il **7,1%**, il **5,3%** o il **4,8%** di quello che hai ricevuto, in base al reddito |
+| **Per chi** | NASpI, disoccupazione agricola, cassa integrazione e assegni dei fondi di solidarietà pagati dall'INPS, con reddito annuo **non oltre 20.000 €** |
 | **Domanda** | **non serve**: è automatica |
-| **Esclusi** | DIS-COLL, lavoratori autonomi, ISCRO |
+| **Esclusi** | DIS-COLL, lavoratori autonomi, ISCRO, anticipo NASpI |
 
 > [Prenota un controllo della NASpI](/prenota): verifichiamo se la somma ti spetta e se l'INPS l'ha pagata.
 
-## Chi la riceve
+## Cos'è la somma non imponibile NASpI?
 
-La somma spetta su queste prestazioni, **se l'INPS le paga direttamente a te**:
+**È una somma senza tasse, in più rispetto alla prestazione**, che spetta a chi ha un reddito da lavoro dipendente basso. L'ha introdotta la legge di bilancio 2025 (legge 207/2024) per i lavoratori; con il messaggio n. 3649/2026 l'INPS la applica anche a NASpI e cassa integrazione.
 
-- **NASpI** (e le vecchie ASpI, MiniASpI e disoccupazione ordinaria);
-- **disoccupazione agricola**;
-- **cassa integrazione** ordinaria, straordinaria e in deroga, **CISOA**;
-- **assegno ordinario** e **assegno di solidarietà** dei Fondi di solidarietà e del **FIS**.
+"Somma non imponibile" e "somma aggiuntiva" sono due nomi dello stesso beneficio. Non è un aumento della NASpI: è un **pagamento a parte**.
 
-Il requisito è un **reddito complessivo annuo non superiore a 20.000 euro**.
+## Quando arriva la somma non imponibile NASpI?
 
-## Chi resta fuori
+**Nel 2026 l'INPS la paga da novembre, insieme agli arretrati dal 1° gennaio 2026.** Il messaggio non indica un giorno preciso.
 
-Il messaggio INPS esclude:
+- Dal **2027** in poi, di regola, si paga in **11 rate mensili a partire da febbraio**.
+- Gli arretrati spettano **anche se la NASpI o la cassa integrazione sono già finite**.
+- L'INPS la riconosce solo sulle prestazioni **pagate direttamente a te**: se la cassa integrazione te la anticipa l'azienda in busta paga, il messaggio non la prevede in automatico.
 
-- la **DIS-COLL**;
-- le prestazioni dei **lavoratori autonomi**, comprese maternità e malattia di autonomi e Gestione separata;
-- l'**ISCRO**;
-- il **TFR** a tassazione separata;
-- l'**anticipo della NASpI** per avviare un'attività (dal 2026 pagato in due rate): su quella somma il beneficio non si applica.
+Se a fine novembre non vedi nulla, non preoccuparti subito: controlla il Fascicolo previdenziale (spieghiamo come più sotto) o passa da noi.
 
-## Quanto spetta
+## Quanto è la somma aggiuntiva NASpI 2026?
 
-La percentuale dipende dal **reddito di lavoro dipendente** dell'anno:
+**È il 7,1%, il 5,3% o il 4,8% dell'importo che hai ricevuto**, in base al tuo reddito di lavoro dipendente dell'anno:
 
-| Reddito | Percentuale |
+| Reddito di lavoro dipendente | Percentuale |
 |---|---|
 | fino a **8.500 €** | **7,1%** |
 | da 8.500 a **15.000 €** | **5,3%** |
 | da 15.000 a **20.000 €** | **4,8%** |
+
+Sopra i **20.000 euro** di reddito complessivo annuo non spetta.
 
 ### Come si fa il calcolo
 
@@ -82,7 +80,7 @@ L'INPS ripete il calcolo **ogni mese** e lo corregge se gli importi cambiano.
 
 **L'esempio della circolare:** 2.000 euro ricevuti in 62 giorni. Rapportati all'anno fanno 11.774 euro (2.000 ÷ 62 × 365), quindi fascia del **5,3%**. La somma spettante è 2.000 × 5,3% = **106 euro**.
 
-## Esempi di calcolo
+### Esempi di calcolo
 
 Gli esempi usano **importi lordi** e immaginano che nel 2026 la persona abbia **solo quella prestazione**. Se hai lavorato anche con uno stipendio, quel reddito cambia la fascia e il totale. Il calcolo ufficiale lo fa l'INPS, mese per mese.
 
@@ -94,29 +92,55 @@ Gli esempi usano **importi lordi** e immaginano che nel 2026 la persona abbia **
 
 Nel secondo esempio la NASpI è già finita a giugno, ma gli arretrati spettano lo stesso: lo dice il messaggio INPS.
 
-## Quando arriva e come la riconosci
+## A chi spetta e chi resta fuori?
 
-- Di norma la somma si paga in **11 rate mensili, da febbraio**.
-- Per il **2026** i pagamenti partono a **novembre**, insieme agli **arretrati dal 1° gennaio 2026**.
-- Gli arretrati spettano **anche se la NASpI o la cassa integrazione sono già finite**.
-- È un **pagamento separato** dalla prestazione: lo vedi come voce a parte.
-- Non serve avere imposte da pagare: la somma arriva **anche se non paghi IRPEF**.
+**Spetta a chi prende dall'INPS NASpI, disoccupazione agricola o cassa integrazione e ha un reddito complessivo dell'anno fino a 20.000 euro.** Nel dettaglio, le prestazioni sono:
+
+- **NASpI** (e le vecchie ASpI, MiniASpI e disoccupazione ordinaria);
+- **disoccupazione agricola** (DS AGR);
+- **cassa integrazione** ordinaria, straordinaria e in deroga, **CISOA**;
+- **assegno ordinario** e **assegno di solidarietà** dei Fondi di solidarietà e del **FIS**.
+
+Il messaggio INPS invece **esclude**:
+
+- la **DIS-COLL**;
+- le prestazioni dei **lavoratori autonomi**, comprese maternità e malattia di autonomi e Gestione separata;
+- l'**ISCRO**;
+- il **TFR** a tassazione separata;
+- l'**anticipo della NASpI** per avviare un'attività (dal 2026 pagato in due rate).
+
+## Spetta anche sulla disoccupazione agricola?
+
+**Sì: la disoccupazione agricola (DS AGR) è tra le prestazioni indicate dal messaggio INPS n. 3649/2026.** Valgono le stesse regole: reddito fino a 20.000 euro, pagamento automatico da novembre 2026 con gli arretrati maturati dal 1° gennaio 2026. Il messaggio non indica date di pagamento diverse per la DS AGR.
+
+## Cosa sono gli arretrati NASpI di novembre 2026?
+
+**Sono le somme non imponibili maturate da gennaio a ottobre 2026, pagate tutte insieme da novembre.** Per questo a novembre l'importo può sembrare più alto del solito. Non sono arretrati della NASpI vera e propria: la tua indennità mensile resta quella di sempre.
+
+## Come la vedi nel Fascicolo previdenziale e nella CU?
+
+**La somma arriva con un pagamento separato dalla NASpI**, quindi la trovi come voce a parte e non nell'importo della mensilità.
+
+- **Su MyINPS:** nel **Fascicolo previdenziale del cittadino**, sezione **Prestazioni**, ci sono le informazioni sui pagamenti ricevuti.
+- **Nella Certificazione Unica (CU)** che l'INPS rilascia nel 2027 compare l'importo riconosciuto come "somma non imponibile". Ti servirà per il **730**: lì si fa il conto finale.
+
+Se non hai SPID o CIE, o non trovi la voce, la controlliamo noi in ufficio.
+
+## Quando pagano la NASpI a dicembre 2026?
+
+**L'INPS non ha comunicato in un atto ufficiale il giorno di pagamento della NASpI di dicembre 2026.** Le date che girano online sono stime. Il giorno esatto del tuo accredito lo vedi nel Fascicolo previdenziale, alla voce dei pagamenti. Se l'INPS pubblicherà una data, aggiorneremo questa pagina.
 
 ## Serve fare domanda?
 
-**No.** L'INPS la riconosce **in automatico**.
+**No: l'INPS la riconosce in automatico.**
 
-Esiste invece un servizio per **rinunciare**. La rinuncia vale per l'anno indicato e **non fa perdere il diritto**: se ne hai i requisiti, la somma si può recuperare con la **dichiarazione dei redditi**.
+Esiste invece un servizio per **rinunciare**, sul sito INPS in "Sostegni, Sussidi e Indennità". La rinuncia vale per l'anno indicato e **non fa perdere il diritto**: se ne hai i requisiti, la somma si può recuperare con la **dichiarazione dei redditi**.
 
 Ricorda che il requisito è il **reddito complessivo di tutto l'anno**. Se nel 2026 hai lavorato anche con altri datori di lavoro e pensi di superare 20.000 euro, parlane con noi prima del 730.
 
-## Dove trovi l'importo
-
-La somma compare nella **Certificazione Unica (CU)** che l'INPS rilascia l'anno dopo. Ti servirà per il **730**: lì si fa il conto finale.
-
 ## Come ti aiuta il Centro Pratiche Flaiano
 
-Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti Flaiano di **Vigne Nuove** (Municipio III).
+Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti Flaiano di **Vigne Nuove** (Municipio III), vicino a Tufello e Porta di Roma.
 
 - Controlliamo con te i **pagamenti INPS** e se ti spetta la somma.
 - Seguiamo la [domanda di NASpI](/naspi) e i passaggi dopo, come il [SIISL](/siisl).
@@ -132,26 +156,26 @@ Siamo **Patronato ENASC** e **CAF UNSIC** a **Roma Nord**, nel Centro Acquisti F
 
 ## Domande frequenti
 
-**Chi riceve la somma non imponibile dall'INPS?**
-Chi prende NASpI, disoccupazione agricola, cassa integrazione o assegni dei fondi di solidarietà pagati direttamente dall'INPS, con reddito complessivo annuo fino a 20.000 euro.
+### Il bonus NASpI di novembre 2026 è la somma non imponibile?
+Sì. "Bonus NASpI", "somma aggiuntiva" e "somma non imponibile" indicano lo stesso pagamento descritto dal messaggio INPS n. 3649/2026.
 
-**Quando arriva?**
-Nel 2026 da novembre, con gli arretrati dal 1° gennaio. Dagli anni successivi in 11 rate mensili da febbraio.
-
-**Bisogna fare domanda?**
-No, è automatica. C'è solo un servizio INPS per chi vuole rinunciare.
-
-**Spetta con la DIS-COLL?**
+### Spetta con la DIS-COLL?
 No, la DIS-COLL è esclusa.
 
-**Spetta se la NASpI è già finita?**
+### Spetta se la NASpI è già finita?
 Sì, gli arretrati del 2026 spettano anche se la prestazione è già cessata.
 
-**Quanto vale?**
-Il 7,1%, il 5,3% o il 4,8% dell'importo ricevuto. La fascia si sceglie rapportando il reddito a un anno intero: per esempio, con una NASpI di 1.300 euro lordi al mese la fascia è del 4,8% e la somma è di 62,40 euro al mese.
+### Spetta anche se non pago l'IRPEF?
+Sì. Il messaggio INPS dice che non serve avere imposte da pagare: la somma arriva anche a chi non paga IRPEF.
 
-**Paga le tasse?**
-No, è una somma non imponibile.
+### Sulla somma non imponibile si pagano le tasse?
+No, è una somma non imponibile: non fa reddito.
+
+### Spetta sull'anticipo NASpI per aprire un'attività?
+No, l'anticipo NASpI pagato per avviare un'attività è escluso.
+
+### Posso rinunciare?
+Sì, con il servizio online dell'INPS. La rinuncia vale per l'anno scelto e la somma, se spetta, si può recuperare con la dichiarazione dei redditi.
 
 ## Articoli correlati
 

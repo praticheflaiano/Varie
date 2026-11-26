@@ -60,6 +60,7 @@ const props = {
     { q: "In quanto tempo arriva?", a: "L'INPS chiude la pratica entro 60 giorni dalla domanda completa. Poi la Carta viene stampata dal Poligrafico dello Stato e spedita da Poste Italiane." },
     { q: "Sostituisce il verbale di invalidità?", a: "Per dimostrare la tua condizione sì: l'INPS scrive che la Carta esonera dal possesso di altre certificazioni sulla disabilità. Chi deve verificarla legge il QR code e controlla i dati aggiornati sul servizio dell'INPS. Il verbale resta però il documento su cui si basano pensioni, permessi e altre prestazioni: conservalo." },
     { q: "Dà diritto a soldi o a permessi dal lavoro?", a: "No. La Carta non è una prestazione economica: serve a farti riconoscere e ad avere le agevolazioni previste dalle convenzioni. Per pensioni, accompagnamento e permessi della 104 ci sono domande diverse, che seguiamo come patronato." },
+    { q: "Con la Disability Card i trasporti a Roma sono gratis?", a: "Non in automatico: la Carta non è un abbonamento. Le agevolazioni sui trasporti dipendono dalle convenzioni attive, pubblicate sul sito del Ministro per le disabilità: tra queste c'è Trenitalia, dove chi ha la lettera A sulla Carta fa viaggiare gratis l'accompagnatore. Prima di viaggiare controlla l'elenco ufficiale. Per chi ha la 104 grave e il CUDE e non può usare bus e metro, Roma Capitale ha il <a href='/blog/trasporto-disabili-roma-lista-attesa-2027-domanda'>trasporto disabili in taxi</a>, con domanda entro il 15 gennaio 2027." },
     { q: "È la stessa cosa del contrassegno per l'auto?", a: "No. Per parcheggi riservati e ZTL serve il contrassegno CUDE, che a Roma rilascia Roma Servizi per la Mobilità. Trovi tutto nella <a href='/cude'>pagina sul CUDE</a>." },
     { q: "Cosa faccio se la perdo o me la rubano?", a: "Va fatta denuncia e portata in copia alla sede INPS: la Carta viene annullata e si può presentare una nuova richiesta." },
   ],
@@ -78,7 +79,7 @@ const usi = [
   { k: "In Europa", t: "Vale anche fuori dall'Italia", d: "La Carta nasce da un progetto europeo ed è riconosciuta negli altri Paesi dell'Unione che vi aderiscono. Una direttiva europea del 2024 la estenderà a tutti i Paesi UE per i soggiorni brevi.", tone: "c39" },
 ];
 ---
-<BaseLayout title="Disability Card a Roma: cos'è, a chi spetta, come richiederla" description="Disability Card (Carta europea della disabilità): a chi spetta, dove si usa, quanto dura e come richiederla. A Vigne Nuove la domanda la facciamo noi: 10 € con tessera, 15 € senza.">
+<BaseLayout title="Disability Card Roma: Carta europea disabilità, a chi spetta" description="Disability Card (Carta europea della disabilità): a chi spetta, dove si usa, quanto dura e come richiederla. A Vigne Nuove la domanda la facciamo noi: 10 € con tessera, 15 € senza.">
   <link slot="head" rel="stylesheet" href="/landing.css" />
   <JsonLdService slot="head" slug="disability-card" name="Richiesta Disability Card (Carta europea della disabilità)" description="Preparazione e invio all'INPS della domanda di Carta europea della disabilità." serviceType="Richiesta Disability Card" offers={[{ name: "Richiesta Disability Card", price: 15 }, { name: "Richiesta Disability Card, con tessera", price: 10 }]} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />

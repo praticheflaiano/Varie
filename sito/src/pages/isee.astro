@@ -18,7 +18,7 @@ import rawBody from "~/fragments/isee.html?raw";
  * e si sostituisce la vecchia sezione FAQ con quella generata da faqs (stessa fonte per HTML e JSON-LD).
  */
 
-const AGGIORNATO = "14 novembre 2026";
+const AGGIORNATO = "26 novembre 2026";
 
 /* Blocco "ISEE 2027 da casa" (id da-casa, dati in src/data/dacasa.ts): i pulsanti "Fai tutto online" puntano a #da-casa. */
 const DACASA_SOSTITUZIONI: [string, string][] = [
@@ -37,6 +37,7 @@ const faqs = [
   { q: "Quanto costa fare l'ISEE a Roma al Centro Pratiche Flaiano?", a: "Niente: la prima DSU dell'anno è gratis, di persona a Vigne Nuove o in videochiamata. La tessera (30 € l'anno per tutta la famiglia) non è obbligatoria, ma te la consigliamo: quando ritiri l'ISEE facciamo insieme una prima consulenza per vedere a quali bonus e agevolazioni hai diritto, e ti avvisiamo quando aprono le domande che ti riguardano, come il bonus TARI e il bonus idrico." },
   { q: "Quando scade l'ISEE e quando conviene rifarlo?", a: "L'ISEE vale fino al 31 dicembre dell'anno in cui presenti la DSU (INPS). Quello del 2026 scade il 31 dicembre 2026 e dal 1° gennaio 2027 serve una nuova DSU. Per l'Assegno Unico conviene farla presto, entro febbraio: te lo spieghiamo nella <a href='/blog/assegno-unico-2027-rinnovo-isee-scadenze'>guida al rinnovo</a>." },
   { q: "Quali anni contano per l'ISEE 2027?", a: "I redditi del 2025 e i risparmi e gli immobili al 31 dicembre 2025. La famiglia è quella dichiarata alla data della domanda. Si può fare dal 1° gennaio 2027. Lo conferma anche l'INPS: contano i dati del secondo anno precedente." },
+  { q: "Per l'ISEE 2027 serve la giacenza media di quale anno?", a: "Del 2025: per ogni conto, libretto e carta con IBAN servono la giacenza media 2025 e il saldo al 31 dicembre 2025, anche per i conti chiusi durante il 2025. Una DSU presentata a dicembre 2026 è ancora un ISEE 2026: l'ISEE 2027 si fa dal 1° gennaio 2027. Tutto nella <a href='/blog/isee-2027-documenti-quando-rinnovare-roma'>guida all'ISEE 2027</a>." },
   { q: "Quale tipo di ISEE mi serve? E se i genitori non vivono insieme, o lo studente vive fuori casa?", a: "Dipende dall'aiuto che chiedi: ordinario, minorenni, università, sociosanitario o corrente. Con una sola DSU l'INPS calcola più valori, ma in alcuni casi servono dati di familiari che non vivono con te. Dillo prima di iniziare e fai il <a href='/quale-isee'>test Quale ISEE ti serve</a>; i dettagli sono nella <a href='/blog/tipi-di-isee-differenze-quale-serve'>guida ai tipi di ISEE</a>." },
   { q: "E se dimentico un conto o un reddito?", a: "Va presentata una nuova DSU. Se la rifacciamo perché mancavano dati importanti, nello stesso anno e per la stessa famiglia, chiediamo 25 € di servizio. Non li paghi se cambia la famiglia, per l'ISEE corrente o se l'errore è nostro. Per questo conviene controllare la lista documenti prima di venire." },
   { q: "Ho una casa di proprietà a Roma: cosa cambia?", a: "Per Assegno Unico, bonus nido, bonus nuovi nati, ADI e SFL la casa in cui vivi pesa meno: nei capoluoghi di città metropolitana, come Roma, è esclusa fino a 120.000 €, più 2.500 € per ogni figlio convivente dopo il primo (legge 199/2025)." },

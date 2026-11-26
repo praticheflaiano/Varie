@@ -110,6 +110,22 @@ const services = [
 
 const faq = [
   {
+    question: "Dove trovo un patronato vicino a me a Roma nord?",
+    answer: "Il nostro Patronato ENASC è a Roma in <strong>Via Filoteo Alberini 25, interno 10</strong>, dentro il Centro Acquisti Flaiano, nel quartiere Vigne Nuove (Municipio III). Seguiamo soprattutto chi abita a Vigne Nuove, Talenti, Montesacro, Conca d'Oro, Tufello, Val Melaina, Bufalotta, Porta di Roma, Fidene, Serpentara, Nuovo Salario e Colle Salario: come arrivare dalla tua zona è nelle pagine delle <a href='/zone'>zone servite</a>.",
+  },
+  {
+    question: "Il patronato è aperto oggi? E il sabato?",
+    answer: "<strong>Dal lunedì al giovedì 9:30-13:00 e 15:30-18:00, il venerdì 9:30-14:00. Il sabato e la domenica siamo chiusi.</strong> Riceviamo su appuntamento: <a href='/prenota'>prenota</a>, chiama lo 06 9784 5429 o scrivi su WhatsApp al 371 623 0690. Le chiusure per le feste sono nella <a href='/contatti'>pagina contatti</a>.",
+  },
+  {
+    question: "Quanto costano le pratiche di patronato? C'è un listino prezzi?",
+    answer: "Molte pratiche sono gratuite: per esempio la <a href='/pensioni'>domanda di pensione</a> e la domanda <a href='/naspi'>NASpI</a>. Dove c'è un costo lo trovi nella pagina del servizio: per esempio le <a href='/dimissioni-online'>dimissioni online</a> partono da 15 €. Con la <a href='/tesseramento'>tessera</a> (30 € all'anno per tutta la famiglia) molte pratiche costano meno. Per un preventivo scrivici su WhatsApp al 371 623 0690.",
+  },
+  {
+    question: "Cos'è il mandato al Patronato ENASC?",
+    answer: "È il modulo con cui autorizzi il Patronato ENASC ad assisterti e a presentare le pratiche all'INPS per tuo conto. Puoi compilarlo online nella pagina del <a href='/mandato'>mandato di patronato</a>.",
+  },
+  {
     question: "Quanto tempo ho per fare domanda di NASpI?",
     answer: "La domanda di NASpI va presentata <strong>entro 68 giorni</strong> dalla cessazione del rapporto di lavoro. Oltre questo termine il diritto decade.",
   },
@@ -129,12 +145,16 @@ const faq = [
     question: "Posso ottenere la Legge 104 e l'invalidità civile contemporaneamente?",
     answer: "Sì, sono due benefici diversi. L'invalidità civile è di natura economica (assegno o pensione di invalidità); la Legge 104 è di natura assistenziale (permessi lavorativi, agevolazioni fiscali, parcheggi). Spesso si richiedono insieme.",
   },
+  {
+    question: "Seguite anche colf e badanti, come un consulente del lavoro?",
+    answer: "Per il lavoro domestico sì: prepariamo il contratto, facciamo l'assunzione all'INPS, ti diamo i prospetti paga e il conto dei contributi trimestrali. Il prezzo annuale lo chiedi su WhatsApp al 371 623 0690. <a href='/colf-badanti'>Il servizio colf e badanti</a>.",
+  },
 ];
 ---
 
 <BaseLayout
-  title="Servizi Patronato: pensioni, NASpI, invalidità, assegno unico"
-  description="Patronato ENASC del Centro Pratiche Flaiano a Roma: pensioni, NASpI e disoccupazione, invalidità civile, Legge 104, assegno unico, maternità, ADI, RED."
+  title="Patronato a Roma Vigne Nuove: pensioni, NASpI, invalidità"
+  description="Patronato ENASC a Roma Vigne Nuove, Via Filoteo Alberini 25: pensioni, NASpI, invalidità e 104, assegno unico, ADI. Aperti lun-ven, sabato chiuso."
 >
   <JsonLdFaq slot="head" items={faq} />
 
@@ -146,7 +166,7 @@ const faq = [
       </span>
       <SectionHeading
         title="Pratiche previdenziali e assistenziali"
-        subtitle="Il nostro Patronato ENASC tutela i tuoi diritti previdenziali e assistenziali. Pensioni, disoccupazione, invalidità, sostegno al reddito: ti seguiamo in tutte le pratiche INPS."
+        subtitle="Il nostro Patronato ENASC è a Roma, in Via Filoteo Alberini 25 a Vigne Nuove (Municipio III), aperto dal lunedì al venerdì. Pensioni, disoccupazione, invalidità, sostegno al reddito: ti seguiamo in tutte le pratiche INPS."
         class="mt-3"
         level="h1"
       />

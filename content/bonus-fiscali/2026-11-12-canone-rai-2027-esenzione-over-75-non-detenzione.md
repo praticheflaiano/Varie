@@ -1,12 +1,12 @@
 ---
-title: "Canone RAI 2027: esenzione over 75 e dichiarazione di non detenzione, le scadenze"
-seo_title: "Canone RAI 2027: esenzione over 75 e non detenzione a Roma"
+title: "Esenzione canone RAI 2027: over 75, dichiarazione di non detenzione, scadenze e costo"
+seo_title: "Esenzione canone RAI 2027: over 75, senza TV e costo"
 slug: "canone-rai-2027-esenzione-over-75-non-detenzione"
 date: 2026-11-12
-last_updated: 2026-11-12
+last_updated: 2026-11-26
 category: "bonus-fiscali"
 tags: ["scadenza", "canone-rai", "canone-tv", "over-75", "non-detenzione", "bolletta-luce", "esenzioni", "roma"]
-meta_description: "Canone RAI 2027: come non pagarlo da over 75 o senza TV. Scadenze 31 gennaio, 30 aprile e 30 giugno, moduli e invio. Ti aiuta il CAF di Vigne Nuove, Roma."
+meta_description: "Esenzione canone RAI 2027: senza TV entro il 31 gennaio 2027, over 75 entro il 30 aprile 2027. Oggi costa 90 €. Ti aiuta il CAF di Vigne Nuove, Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Agenzia delle Entrate, Provvedimento del Direttore n. 45059 del 24/03/2016 (dichiarazione sostitutiva di non detenzione: termini a regime dal 1 luglio al 31 gennaio per l'intero anno e dal 1 febbraio al 30 giugno per il secondo semestre; invio telematico, tramite intermediari o con raccomandata senza busta; presentazione annuale)"
@@ -26,9 +26,9 @@ image: "/og/canone-rai-2027-esenzione-over-75-non-detenzione.jpg"
 image_alt: "Canone RAI 2027: esenzione per gli over 75 e dichiarazione di non detenzione della TV"
 ---
 
-# Canone RAI 2027: esenzione over 75 e dichiarazione di non detenzione, le scadenze
+# Esenzione canone RAI 2027: over 75, dichiarazione di non detenzione, scadenze e costo
 
-**Ultimo aggiornamento: 12 novembre 2026**
+**Ultimo aggiornamento: 26 novembre 2026**
 
 Il **canone RAI** (il canone di abbonamento alla televisione) arriva in automatico nella **bolletta della luce**. Ma non tutti lo devono pagare. Chi ha **75 anni o più con un reddito basso** e chi **non ha la televisione in casa** può evitarlo, a patto di presentare una dichiarazione in tempo.
 
@@ -42,14 +42,17 @@ Vediamo le scadenze del **canone RAI 2027**, chi può non pagarlo e come fare, a
 | **Dichiarazione di non detenzione** per luglio-dicembre 2027 | chi la invia dopo il 31 gennaio | dal **1 febbraio** al **30 giugno 2027** |
 | **Esenzione over 75** per tutto il 2027 | chi ha già 75 anni o li compie entro il 31 gennaio 2027 e ha i requisiti di reddito | **30 aprile 2027** |
 | **Esenzione over 75** per luglio-dicembre 2027 | chi compie 75 anni dal 1 febbraio al 31 luglio 2027 | **31 luglio 2027** |
+| **Quanto costa** | chi deve pagarlo | oggi **90 euro l'anno** in 10 rate da 9 euro; l'importo 2027 **non è ancora deciso** |
 
 > [Prenota per l'esenzione canone RAI](/prenota): ti aiutiamo a preparare e inviare la dichiarazione.
 
-## Quanto costa il canone RAI nel 2027
+## Quanto costa il canone RAI 2027?
+
+Al 26 novembre 2026 il canone RAI costa **90 euro all'anno** e per il 2027 non c'è ancora una norma che cambi l'importo.
 
 Oggi il canone per uso privato è di **90 euro all'anno**. Questa cifra è stata introdotta dalla legge di bilancio 2017 (art. 1, comma 40, L. 232/2016), come spiega la **Circolare dell'Agenzia delle Entrate n. 45/E del 30 dicembre 2016**, ed è quella pagata anche nel 2026.
 
-Per il **2027** l'importo è **in corso di definizione**. Si parla di una possibile riduzione, ma al 12 novembre 2026 non c'è nessuna norma approvata che cambi la cifra. Aggiorneremo questo articolo appena la legge di bilancio 2027 sarà definitiva. Le altre novità della manovra le trovi qui: [Legge di bilancio 2027: novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati).
+Per il **2027** l'importo è **in corso di definizione**. Si parla di una possibile riduzione nella legge di bilancio, ma al 26 novembre 2026 non c'è nessuna norma approvata che cambi la cifra. Aggiorneremo questo articolo appena la legge di bilancio 2027 sarà definitiva. Le altre novità della manovra le trovi qui: [Legge di bilancio 2027: novità per famiglie e pensionati](/blog/legge-di-bilancio-2027-novita-famiglie-pensionati).
 
 ## Come si paga il canone RAI in bolletta
 
@@ -63,7 +66,9 @@ Ecco come funziona:
 
 Non devi fare nulla per pagarlo: lo trovi già in bolletta. Se hai dubbi sulle voci della bolletta o devi cambiare l'intestazione del contratto, guarda la nostra pagina [Luce e gas](/luce-gas).
 
-## Esenzione canone RAI per gli over 75
+## Canone RAI over 75: chi non paga?
+
+Non paga il canone RAI chi ha **75 anni o più**, un **reddito (con il coniuge) fino a 8.000 euro** e non vive con altre persone che hanno un reddito, ma solo se presenta la dichiarazione all'Agenzia delle Entrate.
 
 Se hai **75 anni o più** puoi non pagare il canone. Servono però tutti questi requisiti, indicati nelle istruzioni del modello dell'Agenzia delle Entrate (art. 1, comma 132, L. 244/2007 e art. 1, comma 355, L. 160/2019):
 
@@ -97,7 +102,9 @@ Si usa il modello **"Dichiarazione sostitutiva ai fini dell'esenzione dal pagame
 
 Nel nostro ufficio di Vigne Nuove ti aiutiamo a controllare i requisiti, compilare il modulo e spedirlo nel modo corretto.
 
-## Canone RAI e dichiarazione di non detenzione: se non hai la TV
+## Dichiarazione di non detenzione TV 2027: entro quando?
+
+Per non pagare il canone RAI 2027 perché non hai la TV, la dichiarazione di non detenzione va inviata **entro il 31 gennaio 2027**: puoi già farlo adesso, la finestra è aperta dal 1 luglio 2026.
 
 Se in casa **non hai nessun televisore**, puoi presentare la **dichiarazione sostitutiva di non detenzione**. Con questa dichiari che nessuno della tua famiglia anagrafica ha una TV in nessuna delle case dove la luce è intestata a te.
 
@@ -163,6 +170,12 @@ Nel nostro ufficio di **Via Filoteo Alberini 25 int. 10**, a **Vigne Nuove**, co
 
 **Quanto costa il canone RAI nel 2027?**
 L'importo per il 2027 è in corso di definizione. Oggi è di 90 euro all'anno, in 10 rate da 9 euro.
+
+**Gli over 75 non pagano il canone RAI?**
+Non lo pagano solo se hanno un reddito, sommato a quello del coniuge, fino a 8.000 euro l'anno, non vivono con altre persone con reddito (a parte colf e badanti) e presentano la dichiarazione. Per tutto il 2027 il termine è il 30 aprile 2027.
+
+**Come si chiede l'esenzione dal canone RAI 2027 all'Agenzia delle Entrate?**
+Con il modello di dichiarazione sostitutiva dell'Agenzia delle Entrate: online o tramite un CAF per la non detenzione, con raccomandata, PEC o in ufficio per l'esenzione over 75. Possiamo prepararla e inviarla noi.
 
 **Entro quando si presenta la dichiarazione di non detenzione per non pagare il canone RAI 2027?**
 Entro il 31 gennaio 2027, che cade di domenica: meglio inviarla entro venerdì 29 gennaio. Puoi già inviarla adesso, perché la finestra è aperta dal 1 luglio 2026.

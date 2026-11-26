@@ -9,9 +9,9 @@ import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import { BOOKING, CONTACT } from "~/consts";
 
 const MESE = "dicembre 2026";
-const AGGIORNATO = "24 novembre 2026";
+const AGGIORNATO = "26 novembre 2026";
 const SEO_TITLE = "Pagamenti INPS dicembre 2026: tutte le date";
-const SEO_DESC = "Quando arrivano a dicembre 2026 pensioni, tredicesima, Assegno Unico, ADI e bonus mamme: date INPS, come controllare il pagamento e cosa fare se non arriva";
+const SEO_DESC = "Pagamenti INPS dicembre 2026: pensione e tredicesima il 1° dicembre, Assegno Unico il 16-17, ADI e bonus mamme. Date ufficiali e aiuto a Roma.";
 
 const INPS = "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.";
 const SRC = {
@@ -37,7 +37,7 @@ const ISEE27 = { label: "Prenota l'ISEE 2027 gratis", href: "https://link.arcani
 const CEDOLINO = { label: "Fai controllare il cedolino", href: "/prenota" };
 
 const ROWS: Row[] = [
-  { date: "Martedì 1° dicembre", what: "Pensioni INPS: pagamento di dicembre", who: "Tutti i pensionati INPS", note: "L'INPS paga il primo giorno bancabile del mese (solo a gennaio il secondo). La tredicesima arriva di norma con la pensione di dicembre: il dettaglio lo spiega l'INPS nella notizia sul cedolino di dicembre, non ancora uscita al 24 novembre. A chi ha pensione e redditi bassi l'INPS paga d'ufficio a dicembre anche l'importo aggiuntivo di 154,94 €.", src: [SRC.pensNov, SRC.pensCs, SRC.impAgg], cta: CEDOLINO },
+  { date: "Martedì 1° dicembre", what: "Pensioni INPS: pagamento di dicembre", who: "Tutti i pensionati INPS", note: "L'INPS paga il primo giorno bancabile del mese (solo a gennaio il secondo). La tredicesima arriva di norma con la pensione di dicembre: il dettaglio lo spiega l'INPS nella notizia sul cedolino di dicembre, non ancora uscita al 26 novembre. A chi ha pensione e redditi bassi l'INPS paga d'ufficio a dicembre anche l'importo aggiuntivo di 154,94 €.", src: [SRC.pensNov, SRC.pensCs, SRC.impAgg], cta: CEDOLINO },
   { date: "Martedì 15 dicembre", what: "Assegno di Inclusione (ADI): primi pagamenti ed eventuali arretrati", who: "Chi ha appena avuto l'ADI accolto", src: [SRC.adiMsg, SRC.adiNews], cta: ISEE27 },
   { date: "Mercoledì 16 e giovedì 17 dicembre", what: "Assegno Unico: rata ordinaria di dicembre (con eventuali conguagli)", who: "Famiglie che già ricevono l'Assegno Unico e non hanno avuto variazioni", note: "L'INPS indica due giorni: la data esatta sul conto dipende da banca o Poste.", src: [SRC.auuMsg, SRC.auuNews], cta: ISEE27 },
   { date: "Mercoledì 16 dicembre", what: "Carta Dedicata a te: ultimo giorno per il primo utilizzo", who: "Chi ha ricevuto la carta nel 2026 (500 €)", note: "Non è un pagamento: se non usi la carta entro questa data, perdi la quota 2026.", src: [SRC.carta] },
@@ -54,14 +54,16 @@ const NOV_ROWS: Row[] = [
 
 const NEXT_ROWS = [
   "Pensioni: a gennaio l'INPS paga il secondo giorno bancabile del mese, non il primo. Nel 2027 il 1° gennaio è festivo e il 2 è sabato: il giorno esatto non è ancora stato comunicato dall'INPS. Lo aggiungiamo qui appena esce.",
-  "Pensioni: l'INPS ha annunciato che la rivalutazione (perequazione) sarà applicata già dalla rata di gennaio 2027 (comunicato dell'11 novembre 2026).",
+  "Pensioni: l'INPS ha annunciato che la rivalutazione (perequazione) sarà applicata già dalla rata di gennaio 2027 (comunicato dell'11 novembre 2026). Il decreto MEF del 13 novembre 2026 (Gazzetta Ufficiale n. 274 del 24 novembre 2026) fissa l'aumento provvisorio al 3,2%.",
   "Assegno Unico e ADI: i calendari ufficiali arrivano fino a dicembre 2026. Al 24 novembre l'INPS non ha ancora pubblicato quelli del 2027: non scriviamo date che non esistono.",
   "ISEE: quello del 2026 scade il 31 dicembre. Per l'Assegno di Inclusione serve un ISEE valido; per l'Assegno Unico, senza ISEE aggiornato l'importo scende al minimo. Se vuoi arrivare pronto, prenota ora.",
 ];
 
 const FAQS = [
   { q: "Quando arriva la pensione di dicembre 2026?", a: "L'INPS paga le pensioni il primo giorno bancabile del mese, con l'eccezione di gennaio. A dicembre 2026 è martedì 1° dicembre. Se riscuoti allo sportello, controlla l'orario dell'ufficio postale." },
-  { q: "Quando arriva la tredicesima?", a: "Di norma con la pensione di dicembre. L'INPS spiega il dettaglio nella notizia sul cedolino di dicembre: aggiorniamo questa pagina appena esce." },
+  { q: "Quando arriva la tredicesima?", a: "Di norma con la pensione di dicembre, quindi martedì 1° dicembre 2026. L'INPS spiega il dettaglio nella notizia sul cedolino di dicembre: aggiorniamo questa pagina appena esce." },
+  { q: "Quando arriva il prossimo pagamento INPS?", a: "Per le pensioni il prossimo pagamento è martedì 1° dicembre 2026, con la tredicesima. Poi a dicembre: ADI il 15 (primi pagamenti) e il 23 (ricariche), Assegno Unico il 16 e 17. A gennaio le pensioni si pagano il secondo giorno bancabile: la data esatta del 2027 l'INPS non l'ha ancora comunicata." },
+  { q: "Quando si vede il cedolino della pensione di dicembre 2026?", a: "Nel servizio INPS \"Cedolino della pensione\" (MyINPS o app INPS Mobile), con SPID, CIE o CNS. L'INPS non indica un giorno fisso; la notizia sul cedolino di dicembre lo scorso anno è uscita il 26 novembre." },
   { q: "Chi riceve i 154,94 euro con la pensione di dicembre?", a: "È l'importo aggiuntivo previsto dall'art. 70 della legge 388/2000: l'INPS lo paga d'ufficio a dicembre a chi ha una pensione bassa e redditi entro i limiti di legge. Per il 2026 i limiti sono 11.931,08 euro per chi è solo e 23.862,15 euro con il coniuge (scheda INPS sull'importo aggiuntivo)." },
   { q: "Quando arriva l'Assegno Unico di dicembre 2026?", a: "Secondo il calendario INPS, la rata ordinaria di dicembre è pagata il 16 e il 17 dicembre. Il giorno preciso sul conto dipende da banca o Poste." },
   { q: "Ho fatto domanda di Assegno Unico a novembre: quando arriva la prima rata?", a: "Di norma nell'ultima settimana del mese dopo la domanda, quindi nell'ultima settimana di dicembre. L'INPS non indica un giorno preciso." },
