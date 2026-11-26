@@ -2,43 +2,62 @@
 /**
  * Banner che porta a /pagamenti-inps (richiesta di Antonio del 26/11/2026).
  * variant "grande": home; variant "compatto": in cima agli articoli di pensioni, Assegno Unico, ISEE, NASpI, invalidità.
- * Le date stanno in ~/data/pagamenti.ts (aggiornamento mensile).
+ * Mostra i prossimi 3 pagamenti da oggi: le date stanno in ~/data/pagamenti.ts. Il server le filtra al momento della build,
+ * poi un piccolo script nel browser nasconde quelle già passate (così domani il banner è giusto anche senza nuova build).
  * Tutto il riquadro è un solo link: area da toccare grande, nessun link annidato.
  */
-import { PAG_MESE, PAG_PROSSIMI, pagamentiAggiornati } from "~/data/pagamenti";
+import { PAG_DATE, prossimiPagamenti } from "~/data/pagamenti";
 
 interface Props { variant?: "grande" | "compatto" }
 const { variant = "grande" } = Astro.props;
-const conDate = pagamentiAggiornati();
-const titolo = conDate ? `Pagamenti INPS di ${PAG_MESE}` : "Pagamenti INPS del mese";
+const visibili = new Set(prossimiPagamenti().map((p) => p.da + p.cosa));
+const voci = [...PAG_DATE].sort((a, b) => a.da.localeCompare(b.da));
+const conDate = visibili.size > 0;
 ---
 {variant === "grande" ? (
-  <a href="/pagamenti-inps" class="bp-grande">
+  <a href="/pagamenti-inps" class="bp-grande" data-bp>
     <span class="bp-testo">
-      <span class="bp-occhiello">Calendario aggiornato con le date ufficiali INPS</span>
-      <span class="bp-titolo">{titolo}</span>
-      {conDate ? (
-        <span class="bp-chips">
-          {PAG_PROSSIMI.map((p) => (
-            <span class="bp-chip"><b>{p.cosa}</b>{" "}{p.quando}</span>
-          ))}
-        </span>
-      ) : (
-        <span class="bp-desc">Pensioni, Assegno Unico, ADI e bonus: tutte le date in una pagina.</span>
-      )}
+      <span class="bp-occhiello">Calendario con le date ufficiali INPS</span>
+      <span class="bp-titolo">Prossimi pagamenti INPS</span>
+      <span class="bp-chips" hidden={!conDate}>
+        {voci.map((p) => (
+          <span class="bp-chip" data-fino={p.fino} hidden={!visibili.has(p.da + p.cosa)}><b>{p.cosa}</b>{" "}{p.quando}</span>
+        ))}
+      </span>
+      <span class="bp-desc" hidden={conDate}>Pensioni, Assegno Unico, ADI e bonus: tutte le date in una pagina.</span>
     </span>
-    <span class="bp-btn">Vedi tutte le date →</span>
+    <span class="bp-btn">Vedi tutti i mesi →</span>
   </a>
 ) : (
-  <a href="/pagamenti-inps" class="bp-compatto">
+  <a href="/pagamenti-inps" class="bp-compatto" data-bp>
     <span class="bp-ico" aria-hidden="true">📅</span>
     <span class="bp-c-testo">
-      <b>{titolo}</b>
-      {conDate && <span class="bp-c-date">{PAG_PROSSIMI.map((p) => `${p.cosa} ${p.quando}`).join(" · ")}</span>}
+      <b>Prossimi pagamenti INPS</b>
+      <span class="bp-c-date bp-chips" hidden={!conDate}>
+        {voci.map((p) => (
+          <span class="bp-c-voce" data-fino={p.fino} hidden={!visibili.has(p.da + p.cosa)}>{p.cosa + " " + p.quando}</span>
+        ))}
+      </span>
     </span>
     <span class="bp-c-go">Tutte le date →</span>
   </a>
 )}
+
+<script is:inline>
+  (function () {
+    var d = new Date();
+    var oggi = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    document.querySelectorAll("[data-bp]").forEach(function (b) {
+      var n = 0;
+      b.querySelectorAll("[data-fino]").forEach(function (v) {
+        var ok = v.getAttribute("data-fino") >= oggi && n < 3;
+        v.hidden = !ok; if (ok) n++;
+      });
+      var chips = b.querySelector(".bp-chips"); if (chips) chips.hidden = n === 0;
+      var desc = b.querySelector(".bp-desc"); if (desc) desc.hidden = n > 0;
+    });
+  })();
+</script>
 
 <style>
   .bp-grande { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; padding: 24px 26px; border-radius: 28px; background: #D4FF4F; color: #14142B; text-decoration: none; border: 2px solid #14142B; box-shadow: 0 6px 0 #14142B; transition: transform .15s, box-shadow .15s; }
@@ -48,8 +67,9 @@ const titolo = conDate ? `Pagamenti INPS di ${PAG_MESE}` : "Pagamenti INPS del m
   .bp-occhiello { font-size: 14px; font-weight: 800; }
   .bp-titolo { font-family: var(--font-display); font-weight: 800; font-size: clamp(24px, 4vw, 34px); line-height: 1.1; }
   .bp-desc { font-size: 17px; line-height: 1.45; }
-  .bp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .bp-grande .bp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .bp-chip { background: #fff; border: 2px solid #14142B; border-radius: 999px; padding: 6px 14px; font-size: 16px; line-height: 1.3; }
+  [data-bp] [hidden] { display: none !important; }
   .bp-btn { background: #14142B; color: #fff; font-weight: 800; border-radius: 999px; padding: 12px 22px; white-space: nowrap; }
   .bp-compatto { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 20px; background: #F1EEFF; color: #14142B; text-decoration: none; border: 2px solid #5B3DF5; }
   .bp-compatto:hover { background: #E4DEFF; color: #14142B; text-decoration: none; }
@@ -57,6 +77,7 @@ const titolo = conDate ? `Pagamenti INPS di ${PAG_MESE}` : "Pagamenti INPS del m
   .bp-ico { font-size: 24px; line-height: 1; }
   .bp-c-testo { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 16px; line-height: 1.4; }
   .bp-c-date { font-size: 15px; color: #3B3B55; }
+  .bp-c-voce:not([hidden]) ~ .bp-c-voce:not([hidden])::before { content: " · "; }
   .bp-c-go { font-weight: 800; color: #4B2FE0; white-space: nowrap; }
   @media (max-width: 520px) { .bp-compatto { flex-wrap: wrap; align-items: flex-start; } .bp-c-testo { flex: 1 1 calc(100% - 48px); } .bp-c-go { width: 100%; padding-left: 36px; } }
   @media (prefers-reduced-motion: reduce) { .bp-grande, .bp-grande:hover { transition: none; transform: none; } }
