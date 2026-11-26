@@ -1,0 +1,184 @@
+---
+/**
+ * NASpI sospesa, decaduta o revocata (26/11/2026).
+ * Riscrive la guida /guida/sospensione-naspi del portale domandedisoccupazione.it, che conteneva dati sbagliati o non verificabili:
+ * - "PAD SIISL non firmato entro 15 giorni = NASpI sospesa": falso. Il messaggio INPS 4011/2024 dice che il mancato adempimento
+ *   NON comporta le sanzioni dell'art. 21 c. 7 lett. a) d.lgs. 150/2015: arriva un invito a contattare il Centro per l'impiego.
+ * - "-25% alla prima assenza al CPI": la sanzione è la decurtazione di 1/4 di UNA mensilità (8 giorni di prestazione).
+ * - Soglie di reddito (8.500 / 5.500 / 5.000 euro), "decadenza dal mese successivo", tempi di riattivazione (10-30 giorni),
+ *   "30 giorni prima che diventi decadenza", modulo "Richiesta riattivazione NASpI", "CV vuoto = PAD non valido",
+ *   retribuzione figurativa durante la sospensione: non trovati in nessuna fonte ufficiale, tolti.
+ * Verificato il 26/11/2026 su:
+ * - Circolare INPS 94/2015, par. 2.7, 2.10.a.1, 2.10.a.2, 2.11, 2.12 e 4 (sospensione per lavoro fino a 6 mesi, ripresa d'ufficio
+ *   per i giorni residui anche se ti dimetti prima, lavoro all'estero, malattia entro 60 giorni, maternità, NASpI-Com entro il 31 gennaio
+ *   per gli anni successivi = sospensione, casi di decadenza con restituzione, decadenza di 1 anno per il giudice).
+ * - Scheda INPS NASpI (agg. 2/2/2026), sezione "Sospensione e decadenza" (testo vigente degli artt. 9 e 11 d.lgs. 22/2015
+ *   e rimando all'art. 21 c. 7 d.lgs. 150/2015); Contact center 803 164 / 06 164 164.
+ * - Circolare INPS 224/2016 (art. 21 c. 7 d.lgs. 150/2015 come modificato dal d.lgs. 185/2016: 1/4 di mensilità = 8 giorni,
+ *   1 mensilità = 30 giorni, decadenza; niente contributi figurativi per i giorni tolti). Dossier Camera "Ammortizzatori sociali"
+ *   (agg. 1/1/2026): nessuna modifica 2024-2026 all'art. 21 c. 7.
+ * - Messaggio INPS 4011/2024 (SIISL: 15 giorni, nessuna sanzione per il solo PAD non firmato).
+ * - Ministero del Lavoro, pagina "Ricorsi e sanzioni di condizionalità" e delibera n. 21 del 6/8/2026 (30 giorni, modulo, PEC o
+ *   raccomandata A/R; giustificati motivi da comunicare entro il giorno dell'appuntamento o il giorno dopo).
+ * - Per i ricorsi contro l'INPS: stesse fonti verificate il 25/11/2026 per /naspi/ricorso (90 giorni, solo online; 1 anno per il giudice).
+ * Normattiva non si apriva il 26/11/2026: il testo degli articoli è stato letto attraverso circolari e scheda INPS.
+ */
+import NaspiGuideLayout from "~/layouts/NaspiGuideLayout.astro";
+
+const faq = [
+    {
+        q: 'Perché la mia NASpI è sospesa?',
+        a: 'Il caso tipico è un nuovo lavoro da dipendente di durata fino a 6 mesi: l\'INPS sospende la NASpI per tutto il contratto e la fa ripartire alla fine. Altri motivi sono la malattia indennizzata, la maternità o il reddito del nuovo anno non comunicato. Il motivo è scritto nella comunicazione dell\'INPS.',
+    },
+    {
+        q: 'Se la NASpI è sospesa perdo i soldi?',
+        a: 'No. Con la sospensione i giorni di NASpI che ti restavano non si perdono: finito il contratto, l\'INPS riprende a pagarli da sola. Si perdono solo con la decadenza.',
+    },
+    {
+        q: 'Quanto può durare la sospensione per un nuovo lavoro?',
+        a: 'Al massimo 6 mesi, cioè quanto il contratto. Se il nuovo lavoro dura più di 6 mesi o è a tempo indeterminato e il reddito supera la soglia, la NASpI decade.',
+    },
+    {
+        q: 'Cosa succede se salto la convocazione del centro per l\'impiego?',
+        a: 'Senza un giustificato motivo, la prima volta ti tolgono un quarto di mensilità (8 giorni di NASpI), la seconda una mensilità (30 giorni), la terza perdi la NASpI e lo stato di disoccupazione.',
+    },
+    {
+        q: 'Se non firmo il Patto sul SIISL entro 15 giorni la NASpI viene sospesa?',
+        a: 'No. Il messaggio INPS 4011/2024 dice che il ritardo sul SIISL non porta sanzioni: ricevi un invito a contattare il centro per l\'impiego. Le sanzioni scattano se poi non ti presenti alle convocazioni senza un motivo valido.',
+    },
+    {
+        q: 'Entro quando si fa ricorso se la NASpI è revocata?',
+        a: 'Contro la decisione dell\'INPS: entro 90 giorni al Comitato provinciale INPS, poi entro 1 anno davanti al giudice (non 3 anni). Contro una sanzione del centro per l\'impiego: entro 30 giorni al Comitato per i ricorsi di condizionalità del Ministero del Lavoro.',
+    },
+];
+---
+
+<NaspiGuideLayout
+    title="NASpI sospesa: perché succede, decadenza e come riprenderla"
+    description="NASpI sospesa o revocata? Nuovo lavoro fino a 6 mesi, convocazioni del centro per l'impiego, decadenza, ricorso in 90 giorni. Patronato a Roma."
+    path="/naspi/sospensione"
+    h1="NASpI sospesa o revocata: perché succede e cosa fare"
+    kicker="Sospensione, decadenza e ricorso"
+    crumb="Sospensione e decadenza NASpI"
+    updated="2026-11-26"
+    published="2026-11-26"
+    image="/og/naspi-sospensione.jpg"
+    imageAlt="NASpI sospesa o revocata: perché succede e cosa fare"
+    related={["checklist-primi-7-giorni-perdita-lavoro-roma", "naspi-2026-patronato-vs-caf-cosa-fa-cosa"]}
+    sources={[
+        { t: 'Scheda INPS "NASpI: indennità mensile di disoccupazione", sezione Sospensione e decadenza (ultimo aggiornamento 2 febbraio 2026)', url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.50593.naspi-indennit-mensile-di-disoccupazione.html" },
+        { t: "Circolare INPS 12 maggio 2015, n. 94 (sospensione, ripresa e decadenza della NASpI)", url: "https://servizi2.inps.it/CircolariZIP/Circolare%20numero%2094%20del%2012-05-2015.pdf" },
+        { t: "Circolare INPS 15 dicembre 2016, n. 224 (sanzioni dell'art. 21, comma 7, d.lgs. 150/2015)", url: "https://servizi2.inps.it/CircolariZIP/Circolare%20numero%20224%20del%2015-12-2016.pdf" },
+        { t: "Messaggio INPS 28 novembre 2024, n. 4011 (SIISL per chi prende NASpI e DIS-COLL)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2024.11.messaggio-numero-4011-del-28-11-2024_14713.html" },
+        { t: "D.Lgs. 4 marzo 2015, n. 22, artt. 9, 10 e 11 (NASpI: nuovo lavoro, sospensione e decadenza)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-03-04;22" },
+        { t: "D.Lgs. 14 settembre 2015, n. 150, art. 21 (obblighi verso il centro per l'impiego e sanzioni)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2015-09-14;150" },
+        { t: 'Ministero del Lavoro, "Ricorsi e sanzioni di condizionalità" (delibera n. 21 del 6 agosto 2026)', url: "https://www.lavoro.gov.it/strumenti-e-servizi/pagine/ricorsi-e-sanzioni-di-condizionalita" },
+        { t: "Circolare INPS 17 maggio 2023, n. 48 (ricorsi amministrativi all'INPS)", url: "https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2023.05.circolare-numero-48-del-17-05-2023_14161.html" },
+        { t: "D.P.R. 30 aprile 1970, n. 639, art. 47 (1 anno per andare dal giudice)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:1970-04-30;639" },
+    ]}
+    faq={faq}
+>
+    <blockquote slot="intro">
+        <p><strong>In breve</strong></p>
+        <ul>
+            <li><strong>Sospesa</strong> vuol dire che il pagamento si ferma per un periodo e poi riprende: i giorni che ti restavano <strong>non si perdono</strong>. <strong>Decaduta</strong> (o "revocata") vuol dire che la NASpI finisce.</li>
+            <li>Il caso tipico: un <strong>nuovo lavoro da dipendente fino a 6 mesi</strong>. La NASpI si ferma per tutto il contratto e alla fine riparte da sola.</li>
+            <li>La NASpI <strong>decade</strong> se perdi lo stato di disoccupazione, se inizi un lavoro senza comunicare il reddito entro un mese, se maturi la pensione o l'assegno ordinario di invalidità (salvo che scegli la NASpI).</li>
+            <li>Se salti le convocazioni del <strong>centro per l'impiego</strong> senza motivo: <strong>8 giorni</strong> tolti la prima volta, <strong>30 giorni</strong> la seconda, <strong>decadenza</strong> la terza.</li>
+            <li>Se è un errore: ricorso al Comitato provinciale INPS entro <strong>90 giorni</strong>, poi giudice entro <strong>1 anno</strong>. Contro le sanzioni del centro per l'impiego il termine è di <strong>30 giorni</strong>.</li>
+        </ul>
+    </blockquote>
+
+    <h2>Che differenza c'è tra NASpI sospesa e decaduta?</h2>
+    <p>La <strong>sospensione</strong> ferma il pagamento per un periodo, la <strong>decadenza</strong> lo chiude per sempre. In mezzo c'è la <strong>decurtazione</strong>, una sanzione che toglie alcuni giorni di NASpI.</p>
+    <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: sospensione, decurtazione e decadenza a confronto">
+        <table style="display:table">
+            <thead>
+                <tr>
+                    <th scope="col">Cosa ti succede</th>
+                    <th scope="col">Sospensione</th>
+                    <th scope="col">Decurtazione</th>
+                    <th scope="col">Decadenza</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><th scope="row">Il pagamento</th><td>Si ferma per un periodo</td><td>Continua, con meno giorni</td><td>Si ferma dal giorno del fatto</td></tr>
+                <tr><th scope="row">I giorni che restavano</th><td>Restano tutti e si pagano dopo</td><td>Ne perdi 8 o 30</td><td>Li perdi tutti</td></tr>
+                <tr><th scope="row">Soldi da restituire</th><td>No</td><td>Solo se i giorni ti erano già stati pagati</td><td>Sì, quello che hai preso dopo il fatto</td></tr>
+                <tr><th scope="row">Esempio</th><td>Contratto di 3 mesi</td><td>Assenza al centro per l'impiego</td><td>Lavoro a tempo indeterminato</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <p>Nei messaggi e nelle ricerche si legge spesso "NASpI <strong>revocata</strong>": nella pratica è la decadenza.</p>
+
+    <h2>Perché la NASpI è sospesa?</h2>
+    <p>Di solito perché all'INPS risulta un <strong>nuovo contratto da dipendente di massimo 6 mesi</strong>. Secondo l'INPS la NASpI si sospende in questi casi:</p>
+    <ul>
+        <li><strong>nuovo lavoro da dipendente fino a 6 mesi</strong> con un reddito sopra la soglia, oppure senza aver comunicato il reddito: l'INPS sospende la NASpI <strong>in automatico</strong>, sulla base della comunicazione di assunzione del datore di lavoro;</li>
+        <li><strong>lavoro all'estero fino a 6 mesi</strong>, in un Paese dell'Unione europea o fuori;</li>
+        <li><strong>malattia</strong> iniziata entro 60 giorni dalla fine del lavoro: la NASpI si ferma per tutto il periodo pagato come malattia e poi riprende;</li>
+        <li><strong>maternità</strong>: se durante la NASpI inizia il congedo di maternità, ricevi l'indennità di maternità e la NASpI riprende dopo;</li>
+        <li><strong>reddito del nuovo anno non comunicato</strong>: se hai un'altra attività e la NASpI continua nell'anno nuovo, il reddito previsto va comunicato di nuovo con il modello NASpI-Com entro il <strong>31 gennaio</strong>. Se manca, la NASpI resta sospesa finché non lo comunichi (circolare INPS 94/2015).</li>
+    </ul>
+    <p><strong>Il SIISL non c'entra con la sospensione.</strong> Chi prende la NASpI deve entrare nella piattaforma <a href="/siisl">SIISL</a> entro 15 giorni, completare il curriculum e firmare il Patto di attivazione digitale. Se non lo fai, l'INPS precisa che <strong>non scattano sanzioni</strong>: ricevi un invito a contattare il centro per l'impiego (messaggio INPS 4011/2024). Le sanzioni arrivano dopo, se non ti presenti alle convocazioni.</p>
+
+    <h2>NASpI sospesa per un nuovo lavoro: quando riprende?</h2>
+    <p>Riprende <strong>da sola alla fine del contratto</strong>, per tutti i giorni che ti restavano il giorno della sospensione. Non serve una nuova domanda.</p>
+    <ul>
+        <li>Conta la <strong>durata sul calendario</strong> del contratto, non i giorni lavorati davvero.</li>
+        <li>Se il contratto finisce prima, anche perché <strong>ti dimetti</strong>, la NASpI riparte lo stesso (circolare INPS 94/2015).</li>
+        <li>I contributi del nuovo lavoro valgono per una <strong>futura NASpI</strong>: contano sia per il diritto sia per la durata.</li>
+        <li>Se il contratto dura <strong>più di 6 mesi</strong> o è a tempo indeterminato e il reddito supera la soglia, la NASpI non si sospende: <strong>decade</strong>.</li>
+    </ul>
+    <p>Se invece il nuovo lavoro ti dà un <strong>reddito basso</strong>, sotto la soglia, puoi tenere la NASpI ridotta invece di sospenderla, ma devi comunicare il reddito previsto all'INPS <strong>entro un mese</strong> con il modello NASpI-Com. Soglie ed esempi sono nella guida <a href="/naspi/nuovo-lavoro">nuovo lavoro durante la NASpI</a>.</p>
+    <p class="cta-tool-wrap"><a class="cta-tool" href="/calcolo-naspi"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Apri il calcolo NASpI 2026</span><span class="cta-tool-s">Ricostruisci importo e durata della tua NASpI</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+
+    <h2>Quando la NASpI decade o viene revocata?</h2>
+    <p>La NASpI <strong>decade dal giorno del fatto</strong> che la fa perdere, e quello che hai incassato dopo va <strong>restituito</strong>. Secondo l'art. 11 del d.lgs. 22/2015 e la scheda INPS, decadi se:</p>
+    <ul>
+        <li><strong>perdi lo stato di disoccupazione</strong>;</li>
+        <li>inizi un <strong>lavoro da dipendente di più di 6 mesi</strong> o a tempo indeterminato senza comunicare all'INPS il reddito previsto entro un mese;</li>
+        <li>avevi già un <strong>part-time</strong> quando hai chiesto la NASpI e non hai comunicato il reddito previsto entro un mese dalla domanda;</li>
+        <li>inizi un <strong>lavoro autonomo</strong> o una collaborazione senza comunicare il reddito previsto entro un mese (anche se sei iscritto alla Gestione separata senza lavorare, va dichiarato il reddito, anche zero);</li>
+        <li>raggiungi i requisiti per la <strong>pensione</strong> di vecchiaia o anticipata;</li>
+        <li>ottieni l'<strong>assegno ordinario di invalidità</strong>, salvo che scegli di tenere la NASpI;</li>
+        <li>non rispetti gli <strong>obblighi verso il centro per l'impiego</strong> senza un giustificato motivo, nei casi dell'art. 21 del d.lgs. 150/2015 (vedi sotto).</li>
+    </ul>
+
+    <h2>Cosa succede se non ti presenti al centro per l'impiego?</h2>
+    <p>La prima assenza senza giustificato motivo ti costa <strong>8 giorni di NASpI</strong>, la seconda <strong>30 giorni</strong>, la terza la <strong>decadenza</strong>. Le sanzioni le decide il centro per l'impiego e le applica l'INPS (art. 21, comma 7, d.lgs. 150/2015; circolare INPS 224/2016).</p>
+    <ul>
+        <li><strong>Convocazioni e appuntamenti</strong> (per il Patto di servizio e i contatti successivi) e <strong>laboratori per la ricerca di lavoro</strong>: 1ª volta un quarto di mensilità (8 giorni), 2ª volta una mensilità (30 giorni), 3ª volta decadenza dalla NASpI e dallo stato di disoccupazione.</li>
+        <li><strong>Corsi di formazione</strong>, riqualificazione o altre iniziative di politica attiva: 1ª volta una mensilità (30 giorni), 2ª volta decadenza.</li>
+        <li><strong>Offerta di lavoro congrua rifiutata</strong> senza giustificato motivo: decadenza subito.</li>
+    </ul>
+    <p>Per i giorni tolti non ricevi né i soldi né i contributi figurativi. Se la sanzione arriva quando la NASpI è già finita, l'INPS chiede indietro i giorni pagati in più.</p>
+    <p><strong>Quali sono i giustificati motivi?</strong> Il Ministero del Lavoro accetta, tra gli altri: malattia o infortunio documentati, gravidanza nei periodi di astensione obbligatoria, citazione in tribunale, gravi motivi familiari documentati e ogni altro impedimento oggettivo documentato. Il motivo va comunicato al centro per l'impiego, con i documenti, <strong>entro il giorno dell'appuntamento o al più tardi il giorno dopo</strong>.</p>
+
+    <h2>NASpI sospesa per errore: cosa fare?</h2>
+    <p>Prima di tutto leggi il <strong>motivo</strong> nella comunicazione dell'INPS: da lì capisci se è un errore e chi lo deve correggere.</p>
+    <ol>
+        <li><strong>Controlla lo stato e il motivo</strong> nel servizio NASpI di MyINPS (consultazione della domanda) e nelle comunicazioni ricevute.</li>
+        <li><strong>Se l'INPS ti risulta assunto ma non è vero</strong>, o le date sono sbagliate, la sospensione nasce dalla comunicazione del datore di lavoro: chiedigli di correggerla e tieni le prove (contratto, lettera di fine rapporto, buste paga).</li>
+        <li><strong>Se è una sanzione del centro per l'impiego</strong>, raccogli i documenti del giustificato motivo e guarda nel provvedimento come e entro quando fare ricorso.</li>
+        <li><strong>Segnala l'errore all'INPS</strong> con i documenti: online, al Contact center (803 164 gratuito da fisso, 06 164 164 da cellulare) o tramite un patronato.</li>
+        <li><strong>Non aspettare oltre i termini del ricorso</strong>: la richiesta di correggere l'errore (riesame) non ferma i 90 giorni.</li>
+    </ol>
+    <p>Se sei a Roma, possiamo leggere insieme la lettera dell'INPS nel nostro ufficio di Vigne Nuove e dirti subito se è una sospensione, una sanzione o una decadenza.</p>
+
+    <h2>Entro quando si fa ricorso?</h2>
+    <p>Dipende da chi ha deciso. Contro un provvedimento dell'<strong>INPS</strong> hai <strong>90 giorni</strong>; contro una sanzione del <strong>centro per l'impiego</strong> hai <strong>30 giorni</strong>.</p>
+    <ul>
+        <li><strong>Decisione dell'INPS</strong> (sospensione, decadenza, richiesta di restituzione): ricorso al <strong>Comitato provinciale INPS</strong> entro 90 giorni da quando hai ricevuto il provvedimento, <strong>solo online</strong>, da solo con SPID, CIE o CNS oppure tramite patronato. La raccomandata non vale. Se il ricorso va male, per andare dal giudice del lavoro hai <strong>1 anno</strong>, non 3 (art. 47 del DPR 639/1970: i 3 anni valgono per le pensioni). Tutti i passaggi sono nella guida al <a href="/naspi/ricorso">ricorso NASpI</a>.</li>
+        <li><strong>Sanzione del centro per l'impiego</strong> (decurtazione o decadenza per assenze o rifiuti): ricorso entro <strong>30 giorni</strong> dalla notifica al <strong>Comitato per i ricorsi di condizionalità</strong> del Ministero del Lavoro, con il modulo del Ministero, la copia del documento e le prove del giustificato motivo. Qui si invia per PEC o con raccomandata A/R, come indicato sul sito del Ministero.</li>
+    </ul>
+
+    <h2>Come ti aiutiamo</h2>
+    <p>Al Centro Pratiche Flaiano, patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro, Bufalotta e Porta di Roma), anche a distanza:</p>
+    <ul>
+        <li>leggiamo con te la comunicazione dell'INPS o del centro per l'impiego e ti diciamo se è sospensione, sanzione o decadenza;</li>
+        <li>controlliamo i rapporti di lavoro e i redditi comunicati e, se serve, inviamo il modello NASpI-Com;</li>
+        <li>ti diciamo quali prove raccogliere e presentiamo il ricorso all'INPS come patronato, con il tuo mandato;</li>
+        <li>ti aiutiamo con il <a href="/siisl">SIISL</a> e con il Patto di attivazione digitale, per non avere problemi con le convocazioni.</li>
+    </ul>
+</NaspiGuideLayout>
