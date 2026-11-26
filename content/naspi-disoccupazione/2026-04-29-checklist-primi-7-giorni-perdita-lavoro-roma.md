@@ -6,7 +6,7 @@ date: 2026-04-29
 last_updated: 2026-11-26
 category: "naspi-disoccupazione"
 tags: ["naspi", "guida", "patronato", "lavoro", "isee", "famiglie"]
-meta_description: "Hai perso il lavoro a Roma? Cosa fare nei primi 7 giorni: NASpI, ISEE corrente, AUU, SIISL. Checklist Patronato + CAF UNSIC del Centro Pratiche Flaiano Vigne Nuove."
+meta_description: "Hai perso il lavoro a Roma? Cosa fare nei primi 7 giorni: NASpI, ISEE corrente, AUU, SIISL. La checklist del Patronato ENASC a Vigne Nuove."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Decreto Legislativo 4 marzo 2015, n. 22 (NASpI)"

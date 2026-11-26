@@ -195,7 +195,7 @@ No, il bonus nido non si cumula con la detrazione del 19% per le rette del nido.
 
 ### Quanto costa la domanda del bonus nido al patronato?
 
-Niente: come indicato nella pagina [bonus famiglia](/bonus-famiglia), le domande all'INPS presentate dal nostro patronato sono gratuite, e anche l'ISEE è gratis.
+L'ISEE da noi è gratuito. Per la domanda del bonus nido ti diciamo il costo prima di iniziare: chiedi su WhatsApp al **371 623 0690** o [prenota un appuntamento](/prenota).
 
 ---
 

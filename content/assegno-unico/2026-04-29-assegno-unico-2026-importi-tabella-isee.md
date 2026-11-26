@@ -170,7 +170,7 @@ L'ISEE corrente vale **6 mesi** (o fino a fine anno se richiesto dopo il 1° gen
 
 Operiamo a **Roma**, zona **Vigne Nuove** (Municipio III Montesacro), come **CAF UNSIC** e **Patronato ENASC** autorizzato. Serviamo famiglie da **Tufello, Conca d'Oro, Bufalotta, Porta di Roma** e tutto il **Municipio III**.
 
-Il Patronato presta **assistenza gratuita** per tutte le pratiche INPS (Legge 152/2001), incluso l'Assegno Unico. I nostri operatori si occupano di:
+La domanda di Assegno Unico con noi costa **15 € in ufficio** (**10 €** con la tessera); l'**ISEE** che serve per l'assegno è **gratuito**. I nostri operatori si occupano di:
 
 - Calcolare correttamente l'**ISEE 2026** prima della domanda AUU
 - Verificare le **maggiorazioni applicabili** (entrambi genitori lavoratori, madre under 21, disabilita)

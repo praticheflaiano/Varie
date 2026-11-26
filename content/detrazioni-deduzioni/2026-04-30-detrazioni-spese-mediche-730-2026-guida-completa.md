@@ -6,7 +6,7 @@ date: 2026-04-30
 last_updated: 2026-11-26
 category: "detrazioni-deduzioni"
 tags: ["guida", "730", "spese mediche", "detrazioni", "IRPEF", "tessera sanitaria"]
-meta_description: "Spese mediche nel 730/2026: detrazione del 19% sopra la franchigia di 129,11 €, scontrino parlante e pagamento tracciabile. Ti aiutiamo a Vigne Nuove."
+meta_description: "Spese mediche nel 730/2026: detrazione del 19% sopra la franchigia di 129,11 €, scontrino parlante e pagamento tracciabile. Ti aiutiamo a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Agenzia delle Entrate - Istruzioni 730/2026, Quadro E righi E1-E3, E6"

@@ -6,7 +6,7 @@ date: 2026-11-24
 last_updated: 2026-11-24
 category: "invalidita-civile"
 tags: ["inps", "bandi-inps", "disabilita", "legge-104", "scuola", "docenti", "ata", "orfani"]
-meta_description: "Bando INPS 2026 per figli di insegnanti e personale ATA: fino a 1.000 euro per orfani e figli con disabilità. Domande dal 30 novembre al 30 dicembre 2026."
+meta_description: "Bando INPS 2026 per figli di insegnanti e personale ATA: fino a 1.000 euro per orfani e figli con disabilità. Domande dal 30/11 al 30/12/2026. Aiuto a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "INPS, Bando di concorso Assegni di frequenza e contributi formativi 2026, pubblicato il 24 novembre 2026 - https://www.inps.it/it/it/avvisi-bandi-e-fatturazione/welfare-assistenza-e-mutualita/welfare-bandi/cerca-bandi/dettaglio.welfare-bandi.2026.11.bando-di-concorso-assegni-di-frequenza-e-contribut_176.html"
