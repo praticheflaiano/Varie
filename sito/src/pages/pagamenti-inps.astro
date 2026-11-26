@@ -1,14 +1,16 @@
 ---
 /**
  * Pagina fissa "Pagamenti INPS": l'URL resta /pagamenti-inps, cambia solo il mese.
- * AGGIORNAMENTO MENSILE: modificare solo le costanti qui sotto (MESE, AGGIORNATO, ROWS, NOV_ROWS, NEXT_ROWS, FAQS).
+ * AGGIORNAMENTO MENSILE: modificare le costanti qui sotto (AGGIORNATO, SEO_TITLE, SEO_DESC, ROWS, NOV_ROWS, NEXT_ROWS, FAQS)
+ * e il file ~/data/pagamenti.ts (mese e date del banner in home e negli articoli).
  * Regola: solo date confermate da INPS/MEF (notizia, messaggio o circolare citati). Se non c'è la fonte, non si pubblica.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import { BOOKING, CONTACT } from "~/consts";
+import { PAG_MESE } from "~/data/pagamenti";
 
-const MESE = "dicembre 2026";
+const MESE = PAG_MESE; // il mese si cambia in ~/data/pagamenti.ts (vale anche per il banner)
 const AGGIORNATO = "26 novembre 2026";
 const SEO_TITLE = "Pagamenti INPS dicembre 2026: tutte le date";
 const SEO_DESC = "Pagamenti INPS dicembre 2026: pensione e tredicesima il 1° dicembre, Assegno Unico il 16-17, ADI e bonus mamme. Date ufficiali e aiuto a Roma.";

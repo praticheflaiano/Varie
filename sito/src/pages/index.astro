@@ -4,6 +4,7 @@ import SearchBox from "~/components/search/SearchBox.astro";
 import GoogleReviews from "~/components/ui/GoogleReviews.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 import OpenNow from "~/components/home/OpenNow.astro";
+import BannerPagamenti from "~/components/ui/BannerPagamenti.astro";
 import ArticleCard from "~/components/blog/ArticleCard.astro";
 import Accordion from "~/components/ui/Accordion.svelte";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
@@ -100,6 +101,11 @@ const homeFaq = [
         <span class="sticker" style="position:absolute;left:-6px;bottom:-6px;background:#DB2E6B;color:#fff">Vigne Nuove · Roma Nord</span>
       </div>
     </div>
+  </section>
+
+  <!-- Pagamenti INPS del mese (richiesta di Antonio 26/11/2026): date in ~/data/pagamenti.ts -->
+  <section class="wrap" style="padding-bottom:24px">
+    <BannerPagamenti variant="grande" />
   </section>
 
   <!-- ISEE 2027: prenotazione (strategia SEO 23/11/2026, togliere dopo fine febbraio 2027). Fonte: INPS, l'ISEE vale fino al 31 dicembre -->
