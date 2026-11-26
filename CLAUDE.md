@@ -71,6 +71,7 @@ Regola di Antonio (24/11/2026): queste pratiche valgono su tutte le pagine, nuov
 - **Link con lo stesso testo**: due link con lo stesso testo nella stessa pagina devono portare allo stesso indirizzo. Se portano a pagine diverse, cambiare il testo o aggiungere un `aria-label` che inizia con il testo visibile (es. nel piè di pagina: "Pensioni: il servizio" e "Pensioni: articoli del blog"). Evitare testi generici come "la nostra pagina".
 - **Campi dei moduli**: ogni input, select e textarea ha un'etichetta (`<label>` oppure `aria-label`).
 - **Articoli markdown**: caselle `- [ ]`, tabelle scorrevoli e intestazioni vuote sono sistemate da `sito/src/lib/rehype-a11y.mjs`. Dopo una modifica a quel file cancellare la cache (`rm -rf sito/node_modules/.astro`) prima della build.
+- **Domande frequenti negli articoli** (dal 26/11/2026): `sito/src/lib/rehype-faq.mjs` trasforma ogni domanda della sezione "## Domande frequenti" (`### Domanda?` o `**Domanda?**`) in un riquadro apribile `<details class="faq-item">`; la risposta resta sempre nell'HTML, quindi Google la legge. Le guide (ToolGuideLayout, NaspiGuideLayout) usano lo stesso riquadro. Mai nascondere le risposte con componenti che le scrivono solo all'apertura.
 - **Prima di pubblicare** pagine o componenti nuovi: controllo con axe-core sulle pagine toccate (Playwright + `axe.run` con `wcag2a`, `wcag2aa`, `best-practice`) e correggere ogni errore.
 
 ## Sezione NASpI e disoccupazione (dal 25/11/2026)
