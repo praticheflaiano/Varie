@@ -26,7 +26,7 @@ const LegalDisclaimer: React.FC<LegalDisclaimerProps> = ({ variant = 'calculator
 
     const copy = variant === 'calculator'
         ? `Importi e durate qui indicati sono una stima basata sui parametri INPS ${REFERENCE_YEAR} ` +
-          `(massimale mensile €1.584,70, soglia €1.456,72, rivalutazione ISTAT +1,4%). ` +
+          `(massimo mensile 1.584,70 €, retribuzione di riferimento 1.456,72 €, circolare INPS n. 4/2026). ` +
           `Non sostituiscono il calcolo ufficiale dell'INPS riportato nel decreto di liquidazione.`
         : `Contenuti allineati alla normativa ${REFERENCE_YEAR} (D.Lgs. 22/2015 e successive circolari INPS). ` +
           `Le informazioni hanno scopo divulgativo e non costituiscono consulenza legale o fiscale.`;
