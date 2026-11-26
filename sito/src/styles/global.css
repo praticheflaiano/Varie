@@ -503,6 +503,47 @@
   scroll-margin-top: 6rem;
   font-family: var(--font-display);
 }
+/* Domande frequenti come riquadri apribili (rehype-faq.mjs e layout guide), 26/11/2026.
+   La risposta è sempre nell'HTML: <details> la nasconde solo alla vista. */
+.prose-article details.faq-item {
+  border-radius: 22px;
+  background: #F7F7FB;
+  margin-top: 0.75rem;
+}
+.prose-article details.faq-item + details.faq-item { margin-top: 0.75rem; }
+.prose-article details.faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.4rem;
+  border-radius: 22px;
+}
+.prose-article details.faq-item > summary::-webkit-details-marker { display: none; }
+.prose-article details.faq-item > summary::after {
+  content: "";
+  flex: none;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-top: 0.45rem;
+  border-right: 2.5px solid var(--color-brand-600, #5B3DF5);
+  border-bottom: 2.5px solid var(--color-brand-600, #5B3DF5);
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+}
+.prose-article details.faq-item[open] > summary::after { transform: rotate(-135deg); margin-top: 0.7rem; }
+.prose-article details.faq-item > summary:focus-visible { outline: 3px solid #5B3DF5; outline-offset: 2px; }
+.prose-article h3.faq-q {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+.prose-article .faq-a { padding: 0 1.4rem 1.1rem; }
+.prose-article .faq-a > :first-child { margin-top: 0; }
+.prose-article .faq-a > :last-child { margin-bottom: 0; }
 .prose-article h4 {
   margin-top: 1.75em;
   margin-bottom: 0.5em;
