@@ -70,7 +70,7 @@ Per l'ISEE 2027 serve la **giacenza media del 2025** di ogni conto, libretto, de
 
 La giacenza media è la media dei soldi presenti sul conto durante l'anno: la indica la banca o Poste, su richiesta. Vanno dichiarati anche i conti **aperti o chiusi nel corso del 2025**, con le date. Il saldo di oggi, o quello del 2026, non serve: servirà per l'ISEE 2028.
 
-Una sola eccezione da ricordare: **titoli di Stato, buoni e libretti postali** sono esclusi dal calcolo fino a **50.000 euro** per famiglia (vedi sotto). Vanno comunque indicati nella DSU.
+Una sola eccezione da ricordare: **titoli di Stato, buoni e libretti postali** sono esclusi dal calcolo fino a **50.000 euro** per famiglia (vedi sotto). Fino a quel limite si possono non indicare o indicare ridotti; nella DSU precompilata la riduzione è automatica. Come si calcola la giacenza e dove trovarla: [giacenza media ISEE 2027](/blog/giacenza-media-isee-2027-come-calcolarla-dove-trovarla).
 
 ## Quando si può fare l'ISEE 2027?
 
@@ -183,6 +183,7 @@ La prima presentazione dell'anno al CAF è gratuita. Da noi l'ISEE è gratis, an
 - [Assegno di inclusione 2027: ISEE e rinnovo senza mese di stop](/blog/assegno-di-inclusione-2027-isee-rinnovo)
 - [Assegno unico 2027: rinnovo dell'ISEE e scadenze](/blog/assegno-unico-2027-rinnovo-isee-scadenze)
 - [ISEE corrente: quando conviene a Roma](/blog/isee-corrente-quando-conviene-roma)
+- [Giacenza media ISEE 2027: come si calcola e dove trovarla](/blog/giacenza-media-isee-2027-come-calcolarla-dove-trovarla)
 - [ISEE gratis al CAF di Vigne Nuove](/isee)
 
 ---
