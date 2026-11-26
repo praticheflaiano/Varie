@@ -53,16 +53,15 @@
           </svg>
         </button>
       </h3>
-      {#if isOpen}
-        <div
+      <div
           id={`accordion-panel-${i}`}
+          hidden={!isOpen}
           role="region"
           aria-labelledby={`accordion-trigger-${i}`}
           class="px-6 pb-5 -mt-1 text-[var(--color-ink-soft)] leading-relaxed"
         >
           {@html item.answer}
         </div>
-      {/if}
     </div>
   {/each}
 </div>
