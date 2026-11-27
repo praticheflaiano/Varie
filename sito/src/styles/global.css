@@ -785,7 +785,8 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
     display: grid;
     grid-template-columns: minmax(0, var(--ps-main)) var(--ps-side);
     column-gap: var(--ps-gap);
-    justify-content: center;
+    /* colonne allineate ai bordi della barra in alto (logo a sinistra, Prenota a destra): niente "isola" al centro */
+    justify-content: space-between;
     grid-template-areas: "head head" "cover aside" "top aside" "tool aside" "main aside" "rel rel";
   }
   .ps--tool { grid-template-columns: minmax(0, var(--ps-tool)) var(--ps-side); }
@@ -847,4 +848,10 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
    allineato alla testata; da 1200 px il corpo è quello degli articoli (circa 80 caratteri per riga). */
 @media (min-width: 1200px) {
   article.container-narrow.prose-article { font-size: var(--ps-font); }
+}
+
+/* Con la colonna laterale (PageAside, che ha già Prenota, telefono e WhatsApp) il pulsante WhatsApp flottante
+   copriva il fondo della colonna tra 1200 e 1440px: da 1200px, sulle pagine con la colonna, non serve. (27/11/2026) */
+@media (min-width: 1200px) {
+  body:has(.ps-aside) .whatsapp-fab { display: none; }
 }

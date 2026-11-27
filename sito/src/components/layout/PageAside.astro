@@ -10,15 +10,16 @@ import { CONTACT } from "~/consts";
 
 interface Props {
   toc?: { slug: string; text: string }[];
+  tocTitle?: string; // "In questa guida" (articoli) o "In questa pagina" (FAQ)
 }
-const { toc = [] } = Astro.props;
+const { toc = [], tocTitle = "In questa guida" } = Astro.props;
 const tel = CONTACT.phone.landline.replace(/^\+39\s*/, "");
 const cell = CONTACT.phone.mobile.replace(/^\+39\s*/, "");
 ---
-<div class="ps-aside">
+<div class="ps-aside" data-pagefind-ignore>
   {toc.length > 0 && (
-    <nav class="pa-box pa-toc" aria-label="In questa guida">
-      <p class="pa-title">In questa guida</p>
+    <nav class="pa-box pa-toc" aria-label={tocTitle}>
+      <p class="pa-title">{tocTitle}</p>
       <ol>
         {toc.map((h) => (
           <li><a href={`#${h.slug}`} data-pa-toc>{h.text}</a></li>
