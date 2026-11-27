@@ -82,9 +82,9 @@ Se sei sposato **conta il reddito di tutti e due**, compreso l'eventuale assegno
 
 ### Quali redditi contano e quali no?
 
-Secondo l'INPS **contano**: i redditi IRPEF al netto di tasse e contributi (pensioni comprese, anche estere), gli interessi di conti, libretti, titoli e obbligazioni, le vincite, gli affitti e i redditi di terreni e fabbricati, le rendite INAIL, le pensioni di guerra, gli assegni di mantenimento e le prestazioni assistenziali continuative.
+Secondo l'INPS **contano**: redditi IRPEF netti (pensioni comprese, anche estere), interessi di conti, libretti e titoli, affitti, rendite INAIL, assegni di mantenimento e prestazioni assistenziali continuative.
 
-**Non contano**: la **casa in cui abiti**, il **TFR** e i suoi anticipi, gli **arretrati** tassati separatamente, le prestazioni assistenziali una tantum e **un terzo** della pensione calcolata con il sistema contributivo (fino a un terzo dell'assegno sociale).
+**Non contano**: la **casa in cui abiti**, il **TFR**, gli **arretrati** tassati separatamente e **un terzo** della pensione contributiva (fino a un terzo dell'assegno sociale).
 
 ## Come si calcola l'assegno sociale ridotto?
 
@@ -164,9 +164,6 @@ La casa in cui abiti no. Contano invece gli affitti e i redditi di altri immobil
 
 ### Si può avere l'assegno sociale senza contributi?
 Sì: è una prestazione assistenziale, non serve aver lavorato. Contano età, residenza e reddito.
-
-### Posso andare all'estero se prendo l'assegno sociale?
-Sì, ma per non più di 29 giorni di seguito. Oltre, l'assegno si sospende dal giorno della partenza e l'INPS recupera quanto pagato nel frattempo.
 
 ### Quanto costa fare la domanda di assegno sociale al patronato?
 Prima di iniziare ti diciamo il costo, oppure chiedi un preventivo su WhatsApp al 371 623 0690. La domanda la seguiamo noi dall'invio all'esito.
