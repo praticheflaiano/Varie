@@ -11,5 +11,8 @@ const faqLd = "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"
   <JsonLdService slot="head" slug="adi-sfl" name={"Assegno di inclusione (ADI) e Supporto formazione e lavoro (SFL)"} description={"Verifica requisiti, ISEE, domanda INPS e adempimenti per ADI e SFL tramite CAF e patronato."} serviceType={"Patronato - sostegno al reddito"} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
   <ServiceLanding {...props} />
+  <section style="max-width:860px;margin:0 auto;padding:8px 16px 32px">
+    <p class="cta-tool-wrap"><a href="/calcolo-assegno-inclusione" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h8"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Calcola quanto ti spetta di ADI</span><span class="cta-tool-s">Scala di equivalenza, reddito familiare e affitto, con le soglie 2026</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+  </section>
   <LandingArticles categories={["isee-dsu", "bonus-fiscali"]} />
 </BaseLayout>
