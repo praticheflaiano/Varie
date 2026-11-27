@@ -1,0 +1,60 @@
+---
+/**
+ * Indice delle pagine "per situazione di vita" (27/11/2026): per chi non sa come si chiama la pratica
+ * ma sa cosa gli è successo. Dati in src/data/situazioni.ts.
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import { CONTACT } from "~/consts";
+import { SITUAZIONI } from "~/data/situazioni";
+---
+
+<BaseLayout
+  title="Cosa ti è successo? Le pratiche giuste a Roma"
+  description="Hai perso il lavoro, è nato un figlio, vai in pensione, hai debiti? Scegli la tua situazione e trova pratiche e aiuti. CAF e patronato a Roma Vigne Nuove."
+>
+  <section class="bg-mesh-brand">
+    <div class="container-wide pt-10 pb-12">
+      <Breadcrumb items={[{ name: "Cosa ti è successo?", href: "/situazioni" }]} class="mb-6" />
+      <div class="flex flex-col gap-5" style="max-width:860px">
+        <span class="eyebrow">Non sai come si chiama la pratica?</span>
+        <h1 class="sit-h1">Cosa ti è successo?</h1>
+        <p style="font-size:20px;line-height:1.5">Scegli la tua situazione: ti diciamo cosa fare, in che ordine, quali pratiche ti servono e quali aiuti puoi chiedere.</p>
+        <p style="font-size:17px;line-height:1.5;color:var(--color-ink-soft)">Siamo CAF e patronato a <strong>Roma Vigne Nuove</strong> ({CONTACT.address.street}). Lavoriamo anche in <strong>videochiamata</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-wide section-tight">
+    <ul class="sit-index">
+      {SITUAZIONI.map((s) => (
+        <li>
+          <a href={`/situazioni/${s.slug}`} class="tile sit-tile" style={`background:${s.colori.bg};color:${s.colori.fg};${s.colori.bordo ? "border:2px solid #14142B;" : ""}`}>
+            <h2 class="tile-title sit-tile-t" style={`color:${s.colori.fg}`}>{s.nome}</h2>
+            <span style={`font-size:17px;line-height:1.45;color:${s.colori.sub}`}>{s.breve}</span>
+            <span class="tile-go" style={`color:${s.colori.go}`} aria-hidden="true">Cosa fare →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mt-10 rounded-[28px] bg-[var(--color-brand-50)] p-6">
+      <h2 class="font-display text-xl font-bold text-[var(--color-brand-900)]">Non trovi la tua situazione?</h2>
+      <p class="mt-3 text-[var(--color-ink-soft)] leading-relaxed">
+        Fai il <a href="/quale-isee?modo=bonus">test gratuito per scoprire cosa ti spetta</a>, guarda <a href="/servizi">tutti i servizi</a> oppure scrivici su <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener">WhatsApp {CONTACT.phone.mobile}</a>: ti diciamo noi da dove partire.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a class="btn btn-primary" href="/prenota">Prenota un appuntamento</a>
+        <a class="btn btn-ghost" href={`tel:${CONTACT.phone.landlineRaw}`}>Chiama lo {CONTACT.phone.landline}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sit-h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.02; }
+  .sit-index { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); list-style: none; padding: 0; }
+  .sit-index > li { display: flex; }
+  .sit-tile { width: 100%; }
+  .sit-tile-t { font-size: clamp(28px, 3.4vw, 34px); line-height: 1.05; }
+</style>

@@ -1,0 +1,11 @@
+---
+/** Una pagina per ogni situazione di vita (dati in src/data/situazioni.ts). */
+import SituazionePage from "~/components/situazioni/SituazionePage.astro";
+import { SITUAZIONI, type Situazione } from "~/data/situazioni";
+
+export function getStaticPaths() {
+  return SITUAZIONI.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Situazione };
+---
+<SituazionePage s={s} />
