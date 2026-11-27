@@ -1,0 +1,187 @@
+---
+/**
+ * /calcolatori - Tutti gli strumenti gratuiti del sito in una pagina (27/11/2026).
+ * Ogni card riprende la description o l'h1 della pagina dello strumento: nessun dato nuovo.
+ * Quando nasce un calcolatore nuovo (pagine /calcolo-*, /anticipo-naspi, /assegno-vedovanza, /quale-isee,
+ * strumenti dentro le guide NASpI) aggiungerlo qui, nel gruppo giusto: la lista alimenta anche i dati ItemList.
+ * /stima-pensione è a pagamento e resta noindex finché non è attivo (PUBLIC_STIMA_PENSIONE_API):
+ * compare qui solo quando il servizio è attivo, senza prezzo (non è in /prezzi).
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import { Icon } from "astro-icon/components";
+import { SITE } from "~/consts";
+
+const stimaPensioneAttiva = Boolean(import.meta.env.PUBLIC_STIMA_PENSIONE_API);
+
+type Strumento = { nome: string; cosa: string; href: string; cta: string; nota?: string };
+type Gruppo = { id: string; titolo: string; icona: string; strumenti: Strumento[] };
+
+const gruppi: Gruppo[] = [
+  {
+    id: "lavoro",
+    titolo: "Lavoro e disoccupazione",
+    icona: "heroicons:briefcase",
+    strumenti: [
+      { nome: "Calcolo NASpI", cosa: "Quanto prendi di NASpI e per quanti mesi, con i valori INPS 2026.", href: "/calcolo-naspi", cta: "Calcola la NASpI" },
+      { nome: "Anticipo NASpI", cosa: "Se apri un'attività: le due rate dell'anticipo, 70% subito e 30% dopo.", href: "/anticipo-naspi", cta: "Calcola l'anticipo NASpI" },
+      { nome: "Scadenze della domanda NASpI", cosa: "Entro quando fare la domanda e da quale giorno parte la NASpI.", href: "/naspi/domanda", cta: "Calcola le scadenze NASpI" },
+      { nome: "Fondo di garanzia INPS", cosa: "Il datore è fallito o non paga? Verifica se puoi chiedere TFR e ultimi stipendi all'INPS.", href: "/naspi/fondo-garanzia-tfr", cta: "Fai la verifica del Fondo" },
+    ],
+  },
+  {
+    id: "famiglia",
+    titolo: "Famiglia e figli",
+    icona: "lucide:baby",
+    strumenti: [
+      { nome: "Calcolo Assegno Unico", cosa: "Quanto ti spetta per ogni figlio con la tabella ufficiale INPS 2026 e le maggiorazioni.", href: "/calcolo-assegno-unico", cta: "Calcola l'Assegno Unico" },
+      { nome: "Maternità e congedi", cosa: "Le date di maternità, paternità e congedo parentale, e quanto prendi.", href: "/calcolo-maternita-congedi", cta: "Calcola maternità e congedi" },
+      { nome: "Congedo parentale", cosa: "Quanti mesi ti restano, quanti all'80% e quanti al 30%, fino a quando usarli e quanto prendi.", href: "/calcolo-congedo-parentale", cta: "Calcola il congedo parentale" },
+    ],
+  },
+  {
+    id: "pensioni",
+    titolo: "Pensioni",
+    icona: "heroicons:banknotes",
+    strumenti: [
+      { nome: "Assegno di vedovanza", cosa: "Scopri se ti spetta l'assegno di vedovanza sulla pensione di reversibilità.", href: "/assegno-vedovanza", cta: "Verifica l'assegno di vedovanza" },
+      ...(stimaPensioneAttiva
+        ? [{ nome: "Stima e calcolo della pensione", cosa: "Dal tuo estratto conto INPS un prospetto in PDF con date di uscita, importi stimati e alternative.", href: "/stima-pensione", cta: "Chiedi la stima della pensione", nota: "Servizio a pagamento" }]
+        : []),
+    ],
+  },
+  {
+    id: "casa-tasse",
+    titolo: "Casa, tasse e successioni",
+    icona: "heroicons:home",
+    strumenti: [
+      { nome: "Bollo auto Lazio", cosa: "Quanto paghi di bollo auto nel Lazio con le tariffe 2026, e se sei esente.", href: "/calcolo-bollo-auto", cta: "Calcola il bollo auto" },
+      { nome: "Imposte di successione", cosa: "Imposta per ogni erede, ipotecaria, catastale, tasse e bollo della successione.", href: "/calcolo-imposte-successione", cta: "Calcola le imposte di successione" },
+    ],
+  },
+  {
+    id: "aiuti-isee",
+    titolo: "Aiuti e ISEE",
+    icona: "heroicons:hand-raised",
+    strumenti: [
+      { nome: "Quale ISEE ti serve", cosa: "Test di un minuto: ordinario, minorenni, università, sociosanitario, corrente e gli altri.", href: "/quale-isee", cta: "Fai il test sull'ISEE" },
+      { nome: "Cosa ti spetta", cosa: "Test di un minuto: quali bonus e aiuti ti spettano a Roma e nel Lazio.", href: "/quale-isee?modo=bonus", cta: "Scopri bonus e aiuti" },
+      { nome: "Assegno di inclusione (ADI)", cosa: "Quanto ti spetta di ADI: scala di equivalenza, reddito familiare dalla DSU e quota affitto.", href: "/calcolo-assegno-inclusione", cta: "Calcola l'Assegno di inclusione" },
+    ],
+  },
+  {
+    id: "colf-badanti",
+    titolo: "Colf e badanti",
+    icona: "lucide:heart-handshake",
+    strumenti: [
+      { nome: "Costo di colf e badante", cosa: "Stipendio minimo, tredicesima, contributi INPS e TFR di colf, badante o baby sitter nel 2026.", href: "/calcolo-costo-colf-badante", cta: "Calcola il costo di colf e badante" },
+      { nome: "TFR di colf e badanti", cosa: "Il TFR anno per anno, con le rivalutazioni ISTAT e gli anticipi già pagati.", href: "/calcolo-tfr-colf-badanti", cta: "Calcola il TFR di colf e badanti" },
+    ],
+  },
+];
+
+const tutti = gruppi.flatMap((g) => g.strumenti);
+const itemList = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Calcolatori gratuiti del Centro Pratiche Flaiano",
+  numberOfItems: tutti.length,
+  itemListElement: tutti.map((s, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: s.nome,
+    url: new URL(s.href, SITE.url).toString(),
+  })),
+};
+---
+
+<BaseLayout
+  title="Calcolatori gratuiti: NASpI, ADI, Assegno Unico | Roma"
+  description="Tutti i calcolatori gratuiti del CAF e Patronato di Roma: NASpI, ADI, Assegno Unico, maternità, bollo auto, successione, colf e badanti."
+>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(itemList)} />
+
+  <section class="bg-mesh-brand">
+    <div class="container-narrow pt-10 pb-10">
+      <Breadcrumb items={[{ name: "Calcolatori", href: "/calcolatori" }]} class="mb-6" />
+      <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Strumenti gratuiti</p>
+      <h1 class="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--color-ink)]">Calcolatori gratuiti: NASpI, ADI, Assegno Unico, pensione e altro</h1>
+      <p class="mt-4 text-lg text-[var(--color-ink-soft)] leading-relaxed">
+        Qui trovi tutti i calcolatori del Centro Pratiche Flaiano, CAF e Patronato a Roma Vigne Nuove. Sono gratis e ci vuole un minuto. Scegli il tema e premi il pulsante.
+      </p>
+      <nav aria-label="Temi dei calcolatori" class="mt-6">
+        <ul class="flex flex-wrap gap-2">
+          {gruppi.map((g) => (
+            <li>
+              <a href={`#${g.id}`} class="inline-flex min-h-11 items-center rounded-full border-2 border-[#14142B] bg-white px-4 py-2 text-sm font-bold text-[#14142B] no-underline hover:bg-[#14142B] hover:text-white">{g.titolo}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-narrow">
+      {gruppi.map((g, gi) => (
+        <section id={g.id} aria-labelledby={`${g.id}-t`} class:list={["calc-gruppo", gi > 0 && "mt-12"]}>
+          <h2 id={`${g.id}-t`} class="flex items-center gap-3 font-display text-2xl font-bold text-[var(--color-ink)]">
+            <span class="flex size-11 flex-none items-center justify-center rounded-full bg-[#D4FF4F]">
+              <Icon name={g.icona} class="size-6 text-[#14142B]" aria-hidden="true" />
+            </span>
+            {g.titolo}
+          </h2>
+          <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+            {g.strumenti.map((s) => (
+              <li class="flex flex-col rounded-[24px] bg-[#F7F7FB] p-5 sm:p-6">
+                {s.nota && <p class="mb-2 text-xs font-bold uppercase tracking-wider text-[#B81F56]">{s.nota}</p>}
+                <h3 class="font-display text-xl font-bold text-[var(--color-ink)]">{s.nome}</h3>
+                <p class="mt-2 flex-1 text-base text-[var(--color-ink-soft)] leading-relaxed">{s.cosa}</p>
+                <a href={s.href} class="calc-btn mt-5">
+                  <Icon name="heroicons:calculator" class="size-6 flex-none" aria-hidden="true" />
+                  <span>{s.cta}</span>
+                  <Icon name="heroicons:arrow-right" class="ml-auto size-5 flex-none" aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <div class="mt-14 rounded-[28px] bg-[#14142B] p-6 sm:p-8">
+        <h2 class="font-display text-2xl font-bold text-white">I calcoli sono stime: ti aiutiamo noi</h2>
+        <p class="mt-3 text-lg leading-relaxed text-[#F1EEFF]">
+          I calcolatori danno una stima. Per sapere quanto ti spetta davvero e fare la domanda, ti aiutiamo noi a Roma Vigne Nuove o in videochiamata.
+        </p>
+        <a href="/prenota" class="mt-6 inline-flex min-h-12 items-center rounded-full bg-[#D4FF4F] px-6 py-3 text-base font-extrabold text-[#14142B] no-underline hover:bg-white">Prenota un appuntamento</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .calc-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    background: #5b3df5;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.0625rem;
+    line-height: 1.25;
+    text-decoration: none;
+    box-shadow: 0 4px 0 #14142b;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .calc-btn:hover,
+  .calc-btn:focus-visible {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #14142b;
+  }
+  .calc-gruppo {
+    scroll-margin-top: 6rem;
+  }
+</style>

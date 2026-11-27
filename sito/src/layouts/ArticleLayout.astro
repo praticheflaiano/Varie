@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import type { Article } from "~/utils/articles";
 import { getRelatedArticles, tagSlug } from "~/utils/articles";
 import { getCategory } from "~/utils/categories";
@@ -48,6 +49,17 @@ const faqItems = [...faqBlock.matchAll(/^(?:###\s+(.+?\?)\s*$|\*\*(.+?\?)\*\*\s*
   .map((m) => ({ question: pulisci(m[1] ?? m[2] ?? ""), answer: pulisci(m[3] ?? "") }))
   .filter((f) => f.question.length > 0 && f.answer.length > 0);
 const sourcesCount = article.data.sources?.length ?? 0;
+
+// Indice "In questa guida" (27/11/2026): i titoli h2 dell'articolo, se sono almeno 4.
+// Gli id dei titoli li crea già Astro (rehypeHeadingIds, dopo i nostri plugin rehype): render() li
+// restituisce in `headings` con lo stesso slug, quindi i link puntano sempre al titolo giusto.
+// Fuori dall'indice solo "In breve" e "Articoli correlati". Offset per la barra in alto: scroll-margin-top
+// degli h2 in global.css (.prose-article h2).
+const { headings } = await render(article);
+const tocItems = headings.filter(
+  (h) => h.depth === 2 && h.slug && !/^\s*(in breve|articoli correlati)\b/i.test(h.text),
+);
+const showToc = tocItems.length >= 4;
 ---
 
 <BaseLayout
@@ -141,6 +153,19 @@ const sourcesCount = article.data.sources?.length ?? 0;
       <div class="mt-8"><BannerPagamenti variant="compatto" /></div>
     )}
 
+    {showToc && (
+      <details class="art-toc mt-8">
+        <summary>In questa guida</summary>
+        <nav aria-label="In questa guida">
+          <ol>
+            {tocItems.map((h) => (
+              <li><a href={`#${h.slug}`}>{h.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+    )}
+
     <div class="prose-article mt-10">
       <slot />
     </div>
@@ -186,3 +211,67 @@ const sourcesCount = article.data.sources?.length ?? 0;
     <RelatedArticles articles={related} />
   </article>
 </BaseLayout>
+
+<style>
+  /* Indice "In questa guida": chiuso di default, nessun titolo proprio (solo summary). */
+  .art-toc {
+    border: 2px solid #14142b;
+    border-radius: 22px;
+    background: #f7f7fb;
+  }
+  .art-toc summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    color: #14142b;
+    list-style: none;
+  }
+  .art-toc summary::-webkit-details-marker {
+    display: none;
+  }
+  .art-toc summary::after {
+    content: "";
+    margin-left: auto;
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #5b3df5;
+    border-bottom: 3px solid #5b3df5;
+    transform: rotate(45deg);
+    transition: transform 0.15s;
+  }
+  .art-toc[open] summary::after {
+    transform: rotate(-135deg);
+  }
+  .art-toc summary:focus-visible {
+    outline: 3px solid #5b3df5;
+    outline-offset: 2px;
+    border-radius: 20px;
+  }
+  .art-toc ol {
+    margin: 0;
+    padding: 0 20px 16px 44px;
+    list-style: decimal;
+    color: #3b3b55;
+  }
+  .art-toc li + li {
+    margin-top: 2px;
+  }
+  .art-toc a {
+    display: inline-block;
+    padding: 6px 0;
+    color: #14142b;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .art-toc a:hover {
+    color: #5b3df5;
+  }
+</style>

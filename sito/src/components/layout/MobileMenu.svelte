@@ -108,6 +108,24 @@
         <button type="submit" class="rounded-full bg-[var(--color-ink)] px-4 py-2 text-sm font-extrabold text-white">Cerca</button>
       </form>
       <ul class="space-y-1">
+        <li>
+          <a
+            href="/situazioni"
+            class="block rounded-xl bg-[var(--color-brand-50)] px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+          >
+            Cosa ti è successo?
+            <span class="block text-sm font-normal text-[var(--color-ink-soft)]">Lavoro, figli, pensione, lutto, disabilità, debiti</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="/calcolatori"
+            class="block rounded-xl px-4 py-3 text-lg font-semibold text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]"
+          >
+            Calcolatori gratuiti
+            <span class="block text-sm font-normal text-[var(--color-ink-soft)]">NASpI, ADI, Assegno Unico, maternità e altro</span>
+          </a>
+        </li>
         {#each items as item, i}
           <li>
             {#if item.children}

@@ -23,6 +23,7 @@ const serviziActive = serviziPaths.some((p) => path === p || path.startsWith(p +
 
     <nav class="nav-main" aria-label="Navigazione principale">
       <a href="/servizi" class:list={[{ active: serviziActive }]}>Servizi</a>
+      <a href="/situazioni" class:list={["nav-sit", { active: isActive("/situazioni") }]}><span class="nav-sit-long">Cosa ti è successo?</span><span class="nav-sit-short">Situazioni</span></a>
       <a href="/tesseramento" class:list={[{ active: isActive("/tesseramento") }]}>Tessera</a>
       <a href="/blog" class:list={[{ active: isActive("/blog") }]}>Blog</a>
       <a href="/faq" class:list={[{ active: isActive("/faq") }]}>FAQ</a>
@@ -47,3 +48,11 @@ const serviziActive = serviziPaths.some((p) => path === p || path.startsWith(p +
     </div>
   </div>
 </header>
+
+<style>
+  /* Voce "Cosa ti è successo?" (27/11/2026). La barra in alto è già piena: sotto i 1280 px la voce resta
+     nel menu mobile, in home e nel piè di pagina; da 1280 px compare come "Situazioni", da 1440 px per intero. */
+  .nav-sit-long { display: none; }
+  @media (max-width: 1279px) { .nav-main .nav-sit { display: none; } }
+  @media (min-width: 1440px) { .nav-sit-long { display: inline; } .nav-sit-short { display: none; } }
+</style>

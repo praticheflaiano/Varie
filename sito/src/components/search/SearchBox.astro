@@ -1,20 +1,136 @@
 ---
-/** Casella di ricerca: manda a /cerca?q=... (la ricerca vera gira lì, con l'indice Pagefind creato in build). */
-interface Props { placeholder?: string; label?: string; id?: string; value?: string; autofocus?: boolean }
-const { placeholder = "Cerca: ISEE, 730, NASpI, successione…", label = "Cerca nel sito", id = "q", autofocus = false } = Astro.props;
+/**
+ * Casella di ricerca: manda a /cerca?q=... (la ricerca vera gira lì, con l'indice Pagefind creato in build).
+ * Con `suggest` (predefinito) mostra mentre scrivi fino a 6 pagine prese da src/data/ricerca-sinonimi.ts:
+ * solo dati locali, Pagefind non viene caricato. Tastiera: frecce, Invio, Esc (schema ARIA combobox + listbox).
+ * Se non scegli un suggerimento, Invio manda il modulo a /cerca come sempre.
+ */
+interface Props { placeholder?: string; label?: string; id?: string; value?: string; autofocus?: boolean; suggest?: boolean }
+const { placeholder = "Cerca: ISEE, 730, NASpI, successione…", label = "Cerca nel sito", id = "q", autofocus = false, suggest = true } = Astro.props;
+const listId = `${id}-lista`;
 ---
-<form class="sbox" action="/cerca" method="get" role="search">
+<form class="sbox" action="/cerca" method="get" role="search" data-suggest={suggest ? "" : undefined}>
   <label class="sbox-label" for={id}>{label}</label>
-  <div class="sbox-row">
-    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
-    <input type="search" name="q" id={id} placeholder={placeholder} autocomplete="off" enterkeyhint="search" autofocus={autofocus} />
-    <button type="submit">Cerca</button>
+  <div class="sbox-wrap">
+    <div class="sbox-row">
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+      {suggest ? (
+        <input type="search" name="q" id={id} placeholder={placeholder} autocomplete="off" enterkeyhint="search" autofocus={autofocus}
+          role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls={listId} aria-describedby={`${id}-aiuto`} />
+      ) : (
+        <input type="search" name="q" id={id} placeholder={placeholder} autocomplete="off" enterkeyhint="search" autofocus={autofocus} />
+      )}
+      <button type="submit">Cerca</button>
+    </div>
+    {suggest && (
+      <>
+        <ul id={listId} class="sbox-lista" role="listbox" aria-label="Pagine suggerite" hidden></ul>
+        <span id={`${id}-aiuto`} class="sbox-sr">Mentre scrivi compaiono pagine suggerite: scegli con le frecce su e giù e premi Invio.</span>
+        <span class="sbox-sr sbox-stato" aria-live="polite"></span>
+      </>
+    )}
   </div>
 </form>
+
+<script>
+  import { suggerisci, ETICHETTA_TIPO, type VoceRicerca } from "./ricerca";
+
+  function esc(s: string) {
+    return s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
+  }
+
+  function avvia(form: HTMLFormElement) {
+    const campo = form.querySelector<HTMLInputElement>('input[role="combobox"]');
+    const elenco = form.querySelector<HTMLUListElement>(".sbox-lista");
+    const annunci = form.querySelector<HTMLElement>(".sbox-stato");
+    if (!campo || !elenco || !annunci) return;
+    const input: HTMLInputElement = campo;
+    const lista: HTMLUListElement = elenco;
+    const stato: HTMLElement = annunci;
+    let voci: VoceRicerca[] = [];
+    let attiva = -1;
+    let annuncio: ReturnType<typeof setTimeout> | undefined;
+
+    const aperta = () => !lista.hidden;
+    function chiudi() {
+      lista.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+      input.removeAttribute("aria-activedescendant");
+      attiva = -1;
+    }
+    function evidenzia(i: number) {
+      attiva = i;
+      lista.querySelectorAll<HTMLLIElement>("li").forEach((li, j) => li.setAttribute("aria-selected", String(j === i)));
+      if (i >= 0) {
+        const li = lista.children[i] as HTMLElement;
+        input.setAttribute("aria-activedescendant", li.id);
+        li.scrollIntoView({ block: "nearest" });
+      } else input.removeAttribute("aria-activedescendant");
+    }
+    function aggiorna() {
+      voci = suggerisci(input.value);
+      attiva = -1;
+      if (!voci.length) {
+        lista.innerHTML = "";
+        chiudi();
+        stato.textContent = "";
+        return;
+      }
+      lista.innerHTML = voci
+        .map((v, i) => `<li id="${lista.id}-${i}" role="option" aria-selected="false" data-url="${esc(v.url)}"><span class="sbox-o-t">${esc(v.titolo)}</span><span class="sbox-o-k">${ETICHETTA_TIPO[v.tipo]}</span></li>`)
+        .join("");
+      lista.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+      input.removeAttribute("aria-activedescendant");
+      clearTimeout(annuncio);
+      annuncio = setTimeout(() => {
+        stato.textContent = voci.length === 1 ? "1 pagina suggerita." : `${voci.length} pagine suggerite.`;
+      }, 600);
+    }
+    function vai(i: number) {
+      const v = voci[i];
+      if (v) location.href = v.url;
+    }
+
+    input.addEventListener("input", aggiorna);
+    input.addEventListener("focus", () => { if (input.value.trim().length >= 2 && !aperta()) aggiorna(); });
+    input.addEventListener("blur", () => setTimeout(chiudi, 0));
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        if (!aperta()) { aggiorna(); if (!voci.length) return; }
+        e.preventDefault();
+        evidenzia(attiva + 1 >= voci.length ? -1 : attiva + 1);
+      } else if (e.key === "ArrowUp") {
+        if (!aperta()) return;
+        e.preventDefault();
+        evidenzia(attiva <= -1 ? voci.length - 1 : attiva - 1);
+      } else if (e.key === "Enter") {
+        // Con un suggerimento scelto si va alla pagina; altrimenti il modulo va a /cerca come sempre.
+        if (aperta() && attiva >= 0) { e.preventDefault(); vai(attiva); }
+      } else if (e.key === "Escape") {
+        if (aperta()) { e.preventDefault(); chiudi(); }
+      } else if (e.key === "Tab") chiudi();
+    });
+    // mousedown: il campo resta attivo, così il clic arriva prima della chiusura.
+    lista.addEventListener("mousedown", (e) => e.preventDefault());
+    lista.addEventListener("click", (e) => {
+      const li = (e.target as HTMLElement).closest("li");
+      if (li) vai([...lista.children].indexOf(li));
+    });
+    lista.addEventListener("mousemove", (e) => {
+      const li = (e.target as HTMLElement).closest("li");
+      if (li) { const i = [...lista.children].indexOf(li); if (i !== attiva) evidenzia(i); }
+    });
+    form.addEventListener("submit", chiudi);
+  }
+
+  document.querySelectorAll<HTMLFormElement>("form.sbox[data-suggest]").forEach(avvia);
+</script>
 
 <style is:global>
   .sbox { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 620px; min-width: 0; }
   .sbox-label { font-weight: 800; font-size: 14px; color: #14142B; }
+  .sbox-wrap { position: relative; min-width: 0; }
   .sbox-row { display: flex; align-items: center; gap: 8px; background: #fff; border: 2px solid #14142B; border-radius: 999px; padding: 6px 6px 6px 16px; min-width: 0; color: #14142B; }
   .sbox-row:focus-within { outline: 3px solid #5B3DF5; outline-offset: 2px; }
   .sbox-row svg { flex: none; }
@@ -22,4 +138,11 @@ const { placeholder = "Cerca: ISEE, 730, NASpI, successione…", label = "Cerca 
   .sbox-row input::placeholder { color: #6B6B85; }
   .sbox-row button { flex: none; border: 0; border-radius: 999px; background: #14142B; color: #fff; font: inherit; font-weight: 800; font-size: 15px; padding: 10px 18px; cursor: pointer; }
   .sbox-row button:hover { background: #5B3DF5; }
+  .sbox-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .sbox-lista { position: absolute; left: 0; right: 0; top: calc(100% + 8px); z-index: 70; margin: 0; padding: 6px; list-style: none; background: #fff; border: 2px solid #14142B; border-radius: 18px; box-shadow: 0 12px 32px rgba(20, 20, 43, .18); max-height: min(60vh, 420px); overflow-y: auto; text-align: left; }
+  .sbox-lista[hidden] { display: none; }
+  .sbox-lista li { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 44px; padding: 8px 12px; border-radius: 12px; cursor: pointer; color: #14142B; font-size: 16px; line-height: 1.3; }
+  .sbox-lista li[aria-selected="true"] { background: #F1EEFF; box-shadow: inset 0 0 0 2px #5B3DF5; }
+  .sbox-o-t { font-weight: 700; min-width: 0; overflow-wrap: anywhere; }
+  .sbox-o-k { flex: none; font-size: 12px; font-weight: 800; color: #3D2BB8; background: #F1EEFF; border-radius: 999px; padding: 3px 9px; }
 </style>

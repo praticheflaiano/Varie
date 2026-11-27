@@ -1,7 +1,10 @@
 ---
 /**
- * Ricerca interna. L'indice è creato da Pagefind a fine build (dist/pagefind) e letto dal browser:
- * nessun servizio esterno, nessun dato inviato fuori dal sito.
+ * Ricerca interna. L'indice è creato da Pagefind a fine build (dist/pagefind) e letto dal browser.
+ * - "Forse cerchi": parole comuni → pagine (src/data/ricerca-sinonimi.ts), sopra i risultati.
+ * - Ordine: punteggio di Pagefind + bonus se le parole cercate sono nel titolo (servizio o articolo che sia).
+ * - Risultati in gruppi: Servizi, Calcolatori, Guide e articoli (prima il gruppo con il risultato migliore).
+ * - Statistiche: solo il testo cercato e il numero di risultati, a GA4 (con il consenso del banner) e Vercel.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import SearchBox from "~/components/search/SearchBox.astro";
@@ -10,69 +13,234 @@ const quick = [
   ["Invalidità e 104", "/invalidita-104"], ["Assegno Unico", "/assegno-unico"], ["Dimissioni online", "/dimissioni-online"],
   ["IMU e TARI", "/imu-tari"], ["Orari e contatti", "/info"],
 ];
+const WA = "https://wa.me/393716230690?text=";
 ---
 <BaseLayout title="Cerca nel sito" description="Cerca un servizio, una guida o una scadenza nel sito del Centro Pratiche Flaiano." noindex>
   <section class="cerca" data-pagefind-ignore>
     <h1>Cerca nel sito</h1>
-    <SearchBox id="cerca-q" label="Scrivi cosa ti serve" autofocus />
+    <SearchBox id="cerca-q" label="Scrivi cosa ti serve" autofocus suggest={false} />
     <p id="cerca-stato" class="cerca-stato" aria-live="polite"></p>
-    <ol id="cerca-ris" class="cerca-ris"></ol>
+
+    <section id="cerca-forse" class="cerca-forse" aria-labelledby="cerca-forse-t" hidden>
+      <h2 id="cerca-forse-t">Forse cerchi</h2>
+      <ul class="forse-lista"></ul>
+    </section>
+
+    <div id="cerca-ris" class="cerca-gruppi"></div>
+
+    <section id="cerca-zero" class="cerca-zero" aria-labelledby="cerca-zero-t" hidden>
+      <h2 id="cerca-zero-t">Prova da una di queste pagine</h2>
+      <ul class="zero-lista"></ul>
+      <p class="zero-wa-testo">Oppure scrivici: ti rispondiamo noi.</p>
+      <a id="cerca-zero-wa" class="zero-wa" href={WA + encodeURIComponent("Ciao, cerco informazioni su: ")} target="_blank" rel="noopener">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg>
+        Chiedi su WhatsApp
+      </a>
+    </section>
+
     <div id="cerca-rapidi" class="cerca-rapidi">
       <h2>I più cercati</h2>
       <div class="cerca-chips">
         {quick.map(([l, h]) => <a href={h}>{l}</a>)}
       </div>
     </div>
-    <p class="cerca-aiuto">Non trovi quello che cerchi? <a href="https://wa.me/393716230690?text=Ciao%2C%20cerco%20informazioni%20su..." target="_blank" rel="noopener">Scrivici su WhatsApp</a> o <a href="/contatti">chiamaci</a>.</p>
+    <p class="cerca-aiuto">Non trovi quello che cerchi? <a id="cerca-aiuto-wa" href={WA + encodeURIComponent("Ciao, cerco informazioni su...")} target="_blank" rel="noopener">Scrivici su WhatsApp</a> o <a href="/contatti">chiamaci</a>.</p>
   </section>
 
-  <script is:inline>
-  (function () {
-    var input = document.getElementById('cerca-q');
-    var stato = document.getElementById('cerca-stato');
-    var lista = document.getElementById('cerca-ris');
-    var rapidi = document.getElementById('cerca-rapidi');
-    var pf = null, seq = 0, timer = null;
-    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-    function carica() {
-      if (pf) return Promise.resolve(pf);
-      return import('/pagefind/pagefind.js').then(function (m) { pf = m; return m.options({ excerptLength: 24 }).then(function () { return m; }); });
+  <script>
+    import { forseCerchi, terminiInPiu, pagineSuggerite, parole, tipoDaUrl, ETICHETTA_TIPO, type VoceRicerca, type TipoVoce } from "~/components/search/ricerca";
+
+    type PfRisultato = { id: string; score: number; data: () => Promise<PfDati> };
+    type PfDati = { url: string; excerpt: string; meta?: { title?: string } };
+    type Pagefind = { options: (o: object) => Promise<void>; search: (q: string) => Promise<{ results: PfRisultato[] }> };
+    type Gtag = (...a: unknown[]) => void;
+    type Va = (e: string, d: { name: string; data: Record<string, string | number> }) => void;
+
+    const WA = "https://wa.me/393716230690?text=";
+    const input = document.getElementById("cerca-q") as HTMLInputElement;
+    const stato = document.getElementById("cerca-stato")!;
+    const boxRis = document.getElementById("cerca-ris")!;
+    const rapidi = document.getElementById("cerca-rapidi")!;
+    const forse = document.getElementById("cerca-forse")!;
+    const zero = document.getElementById("cerca-zero")!;
+    const zeroWa = document.getElementById("cerca-zero-wa") as HTMLAnchorElement;
+    const aiutoWa = document.getElementById("cerca-aiuto-wa") as HTMLAnchorElement;
+
+    // Pagine senza pulsante Prenota (non sono pratiche) e pagine che non sono risposte.
+    const SENZA_PRENOTA = /^\/(prenota|prezzi|info|contatti|faq|chi-siamo|recensioni|scadenze|pagamenti-inps|cosa-portare|tesseramento|servizi\/?$|zone\/?$)/;
+    const ESCLUSE = /^\/(blog\/?$|blog\/(tag|categoria)\/|grazie|cerca|404|certificazioni|mandato|richiesta|riservata|stima-pensione\/(pratica|recupera|ufficio))/;
+    const GRUPPI: { tipo: TipoVoce; titolo: string }[] = [
+      { tipo: "servizio", titolo: "Servizi" },
+      { tipo: "calcolatore", titolo: "Calcolatori" },
+      { tipo: "guida", titolo: "Guide e articoli" },
+    ];
+
+    let pf: Pagefind | null = null;
+    let seq = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    function esc(s: string) {
+      return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
     }
-    function tipo(url) { return url.indexOf('/blog/') === 0 ? 'Guida' : 'Servizio'; }
-    function cerca(q) {
-      var mio = ++seq;
-      q = q.trim();
-      try { history.replaceState(null, '', q ? '/cerca?q=' + encodeURIComponent(q) : '/cerca'); } catch (e) {}
-      if (q.length < 2) { lista.innerHTML = ''; stato.textContent = ''; rapidi.hidden = false; return; }
-      stato.textContent = 'Cerco…';
-      carica().then(function (m) { return m.search(q); }).then(function (r) {
-        if (mio !== seq) return;
-        return Promise.all(r.results.slice(0, 24).map(function (x) { return x.data(); })).then(function (dati) {
-          if (mio !== seq) return;
-          // Fuori gli elenchi (tag, categorie, indice blog) e le pagine di servizio interno: non sono risposte.
-          dati = dati.filter(function (d) { return !/^\/(blog\/?$|blog\/(tag|categoria)\/|grazie|cerca|404|certificazioni)/.test(d.url) && d.excerpt.indexOf('<mark>') !== -1; }).slice(0, 12);
-          rapidi.hidden = dati.length > 0;
-          if (!dati.length) { lista.innerHTML = ''; stato.textContent = 'Nessun risultato per "' + q + '". Prova con una parola sola, per esempio ISEE o pensione.'; return; }
-          stato.textContent = dati.length + (dati.length === 1 ? ' risultato' : ' risultati');
-          // Prima le pagine servizio che hanno la parola nel titolo, poi le pagine elenco, poi le guide del blog.
-          var chiave = q.toLowerCase().split(/\s+/)[0].slice(0, 6);
-          function peso(d) {
-            var t = ((d.meta && d.meta.title) || '').toLowerCase();
-            return (d.url.indexOf('/blog/') === 0 ? 4 : 0) + (t.indexOf(chiave) === -1 ? 2 : 0) + (/^\/servizi/.test(d.url) ? 1 : 0);
+    function pulisci(url: string) { return url.replace(/\/$/, "") || "/"; }
+    async function carica(): Promise<Pagefind> {
+      if (pf) return pf;
+      const percorso = "/pagefind/pagefind.js";
+      const m = (await import(/* @vite-ignore */ percorso)) as Pagefind;
+      await m.options({ excerptLength: 24 });
+      pf = m;
+      return m;
+    }
+    function waLink(q: string) { return WA + encodeURIComponent("Ciao, cerco informazioni su: " + q); }
+    function prenota(titolo: string, cls: string) {
+      return `<a class="${cls}" href="/prenota" aria-label="Prenota: ${esc(titolo)}">Prenota</a>`;
+    }
+
+    // ---- Statistiche: una volta per ricerca, dopo una pausa, solo da 3 caratteri ----
+    const inviate = new Set<string>();
+    let stat: ReturnType<typeof setTimeout> | undefined;
+    let inAttesa: (() => void) | null = null;
+    // Mai inviare dati personali: email, codici fiscali, numeri lunghi (telefono, IBAN, pratiche).
+    const PERSONALE = /@|\b[a-z]{6}\d{2}[a-z]\d{2}[a-z]\d{3}[a-z]\b|\d{6,}|\b[a-z]{2}\d{2}[a-z0-9]{11,}\b/i;
+    function statistiche(q: string, n: number, nessuno: boolean) {
+      clearTimeout(stat);
+      inAttesa = null;
+      const chiave = q.toLowerCase();
+      if (q.length < 3 || inviate.has(chiave) || PERSONALE.test(q.replace(/\s+/g, ""))) return;
+      inAttesa = () => {
+        inAttesa = null;
+        if (inviate.has(chiave)) return;
+        inviate.add(chiave);
+        const w = window as unknown as { gtag?: Gtag; va?: Va };
+        try {
+          if (w.gtag) {
+            w.gtag("event", "search", { search_term: q });
+            if (nessuno) w.gtag("event", "search_no_results", { search_term: q });
           }
-          dati = dati.map(function (d, i) { return [peso(d), i, d]; }).sort(function (x, y) { return x[0] - y[0] || x[1] - y[1]; }).map(function (x) { return x[2]; });
-          lista.innerHTML = dati.map(function (d) {
-            var url = d.url.replace(/\/$/, '') || '/';
-            return '<li><a href="' + esc(url) + '"><span class="cerca-tipo">' + tipo(d.url) + '</span><b>' + esc((d.meta && d.meta.title) || url) + '</b><span class="cerca-ex">' + d.excerpt + '</span></a></li>';
-          }).join('');
-        });
-      }).catch(function () { if (mio === seq) stato.textContent = 'La ricerca non è disponibile in questo momento. Usa il menu o scrivici su WhatsApp.'; });
+          if (w.va) w.va("event", { name: "ricerca", data: { q, risultati: n } });
+        } catch { /* le statistiche non devono mai bloccare la ricerca */ }
+      };
+      stat = setTimeout(() => inAttesa && inAttesa(), 1500);
     }
-    var q0 = new URLSearchParams(location.search).get('q') || '';
+    addEventListener("pagehide", () => { clearTimeout(stat); if (inAttesa) inAttesa(); });
+
+    // ---- Riquadri ----
+    function mostraForse(voci: VoceRicerca[]) {
+      forse.hidden = !voci.length;
+      forse.querySelector("ul")!.innerHTML = voci
+        .map((v) => `<li><a class="forse-link" href="${esc(v.url)}"><span class="cerca-tipo">${ETICHETTA_TIPO[v.tipo]}</span><b>${esc(v.titolo)}</b></a>${v.prenota ? prenota(v.titolo, "forse-prenota") : ""}</li>`)
+        .join("");
+    }
+    function mostraZero(q: string) {
+      const voci = pagineSuggerite(q, 5);
+      zero.querySelector("ul")!.innerHTML = voci
+        .map((v) => `<li><a class="zero-link" href="${esc(v.url)}"><span class="cerca-tipo">${ETICHETTA_TIPO[v.tipo]}</span><b>${esc(v.titolo)}</b></a></li>`)
+        .join("");
+      zero.hidden = false;
+    }
+    function svuota() {
+      boxRis.innerHTML = "";
+      forse.hidden = true;
+      zero.hidden = true;
+    }
+
+    // ---- Ricerca ----
+    function marcheVere(excerpt: string) {
+      // Pagefind a volte evidenzia pezzi di indirizzi web (link.arcanis.it/…): non sono risposte.
+      const marche = excerpt.match(/<mark>(.*?)<\/mark>/g) || [];
+      return marche.some((m) => !/https?:|www\.|arcanis|\.it\/|\.com|\/widget\//i.test(m) && m.length < 60);
+    }
+    function nelTitolo(qt: string[], titolo: string) {
+      if (!qt.length) return 0;
+      const tt = parole(titolo);
+      const ok = qt.filter((a) => tt.some((b) => b === a || (a.length >= 3 && b.startsWith(a)) || (a.length >= 5 && b.startsWith(a.replace(/[aeiou]+$/, "")))));
+      return ok.length / qt.length;
+    }
+
+    async function cerca(testo: string) {
+      const mio = ++seq;
+      const q = testo.trim();
+      try { history.replaceState(null, "", q ? "/cerca?q=" + encodeURIComponent(q) : "/cerca"); } catch { /* niente */ }
+      zeroWa.href = waLink(q);
+      aiutoWa.href = q ? waLink(q) : WA + encodeURIComponent("Ciao, cerco informazioni su...");
+      if (q.length < 2) { svuota(); stato.textContent = ""; rapidi.hidden = false; return; }
+
+      const corr = forseCerchi(q);
+      const urlForse = new Set(corr.map((c) => c.voce.url));
+      mostraForse(corr.map((c) => c.voce));
+      stato.textContent = "Cerco…";
+
+      try {
+        const m = await carica();
+        // La ricerca scritta, più i termini principali dei sinonimi (es. "carta 80 euro" → anche "carta acquisti").
+        const ricerche = [q, ...terminiInPiu(q, corr)];
+        const risposte = await Promise.all(ricerche.map((r) => m.search(r)));
+        if (mio !== seq) return;
+        const punti = new Map<string, { r: PfRisultato; base: number }>();
+        risposte.forEach((ris, i) => {
+          const max = Math.max(...ris.results.map((r) => r.score), 0) || 1;
+          const peso = i === 0 ? 1 : 0.75;
+          ris.results.slice(0, 16).forEach((r) => {
+            const base = (r.score / max) * peso;
+            const prima = punti.get(r.id);
+            if (!prima || base > prima.base) punti.set(r.id, { r, base });
+          });
+        });
+        const candidati = [...punti.values()].sort((a, b) => b.base - a.base).slice(0, 28);
+        const dati = await Promise.all(candidati.map(async (c) => ({ base: c.base, d: await c.r.data() })));
+        if (mio !== seq) return;
+
+        const qt = parole(q);
+        // Bonus titolo anche per i termini principali dei sinonimi ("disoccupazione" → titoli con "NASpI"), un po' più basso.
+        const qs = [...new Set(terminiInPiu(q, corr).flatMap((t) => parole(t)))].filter((t) => !qt.includes(t));
+        const visti = new Set<string>();
+        const lista = dati
+          .map(({ base, d }) => {
+            const url = pulisci(d.url);
+            const titolo = (d.meta && d.meta.title) || url;
+            const t = Math.max(nelTitolo(qt, titolo), qs.length ? 0.8 * nelTitolo(qs, titolo) : 0);
+            return { url, titolo, excerpt: d.excerpt, tipo: tipoDaUrl(url), voto: base + 0.6 * t + (urlForse.has(url) ? 0.4 : 0), t };
+          })
+          .filter((x) => !ESCLUSE.test(x.url) && (marcheVere(x.excerpt) || x.t > 0 || urlForse.has(x.url)))
+          .filter((x) => (visti.has(x.url) ? false : (visti.add(x.url), true)))
+          .sort((a, b) => b.voto - a.voto)
+          .slice(0, 15);
+
+        rapidi.hidden = true;
+        if (!lista.length) {
+          boxRis.innerHTML = "";
+          forse.hidden = true;
+          stato.textContent = `Nessun risultato per "${q}". Prova con una parola sola, per esempio ISEE o pensione, oppure guarda qui sotto.`;
+          mostraZero(q);
+          statistiche(q, 0, true);
+          return;
+        }
+        zero.hidden = true;
+        // Al massimo 5 per gruppo; prima il gruppo che ha il risultato migliore.
+        const gruppi = GRUPPI.map((g) => ({ ...g, voci: lista.filter((x) => x.tipo === g.tipo).slice(0, 5) }))
+          .filter((g) => g.voci.length)
+          .sort((a, b) => b.voci[0].voto - a.voci[0].voto);
+        const n = gruppi.reduce((t, g) => t + g.voci.length, 0);
+        stato.textContent = n + (n === 1 ? " risultato" : " risultati");
+        boxRis.innerHTML = gruppi
+          .map((g) => `<section class="cerca-gruppo" aria-labelledby="g-${g.tipo}"><h2 id="g-${g.tipo}">${g.titolo}</h2><ol class="cerca-ris">${g.voci
+            .map((x) => {
+              const pren = x.tipo === "servizio" && !SENZA_PRENOTA.test(x.url);
+              return `<li><a class="ris-main" href="${esc(x.url)}"><span class="cerca-tipo">${ETICHETTA_TIPO[x.tipo]}</span><b>${esc(x.titolo)}</b><span class="cerca-ex">${x.excerpt}</span></a>${pren ? prenota(x.titolo, "ris-prenota") : ""}</li>`;
+            })
+            .join("")}</ol></section>`)
+          .join("");
+        statistiche(q, n, false);
+      } catch {
+        if (mio !== seq) return;
+        stato.textContent = "La ricerca non è disponibile in questo momento. Usa i link qui sopra, il menu o scrivici su WhatsApp.";
+      }
+    }
+
+    const q0 = new URLSearchParams(location.search).get("q") || "";
     if (q0) { input.value = q0; cerca(q0); }
-    input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { cerca(input.value); }, 180); });
-    input.form.addEventListener('submit', function (e) { e.preventDefault(); cerca(input.value); input.blur(); });
-  })();
+    input.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(() => cerca(input.value), 180); });
+    input.form!.addEventListener("submit", (e) => { e.preventDefault(); clearTimeout(timer); cerca(input.value); input.blur(); });
   </script>
 </BaseLayout>
 
@@ -82,14 +250,37 @@ const quick = [
   .cerca h2 { margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 22px; }
   .cerca .sbox { max-width: none; }
   .cerca-stato { margin: 0; min-height: 1.4em; font-size: 15px; color: #4A4A63; }
+  .cerca-stato:empty { display: none; }
+  .cerca-gruppi { display: flex; flex-direction: column; gap: 22px; }
+  .cerca-gruppi:empty { display: none; }
+  .cerca-gruppo { display: flex; flex-direction: column; gap: 10px; }
   .cerca-ris { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  .cerca-ris a { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 2px solid #E4E0FF; border-radius: 20px; padding: 16px 18px; text-decoration: none; color: #14142B; min-width: 0; }
-  .cerca-ris a:hover, .cerca-ris a:focus-visible { border-color: #5B3DF5; outline: none; }
+  .cerca-ris li { position: relative; }
+  .cerca-ris .ris-main { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 2px solid #E4E0FF; border-radius: 20px; padding: 16px 18px; text-decoration: none; color: #14142B; min-width: 0; }
+  .cerca-ris li:has(.ris-prenota) .ris-main { padding-bottom: 58px; }
+  .cerca-ris .ris-main:hover, .cerca-ris .ris-main:focus-visible { border-color: #5B3DF5; outline: none; }
   .cerca-ris b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; line-height: 1.15; overflow-wrap: anywhere; }
+  .ris-prenota { position: absolute; left: 18px; bottom: 14px; display: inline-flex; align-items: center; min-height: 32px; padding: 4px 14px; border-radius: 999px; background: #14142B; color: #fff; font-weight: 800; font-size: 14px; text-decoration: none; }
+  .ris-prenota:hover, .ris-prenota:focus-visible { background: #5B3DF5; outline: 3px solid #5B3DF5; outline-offset: 2px; }
   .cerca-tipo { align-self: flex-start; font-size: 12px; font-weight: 800; background: #F1EEFF; color: #3D2BB8; border-radius: 999px; padding: 3px 10px; }
   .cerca-ex { font-size: 15px; line-height: 1.5; color: #4A4A63; overflow-wrap: anywhere; }
   .cerca-ex mark { background: #D4FF4F; color: #14142B; border-radius: 4px; padding: 0 2px; }
+
+  .cerca-forse, .cerca-zero { display: flex; flex-direction: column; gap: 12px; background: #F1EEFF; border-radius: 24px; padding: 18px; }
+  .cerca-forse[hidden], .cerca-zero[hidden] { display: none; }
+  .forse-lista, .zero-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .forse-lista li { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+  .forse-link, .zero-link { flex: 1 1 260px; display: flex; flex-direction: column; gap: 6px; min-width: 0; background: #fff; border: 2px solid #14142B; border-radius: 18px; padding: 14px 18px; text-decoration: none; color: #14142B; }
+  .forse-link b, .zero-link b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; line-height: 1.15; overflow-wrap: anywhere; }
+  .forse-link:hover, .forse-link:focus-visible, .zero-link:hover, .zero-link:focus-visible { border-color: #5B3DF5; box-shadow: 0 0 0 2px #5B3DF5; outline: none; }
+  .forse-prenota { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 10px 22px; border-radius: 999px; background: #5B3DF5; color: #fff; font-weight: 800; font-size: 16px; text-decoration: none; align-self: center; }
+  .forse-prenota:hover, .forse-prenota:focus-visible { background: #14142B; outline: 3px solid #14142B; outline-offset: 2px; }
+  .zero-wa-testo { margin: 4px 0 0; font-size: 16px; }
+  .zero-wa { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 22px; border-radius: 999px; background: #25D366; color: #14142B; font-weight: 800; font-size: 17px; text-decoration: none; }
+  .zero-wa:hover, .zero-wa:focus-visible { outline: 3px solid #14142B; outline-offset: 2px; }
+
   .cerca-rapidi { display: flex; flex-direction: column; gap: 10px; }
+  .cerca-rapidi[hidden] { display: none; }
   .cerca-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .cerca-chips a { background: #F1EEFF; color: #14142B; font-weight: 700; border-radius: 999px; padding: 10px 16px; text-decoration: none; }
   .cerca-chips a:hover { background: #D4FF4F; }

@@ -148,3 +148,9 @@ Regola di Antonio: anche le pagine con un calcolatore seguono l'impaginazione de
 - Ogni gennaio controllare legge di bilancio e messaggio INPS: se cambiano le soglie, aggiornare `ADI` in `adi.ts` e `ADI_AGGIORNATO`.
 - Pulsanti verso il calcolatore: pagina `/adi-sfl`, articoli ADI 2027 e "finita la NASpI".
 
+## Navigazione: ricerca, situazioni, calcolatori (dal 27/11/2026)
+- Ricerca interna (`/cerca`, Pagefind): parole comuni e "Forse cerchi" in `sito/src/data/ricerca-sinonimi.ts` (ogni nuovo articolo o pagina importante: aggiungere o aggiornare la voce; gli indirizzi devono esistere). Logica in `sito/src/components/search/ricerca.ts`; tendina di suggerimenti in `SearchBox.astro`. Le ricerche vanno in GA4 (`search`, `search_no_results`, solo con consenso) e Vercel (`ricerca`), senza dati personali.
+- Pagine "Cosa ti è successo?": dati in `sito/src/data/situazioni.ts`, pagine `/situazioni` e `/situazioni/<slug>`. Ogni dato dei passi è copiato da una pagina del sito con il link "Dove lo diciamo". Se un articolo citato viene rinominato, la build si ferma.
+- Pagina `/calcolatori`: elenco a mano (lista `gruppi` in `calcolatori.astro`): ogni nuovo calcolatore va aggiunto lì.
+- Articoli con almeno 4 h2: indice "In questa guida" (ArticleLayout).
+
