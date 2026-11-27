@@ -136,3 +136,10 @@ Prima di eseguire questi task, leggere la procedura corrispondente:
 
 ## Pagine calcolatore impaginate come articoli (dal 26/11/2026)
 Regola di Antonio: anche le pagine con un calcolatore seguono l'impaginazione degli articoli. Usare `sito/src/layouts/ToolGuideLayout.astro` (props: title, description, path, h1, kicker, crumbs, category, prenota, updated, published, image, imageAlt, sources, faq, related; slot intro = "In breve", tool = calcolatore, testo nel slot predefinito). Esempi: `/calcolo-tfr-colf-badanti`, `/calcolo-costo-colf-badante`.
+
+## SEO locale e prezzi (dal 27/11/2026)
+- Le prenotazioni arrivano soprattutto dalle ricerche di zona ("caf vicino a me", "caf vigne nuove", "caf roma"): curare per prime le pagine zona, la home e le pagine servizio.
+- Pagine zona (`sito/src/components/zone/ZonaPage.astro`): sezione "Domande frequenti" con dati FAQPage = domande della zona (prop `faqs`, solo fatti già scritti nella pagina) + domande comuni (orari, sabato chiuso, appuntamento, ISEE gratis, telefono) in `FAQ_COMUNI`.
+- FAQ fuori dagli articoli: usare `sito/src/components/ui/FaqList.astro` (`<details>`, risposta sempre nell'HTML, niente JavaScript). `Accordion.svelte` non si usa più.
+- Pagina `/prezzi` (`sito/src/pages/prezzi.astro`): solo prezzi già pubblicati e confermati. Se cambia un prezzo in una pagina servizio, cambiarlo anche lì.
+
