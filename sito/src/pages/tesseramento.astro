@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
-import Accordion from "~/components/ui/Accordion.svelte";
+import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { TESSERAMENTO, SITE, GHL } from "~/consts";
 
@@ -133,7 +133,7 @@ const offerData = {
 
   <section class="container-narrow" style="padding-block:40px">
     <h2 class="text-center mb-8">Domande sulla tessera</h2>
-    <Accordion client:visible items={faq} />
+    <FaqList items={faq} />
   </section>
 
   <BookingCTA />

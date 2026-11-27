@@ -3,7 +3,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import SectionHeading from "~/components/ui/SectionHeading.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
-import Accordion from "~/components/ui/Accordion.svelte";
+import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { Icon } from "astro-icon/components";
 import ServiceBlock from "~/components/ui/ServiceBlock.astro";
@@ -154,7 +154,7 @@ const faq = [
     <div class="container-narrow">
       <SectionHeading eyebrow="Domande frequenti CAF" title="Le risposte alle domande più comuni" align="center" />
       <div class="mt-10">
-        <Accordion client:visible items={faq} />
+        <FaqList items={faq} />
       </div>
     </div>
   </section>

@@ -42,9 +42,15 @@ const offices = [
     html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la pagina NASpI</a>.`,
   },
 ];
+// Domande della zona (27/11/2026): solo fatti già scritti in questa pagina.
+const faqs = [
+  { question: "C'è un CAF e patronato vicino a Talenti?", answer: "<strong>Sì: Talenti, Nuova Talenti e Monte Sacro sono nel Municipio III</strong>, come il nostro ufficio a Vigne Nuove, in Via Filoteo Alberini 25 int. 10." },
+  { question: "Come arrivo da Montesacro?", answer: "Con la <strong>linea 336</strong> (fermate Tirreno/Sempione e Piazzale Adriatico) fino a Vigne Nuove/Lumiere, oppure con la metro B1 fino a Conca d'Oro e poi la 38, la 336 o la 338." },
+];
 ---
 
 <ZonaPage
+  faqs={faqs}
   title="CAF Talenti e Montesacro, Roma: patronato, orari e percorso"
   description="CAF e patronato per Talenti e Montesacro (Roma): Via Filoteo Alberini 25, Vigne Nuove. Lun-gio 9:30-13 e 15:30-18, ven 9:30-14, sabato chiuso."
   slug="caf-patronato-talenti-montesacro"

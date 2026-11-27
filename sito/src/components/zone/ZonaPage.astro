@@ -6,6 +6,7 @@ import OfficeGallery from "~/components/layout/OfficeGallery.astro";
  * il LocalBusiness è già nel BaseLayout, le briciole di pane sono nel componente Breadcrumb.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import SectionHeading from "~/components/ui/SectionHeading.astro";
 import Button from "~/components/ui/Button.astro";
@@ -29,6 +30,8 @@ interface Props {
   offices: Item[];
   officesNote?: string;
   otherZones: { name: string; href: string }[];
+  /** Domande della zona (vanno prima di quelle comuni). Solo fatti già scritti nella pagina. */
+  faqs?: { question: string; answer: string }[];
 }
 
 const p = Astro.props;
@@ -37,10 +40,21 @@ const servizi = SERVIZI.map((href) => {
   const l = LANDING.find((x) => x.href === href);
   return l ? { label: l.label, href, tag: l.tag } : { label: href, href, tag: "" };
 });
+// Domande frequenti comuni a tutte le zone (27/11/2026): rispondono alle ricerche "caf aperto oggi",
+// "caf aperto sabato", "serve appuntamento", "quanto costa l'isee" (Search Console, ricerche di zona).
+const FAQ_COMUNI = [
+  { question: "Il CAF è aperto oggi?", answer: "Siamo aperti <strong>dal lunedì al giovedì 9:30-13:00 e 15:30-18:00</strong> e il <strong>venerdì 9:30-14:00</strong>. Sabato e domenica chiusi. Riceviamo su appuntamento: prenota online o chiama lo 06 9784 5429." },
+  { question: "Siete aperti il sabato?", answer: "<strong>No, il sabato e la domenica siamo chiusi.</strong> Il venerdì siamo aperti solo la mattina, dalle 9:30 alle 14:00." },
+  { question: "Serve l'appuntamento?", answer: "<strong>Sì, riceviamo su appuntamento</strong>, in sede a Vigne Nuove o a distanza in videochiamata. Puoi prenotare online dalla pagina Prenota o scriverci su WhatsApp al 371 623 0690." },
+  { question: "Quanto costa fare l'ISEE?", answer: "<strong>Da noi l'ISEE è gratis.</strong> Per le altre pratiche ti diciamo il costo prima di iniziare: chiedi un preventivo su WhatsApp." },
+  { question: "Qual è il numero di telefono del Centro Pratiche Flaiano?", answer: "Telefono <strong>06 9784 5429</strong>, WhatsApp <strong>371 623 0690</strong>, email info@praticheflaiano.it." },
+];
+const faqTutte = [...(p.faqs ?? []), ...FAQ_COMUNI];
 const mapsDir = "https://www.google.com/maps/dir/?api=1&destination=Centro+Pratiche+Flaiano%2C+Via+Filoteo+Alberini+25%2C+00139+Roma";
 ---
 
 <BaseLayout title={p.title} description={p.description}>
+  <JsonLdFaq slot="head" items={faqTutte} />
   <section class="bg-mesh-brand">
     <div class="container-wide pt-10 pb-12">
       <Breadcrumb
@@ -137,6 +151,19 @@ const mapsDir = "https://www.google.com/maps/dir/?api=1&destination=Centro+Prati
           </ul>
         </div>
       </aside>
+    </div>
+  </section>
+  <section class="section-tight" aria-labelledby="faq-zona">
+    <div class="container-narrow">
+      <h2 id="faq-zona" class="font-display text-2xl font-bold text-[var(--color-ink)]">Domande frequenti</h2>
+      <div class="mt-4 space-y-3">
+        {faqTutte.map((f) => (
+          <details class="rounded-[20px] bg-[#F7F7FB] p-5">
+            <summary class="cursor-pointer font-display text-base font-bold text-[var(--color-ink)]">{f.question}</summary>
+            <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed" set:html={f.answer} />
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 </BaseLayout>

@@ -42,9 +42,15 @@ const offices = [
     html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la pagina NASpI</a>.`,
   },
 ];
+// Domande della zona (27/11/2026): solo fatti già scritti in questa pagina.
+const faqs = [
+  { question: "C'è un CAF vicino a Bufalotta e Porta di Roma?", answer: "<strong>Sì: siamo nello stesso Municipio III</strong>, a Vigne Nuove, in Via Filoteo Alberini 25 int. 10, dentro il Centro Acquisti Flaiano." },
+  { question: "Come arrivo da Porta di Roma?", answer: "Con la <strong>linea 38</strong>, che ha il capolinea a Porta di Roma: scendi a Vigne Nuove/Lumiere e da lì sono circa 6 minuti a piedi." },
+];
 ---
 
 <ZonaPage
+  faqs={faqs}
   title="CAF Bufalotta e Porta di Roma: patronato, orari e percorso"
   description="CAF e patronato per Bufalotta e Porta di Roma: Via Filoteo Alberini 25, Vigne Nuove (Roma). Linee 38, 86, 338, 341. Lun-ven, sabato chiuso."
   slug="caf-patronato-bufalotta-porta-di-roma"
