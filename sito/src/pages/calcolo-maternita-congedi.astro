@@ -1,4 +1,5 @@
 ---
+import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
 /**
  * Calcolo maternità e congedi: calendario completo (maternità all'80%, paternità al 100%, congedo parentale all'80% e al 30%).
  * Regole SOLO da fonti ufficiali, verificate il 24/11/2026:
@@ -266,4 +267,5 @@ const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-si
     };
   })();
   </script>
+  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-maternita-congedi" /></div></section>
 </BaseLayout>

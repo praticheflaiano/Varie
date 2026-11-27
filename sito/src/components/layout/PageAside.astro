@@ -1,0 +1,148 @@
+---
+/**
+ * Colonna laterale delle pagine lunghe (articoli, calcolatori, guide NASpI) sugli schermi da 1200 px in su
+ * (27/11/2026). Sotto i 1200 px non si vede (classe .ps-aside in global.css): lì restano l'indice apribile
+ * sopra il testo e i pulsanti Prenota già presenti nella pagina.
+ * Contenuto: indice "In questa guida" (se ci sono i titoli), riquadro Prenota con telefono e WhatsApp,
+ * link ai calcolatori gratuiti. Niente titoli h2/h3 qui dentro: l'ordine dei titoli della pagina resta quello del testo.
+ */
+import { CONTACT } from "~/consts";
+
+interface Props {
+  toc?: { slug: string; text: string }[];
+}
+const { toc = [] } = Astro.props;
+const tel = CONTACT.phone.landline.replace(/^\+39\s*/, "");
+const cell = CONTACT.phone.mobile.replace(/^\+39\s*/, "");
+---
+<div class="ps-aside">
+  {toc.length > 0 && (
+    <nav class="pa-box pa-toc" aria-label="In questa guida">
+      <p class="pa-title">In questa guida</p>
+      <ol>
+        {toc.map((h) => (
+          <li><a href={`#${h.slug}`} data-pa-toc>{h.text}</a></li>
+        ))}
+      </ol>
+    </nav>
+  )}
+
+  <div class="pa-box pa-book">
+    <p class="pa-title" style="color:#fff">Ti aiutiamo noi</p>
+    <p class="pa-text">CAF UNSIC e Patronato ENASC a Roma Vigne Nuove. In ufficio o in videochiamata.</p>
+    <a class="pa-btn" href="/prenota">Prenota un appuntamento</a>
+    <p class="pa-or">Oppure chiama o scrivi:</p>
+    <ul class="pa-contacts">
+      <li><a href={`tel:${CONTACT.phone.landlineRaw}`}><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>{tel}</a></li>
+      <li><a href={CONTACT.whatsapp.link} target="_blank" rel="noopener"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5Z"/></svg>WhatsApp {cell}</a></li>
+    </ul>
+  </div>
+
+  <a class="pa-box pa-calc" href="/calcolatori">
+    <span class="pa-calc-t">Calcolatori gratuiti</span>
+    <span class="pa-calc-s">NASpI, Assegno Unico, ADI, bollo auto e altri: fai i conti da casa.</span>
+  </a>
+</div>
+
+<script>
+  // Indice laterale: evidenzia il titolo che si sta leggendo (solo se l'indice c'è e il browser lo permette).
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-pa-toc]")];
+  if (links.length && "IntersectionObserver" in window) {
+    const byId = new Map(links.map((a) => [decodeURIComponent(a.hash.slice(1)), a]));
+    const heads = [...byId.keys()].map((id) => document.getElementById(id)).filter((h): h is HTMLElement => !!h);
+    const mark = (id: string) => links.forEach((a) => (a === byId.get(id) ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+    const io = new IntersectionObserver(
+      () => {
+        // l'ultimo titolo passato sotto la barra in alto
+        let cur = heads[0]?.id;
+        for (const h of heads) if (h.getBoundingClientRect().top < 140) cur = h.id;
+        if (cur) mark(cur);
+      },
+      { rootMargin: "-100px 0px -60% 0px" },
+    );
+    heads.forEach((h) => io.observe(h));
+  }
+</script>
+
+<style>
+  .pa-box + .pa-box { margin-top: 16px; }
+  .pa-title {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.125rem;
+    line-height: 1.2;
+    color: #14142b;
+  }
+  .pa-toc {
+    border: 2px solid #14142b;
+    border-radius: 22px;
+    background: #f7f7fb;
+    padding: 16px 18px 12px;
+  }
+  .pa-toc ol {
+    margin: 0;
+    padding-left: 22px;
+    list-style: decimal;
+    color: #3b3b55;
+    font-size: 15px;
+  }
+  .pa-toc a {
+    display: block;
+    padding: 4px 0;
+    color: #14142b;
+    font-weight: 600;
+    line-height: 1.35;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pa-toc a:hover { color: #5b3df5; }
+  .pa-toc a[aria-current="true"] { color: #4b2fe0; text-decoration-thickness: 2px; }
+  .pa-book {
+    background: #5b3df5;
+    color: #fff;
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 6px 0 #14142b;
+  }
+  .pa-text { margin: 0; font-size: 15px; line-height: 1.45; color: #f1eeff; }
+  .pa-btn {
+    display: block;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: #d4ff4f;
+    color: #14142b;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+  }
+  .pa-btn:hover { background: #fff; }
+  .pa-or { margin: 14px 0 4px; font-size: 14px; color: #f1eeff; }
+  .pa-contacts { margin: 0; padding: 0; list-style: none; }
+  .pa-contacts a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pa-book a:focus-visible, .pa-calc:focus-visible { outline: 3px solid #14142b; outline-offset: 2px; }
+  .pa-calc {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 16px;
+    padding: 16px 18px;
+    border-radius: 22px;
+    background: #d4ff4f;
+    color: #14142b;
+    text-decoration: none;
+  }
+  .pa-calc:hover { background: #c6f53a; }
+  .pa-calc-t { font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+  .pa-calc-s { font-size: 14px; line-height: 1.4; color: #26263f; }
+</style>

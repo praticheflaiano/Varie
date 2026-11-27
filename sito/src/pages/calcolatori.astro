@@ -1,84 +1,16 @@
 ---
 /**
  * /calcolatori - Tutti gli strumenti gratuiti del sito in una pagina (27/11/2026).
- * Ogni card riprende la description o l'h1 della pagina dello strumento: nessun dato nuovo.
- * Quando nasce un calcolatore nuovo (pagine /calcolo-*, /anticipo-naspi, /assegno-vedovanza, /quale-isee,
- * strumenti dentro le guide NASpI) aggiungerlo qui, nel gruppo giusto: la lista alimenta anche i dati ItemList.
- * /stima-pensione è a pagamento e resta noindex finché non è attivo (PUBLIC_STIMA_PENSIONE_API):
- * compare qui solo quando il servizio è attivo, senza prezzo (non è in /prezzi).
+ * L'elenco sta in ~/data/calcolatori.ts (usato anche dalla home e dal riquadro "Altri calcolatori"):
+ * quando nasce un calcolatore nuovo aggiungerlo lì, nel tema giusto. La lista alimenta anche i dati ItemList.
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import { Icon } from "astro-icon/components";
 import { SITE } from "~/consts";
+import { GRUPPI_CALCOLATORI } from "~/data/calcolatori";
 
-const stimaPensioneAttiva = Boolean(import.meta.env.PUBLIC_STIMA_PENSIONE_API);
-
-type Strumento = { nome: string; cosa: string; href: string; cta: string; nota?: string };
-type Gruppo = { id: string; titolo: string; icona: string; strumenti: Strumento[] };
-
-const gruppi: Gruppo[] = [
-  {
-    id: "lavoro",
-    titolo: "Lavoro e disoccupazione",
-    icona: "heroicons:briefcase",
-    strumenti: [
-      { nome: "Calcolo NASpI", cosa: "Quanto prendi di NASpI e per quanti mesi, con i valori INPS 2026.", href: "/calcolo-naspi", cta: "Calcola la NASpI" },
-      { nome: "Anticipo NASpI", cosa: "Se apri un'attività: le due rate dell'anticipo, 70% subito e 30% dopo.", href: "/anticipo-naspi", cta: "Calcola l'anticipo NASpI" },
-      { nome: "Scadenze della domanda NASpI", cosa: "Entro quando fare la domanda e da quale giorno parte la NASpI.", href: "/naspi/domanda", cta: "Calcola le scadenze NASpI" },
-      { nome: "Fondo di garanzia INPS", cosa: "Il datore è fallito o non paga? Verifica se puoi chiedere TFR e ultimi stipendi all'INPS.", href: "/naspi/fondo-garanzia-tfr", cta: "Fai la verifica del Fondo" },
-    ],
-  },
-  {
-    id: "famiglia",
-    titolo: "Famiglia e figli",
-    icona: "lucide:baby",
-    strumenti: [
-      { nome: "Calcolo Assegno Unico", cosa: "Quanto ti spetta per ogni figlio con la tabella ufficiale INPS 2026 e le maggiorazioni.", href: "/calcolo-assegno-unico", cta: "Calcola l'Assegno Unico" },
-      { nome: "Maternità e congedi", cosa: "Le date di maternità, paternità e congedo parentale, e quanto prendi.", href: "/calcolo-maternita-congedi", cta: "Calcola maternità e congedi" },
-      { nome: "Congedo parentale", cosa: "Quanti mesi ti restano, quanti all'80% e quanti al 30%, fino a quando usarli e quanto prendi.", href: "/calcolo-congedo-parentale", cta: "Calcola il congedo parentale" },
-    ],
-  },
-  {
-    id: "pensioni",
-    titolo: "Pensioni",
-    icona: "heroicons:banknotes",
-    strumenti: [
-      { nome: "Assegno di vedovanza", cosa: "Scopri se ti spetta l'assegno di vedovanza sulla pensione di reversibilità.", href: "/assegno-vedovanza", cta: "Verifica l'assegno di vedovanza" },
-      ...(stimaPensioneAttiva
-        ? [{ nome: "Stima e calcolo della pensione", cosa: "Dal tuo estratto conto INPS un prospetto in PDF con date di uscita, importi stimati e alternative.", href: "/stima-pensione", cta: "Chiedi la stima della pensione", nota: "Servizio a pagamento" }]
-        : []),
-    ],
-  },
-  {
-    id: "casa-tasse",
-    titolo: "Casa, tasse e successioni",
-    icona: "heroicons:home",
-    strumenti: [
-      { nome: "Bollo auto Lazio", cosa: "Quanto paghi di bollo auto nel Lazio con le tariffe 2026, e se sei esente.", href: "/calcolo-bollo-auto", cta: "Calcola il bollo auto" },
-      { nome: "Imposte di successione", cosa: "Imposta per ogni erede, ipotecaria, catastale, tasse e bollo della successione.", href: "/calcolo-imposte-successione", cta: "Calcola le imposte di successione" },
-    ],
-  },
-  {
-    id: "aiuti-isee",
-    titolo: "Aiuti e ISEE",
-    icona: "heroicons:hand-raised",
-    strumenti: [
-      { nome: "Quale ISEE ti serve", cosa: "Test di un minuto: ordinario, minorenni, università, sociosanitario, corrente e gli altri.", href: "/quale-isee", cta: "Fai il test sull'ISEE" },
-      { nome: "Cosa ti spetta", cosa: "Test di un minuto: quali bonus e aiuti ti spettano a Roma e nel Lazio.", href: "/quale-isee?modo=bonus", cta: "Scopri bonus e aiuti" },
-      { nome: "Assegno di inclusione (ADI)", cosa: "Quanto ti spetta di ADI: scala di equivalenza, reddito familiare dalla DSU e quota affitto.", href: "/calcolo-assegno-inclusione", cta: "Calcola l'Assegno di inclusione" },
-    ],
-  },
-  {
-    id: "colf-badanti",
-    titolo: "Colf e badanti",
-    icona: "lucide:heart-handshake",
-    strumenti: [
-      { nome: "Costo di colf e badante", cosa: "Stipendio minimo, tredicesima, contributi INPS e TFR di colf, badante o baby sitter nel 2026.", href: "/calcolo-costo-colf-badante", cta: "Calcola il costo di colf e badante" },
-      { nome: "TFR di colf e badanti", cosa: "Il TFR anno per anno, con le rivalutazioni ISTAT e gli anticipi già pagati.", href: "/calcolo-tfr-colf-badanti", cta: "Calcola il TFR di colf e badanti" },
-    ],
-  },
-];
+const gruppi = GRUPPI_CALCOLATORI;
 
 const tutti = gruppi.flatMap((g) => g.strumenti);
 const itemList = {
@@ -90,7 +22,7 @@ const itemList = {
     "@type": "ListItem",
     position: i + 1,
     name: s.nome,
-    url: new URL(s.href, SITE.url).toString(),
+    url: new URL(s.url, SITE.url).toString(),
   })),
 };
 ---
@@ -137,7 +69,7 @@ const itemList = {
                 {s.nota && <p class="mb-2 text-xs font-bold uppercase tracking-wider text-[#B81F56]">{s.nota}</p>}
                 <h3 class="font-display text-xl font-bold text-[var(--color-ink)]">{s.nome}</h3>
                 <p class="mt-2 flex-1 text-base text-[var(--color-ink-soft)] leading-relaxed">{s.cosa}</p>
-                <a href={s.href} class="calc-btn mt-5">
+                <a href={s.url} class="calc-btn mt-5">
                   <Icon name="heroicons:calculator" class="size-6 flex-none" aria-hidden="true" />
                   <span>{s.cta}</span>
                   <Icon name="heroicons:arrow-right" class="ml-auto size-5 flex-none" aria-hidden="true" />

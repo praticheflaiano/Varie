@@ -1,4 +1,5 @@
 ---
+import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
 /**
  * Calcolo bollo auto Lazio: esenzioni + importo.
  * Fonti verificate il 21/11/2026:
@@ -243,4 +244,5 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     });
   })();
   </script>
+  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-bollo-auto" /></div></section>
 </BaseLayout>
