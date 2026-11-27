@@ -6,7 +6,7 @@ import BookingCTA from "~/components/home/BookingCTA.astro";
 import OpenNow from "~/components/home/OpenNow.astro";
 import BannerPagamenti from "~/components/ui/BannerPagamenti.astro";
 import ArticleCard from "~/components/blog/ArticleCard.astro";
-import Accordion from "~/components/ui/Accordion.svelte";
+import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { getVisibleArticles } from "~/utils/articles";
 import { CONTACT, ZONE_SERVITE, TESSERAMENTO, GHL } from "~/consts";
@@ -48,6 +48,10 @@ const homeFaq = [
   {
     question: "Dove siete?",
     answer: `In <strong>${CONTACT.address.street}</strong>, dentro il Centro Acquisti Flaiano, quartiere Vigne Nuove (Municipio III). Arrivano da noi da Tufello, Conca d'Oro, Bufalotta, Porta di Roma e da tutta Roma Nord.`,
+  },
+  {
+    question: "Siete aperti il sabato?",
+    answer: "No, il sabato e la domenica siamo chiusi. Siamo aperti <strong>dal lunedì al giovedì 9:30-13:00 e 15:30-18:00</strong> e il <strong>venerdì 9:30-14:00</strong>, su appuntamento. <a href='/prenota'>Prenota qui</a>.",
   },
   {
     question: "Posso fare tutto senza venire in ufficio?",
@@ -277,7 +281,7 @@ const homeFaq = [
       <span class="eyebrow" style="align-self:center">Domande frequenti</span>
       <h2>Le domande che ci fate sempre</h2>
     </div>
-    <Accordion client:visible items={homeFaq} />
+    <FaqList items={homeFaq} />
     <p class="mt-6 text-center"><a href="/faq" style="font-weight:800">Tutte le FAQ →</a></p>
   </section>
 

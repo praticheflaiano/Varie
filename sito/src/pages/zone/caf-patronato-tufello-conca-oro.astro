@@ -42,9 +42,15 @@ const offices = [
     html: `I centri per l'impiego di Roma elencati dalla Regione Lazio sono Casalbertone, Cinecittà, Ostia, Primavalle, Testaccio, Tiburtino e Torre Angela. Non indichiamo qui quale sia il tuo: verificalo sul sito della Regione. Elenco: <a href="https://regione.lazio.it/sites/default/files/2026-10/Lazio-cpi-centro-20-10-2026.pdf" rel="noopener">Regione Lazio, CPI di Roma</a>. Per la NASpI vedi <a href="/naspi">la pagina NASpI</a>.`,
   },
 ];
+// Domande della zona (27/11/2026): solo fatti già scritti in questa pagina.
+const faqs = [
+  { question: "C'è un CAF vicino a Tufello e Val Melaina?", answer: "<strong>Sì: Tufello, Val Melaina e Conca d'Oro sono nel Municipio III</strong>, come il nostro ufficio a Vigne Nuove, in Via Filoteo Alberini 25 int. 10." },
+  { question: "Come arrivo dalla metro Conca d'Oro?", answer: "Alla stazione Conca d'Oro prendi la <strong>38, la 336 o la 338</strong> e scendi a Vigne Nuove/Lumiere: da lì sono circa 6 minuti a piedi." },
+];
 ---
 
 <ZonaPage
+  faqs={faqs}
   title="CAF Conca d'Oro, Tufello e Val Melaina: patronato a Roma"
   description="CAF e patronato per Conca d'Oro, Tufello e Val Melaina (Roma): Via Filoteo Alberini 25, Vigne Nuove. Linee 38, 336, 338 dalla metro. Sabato chiuso."
   slug="caf-patronato-tufello-conca-oro"

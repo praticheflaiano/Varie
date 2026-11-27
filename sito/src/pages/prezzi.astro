@@ -1,0 +1,94 @@
+---
+/**
+ * /prezzi - Prezzi delle pratiche (27/11/2026).
+ * Solo i prezzi già pubblicati nelle pagine servizio e confermati da Antonio (regola del 26/11/2026:
+ * "Naspi a parte, per tutto il resto se credi sia gratis o non sai non mettere"). Fonti interne:
+ * /isee (gratis), /naspi (gratis), /invalidita-104 (1° incontro gratis), /730 (30 € ufficio, 35 € online),
+ * /assegno-unico (15 €, 10 € con tessera), /dimissioni-online (prezzi del 9/11/2026), /successioni (600 € tutto compreso),
+ * consts.ts TESSERAMENTO (30 €/anno). Tutto il resto: preventivo prima. Se cambia un prezzo, cambiarlo anche qui.
+ * Ricerche coperte: "quanto costa ... al caf/patronato", "listino prezzi caf", "prezzi patronato".
+ */
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumb from "~/components/layout/Breadcrumb.astro";
+import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
+import FaqList from "~/components/ui/FaqList.astro";
+import { CONTACT, TESSERAMENTO } from "~/consts";
+
+const AGG = "27 novembre 2026";
+const T = TESSERAMENTO.annual.price;
+
+const prezzi = [
+  { nome: "ISEE (DSU)", prezzo: "Gratis", nota: "Anche l'ISEE corrente.", href: "/isee" },
+  { nome: "Domanda NASpI", prezzo: "Gratis", nota: "La presenta il Patronato ENASC.", href: "/naspi" },
+  { nome: "Invalidità civile e 104", prezzo: "Primo incontro gratis", nota: "Poi ti diciamo il costo prima di iniziare.", href: "/invalidita-104" },
+  { nome: "Modello 730", prezzo: "da 30 €", nota: "In ufficio da 30 €, online da casa da 35 €, in base alla tua situazione.", href: "/730" },
+  { nome: "Assegno Unico", prezzo: "15 €", nota: `Domanda, rinnovo o variazione: 10 € con la tessera.`, href: "/assegno-unico" },
+  { nome: "Dimissioni online", prezzo: "da 15 €", nota: "In ufficio con il tuo SPID 15 € con la tessera, 20 € senza. Senza SPID o online 20 € con la tessera, 25 € senza. Revoca entro 7 giorni: 5 €.", href: "/dimissioni-online" },
+  { nome: "Successione", prezzo: "600 €", nota: "Tutto compreso: dichiarazione, volture e documenti per la banca. Imposte e bolli a parte.", href: "/successioni" },
+  { nome: "Tessera associativa", prezzo: `${T} € l'anno`, nota: "Per tutto il nucleo familiare. Non è obbligatoria.", href: "/tesseramento" },
+];
+
+const faq = [
+  { question: "Quanto costa fare l'ISEE al CAF?", answer: "<strong>Da noi l'ISEE è gratis</strong>, anche l'ISEE corrente. Redditi e CU li recuperiamo noi online. <a href='/isee'>Tutto sull'ISEE</a>." },
+  { question: "Quanto costa il 730 al CAF?", answer: "<strong>In ufficio da 30 €, online da casa da 35 €</strong>, in base alla tua situazione. <a href='/730'>Tutto sul 730</a>." },
+  { question: "Quanto costa la domanda di disoccupazione NASpI al patronato?", answer: "<strong>La domanda NASpI da noi è gratis.</strong> La presenta il Patronato ENASC, anche a distanza. <a href='/naspi'>Tutto sulla NASpI</a>." },
+  { question: "Quanto costa la domanda di Assegno Unico?", answer: "<strong>15 €, oppure 10 € con la tessera.</strong> L'ISEE che serve per l'importo giusto lo facciamo gratis." },
+  { question: "Quanto costa una dichiarazione di successione?", answer: "<strong>600 € tutto compreso</strong>: dichiarazione, volture e documenti per la banca. Imposte e bolli si pagano a parte. <a href='/successioni'>Tutto sulla successione</a>." },
+  { question: "Devo fare la tessera per avere i vostri servizi?", answer: `<strong>No, la tessera non è obbligatoria.</strong> Costa ${T} € l'anno per tutto il nucleo familiare e dà sconti su alcune pratiche, come l'Assegno Unico e le dimissioni. <a href='/tesseramento'>Vedi la tessera</a>.` },
+  { question: "Quanto costano le altre pratiche?", answer: "<strong>Ti diciamo il costo prima di iniziare.</strong> Per pensioni, RED, colf e badanti, IMU e TARI, contratti d'affitto o cartelle scrivici su WhatsApp: ti rispondiamo con un preventivo, senza impegno." },
+];
+---
+
+<BaseLayout
+  title="Prezzi CAF e Patronato a Roma: ISEE gratis, 730 da 30 €"
+  description="Prezzi del CAF e Patronato a Roma Vigne Nuove: ISEE e NASpI gratis, 730 da 30 €, Assegno Unico 15 €, successione 600 €. Per il resto preventivo prima."
+>
+  <JsonLdFaq slot="head" items={faq} />
+
+  <section class="bg-mesh-brand">
+    <div class="container-narrow pt-10 pb-10">
+      <Breadcrumb items={[{ name: "Prezzi", href: "/prezzi" }]} class="mb-6" />
+      <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Prezzi chiari, detti prima</p>
+      <h1 class="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--color-ink)]">Quanto costano le pratiche al CAF e Patronato di Roma Vigne Nuove</h1>
+      <p class="mt-4 text-lg text-[var(--color-ink-soft)] leading-relaxed">
+        Qui trovi i prezzi delle pratiche più richieste al Centro Pratiche Flaiano, CAF UNSIC e Patronato ENASC a Roma. Per tutte le altre <strong>ti diciamo il costo prima di iniziare</strong>: chiedi un preventivo su WhatsApp, senza impegno.
+      </p>
+      <p class="mt-2 text-sm text-[var(--color-ink-muted)]">Prezzi aggiornati al {AGG}.</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/prenota" class="inline-flex items-center rounded-full bg-[#14142B] px-5 py-3 text-base font-extrabold text-white no-underline hover:bg-[#5B3DF5]">Prenota un appuntamento</a>
+        <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener" class="inline-flex items-center rounded-full bg-[#25D366] px-5 py-3 text-base font-extrabold text-[#14142B] no-underline">Chiedi un preventivo su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container-narrow">
+      <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">Listino delle pratiche più richieste</h2>
+      <ul class="mt-4 space-y-3">
+        {prezzi.map((p) => (
+          <li class="rounded-[20px] bg-[#F7F7FB] p-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="font-display text-lg font-bold text-[var(--color-ink)]"><a href={p.href} class="text-[var(--color-ink)]" style="text-decoration:underline">{p.nome}</a></h3>
+              <span class="rounded-full bg-white border-2 border-[#14142B] px-3 py-1 text-base font-extrabold text-[#14142B]">{p.prezzo}</span>
+            </div>
+            <p class="mt-2 text-sm text-[var(--color-ink-soft)] leading-relaxed">{p.nota}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-sm text-[var(--color-ink-soft)] leading-relaxed">
+        Le imposte, i bolli e i versamenti dovuti allo Stato o al Comune non sono compresi: li vedi sempre a parte prima di firmare.
+      </p>
+
+      <h2 class="mt-10 font-display text-2xl font-bold text-[var(--color-ink)]">E le altre pratiche?</h2>
+      <p class="mt-3 text-[var(--color-ink-soft)] leading-relaxed">
+        Pensioni, RED, colf e badanti, IMU e TARI, contratti d'affitto, cartelle e rateizzazioni: il costo dipende dal caso. Scrivici su WhatsApp al <a href={CONTACT.whatsapp.link} target="_blank" rel="noopener">{CONTACT.phone.mobile}</a> o chiama lo <a href={`tel:${CONTACT.phone.landlineRaw}`}>{CONTACT.phone.landline}</a>: ti diciamo il prezzo prima, senza sorprese. Lavoriamo in sede a Vigne Nuove, Municipio III, e a distanza in videochiamata da tutta Italia.
+      </p>
+      <p class="mt-3 text-[var(--color-ink-soft)] leading-relaxed">
+        Prima di venire guarda <a href="/cosa-portare">cosa portare per ogni pratica</a>.
+      </p>
+
+      <h2 class="mt-10 font-display text-2xl font-bold text-[var(--color-ink)]">Domande frequenti sui prezzi</h2>
+      <div class="mt-4"><FaqList items={faq} /></div>
+    </div>
+  </section>
+</BaseLayout>

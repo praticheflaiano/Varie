@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import SectionHeading from "~/components/ui/SectionHeading.astro";
-import Accordion from "~/components/ui/Accordion.svelte";
+import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
 
@@ -145,7 +145,7 @@ const allFaq = groups.flatMap((g) => g.items);
         <div>
           <h2 class="font-display text-2xl font-bold text-[var(--color-brand-900)]">{g.title}</h2>
           <div class="mt-6">
-            <Accordion client:visible items={g.items} multipleOpen />
+            <FaqList items={g.items} />
           </div>
         </div>
       ))}

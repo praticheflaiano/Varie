@@ -1,0 +1,31 @@
+---
+/**
+ * Domande frequenti come riquadri apribili <details> (27/11/2026): sostituisce Accordion.svelte.
+ * Le risposte sono sempre nell'HTML (Google e le AI le leggono anche chiuse) e non serve JavaScript.
+ * Stesso aspetto del vecchio Accordion. La domanda resta un h3 per non perdere i titoletti della pagina.
+ */
+interface Props {
+  items: { question: string; answer: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="flex flex-col gap-3">
+  {items.map((item) => (
+    <details class="faq-box rounded-[22px] bg-[#F7F7FB]">
+      <summary class="flex w-full cursor-pointer items-start justify-between gap-4 px-6 py-5 text-left">
+        <h3 class="m-0 text-lg font-bold text-[var(--color-ink)]">{item.question}</h3>
+        <svg class="faq-box-ico mt-1 size-5 shrink-0 text-[var(--color-brand-600)] transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.06l3.71-3.83a.75.75 0 0 1 1.08 1.04l-4.25 4.39a.75.75 0 0 1-1.08 0L5.21 8.27a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
+        </svg>
+      </summary>
+      <div class="px-6 pb-5 -mt-1 text-[var(--color-ink-soft)] leading-relaxed" set:html={item.answer} />
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq-box > summary { list-style: none; }
+  .faq-box > summary::-webkit-details-marker { display: none; }
+  .faq-box[open] .faq-box-ico { transform: rotate(180deg); }
+  @media (prefers-reduced-motion: reduce) { .faq-box-ico { transition: none; } }
+</style>
