@@ -53,7 +53,7 @@ La carta spetta alle famiglie che:
 
 **Non la ricevi** se nella tua famiglia qualcuno prende:
 
-- l'**Assegno di inclusione**, la **Carta acquisti** o altri sostegni contro la povertà;
+- l'**Assegno di inclusione**, la **Carta acquisti** (le differenze nella guida [Carta Acquisti 2026 e Carta Dedicata a te](/blog/carta-acquisti-2026-80-euro-differenza-carta-dedicata-a-te)) o altri sostegni contro la povertà;
 - la **NASpI**, la **DIS-COLL**, la **cassa integrazione** o altri sostegni al reddito per chi ha perso o sospeso il lavoro.
 
 Le carte sono limitate: per il 2026-2027 ne sono state assegnate **1.177.597** in tutta Italia. Il Comune le distribuisce con una graduatoria che dà la precedenza alle famiglie di **almeno tre persone**, prima quelle con un componente nato entro il **31 dicembre 2012**, poi entro il **31 dicembre 2008**, sempre partendo dall'**ISEE più basso**.
@@ -145,6 +145,7 @@ Per il 2026-2027 c'è una sola lista e le liste sono già chiuse. Conviene comun
 
 ## Articoli correlati
 
+- [Carta Acquisti 2026: 80 € ogni due mesi e differenze con la Carta Dedicata a te](/blog/carta-acquisti-2026-80-euro-differenza-carta-dedicata-a-te)
 - [ISEE 2027: quando rinnovarlo e quali documenti servono](/blog/isee-2027-documenti-quando-rinnovare-roma)
 - [TARI Roma: esenzione e bonus sociale del 25%](/blog/tari-roma-esenzione-bonus-sociale-riduzioni)
 - [Assegno unico 2027: rinnovo dell'ISEE e scadenze](/blog/assegno-unico-2027-rinnovo-isee-scadenze)
