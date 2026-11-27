@@ -47,13 +47,13 @@ Hai il verbale di invalidità o la legge 104 e paghi ancora il ticket per visite
 
 **No: la legge 104 da sola non dà l'esenzione dal ticket.** L'esenzione dipende dalla **percentuale di invalidità**, da una **malattia** riconosciuta o dal **reddito**.
 
-È l'equivoco più frequente. Le esenzioni per invalidità sono quelle del decreto ministeriale del **1° febbraio 1991**: nell'elenco dei codici ci sono le percentuali di invalidità civile, del lavoro, di guerra e per servizio, ma **non c'è un codice per la 104**, né per il comma 1 né per il comma 3.
+È l'equivoco più frequente. Le esenzioni per invalidità sono quelle del decreto ministeriale del **1° febbraio 1991**: ci sono codici per l'invalidità civile, del lavoro, di guerra e per servizio, ma **nessun codice per la 104**, né comma 1 né comma 3.
 
 Spesso però lo stesso verbale riconosce **sia la 104 sia l'invalidità civile**. In quel caso l'esenzione arriva dalla **percentuale** di invalidità, se è almeno del 67%. Che differenza c'è tra i due riconoscimenti lo spieghiamo nella guida su [104 comma 1 e comma 3](/blog/legge-104-comma-1-comma-3-differenza-benefici).
 
 ## Con quale percentuale di invalidità non si paga il ticket?
 
-**Con l'invalidità civile dal 67% in su non paghi il ticket su visite ed esami: dal 67% al 99% il codice è C03, al 100% è C01 o C02.** Sotto il 67% l'esenzione per invalidità civile non c'è.
+**Con l'invalidità civile dal 67% in su non paghi il ticket su visite ed esami: dal 67% al 99% il codice è C03, al 100% è C01 o C02.** Sotto il 67% l'elenco nazionale non prevede esenzione per invalidità civile.
 
 ## Quali sono i codici di esenzione per invalidità?
 
@@ -102,13 +102,11 @@ L'esenzione per patologia si chiede alla ASL con il **certificato di uno special
 | Codice | Chi |
 |---|---|
 | **E01** | under 6 e over 65 con reddito familiare fino a **36.151,98 euro** |
-| **E02** | disoccupati iscritti al centro per l'impiego, con reddito familiare sotto **8.263,31 euro** (11.362,05 con il coniuge, più 516,46 per ogni figlio a carico) |
+| **E02** | disoccupati con la DID (dichiarazione di immediata disponibilità), con reddito familiare sotto **8.263,31 euro** (11.362,05 con il coniuge, più 516,46 per ogni figlio a carico) |
 | **E03** | titolari di **assegno sociale** e familiari a carico |
 | **E04** | titolari di **pensione al minimo** over 60 e familiari a carico, con gli stessi limiti di reddito dell'E02 |
 
 Per E01, E03 ed E04 il **medico di famiglia** controlla negli elenchi se hai diritto e mette il codice sulla ricetta. Se non risulti e pensi di averne diritto, o se sei disoccupato (E02), fai l'autocertificazione alla ASL. Le esenzioni per reddito devono esserci **nel momento della prescrizione**.
-
-Se hai sia un'invalidità dal 67% sia i requisiti di reddito, l'esenzione per invalidità ha un vantaggio: non dipende da come cambia il reddito.
 
 ## Come si chiede l'esenzione ticket per invalidità a Roma?
 
@@ -117,7 +115,7 @@ Se hai sia un'invalidità dal 67% sia i requisiti di reddito, l'esenzione per in
 Nel nostro Municipio, secondo le carte dei servizi della ASL Roma 1:
 
 - **Casa della Comunità Vigne Nuove**, via Dina Galli 3: lo sportello polifunzionale è **al momento solo online**. Per le pratiche diverse da scelta e revoca del medico si scrive a **sportello.distretto3@aslroma1.it** (carta dei servizi aggiornata al 26/05/2026).
-- **Casa della Comunità Montesacro**, via Lampedusa 23-27: lo sportello polifunzionale gestisce le esenzioni **per invalidità, patologia e reddito**, con orari diversi per ogni tipo. Controlla gli orari aggiornati sul sito della ASL prima di andare.
+- **Casa della Comunità Montesacro**, via Lampedusa 23-27: lo sportello polifunzionale gestisce le esenzioni **per invalidità, patologia e reddito**, con orari diversi per ogni tipo: controllali sul sito della ASL prima di andare.
 
 **Cosa ti serve:**
 
@@ -126,7 +124,7 @@ Nel nostro Municipio, secondo le carte dei servizi della ASL Roma 1:
 - [ ] **tessera sanitaria**
 - [ ] se va un familiare: delega e documento della persona interessata
 
-Il verbale lo riceve chi ha fatto la visita: se a Roma hai avviato la pratica con la riforma, leggi come funziona nella guida al [certificato medico introduttivo](/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia).
+Se a Roma hai avviato la pratica con la riforma, alla fine ricevi il certificato finale dell'INPS: leggi come funziona nella guida al [certificato medico introduttivo](/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia).
 
 ## L'esenzione ticket copre anche i farmaci nel Lazio?
 
@@ -145,7 +143,6 @@ Siamo **Patronato ENASC** e **CAF UNSIC** nel Centro Acquisti Flaiano di **Vigne
 - **Leggiamo il verbale** e ti diciamo se ti spetta un codice di esenzione e quale.
 - Ti prepariamo la **richiesta alla ASL Roma 1** con i documenti giusti.
 - Se la percentuale è sotto il 67% ma la situazione è peggiorata, valutiamo con il medico l'**aggravamento**.
-- Controlliamo se hai diritto anche all'esenzione **per reddito** o **per patologia**.
 - Lavoriamo anche **a distanza**, in videochiamata, da tutta Italia.
 
 **Cosa portare:** verbale o certificato INPS, documento, tessera sanitaria e, per il reddito, l'ultima dichiarazione dei redditi della famiglia. Il costo del servizio te lo diciamo prima; per un preventivo scrivici su WhatsApp. Vedi anche la pagina [invalidità e legge 104](/invalidita-104).

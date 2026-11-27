@@ -46,10 +46,7 @@ Sul verbale c'è scritto "art. 3 comma 1" oppure "art. 3 comma 3" e non sai cosa
 
 **Il comma 1 riconosce una disabilità; il comma 3 la riconosce grave, cioè tale da richiedere un sostegno intensivo, permanente, continuativo e globale.** Solo il comma 3 dà i benefici sul lavoro.
 
-Lo dice l'articolo 3 della legge 104/1992, riscritto dalla riforma della disabilità (D.Lgs. 62/2024):
-
-- **comma 1**: è persona con disabilità chi ha **compromissioni durature** fisiche, mentali, intellettive o sensoriali che, insieme alle barriere che incontra, possono ostacolare la sua partecipazione alla vita sociale;
-- **comma 3**: quando la compromissione ha ridotto l'autonomia personale, rispetto all'età, al punto da rendere necessario un **sostegno intensivo, permanente, continuativo e globale**.
+Lo dice l'articolo 3 della legge 104/1992, riscritto dalla riforma della disabilità (D.Lgs. 62/2024). Per il **comma 1** è persona con disabilità chi ha **compromissioni durature** fisiche, mentali, intellettive o sensoriali che, con le barriere che incontra, possono ostacolarne la partecipazione alla vita sociale.
 
 ## Cosa si intende per disabilità grave?
 
@@ -90,7 +87,7 @@ I **3 giorni sono per persona assistita**: più familiari possono dividerseli, m
 4. fratello o sorella convivente;
 5. parente o affine entro il terzo grado convivente.
 
-Si passa al familiare successivo solo se i precedenti mancano, sono deceduti o hanno patologie invalidanti. Il congedo non può andare a più di un lavoratore per la stessa persona assistita.
+Si passa al familiare successivo solo se i precedenti mancano, sono deceduti o hanno patologie invalidanti.
 
 L'indennità è pari all'ultima retribuzione, entro un tetto annuo: l'INPS pubblica quello del 2026 nella scheda del congedo; quello del 2027 non è ancora stato comunicato.
 
@@ -108,8 +105,7 @@ Se l'erede o il beneficiario di una donazione ha la disabilità grave riconosciu
 
 - **spese mediche generiche e di assistenza specifica** deducibili per intero dal reddito;
 - **IVA al 4%** su sussidi tecnici e informatici per menomazioni permanenti motorie, visive, uditive o del linguaggio;
-- **auto con IVA al 4% e detrazione del 19%** per chi ha **capacità motorie ridotte o impedite**, se l'auto è **adattata** e il verbale indica la natura motoria;
-- stesse agevolazioni auto per **non vedenti e sordi**, senza bisogno del comma 3.
+- **agevolazioni auto** per non vedenti, sordi e chi ha capacità motorie ridotte con auto adattata (vedi sotto).
 
 ## Agevolazioni auto e IVA 4%: serve il comma 3?
 
@@ -141,15 +137,13 @@ Il **bollo auto** nel Lazio segue le stesse quattro categorie e va chiesto alla 
 | **Cosa dà** | assegno o pensione (con limiti di reddito), accompagnamento, esenzione ticket, collocamento mirato oltre il 45% | permessi e congedo (comma 3), agevolazioni fiscali |
 | **Chi ne usa i benefici** | soprattutto la persona con disabilità | anche i familiari che la assistono |
 
-Si possono avere tutte e due, una sola o nessuna. Esempio: una invalidità al 100% non vuol dire comma 3, e il comma 3 non dà soldi da solo. Anche la **104 da sola non dà l'esenzione dal ticket**: te lo spieghiamo nella guida all'[esenzione ticket per invalidità e 104 nel Lazio](/blog/esenzione-ticket-invalidita-104-lazio-codici).
+Si possono avere tutte e due o una sola: un'invalidità al 100% non vuol dire comma 3, e il comma 3 da solo non dà soldi. Anche la **104 da sola non dà l'esenzione dal ticket**: te lo spieghiamo nella guida all'[esenzione ticket per invalidità e 104 nel Lazio](/blog/esenzione-ticket-invalidita-104-lazio-codici).
 
 ## Come si chiede la 104 a Roma nel 2026?
 
 **A Roma dal 1° marzo 2026 la 104 si chiede con il certificato medico introduttivo: lo invia all'INPS il medico certificatore e la pratica parte da sola.** Non serve più la domanda a parte.
 
-Roma è tra le 40 province della terza fase della riforma della disabilità. La visita la fa l'**Unità di valutazione di base** dell'INPS, che con un'unica valutazione accerta insieme la disabilità della 104 e l'invalidità civile. Alla fine ricevi un **unico certificato**. In tutta Italia la riforma è prevista dal **1° gennaio 2027**.
-
-Tutti i passaggi (chi fa il certificato, chi fa la visita, cosa fare dopo) sono nella guida sulla [riforma della disabilità a Roma](/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia).
+La visita la fa l'**Unità di valutazione di base** dell'INPS, che valuta insieme 104 e invalidità civile e rilascia un **unico certificato**. In tutta Italia la riforma è prevista dal **1° gennaio 2027**. Tutti i passaggi sono nella guida sulla [riforma della disabilità a Roma](/blog/riforma-disabilita-roma-certificato-introduttivo-cosa-cambia).
 
 ## Come ti aiuta il Centro Pratiche Flaiano a Roma
 
@@ -158,7 +152,6 @@ Siamo **Patronato ENASC** e **CAF UNSIC** nel Centro Acquisti Flaiano di **Vigne
 - **Leggiamo il verbale** e ti diciamo se hai il comma 1 o il comma 3 e cosa ti spetta.
 - Con il medico certificatore avviamo la **pratica per la 104** o per l'aggravamento.
 - Presentiamo all'INPS la domanda di **permessi** o di **congedo straordinario**.
-- Prepariamo il **730** con deduzioni e detrazioni per disabilità.
 - Lavoriamo anche **a distanza**, in videochiamata, da tutta Italia.
 
 **Cosa portare:** documento e tessera sanitaria, il verbale o il certificato INPS, referti recenti, l'ultima busta paga se vuoi chiedere permessi o congedo. Il costo del servizio te lo diciamo prima; per un preventivo scrivici su WhatsApp. Vedi anche la pagina [invalidità e legge 104](/invalidita-104).
