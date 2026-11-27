@@ -17,6 +17,7 @@ import WhyFlaiano from "~/components/blog/WhyFlaiano.astro";
 import Disclaimer from "~/components/blog/Disclaimer.astro";
 import RelatedArticles from "~/components/blog/RelatedArticles.astro";
 import ShareBar from "~/components/ui/ShareBar.astro";
+import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
 import { getArticlesByCategory } from "~/utils/articles";
 import { readingTime } from "~/utils/reading-time";
 import { formatDateIt } from "~/utils/date";
@@ -115,6 +116,8 @@ const article = JSON.stringify({
         </>
       )}
     </div>
+
+    <div class="mt-10"><AltriCalcolatori current={path} /></div>
 
     <slot name="after" />
     <AvvisamiWhatsApp />

@@ -161,7 +161,7 @@ export function pagineSuggerite(testo: string, max = 5): VoceRicerca[] {
 
 /** Calcolatori: pagine con uno strumento di calcolo. */
 export function tipoDaUrl(url: string): TipoVoce {
-  if (/^\/(calcolo-|anticipo-naspi|stima-pensione|quale-isee|assegno-vedovanza)/.test(url)) return "calcolatore";
+  if (/^\/(calcolo-|calcolatori|anticipo-naspi|stima-pensione|quale-isee|assegno-vedovanza)/.test(url)) return "calcolatore";
   if (/^\/blog\//.test(url) || /^\/naspi\/./.test(url)) return "guida";
   return "servizio";
 }

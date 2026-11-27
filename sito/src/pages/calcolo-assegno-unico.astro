@@ -1,4 +1,5 @@
 ---
+import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
 /**
  * Calcolo Assegno Unico 2026.
  * Fonte unica dei valori: INPS, Circolare n. 7 del 30/01/2026 e Allegato n. 1 (tabella mensile 2026 per fascia ISEE),
@@ -160,4 +161,5 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     };
   })();
   </script>
+  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-assegno-unico" /></div></section>
 </BaseLayout>
