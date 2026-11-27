@@ -5,6 +5,7 @@
 // e restituisce il link di pagamento). Vedi vault/procedure/06-stima-pensione.md.
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import StimaPensioneForm from "~/components/pensione/StimaPensioneForm.svelte";
+import PageAside from "~/components/layout/PageAside.astro";
 
 const apiUrl = import.meta.env.PUBLIC_STIMA_PENSIONE_API ?? "";
 const attivo = Boolean(apiUrl);
@@ -46,7 +47,8 @@ const faqs = [
   noindex={!attivo}
   share={false}
 >
-  <div data-pagefind-ignore={attivo ? undefined : "all"}>
+  <div data-pagefind-ignore={attivo ? undefined : "all"} class="pl sp-pl">
+  <div class="pl-main">
   <section class="mx-auto max-w-5xl px-4 pt-10 pb-8 sm:pt-16">
     <p class="mb-3 inline-block rounded-full bg-[#F1EEFF] px-4 py-1.5 text-sm font-bold text-[#4B2FE0]">Pensioni · servizio online</p>
     <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-[#14142B] sm:text-6xl">Stima e Calcolo <span class="text-[#5B3DF5]">della pensione</span></h1>
@@ -113,4 +115,15 @@ const faqs = [
     <p class="mt-8 text-sm text-[#6B6B85]">Stima indicativa: non sostituisce la certificazione dell'INPS e non costituisce domanda di pensione. Per presentare la domanda puoi <a class="font-bold underline" href="/prenota">prenotare un appuntamento</a>.</p>
   </section>
   </div>
+  <PageAside />
+  </div>
 </BaseLayout>
+
+<style>
+  /* Schermi larghi (27/11/2026): da 1200 px la pagina sta a sinistra e a destra c'è la colonna laterale
+     (PageAside). Sotto i 1200 px resta tutto come prima. Testi e prezzi invariati. */
+  @media (min-width: 1200px) {
+    .sp-pl > :global(.ps-aside) { margin-top: 64px; }
+    .sp-pl > .pl-main > section { padding-inline: 0; }
+  }
+</style>

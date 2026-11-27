@@ -5,6 +5,7 @@ import SectionHeading from "~/components/ui/SectionHeading.astro";
 import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import BookingCTA from "~/components/home/BookingCTA.astro";
+import PageAside from "~/components/layout/PageAside.astro";
 
 const groups = [
   {
@@ -119,6 +120,9 @@ const groups = [
 ];
 
 const allFaq = groups.flatMap((g) => g.items);
+// Indice delle sezioni nella colonna laterale (da 1200 px): ogni titolo ha il suo id.
+const slug = (t: string) => "faq-" + t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const toc = groups.map((g) => ({ slug: slug(g.title), text: g.title }));
 ---
 
 <BaseLayout
@@ -140,17 +144,29 @@ const allFaq = groups.flatMap((g) => g.items);
   </section>
 
   <section class="section">
-    <div class="container-narrow space-y-12">
+    <div class="container-narrow pl faq-pl">
+      <div class="pl-main space-y-12">
       {groups.map((g) => (
         <div>
-          <h2 class="font-display text-2xl font-bold text-[var(--color-brand-900)]">{g.title}</h2>
+          <h2 id={slug(g.title)} class="faq-sez font-display text-2xl font-bold text-[var(--color-brand-900)]">{g.title}</h2>
           <div class="mt-6">
             <FaqList items={g.items} />
           </div>
         </div>
       ))}
+      </div>
+      <PageAside toc={toc} />
     </div>
   </section>
 
   <BookingCTA />
 </BaseLayout>
+
+<style>
+  /* Schermi larghi (27/11/2026): da 1200 px domande a sinistra (circa 800 px, allineate al titolo) e a destra,
+     sul bordo del contenitore, la colonna laterale con l'indice delle sezioni, Prenota e calcolatori. Le risposte restano nell'HTML (FaqList, details). */
+  .faq-sez { scroll-margin-top: 6rem; }
+  @media (min-width: 1200px) {
+    .faq-pl { --pl-main: 800px; justify-content: space-between; }
+  }
+</style>

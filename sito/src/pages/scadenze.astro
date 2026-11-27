@@ -48,21 +48,21 @@ const ld = JSON.stringify({
   <script slot="head" type="application/ld+json" set:html={ld} />
 
   <section style="background:#F1EEFF">
-    <div style="max-width:920px;margin:0 auto;padding:40px 16px 48px;display:flex;flex-direction:column;gap:16px">
+    <div class="sc-head">
       <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Aggiornato il 23 novembre 2026</span>
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Le prossime scadenze</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A">Tasse, ISEE, bonus e pratiche INPS: le date da segnare. Per ogni scadenza c'è la guida con le fonti ufficiali. Le date già passate restano in grigio.</p>
     </div>
   </section>
 
-  <section style="max-width:920px;margin:0 auto;padding:32px 16px 64px;display:flex;flex-direction:column;gap:28px">
+  <section class="sc-wrap">
     {gruppi.map((g) => (
-      <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="sc-month">
         <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(26px,5vw,34px);text-transform:capitalize;color:#14142B">{g.mese}</h2>
-        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+        <ul class="sc-list">
           {g.voci.map((v) => (
             <li class="sc-item" data-d={v.d}>
-              <a href={v.href} style="display:flex;gap:16px;align-items:flex-start;background:#F7F7FB;border-radius:22px;padding:16px 18px;text-decoration:none;color:#14142B">
+              <a href={v.href} class="sc-link" style="display:flex;gap:16px;align-items:flex-start;background:#F7F7FB;border-radius:22px;padding:16px 18px;text-decoration:none;color:#14142B">
                 <span class="sc-day" style="flex:none;width:58px;height:58px;border-radius:16px;background:#5B3DF5;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;line-height:1"><b style="font-size:26px">{giorno(v.d)}</b><span style="font-size:12px;font-weight:700;text-transform:uppercase">{MESI[Number(v.d.split("-")[1]) - 1].slice(0, 3)}</span></span>
                 <span style="display:flex;flex-direction:column;gap:4px;min-width:0">
                   <b style="font-size:18px;line-height:1.25">{v.titolo} <span class="sc-past" style="display:none;font-size:13px;font-weight:700;color:#9D174D">· passata</span></b>
@@ -92,3 +92,19 @@ const ld = JSON.stringify({
   })();
   </script>
 </BaseLayout>
+
+<style>
+  /* Stessi valori di prima (erano nello stile in linea). Schermi larghi (27/11/2026): da 1280 px il contenitore
+     è quello del sito (1200 / 1320 / 1440) e le scadenze di ogni mese vanno su due colonne. */
+  .sc-head { max-width: 920px; margin: 0 auto; padding: 40px 16px 48px; display: flex; flex-direction: column; gap: 16px; }
+  .sc-wrap { max-width: 920px; margin: 0 auto; padding: 32px 16px 64px; display: flex; flex-direction: column; gap: 28px; }
+  .sc-month { display: flex; flex-direction: column; gap: 12px; }
+  .sc-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  @media (min-width: 1280px) {
+    .sc-head, .sc-wrap { max-width: var(--container-base); padding-inline: var(--gutter); }
+    .sc-head > p { max-width: 46rem; }
+    .sc-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .sc-link { height: 100%; }
+    .sc-wrap > :global(:not(.sc-month)) { max-width: 920px; }
+  }
+</style>
