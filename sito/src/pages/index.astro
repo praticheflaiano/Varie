@@ -10,6 +10,7 @@ import FaqList from "~/components/ui/FaqList.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { getVisibleArticles } from "~/utils/articles";
 import { CONTACT, ZONE_SERVITE, TESSERAMENTO, GHL } from "~/consts";
+import { SITUAZIONI } from "~/data/situazioni";
 
 const articles = (await getVisibleArticles()).slice(0, 4);
 
@@ -105,6 +106,28 @@ const homeFaq = [
         <span class="sticker" style="position:absolute;left:-6px;bottom:-6px;background:#DB2E6B;color:#fff">Vigne Nuove · Roma Nord</span>
       </div>
     </div>
+  </section>
+
+  <!-- COSA TI È SUCCESSO (27/11/2026): le situazioni di vita, per chi non sa come si chiama la pratica. Dati in ~/data/situazioni.ts -->
+  <section class="wrap" style="padding-bottom:40px" aria-labelledby="home-situazioni">
+    <div class="flex items-baseline justify-between flex-wrap gap-2 mb-4">
+      <h2 id="home-situazioni" style="font-size:clamp(1.7rem,3vw,2.3rem)">Cosa ti è successo?</h2>
+      <a href="/situazioni" style="font-weight:800;display:inline-block;padding:4px 0">Tutte le situazioni →</a>
+    </div>
+    <ul class="grid gap-3 home-sit" style="list-style:none;padding:0">
+      {SITUAZIONI.slice(0, 6).map((s) => (
+        <li style="display:flex">
+          <a href={`/situazioni/${s.slug}`} class="mini" style={`width:100%;background:${s.colori.bg};color:${s.colori.fg};${s.colori.bordo ? "border:2px solid #14142B;" : ""}`}>
+            <span style="font-size:19px;font-weight:800">{s.nome}</span>
+            <span class="home-sit-d" style={`font-size:15px;color:${s.colori.sub}`}>{s.breve}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <style>
+      .home-sit { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+      @media (max-width: 639px) { .home-sit { grid-template-columns: 1fr 1fr; } .home-sit .mini { padding: 16px; } .home-sit-d { display: none; } }
+    </style>
   </section>
 
   <!-- Pagamenti INPS del mese (richiesta di Antonio 26/11/2026): date in ~/data/pagamenti.ts -->
