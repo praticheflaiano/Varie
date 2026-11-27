@@ -3,7 +3,7 @@ title: "Rottamazione quinquies: terza rata entro il 30 novembre 2026, cosa succe
 seo_title: "Terza rata rottamazione quinquies: scade il 30 novembre 2026"
 slug: "rottamazione-quinquies-terza-rata-30-novembre-2026"
 date: 2026-11-17
-last_updated: 2026-11-26
+last_updated: 2026-11-27
 category: "imu-tributi-locali"
 tags: ["rottamazione-quinquies", "cartelle", "scadenza", "agenzia-entrate-riscossione"]
 meta_description: "Terza rata rottamazione quinquies entro lunedì 30 novembre 2026, senza tolleranza. Quater: rata di novembre pagabile fino al 7 dicembre. Aiuto a Roma."
@@ -23,7 +23,7 @@ image_alt: "Rottamazione quinquies: terza rata in scadenza il 30 novembre 2026"
 
 # Rottamazione quinquies: terza rata entro il 30 novembre 2026
 
-**Ultimo aggiornamento: 26 novembre 2026**
+**Ultimo aggiornamento: 27 novembre 2026**
 
 Se hai aderito alla **rottamazione-quinquies** delle cartelle e paghi a rate, **lunedì 30 novembre 2026** scade la **terza rata**. È una scadenza da non sbagliare: per le rate intermedie della rottamazione-quinquies non ci sono i 5 giorni di tolleranza che molti ricordano dalla rottamazione-quater.
 
@@ -54,7 +54,7 @@ Chi ha presentato la dichiarazione di adesione alla rottamazione-quinquies e ha 
 | dalla 4ª alla 51ª | ogni anno il 31 gennaio, 31 marzo, 31 maggio, 31 luglio, 30 settembre e 30 novembre, dal 2027 |
 | ultime tre rate | 31 gennaio, 31 marzo e 31 maggio 2035 |
 
-Fonte: legge 199/2025, art. 1, comma 83. Dopo il 30 novembre, la **prossima rata scade il 31 gennaio 2027**.
+Fonte: legge 199/2025, art. 1, comma 83. Dopo il 30 novembre, la **prossima rata scade il 31 gennaio 2027**, che è domenica: si può pagare fino a **lunedì 1° febbraio 2027**. Tutte le date nel [calendario delle rate 2027](/blog/rottamazione-quinquies-rate-2027-scadenze).
 
 Chi ha scelto di pagare tutto in un'unica soluzione entro il 31 luglio 2026 non ha altre rate da pagare.
 
@@ -111,7 +111,7 @@ Le due rottamazioni hanno quindi **regole diverse**. Se hai sia la quater sia la
 ## Domande frequenti
 
 ### Entro quando si paga la terza rata della rottamazione quinquies?
-Entro lunedì 30 novembre 2026. La prossima rata scade il 31 gennaio 2027.
+Entro lunedì 30 novembre 2026. La prossima rata scade il 31 gennaio 2027 (domenica, quindi si paga entro lunedì 1° febbraio).
 
 ### Quando scade la rata di novembre 2026 della rottamazione quater?
 Il 30 novembre 2026, con tolleranza fino a lunedì 7 dicembre 2026. È la 14ª rata (6ª per i riammessi). Nella quater basta una rata saltata o pagata oltre la tolleranza per decadere.
@@ -141,6 +141,7 @@ Al **Centro Pratiche Flaiano** di Vigne Nuove, nel Municipio III, controlliamo l
 - Pagina servizio: [Cartelle e rateizzazioni](/cartelle-rateizzazione)
 - [Prenota un appuntamento](/prenota)
 - Guida generale: [Rottamazione quinquies 2026: come funziona](/blog/rottamazione-quinquies-2026)
+- Le date del 2027: [Rottamazione quinquies, rate 2027: tutte le scadenze](/blog/rottamazione-quinquies-rate-2027-scadenze)
 - Altre scadenze di fine mese: [Scadenze 30 novembre 2026: acconto IRPEF, TARI Roma e APE sociale](/blog/scadenze-30-novembre-2026-roma-acconto-irpef-tari)
 
 ---
