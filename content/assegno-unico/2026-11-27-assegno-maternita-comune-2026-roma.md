@@ -38,9 +38,9 @@ Hai avuto un bambino nel 2026 ma **non hai la maternità INPS**, perché non lav
 | **Entro quando** | **6 mesi** dalla nascita o dall'ingresso in famiglia |
 | **Dove si chiede** | al **Comune di residenza**; a Roma, a Roma Capitale |
 | **Chi paga** | l'**INPS** |
-| **Da noi** | facciamo l'**ISEE gratis** e ti aiutiamo a preparare la domanda |
+| **Da noi** | facciamo l'**ISEE gratis** e **presentiamo noi la domanda a Roma Capitale** |
 
-> [Prenota: controlliamo se ti spetta l'assegno di maternità](/prenota): a Roma Vigne Nuove o in videochiamata, con l'ISEE gratis.
+> [Prenota: facciamo noi la domanda di maternità al Comune di Roma](/prenota): a Vigne Nuove o in videochiamata, con l'ISEE gratis.
 
 ## Chi ha diritto all'assegno di maternità del Comune?
 
@@ -91,7 +91,7 @@ Esempio: bambino nato il **15 ottobre 2026**? Hai tempo fino al **15 aprile 2027
 
 **A Roma la domanda si presenta a Roma Capitale, il Comune di residenza, che controlla i requisiti e poi passa i dati all'INPS per il pagamento.** Non si presenta all'INPS.
 
-Le modalità di invio (online o allo sportello) e il modulo aggiornato sono nella scheda del servizio sul sito **comune.roma.it**. Possono cambiare da un anno all'altro: prima di inviare controlliamo con te quella in vigore.
+**Se abiti a Roma, la domanda la presentiamo noi per te**: prepariamo l'ISEE, controlliamo i requisiti e inviamo la domanda a Roma Capitale. Il modulo e le istruzioni ufficiali sono anche nella scheda del servizio sul sito **comune.roma.it**.
 
 Prepara:
 
@@ -126,7 +126,7 @@ Siamo **CAF UNSIC** e **Patronato ENASC** nel Centro Acquisti Flaiano di **Vigne
 
 - Facciamo l'**ISEE gratis**, con il bambino nel nucleo.
 - Verifichiamo se ti spetta l'assegno del **Comune**, quello dello **Stato** o la **quota differenziale**.
-- Ti aiutiamo a preparare la **domanda a Roma Capitale** con i documenti giusti, prima dei 6 mesi.
+- **Presentiamo noi la domanda a Roma Capitale** con i documenti giusti, prima dei 6 mesi.
 - Presentiamo l'**Assegno Unico** e ti diciamo se ti spetta il [bonus nuovi nati](/blog/bonus-nuovi-nati-1000-euro-domanda-120-giorni).
 
 Il costo della domanda di maternità al Comune te lo diciamo prima: chiedi il preventivo su WhatsApp al **371 623 0690**. L'Assegno Unico costa 15 € (10 € con la tessera). Puoi fare tutto anche **a distanza**, in videochiamata. Altre misure per chi aspetta un bambino nella pagina [bonus famiglia](/bonus-famiglia).
@@ -149,7 +149,7 @@ No, si chiede al Comune di residenza (a Roma a Roma Capitale). L'INPS però è l
 Sono due prestazioni diverse con due domande diverse: l'Assegno Unico non ha sostituito l'assegno di maternità dei Comuni. Controlliamo con te i requisiti di entrambi.
 
 ### Quanto costa fare la domanda con voi?
-L'ISEE da noi è gratis. Per la domanda al Comune ti diciamo il costo prima: chiedi il preventivo su WhatsApp.
+L'ISEE da noi è gratis. Per la domanda al Comune di Roma, che presentiamo noi, ti diciamo il costo prima: chiedi il preventivo su WhatsApp.
 
 ## Articoli correlati
 

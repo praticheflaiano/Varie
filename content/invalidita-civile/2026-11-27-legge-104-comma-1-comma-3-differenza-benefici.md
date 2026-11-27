@@ -82,9 +82,17 @@ I **3 giorni sono per persona assistita**: più familiari possono dividerseli, m
 
 ### Congedo straordinario
 
-**Fino a 2 anni in tutta la vita lavorativa** per assistere un familiare con disabilità grave, pagati con un'indennità e coperti da contributi figurativi. C'è un **ordine di priorità**: prima il coniuge (o unito civilmente o convivente di fatto), poi i genitori, poi i figli, i fratelli e gli altri parenti fino al terzo grado. Serve la **convivenza** per tutta la durata del congedo.
+**Fino a 2 anni in tutta la vita lavorativa** per assistere un familiare con disabilità grave, pagati con un'indennità e coperti da contributi figurativi. C'è un **ordine di priorità** (INPS):
 
-L'indennità ha un tetto annuo: l'INPS pubblica quello del 2026 nella scheda del congedo; quello del 2027 arriva con l'aggiornamento di inizio anno.
+1. coniuge convivente, parte dell'unione civile o convivente di fatto;
+2. padre o madre;
+3. figlio convivente;
+4. fratello o sorella convivente;
+5. parente o affine entro il terzo grado convivente.
+
+Si passa al familiare successivo solo se i precedenti mancano, sono deceduti o hanno patologie invalidanti. Il congedo non può andare a più di un lavoratore per la stessa persona assistita.
+
+L'indennità è pari all'ultima retribuzione, entro un tetto annuo: l'INPS pubblica quello del 2026 nella scheda del congedo; quello del 2027 non è ancora stato comunicato.
 
 ### Sede di lavoro e trasferimento
 
