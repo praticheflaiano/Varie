@@ -49,12 +49,7 @@ Hai compiuto **67 anni**, hai pochi o nessun contributo e un reddito basso? L'**
 
 **Nel 2026 l'assegno sociale è di 546,24 euro al mese per 13 mensilità, cioè 7.101,12 euro l'anno** (INPS, circolare 153/2025). È l'importo pieno: se hai altri redditi, ricevi di meno.
 
-Altre cose da sapere sull'importo:
-
-- **non si pagano tasse**: l'INPS lo paga senza trattenute IRPEF;
-- **non si può pignorare** né cedere;
-- **non è reversibile**: alla morte del titolare non passa al coniuge;
-- non dà diritto all'**importo aggiuntivo di 154,94 euro** di dicembre, che spetta solo sulle pensioni da contributi (vedi il nostro articolo sul [bonus di 154,94 euro a dicembre](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026)).
+Non si pagano tasse, non si può pignorare e **non è reversibile**: alla morte del titolare non passa al coniuge. Non dà diritto all'**importo aggiuntivo di 154,94 euro** di dicembre, che spetta solo sulle pensioni da contributi (vedi il [bonus di 154,94 euro a dicembre](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026)).
 
 ## Quali sono i requisiti dell'assegno sociale?
 
@@ -101,13 +96,13 @@ Il calcolo vero lo fa l'INPS sui redditi dichiarati: noi lo rifacciamo con te pr
 
 - Per il 2026 la tabella INPS indica una maggiorazione fino a **202,05 € al mese**, con limiti di reddito di **9.727,77 €** (persona sola) e **16.828,89 €** (coppia).
 - La **legge di bilancio 2026** ha aggiunto **20 € al mese** e alzato i limiti di **260 € l'anno**, da gennaio 2026. L'INPS li paga da marzo 2026 con gli arretrati di gennaio e febbraio (circolare INPS 19/2026).
-- In tutto, quindi, l'assegno con la maggiorazione può arrivare a circa **768 € al mese** (calcolo nostro sui dati INPS 2026).
+- L'importo totale con la maggiorazione dipende dai tuoi redditi: lo calcoliamo con te sui dati INPS del tuo caso.
 
 ## Come fare domanda di assegno sociale?
 
 **La domanda si presenta all'INPS online con SPID, CIE o CNS, tramite un patronato oppure chiamando il Contact Center (803 164 da fisso, 06 164164 da cellulare).**
 
-Da giugno 2026 la procedura online è **guidata**: chiede subito più informazioni e documenti, per ridurre le richieste di integrazione (messaggio INPS 1997/2026). L'INPS ha anche avviato una **campagna proattiva**: se in MyINPS hai dato il consenso ai "servizi proattivi", può scriverti per dirti che potresti averne diritto (messaggio INPS 1974/2026).
+Da giugno 2026 la procedura online è **guidata** e chiede subito più documenti (messaggio INPS 1997/2026). Se in MyINPS hai dato il consenso ai "servizi proattivi", l'INPS può scriverti per dirti che potresti averne diritto (messaggio INPS 1974/2026).
 
 Cosa preparare:
 
@@ -134,9 +129,9 @@ Se l'INPS ha pagato più del dovuto, chiede indietro la differenza: dal 2027 que
 
 **Da gennaio 2027 le pensioni salgono del 3,2% provvisorio (decreto MEF del 13 novembre 2026); gli importi e i limiti 2027 dell'assegno sociale li fisserà l'INPS con la circolare di rinnovo.** Fino ad allora valgono le cifre 2026 di questa pagina.
 
-Ogni anno la rivalutazione si applica anche alle **prestazioni assistenziali** come l'assegno sociale: per il 2026 l'INPS ha usato lo stesso aumento delle pensioni (1,4%, circolare 153/2025). Per il 2027 aspettiamo la circolare INPS di fine anno: aggiorneremo la pagina appena esce. Come funziona la rivalutazione: [rivalutazione pensioni 2027](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce).
+Per il 2026 l'INPS ha applicato anche alle **prestazioni assistenziali** lo stesso aumento delle pensioni (1,4%, circolare 153/2025). Aggiorneremo la pagina appena esce la circolare 2027. Come funziona: [rivalutazione pensioni 2027](/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce).
 
-Attenzione all'**età**: la circolare INPS 153/2025 indica i 67 anni per il periodo **fino al 31 dicembre 2026**, e dal 2027 i requisiti di età delle pensioni salgono di un mese per la speranza di vita (vedi i [requisiti pensione 2027](/blog/requisiti-pensione-2027-vecchiaia-anticipata)). Se compi 67 anni a fine 2026 o nel 2027, controlliamo con te la data esatta da cui puoi fare domanda.
+Attenzione all'**età**: la circolare 153/2025 indica i 67 anni **fino al 31 dicembre 2026**, e dal 2027 i requisiti di età delle pensioni salgono di un mese (vedi i [requisiti pensione 2027](/blog/requisiti-pensione-2027-vecchiaia-anticipata)). Se compi 67 anni a fine 2026 o nel 2027, controlliamo con te da quando puoi fare domanda.
 
 ## Come ti aiuta il Centro Pratiche Flaiano a Roma
 

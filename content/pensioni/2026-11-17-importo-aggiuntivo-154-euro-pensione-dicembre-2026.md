@@ -97,7 +97,7 @@ Al 26 novembre 2026 l'INPS non ha ancora pubblicato la notizia sul cedolino di d
 
 ## Non l'ho ricevuto ma credo che mi spetti: cosa faccio?
 
-L'INPS calcola il diritto in base ai redditi che conosce. Se i redditi non sono aggiornati, il bonus può non arrivare; e se poi risulta non dovuto, l'INPS può recuperarlo. Cosa fare:
+L'INPS calcola il diritto in base ai redditi che conosce. Se i redditi non sono aggiornati, il bonus può non arrivare; e se poi risulta non dovuto, l'INPS può recuperarlo. Tutti i motivi e i passi da fare sono nella guida [importo aggiuntivo o tredicesima non arrivati: cosa fare](/blog/importo-aggiuntivo-tredicesima-non-arrivati-cosa-fare). In breve:
 
 1. controlla il cedolino di dicembre;
 2. verifica i redditi tuoi e del coniuge;

@@ -6,7 +6,7 @@ date: 2026-11-27
 last_updated: 2026-11-27
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "tredicesima", "ricostituzione", "patronato"]
-meta_description: "Importo aggiuntivo di 154,94 € o tredicesima non arrivati con la pensione di dicembre 2026? I motivi più comuni e come chiedere la verifica. Patronato a Roma."
+meta_description: "Importo aggiuntivo di 154,94 € o tredicesima non arrivati a dicembre 2026? I motivi più comuni e come chiedere la verifica all'INPS. Patronato a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Legge 23 dicembre 2000, n. 388, art. 70, commi 7-10 (importo aggiuntivo: pensione fino al trattamento minimo, redditi IRPEF dell'anno, limite personale e coniugale, pagamento con la tredicesima o l'ultima rata dell'anno)"
@@ -79,7 +79,7 @@ Per le pensioni delle **gestioni pubbliche** (ex INPDAP) lo scorso anno il bonus
 
 **La tredicesima non arriva a parte: è compresa nella rata di dicembre pagata il 1° dicembre 2026. Se il netto è basso, di solito dipende da IRPEF, conguagli del 730 o pensione iniziata nell'anno.**
 
-Sul cedolino di dicembre trovi la tredicesima come **voce separata**, ma il bonifico è uno solo. I motivi più comuni per cui sembra più bassa del previsto:
+Sul cedolino è una **voce separata**, ma il bonifico è uno solo. I motivi più comuni per cui sembra bassa:
 
 - **IRPEF sulla tredicesima**: si paga come sulla pensione, quindi il netto è più basso del lordo;
 - **pensione iniziata nel 2026**: la tredicesima è calcolata solo sui mesi di pensione dell'anno;
@@ -103,15 +103,11 @@ Entra su **inps.it** o nell'app **INPS Mobile** con SPID, CIE o CNS, servizio **
 
 ### Passo 2: verifica i requisiti
 
-Somma la pensione annua e i redditi 2026 tuoi e del coniuge. Se sei sopra i limiti, il bonus non spetta: meglio così che riceverlo e doverlo restituire.
+Somma la pensione annua e i redditi 2026 tuoi e del coniuge. Se sei sopra i limiti, il bonus non spetta. Lo scorso anno l'INPS ha dato le istruzioni sui pagamenti di dicembre con un messaggio del **15 dicembre**: per il 2026 non è ancora uscito, lo segnaleremo qui.
 
-### Passo 3: aspetta le istruzioni INPS di metà dicembre
+### Passo 3: chiedi la ricostituzione
 
-Lo scorso anno l'INPS ha spiegato i pagamenti di dicembre con un messaggio del **15 dicembre**. Per il 2026 il messaggio non è ancora uscito: lo segnaleremo qui appena esce.
-
-### Passo 4: chiedi la ricostituzione
-
-Se ti spetta e non l'hai ricevuto, si presenta la **domanda di ricostituzione** della pensione, con cui l'INPS aggiorna i redditi e ricalcola il diritto. Si fa:
+Se ti spetta e non l'hai ricevuto, si presenta la **domanda di ricostituzione** della pensione: l'INPS aggiorna i redditi e ricalcola il diritto. Si fa:
 
 - **online** sul sito INPS con SPID, CIE o CNS;
 - tramite un **patronato**;
@@ -152,9 +148,6 @@ Perché l'importo aggiuntivo spetta solo sulle pensioni da contributi. Sull'asse
 
 ### Non è arrivata nemmeno la quattordicesima di dicembre: cosa faccio?
 Vale lo stesso percorso: controlla il cedolino e, se pensi che ti spetti, chiedi la ricostituzione online o tramite patronato. Lo scorso anno l'INPS l'ha pagata a dicembre a chi aveva compiuto 64 anni nella seconda metà dell'anno o era andato in pensione nell'anno.
-
-### Senza SPID come controllo il cedolino?
-Vieni in ufficio: lo leggiamo insieme e, se vuoi, ti aiutiamo ad attivare SPID o CIE.
 
 ## Articoli correlati
 
