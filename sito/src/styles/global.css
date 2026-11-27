@@ -785,7 +785,8 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
     display: grid;
     grid-template-columns: minmax(0, var(--ps-main)) var(--ps-side);
     column-gap: var(--ps-gap);
-    justify-content: center;
+    /* colonne allineate ai bordi della barra in alto (logo a sinistra, Prenota a destra): niente "isola" al centro */
+    justify-content: space-between;
     grid-template-areas: "head head" "cover aside" "top aside" "tool aside" "main aside" "rel rel";
   }
   .ps--tool { grid-template-columns: minmax(0, var(--ps-tool)) var(--ps-side); }
@@ -819,4 +820,38 @@ article.container-narrow > h1 { font-size: clamp(2.2rem, 4.6vw, 3.6rem); line-he
    così tra il testo e il riquadro non resta un buco (index.astro non ha classi qui: si aggancia allo stile in linea). */
 @media (min-width: 1440px) {
   section.wrap > .flex > div:not([class])[style*="flex:1 1 320px"] { flex: 0 1 420px; }
+}
+
+/* Pagine con colonna laterale fuori dai layout degli articoli (27/11/2026, secondo giro: /faq, /prezzi,
+   /stima-pensione). Struttura: <div class="container-narrow pl"><div class="pl-main">…</div><PageAside /></div>.
+   Sotto i 1200 px .pl e .pl-main non cambiano nulla (il contenitore resta quello di prima, PageAside non si vede).
+   Da 1200 px: a sinistra il contenuto (--pl-main, di base tutto lo spazio rimasto), a destra la colonna laterale
+   ferma sotto la barra. .pl-head allinea la testata della pagina al bordo sinistro della griglia. */
+@media (min-width: 1200px) {
+  .pl {
+    display: grid;
+    grid-template-columns: minmax(0, var(--pl-main, 1fr)) var(--ps-side);
+    grid-template-areas: "main aside";
+    column-gap: var(--ps-gap);
+    justify-content: center;
+    align-items: start;
+    max-width: var(--container-base);
+    margin-inline: auto;
+    padding-inline: max(32px, var(--gutter));
+  }
+  .pl-main { grid-area: main; min-width: 0; }
+  .pl > .ps-aside { margin-top: 0; }
+  .pl-head { max-width: var(--container-base); padding-inline: max(32px, var(--gutter)); }
+}
+
+/* Pagine legali (/privacy, /cookie, /note-legali, 27/11/2026): il testo resta nella colonna stretta al centro,
+   allineato alla testata; da 1200 px il corpo è quello degli articoli (circa 80 caratteri per riga). */
+@media (min-width: 1200px) {
+  article.container-narrow.prose-article { font-size: var(--ps-font); }
+}
+
+/* Con la colonna laterale (PageAside, che ha già Prenota, telefono e WhatsApp) il pulsante WhatsApp flottante
+   copriva il fondo della colonna tra 1200 e 1440px: da 1200px, sulle pagine con la colonna, non serve. (27/11/2026) */
+@media (min-width: 1200px) {
+  body:has(.ps-aside) .whatsapp-fab { display: none; }
 }

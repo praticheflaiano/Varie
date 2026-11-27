@@ -6,6 +6,7 @@
  */
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import bonus from "~/data/bonus.json";
+import PageAside from "~/components/layout/PageAside.astro";
 
 // Dati del tab "Cosa ti spetta": solo i campi che servono alla pagina, inseriti a build time.
 const misure = bonus.misure.map((m: any) => ({
@@ -39,10 +40,13 @@ const ld = {
 
   <section class="qi">
     <div class="qi-wrap">
+      <div class="qi-head">
       <span class="qi-eyebrow">Strumenti gratuiti</span>
       <h1 class="qi-title">Quale ISEE ti serve e cosa ti spetta</h1>
       <p class="qi-lead">Due test di un minuto: scopri quale ISEE chiedere e quali bonus e aiuti puoi avere a Roma e nel Lazio. Non ti chiediamo nessun dato personale.</p>
+      </div>
 
+      <div class="qi-main">
       <div class="qi-tabs" role="tablist" aria-label="Scegli lo strumento" id="qi-tabs" hidden>
         <button type="button" role="tab" class="qi-tab" id="qi-tab-isee" aria-controls="qi-panel-isee" aria-selected="true" data-modo="isee">Quale ISEE ti serve</button>
         <button type="button" role="tab" class="qi-tab" id="qi-tab-bonus" aria-controls="qi-panel-bonus" aria-selected="false" tabindex="-1" data-modo="bonus">Cosa ti spetta</button>
@@ -63,6 +67,8 @@ const ld = {
         <script id="qb-data" type="application/json" is:inline set:html={misureJson} />
         <p class="qi-note">Strumento indicativo. Non salviamo le tue risposte. Per verificare davvero cosa ti spetta serve il tuo ISEE e, in alcuni casi, i tuoi documenti. Dati verificati su fonti ufficiali il {bonus.meta.generato_il.split("-").reverse().join("/")}. Leggi la <a href="/privacy">privacy</a>.</p>
       </div>
+      </div>
+      <PageAside />
     </div>
   </section>
 
@@ -614,5 +620,26 @@ import { trova, dataLunga, testoGiorni } from "~/scripts/bonus-engine.js";
     .qb-isee p { margin: 0 0 8px; }
     .qi-cta { align-items: center; }
     @media (max-width: 560px) { .qi-card { padding: 20px; border-radius: 22px; } .qi-btn { width: 100%; } .qi-tab { font-size: 15px; padding: 10px 6px; } .qb-item { padding: 14px; } }
+    /* Sotto i 1200 px i due gruppi non esistono per l'impaginazione (stessa colonna di prima).
+       Schermi larghi (27/11/2026): da 1200 px titolo in alto, sotto lo strumento (fino a 960 px)
+       e a destra la colonna laterale (PageAside: Prenota, telefono, WhatsApp, calcolatori). */
+    .qi-head, .qi-main { display: contents; }
+    @media (min-width: 1200px) {
+      .qi .qi-wrap {
+        max-width: var(--container-base);
+        display: grid;
+        grid-template-columns: minmax(0, 960px) var(--ps-side);
+        grid-template-areas: "head head" "main aside";
+        column-gap: var(--ps-gap);
+        row-gap: 28px;
+        justify-content: center;
+        align-items: start;
+        padding-inline: max(32px, var(--gutter));
+      }
+      .qi .qi-head { grid-area: head; display: flex; flex-direction: column; gap: 18px; }
+      .qi .qi-lead { max-width: 46rem; }
+      .qi .qi-main { grid-area: main; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+      .qi .qi-wrap > .ps-aside { margin-top: 0; }
+    }
   </style>
 </BaseLayout>

@@ -34,7 +34,7 @@ const itemList = {
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(itemList)} />
 
   <section class="bg-mesh-brand">
-    <div class="container-narrow pt-10 pb-10">
+    <div class="container-narrow calc-head pt-10 pb-10">
       <Breadcrumb items={[{ name: "Calcolatori", href: "/calcolatori" }]} class="mb-6" />
       <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Strumenti gratuiti</p>
       <h1 class="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--color-ink)]">Calcolatori gratuiti: NASpI, ADI, Assegno Unico, pensione e altro</h1>
@@ -54,7 +54,7 @@ const itemList = {
   </section>
 
   <section class="section-tight">
-    <div class="container-narrow">
+    <div class="container-narrow calc-list">
       {gruppi.map((g, gi) => (
         <section id={g.id} aria-labelledby={`${g.id}-t`} class:list={["calc-gruppo", gi > 0 && "mt-12"]}>
           <h2 id={`${g.id}-t`} class="flex items-center gap-3 font-display text-2xl font-bold text-[var(--color-ink)]">
@@ -63,7 +63,7 @@ const itemList = {
             </span>
             {g.titolo}
           </h2>
-          <ul class="mt-5 grid gap-4 sm:grid-cols-2">
+          <ul class="calc-grid mt-5 grid gap-4 sm:grid-cols-2">
             {g.strumenti.map((s) => (
               <li class="flex flex-col rounded-[24px] bg-[#F7F7FB] p-5 sm:p-6">
                 {s.nota && <p class="mb-2 text-xs font-bold uppercase tracking-wider text-[#B81F56]">{s.nota}</p>}
@@ -115,5 +115,17 @@ const itemList = {
   }
   .calc-gruppo {
     scroll-margin-top: 6rem;
+  }
+  /* Schermi larghi (27/11/2026): da 1024 px le card usano tutto il contenitore del sito (1200 / 1320 / 1440),
+     3 colonne da 1200 px e 4 da 1680 px; il testo in alto resta a una larghezza comoda da leggere. */
+  @media (min-width: 1024px) {
+    .calc-head, .calc-list { max-width: var(--container-base); }
+    .calc-head > p, .calc-head > h1 { max-width: 52rem; }
+  }
+  @media (min-width: 1200px) {
+    .calc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1680px) {
+    .calc-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 </style>

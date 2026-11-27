@@ -12,6 +12,7 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumb from "~/components/layout/Breadcrumb.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import FaqList from "~/components/ui/FaqList.astro";
+import PageAside from "~/components/layout/PageAside.astro";
 import { CONTACT, TESSERAMENTO } from "~/consts";
 
 const AGG = "27 novembre 2026";
@@ -46,7 +47,7 @@ const faq = [
   <JsonLdFaq slot="head" items={faq} />
 
   <section class="bg-mesh-brand">
-    <div class="container-narrow pt-10 pb-10">
+    <div class="container-narrow pl-head pz-head pt-10 pb-10">
       <Breadcrumb items={[{ name: "Prezzi", href: "/prezzi" }]} class="mb-6" />
       <p class="text-sm font-semibold uppercase tracking-wider text-[var(--color-brand-800)]">Prezzi chiari, detti prima</p>
       <h1 class="mt-2 font-display text-3xl md:text-4xl font-extrabold text-[var(--color-ink)]">Quanto costano le pratiche al CAF e Patronato di Roma Vigne Nuove</h1>
@@ -62,9 +63,10 @@ const faq = [
   </section>
 
   <section class="section-tight">
-    <div class="container-narrow">
+    <div class="container-narrow pl">
+      <div class="pl-main pz-main">
       <h2 class="font-display text-2xl font-bold text-[var(--color-ink)]">Listino delle pratiche più richieste</h2>
-      <ul class="mt-4 space-y-3">
+      <ul class="pz-list mt-4 space-y-3">
         {prezzi.map((p) => (
           <li class="rounded-[20px] bg-[#F7F7FB] p-5">
             <div class="flex flex-wrap items-baseline justify-between gap-2">
@@ -89,6 +91,21 @@ const faq = [
 
       <h2 class="mt-10 font-display text-2xl font-bold text-[var(--color-ink)]">Domande frequenti sui prezzi</h2>
       <div class="mt-4"><FaqList items={faq} /></div>
+      </div>
+      <PageAside />
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* Schermi larghi (27/11/2026): da 1024 px il listino va su due colonne; da 1200 px a destra la colonna
+     laterale (PageAside: Prenota, telefono, WhatsApp, calcolatori). I paragrafi restano a una larghezza comoda. */
+  @media (min-width: 1024px) {
+    .pz-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .pz-list > li { margin: 0; }
+  }
+  @media (min-width: 1200px) {
+    .pz-head > :not(nav) { max-width: 52rem; }
+    .pz-main > p { max-width: 46rem; }
+  }
+</style>
