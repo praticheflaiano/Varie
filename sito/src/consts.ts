@@ -145,29 +145,34 @@ export const TESSERAMENTO = {
   currency: "EUR",
 } as const;
 
-/** Le 6 pagine servizio-funnel (collegate a calendari e form GHL). */
+/**
+ * Le pagine servizio-funnel (collegate a calendari e form GHL).
+ * `area` (27/11/2026) divide le colonne del piè di pagina, come le pagine /servizi/caf, /servizi/patronato
+ * e /servizi/servizi-vari: "caf", "patronato" o "vari" (pratiche generali: bollette, cartelle, SEND).
+ * Dimissioni online: patronato (nell'elenco degli intermediari del Ministero ci sono i patronati, non i CAF).
+ */
 export const LANDING = [
-  { label: "ISEE", href: "/isee", tag: "0 €" },
-  { label: "Modello 730", href: "/730", tag: "da 30 €" },
-  { label: "Invalidità e 104", href: "/invalidita-104", tag: "1° incontro gratis" },
-  { label: "NASpI", href: "/naspi", tag: "Domanda gratis" },
-  { label: "SIISL dopo la NASpI", href: "/siisl", tag: "" },
-  { label: "Assegno Unico", href: "/assegno-unico", tag: "da 10 €" },
-  { label: "Successioni", href: "/successioni", tag: "" },
-  { label: "Pensioni", href: "/pensioni", tag: "" },
-  { label: "ADI e SFL", href: "/adi-sfl", tag: "" },
-  { label: "Dimissioni online", href: "/dimissioni-online", tag: "" },
-  { label: "Colf e badanti", href: "/colf-badanti", tag: "" },
-  { label: "Contratti d'affitto", href: "/contratti-affitto", tag: "" },
-  { label: "IMU e TARI", href: "/imu-tari", tag: "" },
-  { label: "Bonus famiglia", href: "/bonus-famiglia", tag: "" },
-  { label: "RED e INVCIV", href: "/red-invciv", tag: "" },
-  { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "" },
-  { label: "Raccomandate SEND", href: "/raccomandata-send", tag: "" },
-  { label: "Luce e gas", href: "/luce-gas", tag: "" },
-  { label: "Disability Card", href: "/disability-card", tag: "" },
-  { label: "Contrassegno CUDE", href: "/cude", tag: "" },
-  { label: "Caregiver familiare", href: "/caregiver", tag: "" },
+  { label: "ISEE", href: "/isee", tag: "0 €", area: "caf" },
+  { label: "Modello 730", href: "/730", tag: "da 30 €", area: "caf" },
+  { label: "Invalidità e 104", href: "/invalidita-104", tag: "1° incontro gratis", area: "patronato" },
+  { label: "NASpI", href: "/naspi", tag: "Domanda gratis", area: "patronato" },
+  { label: "SIISL dopo la NASpI", href: "/siisl", tag: "", area: "patronato" },
+  { label: "Assegno Unico", href: "/assegno-unico", tag: "da 10 €", area: "patronato" },
+  { label: "Successioni", href: "/successioni", tag: "", area: "caf" },
+  { label: "Pensioni", href: "/pensioni", tag: "", area: "patronato" },
+  { label: "ADI e SFL", href: "/adi-sfl", tag: "", area: "patronato" },
+  { label: "Dimissioni online", href: "/dimissioni-online", tag: "", area: "patronato" },
+  { label: "Colf e badanti", href: "/colf-badanti", tag: "", area: "patronato" },
+  { label: "Contratti d'affitto", href: "/contratti-affitto", tag: "", area: "caf" },
+  { label: "IMU e TARI", href: "/imu-tari", tag: "", area: "caf" },
+  { label: "Bonus famiglia", href: "/bonus-famiglia", tag: "", area: "patronato" },
+  { label: "RED e INVCIV", href: "/red-invciv", tag: "", area: "patronato" },
+  { label: "Cartelle e rate", href: "/cartelle-rateizzazione", tag: "", area: "vari" },
+  { label: "Raccomandate SEND", href: "/raccomandata-send", tag: "", area: "vari" },
+  { label: "Luce e gas", href: "/luce-gas", tag: "", area: "vari" },
+  { label: "Disability Card", href: "/disability-card", tag: "", area: "patronato" },
+  { label: "Contrassegno CUDE", href: "/cude", tag: "", area: "patronato" },
+  { label: "Caregiver familiare", href: "/caregiver", tag: "", area: "patronato" },
 ] as const;
 
 /** Richiesta online (form GHL) e calendario generale GHL sul dominio principale. */
@@ -194,6 +199,7 @@ export const NAV = [
       { label: "Dimissioni online", href: "/dimissioni-online" },
       { label: "Colf e badanti", href: "/colf-badanti" },
       { label: "Contratti d'affitto", href: "/contratti-affitto" },
+      { label: "Calcolatori gratuiti", href: "/calcolatori" },
       { label: "Tutti i servizi CAF", href: "/servizi/caf" },
       { label: "Tutti i servizi Patronato", href: "/servizi/patronato" },
       { label: "Servizi vari", href: "/servizi/servizi-vari" },

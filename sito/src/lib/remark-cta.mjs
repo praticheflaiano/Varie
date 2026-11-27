@@ -21,8 +21,13 @@ const ICON_PDF = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" st
 const ICON_CAL = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M9 15l2 2 4-4"/></svg>';
 const ARROW = '<svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+// Sotto il primo pulsante-calcolatore di ogni articolo (27/11/2026): riga piccola verso l'elenco completo.
+// Solo per i calcolatori (non per PDF e prenotazioni), una volta per articolo.
+const TUTTI_CALC = '<p class="cta-tool-all" style="margin:-1.1em 0 1.75em;font-size:15px;line-height:1.4"><a href="/calcolatori" style="display:inline-block;padding:4px 0;text-decoration:underline;text-underline-offset:3px;font-weight:700">Vedi tutti i calcolatori gratuiti</a></p>';
+
 export default function remarkCta() {
   return (tree) => {
+    let tuttiMesso = false;
     const walk = (node) => {
       if (!node.children) return;
       node.children = node.children.map((c) => {
@@ -40,9 +45,11 @@ export default function remarkCta() {
             sub = sub.charAt(0).toUpperCase() + sub.slice(1);
             const label = title.charAt(0).toUpperCase() + title.slice(1);
             const attrs = isPdf ? ' download target="_blank" rel="noopener"' : "";
+            const tutti = !isBook && !isPdf && !tuttiMesso;
+            if (tutti) tuttiMesso = true;
             return {
               type: "html",
-              value: `<p class="cta-tool-wrap"><a class="cta-tool" href="${esc(l.url)}"${attrs}><span class="cta-tool-ico">${isBook ? ICON_CAL : isPdf ? ICON_PDF : ICON_CALC}</span><span class="cta-tool-txt"><span class="cta-tool-t">${esc(isPdf || isBook ? label : "Apri il " + title)}</span><span class="cta-tool-s">${esc(sub)}</span></span>${ARROW}</a></p>`,
+              value: `<p class="cta-tool-wrap"><a class="cta-tool" href="${esc(l.url)}"${attrs}><span class="cta-tool-ico">${isBook ? ICON_CAL : isPdf ? ICON_PDF : ICON_CALC}</span><span class="cta-tool-txt"><span class="cta-tool-t">${esc(isPdf || isBook ? label : "Apri il " + title)}</span><span class="cta-tool-s">${esc(sub)}</span></span>${ARROW}</a></p>${tutti ? TUTTI_CALC : ""}`,
             };
           }
         }

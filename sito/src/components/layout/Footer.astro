@@ -6,11 +6,61 @@ import Logo from "~/components/illustrations/Logo.astro";
 const year = new Date().getFullYear();
 const fmt = (h: (typeof HOURS)[number]) =>
   `${h.open}–${h.close}${h.afternoon ? ` e ${h.afternoon.open}–${h.afternoon.close}` : ""}`;
+
+/**
+ * Colonne di link (27/11/2026). Su computer stanno affiancate; su telefono diventano riquadri apribili
+ * (<details>, chiusi). Le due versioni sono nello stesso HTML e una delle due è nascosta con display:none,
+ * così non serve JavaScript. I singoli calcolatori non stanno qui: sono tutti in /calcolatori.
+ * aria-label "X: il servizio" / "X: articoli del blog": lo stesso testo porta a pagine diverse.
+ */
+type FLink = { label: string; href: string; aria?: string; evid?: boolean };
+const servizio = (l: { label: string; href: string }): FLink => ({ label: l.label, href: l.href, aria: `${l.label}: il servizio` });
+const colonne: { id: string; titolo: string; links: FLink[] }[] = [
+  {
+    id: "caf",
+    titolo: "CAF e servizi vari",
+    links: [
+      ...LANDING.filter((l) => l.area === "caf").map(servizio),
+      ...LANDING.filter((l) => l.area === "vari").map(servizio),
+      { label: "Servizi vari", href: "/servizi/servizi-vari" },
+      { label: "Tutti i servizi CAF", href: "/servizi/caf" },
+    ],
+  },
+  {
+    id: "patronato",
+    titolo: "Patronato",
+    links: [...LANDING.filter((l) => l.area === "patronato").map(servizio), { label: "Tutti i servizi Patronato", href: "/servizi/patronato" }],
+  },
+  {
+    id: "strumenti",
+    titolo: "Strumenti e info",
+    links: [
+      { label: "Cosa ti è successo?", href: "/situazioni" },
+      { label: "Calcolatori gratuiti", href: "/calcolatori", evid: true },
+      { label: "Quale ISEE ti serve", href: "/quale-isee" },
+      { label: "Scopri cosa ti spetta", href: "/quale-isee?modo=bonus" },
+      { label: "Pagamenti INPS: le date", href: "/pagamenti-inps" },
+      { label: "Le prossime scadenze", href: "/scadenze" },
+      { label: "Cosa portare", href: "/cosa-portare" },
+      { label: "Prezzi", href: "/prezzi" },
+      { label: "Tessera", href: "/tesseramento" },
+      { label: "Tutti i servizi", href: "/servizi" },
+    ],
+  },
+  {
+    id: "blog",
+    titolo: "Dal blog",
+    links: [
+      ...CATEGORY_LIST.slice(0, 7).map((c) => ({ label: c.label, href: `/blog/categoria/${c.slug}`, aria: `${c.label}: articoli del blog` })),
+      { label: "Tutti gli articoli →", href: "/blog", evid: true },
+    ],
+  },
+];
 ---
 <footer id="contatti" class="site-footer" style="background:#14142B;color:#D7D7E6;padding-block:72px 32px">
   <div class="wrap">
-    <div class="grid gap-10 lg:grid-cols-12">
-      <div class="lg:col-span-4 flex flex-col gap-5">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
+      <div class="lg:col-span-7 flex flex-col gap-5">
         <a href="/" class="no-underline" aria-label="Home"><Logo dark /></a>
         <p style="font-family:var(--font-display);font-weight:800;font-size:32px;line-height:1.05;color:#fff">
           Passa a trovarci.<br /><span style="color:#D4FF4F">O chiamaci.</span>
@@ -27,42 +77,7 @@ const fmt = (h: (typeof HOURS)[number]) =>
         </div>
       </div>
 
-      <div class="lg:col-span-2">
-        <h2 class="footer-title">Servizi</h2>
-        <ul class="space-y-2 text-sm">
-          {LANDING.map((l) => <li><a href={l.href} aria-label={`${l.label}: il servizio`}>{l.label}</a></li>)}
-          <li><a href="/servizi">Tutti i servizi</a></li>
-          <li><a href="/situazioni">Cosa ti è successo?</a></li>
-          <li><a href="/calcolatori">Calcolatori gratuiti</a></li>
-          <li><a href="/tesseramento">Tessera</a></li>
-          <li><a href="/pagamenti-inps">Pagamenti INPS: le date</a></li>
-          <li><a href="/scadenze">Le prossime scadenze</a></li>
-          <li><a href="/quale-isee">Quale ISEE ti serve</a></li>
-          <li><a href="/quale-isee?modo=bonus">Scopri cosa ti spetta</a></li>
-          <li><a href="/cosa-portare">Cosa portare</a></li>
-          <li><a href="/prezzi">Prezzi</a></li>
-          <li><a href="/calcolo-imposte-successione">Calcolo tasse di successione</a></li>
-          <li><a href="/calcolo-bollo-auto">Calcolo bollo auto</a></li>
-          <li><a href="/calcolo-assegno-unico">Calcolo Assegno Unico</a></li>
-          <li><a href="/calcolo-congedo-parentale">Calcolo congedo parentale</a></li>
-          <li><a href="/calcolo-maternita-congedi">Calcolo maternità e congedi</a></li>
-          <li><a href="/calcolo-costo-colf-badante">Calcolo costo colf e badante</a></li>
-          <li><a href="/calcolo-tfr-colf-badanti">Calcolo TFR colf e badanti</a></li>
-          <li><a href="/calcolo-naspi">Calcolo NASpI</a></li>
-          <li><a href="/anticipo-naspi">Anticipo NASpI</a></li>
-          <li><a href="/naspi/fondo-garanzia-tfr">Fondo di garanzia TFR</a></li>
-        </ul>
-      </div>
-
-      <div class="lg:col-span-3">
-        <h2 class="footer-title">Dal blog</h2>
-        <ul class="space-y-2 text-sm">
-          {CATEGORY_LIST.slice(0, 7).map((c) => <li><a href={`/blog/categoria/${c.slug}`} aria-label={`${c.label}: articoli del blog`}>{c.label}</a></li>)}
-          <li><a href="/blog" style="color:#D4FF4F;font-weight:700">Tutti gli articoli →</a></li>
-        </ul>
-      </div>
-
-      <div class="lg:col-span-3">
+      <div class="lg:col-span-5">
         <h2 class="footer-title">Dove e quando</h2>
         <address class="not-italic text-sm space-y-3">
           <p>
@@ -82,6 +97,33 @@ const fmt = (h: (typeof HOURS)[number]) =>
         </address>
         <a href="/prenota" class="btn btn-lime btn-sm mt-5" style="box-shadow:none;color:#14142B">Vai alle prenotazioni</a>
       </div>
+    </div>
+
+    <!-- Computer e tablet: colonne affiancate -->
+    <div class="f-cols">
+      {colonne.map((c) => (
+        <div>
+          <h2 class="footer-title">{c.titolo}</h2>
+          <ul class="f-list">
+            {c.links.map((l) => <li><a href={l.href} aria-label={l.aria} class:list={[{ "f-evid": l.evid }]}>{l.label}</a></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <!-- Telefono: riquadri apribili, chiusi -->
+    <div class="f-acc">
+      {colonne.map((c) => (
+        <details class="f-det">
+          <summary class="f-sum">
+            <h2 class="footer-title">{c.titolo}</h2>
+            <svg class="f-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+          </summary>
+          <ul class="f-list">
+            {c.links.map((l) => <li><a href={l.href} aria-label={l.aria} class:list={[{ "f-evid": l.evid }]}>{l.label}</a></li>)}
+          </ul>
+        </details>
+      ))}
     </div>
 
     <hr class="my-10" style="border:0;border-top:1px solid #33334D" />
@@ -104,3 +146,96 @@ const fmt = (h: (typeof HOURS)[number]) =>
     </p>
   </div>
 </footer>
+
+<style>
+  .f-cols {
+    display: none;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid #33334d;
+    gap: 40px 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .f-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .f-list li + li {
+    margin-top: 4px;
+  }
+  .f-list a {
+    display: inline-block;
+    padding: 4px 0;
+  }
+  .site-footer .f-list a.f-evid {
+    color: #d4ff4f;
+    font-weight: 700;
+  }
+  .f-acc {
+    margin-top: 40px;
+    border-top: 1px solid #33334d;
+  }
+  .f-det {
+    border-bottom: 1px solid #33334d;
+  }
+  .f-sum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    cursor: pointer;
+    list-style: none;
+    color: #fff;
+  }
+  .f-sum::-webkit-details-marker {
+    display: none;
+  }
+  .site-footer .f-sum .footer-title {
+    margin: 0;
+    font-size: 14px;
+  }
+  .f-sum:focus-visible {
+    outline: 3px solid #d4ff4f;
+    outline-offset: 2px;
+  }
+  .f-chev {
+    flex: none;
+    color: #d4ff4f;
+    transition: transform 0.15s;
+  }
+  .f-det[open] .f-chev {
+    transform: rotate(180deg);
+  }
+  .f-det .f-list {
+    padding-bottom: 16px;
+    font-size: 16px;
+  }
+  .f-det .f-list a {
+    padding: 8px 0;
+  }
+  .f-det .f-list li + li {
+    margin-top: 0;
+  }
+  @media (min-width: 768px) {
+    .f-cols {
+      display: grid;
+    }
+    .f-acc {
+      display: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    .f-cols {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .f-chev {
+      transition: none;
+    }
+  }
+</style>
