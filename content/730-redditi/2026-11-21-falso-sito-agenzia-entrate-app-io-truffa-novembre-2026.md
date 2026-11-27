@@ -3,7 +3,7 @@ title: "Falso sito dell'Agenzia delle Entrate e falso aggiornamento dell'app IO:
 seo_title: "Falso sito Agenzia Entrate e app IO: truffa 2026"
 slug: "falso-sito-agenzia-entrate-app-io-truffa-novembre-2026"
 date: 2026-11-21
-last_updated: 2026-11-21
+last_updated: 2026-11-27
 category: "730-redditi"
 tags: ["agenzia-entrate", "truffe", "phishing", "app-io", "pensionati", "roma", "novita"]
 meta_description: "Un falso sito dell'Agenzia delle Entrate fa installare un'app che ruba dati bancari e codici OTP su Android. Come riconoscerlo e cosa fare: guida da Roma."
@@ -11,6 +11,7 @@ author: "Redazione Centro Pratiche Flaiano"
 sources:
   - "Agenzia delle Entrate, comunicato stampa del 19 novembre 2026 \"Nuova campagna di phishing per rubare i dati degli utenti. Online un falso sito dell'Agenzia delle entrate: ecco come difendersi\" - https://www.agenziaentrate.gov.it/portale/-/nuova-campagna-di-phishing-per-rubare-i-dati-degli-utenti.-online-un-falso-sito-dell-agenzia-delle-entrate-ecco-come-difendersi"
   - "Agenzia delle Entrate, Focus sul phishing, Avviso del 19 novembre 2026 \"Nuova campagna di phishing tramite falso sito dell'Agenzia\" - https://www.agenziaentrate.gov.it/portale/avviso-del-19-novembre-2026-nuova-campagna-di-phishing-tramite-falso-sito-dell-agenzia"
+  - "Agenzia delle Entrate, Focus sul phishing, Avviso del 26 novembre 2026 \"Nuova campagna di phishing su false richieste di rimborso\" - https://www.agenziaentrate.gov.it/portale/avviso-del-26-novembre-2026"
   - "Agenzia delle Entrate, Focus sul phishing, Avviso del 2 novembre 2026 (false notifiche a nome dell'Agenzia delle Entrate-Riscossione) e Avviso del 23 ottobre 2026 (false richieste di pagamento sulla dichiarazione dei redditi)"
   - "Agenzia delle Entrate, Focus sul phishing: \"Come difendersi\" e \"Domini estranei all'Agenzia delle Entrate\" - https://www.agenziaentrate.gov.it/portale/web/guest/focus-sul-phishing"
 status: published
@@ -21,7 +22,7 @@ image_alt: "Falso sito Agenzia delle Entrate e falso aggiornamento app IO: come 
 
 # Falso sito dell'Agenzia delle Entrate e falso aggiornamento dell'app IO: la truffa di novembre 2026
 
-**Ultimo aggiornamento: 21 novembre 2026**
+**Ultimo aggiornamento: 27 novembre 2026** (aggiunto l'avviso del 26 novembre 2026 sul falso rimborso IRPEF)
 
 Con il **comunicato stampa del 19 novembre 2026** l'Agenzia delle Entrate ha segnalato un **sito falso** che copia l'aspetto del suo portale. Il sito invita a installare sul telefono un'applicazione presentata come "ufficiale": in realtà avvia una truffa che porta a installare un secondo programma, capace di intercettare **credenziali della banca, SMS e codici di sicurezza usa e getta (OTP)**. L'Agenzia si dichiara totalmente estranea e ricorda che l'unico indirizzo ufficiale è **www.agenziaentrate.gov.it**.
 
@@ -36,7 +37,8 @@ Qui ti spieghiamo in parole semplici come funziona questa truffa, come riconosce
 | **Il trucco** | appena avviata, l'app mostra un finto **"aggiornamento dell'app IO"** che installa una seconda app, quella che ruba i dati |
 | **Cosa può intercettare** | credenziali bancarie, SMS e codici OTP |
 | **Come difendersi** | non interagire con siti sospetti, installare app **solo dagli store ufficiali**, controllare sempre l'indirizzo: quello vero è **www.agenziaentrate.gov.it** |
-| **Fonte** | comunicato stampa e avviso dell'Agenzia delle Entrate del 19/11/2026 |
+| **Nuova truffa del 26/11** | email, SMS o messaggi su un finto **rimborso IRPEF** che alla fine chiedono **numero della carta, scadenza e CVV**: l'Agenzia si dichiara totalmente estranea |
+| **Fonte** | comunicato stampa e avviso dell'Agenzia delle Entrate del 19/11/2026; avviso del 26/11/2026 |
 
 ## Come funziona la truffa del falso sito dell'Agenzia delle Entrate?
 
@@ -69,6 +71,21 @@ Le indicazioni dell'Agenzia delle Entrate (pagine "Come difendersi" e "Domini es
 - **Controlla gli allegati**: devono avere una sola estensione (per esempio ".docx" e non ".docx.exe").
 - **Leggi bene il messaggio**: mittente sconosciuto, italiano scorretto, testo "copiato e incollato" o che non ha senso sono segnali di pericolo. Anche uno solo basta per considerarlo sospetto.
 - **Ricorda**: l'Agenzia delle Entrate **non invia mai per posta elettronica comunicazioni che contengono dati personali** dei contribuenti.
+
+## Il finto rimborso IRPEF che chiede i dati della carta (avviso del 26 novembre 2026)
+
+**Se un messaggio ti promette un rimborso IRPEF e alla fine ti chiede i dati della carta, è la truffa segnalata dall'Agenzia delle Entrate il 26 novembre 2026: non inserire nulla.** Con l'[avviso del **26 novembre 2026**](https://www.agenziaentrate.gov.it/portale/avviso-del-26-novembre-2026) l'Agenzia ha segnalato una nuova campagna che arriva per **email, SMS o altri messaggi** con un link a pagine false, su indirizzi che non appartengono al dominio "agenziaentrate.gov.it".
+
+Come funziona, secondo l'avviso:
+
+1. la pagina ti chiede di **inserire il codice fiscale** per verificare se hai un rimborso IRPEF;
+2. poi ti mostra un **rimborso "in attesa di accredito"** con dati che sembrano veri: numero di protocollo, anno d'imposta, tipo di rimborso e importo;
+3. per "completare la procedura" ti chiede di **confermare o aggiornare le coordinate per l'accredito**;
+4. alla fine chiede **nome dell'intestatario della carta, numero della carta, data di scadenza, codice di sicurezza (CVV) e numero di cellulare**.
+
+L'obiettivo, spiega l'Agenzia, è usare quei dati per **frodi e usi non autorizzati della carta**. Le sue raccomandazioni: controllare sempre l'indirizzo nella barra del browser prima di scrivere qualsiasi dato, entrare nei servizi dell'Agenzia **solo dai canali ufficiali**, **diffidare dei messaggi che mettono fretta o minacciano di farti perdere il rimborso**, segnalare subito email, SMS o siti sospetti. L'Agenzia invita a **non interagire in alcun modo** con questi messaggi e a non dare informazioni personali; si dichiara totalmente estranea a queste comunicazioni.
+
+Un consiglio nostro: con il 730 il rimborso arriva di norma in busta paga o nella rata di pensione, pagato dal datore di lavoro o dall'INPS. Se non c'è un sostituto d'imposta, lo paga direttamente l'Agenzia delle Entrate, con accredito sul conto se le hai comunicato l'IBAN. In nessuno di questi casi devi dare numero della carta, scadenza o CVV. Lo stato dei tuoi rimborsi lo puoi controllare nella tua area riservata su www.agenziaentrate.gov.it, entrando tu dal sito.
 
 ## Quali altre truffe a nome dell'Agenzia sono girate in queste settimane?
 
@@ -129,17 +146,22 @@ No. Nella pagina "Come difendersi" l'Agenzia precisa che non invia mai per posta
 
 Fai attenzione: il 23 ottobre 2026 l'Agenzia ha segnalato false email che chiedevano 732,00 euro per una presunta "discrepanza" nella dichiarazione dei redditi. Non cliccare e verifica nella tua area riservata o rivolgiti a un CAF.
 
+### Mi è arrivato un messaggio su un rimborso IRPEF che chiede la carta: è vero?
+
+**No**: è la truffa segnalata dall'Agenzia delle Entrate il **26 novembre 2026**, con false pagine su presunti rimborsi IRPEF che chiedono codice fiscale, numero della carta, scadenza e CVV. Non inserire nulla e controlla i rimborsi nella tua area riservata.
+
 ### Come verifico se un sito o un messaggio è autentico?
 
 Consulta la pagina "Focus sul phishing" su www.agenziaentrate.gov.it, usa i contatti ufficiali del portale oppure rivolgiti all'ufficio territoriale dell'Agenzia.
 
 ## Articoli correlati
 
+- [Falsa app INPS Mobile via SMS: la truffa segnalata dall'INPS e come difendersi](https://praticheflaiano.it/blog/falsa-app-inps-mobile-sms-truffa-come-difendersi)
 - [Indebiti INPS dal 2027 con SEND: le lettere di restituzione arrivano in digitale](https://praticheflaiano.it/blog/indebiti-inps-send-notifica-digitale-2027-messaggio-3801)
 - [Raccomandata SEND: cos'è e come ritirarla](/raccomandata-send)
 
 ---
 
-*Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o informatica professionale. Si invita a verificare sempre l'attualità delle informazioni presso le fonti ufficiali (agenziaentrate.gov.it). Per una valutazione personalizzata della propria situazione, prenota un appuntamento presso il nostro Centro.*
+*Le informazioni contenute in questo articolo hanno carattere puramente informativo e non costituiscono consulenza fiscale, legale o previdenziale professionale. Le normative, gli importi e le scadenze citati sono soggetti a modifiche da parte del legislatore; si invita a verificare sempre l'attualità delle informazioni presso le fonti ufficiali (agenziaentrate.gov.it, inps.it, gazzettaufficiale.it). Per una valutazione personalizzata della propria situazione, si consiglia di prenotare un appuntamento presso il nostro Centro.*
 
-*Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC - Via Filoteo Alberini 25 int. 10, 00139 Roma - Tel. 06 9784 5429 - WhatsApp 371 623 0690*
+*Centro Pratiche Flaiano - CAF UNSIC | Patronato ENASC - Via Filoteo Alberini 25 int 10, 00139 Roma - Tel: 0697845429 | WhatsApp: 3716230690 | info@praticheflaiano.it - Prenotazioni online: https://link.arcanis.it/widget/group/bklXY9sZUszt8V2GpkU1*
