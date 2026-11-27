@@ -1,5 +1,7 @@
 ---
 import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
+import PageAside from "~/components/layout/PageAside.astro";
+import "~/styles/calcolatori-larghi.css";
 /**
  * Calcolo congedo parentale. Regole e numeri SOLO da fonti ufficiali (verificate il 24/11/2026):
  * - INPS, scheda "Indennità di congedo parentale per lavoratrici e lavoratori dipendenti" (agg. 16/06/2026):
@@ -31,13 +33,17 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
   <script slot="head" type="application/ld+json" set:html={appLd} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <section style="background:#F1EEFF">
-    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+  <!-- Da 1200 px: titolo largo, strumento, testo e colonna laterale (calcolatori-larghi.css) -->
+  <div class="cl">
+  <section class="cl-hero" style="background:#F1EEFF">
+    <div class="cl-hero-in" style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <div class="ps-head cl-head">
       <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · regole INPS 2026</span>
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Congedo parentale: quanti mesi e quanti soldi?</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Rispondi a poche domande: ti diciamo <b>quanti mesi ti restano</b>, quanti sono pagati all'<b>80%</b> e quanti al <b>30%</b>, <b>fino a quando</b> puoi usarli e <b>quanto prendi</b>.</p>
+      </div>
 
-      <form id="cp" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
+      <form id="cp" class="ps-tool" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
         <fieldset class="cp-f"><legend>1. Che lavoro fai?</legend>
           <label class="cp-o cp-card"><input type="radio" name="cat" value="dip" checked> <span><b>Dipendente</b><br><small>Hai una busta paga, nel privato o nel pubblico</small></span></label>
           <label class="cp-o cp-card"><input type="radio" name="cat" value="gs"> <span><b>Gestione separata</b><br><small>Collaboratore o professionista senza una cassa</small></span></label>
@@ -89,7 +95,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     </div>
   </section>
 
-  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+  <section class="ps-main" style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
     <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 24 novembre 2026.</b> Regole in vigore nel 2026 (schede e messaggi INPS).</p>
 
     <a href="/blog/congedo-parentale-guida-mesi-80-per-cento-domanda" class="cta-tool"><span class="cta-tool-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14142B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16l-8-4-8 4z"/></svg></span><span class="cta-tool-txt"><span class="cta-tool-t">Leggi la guida completa al congedo parentale</span><span class="cta-tool-s">Tutte le regole spiegate semplici, con esempi</span></span><svg class="cta-tool-go" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -243,5 +249,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     };
   })();
   </script>
-  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-congedo-parentale" /></div></section>
+  <section class="wrap cl-altri" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-congedo-parentale" /></div></section>
+  <PageAside />
+  </div>
 </BaseLayout>

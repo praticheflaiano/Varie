@@ -1,5 +1,7 @@
 ---
 import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
+import PageAside from "~/components/layout/PageAside.astro";
+import "~/styles/calcolatori-larghi.css";
 /**
  * Calcolo Assegno Unico 2026.
  * Fonte unica dei valori: INPS, Circolare n. 7 del 30/01/2026 e Allegato n. 1 (tabella mensile 2026 per fascia ISEE),
@@ -30,13 +32,17 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
   <script slot="head" type="application/ld+json" set:html={appLd} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <section style="background:#F1EEFF">
-    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+  <!-- Da 1200 px: titolo largo, strumento, testo e colonna laterale (calcolatori-larghi.css) -->
+  <div class="cl">
+  <section class="cl-hero" style="background:#F1EEFF">
+    <div class="cl-hero-in" style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <div class="ps-head cl-head">
       <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · tabella INPS 2026</span>
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Assegno Unico: quanto ti spetta?</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Inserisci il tuo <b>ISEE</b> e i tuoi <b>figli</b>: il calcolatore usa la <b>tabella ufficiale INPS 2026</b> (circolare n. 7 del 30 gennaio 2026) con tutte le maggiorazioni.</p>
+      </div>
 
-      <form id="au" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
+      <form id="au" class="ps-tool" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
         <label class="au-l">1. ISEE (in euro)
           <input id="au-isee" type="number" min="0" step="0.01" inputmode="decimal" placeholder="es. 15000" class="au-in" style="max-width:220px">
           <span class="au-o" style="margin-top:4px"><input type="checkbox" id="au-noisee"> Non ho l'ISEE</span></label>
@@ -58,7 +64,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     </div>
   </section>
 
-  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+  <section class="ps-main" style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
     <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 23 novembre 2026.</b> Valori 2026 della circolare INPS n. 7 del 30 gennaio 2026, Allegato 1. Le tabelle 2027 usciranno a inizio anno: aggiorneremo il calcolatore.</p>
 
     <h2 style={H2.replace("24px 0 0","0")}>Quanto spetta nel 2026</h2>
@@ -161,5 +167,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     };
   })();
   </script>
-  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-assegno-unico" /></div></section>
+  <section class="wrap cl-altri" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-assegno-unico" /></div></section>
+  <PageAside />
+  </div>
 </BaseLayout>

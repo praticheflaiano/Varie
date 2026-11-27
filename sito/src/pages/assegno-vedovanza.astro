@@ -1,5 +1,7 @@
 ---
 import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
+import PageAside from "~/components/layout/PageAside.astro";
+import "~/styles/calcolatori-larghi.css";
 /**
  * Assegno di vedovanza: ANF su pensione ai superstiti da lavoro dipendente per il vedovo/la vedova inabile.
  * Fonti verificate il 20/11/2026:
@@ -32,13 +34,17 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
   <script slot="head" type="application/ld+json" set:html={appLd} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <section style="background:#F1EEFF">
-    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+  <!-- Da 1200 px: titolo largo, strumento, testo e colonna laterale (calcolatori-larghi.css) -->
+  <div class="cl">
+  <section class="cl-hero" style="background:#F1EEFF">
+    <div class="cl-hero-in" style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <div class="ps-head cl-head">
       <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito</span>
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Assegno di vedovanza: ti spetta?</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Se prendi la <b>pensione di reversibilità</b> e sei <b>invalido al 100%</b> o hai l'<b>accompagnamento</b>, l'INPS può pagarti in più fino a <b>52,91 € al mese</b>, con gli arretrati fino a 5 anni. Molti non lo chiedono perché non lo sanno. Rispondi a 5 domande e scopri se ti spetta.</p>
+      </div>
 
-      <form id="av" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
+      <form id="av" class="ps-tool" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:0 6px 0 #14142B;max-width:780px">
         <fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:800;margin-bottom:8px">1. Prendi una pensione di reversibilità o indiretta?</legend>
           <label class="av-o"><input type="radio" name="q1" value="si"> Sì</label><label class="av-o"><input type="radio" name="q1" value="no"> No</label></fieldset>
         <fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:800;margin-bottom:8px">2. Il coniuge che è mancato era un lavoratore dipendente (pubblico o privato)?</legend>
@@ -57,7 +63,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     </div>
   </section>
 
-  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+  <section class="ps-main" style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
     <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 20 novembre 2026.</b> Importi e soglie dalle tabelle ANF INPS in vigore dal 1° luglio 2026.</p>
 
     <h2 style={H2.replace("24px 0 0","0")}>Cos'è l'assegno di vedovanza</h2>
@@ -131,5 +137,7 @@ const TH = "text-align:left;padding:10px;background:#14142B;color:#fff";
     });
   })();
   </script>
-  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/assegno-vedovanza" /></div></section>
+  <section class="wrap cl-altri" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/assegno-vedovanza" /></div></section>
+  <PageAside />
+  </div>
 </BaseLayout>
