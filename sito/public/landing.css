@@ -2,3 +2,14 @@
 
 /* Accessibilita: i link dentro i testi si riconoscono dalla sottolineatura, non solo dal colore */
 .lp p a:not([class]),.lp li a:not([class]){text-decoration:underline;text-underline-offset:2px}
+
+/* Schermi larghi (27/11/2026): i contenitori delle landing seguono le larghezze a scaglioni del sito
+   (--container-base e --gutter in global.css: 1200 px fino a 1439, 1320 da 1440, 1440 da 1680). */
+.c10,.c13,.c19,.c28,.c32,.c42,.c44,.c46,.c47,.c58{max-width:var(--container-base,1200px);padding-left:var(--gutter,24px);padding-right:var(--gutter,24px)}
+/* avviso scadenza ISEE: stava a tutta larghezza dello schermo, ora resta nel contenitore come il resto della pagina */
+.lp>.c36:has(>#scadenza){max-width:var(--container-base,1200px);margin-inline:auto;padding-inline:var(--gutter,24px)}
+/* griglie di card (c17): con il contenitore più largo 6 card diventavano 5+1 e 8 card 5+3; righe piene invece */
+@media (min-width:1024px){
+.c17:has(>:nth-child(6):last-child),.c17:has(>:nth-child(9):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}
+.c17:has(>:nth-child(8):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}
+}

@@ -20,6 +20,7 @@ import JsonLdArticle from "~/components/seo/JsonLdArticle.astro";
 import JsonLdFaq from "~/components/seo/JsonLdFaq.astro";
 import { SITE } from "~/consts";
 import { Icon } from "astro-icon/components";
+import PageAside from "~/components/layout/PageAside.astro";
 
 interface Props {
   article: Article;
@@ -88,7 +89,10 @@ const showToc = tocItems.length >= 4;
   />
   {faqItems.length >= 2 && <JsonLdFaq slot="head" items={faqItems} />}
 
-  <article class="container-narrow py-10 md:py-16">
+  <!-- Impaginazione (27/11/2026): .ps in global.css. Da 1200 px titolo su tutta la larghezza, testo a sinistra,
+       colonna laterale con indice, Prenota e calcolatori (PageAside). Sotto i 1200 px una colonna come prima. -->
+  <article class="ps py-10 md:py-16">
+    <div class="ps-head">
     <Breadcrumb items={breadcrumbs} class="mb-6" />
 
     {cat && (
@@ -102,11 +106,14 @@ const showToc = tocItems.length >= 4;
       </a>
     )}
 
-    <h1 class="mt-5 font-display text-balance">{article.data.title}</h1>
+    <h1 class="art-title mt-5 font-display text-balance">{article.data.title}</h1>
 
-    <p class="mt-5 text-lg text-[var(--color-ink-soft)] leading-relaxed">
+    <p class="ps-lede mt-5 text-lg text-[var(--color-ink-soft)] leading-relaxed">
       {article.data.meta_description}
     </p>
+    </div>
+
+    <div class="ps-main">
 
     {article.data.image && (
       <figure class="mt-8 -mx-4 sm:mx-0 overflow-hidden rounded-[32px]">
@@ -207,8 +214,13 @@ const showToc = tocItems.length >= 4;
     <WhyFlaiano />
 
     <Disclaimer lastUpdated={formatDateIt(lastUpdated)} />
+    </div>
 
-    <RelatedArticles articles={related} />
+    <PageAside toc={showToc ? tocItems.map((h) => ({ slug: h.slug, text: h.text })) : []} />
+
+    <div class="ps-rel">
+      <RelatedArticles articles={related} />
+    </div>
   </article>
 </BaseLayout>
 
