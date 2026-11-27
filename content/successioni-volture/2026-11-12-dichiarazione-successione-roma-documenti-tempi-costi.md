@@ -257,7 +257,7 @@ Sì, il nostro calcolatore delle imposte di successione è gratuito: lo trovi pi
 Dipende dal tipo. Se la modifica richiede una nuova trascrizione o voltura (codice 1, per esempio cambia un erede, un dato catastale o il valore), si pagano di nuovo tassa ipotecaria e bollo per gli uffici interessati. Se la modifica non riguarda gli immobili (codice 2) o integra solo gli allegati (codice 3), queste somme non sono dovute. La sostitutiva sostituisce per intero la precedente.
 
 **Se ereditiamo solo un conto corrente devo fare la successione?**
-Se gli eredi sono coniuge e figli e l'eredità non supera 100.000 euro senza immobili, no. Basta una dichiarazione scritta alla banca.
+Se gli eredi sono coniuge e figli e l'eredità non supera 100.000 euro senza immobili, no. Basta una dichiarazione scritta alla banca. Tutti i casi nella guida [successione con solo il conto corrente](/blog/successione-solo-conto-corrente-esonero-banca).
 
 **Quanto si paga di successione su una casa lasciata ai figli?**
 L'imposta di successione no, se ogni figlio resta sotto 1 milione di euro. Si pagano ipotecaria e catastale: 2% e 1%, oppure 200 + 200 euro con la prima casa.
