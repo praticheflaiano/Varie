@@ -1,5 +1,7 @@
 ---
 import AltriCalcolatori from "~/components/tools/AltriCalcolatori.astro";
+import PageAside from "~/components/layout/PageAside.astro";
+import "~/styles/calcolatori-larghi.css";
 /**
  * Calcolo maternità e congedi: calendario completo (maternità all'80%, paternità al 100%, congedo parentale all'80% e al 30%).
  * Regole SOLO da fonti ufficiali, verificate il 24/11/2026:
@@ -32,13 +34,17 @@ const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-si
   <script slot="head" type="application/ld+json" set:html={appLd} />
   <script slot="head" type="application/ld+json" set:html={faqLd} />
 
-  <section style="background:#F1EEFF">
-    <div style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+  <!-- Da 1200 px: titolo largo, strumento, testo e colonna laterale (calcolatori-larghi.css) -->
+  <div class="cl">
+  <section class="cl-hero" style="background:#F1EEFF">
+    <div class="cl-hero-in" style="max-width:1120px;margin:0 auto;padding:40px 16px 56px;display:flex;flex-direction:column;gap:18px">
+      <div class="ps-head cl-head">
       <span style="align-self:flex-start;background:#D4FF4F;color:#14142B;font-weight:800;font-size:14px;border-radius:999px;padding:6px 14px">Calcolatore gratuito · regole INPS 2026</span>
       <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,7vw,56px);line-height:1.02;letter-spacing:-1px;color:#14142B">Maternità e congedi: le tue date e quanto prendi</h1>
       <p style="margin:0;font-size:18px;line-height:1.5;color:#34344A;max-width:780px">Scrivi la data del parto: ti prepariamo il <b>calendario completo</b>, dalla maternità (<b>80%</b>) al congedo parentale (<b>80% e 30%</b>), con le date e gli importi.</p>
+      </div>
 
-      <form id="mc" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
+      <form id="mc" class="ps-tool" onsubmit="return false" novalidate style="background:#fff;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:20px;box-shadow:0 6px 0 #14142B;max-width:780px">
         <fieldset class="mc-f"><legend>1. Che lavoro fai?</legend>
           <label class="mc-o mc-card"><input type="radio" name="cat" value="dip" checked> <span><b>Dipendente</b><br><small>Hai una busta paga, nel privato o nel pubblico</small></span></label>
           <label class="mc-o mc-card"><input type="radio" name="cat" value="gs"> <span><b>Gestione separata</b><br><small>Collaboratore o professionista senza una cassa</small></span></label>
@@ -84,7 +90,7 @@ const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-si
     </div>
   </section>
 
-  <section style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
+  <section class="ps-main" style="max-width:860px;margin:0 auto;padding:48px 16px 64px;display:flex;flex-direction:column;gap:14px;font-size:17px;line-height:1.6;color:#2A2A40">
     <p style="margin:0;font-size:14px;color:#5B5B72"><b>Ultimo aggiornamento: 24 novembre 2026.</b> Regole in vigore nel 2026 (schede INPS e Ispettorato del lavoro).</p>
 
     <h2 style={H2.replace("24px 0 0", "0")}>Le tre cose da non confondere</h2>
@@ -267,5 +273,7 @@ const H2 = "margin:24px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-si
     };
   })();
   </script>
-  <section class="wrap" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-maternita-congedi" /></div></section>
+  <section class="wrap cl-altri" style="padding-top:8px;padding-bottom:48px"><div style="max-width:860px;margin:0 auto"><AltriCalcolatori current="/calcolo-maternita-congedi" /></div></section>
+  <PageAside />
+  </div>
 </BaseLayout>

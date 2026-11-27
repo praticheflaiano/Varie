@@ -1,0 +1,86 @@
+/* Calcolatori con impaginazione propria (27/11/2026): /calcolo-assegno-unico, /calcolo-bollo-auto,
+   /calcolo-congedo-parentale, /calcolo-imposte-successione, /calcolo-maternita-congedi, /assegno-vedovanza.
+   Sotto i 1200 px non cambia niente: .cl è un semplice contenitore e i blocchi aggiunti (.cl-head, .cl-wrap-tool)
+   sono "display: contents", quindi la pagina resta com'era (fascia lilla con titolo e calcolatore, poi il testo).
+   Da 1200 px le pagine si comportano come i calcolatori su ToolGuideLayout (.ps--tool in global.css):
+   titolo su tutta la larghezza del contenitore, sotto lo strumento largo (--ps-tool) e il testo a --ps-main,
+   a destra la colonna laterale fissa (PageAside.astro, classe .ps-aside, che prende grid-area "aside").
+   La fascia lilla resta dietro titolo e strumento, da bordo a bordo dello schermo (::before con box-shadow:
+   non crea scorrimento orizzontale).
+   Le pagine hanno stili in linea: per sovrascriverli da 1200 px serve !important.
+   .cl--full: lo strumento prende tutta la larghezza (calcolo successioni: ha già la sua colonna dei risultati). */
+
+.cl-head,
+.cl-wrap-tool { display: contents; }
+
+@media (min-width: 1200px) {
+  .cl {
+    width: 100%;
+    max-width: var(--container-base);
+    margin-inline: auto;
+    padding-inline: max(32px, var(--gutter));
+    display: grid;
+    grid-template-columns: minmax(0, var(--ps-tool)) var(--ps-side);
+    column-gap: var(--ps-gap);
+    justify-content: center;
+    grid-template-areas: "head head" "tool aside" "main aside" "altri aside";
+    isolation: isolate; /* la fascia (::before, z-index -1) resta sotto i contenuti e sopra lo sfondo della pagina */
+  }
+  .cl--full { grid-template-areas: "head head" "tool tool" "main aside" "altri aside"; }
+
+  /* fascia lilla dietro titolo e strumento */
+  .cl::before {
+    content: "";
+    grid-column: 1 / -1;
+    grid-row: head-start / tool-end;
+    background: #f1eeff;
+    box-shadow: 0 0 0 100vmax #f1eeff;
+    clip-path: inset(0 -100vmax);
+    z-index: -1; /* clip-path crea un contesto di sovrapposizione: senza questo la fascia coprirebbe il modulo */
+  }
+
+  /* la sezione lilla e il suo contenitore lasciano i figli alla griglia */
+  .cl > .cl-hero,
+  .cl > .cl-hero > .cl-hero-in { display: contents !important; }
+
+  .cl .ps-head {
+    grid-area: head;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-top: 40px;
+  }
+  .cl .ps-tool {
+    grid-area: tool;
+    min-width: 0;
+    margin: 18px 0 56px;
+  }
+  /* il modulo era largo al massimo 780 px: ora prende tutta la colonna dello strumento */
+  .cl form.ps-tool { max-width: none !important; }
+  .cl .cl-wrap-tool {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .cl .ps-main {
+    grid-area: main;
+    min-width: 0;
+    width: 100%;
+    max-width: var(--ps-main) !important;
+    margin: 0 !important;
+    padding: 48px 0 0 !important;
+    font-size: var(--ps-font) !important;
+  }
+  .cl .cl-altri {
+    grid-area: altri;
+    min-width: 0;
+    max-width: var(--ps-main);
+    margin: 0;
+    padding: 40px 0 64px !important;
+  }
+
+  .cl .ps-aside { margin-top: 18px; }
+  .cl--full .ps-aside { margin-top: 48px; }
+}
