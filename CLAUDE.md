@@ -143,3 +143,8 @@ Regola di Antonio: anche le pagine con un calcolatore seguono l'impaginazione de
 - FAQ fuori dagli articoli: usare `sito/src/components/ui/FaqList.astro` (`<details>`, risposta sempre nell'HTML, niente JavaScript). `Accordion.svelte` non si usa più.
 - Pagina `/prezzi` (`sito/src/pages/prezzi.astro`): solo prezzi già pubblicati e confermati. Se cambia un prezzo in una pagina servizio, cambiarlo anche lì.
 
+## Calcolatore Assegno di inclusione (dal 27/11/2026)
+- Pagina `/calcolo-assegno-inclusione` (ToolGuideLayout), logica in `sito/src/lib/adi.ts` (soglie 2026: ISEE 10.140, reddito 6.500 / 8.190 x scala, accesso affitto 10.140, affitto 3.640 / 1.950, minimo 480; scala ADI con il valore 1 all'adulto con il peso più basso). Fonti e punti interpretativi in testa al file.
+- Ogni gennaio controllare legge di bilancio e messaggio INPS: se cambiano le soglie, aggiornare `ADI` in `adi.ts` e `ADI_AGGIORNATO`.
+- Pulsanti verso il calcolatore: pagina `/adi-sfl`, articoli ADI 2027 e "finita la NASpI".
+

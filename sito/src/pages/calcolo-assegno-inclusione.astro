@@ -1,0 +1,358 @@
+---
+/**
+ * Calcolo dell'importo dell'Assegno di inclusione (ADI) (27/11/2026, richiesta di Antonio).
+ * Regole, soglie 2026 e fonti in src/lib/adi.ts. Esempi della pagina calcolati con la stessa funzione.
+ * Domande SEO: "quanto si prende di ADI", "come si calcola l'ADI", "importo ADI persona sola / famiglia / affitto",
+ * "importo massimo e minimo ADI", "come leggere l'esito INPS". La lettura delle voci dell'esito INPS è un'interpretazione
+ * (l'INPS non pubblica una legenda): resta scritta così nella pagina.
+ */
+import ToolGuideLayout from "~/layouts/ToolGuideLayout.astro";
+import { ADI, ADI_AGGIORNATO, calcolaAdi, eurA } from "~/lib/adi";
+
+const A = (eta: number, disabilita: "no" | "media" | "grave" | "nonauto" = "no") => ({ eta, disabilita });
+const es = {
+  sola: calcolaAdi({ adulti: [A(62)], minori: 0 }, { isee: 0, redditoFamiliare: 0, canoneAnnuo: 0 }),
+  solaAffitto: calcolaAdi({ adulti: [A(62)], minori: 0 }, { isee: 0, redditoFamiliare: 0, canoneAnnuo: 4500 }),
+  famiglia: calcolaAdi({ adulti: [A(30), A(32)], minori: 2, minoreSotto3: true, carichiDiCura: true }, { isee: 7000, redditoFamiliare: 4000, canoneAnnuo: 5400 }),
+  anziano: calcolaAdi({ adulti: [A(68)], minori: 0 }, { isee: 6000, redditoFamiliare: 6000, canoneAnnuo: 3000 }),
+  mamma: calcolaAdi({ adulti: [A(35)], minori: 2 }, { isee: 3000, redditoFamiliare: 2000, canoneAnnuo: 0 }),
+};
+const mese = (n: number) => eurA(n / 12);
+const scalaTxt = (n: number) => String(n).replace(".", ",");
+
+const faqs = [
+  { q: "Quanto si prende di Assegno di inclusione?", a: `Fino a ${eurA(ADI.soglia)} l'anno moltiplicati per la scala di equivalenza del nucleo, meno il reddito familiare, più fino a ${eurA(ADI.affittoMax)} l'anno per l'affitto. Una persona sola senza reddito prende ${mese(ADI.soglia)} al mese, ${mese(es.solaAffitto.annuo)} se paga un affitto di almeno ${eurA(ADI.affittoMax)} l'anno.` },
+  { q: "Come si calcola l'importo dell'ADI?", a: `Si moltiplica ${eurA(ADI.soglia)} (${eurA(ADI.sogliaAnziani)} se in famiglia sono tutti over 67) per la scala di equivalenza, si toglie il reddito familiare e si aggiunge il canone d'affitto fino a ${eurA(ADI.affittoMax)}. Il totale annuo si divide per 12.` },
+  { q: "Qual è l'importo minimo dell'ADI?", a: `${eurA(ADI.minimoAnnuo)} l'anno, cioè 40 € al mese: se il conto dà meno, l'INPS paga comunque il minimo.` },
+  { q: "L'Assegno di inclusione si somma all'Assegno Unico?", a: "Sì. L'Assegno Unico non conta nel reddito familiare dell'ADI e si paga a parte, con la sua domanda." },
+  { q: "La pensione di invalidità o l'accompagnamento abbassano l'ADI?", a: "No. Secondo la scheda INPS i trattamenti ricevuti per la disabilità (pensione di invalidità civile, indennità di accompagnamento, indennità di frequenza) non entrano nel reddito familiare dell'ADI." },
+  { q: "Perché al rinnovo la prima rata è più bassa?", a: "Dal 2026 non c'è più il mese di stop dopo i primi 18 mesi: in cambio la prima mensilità di ogni rinnovo è pagata al 50% (legge di bilancio 2026)." },
+  { q: "Il calcolatore è preciso?", a: "È una stima fatta con le regole e le soglie ufficiali 2026. L'importo esatto lo decide l'INPS con i dati della DSU e della domanda: se il risultato è molto diverso dalla lettera INPS, portacela e la controlliamo." },
+];
+const appLd = JSON.stringify({ "@context": "https://schema.org", "@type": "WebApplication", name: "Calcolo Assegno di inclusione 2026", url: "https://praticheflaiano.it/calcolo-assegno-inclusione", applicationCategory: "FinanceApplication", operatingSystem: "Web", inLanguage: "it-IT", offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" } });
+---
+
+<ToolGuideLayout
+  title="Calcolo Assegno di inclusione 2026: quanto spetta di ADI"
+  description="Calcola quanto ti spetta di ADI: scala di equivalenza, reddito familiare dalla DSU e quota affitto, con le soglie INPS 2026. Calcolatore gratuito del patronato a Roma."
+  path="/calcolo-assegno-inclusione"
+  h1="Calcolo Assegno di inclusione: quanto spetta di ADI e come si calcola"
+  kicker="Calcolatore gratuito · ADI 2026"
+  crumbs={[{ name: "ADI e SFL", href: "/adi-sfl" }, { name: "Calcolo ADI", href: "/calcolo-assegno-inclusione" }]}
+  category="isee-dsu"
+  prenota={{ t: "Prenota: ISEE gratis e domanda ADI", s: "Controlliamo l'importo e la lettera INPS, a Roma Vigne Nuove o in videochiamata" }}
+  updated="2026-11-27"
+  published="2026-11-27"
+  image="/og/calcolo-assegno-inclusione.jpg"
+  imageAlt="Calcolo dell'Assegno di inclusione 2026"
+  related={["assegno-di-inclusione-2027-isee-rinnovo", "finita-naspi-cosa-spetta-adi-sfl", "carta-acquisti-2026-80-euro-differenza-carta-dedicata-a-te"]}
+  sources={[
+    { t: "D.L. 4 maggio 2023, n. 48, artt. 1-3 e 6: dossier della Camera sul testo convertito (scala di equivalenza, reddito familiare, carichi di cura)", url: "https://documenti.camera.it/Leg19/Dossier/Pdf/D23048b.Pdf" },
+    { t: "Legge 30 dicembre 2024, n. 207, art. 1, c. 198: dossier della Camera sulla legge di bilancio 2025 (soglie 10.140, 6.500, 8.190; affitto 3.640 e 1.950)", url: "https://documenti.camera.it/leg19/dossier/pdf/ID0011fvol1.pdf" },
+    { t: "INPS, messaggio n. 148 del 15 gennaio 2025 (nuove soglie ADI)", url: "https://lavoro.gov.it/adi/sites/default/files/2025-01/Messaggio-INPS-148-del-15-01-2025.pdf" },
+    { t: "INPS, Assegno di inclusione e SFL: le novità 2025 (esempi di calcolo con l'affitto)", url: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.02.assegno-di-inclusione-e-supporto-formazione-e-lavoro-le-novit-2025.html" },
+    { t: "INPS, Inps in rete per l'inclusione: ADI e SFL (14 gennaio 2025), formula dell'importo e reddito familiare", url: "https://www.inps.it/content/dam/inps-site/pdf/inpscomunica/documents/W3_ADI_SFL_INPS_in_rete_per_inclusione.pdf" },
+    { t: "INPS, tutorial Invio domanda ADI (esempi di scala di equivalenza)", url: "https://www.inps.it/content/dam/inps-site/pdf/allegati/Template_Tutorial_Invio_domanda_ADI.pdf" },
+    { t: "INPS, scheda Assegno di inclusione (aggiornata al 29 luglio 2026)", url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-di-inclusione-adi.html" },
+    { t: "INPS, Cosa rientra nel reddito familiare", url: "https://www.inps.it/it/it/inps-comunica/dossier/decreto-lavoro--cosa-cambia/assegno-di-inclusione/cosa-rientra-nel-reddito-familiare.html" },
+    { t: "Ministero del Lavoro, ADI: cosa cambia con la legge di bilancio 2026 (12 gennaio 2026)", url: "https://lavoro.gov.it/notizie/pagine/adi-cosa-cambia-con-la-legge-di-bilancio-2026" },
+    { t: "Ministero del Lavoro, il nuovo ISEE per le prestazioni familiari e l'inclusione (19 marzo 2026)", url: "https://lavoro.gov.it/adi/comunicazione/news/nuovo-isee-specifiche-prestazioni-familiari-e-linclusione" },
+  ]}
+  faq={faqs}
+>
+  <script slot="head" type="application/ld+json" set:html={appLd} />
+
+  <blockquote slot="intro">
+    <p><strong>In breve</strong></p>
+    <ul>
+      <li>L'ADI completa il reddito della famiglia fino a <strong>{eurA(ADI.soglia)} l'anno × la scala di equivalenza</strong> ({eurA(ADI.sogliaAnziani)} se sono tutti over 67).</li>
+      <li>Chi è in affitto prende in più il canone, fino a <strong>{eurA(ADI.affittoMax)} l'anno</strong> ({eurA(ADI.affittoMaxAnziani)} per i nuclei di over 67).</li>
+      <li>Serve un <strong>ISEE fino a {eurA(ADI.isee)}</strong>; il minimo è <strong>{eurA(ADI.minimoAnnuo)} l'anno</strong> (40 € al mese).</li>
+      <li>Una persona sola senza reddito prende <strong>{mese(es.sola.annuo)} al mese</strong>, <strong>{mese(es.solaAffitto.annuo)}</strong> se paga l'affitto.</li>
+      <li>L'<strong>Assegno Unico</strong> e i trattamenti per la <strong>disabilità</strong> non abbassano l'ADI.</li>
+    </ul>
+  </blockquote>
+
+  <div slot="tool">
+    <form id="ad" onsubmit="return false" novalidate style="background:#F1EEFF;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:0 6px 0 #14142B">
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-size:28px;line-height:1.1;color:#14142B">Calcola il tuo Assegno di inclusione</h2>
+
+      <fieldset class="cc-f"><legend>1. Gli adulti della famiglia (nucleo ISEE)</legend>
+        <p class="cc-h" style="margin:0">Una riga per ogni maggiorenne, compreso chi fa domanda.</p>
+        <div id="ad-adulti" style="display:flex;flex-direction:column;gap:12px"></div>
+        <button id="ad-add" type="button" class="ad-small">+ Aggiungi un adulto</button>
+      </fieldset>
+
+      <fieldset class="cc-f"><legend>2. I figli minorenni</legend>
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <label class="cc-l" for="ad-min" style="flex:1 1 160px">Quanti minorenni?
+            <input id="ad-min" class="cc-in" type="number" min="0" max="12" step="1" inputmode="numeric" value="0">
+          </label>
+          <label class="cc-l" for="ad-min-dis" style="flex:1 1 240px">Un minorenne ha una disabilità?
+            <select id="ad-min-dis" class="cc-in"><option value="no">No</option><option value="media">Sì, disabilità media</option><option value="grave">Sì, disabilità grave</option><option value="nonauto">Sì, non autosufficiente</option></select>
+          </label>
+        </div>
+        <label class="cc-o"><input id="ad-sotto3" type="checkbox"> C'è un bambino sotto i 3 anni</label>
+      </fieldset>
+
+      <fieldset class="cc-f" id="ad-cura-w"><legend>3. Carichi di cura</legend>
+        <label class="cc-o"><input id="ad-cura" type="checkbox" checked> Un adulto si occupa della cura (di un bambino sotto i 3 anni, di 3 o più figli minorenni o di un familiare con disabilità)</label>
+        <small class="cc-h" id="ad-cura-h">Vale solo se in famiglia c'è un bambino sotto i 3 anni, 3 o più minorenni o una persona con disabilità.</small>
+      </fieldset>
+
+      <fieldset class="cc-f"><legend>4. ISEE e affitto</legend>
+        <div style="display:flex;flex-wrap:wrap;gap:16px">
+          <label class="cc-l" for="ad-isee" style="flex:1 1 200px">Valore ISEE
+            <input id="ad-isee" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 6.500,00" aria-describedby="ad-isee-h">
+            <small id="ad-isee-h" class="cc-h">Dal 2026 è l'ISEE "per le prestazioni familiari e l'inclusione".</small>
+          </label>
+          <label class="cc-l" for="ad-aff" style="flex:1 1 200px">Affitto annuo (contratto registrato)
+            <input id="ad-aff" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="0 se non sei in affitto" aria-describedby="ad-aff-h">
+            <small id="ad-aff-h" class="cc-h">Il canone annuo scritto nella DSU, nella parte "casa di abitazione".</small>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="cc-f"><legend>5. Il reddito familiare</legend>
+        <label class="cc-o"><input type="radio" name="ad-modo" value="dsu" checked> Lo calcolo dai dati della DSU</label>
+        <label class="cc-o"><input type="radio" name="ad-modo" value="noto"> Lo conosco già (per esempio dalla lettera INPS)</label>
+        <div id="ad-noto-w" style="display:none">
+          <label class="cc-l" for="ad-rf">Reddito familiare annuo
+            <input id="ad-rf" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 3.200,00">
+          </label>
+        </div>
+        <div id="ad-dsu-w" style="display:flex;flex-direction:column;gap:14px">
+          <label class="cc-l" for="ad-red">a) Redditi di tutto il nucleo nella DSU
+            <input id="ad-red" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 5.000,00" aria-describedby="ad-red-h">
+            <small id="ad-red-h" class="cc-h">Somma, per ogni componente, delle voci di reddito della DSU: reddito complessivo IRPEF, redditi a imposta sostitutiva, redditi esenti, assegni per i figli, trattamenti non tassati (anche Assegno Unico e invalidità, li togli al punto b). Non usare l'ISR dell'attestazione: contiene deduzioni e una parte del patrimonio.</small>
+          </label>
+          <label class="cc-l" for="ad-tolti">b) Da togliere: aiuti già compresi nei redditi del punto a
+            <input id="ad-tolti" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="es. 2.400,00" aria-describedby="ad-tolti-h">
+            <small id="ad-tolti-h" class="cc-h">Assegno Unico, ADI o Reddito di cittadinanza, pensione di invalidità civile, accompagnamento, indennità di frequenza e gli altri trattamenti assistenziali presenti nella DSU.</small>
+          </label>
+          <label class="cc-l" for="ad-incorso">c) Da aggiungere: aiuti economici che ricevi oggi (importo di un anno)
+            <input id="ad-incorso" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="0 se non ne ricevi" aria-describedby="ad-incorso-h">
+            <small id="ad-incorso-h" class="cc-h">Solo quelli legati al reddito o all'ISEE: assegno sociale, maggiorazioni sociali, Carta Acquisti, assegno di maternità o per il nucleo del Comune, contributi del Comune.</small>
+          </label>
+          <label class="cc-l" for="ad-pens">d) Da aggiungere: pensioni iniziate dopo l'anno dei redditi della DSU (importo di un anno)
+            <input id="ad-pens" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="0 se non ce ne sono">
+          </label>
+        </div>
+      </fieldset>
+
+      <details class="ad-det"><summary>Facoltativo: controlla anche patrimonio e risparmi</summary>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px">
+          <label class="cc-l" for="ad-mob" style="flex:1 1 220px">Patrimonio mobiliare del nucleo
+            <input id="ad-mob" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="conti, libretti, titoli">
+          </label>
+          <label class="cc-l" for="ad-imm" style="flex:1 1 220px">Patrimonio immobiliare, esclusa la casa dove abiti
+            <input id="ad-imm" class="cc-in" type="text" inputmode="decimal" autocomplete="off" placeholder="valore ai fini IMU">
+          </label>
+        </div>
+      </details>
+
+      <button id="ad-b" type="button" style="align-self:flex-start;background:#5B3DF5;color:#fff;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer">Calcola l'ADI</button>
+      <div id="ad-out" aria-live="polite"></div>
+      <p style="margin:0;font-size:14px;color:#3F3F5A">Soglie e regole in vigore nel 2026, controllate il {ADI_AGGIORNATO}. È una stima: l'importo esatto lo calcola l'INPS.</p>
+    </form>
+  </div>
+
+  <h2>Quanto si prende di Assegno di inclusione?</h2>
+  <p><strong>Fino a {eurA(ADI.soglia)} l'anno moltiplicati per la scala di equivalenza, meno il reddito familiare, più l'affitto fino a {eurA(ADI.affittoMax)} l'anno.</strong> Per una persona sola senza reddito sono {mese(ADI.soglia)} al mese, che diventano {mese(es.solaAffitto.annuo)} con l'affitto.</p>
+  <p>L'importo cambia da famiglia a famiglia perché dipende da tre cose: <strong>chi c'è nel nucleo</strong> (la scala di equivalenza), <strong>quanto reddito ha il nucleo</strong> (il reddito familiare) e <strong>se paga un affitto</strong>.</p>
+
+  <h2>Come si calcola l'importo dell'ADI?</h2>
+  <p><strong>(6.500 € × scala − reddito familiare) + affitto, diviso 12.</strong> È la formula dell'INPS; per i nuclei di soli over 67 al posto di 6.500 € si usano 8.190 €.</p>
+  <ol>
+    <li><strong>Scala di equivalenza.</strong> Si parte da 1 e si aggiunge un valore per ogni componente (tabella qui sotto).</li>
+    <li><strong>Soglia.</strong> {eurA(ADI.soglia)} × scala ({eurA(ADI.sogliaAnziani)} × scala se sono tutti over 67, o over 67 con altri familiari tutti con disabilità grave o non autosufficienti).</li>
+    <li><strong>Integrazione del reddito.</strong> Soglia meno reddito familiare. Se il reddito supera la soglia, questa parte è zero.</li>
+    <li><strong>Affitto.</strong> Il canone annuo del contratto registrato, fino a {eurA(ADI.affittoMax)} ({eurA(ADI.affittoMaxAnziani)} per i nuclei di over 67).</li>
+    <li><strong>Totale.</strong> Integrazione + affitto, minimo {eurA(ADI.minimoAnnuo)} l'anno, diviso in 12 mesi.</li>
+  </ol>
+
+  <h2>Scala di equivalenza dell'ADI: quanto vale ogni componente</h2>
+  <p><strong>Si parte da 1 e il massimo è 2,2 (2,3 se in famiglia c'è una persona con disabilità grave o non autosufficiente).</strong> Non è la scala dell'ISEE: è una scala diversa, solo per l'ADI.</p>
+  <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: scala di equivalenza ADI"><table style="display:table">
+    <thead><tr><th>Componente</th><th>Valore</th></tr></thead>
+    <tbody>
+      <tr><td>Primo adulto (va all'adulto con il valore più basso)</td><td>1</td></tr>
+      <tr><td>Ogni altro componente con disabilità o non autosufficiente</td><td>+0,5</td></tr>
+      <tr><td>Ogni altro componente di 60 anni o più</td><td>+0,4</td></tr>
+      <tr><td>Un adulto con carichi di cura (figlio sotto i 3 anni, 3 o più figli minorenni o familiare con disabilità)</td><td>+0,4</td></tr>
+      <tr><td>Ogni altro adulto in grave disagio, inserito in un programma di cura certificato</td><td>+0,3</td></tr>
+      <tr><td>Primo e secondo figlio minorenne</td><td>+0,15 ciascuno</td></tr>
+      <tr><td>Dal terzo figlio minorenne</td><td>+0,10 ciascuno</td></tr>
+      <tr><td>Adulti che non rientrano in queste voci</td><td>0</td></tr>
+    </tbody>
+  </table></div>
+  <p>Esempi dell'INPS: un genitore con due figli vale 1,3; due genitori con due figli, uno sotto i 3 anni, valgono 1,7; due adulti di cui uno di 60 anni o più valgono 1,4.</p>
+
+  <h2>Cos'è il reddito familiare per l'ADI?</h2>
+  <p><strong>È il reddito del nucleo che risulta dalla DSU, senza gli aiuti assistenziali già percepiti, più gli aiuti legati al reddito che ricevi oggi.</strong> Non è il valore ISEE e non è l'ISR dell'attestazione.</p>
+  <ul>
+    <li><strong>Conta:</strong> lavoro, pensioni, redditi tassati e non tassati dei componenti come risultano dalla DSU; assegno sociale, maggiorazioni sociali, Carta Acquisti e contributi del Comune con l'importo che ricevi oggi; pensioni iniziate dopo l'anno dei redditi della DSU.</li>
+    <li><strong>Non conta:</strong> Assegno Unico, la stessa ADI o il vecchio Reddito di cittadinanza, pensione di invalidità civile, indennità di accompagnamento, arretrati, rimborsi di spese e buoni servizio.</li>
+    <li><strong>Lavoro nuovo durante l'ADI:</strong> il reddito in più non conta fino a {eurA(ADI.franchigiaLavoro)} lordi l'anno per tutto il nucleo, ma va comunicato all'INPS.</li>
+  </ul>
+
+  <h2>Quanto spetta di ADI: quattro esempi</h2>
+  <div style="overflow-x:auto" tabindex="0" role="region" aria-label="Tabella: esempi di calcolo ADI"><table style="display:table">
+    <thead><tr><th>Famiglia</th><th>Scala</th><th>Al mese</th></tr></thead>
+    <tbody>
+      <tr><td>Persona sola di 62 anni, reddito familiare zero, affitto 4.500 € l'anno (esempio INPS)</td><td>{scalaTxt(es.solaAffitto.scala)}</td><td style="white-space:nowrap"><strong>{eurA(es.solaAffitto.mensile)}</strong></td></tr>
+      <tr><td>Mamma sola con 2 figli, reddito familiare 2.000 €, casa non in affitto</td><td>{scalaTxt(es.mamma.scala)}</td><td style="white-space:nowrap"><strong>{eurA(es.mamma.mensile)}</strong></td></tr>
+      <tr><td>Due genitori, 2 figli (uno sotto i 3 anni), reddito familiare 4.000 €, affitto 5.400 €</td><td>{scalaTxt(es.famiglia.scala)}</td><td style="white-space:nowrap"><strong>{eurA(es.famiglia.mensile)}</strong></td></tr>
+      <tr><td>Pensionato solo di 68 anni con assegno sociale di 6.000 € l'anno, affitto 3.000 €</td><td>{scalaTxt(es.anziano.scala)}</td><td style="white-space:nowrap"><strong>{eurA(es.anziano.mensile)}</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p>Il primo esempio è dell'INPS; gli altri li abbiamo calcolati con la stessa formula. L'Assegno Unico, dove spetta, si aggiunge a parte.</p>
+
+  <h2>Quanto spetta di ADI a una persona sola?</h2>
+  <p><strong>Al massimo {mese(ADI.soglia)} al mese senza affitto e {mese(es.solaAffitto.annuo)} con l'affitto</strong>, se il reddito familiare è zero. Ogni euro di reddito familiare toglie un euro dall'integrazione annua. Una persona sola può avere l'ADI solo se ha almeno 60 anni, una disabilità o una condizione di svantaggio certificata.</p>
+
+  <h2>Quanto spetta agli over 67?</h2>
+  <p><strong>Se in famiglia sono tutti over 67 la soglia sale a {eurA(ADI.sogliaAnziani)} × scala, cioè {mese(ADI.sogliaAnziani)} al mese per una persona sola senza reddito.</strong> L'aiuto per l'affitto però è più basso: fino a {eurA(ADI.affittoMaxAnziani)} l'anno ({mese(ADI.affittoMaxAnziani)} al mese). Assegno sociale e maggiorazioni contano nel reddito familiare.</p>
+
+  <h2>Qual è l'importo massimo e minimo dell'ADI?</h2>
+  <p><strong>Il minimo è {eurA(ADI.minimoAnnuo)} l'anno (40 € al mese).</strong> Il massimo dipende dalla scala: con la soglia di {eurA(ADI.soglia)}, scala 2,3, reddito familiare zero e affitto pieno si arriva a {eurA(ADI.soglia * 2.3 + ADI.affittoMax)} l'anno, cioè {mese(ADI.soglia * 2.3 + ADI.affittoMax)} al mese.</p>
+
+  <h2>Requisiti economici dell'ADI nel 2026</h2>
+  <ul>
+    <li><strong>ISEE</strong> fino a {eurA(ADI.isee)}.</li>
+    <li><strong>Reddito familiare</strong> sotto {eurA(ADI.soglia)} × scala ({eurA(ADI.sogliaAnziani)} × scala per i nuclei di over 67). Per chi è in affitto la soglia per entrare sale a {eurA(ADI.sogliaAffittoAccesso)}: in quel caso spetta almeno la parte per l'affitto.</li>
+    <li><strong>Patrimonio immobiliare</strong> fino a {eurA(ADI.immobiliare)}, esclusa la casa dove abiti fino a {eurA(ADI.casaEsclusa)} di valore IMU.</li>
+    <li><strong>Patrimonio mobiliare</strong> (conti, libretti, titoli) fino a 6.000 € per una persona sola, +2.000 € per ogni altro componente fino a 10.000 €, +1.000 € per ogni figlio minorenne dopo il secondo, +5.000 € per ogni persona con disabilità e +7.500 € per ogni persona con disabilità grave o non autosufficiente.</li>
+    <li><strong>Niente auto</strong> sopra i 1.600 cc o moto sopra i 250 cc immatricolate negli ultimi 36 mesi (salvo le agevolazioni per disabili), né barche o aerei.</li>
+  </ul>
+
+  <h2>Come leggere la lettera o l'esito INPS dell'ADI</h2>
+  <p><strong>Nel dettaglio della domanda l'INPS mostra i numeri usati per il calcolo: ISEE, reddito, scala e soglia.</strong> L'INPS non pubblica una spiegazione ufficiale di ogni voce: questa è la nostra lettura, coerente con le regole di legge.</p>
+  <ul>
+    <li><strong>ISEE</strong>: il valore usato per il requisito dei {eurA(ADI.isee)}.</li>
+    <li><strong>Valore DSU / reddito DSU</strong>: i redditi del nucleo come risultano dalla DSU, prima delle correzioni.</li>
+    <li><strong>Trattamenti assistenziali</strong>: gli aiuti tolti (perché già nella DSU) o aggiunti (perché li ricevi oggi).</li>
+    <li><strong>Reddito DSU ricalcolato / reddito familiare</strong>: il reddito dopo queste correzioni. È il numero che si confronta con la soglia e che si toglie per calcolare l'importo.</li>
+    <li><strong>Scala di equivalenza</strong>: quella dell'ADI, non quella dell'ISEE.</li>
+    <li><strong>Soglia</strong>: {eurA(ADI.soglia)} (o {eurA(ADI.sogliaAnziani)}) × scala.</li>
+  </ul>
+  <p>Per controllare l'importo inserisci nel calcolatore il reddito familiare della lettera (scelta "Lo conosco già"). Se il risultato non torna, portaci la lettera: la verifichiamo insieme.</p>
+
+  <h2>L'ADI si somma all'Assegno Unico?</h2>
+  <p><strong>Sì: l'Assegno Unico non conta nel reddito familiare dell'ADI e si paga a parte.</strong> Va chiesto con la sua domanda; da noi la domanda di Assegno Unico costa 15 € (10 € con la tessera) e l'ISEE è gratis.</p>
+
+  <h2>Cosa cambia al rinnovo dell'ADI nel 2026?</h2>
+  <p><strong>Dopo i primi 18 mesi non c'è più il mese di stop, ma la prima rata del rinnovo è pagata al 50%.</strong> Il rinnovo dura 12 mesi e si chiede dal mese dopo l'ultimo pagamento. L'ISEE scade il 31 dicembre: va rifatto a gennaio per non perdere i pagamenti.</p>
+
+  <h2>L'ADI te lo controlliamo noi, a Roma</h2>
+  <p>Al Centro Pratiche Flaiano, CAF UNSIC e Patronato ENASC a <strong>Roma Vigne Nuove</strong> (Municipio III, vicino a Tufello, Conca d'Oro, Talenti, Bufalotta e Porta di Roma), facciamo l'<strong>ISEE gratis</strong>, calcoliamo quanto ti spetta, presentiamo la domanda all'INPS e ti aiutiamo a leggere l'esito e a fare i rinnovi in tempo. Per la domanda ADI ti diciamo il costo prima: chiedi un preventivo su WhatsApp. Lavoriamo anche in videochiamata da tutta Italia.</p>
+  <p>Leggi anche: <a href="/blog/assegno-di-inclusione-2027-isee-rinnovo">ADI 2027: rinnovo dell'ISEE e novità</a> e la pagina <a href="/adi-sfl">ADI e SFL</a>.</p>
+</ToolGuideLayout>
+
+<style is:global>
+  #ad-out{scroll-margin-top:90px}
+  .cc-f{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .cc-f legend{font-weight:800;margin-bottom:8px}
+  .cc-l{display:flex;flex-direction:column;gap:6px;font-weight:800}
+  .cc-h{font-weight:400;color:#5B5B72;font-size:14px}
+  .cc-in{border:2px solid #14142B;border-radius:14px;padding:11px 12px;font-size:17px;background:#fff;width:100%;max-width:100%;font-weight:400;color:#14142B}
+  .cc-o{display:flex;align-items:center;gap:10px;font-size:16px;cursor:pointer;font-weight:400;min-height:28px}
+  .cc-o input{width:20px;height:20px;accent-color:#5B3DF5;flex:none}
+  .cc-res{border-radius:20px;padding:18px 20px;line-height:1.5;margin-top:4px}
+  .cc-ok{background:#D4FF4F;color:#14142B}
+  .cc-warn{background:#FFF4D6;color:#14142B}
+  .cc-res b.big{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:40px;line-height:1.05;margin:4px 0}
+  .ad-row{background:#fff;border:2px solid #14142B;border-radius:18px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end}
+  .ad-row .cc-l{flex:1 1 130px}
+  .ad-small{align-self:flex-start;background:#fff;color:#14142B;border:2px solid #14142B;border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px;cursor:pointer;min-height:36px}
+  .ad-det summary{cursor:pointer;font-weight:800;min-height:28px}
+  .ad-tab{border-collapse:collapse;width:100%;margin-top:10px;font-size:15px}
+  .ad-tab td{padding:5px 6px 5px 0;border-top:1px solid rgba(20,20,43,.15)}
+  .ad-tab td:last-child{text-align:right;white-space:nowrap}
+</style>
+
+<script>
+  import { calcolaAdi, leggiEuro, eurA, redditoFamiliareDaDsu, type Adulto, type Disabilita } from "~/lib/adi";
+  const $ = (i: string) => document.getElementById(i) as HTMLInputElement;
+  const lista = document.getElementById("ad-adulti")!;
+  let n = 0;
+  function rigaAdulto(eta = "") {
+    n++;
+    const id = "ad-a" + n;
+    const d = document.createElement("div");
+    d.className = "ad-row";
+    d.innerHTML =
+      '<label class="cc-l" for="' + id + '-eta">Età<input id="' + id + '-eta" class="cc-in" data-k="eta" type="number" min="18" max="110" inputmode="numeric" value="' + eta + '" placeholder="es. 40"></label>' +
+      '<label class="cc-l" for="' + id + '-dis" style="flex:2 1 200px">Disabilità<select id="' + id + '-dis" class="cc-in" data-k="dis"><option value="no">Nessuna</option><option value="media">Disabilità media</option><option value="grave">Disabilità grave</option><option value="nonauto">Non autosufficiente</option></select></label>' +
+      '<label class="cc-o" style="flex:1 1 220px"><input type="checkbox" data-k="sv"> In grave disagio, seguito dai servizi con un programma certificato</label>' +
+      '<button type="button" class="ad-small" data-k="del" aria-label="Togli questo adulto">Togli</button>';
+    d.querySelector<HTMLButtonElement>('[data-k="del"]')!.addEventListener("click", () => { if (lista.children.length > 1) d.remove(); });
+    lista.appendChild(d);
+  }
+  rigaAdulto();
+  document.getElementById("ad-add")!.addEventListener("click", () => { if (lista.children.length < 10) rigaAdulto(); });
+
+  function aggiornaModo() {
+    const m = (document.querySelector('input[name="ad-modo"]:checked') as HTMLInputElement).value;
+    (document.getElementById("ad-noto-w") as HTMLElement).style.display = m === "noto" ? "block" : "none";
+    (document.getElementById("ad-dsu-w") as HTMLElement).style.display = m === "dsu" ? "flex" : "none";
+  }
+  document.querySelectorAll('input[name="ad-modo"]').forEach((r) => r.addEventListener("change", aggiornaModo));
+  aggiornaModo();
+
+  function show(c: string, h: string) { const o = $("ad-out"); o.innerHTML = '<div class="cc-res ' + c + '">' + h + "</div>"; o.scrollIntoView({ behavior: "smooth", block: "nearest" }); }
+  const v = (id: string) => leggiEuro($(id).value);
+
+  document.getElementById("ad-b")!.addEventListener("click", () => {
+    const adulti: Adulto[] = [];
+    let erroreEta = false;
+    lista.querySelectorAll(".ad-row").forEach((r) => {
+      const eta = parseInt((r.querySelector('[data-k="eta"]') as HTMLInputElement).value, 10);
+      if (!(eta >= 18)) erroreEta = true;
+      adulti.push({ eta, disabilita: (r.querySelector('[data-k="dis"]') as HTMLSelectElement).value as Disabilita, svantaggio: (r.querySelector('[data-k="sv"]') as HTMLInputElement).checked });
+    });
+    if (erroreEta) { show("cc-warn", "Scrivi l'età di ogni adulto (almeno 18 anni)."); return; }
+    const minori = Math.max(0, parseInt($("ad-min").value, 10) || 0);
+    const minDis = ($("ad-min-dis") as unknown as HTMLSelectElement).value as Disabilita;
+    const isee = v("ad-isee"), aff = v("ad-aff") ?? 0;
+    if (isee === undefined || Number.isNaN(isee)) { show("cc-warn", "Scrivi il valore ISEE, solo con i numeri (per esempio 6.500,00)."); return; }
+    if (Number.isNaN(aff)) { show("cc-warn", "Non riesco a leggere l'affitto: scrivi solo il numero, per esempio 4.200."); return; }
+    const modo = (document.querySelector('input[name="ad-modo"]:checked') as HTMLInputElement).value;
+    let rf: number | undefined;
+    if (modo === "noto") rf = v("ad-rf");
+    else {
+      const parti = ["ad-red", "ad-tolti", "ad-incorso", "ad-pens"].map((i) => v(i));
+      if (parti.some((x) => Number.isNaN(x))) { show("cc-warn", "Uno degli importi del reddito non si legge: scrivi solo numeri, per esempio 1.250,50."); return; }
+      rf = redditoFamiliareDaDsu({ redditiDsu: parti[0] ?? 0, trattamentiDaTogliere: parti[1] ?? 0, aiutiInCorso: parti[2] ?? 0, pensioniNuove: parti[3] ?? 0 });
+    }
+    if (rf === undefined || Number.isNaN(rf)) { show("cc-warn", "Scrivi il reddito familiare (0 se non c'è)."); return; }
+    const mob = v("ad-mob"), imm = v("ad-imm");
+    const r = calcolaAdi(
+      { adulti, minori, minoreSotto3: $("ad-sotto3").checked, disabiliMinori: minori > 0 && minDis !== "no" ? [minDis] : [], carichiDiCura: $("ad-cura").checked },
+      { isee, redditoFamiliare: rf, canoneAnnuo: aff, patrimonioMobiliare: Number.isNaN(mob as number) ? undefined : mob, patrimonioImmobiliare: Number.isNaN(imm as number) ? undefined : imm },
+    );
+    const sc = String(r.scala).replace(".", ",");
+    const dett = r.scalaDett.righe.map((x) => "<tr><td>" + x.voce + "</td><td>+" + String(x.valore).replace(".", ",") + "</td></tr>").join("");
+    const conto =
+      '<table class="ad-tab"><tbody>' +
+      "<tr><td>Scala di equivalenza ADI</td><td><b>" + sc + "</b></td></tr>" +
+      "<tr><td>Soglia: " + eurA(r.sogliaBase) + " × " + sc + "</td><td>" + eurA(r.sogliaReddito) + "</td></tr>" +
+      "<tr><td>Reddito familiare</td><td>− " + eurA(rf) + "</td></tr>" +
+      "<tr><td>Integrazione del reddito (all'anno)</td><td>" + eurA(r.quotaA) + "</td></tr>" +
+      "<tr><td>Parte per l'affitto (all'anno)</td><td>" + eurA(r.quotaB) + "</td></tr>" +
+      "</tbody></table>" +
+      '<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:800">Come abbiamo calcolato la scala</summary><table class="ad-tab"><tbody>' + dett + "</tbody></table></details>";
+    if (!r.ammesso) {
+      show("cc-warn", "<b>Con questi dati l'ADI non spetta.</b><ul style=\"margin:8px 0 0 18px\">" + r.motivi.map((m) => "<li>" + m + "</li>").join("") + "</ul>" + (r.scalaDett.ok ? conto : "") + '<p style="margin:10px 0 0">Non sei sicuro dei dati? <a href="/prenota">Prenota</a>: l\'ISEE lo facciamo gratis e controlliamo tutto.</p>');
+      return;
+    }
+    const avvisi = (r.minimoApplicato ? ["Il conto dava meno del minimo: l'INPS paga " + eurA(480) + " l'anno."] : []).concat(r.avvisi);
+    show("cc-ok",
+      "Assegno di inclusione stimato" +
+      '<b class="big">' + eurA(r.mensile) + " al mese</b>" +
+      eurA(r.annuo) + " l'anno. Se è un rinnovo, la prima rata è " + eurA(r.primaRataRinnovo) + "." +
+      conto +
+      (avvisi.length ? '<ul style="margin:8px 0 0 18px">' + avvisi.map((m) => "<li>" + m + "</li>").join("") + "</ul>" : "") +
+      '<p style="margin:10px 0 0">L\'Assegno Unico, se ti spetta, si aggiunge a parte. È una stima: <a href="/prenota">prenota</a> e controlliamo con te ISEE e domanda.</p>');
+  });
+</script>

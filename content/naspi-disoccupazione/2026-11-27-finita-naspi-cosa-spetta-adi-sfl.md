@@ -75,6 +75,8 @@ Secondo la scheda INPS servono anche:
 
 L'ADI dura **18 mesi**, poi si rinnova per **12 mesi** con nuova domanda. Dal 2026 non c'è più il mese di stop, ma la prima rata del rinnovo è al **50%**. Tutto sul rinnovo nell'articolo sull'[Assegno di inclusione 2027](/blog/assegno-di-inclusione-2027-isee-rinnovo).
 
+> [calcolatore dell'Assegno di inclusione](/calcolo-assegno-inclusione): scopri quanto ti spetta di ADI al mese.
+
 ## SFL: quali sono i requisiti e quanto spetta?
 
 **Il Supporto per la formazione e il lavoro dà 500 euro al mese, per 12 mesi, a chi ha 18-59 anni e un ISEE fino a 10.140 euro e partecipa a corsi o progetti** (scheda INPS SFL, aggiornata al 5 marzo 2026).

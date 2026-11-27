@@ -50,6 +50,8 @@ Se nel frattempo **cambia la famiglia** (una nascita, qualcuno che va via di cas
 
 > [Prenota l'ISEE 2027 gratis](https://link.arcanis.it/widget/booking/PcX3eqVyShnXdizbkN1G): l'ISEE 2026 scade il 31 dicembre, rinnovalo a inizio gennaio.
 
+> [calcolatore dell'Assegno di inclusione](/calcolo-assegno-inclusione): scopri quanto ti spetta al mese con la tua famiglia, il tuo reddito e l'affitto.
+
 ## Il rinnovo: niente più mese di stop
 
 Fino al 2025, dopo i primi 18 mesi l'assegno si fermava per **un mese** prima del rinnovo. Con la **legge di bilancio 2026** questo mese di sospensione è stato **eliminato**: il rinnovo si può chiedere già dal mese dopo l'ultimo pagamento (notizia INPS del 3 marzo 2026).
