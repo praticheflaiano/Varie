@@ -40,7 +40,7 @@ L'azienda non ti paga lo stipendio, ti umilia, ti ha cambiato mansioni o sede se
 | **Preavviso** | **non lo devi dare**; anzi, l'azienda ti deve l'**indennità di mancato preavviso** |
 | **NASpI** | **sì**, se hai i requisiti; l'INPS chiede una **dichiarazione** e i **documenti** della contestazione |
 | **Prove** | diffide, denunce, esposti, ricorsi: senza, la giusta causa è debole |
-| **Da noi** | invio delle dimissioni e **domanda NASpI gratis**; per diffide e cause ti indirizziamo a un avvocato o al sindacato |
+| **Da noi** | invio delle dimissioni **da 15 €** e **domanda NASpI gratis**; per diffide e cause ti indirizziamo a un avvocato o al sindacato |
 
 > [Prenota: valutiamo con te dimissioni e NASpI](/prenota): a Roma Vigne Nuove o in videochiamata, da tutta Italia.
 
