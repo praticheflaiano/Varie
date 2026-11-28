@@ -45,6 +45,10 @@ export const VOCI_RICERCA: VoceRicerca[] = [
   ...gruppo(["did", "did online", "immediata disponibilita", "dichiarazione di immediata disponibilita"], ["DID online: la dichiarazione di immediata disponibilità", "/naspi/did", "guida"]),
   ...gruppo(["lavorare con la naspi", "nuovo lavoro naspi", "naspi com", "naspi e lavoro"], ["Lavorare durante la NASpI", "/naspi/nuovo-lavoro", "guida"]),
   ...gruppo(["siisl", "patto di attivazione digitale", "pad naspi"], ["SIISL: il patto di attivazione digitale", "/siisl", "servizio"]),
+  ...gruppo(["naspi malattia", "malattia naspi", "malattia durante la naspi", "sospensione naspi malattia", "malattia disoccupato", "malattia dopo licenziamento", "in malattia fine contratto", "certificato capacita lavorativa", "certificato riacquisto capacita lavorativa", "malattia ultimo giorno di lavoro"],
+    ["Malattia durante la NASpI: quando si sospende", "/blog/malattia-durante-naspi-sospensione-60-giorni", "guida"],
+    ["In malattia a fine lavoro: malattia o NASpI", "/blog/naspi-malattia-fine-rapporto-lavoro", "guida"],
+  ),
   ...gruppo(["fondo di garanzia", "tfr non pagato", "stipendi non pagati", "azienda fallita", "fallimento"], ["Fondo di garanzia INPS: TFR e stipendi non pagati", "/naspi/fondo-garanzia-tfr", "guida"]),
   ...gruppo(
     ["dimissioni", "dimissioni online", "licenziarsi", "mi licenzio", "dimettersi", "dimettermi", "dare le dimissioni", "dimissioni giusta causa", "dimisioni", "dimmissioni"],

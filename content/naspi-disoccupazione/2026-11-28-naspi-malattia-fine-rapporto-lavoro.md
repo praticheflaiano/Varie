@@ -26,7 +26,7 @@ image_alt: "In malattia a fine lavoro: malattia INPS o NASpI e certificato medic
 
 **Ultimo aggiornamento: 28 novembre 2026**
 
-Il tuo contratto finisce, o ti licenziano, mentre sei **in malattia**? Ti chiedi se devi fare subito la NASpI o se puoi restare in malattia, e che certificato ti chiede l'INPS. Questa guida è per te: la risposta cambia molto se il tuo contratto era **a tempo indeterminato** o **a tempo determinato**.
+Il tuo lavoro finisce mentre sei **in malattia**? Ti chiedi se fare subito la NASpI o restare in malattia, e che certificato vuole l'INPS. Questa guida è per te: la risposta cambia se il contratto era **a tempo indeterminato** o **a tempo determinato**.
 
 ## In breve
 
@@ -53,13 +53,11 @@ Non è una scelta libera. Funziona così:
 
 L'indennità di malattia ha comunque un tetto: al massimo **180 giorni nell'anno solare**, contando anche quelli già usati mentre lavoravi.
 
-**Attenzione: la malattia INPS non spetta a tutti.** Secondo l'INPS sono esclusi, tra gli altri, **impiegati dell'industria**, quadri dell'industria e dell'artigianato, dirigenti, portieri e **colf e badanti**: per loro la malattia la paga solo il datore di lavoro, come prevede il contratto collettivo. Spetta invece, per esempio, agli **operai dell'industria** e a **operai e impiegati del commercio e dei servizi**.
+**Attenzione: la malattia INPS non spetta a tutti.** Spetta per esempio agli **operai dell'industria** e a **operai e impiegati del commercio e dei servizi**. Sono esclusi, tra gli altri, **impiegati dell'industria**, quadri, dirigenti, portieri e **colf e badanti**: per loro non c'è una malattia INPS da continuare dopo la fine del lavoro.
 
 ## Ero a tempo determinato e il contratto è scaduto mentre ero in malattia: cosa succede?
 
 **Con il contratto a termine la malattia INPS si ferma alla fine del rapporto e i 68 giorni per la NASpI partono dalla fine del lavoro.** L'INPS lo scrive chiaro: "Il diritto cessa con la cessazione del rapporto di lavoro, anche se precede la scadenza del contratto".
-
-Quindi:
 
 - dopo la scadenza **non c'è una malattia da continuare**;
 - il termine per la NASpI **non si sposta** (Messaggio INPS n. 4211/2019, che fa l'esempio dei lavoratori a tempo determinato del commercio);
@@ -71,21 +69,17 @@ Fai domanda in tempo e manda il certificato di capacità lavorativa appena il me
 
 **Serve un certificato medico che attesti il riacquisto della capacità lavorativa, cioè che sei di nuovo in grado di lavorare, senza diagnosi.** Lo chiede l'INPS dal **1° marzo 2025** (Messaggio n. 4468 del 27 dicembre 2024).
 
-Ecco cosa sapere:
-
 - vale per chi era **in malattia al momento della fine del lavoro**;
 - il certificato **non deve contenere la diagnosi**;
 - se l'evento era un **infortunio sul lavoro o una malattia professionale** (INAIL), serve il **certificato definitivo dell'INAIL**;
 - puoi **allegarlo alla domanda NASpI** oppure mandarlo **dopo**, con il modello **NASpI-Com**;
 - se serve, gli accertamenti li fanno direttamente i medici dell'INPS.
 
-Il messaggio non indica un medico in particolare né un modulo: chiedi il certificato al medico che ti ha seguito nella malattia. Conta che dica che hai **riacquistato la capacità lavorativa** e da quando. Senza certificato la NASpI si paga più tardi: l'INPS lo chiede proprio per velocizzare la liquidazione.
+Il messaggio non indica un medico né un modulo: chiedilo al medico che ti ha seguito. Deve dire che hai **riacquistato la capacità lavorativa** e da quando. L'INPS lo chiede per pagare la NASpI più in fretta.
 
 ## Entro quando devo fare la domanda NASpI se ero in malattia?
 
 **Entro 68 giorni dalla fine della malattia indennizzata, se la malattia era iniziata durante il lavoro.** Lo prevede la Circolare INPS n. 94/2015 (par. 2.6, lettera c).
-
-I casi principali:
 
 | Situazione | Da quando contano i 68 giorni |
 |---|---|
@@ -94,7 +88,7 @@ I casi principali:
 | Malattia **non indennizzata** (es. tempo determinato, categorie escluse) | dalla **fine del lavoro**, come sempre |
 | **Infortunio sul lavoro** INAIL iniziato durante il lavoro | dalla **fine dell'infortunio** |
 
-Se non sei sicuro che la tua malattia sia indennizzata, **conta i 68 giorni dalla fine del lavoro**: è la strada che non ti fa rischiare. Trovi tutte le altre regole e il calcolo delle scadenze nella guida alla [domanda NASpI](/naspi/domanda).
+Nel dubbio, **conta i 68 giorni dalla fine del lavoro**: così non rischi. Le altre regole e il calcolo delle scadenze sono nella guida alla [domanda NASpI](/naspi/domanda).
 
 ## Da quando parte la NASpI dopo la malattia?
 
@@ -106,7 +100,7 @@ Esempio: la malattia finisce il 10 marzo. Conviene avere già il certificato pro
 
 **No: la malattia dopo la fine del lavoro non consuma la NASpI, che semplicemente parte dopo.** La durata dipende dai contributi degli ultimi 4 anni.
 
-Per il calcolo, la Circolare INPS n. 94/2015 dice che i periodi di malattia coperti solo da contributi figurativi non contano come contributi, ma **allungano all'indietro** il periodo di 4 anni da guardare: in pratica non ti penalizzano.
+E la malattia avuta mentre lavoravi? Per la Circolare INPS n. 94/2015, i periodi coperti solo da contributi figurativi non contano, ma **allungano all'indietro** i 4 anni da guardare.
 
 > [calcolo NASpI](/calcolo-naspi): stima quanto prendi al mese e per quanti mesi, prima di fare la domanda.
 
@@ -120,7 +114,7 @@ Per il calcolo, la Circolare INPS n. 94/2015 dice che i periodi di malattia cope
 
 **Con il licenziamento per superamento del periodo di comporto la NASpI spetta, perché è un licenziamento; con le dimissioni volontarie no, salvo la giusta causa.**
 
-- **Comporto**: è il periodo massimo di malattia oltre il quale l'azienda può licenziarti, lo fissa il contratto collettivo. Se arriva il licenziamento, valgono le regole di questa guida: se hai già usato i **180 giorni** di malattia INPS dell'anno, la malattia non è più indennizzata e i 68 giorni partono dalla fine del lavoro.
+- **Comporto**: è il massimo di assenze per malattia fissato dal contratto collettivo. Dopo il licenziamento valgono le regole di questa guida; ma se hai già usato i **180 giorni** di malattia INPS dell'anno, la malattia non è più indennizzata e i 68 giorni partono dalla fine del lavoro.
 - **Dimissioni durante la malattia**: se sono volontarie, la NASpI **non spetta**. Spetta solo se ti dimetti per **giusta causa** (per esempio stipendi non pagati): leggi la guida sulle [dimissioni per giusta causa e NASpI](/blog/dimissioni-giusta-causa-naspi).
 
 ## Devo andare al centro per l'impiego se sono ancora in malattia?
@@ -150,9 +144,6 @@ No, se la malattia è indennizzata: i 68 giorni partono dalla fine della malatti
 
 ### Il certificato di capacità lavorativa è obbligatorio?
 L'INPS chiede di allegarlo dal 1° marzo 2025 a chi era in malattia quando è finito il lavoro. Se non lo alleghi alla domanda puoi mandarlo dopo con la NASpI-Com, ma intanto la pratica si rallenta.
-
-### Il certificato deve avere la diagnosi?
-No. L'INPS chiede espressamente certificati senza diagnosi: deve risultare solo che hai riacquistato la capacità lavorativa.
 
 ### Quanto costa fare la NASpI da voi se ero in malattia?
 La domanda NASpI al Centro Pratiche Flaiano è gratis, anche senza tessera e anche a distanza da tutta Italia.

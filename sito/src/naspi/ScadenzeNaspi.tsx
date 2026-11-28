@@ -103,7 +103,7 @@ const ScadenzeNaspi: React.FC = () => {
             <a href="/naspi#richiesta-online" className="mt-6 flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-800 !text-white !no-underline font-bold rounded-xl py-4 px-4 transition-colors">
                 Fai la domanda con noi, è gratis <ArrowRight className="w-5 h-5" aria-hidden="true" />
             </a>
-            <p className="text-xs text-slate-300 mt-3">Calcolo indicativo. Se c'erano maternità, malattia, infortunio o preavviso pagato dopo la fine del lavoro, i termini partono dalla loro fine.</p>
+            <p className="text-xs text-slate-300 mt-3">Calcolo indicativo. Se alla fine del lavoro c'erano maternità o preavviso pagato, oppure malattia o infortunio pagati dall'INPS dopo un lavoro a tempo indeterminato, i termini partono dalla loro fine. Per i contratti a termine la malattia non sposta i termini.</p>
         </div>
     );
 };
