@@ -3,12 +3,13 @@ title: "Importo aggiuntivo di 154,94 € o tredicesima non arrivati o più bassi
 seo_title: "Importo aggiuntivo 154 € non ricevuto: perché e cosa fare"
 slug: "importo-aggiuntivo-tredicesima-non-arrivati-cosa-fare"
 date: 2026-11-27
-last_updated: 2026-11-27
+last_updated: 2026-11-28
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "tredicesima", "ricostituzione", "patronato"]
 meta_description: "Importo aggiuntivo di 154,94 € o tredicesima non arrivati a dicembre 2026? I motivi più comuni e come chiedere la verifica all'INPS. Patronato a Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, Messaggio n. 3923 del 27 novembre 2026 (pensione di dicembre 2026: quattordicesima a chi ha maturato il diritto nella seconda parte dell'anno e importo aggiuntivo di 154,94 euro; limiti di reddito 2026 calcolati con la perequazione definitiva dell'1,40%) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3923-del-27-11-2026_16430.html"
   - "Legge 23 dicembre 2000, n. 388, art. 70, commi 7-10 (importo aggiuntivo: pensione fino al trattamento minimo, redditi IRPEF dell'anno, limite personale e coniugale, pagamento con la tredicesima o l'ultima rata dell'anno)"
   - "INPS, scheda Importo aggiuntivo delle pensioni (aggiornata al 16 aprile 2026: limiti 2026, esclusioni, attribuzione d'ufficio a dicembre, domanda di ricostituzione se non arriva) - https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.53721.importo-aggiuntivo-delle-pensioni.html"
   - "INPS, Messaggio n. 3781 del 15 dicembre 2025 (pagamento di dicembre 2025: importo aggiuntivo provvisorio sull'ultimo reddito memorizzato, in dodicesimi per le pensioni iniziate nell'anno, posizioni scartate per redditi mancanti, gestioni pubbliche pagate dalle sedi dopo la verifica)"
@@ -24,7 +25,7 @@ image_alt: "Importo aggiuntivo di 154,94 euro o tredicesima non arrivati: cosa f
 
 # Importo aggiuntivo di 154,94 € o tredicesima non arrivati o più bassi: perché succede e cosa fare
 
-**Ultimo aggiornamento: 27 novembre 2026**
+**Ultimo aggiornamento: 28 novembre 2026** (aggiunte le istruzioni del messaggio INPS n. 3923 del 27 novembre 2026)
 
 La pensione di dicembre 2026 arriva **martedì 1° dicembre**. Se sul cedolino non trovi l'**importo aggiuntivo di 154,94 euro**, se ne trovi solo una parte o se la **tredicesima** ti sembra sparita o troppo bassa, questa guida ti dice perché può succedere e cosa fare. A chi spetta il bonus lo spieghiamo nell'articolo sul [bonus di 154,94 euro a dicembre](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026).
 
@@ -56,24 +57,24 @@ Il limite 2026 è **11.931,08 euro** di reddito IRPEF personale; se sei sposato,
 
 ### 3. La tua prestazione è esclusa
 
-Il bonus **non spetta** su assegno sociale, pensione sociale, pensioni e assegni di **invalidità civile**, pensioni dei dipendenti di enti creditizi e dei dirigenti d'azienda (scheda INPS).
+Il bonus **non spetta** su assegno sociale, pensione sociale, pensioni e assegni di **invalidità civile**, pensioni dei dipendenti di enti creditizi e dei dirigenti d'azienda (scheda INPS), né sull'**APE sociale** e sulle pensioni di vecchiaia in **cumulo** finché non sono complete di tutte le quote (messaggio INPS 3923/2026).
 
 ### 4. L'INPS non ha i tuoi redditi recenti
 
-**Questo è il caso più frequente quando il bonus spetta ma non arriva.** A dicembre i redditi dell'anno non sono ancora chiusi: l'INPS paga **in via provvisoria** usando l'**ultimo reddito che ha in archivio**. Lo scorso anno ha usato redditi non più vecchi del **2021** e ha **scartato** le posizioni senza un reddito dichiarato almeno per quell'anno (messaggio INPS 3781/2025).
+**Questo è il caso più frequente quando il bonus spetta ma non arriva.** A dicembre i redditi dell'anno non sono ancora chiusi: l'INPS paga **in via provvisoria** usando l'**ultimo reddito che ha in archivio**. Per il 2026 usa l'**ultimo reddito memorizzato, non più vecchio del 2022** (messaggio INPS n. 3923 del 27 novembre 2026). Lo scorso anno ha **scartato** le posizioni senza un reddito dichiarato abbastanza recente (messaggio INPS 3781/2025).
 
 Se non fai il 730 e non hai mandato il **RED** quando l'INPS lo chiedeva, l'INPS può non avere i tuoi dati: ecco perché il bonus salta. Come funziona il RED: [modello RED 2026](/blog/red-2026-scadenza-28-febbraio-2027-messaggio-inps-3568).
 
 ### 5. Sei un ex dipendente pubblico
 
-Per le pensioni delle **gestioni pubbliche** (ex INPDAP) lo scorso anno il bonus lo hanno pagato le **sedi INPS** dopo aver controllato i requisiti, non il calcolo automatico (messaggio INPS 3781/2025). Se pensi che ti spetti e non lo vedi, conviene segnalarlo all'INPS tramite il patronato.
+Per le pensioni delle **gestioni pubbliche** (ex INPDAP, sistemi "SIN" e "GPP") e per gli ex iscritti INPGI anche nel 2026 il bonus lo pagano le **sedi INPS** dopo aver controllato i requisiti, non il calcolo automatico (messaggio INPS n. 3923/2026). Se pensi che ti spetti e non lo vedi, conviene segnalarlo all'INPS tramite il patronato.
 
 ## Perché l'importo aggiuntivo è più basso di 154,94 euro?
 
 **Perché la pensione supera di poco il minimo, oppure perché sei andato in pensione nel corso del 2026.** In questi casi ricevi solo una parte.
 
 - **Pensione tra 7.954,05 e 8.108,99 euro l'anno**: ricevi la differenza fino a 8.108,99 euro. Esempio, calcolo nostro: pensione di 615 € al mese × 13 = 7.995 € l'anno, quindi bonus di **113,99 €**.
-- **Pensione iniziata durante l'anno**: il bonus si paga **in dodicesimi** (messaggio INPS 3781/2025). Esempio, calcolo nostro: pensione da luglio 2026, sei mesi, metà del bonus, cioè **77,47 €**.
+- **Pensione iniziata durante l'anno**: il bonus si paga **in dodicesimi** e anche il limite di reddito è rapportato ai mesi di pensione (messaggio INPS n. 3923/2026). Esempio, calcolo nostro: pensione da luglio 2026, sei mesi, metà del bonus, cioè **77,47 €**. Se però hai anche un'altra pensione iniziata prima, il bonus spetta per intero, se ne hai diritto.
 
 ## Perché la tredicesima della pensione non è arrivata o è più bassa?
 
@@ -103,7 +104,7 @@ Entra su **inps.it** o nell'app **INPS Mobile** con SPID, CIE o CNS, servizio **
 
 ### Passo 2: verifica i requisiti
 
-Somma la pensione annua e i redditi 2026 tuoi e del coniuge. Se sei sopra i limiti, il bonus non spetta. Lo scorso anno l'INPS ha dato le istruzioni sui pagamenti di dicembre con un messaggio del **15 dicembre**: per il 2026 non è ancora uscito, lo segnaleremo qui.
+Somma la pensione annua e i redditi 2026 tuoi e del coniuge. Se sei sopra i limiti, il bonus non spetta. Le istruzioni per il 2026 sono nel **messaggio INPS n. 3923 del 27 novembre 2026**: limiti di reddito definitivi (pensione fino a 8.108,99 euro, reddito personale fino a 11.931,08 euro, di coppia fino a 23.862,15 euro).
 
 ### Passo 3: chiedi la ricostituzione
 
@@ -147,7 +148,10 @@ No. Arriva da sola con la pensione di dicembre, il 1° dicembre 2026, compresa n
 Perché l'importo aggiuntivo spetta solo sulle pensioni da contributi. Sull'assegno sociale e sull'invalidità civile non spetta (scheda INPS). Tutto sull'assegno: [assegno sociale 2026](/blog/assegno-sociale-2026-importo-requisiti-domanda).
 
 ### Non è arrivata nemmeno la quattordicesima di dicembre: cosa faccio?
-Vale lo stesso percorso: controlla il cedolino e, se pensi che ti spetti, chiedi la ricostituzione online o tramite patronato. Lo scorso anno l'INPS l'ha pagata a dicembre a chi aveva compiuto 64 anni nella seconda metà dell'anno o era andato in pensione nell'anno.
+Vale lo stesso percorso: controlla il cedolino e, se pensi che ti spetti, chiedi la ricostituzione online o tramite patronato. A dicembre 2026 l'INPS la paga a chi ha compiuto 64 anni dal 1° agosto al 31 dicembre (dal 1° luglio per gli ex dipendenti pubblici), a chi è andato in pensione nel 2026 e a chi era stato escluso a luglio perché l'INPS non aveva un suo reddito dal 2022 in poi, se ha i requisiti (messaggio INPS n. 3923/2026).
+
+### L'INPS mi scrive che devo restituire la quattordicesima: perché?
+Se nella seconda parte del 2026 sono venute meno le condizioni per averla, l'INPS manda una comunicazione e recupera la somma pagata in via provvisoria in 12 rate, dalla prima rata utile (messaggio INPS n. 3923/2026). Portaci la lettera: controlliamo se il recupero è giusto.
 
 ## Articoli correlati
 

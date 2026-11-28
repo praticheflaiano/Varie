@@ -3,12 +3,13 @@ title: "Colf e badanti a Roma: contributi INPS 2026, scadenze e cosa deve fare l
 seo_title: "Colf e badanti 2026: contributi INPS e scadenze"
 slug: "colf-badanti-roma-contributi-inps-2026-scadenze"
 date: 2026-11-10
-last_updated: 2026-11-17
+last_updated: 2026-11-28
 category: "lavoro-domestico"
 tags: ["colf", "badanti", "inps", "lavoro-domestico", "scadenza", "famiglie"]
 meta_description: "Colf e badanti nel 2026: contributi INPS orari, scadenze trimestrali, assunzione entro il giorno prima, detrazioni nel 730. Guida per le famiglie di Roma Nord."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, notizia del 27 novembre 2026: La video guida per pagare online i contributi dei lavoratori domestici - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.11.la-video-guida-per-pagare-online-i-contributi-dei-lavoratori-domestici.html"
   - "INPS, Messaggio n. 3691 del 12 novembre 2026 - Contributi per i lavoratori domestici. Chiarimenti sulle modalità di pagamento - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3691-del-12-11-2026_16412.html"
   - "INPS, Circolare n. 9 del 3 febbraio 2026 - contributi dovuti per i lavoratori domestici nel 2026"
   - "INPS, notizia del 3 febbraio 2026: Lavoratori domestici, i contributi dovuti per il 2026 - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.lavoratori-domestici-i-contributi-dovuti-per-il-2026.html"
@@ -26,7 +27,7 @@ image_alt: "Colf e badanti 2026: contributi INPS e scadenze"
 
 # Colf e badanti a Roma: contributi INPS 2026, scadenze e cosa deve fare la famiglia
 
-**Ultimo aggiornamento: 17 novembre 2026** (aggiunti i chiarimenti del messaggio INPS n. 3691 del 12 novembre 2026 su come pagare i contributi)
+**Ultimo aggiornamento: 28 novembre 2026** (aggiunta la notizia INPS del 27 novembre 2026 sulla video guida per pagare i contributi; chiarimenti del messaggio INPS n. 3691 del 12 novembre 2026)
 
 Chi ha in casa una **colf**, una **badante** o una **baby sitter** è a tutti gli effetti un **datore di lavoro**. Deve comunicare l'assunzione all'INPS, pagare i contributi ogni tre mesi, fare la busta paga e, a fine rapporto, il TFR.
 
@@ -85,6 +86,8 @@ Secondo il messaggio INPS n. 3691/2026 il modello pagoPA si trova solo **online 
 - **home banking**, con la funzione **CBILL**;
 - **sportelli bancari** e **uffici postali**;
 - **app INPS Mobile** o **app IO**.
+
+**Video guida personalizzata.** Se risultano contributi 2026 non pagati, l'INPS manda al datore di lavoro una **video guida** con i dati dei suoi rapporti di lavoro domestico e i contributi da versare, che spiega come pagare online (notizia INPS del 27 novembre 2026). La trovi con il link in fondo all'avviso nel **centro notifiche di MyINPS** o tra le notifiche delle app **IO** e **INPS Mobile**, e si può usare per sei mesi. Per ricevere gli avvisi anche via **SMS ed email da gennaio 2027**, l'INPS consiglia di controllare in MyINPS cellulare ed email e di dare il consenso nella sezione "Vai ai tuoi consensi".
 
 Il servizio INPS di "emissione massiva" degli avvisi è riservato ai **professionisti abilitati** e alle **associazioni sindacali dei datori di lavoro domestico** che gestiscono almeno 200 rapporti di lavoro a trimestre. Se non hai SPID o non ti trovi con il portale, l'avviso **te lo prepariamo noi** in ufficio.
 
