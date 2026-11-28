@@ -153,6 +153,8 @@ export const VOCI_RICERCA: VoceRicerca[] = [
   ...gruppo(["assegno di vedovanza", "vedovanza", "vedova", "vedovo"], ["Assegno di vedovanza: ti spetta?", "/assegno-vedovanza", "calcolatore"]),
   ...gruppo(["assegno sociale", "pensione sociale"], ["Assegno sociale: importo e requisiti", "/blog/assegno-sociale-2026-importo-requisiti-domanda", "guida"]),
   ...gruppo(["cedolino", "cedolino pensione", "cedolino inps", "cedolini", "obis m"], ["Cedolino della pensione: come leggerlo", "/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo", "guida"]),
+  ...gruppo(["lavori condominio pagati da un condomino", "condominio detrazione 50", "lavori parti comuni detrazione", "spese condominiali pagate da me", "principio di diritto 4 2026"], ["Lavori in condominio pagati da un solo condòmino: detrazione al 50%", "/blog/lavori-condominio-pagati-da-un-condomino-detrazione-50-principio-4-2026", "guida"]),
+  ...gruppo(["quattordicesima dicembre", "quattordicesima a dicembre"], ["Cedolino pensione dicembre 2026: tredicesima, quattordicesima e 154,94 €", "/blog/cedolino-pensione-novembre-dicembre-2026-come-leggerlo", "guida"]),
   ...gruppo(["154 euro", "importo aggiuntivo", "bonus 154", "tredicesima", "tredicesima pensione"], ["Bonus 154,94 euro sulla pensione di dicembre", "/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026", "guida"]),
   ...gruppo(["aumento pensioni", "rivalutazione", "rivalutazione pensioni", "perequazione"], ["Rivalutazione pensioni 2027", "/blog/rivalutazione-pensioni-2027-aumento-gennaio-fasce", "guida"]),
   ...gruppo(["ape sociale", "ape"], ["APE sociale: la domanda", "/blog/ape-sociale-2026-ultima-scadenza-30-novembre", "guida"]),

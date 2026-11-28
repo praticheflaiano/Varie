@@ -3,12 +3,13 @@ title: "Cedolino pensione dicembre 2026: pagamento il 1° dicembre, tredicesima,
 seo_title: "Cedolino pensione dicembre 2026: data, tredicesima e 154,94 €"
 slug: "cedolino-pensione-novembre-dicembre-2026-come-leggerlo"
 date: 2026-11-10
-last_updated: 2026-11-26
+last_updated: 2026-11-28
 category: "pensioni"
 tags: ["pensione", "pensionati", "inps", "guida", "tredicesima", "cedolino"]
 meta_description: "Cedolino pensione dicembre 2026: pagamento martedì 1° dicembre con tredicesima, bonus 154,94 € a chi spetta, niente addizionali. Quando si vede. CAF Roma."
 author: "Redazione Centro Pratiche Flaiano"
 sources:
+  - "INPS, Messaggio n. 3923 del 27 novembre 2026 (pensione di dicembre 2026: quattordicesima a chi ha maturato il diritto nella seconda parte dell'anno e importo aggiuntivo di 154,94 euro; limiti di reddito 2026 calcolati con la perequazione definitiva dell'1,40%) - https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.circolari-e-messaggi.2026.11.messaggio-numero-3923-del-27-11-2026_16430.html"
   - "INPS, Pensionati: il cedolino di pensione di dicembre 2025 (26 novembre 2025; regole di dicembre: pagamento, importo aggiuntivo, quattordicesima, addizionali, conguagli 730) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2025.11.pensionati-il-cedolino-di-pensione-di-dicembre-2025.html"
   - "INPS, Circolare n. 153 del 19 dicembre 2025 (calendario pagamenti 2026: dicembre valuta 1; par. 7.1 conguagli IRPEF a gennaio e febbraio; par. 7.2 addizionali da gennaio a novembre) - https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2025/12/Circolare_15109/Allegati/16484_Circolare-numero-153-del-19-12-2025.pdf"
   - "INPS, Pensionati: il cedolino di pensione di novembre 2026 (29 ottobre 2026) - https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.10.pensionati-il-cedolino-di-pensione-di-novembre-2026.html"
@@ -28,17 +29,18 @@ image_alt: "Cedolino pensione dicembre 2026: data di pagamento, tredicesima e tr
 
 # Cedolino pensione dicembre 2026: pagamento il 1° dicembre, tredicesima, 154,94 € e trattenute
 
-**Ultimo aggiornamento: 26 novembre 2026**
+**Ultimo aggiornamento: 28 novembre 2026** (aggiunte quattordicesima e importo aggiuntivo dal messaggio INPS n. 3923 del 27 novembre 2026)
 
 La **pensione di dicembre 2026** arriva **martedì 1° dicembre**, insieme alla **tredicesima**. Qui trovi cosa c'è nel **cedolino di dicembre 2026**: quando si vede su MyINPS, il bonus di **154,94 euro**, le trattenute che spariscono e i conguagli.
 
-> **Al 26 novembre 2026 l'INPS non ha ancora pubblicato la notizia sul cedolino di dicembre 2026.** Le date di pagamento sono già fissate dalla circolare INPS 153/2025. Per le altre voci usiamo le regole che l'INPS ha indicato nel cedolino di dicembre dello scorso anno. Aggiorneremo la pagina appena esce la notizia.
+> **Novità del 27 novembre 2026:** con il **messaggio n. 3923** l'INPS ha confermato che con la rata di dicembre paga la **quattordicesima** a chi ne ha maturato il diritto nella seconda parte del 2026 e l'**importo aggiuntivo di 154,94 euro**. La notizia INPS con tutte le voci del cedolino non è ancora uscita: per le altre voci usiamo le regole del dicembre scorso. Le date di pagamento sono fissate dalla circolare INPS 153/2025.
 
 ## In breve: cedolino pensione dicembre 2026
 
 - **Quando viene pagata la pensione di dicembre 2026:** **martedì 1° dicembre 2026**, in banca e in Posta (circolare INPS 153/2025).
 - **Tredicesima:** arriva **con la pensione di dicembre**, senza domanda.
 - **Bonus 154,94 euro:** l'**importo aggiuntivo** arriva con la rata di dicembre solo a chi ha **pensione e redditi bassi**. Non spetta a tutti.
+- **Quattordicesima a dicembre:** a chi ha compiuto **64 anni da agosto a dicembre 2026** (da luglio per gli ex dipendenti pubblici), a chi è andato in pensione nel 2026 e a chi era stato escluso a luglio perché l'INPS non aveva i suoi redditi, se ha i requisiti (messaggio INPS 3923/2026).
 - **Trattenute:** a dicembre **non ci sono le addizionali** regionale e comunale. Può esserci un rimborso o una trattenuta del **730** non chiusa a novembre.
 - **Quando si vede il cedolino:** nel servizio INPS **"Cedolino della pensione"** (MyINPS o app INPS Mobile), con SPID, CIE o CNS. La notizia INPS sul cedolino di dicembre lo scorso anno è uscita il **26 novembre**.
 
@@ -76,15 +78,15 @@ In linea generale vale **una mensilità** di pensione. Chi è andato in pensione
 
 ## Bonus 154,94 euro: a chi arriva a dicembre?
 
-Con la rata di dicembre l'INPS paga l'**importo aggiuntivo di 154,94 euro** (art. 70 della legge 388/2000) **solo** a chi ha una **pensione bassa** e **redditi sotto i limiti di legge**. Lo scorso anno l'INPS lo ha pagato **in via provvisoria**, con un controllo successivo sui redditi.
+Con la rata di dicembre l'INPS paga l'**importo aggiuntivo di 154,94 euro** (art. 70 della legge 388/2000) **solo** a chi ha una **pensione bassa** e **redditi sotto i limiti di legge**. Anche quest'anno l'INPS lo paga **in via provvisoria**, con un controllo successivo sui redditi (messaggio INPS n. 3923 del 27 novembre 2026).
 
-Per il 2026, in sintesi (circolare INPS 153/2025, valori provvisori):
+Per il 2026, in sintesi (circolare INPS 153/2025, limiti confermati dal messaggio 3923/2026):
 
 - pensione annua **fino a 8.108,99 euro**;
 - reddito personale **fino a 11.931,08 euro**; se sei sposato, anche reddito di coppia **fino a 23.862,15 euro**;
 - **non spetta** su assegno sociale e prestazioni di invalidità civile.
 
-Sul cedolino lo trovi come voce separata, con il riferimento alla **legge 23 dicembre 2000, n. 388**. Tutti i dettagli e gli esempi: [bonus 154,94 euro sulla pensione di dicembre 2026](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026).
+Sul cedolino lo trovi come voce separata: "**Importo aggiuntivo (Legge 23 dicembre 2000, n. 388) – CREDITO ANNO 2026**". Tutti i dettagli e gli esempi: [bonus 154,94 euro sulla pensione di dicembre 2026](/blog/importo-aggiuntivo-154-euro-pensione-dicembre-2026).
 
 ## Quali trattenute ci sono sul cedolino di dicembre?
 
@@ -117,7 +119,16 @@ Se durante l'anno l'INPS ha trattenuto meno IRPEF del dovuto, la differenza a de
 
 ## Quattordicesima a dicembre: a chi arriva?
 
-La quattordicesima si paga a **luglio**. A dicembre 2025 l'INPS l'ha pagata, in via provvisoria, anche a chi aveva compiuto **64 anni nel secondo semestre** o era diventato **pensionato nel corso dell'anno**. Se pensi che ti spetti e non la trovi, il patronato può chiedere la **ricostituzione** della pensione. Per dicembre 2026 aspettiamo la conferma nella notizia INPS.
+La quattordicesima si paga a **luglio**. Con il **messaggio n. 3923 del 27 novembre 2026** l'INPS ha confermato che con la rata di **dicembre 2026** la paga d'ufficio a chi ne ha maturato il diritto nella seconda parte dell'anno, se ha gli altri requisiti (età e redditi):
+
+- chi ha compiuto **64 anni dal 1° agosto al 31 dicembre 2026**;
+- chi è diventato **pensionato nel corso del 2026**;
+- chi era stato escluso a luglio perché l'INPS non aveva un **reddito dichiarato almeno per il 2022**;
+- per gli **ex dipendenti pubblici** (pensioni dei sistemi "SIN" e "GPP"): chi ha compiuto 64 anni **dal 1° luglio al 31 dicembre 2026**, chi è andato in pensione nel 2026 e le domande arrivate fino al 5 ottobre 2026.
+
+Sul cedolino la voce si chiama "**QUATTORDICESIMA (LEGGE 3 AGOSTO 2007, N. 127) - CREDITO ANNO 2026**". I limiti di reddito sono gli stessi usati a luglio (perequazione definitiva dell'1,40%).
+
+**Attenzione:** se nella seconda parte del 2026 sono venute meno le condizioni, l'INPS manda una comunicazione e **recupera** la quattordicesima pagata in via provvisoria **in 12 rate**, dalla prima rata utile. Se pensi che ti spetti e non la trovi, il patronato può chiedere la **ricostituzione** della pensione.
 
 ## Perché la pensione di dicembre è diversa dal solito?
 
@@ -163,7 +174,10 @@ Se sul cedolino trovi una trattenuta che non capisci, manca il bonus di dicembre
 ## Domande frequenti
 
 ### Quando esce il cedolino della pensione di dicembre 2026?
-L'INPS non indica un giorno fisso. La notizia sul cedolino di dicembre lo scorso anno è uscita il 26 novembre; al 26 novembre 2026 quella di quest'anno non è ancora pubblicata. Aggiorneremo la pagina appena esce.
+L'INPS non indica un giorno fisso. Il 27 novembre 2026 ha pubblicato il messaggio n. 3923 su quattordicesima e importo aggiuntivo; la notizia con tutte le voci del cedolino non è ancora uscita. Aggiorneremo la pagina appena esce.
+
+### A chi arriva la quattordicesima con la pensione di dicembre 2026?
+A chi ha compiuto 64 anni dal 1° agosto al 31 dicembre 2026 (dal 1° luglio per gli ex dipendenti pubblici), a chi è andato in pensione nel 2026 e a chi era stato escluso a luglio perché l'INPS non aveva un suo reddito dal 2022 in poi, se ha i requisiti (messaggio INPS n. 3923 del 27 novembre 2026).
 
 ### Quando viene pagata la pensione di dicembre 2026?
 Martedì 1° dicembre 2026, in banca e in Posta, insieme alla tredicesima (circolare INPS 153/2025).
